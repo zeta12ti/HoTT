@@ -2,7 +2,8 @@
     to start from scratch. *)
 
 Require Export Notations.
-Require Export Logic.
+Require Export LogicClasses.
+Require Export TypeLogic.
 Require Export Datatypes.
 Require Export Coq.Init.Tactics.
 

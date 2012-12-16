@@ -331,6 +331,16 @@ Proof.
   path_induction. 
 Defined.
 
+(** Now we can tell Coq that he can consider [paths] as an equality.
+    paths_non_dep_elim could be defined as Fibrations.transport
+    (but with argument order changed!). *)
+Scheme paths_non_dep_elim := Minimality for paths Sort Type.
+Global Instance log_equational :
+  equational_logic (@paths) paths_non_dep_elim (@idpath) (@opposite) (@concat)
+    (fun A B f x y e => map f e).
+Global Instance log_full :
+  full_eq_logic (X:=Type) log_propositional log_fol log_equational.
+
 (** Taking opposites of 1-paths is functorial on 2-paths. *)
 
 Definition opposite2 {A} {x y : A} {p q : x = y} (a : p = q) : (!p = !q)
