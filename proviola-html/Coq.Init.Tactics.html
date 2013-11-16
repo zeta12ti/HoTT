@@ -1,0 +1,181 @@
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<link href="coqdoc.css" type="text/css" rel="stylesheet">
+<link href="proviola.css" type="text/css" rel="stylesheet">
+<script type="text/javascript">
+        var responses = new Array();
+
+        function mouseover(id, scene) {
+          set_response(get_response(id), scene);
+        };
+
+        function mouseout(scene) {
+          set_response("", scene);
+        };
+
+        function set_array() {
+          
+
+            i = 0;
+            data = "";
+            responses[i]=data;
+          
+
+            i = 1;
+            data = "";
+            responses[i]=data;
+          
+
+            i = 2;
+            data = "";
+            responses[i]=data;
+          
+
+            i = 3;
+            data = "";
+            responses[i]=data;
+          
+
+            i = 4;
+            data = "";
+            responses[i]=data;
+          
+
+            i = 5;
+            data = "";
+            responses[i]=data;
+          
+
+            i = 6;
+            data = "easy is defined	";
+            responses[i]=data;
+          
+
+            i = 7;
+            data = "";
+            responses[i]=data;
+          
+
+            i = 8;
+            data = "";
+            responses[i]=data;
+          
+
+            i = 9;
+            data = "";
+            responses[i]=data;
+          
+
+            i = 10;
+            data = "";
+            responses[i]=data;
+          
+
+            i = 11;
+            data = "";
+            responses[i]=data;
+          
+
+            i = 12;
+            data = "";
+            responses[i]=data;
+          
+
+            i = 13;
+            data = "";
+            responses[i]=data;
+          
+
+            i = 14;
+            data = "";
+            responses[i]=data;
+          
+
+            i = 15;
+            data = "";
+            responses[i]=data;
+          
+
+            i = 16;
+            data = "";
+            responses[i]=data;
+          
+
+            i = 17;
+            data = "";
+            responses[i]=data;
+          
+
+            i = 18;
+            data = "";
+            responses[i]=data;
+          
+        };
+        
+        function get_response(id) {
+          return responses[id];
+        };
+
+        function set_response(response, scene) {
+          goalId = "goal"+scene;
+          elById = document.getElementById(goalId);
+          if(elById){ 
+            goalSpan = elById.getElementsByTagName("span")[0];
+            goalSpan.innerHTML = response.replace(/	/g , '\n');
+          }
+        };
+      </script>
+</head>
+<body onload="set_array()"><div id="page" scenenumber="0" class="doc">
+<div id="header" scenenumber="1" class="doc">
+</div>
+<div id="main" scenenumber="3" class="doc">
+<h1 class="libtitle">Library Coq.Init.Tactics</h1>
+<div scenenumber="3" class="code">
+<span class="command" onmouseout="
+      mouseout('0_3_3');
+      " onmouseover="
+      mouseover(6, '0_3_3');
+      ">
+<br>
+<br>
+<span class="id" type="keyword">Ltac</span> <span class="id" type="var">easy</span> :=<br>
+  <span class="id" type="keyword">let</span> <span class="id" type="var">rec</span> <span class="id" type="var">use_hyp</span> <span class="id" type="var">H</span> :=<br>
+    <span class="id" type="keyword">match</span> <span class="id" type="var">type</span> <span class="id" type="var">of</span> <span class="id" type="var">H</span> <span class="id" type="keyword">with</span><br>
+    | <span class="id" type="var">_</span> ⇒ <span class="id" type="tactic">try</span> <span class="id" type="tactic">solve</span> [<span class="id" type="tactic">inversion</span> <span class="id" type="var">H</span>]<br>
+    <span class="id" type="keyword">end</span><br>
+  <span class="id" type="keyword">with</span> <span class="id" type="var">do_intro</span> := <span class="id" type="keyword">let</span> <span class="id" type="var">H</span> := <span class="id" type="tactic">fresh</span> <span class="id" type="keyword">in</span> <span class="id" type="tactic">intro</span> <span class="id" type="var">H</span>; <span class="id" type="var">use_hyp</span> <span class="id" type="var">H</span><br>
+  <span class="id" type="keyword">with</span> <span class="id" type="var">destruct_hyp</span> <span class="id" type="var">H</span> := <span class="id" type="tactic">case</span> <span class="id" type="var">H</span>; <span class="id" type="tactic">clear</span> <span class="id" type="var">H</span>; <span class="id" type="var">do_intro</span>; <span class="id" type="var">do_intro</span> <span class="id" type="keyword">in</span><br>
+  <span class="id" type="keyword">let</span> <span class="id" type="var">rec</span> <span class="id" type="var">use_hyps</span> :=<br>
+    <span class="id" type="keyword">match</span> <span class="id" type="keyword">goal</span> <span class="id" type="keyword">with</span><br>
+    | <span class="id" type="var">H</span> : <span class="id" type="var">_</span> |- <span class="id" type="var">_</span> ⇒ <span class="id" type="tactic">solve</span> [<span class="id" type="tactic">inversion</span> <span class="id" type="var">H</span>]<br>
+    | <span class="id" type="var">_</span> ⇒ <span class="id" type="tactic">idtac</span><br>
+    <span class="id" type="keyword">end</span> <span class="id" type="keyword">in</span><br>
+  <span class="id" type="keyword">let</span> <span class="id" type="var">rec</span> <span class="id" type="var">do_atom</span> :=<br>
+    <span class="id" type="tactic">solve</span> [<span class="id" type="tactic">reflexivity</span> | <span class="id" type="tactic">symmetry</span>; <span class="id" type="tactic">trivial</span>] ||<br>
+    <span class="id" type="var">contradiction</span> ||<br>
+    (<span class="id" type="tactic">split</span>; <span class="id" type="var">do_atom</span>)<br>
+  <span class="id" type="keyword">with</span> <span class="id" type="var">do_ccl</span> := <span class="id" type="tactic">trivial</span>; <span class="id" type="tactic">repeat</span> <span class="id" type="var">do_intro</span>; <span class="id" type="var">do_atom</span> <span class="id" type="keyword">in</span><br>
+  (<span class="id" type="var">use_hyps</span>; <span class="id" type="var">do_ccl</span>) || <span class="id" type="tactic">fail</span> "Cannot solve this goal".</span><span class="command" onmouseout="
+      mouseout('0_3_3');
+      " onmouseover="
+      mouseover(7, '0_3_3');
+      "><br>
+<br>
+<span class="id" type="keyword">Tactic Notation</span> "now" <span class="id" type="var">tactic</span>(<span class="id" type="var">t</span>) := <span class="id" type="var">t</span>; <span class="id" type="var">easy</span>.</span><span class="command" onmouseout="
+      mouseout('0_3_3');
+      " onmouseover="
+      mouseover(8, '0_3_3');
+      "><br>
+<br>
+</span>
+</div>
+<div class="goal" id="goal0_3_3"><pre><span></span></pre></div>
+</div>
+<div id="footer" scenenumber="5" class="doc">
+<hr>
+<a href="index.html">Index</a><hr>This page has been generated by <a href="http://coq.inria.fr/">coqdoc</a>
+</div>
+</div></body>
+</html>
