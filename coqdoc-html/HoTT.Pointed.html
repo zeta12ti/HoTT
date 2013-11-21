@@ -1,0 +1,105 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
+"http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
+<link href="coqdoc.css" rel="stylesheet" type="text/css"/>
+<title>HoTT.Pointed</title>
+</head>
+
+<body>
+
+<div id="page">
+
+<div id="header">
+</div>
+
+<div id="main">
+
+<h1 class="libtitle">Library HoTT.Pointed</h1>
+
+<div class="code">
+</div>
+
+<div class="doc">
+<a name="lab55"></a><h1 class="section">Pointed Types</h1>
+
+</div>
+<div class="code">
+
+<br/>
+<span class="id" type="keyword">Require</span> <span class="id" type="keyword">Import</span> <a class="idref" href="HoTT.Overture.html#"><span class="id" type="library">Overture</span></a>.<br/>
+
+<br/>
+<span class="id" type="keyword">Local</span>&nbsp;<span class="id" type="keyword">Open</span> <span class="id" type="keyword">Scope</span> <span class="id" type="var">path_scope</span>.<br/>
+<span class="id" type="keyword">Local</span>&nbsp;<span class="id" type="keyword">Open</span> <span class="id" type="keyword">Scope</span> <span class="id" type="var">equiv_scope</span>.<br/>
+
+<br/>
+</div>
+
+<div class="doc">
+Allow ourselves to implicitly generalize over types <span class="inlinecode"><a class="idref" href="Coq.Init.Logic_Type.html#identity_is_a_congruence.A"><span class="id" type="variable">A</span></a></span> and <span class="inlinecode"><a class="idref" href="Coq.Init.Logic_Type.html#identity_is_a_congruence.B"><span class="id" type="variable">B</span></a></span>, and a function <span class="inlinecode"><a class="idref" href="Coq.Init.Logic_Type.html#identity_is_a_congruence.f"><span class="id" type="variable">f</span></a></span>. 
+</div>
+<div class="code">
+<span class="id" type="keyword">Generalizable</span> <span class="id" type="keyword">Variables</span> <span class="id" type="var">A</span> <span class="id" type="var">B</span> <span class="id" type="var">f</span>.<br/>
+
+<br/>
+</div>
+
+<div class="doc">
+Any contratible type is pointed. 
+</div>
+<div class="code">
+<span class="id" type="keyword">Instance</span> <a name="ispointed_contr"><span class="id" type="instance">ispointed_contr</span></a> `{<a class="idref" href="HoTT.Overture.html#Contr"><span class="id" type="abbreviation">Contr</span></a> <span class="id" type="var">A</span>} : <a class="idref" href="HoTT.Overture.html#IsPointed"><span class="id" type="class">IsPointed</span></a> <a class="idref" href="HoTT.Pointed.html#A"><span class="id" type="variable">A</span></a> := <a class="idref" href="HoTT.Overture.html#center"><span class="id" type="method">center</span></a> <span class="id" type="var">A</span>.<br/>
+
+<br/>
+</div>
+
+<div class="doc">
+A pi type with a pointed target is pointed.  I'm not sure why I need to explicitly pass the instance to <span class="inlinecode"><a class="idref" href="HoTT.Overture.html#point"><span class="id" type="projection">point</span></a></span> here. -Jason Gross 
+</div>
+<div class="code">
+<span class="id" type="keyword">Instance</span> <a name="ispointed_forall"><span class="id" type="instance">ispointed_forall</span></a> `{<span class="id" type="var">H</span> : <span class="id" type="keyword">∀</span> <span class="id" type="var">a</span> : <span class="id" type="var">A</span>, <a class="idref" href="HoTT.Overture.html#IsPointed"><span class="id" type="class">IsPointed</span></a> (<span class="id" type="var">B</span> <a class="idref" href="HoTT.Pointed.html#a"><span class="id" type="variable">a</span></a>)}<br/>
+: <a class="idref" href="HoTT.Overture.html#IsPointed"><span class="id" type="class">IsPointed</span></a> (<span class="id" type="keyword">∀</span> <span class="id" type="var">a</span>, <a class="idref" href="HoTT.Pointed.html#B"><span class="id" type="variable">B</span></a> <a class="idref" href="HoTT.Pointed.html#a"><span class="id" type="variable">a</span></a>)<br/>
+&nbsp;&nbsp;:= <span class="id" type="keyword">fun</span> <span class="id" type="var">a</span> ⇒ @<a class="idref" href="HoTT.Overture.html#point"><span class="id" type="definition">point</span></a> (<span class="id" type="var">B</span> <a class="idref" href="HoTT.Pointed.html#a"><span class="id" type="variable">a</span></a>) (<span class="id" type="var">H</span> <a class="idref" href="HoTT.Pointed.html#a"><span class="id" type="variable">a</span></a>).<br/>
+
+<br/>
+</div>
+
+<div class="doc">
+A sigma type of pointed components is pointed. 
+</div>
+<div class="code">
+<span class="id" type="keyword">Instance</span> <a name="ispointed_sigma"><span class="id" type="instance">ispointed_sigma</span></a> `{<a class="idref" href="HoTT.Overture.html#IsPointed"><span class="id" type="class">IsPointed</span></a> <span class="id" type="var">A</span>} `{<a class="idref" href="HoTT.Overture.html#IsPointed"><span class="id" type="class">IsPointed</span></a> (<span class="id" type="var">B</span> (<a class="idref" href="HoTT.Overture.html#point"><span class="id" type="definition">point</span></a> <a class="idref" href="HoTT.Pointed.html#A"><span class="id" type="variable">A</span></a>))}<br/>
+: <a class="idref" href="HoTT.Overture.html#IsPointed"><span class="id" type="class">IsPointed</span></a> (<a class="idref" href="Coq.Init.Specif.html#sigT"><span class="id" type="abbreviation">sigT</span></a> <a class="idref" href="HoTT.Pointed.html#B"><span class="id" type="variable">B</span></a>)<br/>
+&nbsp;&nbsp;:= <a class="idref" href="HoTT.Overture.html#:fibration_scope:'('_x_';'_x_')'"><span class="id" type="notation">(</span></a><a class="idref" href="HoTT.Overture.html#point"><span class="id" type="definition">point</span></a> <span class="id" type="var">A</span><a class="idref" href="HoTT.Overture.html#:fibration_scope:'('_x_';'_x_')'"><span class="id" type="notation">;</span></a> <a class="idref" href="HoTT.Overture.html#point"><span class="id" type="definition">point</span></a> (<span class="id" type="var">B</span> (<a class="idref" href="HoTT.Overture.html#point"><span class="id" type="definition">point</span></a> <span class="id" type="var">A</span>))<a class="idref" href="HoTT.Overture.html#:fibration_scope:'('_x_';'_x_')'"><span class="id" type="notation">)</span></a>.<br/>
+
+<br/>
+</div>
+
+<div class="doc">
+A cartesian product of pointed types is pointed. 
+</div>
+<div class="code">
+<span class="id" type="keyword">Instance</span> <a name="ispointed_pord"><span class="id" type="instance">ispointed_pord</span></a> `{<a class="idref" href="HoTT.Overture.html#IsPointed"><span class="id" type="class">IsPointed</span></a> <span class="id" type="var">A</span>, <a class="idref" href="HoTT.Overture.html#IsPointed"><span class="id" type="class">IsPointed</span></a> <span class="id" type="var">B</span>} : <a class="idref" href="HoTT.Overture.html#IsPointed"><span class="id" type="class">IsPointed</span></a> (<a class="idref" href="HoTT.Pointed.html#A"><span class="id" type="variable">A</span></a> <a class="idref" href="Coq.Init.Datatypes.html#:type_scope:x_'*'_x"><span class="id" type="notation">×</span></a> <a class="idref" href="HoTT.Pointed.html#B"><span class="id" type="variable">B</span></a>)<br/>
+&nbsp;&nbsp;:= <a class="idref" href="Coq.Init.Datatypes.html#:core_scope:'('_x_','_x_','_'..'_','_x_')'"><span class="id" type="notation">(</span></a><a class="idref" href="HoTT.Overture.html#point"><span class="id" type="definition">point</span></a> <span class="id" type="var">A</span><a class="idref" href="Coq.Init.Datatypes.html#:core_scope:'('_x_','_x_','_'..'_','_x_')'"><span class="id" type="notation">,</span></a> <a class="idref" href="HoTT.Overture.html#point"><span class="id" type="definition">point</span></a> <span class="id" type="var">B</span><a class="idref" href="Coq.Init.Datatypes.html#:core_scope:'('_x_','_x_','_'..'_','_x_')'"><span class="id" type="notation">)</span></a>.<br/>
+
+<br/>
+</div>
+
+<div class="doc">
+The type <span class="inlinecode"><a class="idref" href="Coq.Init.Logic_Type.html#identity_is_a_congruence.x"><span class="id" type="variable">x</span></a></span> <span class="inlinecode">=</span> <span class="inlinecode"><a class="idref" href="Coq.Init.Logic_Type.html#identity_is_a_congruence.x"><span class="id" type="variable">x</span></a></span> is pointed. 
+</div>
+<div class="code">
+<span class="id" type="keyword">Instance</span> <a name="ispointed_loop_space"><span class="id" type="instance">ispointed_loop_space</span></a> <span class="id" type="var">A</span> (<span class="id" type="var">a</span> : <a class="idref" href="HoTT.Pointed.html#A"><span class="id" type="variable">A</span></a>) : <a class="idref" href="HoTT.Overture.html#IsPointed"><span class="id" type="class">IsPointed</span></a> (<a class="idref" href="HoTT.Pointed.html#a"><span class="id" type="variable">a</span></a> <a class="idref" href="HoTT.Overture.html#:type_scope:x_'='_x"><span class="id" type="notation">=</span></a> <a class="idref" href="HoTT.Pointed.html#a"><span class="id" type="variable">a</span></a>) := <a class="idref" href="HoTT.Overture.html#idpath"><span class="id" type="constructor">idpath</span></a>.<br/>
+</div>
+</div>
+
+<div id="footer">
+<hr/><a href="index.html">Index</a><hr/>This page has been generated by <a href="http://coq.inria.fr/">coqdoc</a>
+</div>
+
+</div>
+
+</body>
+</html>
