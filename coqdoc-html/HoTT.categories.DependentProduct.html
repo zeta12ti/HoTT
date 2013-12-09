@@ -1,0 +1,101 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
+"http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
+<link href="coqdoc.css" rel="stylesheet" type="text/css"/>
+<title>HoTT.categories.DependentProduct</title>
+</head>
+
+<body>
+
+<div id="page">
+
+<div id="header">
+</div>
+
+<div id="main">
+
+<h1 class="libtitle">Library HoTT.categories.DependentProduct</h1>
+
+<div class="code">
+<span class="id" type="keyword">Require</span> <span class="id" type="keyword">Import</span> <a class="idref" href="HoTT.categories.Category.Core.html#"><span class="id" type="library">Category.Core</span></a> <a class="idref" href="HoTT.categories.Functor.Core.html#"><span class="id" type="library">Functor.Core</span></a>.<br/>
+<span class="id" type="keyword">Require</span> <span class="id" type="keyword">Import</span> <a class="idref" href="HoTT.categories.Cat.Core.html#"><span class="id" type="library">Cat.Core</span></a>.<br/>
+<span class="id" type="keyword">Require</span> <a class="idref" href="HoTT.categories.Grothendieck.ToCat.html#"><span class="id" type="library">Grothendieck.ToCat</span></a>.<br/>
+<span class="id" type="keyword">Require</span> <span class="id" type="keyword">Import</span> <a class="idref" href="HoTT.categories.CategoryOfSections.Core.html#"><span class="id" type="library">CategoryOfSections.Core</span></a>.<br/>
+
+<br/>
+<span class="id" type="keyword">Set</span> <span class="id" type="var">Universe</span> <span class="id" type="var">Polymorphism</span>.<br/>
+<span class="id" type="keyword">Set Implicit Arguments</span>.<br/>
+<span class="id" type="keyword">Generalizable</span> <span class="id" type="keyword">All</span> <span class="id" type="keyword">Variables</span>.<br/>
+<span class="id" type="keyword">Set</span> <span class="id" type="var">Asymmetric</span> <span class="id" type="var">Patterns</span>.<br/>
+
+<br/>
+<span class="id" type="keyword">Local</span>&nbsp;<span class="id" type="keyword">Open</span> <span class="id" type="keyword">Scope</span> <span class="id" type="var">functor_scope</span>.<br/>
+
+<br/>
+<span class="id" type="keyword">Section</span> <a name="dependent_product"><span class="id" type="section">dependent_product</span></a>.<br/>
+&nbsp;&nbsp;<span class="id" type="keyword">Context</span> `{<a class="idref" href="HoTT.Overture.html#Funext"><span class="id" type="class">Funext</span></a>}.<br/>
+&nbsp;&nbsp;<span class="id" type="keyword">Variable</span> <a name="dependent_product.C"><span class="id" type="variable">C</span></a> : <a class="idref" href="HoTT.categories.Category.Core.html#PreCategory"><span class="id" type="record">PreCategory</span></a>.<br/>
+&nbsp;&nbsp;<span class="id" type="keyword">Variable</span> <a name="dependent_product.P"><span class="id" type="variable">P</span></a> : <a class="idref" href="HoTT.categories.Category.Core.html#PreCategory"><span class="id" type="record">PreCategory</span></a> <a class="idref" href="Coq.Init.Logic.html#:type_scope:x_'->'_x"><span class="id" type="notation">→</span></a> <span class="id" type="keyword">Type</span>.<br/>
+&nbsp;&nbsp;<span class="id" type="keyword">Context</span> `{<span class="id" type="var">HF</span> : <span class="id" type="keyword">∀</span> <span class="id" type="var">C</span> <span class="id" type="var">D</span>, <a class="idref" href="HoTT.categories.DependentProduct.html#dependent_product.P"><span class="id" type="variable">P</span></a> <a class="idref" href="HoTT.categories.DependentProduct.html#C"><span class="id" type="variable">C</span></a> <a class="idref" href="Coq.Init.Logic.html#:type_scope:x_'->'_x"><span class="id" type="notation">→</span></a> <a class="idref" href="HoTT.categories.DependentProduct.html#dependent_product.P"><span class="id" type="variable">P</span></a> <a class="idref" href="HoTT.categories.DependentProduct.html#D"><span class="id" type="variable">D</span></a> <a class="idref" href="Coq.Init.Logic.html#:type_scope:x_'->'_x"><span class="id" type="notation">→</span></a> <a class="idref" href="HoTT.Overture.html#IsHSet"><span class="id" type="abbreviation">IsHSet</span></a> (<a class="idref" href="HoTT.categories.Functor.Core.html#Functor"><span class="id" type="record">Functor</span></a> <a class="idref" href="HoTT.categories.DependentProduct.html#C"><span class="id" type="variable">C</span></a> <a class="idref" href="HoTT.categories.DependentProduct.html#D"><span class="id" type="variable">D</span></a>)}.<br/>
+
+<br/>
+&nbsp;&nbsp;<span class="id" type="keyword">Local</span>&nbsp;<span class="id" type="keyword">Notation</span> <a name="cat"><span class="id" type="abbreviation">cat</span></a> := (@<a class="idref" href="HoTT.categories.Cat.Core.html#sub_pre_cat"><span class="id" type="definition">sub_pre_cat</span></a> <span class="id" type="var">_</span> <a class="idref" href="HoTT.categories.DependentProduct.html#dependent_product.P"><span class="id" type="variable">P</span></a> <a class="idref" href="HoTT.categories.DependentProduct.html#dependent_product.HF"><span class="id" type="variable">HF</span></a>).<br/>
+
+<br/>
+&nbsp;&nbsp;<span class="id" type="keyword">Variable</span> <a name="dependent_product.F"><span class="id" type="variable">F</span></a> : <a class="idref" href="HoTT.categories.Functor.Core.html#Functor"><span class="id" type="record">Functor</span></a> <a class="idref" href="HoTT.categories.DependentProduct.html#dependent_product.C"><span class="id" type="variable">C</span></a> <a class="idref" href="HoTT.categories.DependentProduct.html#cat"><span class="id" type="abbreviation">cat</span></a>.<br/>
+
+<br/>
+</div>
+
+<div class="doc">
+Quoting http://mathoverflow.net/questions/137689/explicit-description-of-the-oplax-limit-of-a-functor-to-cat:
+
+<div class="paragraph"> </div>
+
+      The oplax limit is the category of sections for the functor from
+      the Grothendieck construction to the base category.
+
+<div class="paragraph"> </div>
+
+      The strong limit is the category of cartesian sections
+      (every arrow in the base category gets mapped to a cartesian
+      one).
+
+<div class="paragraph"> </div>
+
+      Notice how this goes along very well with the interpretation as
+      dependent product and as ∀: The set theoretic product is just
+      the set of sections into the disjoint union.
+
+<div class="paragraph"> </div>
+
+      Given a strong functor <span class="inlinecode"><a class="idref" href="HoTT.categories.Limits.Core.html#Limit.F"><span class="id" type="variable">F</span></a></span> <span class="inlinecode">:</span> <span class="inlinecode"><a class="idref" href="HoTT.categories.Adjoint.UniversalMorphisms.html#adjunction_universal.terminal.X"><span class="id" type="variable">X</span></a></span> <span class="inlinecode">→</span> <span class="inlinecode"><a class="idref" href="HoTT.categories.Comma.ProjectionFunctors.html#Cat"><span class="id" type="abbreviation">Cat</span></a></span> we denote the Grothendieck
+      construction by <span class="inlinecode"><span class="id" type="var">Gr</span></span> <span class="inlinecode"><a class="idref" href="HoTT.categories.Limits.Core.html#Limit.F"><span class="id" type="variable">F</span></a></span>.
+
+<div class="paragraph"> </div>
+
+      There is a canonical functor <span class="inlinecode">π</span> <span class="inlinecode">:</span> <span class="inlinecode"><span class="id" type="var">Gr</span></span> <span class="inlinecode"><a class="idref" href="HoTT.categories.Limits.Core.html#Limit.F"><span class="id" type="variable">F</span></a></span> <span class="inlinecode">→</span> <span class="inlinecode"><a class="idref" href="HoTT.categories.Adjoint.UniversalMorphisms.html#adjunction_universal.terminal.X"><span class="id" type="variable">X</span></a></span>. Sections of this
+      functor are functors <span class="inlinecode"><a class="idref" href="HoTT.categories.Cat.Morphisms.html#iso_lemmas.s"><span class="id" type="variable">s</span></a></span> <span class="inlinecode">:</span> <span class="inlinecode"><a class="idref" href="HoTT.categories.Adjoint.UniversalMorphisms.html#adjunction_universal.terminal.X"><span class="id" type="variable">X</span></a></span> <span class="inlinecode">→</span> <span class="inlinecode"><span class="id" type="var">Gr</span></span> <span class="inlinecode"><a class="idref" href="HoTT.categories.Limits.Core.html#Limit.F"><span class="id" type="variable">F</span></a></span> such that <span class="inlinecode"><a class="idref" href="HoTT.categories.Cat.Morphisms.html#iso_lemmas.s"><span class="id" type="variable">s</span></a></span> <span class="inlinecode">∘</span> <span class="inlinecode">π</span> <span class="inlinecode">=</span> <span class="inlinecode"><span class="id" type="var">id</span></span>. 
+</div>
+<div class="code">
+
+<br/>
+&nbsp;&nbsp;<span class="id" type="keyword">Definition</span> <a name="dependent_product"><span class="id" type="definition">dependent_product</span></a> : <a class="idref" href="HoTT.categories.Category.Core.html#PreCategory"><span class="id" type="record">PreCategory</span></a><br/>
+&nbsp;&nbsp;&nbsp;&nbsp;:= <a class="idref" href="HoTT.categories.CategoryOfSections.Core.html#category_of_sections"><span class="id" type="definition">category_of_sections</span></a> (<a class="idref" href="HoTT.categories.Grothendieck.ToCat.html#pr1"><span class="id" type="definition">Grothendieck.ToCat.pr1</span></a> <a class="idref" href="HoTT.categories.DependentProduct.html#dependent_product.F"><span class="id" type="variable">F</span></a>).<br/>
+<span class="id" type="keyword">End</span> <a class="idref" href="HoTT.categories.DependentProduct.html#dependent_product"><span class="id" type="section">dependent_product</span></a>.<br/>
+
+<br/>
+<span class="id" type="keyword">Notation</span> <a name="Pi"><span class="id" type="abbreviation">Pi</span></a> := <a class="idref" href="HoTT.categories.DependentProduct.html#dependent_product"><span class="id" type="definition">dependent_product</span></a>.<br/>
+</div>
+</div>
+
+<div id="footer">
+<hr/><a href="index.html">Index</a><hr/>This page has been generated by <a href="http://coq.inria.fr/">coqdoc</a>
+</div>
+
+</div>
+
+</body>
+</html>

@@ -1,0 +1,94 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
+"http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
+<link href="coqdoc.css" rel="stylesheet" type="text/css"/>
+<title>HoTT.categories.KanExtensions.Functors</title>
+</head>
+
+<body>
+
+<div id="page">
+
+<div id="header">
+</div>
+
+<div id="main">
+
+<h1 class="libtitle">Library HoTT.categories.KanExtensions.Functors</h1>
+
+<div class="code">
+<span class="id" type="keyword">Require</span> <span class="id" type="keyword">Import</span> <a class="idref" href="HoTT.categories.Category.Core.html#"><span class="id" type="library">Category.Core</span></a> <a class="idref" href="HoTT.categories.Functor.Core.html#"><span class="id" type="library">Functor.Core</span></a> <a class="idref" href="HoTT.categories.NaturalTransformation.Core.html#"><span class="id" type="library">NaturalTransformation.Core</span></a>.<br/>
+<span class="id" type="keyword">Require</span> <span class="id" type="keyword">Import</span> <a class="idref" href="HoTT.categories.KanExtensions.Core.html#"><span class="id" type="library">KanExtensions.Core</span></a>.<br/>
+<span class="id" type="keyword">Require</span> <span class="id" type="keyword">Import</span> <a class="idref" href="HoTT.categories.Adjoint.UniversalMorphisms.html#"><span class="id" type="library">Adjoint.UniversalMorphisms</span></a>.<br/>
+<span class="id" type="keyword">Require</span> <span class="id" type="keyword">Import</span> <a class="idref" href="HoTT.categories.FunctorCategory.Core.html#"><span class="id" type="library">FunctorCategory.Core</span></a>.<br/>
+<span class="id" type="keyword">Require</span> <span class="id" type="keyword">Import</span> <a class="idref" href="HoTT.categories.Adjoint.Core.html#"><span class="id" type="library">Adjoint.Core</span></a>.<br/>
+
+<br/>
+<span class="id" type="keyword">Set</span> <span class="id" type="var">Universe</span> <span class="id" type="var">Polymorphism</span>.<br/>
+<span class="id" type="keyword">Set Implicit Arguments</span>.<br/>
+<span class="id" type="keyword">Generalizable</span> <span class="id" type="keyword">All</span> <span class="id" type="keyword">Variables</span>.<br/>
+<span class="id" type="keyword">Set</span> <span class="id" type="var">Asymmetric</span> <span class="id" type="var">Patterns</span>.<br/>
+
+<br/>
+</div>
+
+<div class="doc">
+Kan extensions assemble into functors 
+</div>
+<div class="code">
+
+<br/>
+<span class="id" type="keyword">Section</span> <a name="kan_extension_functors"><span class="id" type="section">kan_extension_functors</span></a>.<br/>
+&nbsp;&nbsp;<span class="id" type="keyword">Context</span> `{<a class="idref" href="HoTT.Overture.html#Funext"><span class="id" type="class">Funext</span></a>}.<br/>
+&nbsp;&nbsp;<span class="id" type="keyword">Variable</span> <a name="kan_extension_functors.C"><span class="id" type="variable">C</span></a>  : <a class="idref" href="HoTT.categories.Category.Core.html#PreCategory"><span class="id" type="record">PreCategory</span></a>.<br/>
+&nbsp;&nbsp;<span class="id" type="keyword">Variable</span> <a name="kan_extension_functors.C'"><span class="id" type="variable">C'</span></a> : <a class="idref" href="HoTT.categories.Category.Core.html#PreCategory"><span class="id" type="record">PreCategory</span></a>.<br/>
+&nbsp;&nbsp;<span class="id" type="keyword">Variable</span> <a name="kan_extension_functors.D"><span class="id" type="variable">D</span></a>  : <a class="idref" href="HoTT.categories.Category.Core.html#PreCategory"><span class="id" type="record">PreCategory</span></a>.<br/>
+&nbsp;&nbsp;<span class="id" type="keyword">Variable</span> <a name="kan_extension_functors.p"><span class="id" type="variable">p</span></a> : <a class="idref" href="HoTT.categories.Category.Core.html#object"><span class="id" type="projection">object</span></a> (<a class="idref" href="HoTT.categories.KanExtensions.Functors.html#kan_extension_functors.C"><span class="id" type="variable">C</span></a> <a class="idref" href="HoTT.categories.FunctorCategory.Core.html#FunctorCategoryCoreNotations.:category_scope:x_'->'_x"><span class="id" type="notation">→</span></a> <a class="idref" href="HoTT.categories.KanExtensions.Functors.html#kan_extension_functors.C'"><span class="id" type="variable">C'</span></a>).<br/>
+
+<br/>
+&nbsp;&nbsp;<span class="id" type="keyword">Section</span> <a name="kan_extension_functors.lan"><span class="id" type="section">lan</span></a>.<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="id" type="keyword">Context</span> `(<span class="id" type="var">has_left_kan_extensions</span><br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;: <span class="id" type="keyword">∀</span> <span class="id" type="var">h</span> : <a class="idref" href="HoTT.categories.Category.Core.html#object"><span class="id" type="projection">object</span></a> (<a class="idref" href="HoTT.categories.KanExtensions.Functors.html#kan_extension_functors.C"><span class="id" type="variable">C</span></a> <a class="idref" href="HoTT.categories.FunctorCategory.Core.html#FunctorCategoryCoreNotations.:category_scope:x_'->'_x"><span class="id" type="notation">→</span></a> <a class="idref" href="HoTT.categories.KanExtensions.Functors.html#kan_extension_functors.D"><span class="id" type="variable">D</span></a>),<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;@<a class="idref" href="HoTT.categories.KanExtensions.Core.html#IsLeftKanExtensionAlong"><span class="id" type="definition">IsLeftKanExtensionAlong</span></a> <span class="id" type="var">_</span> <span class="id" type="var">_</span> <span class="id" type="var">_</span> <span class="id" type="var">_</span> <a class="idref" href="HoTT.categories.KanExtensions.Functors.html#kan_extension_functors.p"><span class="id" type="variable">p</span></a> <a class="idref" href="HoTT.categories.KanExtensions.Functors.html#h"><span class="id" type="variable">h</span></a> (<span class="id" type="var">left_kan_extensions</span> <a class="idref" href="HoTT.categories.KanExtensions.Functors.html#h"><span class="id" type="variable">h</span></a>)).<br/>
+
+<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="id" type="keyword">Definition</span> <a name="left_kan_extension_functor"><span class="id" type="definition">left_kan_extension_functor</span></a><br/>
+&nbsp;&nbsp;&nbsp;&nbsp;: <a class="idref" href="HoTT.categories.Functor.Core.html#Functor"><span class="id" type="record">Functor</span></a> (<a class="idref" href="HoTT.categories.KanExtensions.Functors.html#kan_extension_functors.C"><span class="id" type="variable">C</span></a> <a class="idref" href="HoTT.categories.FunctorCategory.Core.html#FunctorCategoryCoreNotations.:category_scope:x_'->'_x"><span class="id" type="notation">→</span></a> <a class="idref" href="HoTT.categories.KanExtensions.Functors.html#kan_extension_functors.D"><span class="id" type="variable">D</span></a>) (<a class="idref" href="HoTT.categories.KanExtensions.Functors.html#kan_extension_functors.C'"><span class="id" type="variable">C'</span></a> <a class="idref" href="HoTT.categories.FunctorCategory.Core.html#FunctorCategoryCoreNotations.:category_scope:x_'->'_x"><span class="id" type="notation">→</span></a> <a class="idref" href="HoTT.categories.KanExtensions.Functors.html#kan_extension_functors.D"><span class="id" type="variable">D</span></a>)<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;:= <a class="idref" href="HoTT.categories.Adjoint.UniversalMorphisms.html#functor__of__initial_morphism"><span class="id" type="definition">functor__of__initial_morphism</span></a> <a class="idref" href="HoTT.categories.KanExtensions.Functors.html#kan_extension_functors.lan.has_left_kan_extensions"><span class="id" type="variable">has_left_kan_extensions</span></a>.<br/>
+
+<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="id" type="keyword">Definition</span> <a name="left_kan_extension_adjunction"><span class="id" type="definition">left_kan_extension_adjunction</span></a><br/>
+&nbsp;&nbsp;&nbsp;&nbsp;: <a class="idref" href="HoTT.categories.KanExtensions.Functors.html#left_kan_extension_functor"><span class="id" type="definition">left_kan_extension_functor</span></a> <a class="idref" href="HoTT.categories.Adjoint.Core.html#AdjointCoreNotations.:type_scope:x_'-|'_x"><span class="id" type="notation">-|</span></a> <a class="idref" href="HoTT.categories.KanExtensions.Core.html#pullback_along"><span class="id" type="definition">pullback_along</span></a> <a class="idref" href="HoTT.categories.KanExtensions.Functors.html#kan_extension_functors.D"><span class="id" type="variable">D</span></a> <a class="idref" href="HoTT.categories.KanExtensions.Functors.html#kan_extension_functors.p"><span class="id" type="variable">p</span></a><br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;:= <a class="idref" href="HoTT.categories.Adjoint.UniversalMorphisms.html#adjunction__of__initial_morphism"><span class="id" type="definition">adjunction__of__initial_morphism</span></a> <a class="idref" href="HoTT.categories.KanExtensions.Functors.html#kan_extension_functors.lan.has_left_kan_extensions"><span class="id" type="variable">has_left_kan_extensions</span></a>.<br/>
+&nbsp;&nbsp;<span class="id" type="keyword">End</span> <a class="idref" href="HoTT.categories.KanExtensions.Functors.html#kan_extension_functors.lan"><span class="id" type="section">lan</span></a>.<br/>
+
+<br/>
+&nbsp;&nbsp;<span class="id" type="keyword">Section</span> <a name="kan_extension_functors.ran"><span class="id" type="section">ran</span></a>.<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="id" type="keyword">Context</span> `(<span class="id" type="var">has_right_kan_extensions</span><br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;: <span class="id" type="keyword">∀</span> <span class="id" type="var">h</span> : <a class="idref" href="HoTT.categories.Category.Core.html#object"><span class="id" type="projection">object</span></a> (<a class="idref" href="HoTT.categories.KanExtensions.Functors.html#kan_extension_functors.C"><span class="id" type="variable">C</span></a> <a class="idref" href="HoTT.categories.FunctorCategory.Core.html#FunctorCategoryCoreNotations.:category_scope:x_'->'_x"><span class="id" type="notation">→</span></a> <a class="idref" href="HoTT.categories.KanExtensions.Functors.html#kan_extension_functors.D"><span class="id" type="variable">D</span></a>),<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;@<a class="idref" href="HoTT.categories.KanExtensions.Core.html#IsRightKanExtensionAlong"><span class="id" type="definition">IsRightKanExtensionAlong</span></a> <span class="id" type="var">_</span> <span class="id" type="var">_</span> <span class="id" type="var">_</span> <span class="id" type="var">_</span> <a class="idref" href="HoTT.categories.KanExtensions.Functors.html#kan_extension_functors.p"><span class="id" type="variable">p</span></a> <a class="idref" href="HoTT.categories.KanExtensions.Functors.html#h"><span class="id" type="variable">h</span></a> (<span class="id" type="var">right_kan_extensions</span> <a class="idref" href="HoTT.categories.KanExtensions.Functors.html#h"><span class="id" type="variable">h</span></a>)).<br/>
+
+<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="id" type="keyword">Definition</span> <a name="right_kan_extension_functor"><span class="id" type="definition">right_kan_extension_functor</span></a><br/>
+&nbsp;&nbsp;&nbsp;&nbsp;: <a class="idref" href="HoTT.categories.Functor.Core.html#Functor"><span class="id" type="record">Functor</span></a> (<a class="idref" href="HoTT.categories.KanExtensions.Functors.html#kan_extension_functors.C"><span class="id" type="variable">C</span></a> <a class="idref" href="HoTT.categories.FunctorCategory.Core.html#FunctorCategoryCoreNotations.:category_scope:x_'->'_x"><span class="id" type="notation">→</span></a> <a class="idref" href="HoTT.categories.KanExtensions.Functors.html#kan_extension_functors.D"><span class="id" type="variable">D</span></a>) (<a class="idref" href="HoTT.categories.KanExtensions.Functors.html#kan_extension_functors.C'"><span class="id" type="variable">C'</span></a> <a class="idref" href="HoTT.categories.FunctorCategory.Core.html#FunctorCategoryCoreNotations.:category_scope:x_'->'_x"><span class="id" type="notation">→</span></a> <a class="idref" href="HoTT.categories.KanExtensions.Functors.html#kan_extension_functors.D"><span class="id" type="variable">D</span></a>)<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;:= <a class="idref" href="HoTT.categories.Adjoint.UniversalMorphisms.html#functor__of__terminal_morphism"><span class="id" type="definition">functor__of__terminal_morphism</span></a> <a class="idref" href="HoTT.categories.KanExtensions.Functors.html#kan_extension_functors.ran.has_right_kan_extensions"><span class="id" type="variable">has_right_kan_extensions</span></a>.<br/>
+
+<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="id" type="keyword">Definition</span> <a name="right_kan_extension_adjunction"><span class="id" type="definition">right_kan_extension_adjunction</span></a><br/>
+&nbsp;&nbsp;&nbsp;&nbsp;: <a class="idref" href="HoTT.categories.KanExtensions.Core.html#pullback_along"><span class="id" type="definition">pullback_along</span></a> <a class="idref" href="HoTT.categories.KanExtensions.Functors.html#kan_extension_functors.D"><span class="id" type="variable">D</span></a> <a class="idref" href="HoTT.categories.KanExtensions.Functors.html#kan_extension_functors.p"><span class="id" type="variable">p</span></a> <a class="idref" href="HoTT.categories.Adjoint.Core.html#AdjointCoreNotations.:type_scope:x_'-|'_x"><span class="id" type="notation">-|</span></a> <a class="idref" href="HoTT.categories.KanExtensions.Functors.html#right_kan_extension_functor"><span class="id" type="definition">right_kan_extension_functor</span></a><br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;:= <a class="idref" href="HoTT.categories.Adjoint.UniversalMorphisms.html#adjunction__of__terminal_morphism"><span class="id" type="definition">adjunction__of__terminal_morphism</span></a> <a class="idref" href="HoTT.categories.KanExtensions.Functors.html#kan_extension_functors.ran.has_right_kan_extensions"><span class="id" type="variable">has_right_kan_extensions</span></a>.<br/>
+&nbsp;&nbsp;<span class="id" type="keyword">End</span> <a class="idref" href="HoTT.categories.KanExtensions.Functors.html#kan_extension_functors.ran"><span class="id" type="section">ran</span></a>.<br/>
+<span class="id" type="keyword">End</span> <a class="idref" href="HoTT.categories.KanExtensions.Functors.html#kan_extension_functors"><span class="id" type="section">kan_extension_functors</span></a>.<br/>
+</div>
+</div>
+
+<div id="footer">
+<hr/><a href="index.html">Index</a><hr/>This page has been generated by <a href="http://coq.inria.fr/">coqdoc</a>
+</div>
+
+</div>
+
+</body>
+</html>
