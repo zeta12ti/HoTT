@@ -1,0 +1,286 @@
+<html>
+<head>
+<title>Pointwise.v</title>
+<style>
+.time {
+  background-color: #ffaaaa;
+  height: 100%;
+  z-index: -1;
+  position: absolute;
+}
+.code {
+  z-index: 0;
+  position: relative;
+  border-style: solid;
+  border-color: transparent;
+  border-width: 1px;
+}
+.code:hover {
+  border-style: solid;
+  border-color: black;
+  border-width: 1px;
+}
+pre {
+  margin: 1px;
+}
+</style>
+</head>
+<body>
+<h1>Timings for Pointwise.v</h1>
+
+<div class="code" title="File: Pointwise.v
+Line: 1
+Time: 0.006s">
+<div class="time" style="width: 0.38387715930902%"></div>
+<pre>Require Import Category.Core Functor.Core NaturalTransformation.Core.</pre>
+</div>
+<div class="code" title="File: Pointwise.v
+Line: 1
+Time: 0.037s">
+<div class="time" style="width: 2.3672424824056%"></div>
+<pre>
+Require Import FunctorCategory.Core NaturalTransformation.Paths Functor.Composition.Core NaturalTransformation.Composition.Core.</pre>
+</div>
+<div class="code" title="File: Pointwise.v
+Line: 2
+Time: 0.001s">
+<div class="time" style="width: 0.063979526551504%"></div>
+<pre>
+Require Import Functor.Pointwise.</pre>
+</div>
+<div class="code" title="File: Pointwise.v
+Line: 3
+Time: 0s">
+<div class="time" style="width: 0%"></div>
+<pre>
+
+Set Universe Polymorphism.</pre>
+</div>
+<div class="code" title="File: Pointwise.v
+Line: 5
+Time: 0s">
+<div class="time" style="width: 0%"></div>
+<pre>
+Set Implicit Arguments.</pre>
+</div>
+<div class="code" title="File: Pointwise.v
+Line: 6
+Time: 0s">
+<div class="time" style="width: 0%"></div>
+<pre>
+Generalizable All Variables.</pre>
+</div>
+<div class="code" title="File: Pointwise.v
+Line: 7
+Time: 0s">
+<div class="time" style="width: 0%"></div>
+<pre>
+Set Asymmetric Patterns.</pre>
+</div>
+<div class="code" title="File: Pointwise.v
+Line: 8
+Time: 0s">
+<div class="time" style="width: 0%"></div>
+<pre>
+
+(** * Pointwise Natural Transformations
+
+    Recall that a "pointwise" functor is a functor [Aᴮ → Cᴰ] induced
+    by functors [D → B] and [A → C].  Given two functors [D → B] and a
+    natural transformation between them, there is an induced natural
+    transformation between the resulting functors between functor
+    categories, and similarly for two functors [A → C].  In this file,
+    we construct these natural transformations. They will be used to
+    construct the pointwise induced adjunction [Fˣ ⊣ Gˣ] of an
+    adjunction [F ⊣ G] for all categories [X]. *)
+
+</pre>
+</div>
+<div class="code" title="File: Pointwise.v
+Line: 20
+Time: 0s">
+<div class="time" style="width: 0%"></div>
+<pre>Local Open Scope morphism_scope.</pre>
+</div>
+<div class="code" title="File: Pointwise.v
+Line: 20
+Time: 0s">
+<div class="time" style="width: 0%"></div>
+<pre>
+Local Open Scope category_scope.</pre>
+</div>
+<div class="code" title="File: Pointwise.v
+Line: 21
+Time: 0s">
+<div class="time" style="width: 0%"></div>
+<pre>
+Local Open Scope functor_scope.</pre>
+</div>
+<div class="code" title="File: Pointwise.v
+Line: 22
+Time: 0s">
+<div class="time" style="width: 0%"></div>
+<pre>
+Local Open Scope natural_transformation_scope.</pre>
+</div>
+<div class="code" title="File: Pointwise.v
+Line: 23
+Time: 0s">
+<div class="time" style="width: 0%"></div>
+<pre>
+
+Section pointwise.</pre>
+</div>
+<div class="code" title="File: Pointwise.v
+Line: 25
+Time: 0s">
+<div class="time" style="width: 0%"></div>
+<pre>
+  Context `{Funext}.</pre>
+</div>
+<div class="code" title="File: Pointwise.v
+Line: 26
+Time: 0s">
+<div class="time" style="width: 0%"></div>
+<pre>
+
+  Variable C : PreCategory.</pre>
+</div>
+<div class="code" title="File: Pointwise.v
+Line: 28
+Time: 0s">
+<div class="time" style="width: 0%"></div>
+<pre>
+  Variable D : PreCategory.</pre>
+</div>
+<div class="code" title="File: Pointwise.v
+Line: 29
+Time: 0s">
+<div class="time" style="width: 0%"></div>
+<pre>
+  Variable C' : PreCategory.</pre>
+</div>
+<div class="code" title="File: Pointwise.v
+Line: 30
+Time: 0s">
+<div class="time" style="width: 0%"></div>
+<pre>
+  Variable D' : PreCategory.</pre>
+</div>
+<div class="code" title="File: Pointwise.v
+Line: 31
+Time: 0s">
+<div class="time" style="width: 0%"></div>
+<pre>
+
+  Local Ltac t :=
+    path_natural_transformation; simpl;
+    rewrite &lt;- ?composition_of;
+    try apply ap;
+    first [ apply commutes
+          | apply symmetry; apply commutes ].</pre>
+</div>
+<div class="code" title="File: Pointwise.v
+Line: 38
+Time: 0.077s">
+<div class="time" style="width: 4.9264235444658%"></div>
+<pre>
+
+  Definition pointwise_l
+             (F G : Functor C D)
+             (T : NaturalTransformation F G)
+             (F' : Functor C' D')
+  : NaturalTransformation (pointwise F F') (pointwise G F').</pre>
+</div>
+<div class="code" title="File: Pointwise.v
+Line: 44
+Time: 0s">
+<div class="time" style="width: 0%"></div>
+<pre>
+  Proof.</pre>
+</div>
+<div class="code" title="File: Pointwise.v
+Line: 45
+Time: 0.331s">
+<div class="time" style="width: 21.177223288548%"></div>
+<pre>
+    refine (Build_NaturalTransformation
+              (pointwise F F') (pointwise G F')
+              (fun f : object (D -&gt; C') =&gt; (F' o f) oL T)%natural_transformation
+              _).</pre>
+</div>
+<div class="code" title="File: Pointwise.v
+Line: 49
+Time: 1.563s">
+<div class="time" style="width: 100%"></div>
+<pre>
+    abstract t.</pre>
+</div>
+<div class="code" title="File: Pointwise.v
+Line: 50
+Time: 0.071s">
+<div class="time" style="width: 4.5425463851567%"></div>
+<pre>
+  Defined.</pre>
+</div>
+<div class="code" title="File: Pointwise.v
+Line: 51
+Time: 0.051s">
+<div class="time" style="width: 3.2629558541267%"></div>
+<pre>
+
+  Definition pointwise_r
+             (F : Functor C D)
+             (F' G' : Functor C' D')
+             (T' : NaturalTransformation F' G')
+  : NaturalTransformation (pointwise F F') (pointwise F G').</pre>
+</div>
+<div class="code" title="File: Pointwise.v
+Line: 57
+Time: 0s">
+<div class="time" style="width: 0%"></div>
+<pre>
+  Proof.</pre>
+</div>
+<div class="code" title="File: Pointwise.v
+Line: 58
+Time: 0.293s">
+<div class="time" style="width: 18.746001279591%"></div>
+<pre>
+    refine (Build_NaturalTransformation
+              (pointwise F F') (pointwise F G')
+              (fun f : object (D -&gt; C') =&gt; T' oR f oR F)%natural_transformation
+              _).</pre>
+</div>
+<div class="code" title="File: Pointwise.v
+Line: 62
+Time: 1.335s">
+<div class="time" style="width: 85.412667946257%"></div>
+<pre>
+    abstract t.</pre>
+</div>
+<div class="code" title="File: Pointwise.v
+Line: 63
+Time: 0.089s">
+<div class="time" style="width: 5.6941778630838%"></div>
+<pre>
+  Defined.</pre>
+</div>
+<div class="code" title="File: Pointwise.v
+Line: 64
+Time: 0.019s">
+<div class="time" style="width: 1.2156110044786%"></div>
+<pre>
+End pointwise.</pre>
+</div>
+<div class="code" title="File: Pointwise.v
+Line: 66
+Time: 0s">
+<div class="time" style="width: 0%"></div>
+<pre>
+
+</pre>
+</div>
+</body>
+</html>
+

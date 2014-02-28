@@ -1,0 +1,250 @@
+<html>
+<head>
+<title>NatCategory.v</title>
+<style>
+.time {
+  background-color: #ffaaaa;
+  height: 100%;
+  z-index: -1;
+  position: absolute;
+}
+.code {
+  z-index: 0;
+  position: relative;
+  border-style: solid;
+  border-color: transparent;
+  border-width: 1px;
+}
+.code:hover {
+  border-style: solid;
+  border-color: black;
+  border-width: 1px;
+}
+pre {
+  margin: 1px;
+}
+</style>
+</head>
+<body>
+<h1>Timings for NatCategory.v</h1>
+
+<div class="code" title="File: NatCategory.v
+Line: 1
+Time: 0.039s">
+<div class="time" style="width: 86.666666666667%"></div>
+<pre>Require Import Category.Core DiscreteCategory IndiscreteCategory.</pre>
+</div>
+<div class="code" title="File: NatCategory.v
+Line: 1
+Time: 0.007s">
+<div class="time" style="width: 15.555555555556%"></div>
+<pre>
+Require Import types.Unit Trunc types.Sum types.Empty.</pre>
+</div>
+<div class="code" title="File: NatCategory.v
+Line: 2
+Time: 0s">
+<div class="time" style="width: 0%"></div>
+<pre>
+
+Set Universe Polymorphism.</pre>
+</div>
+<div class="code" title="File: NatCategory.v
+Line: 4
+Time: 0s">
+<div class="time" style="width: 0%"></div>
+<pre>
+Set Implicit Arguments.</pre>
+</div>
+<div class="code" title="File: NatCategory.v
+Line: 5
+Time: 0s">
+<div class="time" style="width: 0%"></div>
+<pre>
+Generalizable All Variables.</pre>
+</div>
+<div class="code" title="File: NatCategory.v
+Line: 6
+Time: 0s">
+<div class="time" style="width: 0%"></div>
+<pre>
+Set Asymmetric Patterns.</pre>
+</div>
+<div class="code" title="File: NatCategory.v
+Line: 7
+Time: 0s">
+<div class="time" style="width: 0%"></div>
+<pre>
+
+Module Export Core.</pre>
+</div>
+<div class="code" title="File: NatCategory.v
+Line: 9
+Time: 0.001s">
+<div class="time" style="width: 2.2222222222222%"></div>
+<pre>
+  Fixpoint CardinalityRepresentative (n : nat) : Set :=
+    match n with
+      | 0 =&gt; Empty
+      | 1 =&gt; Unit
+      | S n' =&gt; (CardinalityRepresentative n' + Unit)%type
+    end.</pre>
+</div>
+<div class="code" title="File: NatCategory.v
+Line: 15
+Time: 0s">
+<div class="time" style="width: 0%"></div>
+<pre>
+
+  Coercion CardinalityRepresentative : nat &gt;-&gt; Sortclass.</pre>
+</div>
+<div class="code" title="File: NatCategory.v
+Line: 17
+Time: 0s">
+<div class="time" style="width: 0%"></div>
+<pre>
+
+  Instance trunc_cardinality_representative (n : nat)
+  : IsHSet (CardinalityRepresentative n).</pre>
+</div>
+<div class="code" title="File: NatCategory.v
+Line: 20
+Time: 0s">
+<div class="time" style="width: 0%"></div>
+<pre>
+  Proof.</pre>
+</div>
+<div class="code" title="File: NatCategory.v
+Line: 21
+Time: 0.004s">
+<div class="time" style="width: 8.8888888888889%"></div>
+<pre>
+    induction n; [ typeclasses eauto |].</pre>
+</div>
+<div class="code" title="File: NatCategory.v
+Line: 22
+Time: 0.007s">
+<div class="time" style="width: 15.555555555556%"></div>
+<pre>
+    induction n; [ typeclasses eauto |].</pre>
+</div>
+<div class="code" title="File: NatCategory.v
+Line: 23
+Time: 0.045s">
+<div class="time" style="width: 100%"></div>
+<pre>
+    intros [x|x] [y|y];
+      typeclasses eauto.</pre>
+</div>
+<div class="code" title="File: NatCategory.v
+Line: 25
+Time: 0.01s">
+<div class="time" style="width: 22.222222222222%"></div>
+<pre>
+  Qed.</pre>
+</div>
+<div class="code" title="File: NatCategory.v
+Line: 26
+Time: 0.002s">
+<div class="time" style="width: 4.4444444444444%"></div>
+<pre>
+
+  Definition nat_category (n : nat) :=
+    match n with
+      | 0 =&gt; indiscrete_category 0
+      | 1 =&gt; indiscrete_category 1
+      | S (S n') =&gt; discrete_category (S (S n'))
+    end.</pre>
+</div>
+<div class="code" title="File: NatCategory.v
+Line: 33
+Time: 0s">
+<div class="time" style="width: 0%"></div>
+<pre>
+
+  Coercion nat_category : nat &gt;-&gt; PreCategory.</pre>
+</div>
+<div class="code" title="File: NatCategory.v
+Line: 35
+Time: 0s">
+<div class="time" style="width: 0%"></div>
+<pre>
+
+  Module Export NatCategoryCoreNotations.</pre>
+</div>
+<div class="code" title="File: NatCategory.v
+Line: 37
+Time: 0s">
+<div class="time" style="width: 0%"></div>
+<pre>
+    Notation "1" := (nat_category 1) : category_scope.</pre>
+</div>
+<div class="code" title="File: NatCategory.v
+Line: 38
+Time: 0s">
+<div class="time" style="width: 0%"></div>
+<pre>
+  End NatCategoryCoreNotations.</pre>
+</div>
+<div class="code" title="File: NatCategory.v
+Line: 39
+Time: 0.001s">
+<div class="time" style="width: 2.2222222222222%"></div>
+<pre>
+
+  Typeclasses Transparent nat_category.</pre>
+</div>
+<div class="code" title="File: NatCategory.v
+Line: 41
+Time: 0s">
+<div class="time" style="width: 0%"></div>
+<pre>
+  Hint Unfold nat_category.</pre>
+</div>
+<div class="code" title="File: NatCategory.v
+Line: 42
+Time: 0s">
+<div class="time" style="width: 0%"></div>
+<pre>
+  Arguments nat_category / .</pre>
+</div>
+<div class="code" title="File: NatCategory.v
+Line: 43
+Time: 0.001s">
+<div class="time" style="width: 2.2222222222222%"></div>
+<pre>
+End Core.</pre>
+</div>
+<div class="code" title="File: NatCategory.v
+Line: 44
+Time: 0s">
+<div class="time" style="width: 0%"></div>
+<pre>
+
+Module Notations.</pre>
+</div>
+<div class="code" title="File: NatCategory.v
+Line: 46
+Time: 0s">
+<div class="time" style="width: 0%"></div>
+<pre>
+  Include Core.NatCategoryCoreNotations.</pre>
+</div>
+<div class="code" title="File: NatCategory.v
+Line: 47
+Time: 0s">
+<div class="time" style="width: 0%"></div>
+<pre>
+End Notations.</pre>
+</div>
+<div class="code" title="File: NatCategory.v
+Line: 49
+Time: 0s">
+<div class="time" style="width: 0%"></div>
+<pre>
+
+</pre>
+</div>
+</body>
+</html>
+

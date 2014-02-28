@@ -1,0 +1,236 @@
+<html>
+<head>
+<title>Morphisms.v</title>
+<style>
+.time {
+  background-color: #ffaaaa;
+  height: 100%;
+  z-index: -1;
+  position: absolute;
+}
+.code {
+  z-index: 0;
+  position: relative;
+  border-style: solid;
+  border-color: transparent;
+  border-width: 1px;
+}
+.code:hover {
+  border-style: solid;
+  border-color: black;
+  border-width: 1px;
+}
+pre {
+  margin: 1px;
+}
+</style>
+</head>
+<body>
+<h1>Timings for Morphisms.v</h1>
+
+<div class="code" title="File: Morphisms.v
+Line: 1
+Time: 0.057s">
+<div class="time" style="width: 20.955882352941%"></div>
+<pre>Require Import Category.Core Functor.Core FunctorCategory.Core FunctorCategory.Morphisms NaturalTransformation.Core.</pre>
+</div>
+<div class="code" title="File: Morphisms.v
+Line: 1
+Time: 0.002s">
+<div class="time" style="width: 0.73529411764706%"></div>
+<pre>
+Require Import Category.Morphisms.</pre>
+</div>
+<div class="code" title="File: Morphisms.v
+Line: 2
+Time: 0s">
+<div class="time" style="width: 0%"></div>
+<pre>
+
+Set Universe Polymorphism.</pre>
+</div>
+<div class="code" title="File: Morphisms.v
+Line: 4
+Time: 0s">
+<div class="time" style="width: 0%"></div>
+<pre>
+Set Implicit Arguments.</pre>
+</div>
+<div class="code" title="File: Morphisms.v
+Line: 5
+Time: 0s">
+<div class="time" style="width: 0%"></div>
+<pre>
+Generalizable All Variables.</pre>
+</div>
+<div class="code" title="File: Morphisms.v
+Line: 6
+Time: 0s">
+<div class="time" style="width: 0%"></div>
+<pre>
+Set Asymmetric Patterns.</pre>
+</div>
+<div class="code" title="File: Morphisms.v
+Line: 7
+Time: 0s">
+<div class="time" style="width: 0%"></div>
+<pre>
+
+Local Open Scope category_scope.</pre>
+</div>
+<div class="code" title="File: Morphisms.v
+Line: 9
+Time: 0s">
+<div class="time" style="width: 0%"></div>
+<pre>
+Local Open Scope morphism_scope.</pre>
+</div>
+<div class="code" title="File: Morphisms.v
+Line: 10
+Time: 0s">
+<div class="time" style="width: 0%"></div>
+<pre>
+
+Section iso_lemmas.</pre>
+</div>
+<div class="code" title="File: Morphisms.v
+Line: 12
+Time: 0.001s">
+<div class="time" style="width: 0.36764705882353%"></div>
+<pre>
+  Context `{Funext}.</pre>
+</div>
+<div class="code" title="File: Morphisms.v
+Line: 13
+Time: 0s">
+<div class="time" style="width: 0%"></div>
+<pre>
+
+  Variable C : PreCategory.</pre>
+</div>
+<div class="code" title="File: Morphisms.v
+Line: 15
+Time: 0.001s">
+<div class="time" style="width: 0.36764705882353%"></div>
+<pre>
+
+  Variables s d : C.</pre>
+</div>
+<div class="code" title="File: Morphisms.v
+Line: 17
+Time: 0.002s">
+<div class="time" style="width: 0.73529411764706%"></div>
+<pre>
+  Variables m1 m2 : morphism C s d.</pre>
+</div>
+<div class="code" title="File: Morphisms.v
+Line: 18
+Time: 0.001s">
+<div class="time" style="width: 0.36764705882353%"></div>
+<pre>
+  Variable p : m1 = m2.</pre>
+</div>
+<div class="code" title="File: Morphisms.v
+Line: 19
+Time: 0s">
+<div class="time" style="width: 0%"></div>
+<pre>
+
+  Variable Fs : PreCategory.</pre>
+</div>
+<div class="code" title="File: Morphisms.v
+Line: 21
+Time: 0s">
+<div class="time" style="width: 0%"></div>
+<pre>
+  Variable Fd : PreCategory.</pre>
+</div>
+<div class="code" title="File: Morphisms.v
+Line: 22
+Time: 0.002s">
+<div class="time" style="width: 0.73529411764706%"></div>
+<pre>
+  Variable Fm : morphism C s d -&gt; Functor Fs Fd.</pre>
+</div>
+<div class="code" title="File: Morphisms.v
+Line: 23
+Time: 0.144s">
+<div class="time" style="width: 52.941176470588%"></div>
+<pre>
+
+  Lemma transport_Fc_to_idtoiso
+        s' d' u
+  : @transport _ (fun m =&gt; morphism _ (Fm m s') d') _ _ p u
+    = u o components_of (Category.Morphisms.idtoiso (_ -&gt; _) (ap Fm p) : morphism _ _ _)^-1 s'.</pre>
+</div>
+<div class="code" title="File: Morphisms.v
+Line: 28
+Time: 0s">
+<div class="time" style="width: 0%"></div>
+<pre>
+  Proof.</pre>
+</div>
+<div class="code" title="File: Morphisms.v
+Line: 29
+Time: 0.272s">
+<div class="time" style="width: 100%"></div>
+<pre>
+    case p; clear p; simpl; autorewrite with morphism; reflexivity.</pre>
+</div>
+<div class="code" title="File: Morphisms.v
+Line: 30
+Time: 0.191s">
+<div class="time" style="width: 70.220588235294%"></div>
+<pre>
+  Qed.</pre>
+</div>
+<div class="code" title="File: Morphisms.v
+Line: 31
+Time: 0.031s">
+<div class="time" style="width: 11.397058823529%"></div>
+<pre>
+
+  Lemma transport_cF_to_idtoiso
+        s' d' u
+  : @transport _ (fun m =&gt; morphism _ s' (Fm m d')) _ _ p u
+    = components_of (Category.Morphisms.idtoiso (_ -&gt; _) (ap Fm p) : morphism _ _ _) d' o u.</pre>
+</div>
+<div class="code" title="File: Morphisms.v
+Line: 36
+Time: 0s">
+<div class="time" style="width: 0%"></div>
+<pre>
+  Proof.</pre>
+</div>
+<div class="code" title="File: Morphisms.v
+Line: 37
+Time: 0.073s">
+<div class="time" style="width: 26.838235294118%"></div>
+<pre>
+    case p; clear p; simpl; autorewrite with morphism; reflexivity.</pre>
+</div>
+<div class="code" title="File: Morphisms.v
+Line: 38
+Time: 0.069s">
+<div class="time" style="width: 25.367647058824%"></div>
+<pre>
+  Qed.</pre>
+</div>
+<div class="code" title="File: Morphisms.v
+Line: 39
+Time: 0.006s">
+<div class="time" style="width: 2.2058823529412%"></div>
+<pre>
+End iso_lemmas.</pre>
+</div>
+<div class="code" title="File: Morphisms.v
+Line: 41
+Time: 0s">
+<div class="time" style="width: 0%"></div>
+<pre>
+
+</pre>
+</div>
+</body>
+</html>
+

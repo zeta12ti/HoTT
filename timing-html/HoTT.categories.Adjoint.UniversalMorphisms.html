@@ -1,0 +1,660 @@
+<html>
+<head>
+<title>UniversalMorphisms.v</title>
+<style>
+.time {
+  background-color: #ffaaaa;
+  height: 100%;
+  z-index: -1;
+  position: absolute;
+}
+.code {
+  z-index: 0;
+  position: relative;
+  border-style: solid;
+  border-color: transparent;
+  border-width: 1px;
+}
+.code:hover {
+  border-style: solid;
+  border-color: black;
+  border-width: 1px;
+}
+pre {
+  margin: 1px;
+}
+</style>
+</head>
+<body>
+<h1>Timings for UniversalMorphisms.v</h1>
+
+<div class="code" title="File: UniversalMorphisms.v
+Line: 1
+Time: 0.005s">
+<div class="time" style="width: 0.33579583613163%"></div>
+<pre>Require Import Category.Core Functor.Core NaturalTransformation.Core.</pre>
+</div>
+<div class="code" title="File: UniversalMorphisms.v
+Line: 1
+Time: 0.001s">
+<div class="time" style="width: 0.067159167226326%"></div>
+<pre>
+Require Import Functor.Identity Functor.Composition.Core.</pre>
+</div>
+<div class="code" title="File: UniversalMorphisms.v
+Line: 2
+Time: 0.03s">
+<div class="time" style="width: 2.0147750167898%"></div>
+<pre>
+Require Import Functor.Dual NaturalTransformation.Dual Category.Dual.</pre>
+</div>
+<div class="code" title="File: UniversalMorphisms.v
+Line: 3
+Time: 0.007s">
+<div class="time" style="width: 0.47011417058428%"></div>
+<pre>
+Require Import Adjoint.Core Adjoint.UnitCounit Adjoint.UnitCounitCoercions Adjoint.Dual.</pre>
+</div>
+<div class="code" title="File: UniversalMorphisms.v
+Line: 4
+Time: 0.045s">
+<div class="time" style="width: 3.0221625251847%"></div>
+<pre>
+Require Import Comma.Core UniversalProperties Comma.Dual InitialTerminalCategory.</pre>
+</div>
+<div class="code" title="File: UniversalMorphisms.v
+Line: 5
+Time: 0.001s">
+<div class="time" style="width: 0.067159167226326%"></div>
+<pre>
+Require Import HProp types.Sigma HoTT.Tactics.</pre>
+</div>
+<div class="code" title="File: UniversalMorphisms.v
+Line: 6
+Time: 0s">
+<div class="time" style="width: 0%"></div>
+<pre>
+
+Set Universe Polymorphism.</pre>
+</div>
+<div class="code" title="File: UniversalMorphisms.v
+Line: 8
+Time: 0s">
+<div class="time" style="width: 0%"></div>
+<pre>
+Set Implicit Arguments.</pre>
+</div>
+<div class="code" title="File: UniversalMorphisms.v
+Line: 9
+Time: 0s">
+<div class="time" style="width: 0%"></div>
+<pre>
+Generalizable All Variables.</pre>
+</div>
+<div class="code" title="File: UniversalMorphisms.v
+Line: 10
+Time: 0s">
+<div class="time" style="width: 0%"></div>
+<pre>
+Set Asymmetric Patterns.</pre>
+</div>
+<div class="code" title="File: UniversalMorphisms.v
+Line: 11
+Time: 0s">
+<div class="time" style="width: 0%"></div>
+<pre>
+
+Local Open Scope morphism_scope.</pre>
+</div>
+<div class="code" title="File: UniversalMorphisms.v
+Line: 13
+Time: 0s">
+<div class="time" style="width: 0%"></div>
+<pre>
+
+Section adjunction_universal.</pre>
+</div>
+<div class="code" title="File: UniversalMorphisms.v
+Line: 15
+Time: 0s">
+<div class="time" style="width: 0%"></div>
+<pre>
+  Section initial.</pre>
+</div>
+<div class="code" title="File: UniversalMorphisms.v
+Line: 16
+Time: 0s">
+<div class="time" style="width: 0%"></div>
+<pre>
+    Variable C : PreCategory.</pre>
+</div>
+<div class="code" title="File: UniversalMorphisms.v
+Line: 17
+Time: 0s">
+<div class="time" style="width: 0%"></div>
+<pre>
+    Variable D : PreCategory.</pre>
+</div>
+<div class="code" title="File: UniversalMorphisms.v
+Line: 18
+Time: 0.001s">
+<div class="time" style="width: 0.067159167226326%"></div>
+<pre>
+    Variable F : Functor C D.</pre>
+</div>
+<div class="code" title="File: UniversalMorphisms.v
+Line: 19
+Time: 0.001s">
+<div class="time" style="width: 0.067159167226326%"></div>
+<pre>
+    Variable G : Functor D C.</pre>
+</div>
+<div class="code" title="File: UniversalMorphisms.v
+Line: 20
+Time: 0.003s">
+<div class="time" style="width: 0.20147750167898%"></div>
+<pre>
+    Variable A : F -| G.</pre>
+</div>
+<div class="code" title="File: UniversalMorphisms.v
+Line: 21
+Time: 0s">
+<div class="time" style="width: 0%"></div>
+<pre>
+    Variable Y : C.</pre>
+</div>
+<div class="code" title="File: UniversalMorphisms.v
+Line: 22
+Time: 0.076s">
+<div class="time" style="width: 5.1040967092008%"></div>
+<pre>
+
+    Definition initial_morphism__of__adjunction
+    : object (Y / G)
+      := @CommaCategory.Build_object
+           _ D C
+           (! Y) G
+           (center _)
+           (F Y)
+           ((unit A) Y).</pre>
+</div>
+<div class="code" title="File: UniversalMorphisms.v
+Line: 31
+Time: 0.229s">
+<div class="time" style="width: 15.379449294829%"></div>
+<pre>
+
+    Definition is_initial_morphism__of__adjunction
+    : IsInitialMorphism initial_morphism__of__adjunction
+      := Build_IsInitialMorphism
+           _
+           _
+           _
+           _
+           ((A : AdjunctionUnit _ _).2 _).</pre>
+</div>
+<div class="code" title="File: UniversalMorphisms.v
+Line: 40
+Time: 0.009s">
+<div class="time" style="width: 0.60443250503694%"></div>
+<pre>
+  End initial.</pre>
+</div>
+<div class="code" title="File: UniversalMorphisms.v
+Line: 41
+Time: 0.002s">
+<div class="time" style="width: 0.13431833445265%"></div>
+<pre>
+
+  Global Arguments initial_morphism__of__adjunction [C D F G] A Y.</pre>
+</div>
+<div class="code" title="File: UniversalMorphisms.v
+Line: 43
+Time: 0.002s">
+<div class="time" style="width: 0.13431833445265%"></div>
+<pre>
+  Global Arguments is_initial_morphism__of__adjunction [C D F G] A Y _.</pre>
+</div>
+<div class="code" title="File: UniversalMorphisms.v
+Line: 44
+Time: 0s">
+<div class="time" style="width: 0%"></div>
+<pre>
+
+  Section terminal.</pre>
+</div>
+<div class="code" title="File: UniversalMorphisms.v
+Line: 46
+Time: 0.001s">
+<div class="time" style="width: 0.067159167226326%"></div>
+<pre>
+    Variable C : PreCategory.</pre>
+</div>
+<div class="code" title="File: UniversalMorphisms.v
+Line: 47
+Time: 0.001s">
+<div class="time" style="width: 0.067159167226326%"></div>
+<pre>
+    Variable D : PreCategory.</pre>
+</div>
+<div class="code" title="File: UniversalMorphisms.v
+Line: 48
+Time: 0.003s">
+<div class="time" style="width: 0.20147750167898%"></div>
+<pre>
+    Variable F : Functor C D.</pre>
+</div>
+<div class="code" title="File: UniversalMorphisms.v
+Line: 49
+Time: 0.003s">
+<div class="time" style="width: 0.20147750167898%"></div>
+<pre>
+    Variable G : Functor D C.</pre>
+</div>
+<div class="code" title="File: UniversalMorphisms.v
+Line: 50
+Time: 0.006s">
+<div class="time" style="width: 0.40295500335796%"></div>
+<pre>
+    Variable A : F -| G.</pre>
+</div>
+<div class="code" title="File: UniversalMorphisms.v
+Line: 51
+Time: 0.001s">
+<div class="time" style="width: 0.067159167226326%"></div>
+<pre>
+    Variable X : D.</pre>
+</div>
+<div class="code" title="File: UniversalMorphisms.v
+Line: 52
+Time: 0.451s">
+<div class="time" style="width: 30.288784419073%"></div>
+<pre>
+
+    Definition terminal_morphism__of__adjunction
+    : object (F / X)
+      := Eval simpl in
+          dual_functor_inv
+            F (! X)
+            (initial_morphism__of__adjunction A^op X).</pre>
+</div>
+<div class="code" title="File: UniversalMorphisms.v
+Line: 59
+Time: 0.09s">
+<div class="time" style="width: 6.0443250503694%"></div>
+<pre>
+
+    Definition is_terminal_morphism__of__adjunction
+    : IsTerminalMorphism terminal_morphism__of__adjunction
+      := is_initial_morphism__of__adjunction A^op X.</pre>
+</div>
+<div class="code" title="File: UniversalMorphisms.v
+Line: 63
+Time: 0.009s">
+<div class="time" style="width: 0.60443250503694%"></div>
+<pre>
+  End terminal.</pre>
+</div>
+<div class="code" title="File: UniversalMorphisms.v
+Line: 64
+Time: 0.001s">
+<div class="time" style="width: 0.067159167226326%"></div>
+<pre>
+
+  Global Arguments terminal_morphism__of__adjunction [C D F G] A X.</pre>
+</div>
+<div class="code" title="File: UniversalMorphisms.v
+Line: 66
+Time: 0.002s">
+<div class="time" style="width: 0.13431833445265%"></div>
+<pre>
+  Global Arguments is_terminal_morphism__of__adjunction [C D F G] A X _.</pre>
+</div>
+<div class="code" title="File: UniversalMorphisms.v
+Line: 67
+Time: 0.033s">
+<div class="time" style="width: 2.2162525184688%"></div>
+<pre>
+End adjunction_universal.</pre>
+</div>
+<div class="code" title="File: UniversalMorphisms.v
+Line: 68
+Time: 0s">
+<div class="time" style="width: 0%"></div>
+<pre>
+
+Section adjunction_from_universal.</pre>
+</div>
+<div class="code" title="File: UniversalMorphisms.v
+Line: 70
+Time: 0s">
+<div class="time" style="width: 0%"></div>
+<pre>
+  Section initial.</pre>
+</div>
+<div class="code" title="File: UniversalMorphisms.v
+Line: 71
+Time: 0s">
+<div class="time" style="width: 0%"></div>
+<pre>
+    Variable C : PreCategory.</pre>
+</div>
+<div class="code" title="File: UniversalMorphisms.v
+Line: 72
+Time: 0s">
+<div class="time" style="width: 0%"></div>
+<pre>
+    Variable D : PreCategory.</pre>
+</div>
+<div class="code" title="File: UniversalMorphisms.v
+Line: 73
+Time: 0.002s">
+<div class="time" style="width: 0.13431833445265%"></div>
+<pre>
+
+    Variable G : Functor D C.</pre>
+</div>
+<div class="code" title="File: UniversalMorphisms.v
+Line: 75
+Time: 0.034s">
+<div class="time" style="width: 2.2834116856951%"></div>
+<pre>
+    Context `(HM : forall Y, @IsInitialMorphism _ _ Y G (M Y)).</pre>
+</div>
+<div class="code" title="File: UniversalMorphisms.v
+Line: 76
+Time: 0s">
+<div class="time" style="width: 0%"></div>
+<pre>
+
+    Local Notation obj_of Y :=
+      (IsInitialMorphism_object (@HM Y))
+        (only parsing).</pre>
+</div>
+<div class="code" title="File: UniversalMorphisms.v
+Line: 80
+Time: 0s">
+<div class="time" style="width: 0%"></div>
+<pre>
+
+    Local Notation mor_of Y0 Y1 f :=
+      (let etaY1 := IsInitialMorphism_morphism (@HM Y1) in
+       IsInitialMorphism_property_morphism (@HM Y0) _ (etaY1 o f))
+        (only parsing).</pre>
+</div>
+<div class="code" title="File: UniversalMorphisms.v
+Line: 85
+Time: 0.028s">
+<div class="time" style="width: 1.8804566823371%"></div>
+<pre>
+
+    Lemma identity_of Y : mor_of Y Y 1 = 1.</pre>
+</div>
+<div class="code" title="File: UniversalMorphisms.v
+Line: 87
+Time: 0s">
+<div class="time" style="width: 0%"></div>
+<pre>
+    Proof.</pre>
+</div>
+<div class="code" title="File: UniversalMorphisms.v
+Line: 88
+Time: 0.005s">
+<div class="time" style="width: 0.33579583613163%"></div>
+<pre>
+      simpl.</pre>
+</div>
+<div class="code" title="File: UniversalMorphisms.v
+Line: 89
+Time: 0.136s">
+<div class="time" style="width: 9.1336467427804%"></div>
+<pre>
+      erewrite IsInitialMorphism_property_morphism_unique; [ reflexivity | ].</pre>
+</div>
+<div class="code" title="File: UniversalMorphisms.v
+Line: 90
+Time: 0.324s">
+<div class="time" style="width: 21.75957018133%"></div>
+<pre>
+      rewrite ?identity_of, ?left_identity, ?right_identity.</pre>
+</div>
+<div class="code" title="File: UniversalMorphisms.v
+Line: 91
+Time: 0.017s">
+<div class="time" style="width: 1.1417058428475%"></div>
+<pre>
+      reflexivity.</pre>
+</div>
+<div class="code" title="File: UniversalMorphisms.v
+Line: 92
+Time: 0.257s">
+<div class="time" style="width: 17.259905977166%"></div>
+<pre>
+    Qed.</pre>
+</div>
+<div class="code" title="File: UniversalMorphisms.v
+Line: 93
+Time: 0.105s">
+<div class="time" style="width: 7.0517125587643%"></div>
+<pre>
+
+    Lemma composition_of x y z g f
+    : mor_of _ _ (f o g) = mor_of y z f o mor_of x y g.</pre>
+</div>
+<div class="code" title="File: UniversalMorphisms.v
+Line: 96
+Time: 0s">
+<div class="time" style="width: 0%"></div>
+<pre>
+    Proof.</pre>
+</div>
+<div class="code" title="File: UniversalMorphisms.v
+Line: 97
+Time: 0.013s">
+<div class="time" style="width: 0.87306917394224%"></div>
+<pre>
+      simpl.</pre>
+</div>
+<div class="code" title="File: UniversalMorphisms.v
+Line: 98
+Time: 0.308s">
+<div class="time" style="width: 20.685023505709%"></div>
+<pre>
+      erewrite IsInitialMorphism_property_morphism_unique; [ reflexivity | ].</pre>
+</div>
+<div class="code" title="File: UniversalMorphisms.v
+Line: 99
+Time: 0.249s">
+<div class="time" style="width: 16.722632639355%"></div>
+<pre>
+      rewrite ?composition_of.</pre>
+</div>
+<div class="code" title="File: UniversalMorphisms.v
+Line: 100
+Time: 1.489s">
+<div class="time" style="width: 100%"></div>
+<pre>
+      repeat
+        try_associativity_quick
+        rewrite IsInitialMorphism_property_morphism_property.</pre>
+</div>
+<div class="code" title="File: UniversalMorphisms.v
+Line: 103
+Time: 0.046s">
+<div class="time" style="width: 3.089321692411%"></div>
+<pre>
+      reflexivity.</pre>
+</div>
+<div class="code" title="File: UniversalMorphisms.v
+Line: 104
+Time: 1.225s">
+<div class="time" style="width: 82.26997985225%"></div>
+<pre>
+    Qed.</pre>
+</div>
+<div class="code" title="File: UniversalMorphisms.v
+Line: 105
+Time: 0.098s">
+<div class="time" style="width: 6.58159838818%"></div>
+<pre>
+
+    Definition functor__of__initial_morphism : Functor C D
+      := Build_Functor
+           C D
+           (fun x =&gt; obj_of x)
+           (fun s d m =&gt; mor_of s d m)
+           composition_of
+           identity_of.</pre>
+</div>
+<div class="code" title="File: UniversalMorphisms.v
+Line: 113
+Time: 0.006s">
+<div class="time" style="width: 0.40295500335796%"></div>
+<pre>
+
+    Definition adjunction__of__initial_morphism
+    : functor__of__initial_morphism -| G.</pre>
+</div>
+<div class="code" title="File: UniversalMorphisms.v
+Line: 116
+Time: 0s">
+<div class="time" style="width: 0%"></div>
+<pre>
+    Proof.</pre>
+</div>
+<div class="code" title="File: UniversalMorphisms.v
+Line: 117
+Time: 0.017s">
+<div class="time" style="width: 1.1417058428475%"></div>
+<pre>
+      refine (_ : AdjunctionUnit functor__of__initial_morphism G).</pre>
+</div>
+<div class="code" title="File: UniversalMorphisms.v
+Line: 118
+Time: 0.504s">
+<div class="time" style="width: 33.848220282068%"></div>
+<pre>
+      eexists (Build_NaturalTransformation
+                1
+                (G o functor__of__initial_morphism)
+                (fun x =&gt; IsInitialMorphism_morphism (@HM x))
+                (fun s d m =&gt;
+                   symmetry
+                     _ _
+                     (IsInitialMorphism_property_morphism_property (@HM s) _ _))).</pre>
+</div>
+<div class="code" title="File: UniversalMorphisms.v
+Line: 126
+Time: 0.014s">
+<div class="time" style="width: 0.94022834116857%"></div>
+<pre>
+      simpl.</pre>
+</div>
+<div class="code" title="File: UniversalMorphisms.v
+Line: 127
+Time: 0.035s">
+<div class="time" style="width: 2.3505708529214%"></div>
+<pre>
+      exact (fun c =&gt; @IsInitialMorphism_property _ _ c G (M c) (@HM c)).</pre>
+</div>
+<div class="code" title="File: UniversalMorphisms.v
+Line: 128
+Time: 0.405s">
+<div class="time" style="width: 27.199462726662%"></div>
+<pre>
+    Defined.</pre>
+</div>
+<div class="code" title="File: UniversalMorphisms.v
+Line: 129
+Time: 0.017s">
+<div class="time" style="width: 1.1417058428475%"></div>
+<pre>
+  End initial.</pre>
+</div>
+<div class="code" title="File: UniversalMorphisms.v
+Line: 130
+Time: 0s">
+<div class="time" style="width: 0%"></div>
+<pre>
+
+  Section terminal.</pre>
+</div>
+<div class="code" title="File: UniversalMorphisms.v
+Line: 132
+Time: 0s">
+<div class="time" style="width: 0%"></div>
+<pre>
+    Variable C : PreCategory.</pre>
+</div>
+<div class="code" title="File: UniversalMorphisms.v
+Line: 133
+Time: 0s">
+<div class="time" style="width: 0%"></div>
+<pre>
+    Variable D : PreCategory.</pre>
+</div>
+<div class="code" title="File: UniversalMorphisms.v
+Line: 134
+Time: 0.001s">
+<div class="time" style="width: 0.067159167226326%"></div>
+<pre>
+
+    Variable F : Functor C D.</pre>
+</div>
+<div class="code" title="File: UniversalMorphisms.v
+Line: 136
+Time: 0.081s">
+<div class="time" style="width: 5.4398925453324%"></div>
+<pre>
+    Context `(HM : forall X, @IsTerminalMorphism _ _ F X (M X)).</pre>
+</div>
+<div class="code" title="File: UniversalMorphisms.v
+Line: 137
+Time: 0.705s">
+<div class="time" style="width: 47.34721289456%"></div>
+<pre>
+
+    Definition functor__of__terminal_morphism : Functor D C
+      := (@functor__of__initial_morphism
+            (D^op) (C^op)
+            (F^op)
+            (fun x : D =&gt; dual_functor F !x (M x)) HM)^op'.</pre>
+</div>
+<div class="code" title="File: UniversalMorphisms.v
+Line: 143
+Time: 0.824s">
+<div class="time" style="width: 55.339153794493%"></div>
+<pre>
+
+    Definition adjunction__of__terminal_morphism
+    : F -| functor__of__terminal_morphism
+      := ((@adjunction__of__initial_morphism
+             (D^op) (C^op)
+             (F^op)
+             (fun x : D =&gt; dual_functor F !x (M x)) HM)^op'R)%adjunction.</pre>
+</div>
+<div class="code" title="File: UniversalMorphisms.v
+Line: 150
+Time: 0.013s">
+<div class="time" style="width: 0.87306917394224%"></div>
+<pre>
+  End terminal.</pre>
+</div>
+<div class="code" title="File: UniversalMorphisms.v
+Line: 151
+Time: 0.051s">
+<div class="time" style="width: 3.4251175285426%"></div>
+<pre>
+End adjunction_from_universal.</pre>
+</div>
+<div class="code" title="File: UniversalMorphisms.v
+Line: 153
+Time: 0s">
+<div class="time" style="width: 0%"></div>
+<pre>
+
+</pre>
+</div>
+</body>
+</html>
+

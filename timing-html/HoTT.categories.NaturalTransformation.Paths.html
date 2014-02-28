@@ -1,0 +1,524 @@
+<html>
+<head>
+<title>Paths.v</title>
+<style>
+.time {
+  background-color: #ffaaaa;
+  height: 100%;
+  z-index: -1;
+  position: absolute;
+}
+.code {
+  z-index: 0;
+  position: relative;
+  border-style: solid;
+  border-color: transparent;
+  border-width: 1px;
+}
+.code:hover {
+  border-style: solid;
+  border-color: black;
+  border-width: 1px;
+}
+pre {
+  margin: 1px;
+}
+</style>
+</head>
+<body>
+<h1>Timings for Paths.v</h1>
+
+<div class="code" title="File: Paths.v
+Line: 1
+Time: 0.007s">
+<div class="time" style="width: 0.76586433260394%"></div>
+<pre>Require Import Category.Core Functor.Core NaturalTransformation.Core.</pre>
+</div>
+<div class="code" title="File: Paths.v
+Line: 1
+Time: 0.02s">
+<div class="time" style="width: 2.1881838074398%"></div>
+<pre>
+Require Import Equivalences types.Sigma Trunc.</pre>
+</div>
+<div class="code" title="File: Paths.v
+Line: 2
+Time: 0s">
+<div class="time" style="width: 0%"></div>
+<pre>
+
+Set Universe Polymorphism.</pre>
+</div>
+<div class="code" title="File: Paths.v
+Line: 4
+Time: 0s">
+<div class="time" style="width: 0%"></div>
+<pre>
+Set Implicit Arguments.</pre>
+</div>
+<div class="code" title="File: Paths.v
+Line: 5
+Time: 0s">
+<div class="time" style="width: 0%"></div>
+<pre>
+Generalizable All Variables.</pre>
+</div>
+<div class="code" title="File: Paths.v
+Line: 6
+Time: 0s">
+<div class="time" style="width: 0%"></div>
+<pre>
+Set Asymmetric Patterns.</pre>
+</div>
+<div class="code" title="File: Paths.v
+Line: 7
+Time: 0s">
+<div class="time" style="width: 0%"></div>
+<pre>
+
+Local Open Scope morphism_scope.</pre>
+</div>
+<div class="code" title="File: Paths.v
+Line: 9
+Time: 0s">
+<div class="time" style="width: 0%"></div>
+<pre>
+Local Open Scope natural_transformation_scope.</pre>
+</div>
+<div class="code" title="File: Paths.v
+Line: 10
+Time: 0s">
+<div class="time" style="width: 0%"></div>
+<pre>
+
+Section path_natural_transformation.</pre>
+</div>
+<div class="code" title="File: Paths.v
+Line: 12
+Time: 0s">
+<div class="time" style="width: 0%"></div>
+<pre>
+  Context `{Funext}.</pre>
+</div>
+<div class="code" title="File: Paths.v
+Line: 13
+Time: 0s">
+<div class="time" style="width: 0%"></div>
+<pre>
+
+  Variable C : PreCategory.</pre>
+</div>
+<div class="code" title="File: Paths.v
+Line: 15
+Time: 0s">
+<div class="time" style="width: 0%"></div>
+<pre>
+  Variable D : PreCategory.</pre>
+</div>
+<div class="code" title="File: Paths.v
+Line: 16
+Time: 0.001s">
+<div class="time" style="width: 0.10940919037199%"></div>
+<pre>
+  Variables F G : Functor C D.</pre>
+</div>
+<div class="code" title="File: Paths.v
+Line: 17
+Time: 0s">
+<div class="time" style="width: 0%"></div>
+<pre>
+
+  Local Open Scope equiv_scope.</pre>
+</div>
+<div class="code" title="File: Paths.v
+Line: 19
+Time: 0.018s">
+<div class="time" style="width: 1.9693654266958%"></div>
+<pre>
+
+  Lemma equiv_sig_natural_transformation
+  : { CO : forall x, morphism D (F x) (G x)
+    | forall s d (m : morphism C s d),
+        CO d o F _1 m = G _1 m o CO s }
+      &lt;~&gt; NaturalTransformation F G.</pre>
+</div>
+<div class="code" title="File: Paths.v
+Line: 25
+Time: 0s">
+<div class="time" style="width: 0%"></div>
+<pre>
+  Proof.</pre>
+</div>
+<div class="code" title="File: Paths.v
+Line: 26
+Time: 0.914s">
+<div class="time" style="width: 100%"></div>
+<pre>
+    let build := constr:(@Build_NaturalTransformation _ _ F G) in
+    let pr1 := constr:(@components_of _ _ F G) in
+    let pr2 := constr:(@commutes _ _ F G) in
+    apply (equiv_adjointify (fun u =&gt; build u.1 u.2)
+                            (fun v =&gt; (pr1 v; pr2 v)));
+      hnf;
+      [ intros []; intros; simpl; expand; f_ap; exact (center _)
+      | intros; apply eta_sigma ].</pre>
+</div>
+<div class="code" title="File: Paths.v
+Line: 34
+Time: 0.303s">
+<div class="time" style="width: 33.150984682713%"></div>
+<pre>
+  Defined.</pre>
+</div>
+<div class="code" title="File: Paths.v
+Line: 35
+Time: 0.001s">
+<div class="time" style="width: 0.10940919037199%"></div>
+<pre>
+
+  Global Instance trunc_natural_transformation
+  : IsHSet (NaturalTransformation F G).</pre>
+</div>
+<div class="code" title="File: Paths.v
+Line: 38
+Time: 0s">
+<div class="time" style="width: 0%"></div>
+<pre>
+  Proof.</pre>
+</div>
+<div class="code" title="File: Paths.v
+Line: 39
+Time: 0.006s">
+<div class="time" style="width: 0.65645514223195%"></div>
+<pre>
+    eapply trunc_equiv'; [ exact equiv_sig_natural_transformation | ].</pre>
+</div>
+<div class="code" title="File: Paths.v
+Line: 40
+Time: 0.146s">
+<div class="time" style="width: 15.973741794311%"></div>
+<pre>
+    typeclasses eauto.</pre>
+</div>
+<div class="code" title="File: Paths.v
+Line: 41
+Time: 0.1s">
+<div class="time" style="width: 10.940919037199%"></div>
+<pre>
+  Qed.</pre>
+</div>
+<div class="code" title="File: Paths.v
+Line: 42
+Time: 0s">
+<div class="time" style="width: 0%"></div>
+<pre>
+
+  Section path.</pre>
+</div>
+<div class="code" title="File: Paths.v
+Line: 44
+Time: 0.002s">
+<div class="time" style="width: 0.21881838074398%"></div>
+<pre>
+    Variables T U : NaturalTransformation F G.</pre>
+</div>
+<div class="code" title="File: Paths.v
+Line: 45
+Time: 0.014s">
+<div class="time" style="width: 1.5317286652079%"></div>
+<pre>
+
+    Lemma path'_natural_transformation
+    : components_of T = components_of U
+      -&gt; T = U.</pre>
+</div>
+<div class="code" title="File: Paths.v
+Line: 49
+Time: 0s">
+<div class="time" style="width: 0%"></div>
+<pre>
+    Proof.</pre>
+</div>
+<div class="code" title="File: Paths.v
+Line: 50
+Time: 0.004s">
+<div class="time" style="width: 0.43763676148796%"></div>
+<pre>
+      intros.</pre>
+</div>
+<div class="code" title="File: Paths.v
+Line: 51
+Time: 0.173s">
+<div class="time" style="width: 18.927789934354%"></div>
+<pre>
+      destruct T, U; simpl in *.</pre>
+</div>
+<div class="code" title="File: Paths.v
+Line: 52
+Time: 0.076s">
+<div class="time" style="width: 8.3150984682713%"></div>
+<pre>
+      path_induction.</pre>
+</div>
+<div class="code" title="File: Paths.v
+Line: 53
+Time: 0.731s">
+<div class="time" style="width: 79.978118161926%"></div>
+<pre>
+      f_ap;
+        refine (center _).</pre>
+</div>
+<div class="code" title="File: Paths.v
+Line: 55
+Time: 0.279s">
+<div class="time" style="width: 30.525164113786%"></div>
+<pre>
+    Qed.</pre>
+</div>
+<div class="code" title="File: Paths.v
+Line: 56
+Time: 0.007s">
+<div class="time" style="width: 0.76586433260394%"></div>
+<pre>
+
+    Lemma path_natural_transformation
+    : components_of T == components_of U
+      -&gt; T = U.</pre>
+</div>
+<div class="code" title="File: Paths.v
+Line: 60
+Time: 0s">
+<div class="time" style="width: 0%"></div>
+<pre>
+    Proof.</pre>
+</div>
+<div class="code" title="File: Paths.v
+Line: 61
+Time: 0.004s">
+<div class="time" style="width: 0.43763676148796%"></div>
+<pre>
+      intros.</pre>
+</div>
+<div class="code" title="File: Paths.v
+Line: 62
+Time: 0.006s">
+<div class="time" style="width: 0.65645514223195%"></div>
+<pre>
+      apply path'_natural_transformation.</pre>
+</div>
+<div class="code" title="File: Paths.v
+Line: 63
+Time: 0.012s">
+<div class="time" style="width: 1.3129102844639%"></div>
+<pre>
+      apply path_forall; assumption.</pre>
+</div>
+<div class="code" title="File: Paths.v
+Line: 64
+Time: 0.025s">
+<div class="time" style="width: 2.7352297592998%"></div>
+<pre>
+    Qed.</pre>
+</div>
+<div class="code" title="File: Paths.v
+Line: 65
+Time: 0.032s">
+<div class="time" style="width: 3.5010940919037%"></div>
+<pre>
+
+    Let path_inv
+    : T = U -&gt; components_of T == components_of U
+      := (fun H _ =&gt; match H with idpath =&gt; idpath end).</pre>
+</div>
+<div class="code" title="File: Paths.v
+Line: 69
+Time: 0.031s">
+<div class="time" style="width: 3.3916849015317%"></div>
+<pre>
+
+    Lemma eisretr_path_natural_transformation
+    : Sect path_natural_transformation path_inv.</pre>
+</div>
+<div class="code" title="File: Paths.v
+Line: 72
+Time: 0s">
+<div class="time" style="width: 0%"></div>
+<pre>
+    Proof.</pre>
+</div>
+<div class="code" title="File: Paths.v
+Line: 73
+Time: 0.005s">
+<div class="time" style="width: 0.54704595185996%"></div>
+<pre>
+      repeat intro.</pre>
+</div>
+<div class="code" title="File: Paths.v
+Line: 74
+Time: 0.114s">
+<div class="time" style="width: 12.472647702407%"></div>
+<pre>
+      refine (center _).</pre>
+</div>
+<div class="code" title="File: Paths.v
+Line: 75
+Time: 0.095s">
+<div class="time" style="width: 10.393873085339%"></div>
+<pre>
+    Qed.</pre>
+</div>
+<div class="code" title="File: Paths.v
+Line: 76
+Time: 0.042s">
+<div class="time" style="width: 4.5951859956236%"></div>
+<pre>
+
+    Lemma eissect_path_natural_transformation
+    : Sect path_inv path_natural_transformation.</pre>
+</div>
+<div class="code" title="File: Paths.v
+Line: 79
+Time: 0s">
+<div class="time" style="width: 0%"></div>
+<pre>
+    Proof.</pre>
+</div>
+<div class="code" title="File: Paths.v
+Line: 80
+Time: 0.003s">
+<div class="time" style="width: 0.32822757111597%"></div>
+<pre>
+      repeat intro.</pre>
+</div>
+<div class="code" title="File: Paths.v
+Line: 81
+Time: 0.032s">
+<div class="time" style="width: 3.5010940919037%"></div>
+<pre>
+      refine (center _).</pre>
+</div>
+<div class="code" title="File: Paths.v
+Line: 82
+Time: 0.069s">
+<div class="time" style="width: 7.5492341356674%"></div>
+<pre>
+    Qed.</pre>
+</div>
+<div class="code" title="File: Paths.v
+Line: 83
+Time: 0.077s">
+<div class="time" style="width: 8.4245076586433%"></div>
+<pre>
+
+    Lemma eisadj_path_natural_transformation
+    : forall x,
+        @eisretr_path_natural_transformation (path_inv x)
+        = ap path_inv (eissect_path_natural_transformation x).</pre>
+</div>
+<div class="code" title="File: Paths.v
+Line: 88
+Time: 0s">
+<div class="time" style="width: 0%"></div>
+<pre>
+    Proof.</pre>
+</div>
+<div class="code" title="File: Paths.v
+Line: 89
+Time: 0.004s">
+<div class="time" style="width: 0.43763676148796%"></div>
+<pre>
+      repeat intro.</pre>
+</div>
+<div class="code" title="File: Paths.v
+Line: 90
+Time: 0.247s">
+<div class="time" style="width: 27.024070021882%"></div>
+<pre>
+      refine (center _).</pre>
+</div>
+<div class="code" title="File: Paths.v
+Line: 91
+Time: 0.237s">
+<div class="time" style="width: 25.929978118162%"></div>
+<pre>
+    Qed.</pre>
+</div>
+<div class="code" title="File: Paths.v
+Line: 92
+Time: 0.008s">
+<div class="time" style="width: 0.87527352297593%"></div>
+<pre>
+
+    Lemma equiv_path_natural_transformation
+    : T = U &lt;~&gt; (components_of T == components_of U).</pre>
+</div>
+<div class="code" title="File: Paths.v
+Line: 95
+Time: 0s">
+<div class="time" style="width: 0%"></div>
+<pre>
+    Proof.</pre>
+</div>
+<div class="code" title="File: Paths.v
+Line: 96
+Time: 0.013s">
+<div class="time" style="width: 1.4223194748359%"></div>
+<pre>
+      econstructor.</pre>
+</div>
+<div class="code" title="File: Paths.v
+Line: 97
+Time: 0.054s">
+<div class="time" style="width: 5.9080962800875%"></div>
+<pre> econstructor.</pre>
+</div>
+<div class="code" title="File: Paths.v
+Line: 97
+Time: 0.052s">
+<div class="time" style="width: 5.6892778993435%"></div>
+<pre> exact eisadj_path_natural_transformation.</pre>
+</div>
+<div class="code" title="File: Paths.v
+Line: 97
+Time: 0.093s">
+<div class="time" style="width: 10.175054704595%"></div>
+<pre>
+    Defined.</pre>
+</div>
+<div class="code" title="File: Paths.v
+Line: 98
+Time: 0.011s">
+<div class="time" style="width: 1.2035010940919%"></div>
+<pre>
+  End path.</pre>
+</div>
+<div class="code" title="File: Paths.v
+Line: 99
+Time: 0.07s">
+<div class="time" style="width: 7.6586433260394%"></div>
+<pre>
+End path_natural_transformation.</pre>
+</div>
+<div class="code" title="File: Paths.v
+Line: 100
+Time: 0s">
+<div class="time" style="width: 0%"></div>
+<pre>
+
+Ltac path_natural_transformation :=
+  repeat match goal with
+           | _ =&gt; intro
+           | _ =&gt; apply path_natural_transformation; simpl
+         end.</pre>
+</div>
+<div class="code" title="File: Paths.v
+Line: 107
+Time: 0s">
+<div class="time" style="width: 0%"></div>
+<pre>
+
+</pre>
+</div>
+</body>
+</html>
+

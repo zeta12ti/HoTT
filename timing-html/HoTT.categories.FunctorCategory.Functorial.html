@@ -1,0 +1,171 @@
+<html>
+<head>
+<title>Functorial.v</title>
+<style>
+.time {
+  background-color: #ffaaaa;
+  height: 100%;
+  z-index: -1;
+  position: absolute;
+}
+.code {
+  z-index: 0;
+  position: relative;
+  border-style: solid;
+  border-color: transparent;
+  border-width: 1px;
+}
+.code:hover {
+  border-style: solid;
+  border-color: black;
+  border-width: 1px;
+}
+pre {
+  margin: 1px;
+}
+</style>
+</head>
+<body>
+<h1>Timings for Functorial.v</h1>
+
+<div class="code" title="File: Functorial.v
+Line: 1
+Time: 0.096s">
+<div class="time" style="width: 1.7900428864442%"></div>
+<pre>Require Import Category.Core Functor.Core FunctorCategory.Core Functor.Pointwise Functor.Pointwise.Properties Category.Dual Category.Prod Cat.Core ExponentialLaws.Law4.Functors.</pre>
+</div>
+<div class="code" title="File: Functorial.v
+Line: 1
+Time: 0s">
+<div class="time" style="width: 0%"></div>
+<pre>
+
+Set Universe Polymorphism.</pre>
+</div>
+<div class="code" title="File: Functorial.v
+Line: 3
+Time: 0s">
+<div class="time" style="width: 0%"></div>
+<pre>
+Set Implicit Arguments.</pre>
+</div>
+<div class="code" title="File: Functorial.v
+Line: 4
+Time: 0s">
+<div class="time" style="width: 0%"></div>
+<pre>
+Generalizable All Variables.</pre>
+</div>
+<div class="code" title="File: Functorial.v
+Line: 5
+Time: 0s">
+<div class="time" style="width: 0%"></div>
+<pre>
+Set Asymmetric Patterns.</pre>
+</div>
+<div class="code" title="File: Functorial.v
+Line: 6
+Time: 0s">
+<div class="time" style="width: 0%"></div>
+<pre>
+
+Local Open Scope category_scope.</pre>
+</div>
+<div class="code" title="File: Functorial.v
+Line: 8
+Time: 0s">
+<div class="time" style="width: 0%"></div>
+<pre>
+
+Section functor.</pre>
+</div>
+<div class="code" title="File: Functorial.v
+Line: 10
+Time: 0s">
+<div class="time" style="width: 0%"></div>
+<pre>
+  Context `{fs1 : Funext}.</pre>
+</div>
+<div class="code" title="File: Functorial.v
+Line: 11
+Time: 0s">
+<div class="time" style="width: 0%"></div>
+<pre>
+
+  Variable P : PreCategory -&gt; Type.</pre>
+</div>
+<div class="code" title="File: Functorial.v
+Line: 13
+Time: 0.001s">
+<div class="time" style="width: 0.018646280067127%"></div>
+<pre>
+  Context `{forall C, IsHProp (P C)}.</pre>
+</div>
+<div class="code" title="File: Functorial.v
+Line: 14
+Time: 0.002s">
+<div class="time" style="width: 0.037292560134253%"></div>
+<pre>
+  Context `{HF : forall C D, P C -&gt; P D -&gt; IsHSet (Functor C D)}.</pre>
+</div>
+<div class="code" title="File: Functorial.v
+Line: 15
+Time: 0s">
+<div class="time" style="width: 0%"></div>
+<pre>
+
+  Local Notation cat := (sub_pre_cat P HF).</pre>
+</div>
+<div class="code" title="File: Functorial.v
+Line: 17
+Time: 0.077s">
+<div class="time" style="width: 1.4357635651687%"></div>
+<pre>
+
+  Hypothesis has_functor_categories : forall C D : cat, P (C.1 -&gt; D.1).</pre>
+</div>
+<div class="code" title="File: Functorial.v
+Line: 19
+Time: 5.363s">
+<div class="time" style="width: 100%"></div>
+<pre>
+
+  Definition functor_uncurried `{fs2 : Funext}
+  : object (@functor_category fs2 (cat^op * cat) cat)
+    := Eval cbv zeta in
+        let object_of := (fun CD =&gt; (((fst CD).1 -&gt; (snd CD).1);
+                                     has_functor_categories (fst CD) (snd CD)))
+        in Build_Functor
+             (cat^op * cat) cat
+             object_of
+             (fun CD C'D' FG =&gt; pointwise (fst FG) (snd FG))
+             (fun _ _ _ _ _ =&gt; Functor.Pointwise.Properties.composition_of _ _ _ _)
+             (fun _ =&gt; Functor.Pointwise.Properties.identity_of _ _).</pre>
+</div>
+<div class="code" title="File: Functorial.v
+Line: 31
+Time: 0.375s">
+<div class="time" style="width: 6.9923550251725%"></div>
+<pre>
+
+  Definition functor `{fs2 : Funext} : object (cat^op -&gt; (cat -&gt; cat))
+    := ExponentialLaws.Law4.Functors.inverse _ _ _ (@functor_uncurried fs2).</pre>
+</div>
+<div class="code" title="File: Functorial.v
+Line: 34
+Time: 0.023s">
+<div class="time" style="width: 0.42886444154391%"></div>
+<pre>
+End functor.</pre>
+</div>
+<div class="code" title="File: Functorial.v
+Line: 36
+Time: 0s">
+<div class="time" style="width: 0%"></div>
+<pre>
+
+</pre>
+</div>
+</body>
+</html>
+

@@ -1,0 +1,890 @@
+<html>
+<head>
+<title>Tactics.v</title>
+<style>
+.time {
+  background-color: #ffaaaa;
+  height: 100%;
+  z-index: -1;
+  position: absolute;
+}
+.code {
+  z-index: 0;
+  position: relative;
+  border-style: solid;
+  border-color: transparent;
+  border-width: 1px;
+}
+.code:hover {
+  border-style: solid;
+  border-color: black;
+  border-width: 1px;
+}
+pre {
+  margin: 1px;
+}
+</style>
+</head>
+<body>
+<h1>Timings for Tactics.v</h1>
+
+<div class="code" title="File: Tactics.v
+Line: 1
+Time: 0s">
+<div class="time" style="width: 0%"></div>
+<pre>(************************************************************************)
+(*  v      *   The Coq Proof Assistant  /  The Coq Development Team     *)
+(* &lt;O___,, *   INRIA - CNRS - LIX - LRI - PPS - Copyright 1999-2012     *)
+(*   \VV/  **************************************************************)
+(*    //   *      This file is distributed under the terms of the       *)
+(*         *       GNU Lesser General Public License Version 2.1        *)
+(************************************************************************)
+
+(************************************************************************)
+(*   This file has been modified for the purposes of the HoTT library.  *)
+(************************************************************************)
+
+</pre>
+</div>
+<div class="code" title="File: Tactics.v
+Line: 12
+Time: 0.004s">
+<div class="time" style="width: 100%"></div>
+<pre>Require Import Datatypes Specif Logic.</pre>
+</div>
+<div class="code" title="File: Tactics.v
+Line: 12
+Time: 0s">
+<div class="time" style="width: 0%"></div>
+<pre>
+
+(** This module implements various tactics used to simplify the goals produced by Program,
+   which are also generally useful. *)
+
+(** Debugging tactics to show the goal during evaluation. *)
+
+</pre>
+</div>
+<div class="code" title="File: Tactics.v
+Line: 18
+Time: 0s">
+<div class="time" style="width: 0%"></div>
+<pre>Ltac show_goal := match goal with [ |- ?T ] =&gt; idtac T end.</pre>
+</div>
+<div class="code" title="File: Tactics.v
+Line: 18
+Time: 0s">
+<div class="time" style="width: 0%"></div>
+<pre>
+
+Ltac show_hyp id :=
+  match goal with
+    | [ H := ?b : ?T |- _ ] =&gt;
+      match H with
+        | id =&gt; idtac id ":=" b ":" T
+      end
+    | [ H : ?T |- _ ] =&gt;
+      match H with
+        | id =&gt; idtac id  ":"  T
+      end
+  end.</pre>
+</div>
+<div class="code" title="File: Tactics.v
+Line: 30
+Time: 0s">
+<div class="time" style="width: 0%"></div>
+<pre>
+
+Ltac show_hyps :=
+  try match reverse goal with
+        | [ H : ?T |- _ ] =&gt; show_hyp H ; fail
+      end.</pre>
+</div>
+<div class="code" title="File: Tactics.v
+Line: 35
+Time: 0s">
+<div class="time" style="width: 0%"></div>
+<pre>
+
+(** The [do] tactic but using a Coq-side nat. *)
+
+</pre>
+</div>
+<div class="code" title="File: Tactics.v
+Line: 38
+Time: 0s">
+<div class="time" style="width: 0%"></div>
+<pre>Ltac do_nat n tac :=
+  match n with
+    | 0 =&gt; idtac
+    | S ?n' =&gt; tac ; do_nat n' tac
+  end.</pre>
+</div>
+<div class="code" title="File: Tactics.v
+Line: 42
+Time: 0s">
+<div class="time" style="width: 0%"></div>
+<pre>
+
+(** Do something on the last hypothesis, or fail *)
+
+</pre>
+</div>
+<div class="code" title="File: Tactics.v
+Line: 45
+Time: 0s">
+<div class="time" style="width: 0%"></div>
+<pre>Ltac on_last_hyp tac :=
+  match goal with [ H : _ |- _ ] =&gt; first [ tac H | fail 1 ] end.</pre>
+</div>
+<div class="code" title="File: Tactics.v
+Line: 46
+Time: 0s">
+<div class="time" style="width: 0%"></div>
+<pre>
+
+(** Destructs one pair, without care regarding naming. *)
+
+</pre>
+</div>
+<div class="code" title="File: Tactics.v
+Line: 49
+Time: 0s">
+<div class="time" style="width: 0%"></div>
+<pre>Ltac destruct_one_pair :=
+ match goal with
+   | [H : conj _ _ |- _] =&gt; destruct H
+   | [H : prod _ _ |- _] =&gt; destruct H
+ end.</pre>
+</div>
+<div class="code" title="File: Tactics.v
+Line: 53
+Time: 0s">
+<div class="time" style="width: 0%"></div>
+<pre>
+
+(** Repeateadly destruct pairs. *)
+
+</pre>
+</div>
+<div class="code" title="File: Tactics.v
+Line: 56
+Time: 0s">
+<div class="time" style="width: 0%"></div>
+<pre>Ltac destruct_pairs := repeat (destruct_one_pair).</pre>
+</div>
+<div class="code" title="File: Tactics.v
+Line: 56
+Time: 0s">
+<div class="time" style="width: 0%"></div>
+<pre>
+
+(** Destruct one existential package, keeping the name of the hypothesis for the first component. *)
+
+</pre>
+</div>
+<div class="code" title="File: Tactics.v
+Line: 59
+Time: 0s">
+<div class="time" style="width: 0%"></div>
+<pre>Ltac destruct_one_ex :=
+  let tac H := let ph := fresh "H" in (destruct H as [H ph]) in
+  let tac2 H := let ph := fresh "H" in let ph' := fresh "H" in 
+    (destruct H as [H ph ph']) 
+  in
+  let tacT H := let ph := fresh "X" in (destruct H as [H ph]) in
+  let tacT2 H := let ph := fresh "X" in let ph' := fresh "X" in 
+    (destruct H as [H ph ph']) 
+  in
+    match goal with
+      (* | [H : (ex _) |- _] =&gt; tac H *)
+      (* | [H : (sig ?P) |- _ ] =&gt; tac H *)
+      | [H : (sigT ?P) |- _ ] =&gt; tacT H
+      (* | [H : (ex2 _ _) |- _] =&gt; tac2 H *)
+      (* | [H : (sig2 ?P _) |- _ ] =&gt; tac2 H *)
+      | [H : (sigT2 ?P _) |- _ ] =&gt; tacT2 H
+    end.</pre>
+</div>
+<div class="code" title="File: Tactics.v
+Line: 75
+Time: 0s">
+<div class="time" style="width: 0%"></div>
+<pre>
+
+(** Repeateadly destruct existentials. *)
+
+</pre>
+</div>
+<div class="code" title="File: Tactics.v
+Line: 78
+Time: 0s">
+<div class="time" style="width: 0%"></div>
+<pre>Ltac destruct_exists := repeat (destruct_one_ex).</pre>
+</div>
+<div class="code" title="File: Tactics.v
+Line: 78
+Time: 0s">
+<div class="time" style="width: 0%"></div>
+<pre>
+
+(** Repeateadly destruct conjunctions and existentials. *)
+
+</pre>
+</div>
+<div class="code" title="File: Tactics.v
+Line: 81
+Time: 0s">
+<div class="time" style="width: 0%"></div>
+<pre>Ltac destruct_conjs := repeat (destruct_one_pair || destruct_one_ex).</pre>
+</div>
+<div class="code" title="File: Tactics.v
+Line: 81
+Time: 0s">
+<div class="time" style="width: 0%"></div>
+<pre>
+
+(** Destruct an existential hypothesis [t] keeping its name for the first component
+   and using [Ht] for the second *)
+
+</pre>
+</div>
+<div class="code" title="File: Tactics.v
+Line: 85
+Time: 0s">
+<div class="time" style="width: 0%"></div>
+<pre>Tactic Notation "destruct" "exist" ident(t) ident(Ht) := destruct t as [t Ht].</pre>
+</div>
+<div class="code" title="File: Tactics.v
+Line: 85
+Time: 0s">
+<div class="time" style="width: 0%"></div>
+<pre>
+
+(** Destruct a disjunction keeping its name in both subgoals. *)
+
+</pre>
+</div>
+<div class="code" title="File: Tactics.v
+Line: 88
+Time: 0s">
+<div class="time" style="width: 0%"></div>
+<pre>Tactic Notation "destruct" "or" ident(H) := destruct H as [H|H].</pre>
+</div>
+<div class="code" title="File: Tactics.v
+Line: 88
+Time: 0s">
+<div class="time" style="width: 0%"></div>
+<pre>
+
+(** Discriminate that also work on a [x &lt;&gt; x] hypothesis. *)
+
+</pre>
+</div>
+<div class="code" title="File: Tactics.v
+Line: 91
+Time: 0s">
+<div class="time" style="width: 0%"></div>
+<pre>Ltac discriminates :=
+  match goal with
+    (* | [ H : ?x &lt;&gt; ?x |- _ ] =&gt; elim H ; reflexivity *)
+    | _ =&gt; discriminate
+  end.</pre>
+</div>
+<div class="code" title="File: Tactics.v
+Line: 95
+Time: 0s">
+<div class="time" style="width: 0%"></div>
+<pre>
+
+(** Revert the last hypothesis. *)
+
+</pre>
+</div>
+<div class="code" title="File: Tactics.v
+Line: 98
+Time: 0s">
+<div class="time" style="width: 0%"></div>
+<pre>Ltac revert_last :=
+  match goal with
+    [ H : _ |- _ ] =&gt; revert H
+  end.</pre>
+</div>
+<div class="code" title="File: Tactics.v
+Line: 101
+Time: 0s">
+<div class="time" style="width: 0%"></div>
+<pre>
+
+(** Repeatedly reverse the last hypothesis, putting everything in the goal. *)
+
+</pre>
+</div>
+<div class="code" title="File: Tactics.v
+Line: 104
+Time: 0s">
+<div class="time" style="width: 0%"></div>
+<pre>Ltac reverse := repeat revert_last.</pre>
+</div>
+<div class="code" title="File: Tactics.v
+Line: 104
+Time: 0s">
+<div class="time" style="width: 0%"></div>
+<pre>
+
+(** Reverse everything up to hypothesis id (not included). *)
+
+</pre>
+</div>
+<div class="code" title="File: Tactics.v
+Line: 107
+Time: 0s">
+<div class="time" style="width: 0%"></div>
+<pre>Ltac revert_until id :=
+  on_last_hyp ltac:(fun id' =&gt;
+    match id' with
+      | id =&gt; idtac
+      | _ =&gt; revert id' ; revert_until id
+    end).</pre>
+</div>
+<div class="code" title="File: Tactics.v
+Line: 112
+Time: 0s">
+<div class="time" style="width: 0%"></div>
+<pre>
+
+(** Clear duplicated hypotheses *)
+
+</pre>
+</div>
+<div class="code" title="File: Tactics.v
+Line: 115
+Time: 0s">
+<div class="time" style="width: 0%"></div>
+<pre>Ltac clear_dup :=
+  match goal with
+    | [ H : ?X |- _ ] =&gt;
+      match goal with
+        | [ H' : ?Y |- _ ] =&gt;
+          match H with
+            | H' =&gt; fail 2
+            | _ =&gt; unify X Y ; (clear H' || clear H)
+          end
+      end
+  end.</pre>
+</div>
+<div class="code" title="File: Tactics.v
+Line: 125
+Time: 0s">
+<div class="time" style="width: 0%"></div>
+<pre>
+
+Ltac clear_dups := repeat clear_dup.</pre>
+</div>
+<div class="code" title="File: Tactics.v
+Line: 127
+Time: 0s">
+<div class="time" style="width: 0%"></div>
+<pre>
+
+(** Try to clear everything except some hyp *)
+
+</pre>
+</div>
+<div class="code" title="File: Tactics.v
+Line: 130
+Time: 0s">
+<div class="time" style="width: 0%"></div>
+<pre>Ltac clear_except hyp := 
+  repeat match goal with [ H : _ |- _ ] =&gt;
+           match H with
+             | hyp =&gt; fail 1
+             | _ =&gt; clear H
+           end
+         end.</pre>
+</div>
+<div class="code" title="File: Tactics.v
+Line: 136
+Time: 0s">
+<div class="time" style="width: 0%"></div>
+<pre>
+
+(** A non-failing subst that substitutes as much as possible. *)
+
+</pre>
+</div>
+<div class="code" title="File: Tactics.v
+Line: 139
+Time: 0s">
+<div class="time" style="width: 0%"></div>
+<pre>Ltac subst_no_fail := idtac.</pre>
+</div>
+<div class="code" title="File: Tactics.v
+Line: 139
+Time: 0s">
+<div class="time" style="width: 0%"></div>
+<pre>
+  (* repeat (match goal with *)
+  (*           [ H : ?X = ?Y |- _ ] =&gt; subst X || subst Y *)
+  (*         end). *)
+
+</pre>
+</div>
+<div class="code" title="File: Tactics.v
+Line: 143
+Time: 0s">
+<div class="time" style="width: 0%"></div>
+<pre>Tactic Notation "subst" "*" := subst_no_fail.</pre>
+</div>
+<div class="code" title="File: Tactics.v
+Line: 143
+Time: 0s">
+<div class="time" style="width: 0%"></div>
+<pre>
+
+Ltac on_application f tac T :=
+  match T with
+    | context [f ?x ?y ?z ?w ?v ?u ?a ?b ?c] =&gt; tac (f x y z w v u a b c)
+    | context [f ?x ?y ?z ?w ?v ?u ?a ?b] =&gt; tac (f x y z w v u a b)
+    | context [f ?x ?y ?z ?w ?v ?u ?a] =&gt; tac (f x y z w v u a)
+    | context [f ?x ?y ?z ?w ?v ?u] =&gt; tac (f x y z w v u)
+    | context [f ?x ?y ?z ?w ?v] =&gt; tac (f x y z w v)
+    | context [f ?x ?y ?z ?w] =&gt; tac (f x y z w)
+    | context [f ?x ?y ?z] =&gt; tac (f x y z)
+    | context [f ?x ?y] =&gt; tac (f x y)
+    | context [f ?x] =&gt; tac (f x)
+  end.</pre>
+</div>
+<div class="code" title="File: Tactics.v
+Line: 156
+Time: 0s">
+<div class="time" style="width: 0%"></div>
+<pre>
+
+(** A variant of [apply] using [refine], doing as much conversion as necessary. *)
+
+</pre>
+</div>
+<div class="code" title="File: Tactics.v
+Line: 159
+Time: 0s">
+<div class="time" style="width: 0%"></div>
+<pre>Ltac rapply p :=
+  refine (p _ _ _ _ _ _ _ _ _ _ _ _ _ _ _) ||
+  refine (p _ _ _ _ _ _ _ _ _ _ _ _ _ _) ||
+  refine (p _ _ _ _ _ _ _ _ _ _ _ _ _) ||
+  refine (p _ _ _ _ _ _ _ _ _ _ _ _) ||
+  refine (p _ _ _ _ _ _ _ _ _ _ _) ||
+  refine (p _ _ _ _ _ _ _ _ _ _) ||
+  refine (p _ _ _ _ _ _ _ _ _) ||
+  refine (p _ _ _ _ _ _ _ _) ||
+  refine (p _ _ _ _ _ _ _) ||
+  refine (p _ _ _ _ _ _) ||
+  refine (p _ _ _ _ _) ||
+  refine (p _ _ _ _) ||
+  refine (p _ _ _) ||
+  refine (p _ _) ||
+  refine (p _) ||
+  refine p.</pre>
+</div>
+<div class="code" title="File: Tactics.v
+Line: 175
+Time: 0s">
+<div class="time" style="width: 0%"></div>
+<pre>
+
+(** Tactical [on_call f tac] applies [tac] on any application of [f] in the hypothesis or goal. *)
+
+</pre>
+</div>
+<div class="code" title="File: Tactics.v
+Line: 178
+Time: 0s">
+<div class="time" style="width: 0%"></div>
+<pre>Ltac on_call f tac :=
+  match goal with
+    | |- ?T  =&gt; on_application f tac T
+    | H : ?T |- _  =&gt; on_application f tac T
+  end.</pre>
+</div>
+<div class="code" title="File: Tactics.v
+Line: 182
+Time: 0s">
+<div class="time" style="width: 0%"></div>
+<pre>
+
+(* Destructs calls to f in hypothesis or conclusion, useful if f creates a subset object. *)
+
+</pre>
+</div>
+<div class="code" title="File: Tactics.v
+Line: 185
+Time: 0s">
+<div class="time" style="width: 0%"></div>
+<pre>Ltac destruct_call f :=
+  let tac t := (destruct t) in on_call f tac.</pre>
+</div>
+<div class="code" title="File: Tactics.v
+Line: 186
+Time: 0s">
+<div class="time" style="width: 0%"></div>
+<pre>
+
+Ltac destruct_calls f := repeat destruct_call f.</pre>
+</div>
+<div class="code" title="File: Tactics.v
+Line: 188
+Time: 0s">
+<div class="time" style="width: 0%"></div>
+<pre>
+
+Ltac destruct_call_in f H :=
+  let tac t := (destruct t) in
+  let T := type of H in
+    on_application f tac T.</pre>
+</div>
+<div class="code" title="File: Tactics.v
+Line: 193
+Time: 0s">
+<div class="time" style="width: 0%"></div>
+<pre>
+
+Ltac destruct_call_as f l :=
+  let tac t := (destruct t as l) in on_call f tac.</pre>
+</div>
+<div class="code" title="File: Tactics.v
+Line: 196
+Time: 0s">
+<div class="time" style="width: 0%"></div>
+<pre>
+
+Ltac destruct_call_as_in f l H :=
+  let tac t := (destruct t as l) in
+  let T := type of H in
+    on_application f tac T.</pre>
+</div>
+<div class="code" title="File: Tactics.v
+Line: 201
+Time: 0s">
+<div class="time" style="width: 0%"></div>
+<pre>
+
+Tactic Notation "destruct_call" constr(f) := destruct_call f.</pre>
+</div>
+<div class="code" title="File: Tactics.v
+Line: 203
+Time: 0s">
+<div class="time" style="width: 0%"></div>
+<pre>
+
+(** Permit to name the results of destructing the call to [f]. *)
+
+</pre>
+</div>
+<div class="code" title="File: Tactics.v
+Line: 206
+Time: 0s">
+<div class="time" style="width: 0%"></div>
+<pre>Tactic Notation "destruct_call" constr(f) "as" simple_intropattern(l) :=
+  destruct_call_as f l.</pre>
+</div>
+<div class="code" title="File: Tactics.v
+Line: 207
+Time: 0s">
+<div class="time" style="width: 0%"></div>
+<pre>
+
+(** Specify the hypothesis in which the call occurs as well. *)
+
+</pre>
+</div>
+<div class="code" title="File: Tactics.v
+Line: 210
+Time: 0s">
+<div class="time" style="width: 0%"></div>
+<pre>Tactic Notation "destruct_call" constr(f) "in" hyp(id) :=
+  destruct_call_in f id.</pre>
+</div>
+<div class="code" title="File: Tactics.v
+Line: 211
+Time: 0s">
+<div class="time" style="width: 0%"></div>
+<pre>
+
+Tactic Notation "destruct_call" constr(f) "as" simple_intropattern(l) "in" hyp(id) :=
+  destruct_call_as_in f l id.</pre>
+</div>
+<div class="code" title="File: Tactics.v
+Line: 214
+Time: 0s">
+<div class="time" style="width: 0%"></div>
+<pre>
+
+(** A marker for prototypes to destruct. *)
+
+</pre>
+</div>
+<div class="code" title="File: Tactics.v
+Line: 217
+Time: 0s">
+<div class="time" style="width: 0%"></div>
+<pre>Definition fix_proto {A : Type} (a : A) := a.</pre>
+</div>
+<div class="code" title="File: Tactics.v
+Line: 217
+Time: 0s">
+<div class="time" style="width: 0%"></div>
+<pre>
+
+Ltac destruct_rec_calls :=
+  match goal with
+    | [ H : fix_proto _ |- _ ] =&gt; destruct_calls H ; clear H
+  end.</pre>
+</div>
+<div class="code" title="File: Tactics.v
+Line: 222
+Time: 0s">
+<div class="time" style="width: 0%"></div>
+<pre>
+
+Ltac destruct_all_rec_calls :=
+  repeat destruct_rec_calls ; unfold fix_proto in *.</pre>
+</div>
+<div class="code" title="File: Tactics.v
+Line: 225
+Time: 0s">
+<div class="time" style="width: 0%"></div>
+<pre>
+
+(** Try to inject any potential constructor equality hypothesis. *)
+
+</pre>
+</div>
+<div class="code" title="File: Tactics.v
+Line: 228
+Time: 0s">
+<div class="time" style="width: 0%"></div>
+<pre>Ltac autoinjection tac := idtac.</pre>
+</div>
+<div class="code" title="File: Tactics.v
+Line: 228
+Time: 0s">
+<div class="time" style="width: 0%"></div>
+<pre>
+  (* match goal with *)
+  (*   | [ H : ?f ?a = ?f' ?a' |- _ ] =&gt; tac H *)
+  (* end. *)
+
+</pre>
+</div>
+<div class="code" title="File: Tactics.v
+Line: 232
+Time: 0s">
+<div class="time" style="width: 0%"></div>
+<pre>Ltac inject H := progress (inversion H ; subst*; clear_dups) ; clear H.</pre>
+</div>
+<div class="code" title="File: Tactics.v
+Line: 232
+Time: 0s">
+<div class="time" style="width: 0%"></div>
+<pre>
+
+Ltac autoinjections := repeat (clear_dups ; autoinjection ltac:inject).</pre>
+</div>
+<div class="code" title="File: Tactics.v
+Line: 234
+Time: 0s">
+<div class="time" style="width: 0%"></div>
+<pre>
+
+(** Destruct an hypothesis by first copying it to avoid dependencies. *)
+
+</pre>
+</div>
+<div class="code" title="File: Tactics.v
+Line: 237
+Time: 0s">
+<div class="time" style="width: 0%"></div>
+<pre>Ltac destruct_nondep H := let H0 := fresh "H" in assert(H0 := H); destruct H0.</pre>
+</div>
+<div class="code" title="File: Tactics.v
+Line: 237
+Time: 0s">
+<div class="time" style="width: 0%"></div>
+<pre>
+
+(** If bang appears in the goal, it means that we have a proof of False and the goal is solved. *)
+
+</pre>
+</div>
+<div class="code" title="File: Tactics.v
+Line: 240
+Time: 0s">
+<div class="time" style="width: 0%"></div>
+<pre>Ltac bang :=
+  match goal with
+    | |- ?x =&gt;
+      match x with
+        | appcontext [False_rect _ ?p] =&gt; elim p
+      end
+  end.</pre>
+</div>
+<div class="code" title="File: Tactics.v
+Line: 246
+Time: 0s">
+<div class="time" style="width: 0%"></div>
+<pre>
+
+(** A tactic to show contradiction by first asserting an automatically provable hypothesis. *)</pre>
+</div>
+<div class="code" title="File: Tactics.v
+Line: 248
+Time: 0s">
+<div class="time" style="width: 0%"></div>
+<pre>Tactic Notation "contradiction" "by" constr(t) :=
+  let H := fresh in assert t as H by auto with * ; contradiction.</pre>
+</div>
+<div class="code" title="File: Tactics.v
+Line: 249
+Time: 0s">
+<div class="time" style="width: 0%"></div>
+<pre>
+
+(** A tactic that adds [H:=p:typeof(p)] to the context if no hypothesis of the same type appears in the goal.
+   Useful to do saturation using tactics. *)
+
+</pre>
+</div>
+<div class="code" title="File: Tactics.v
+Line: 253
+Time: 0s">
+<div class="time" style="width: 0%"></div>
+<pre>Ltac add_hypothesis H' p :=
+  match type of p with
+    ?X =&gt;
+    match goal with
+      | [ H : X |- _ ] =&gt; fail 1
+      | _ =&gt; set (H':=p) ; try (change p with H') ; clearbody H'
+    end
+  end.</pre>
+</div>
+<div class="code" title="File: Tactics.v
+Line: 260
+Time: 0s">
+<div class="time" style="width: 0%"></div>
+<pre>
+
+(** A tactic to replace an hypothesis by another term. *)
+
+</pre>
+</div>
+<div class="code" title="File: Tactics.v
+Line: 263
+Time: 0s">
+<div class="time" style="width: 0%"></div>
+<pre>Ltac replace_hyp H c :=
+  let H' := fresh "H" in
+    assert(H' := c) ; clear H ; rename H' into H.</pre>
+</div>
+<div class="code" title="File: Tactics.v
+Line: 265
+Time: 0s">
+<div class="time" style="width: 0%"></div>
+<pre>
+
+(** A tactic to refine an hypothesis by supplying some of its arguments. *)
+
+</pre>
+</div>
+<div class="code" title="File: Tactics.v
+Line: 268
+Time: 0s">
+<div class="time" style="width: 0%"></div>
+<pre>Ltac refine_hyp c :=
+  let tac H := replace_hyp H c in
+    match c with
+      | ?H _ =&gt; tac H
+      | ?H _ _ =&gt; tac H
+      | ?H _ _ _ =&gt; tac H
+      | ?H _ _ _ _ =&gt; tac H
+      | ?H _ _ _ _ _ =&gt; tac H
+      | ?H _ _ _ _ _ _ =&gt; tac H
+      | ?H _ _ _ _ _ _ _ =&gt; tac H
+      | ?H _ _ _ _ _ _ _ _ =&gt; tac H
+    end.</pre>
+</div>
+<div class="code" title="File: Tactics.v
+Line: 279
+Time: 0s">
+<div class="time" style="width: 0%"></div>
+<pre>
+
+(** The default simplification tactic used by Program is defined by [program_simpl], sometimes [auto]
+   is not enough, better rebind using [Obligation Tactic := tac] in this case,
+   possibly using [program_simplify] to use standard goal-cleaning tactics. *)
+
+</pre>
+</div>
+<div class="code" title="File: Tactics.v
+Line: 284
+Time: 0s">
+<div class="time" style="width: 0%"></div>
+<pre>Ltac program_simplify :=
+simpl; intros ; destruct_all_rec_calls ; repeat (destruct_conjs; simpl proj1_sig in * );
+  subst*; autoinjections ; try discriminates ;
+    try (solve [ red ; intros ; destruct_conjs ; autoinjections ; discriminates ]).</pre>
+</div>
+<div class="code" title="File: Tactics.v
+Line: 287
+Time: 0s">
+<div class="time" style="width: 0%"></div>
+<pre>
+
+(** Restrict automation to propositional obligations. *)
+
+</pre>
+</div>
+<div class="code" title="File: Tactics.v
+Line: 290
+Time: 0s">
+<div class="time" style="width: 0%"></div>
+<pre>Ltac program_solve_wf :=
+  match goal with
+    (* | |- well_founded _ =&gt; auto with * *)
+    | |- ?T =&gt; match type of T with Prop =&gt; auto end
+  end.</pre>
+</div>
+<div class="code" title="File: Tactics.v
+Line: 294
+Time: 0s">
+<div class="time" style="width: 0%"></div>
+<pre>
+
+Create HintDb program discriminated.</pre>
+</div>
+<div class="code" title="File: Tactics.v
+Line: 296
+Time: 0s">
+<div class="time" style="width: 0%"></div>
+<pre>
+
+Ltac program_simpl := program_simplify ; try typeclasses eauto with program ; try program_solve_wf.</pre>
+</div>
+<div class="code" title="File: Tactics.v
+Line: 298
+Time: 0s">
+<div class="time" style="width: 0%"></div>
+<pre>
+
+Obligation Tactic := program_simpl.</pre>
+</div>
+<div class="code" title="File: Tactics.v
+Line: 300
+Time: 0s">
+<div class="time" style="width: 0%"></div>
+<pre>
+
+Definition obligation (A : Type) {a : A} := a.</pre>
+</div>
+</body>
+</html>
+

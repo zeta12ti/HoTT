@@ -1,0 +1,251 @@
+<html>
+<head>
+<title>Functors.v</title>
+<style>
+.time {
+  background-color: #ffaaaa;
+  height: 100%;
+  z-index: -1;
+  position: absolute;
+}
+.code {
+  z-index: 0;
+  position: relative;
+  border-style: solid;
+  border-color: transparent;
+  border-width: 1px;
+}
+.code:hover {
+  border-style: solid;
+  border-color: black;
+  border-width: 1px;
+}
+pre {
+  margin: 1px;
+}
+</style>
+</head>
+<body>
+<h1>Timings for Functors.v</h1>
+
+<div class="code" title="File: Functors.v
+Line: 1
+Time: 0.006s">
+<div class="time" style="width: 3.0456852791878%"></div>
+<pre>Require Import Category.Core Functor.Core NaturalTransformation.Core.</pre>
+</div>
+<div class="code" title="File: Functors.v
+Line: 1
+Time: 0.082s">
+<div class="time" style="width: 41.624365482234%"></div>
+<pre>
+Require Import KanExtensions.Core.</pre>
+</div>
+<div class="code" title="File: Functors.v
+Line: 2
+Time: 0.007s">
+<div class="time" style="width: 3.5532994923858%"></div>
+<pre>
+Require Import Adjoint.UniversalMorphisms.</pre>
+</div>
+<div class="code" title="File: Functors.v
+Line: 3
+Time: 0s">
+<div class="time" style="width: 0%"></div>
+<pre>
+Require Import FunctorCategory.Core.</pre>
+</div>
+<div class="code" title="File: Functors.v
+Line: 4
+Time: 0s">
+<div class="time" style="width: 0%"></div>
+<pre>
+Require Import Adjoint.Core.</pre>
+</div>
+<div class="code" title="File: Functors.v
+Line: 5
+Time: 0s">
+<div class="time" style="width: 0%"></div>
+<pre>
+
+Set Universe Polymorphism.</pre>
+</div>
+<div class="code" title="File: Functors.v
+Line: 7
+Time: 0s">
+<div class="time" style="width: 0%"></div>
+<pre>
+Set Implicit Arguments.</pre>
+</div>
+<div class="code" title="File: Functors.v
+Line: 8
+Time: 0s">
+<div class="time" style="width: 0%"></div>
+<pre>
+Generalizable All Variables.</pre>
+</div>
+<div class="code" title="File: Functors.v
+Line: 9
+Time: 0s">
+<div class="time" style="width: 0%"></div>
+<pre>
+Set Asymmetric Patterns.</pre>
+</div>
+<div class="code" title="File: Functors.v
+Line: 10
+Time: 0s">
+<div class="time" style="width: 0%"></div>
+<pre>
+
+(** Kan extensions assemble into functors *)
+
+</pre>
+</div>
+<div class="code" title="File: Functors.v
+Line: 13
+Time: 0s">
+<div class="time" style="width: 0%"></div>
+<pre>Section kan_extension_functors.</pre>
+</div>
+<div class="code" title="File: Functors.v
+Line: 13
+Time: 0s">
+<div class="time" style="width: 0%"></div>
+<pre>
+  Context `{Funext}.</pre>
+</div>
+<div class="code" title="File: Functors.v
+Line: 14
+Time: 0s">
+<div class="time" style="width: 0%"></div>
+<pre>
+  Variable C  : PreCategory.</pre>
+</div>
+<div class="code" title="File: Functors.v
+Line: 15
+Time: 0s">
+<div class="time" style="width: 0%"></div>
+<pre>
+  Variable C' : PreCategory.</pre>
+</div>
+<div class="code" title="File: Functors.v
+Line: 16
+Time: 0s">
+<div class="time" style="width: 0%"></div>
+<pre>
+  Variable D  : PreCategory.</pre>
+</div>
+<div class="code" title="File: Functors.v
+Line: 17
+Time: 0.021s">
+<div class="time" style="width: 10.659898477157%"></div>
+<pre>
+  Variable p : object (C -&gt; C').</pre>
+</div>
+<div class="code" title="File: Functors.v
+Line: 18
+Time: 0s">
+<div class="time" style="width: 0%"></div>
+<pre>
+
+  Section lan.</pre>
+</div>
+<div class="code" title="File: Functors.v
+Line: 20
+Time: 0.177s">
+<div class="time" style="width: 89.847715736041%"></div>
+<pre>
+    Context `(has_left_kan_extensions
+              : forall h : object (C -&gt; D),
+                  @IsLeftKanExtensionAlong _ _ _ _ p h (left_kan_extensions h)).</pre>
+</div>
+<div class="code" title="File: Functors.v
+Line: 23
+Time: 0.124s">
+<div class="time" style="width: 62.944162436548%"></div>
+<pre>
+
+    Definition left_kan_extension_functor
+    : Functor (C -&gt; D) (C' -&gt; D)
+      := functor__of__initial_morphism has_left_kan_extensions.</pre>
+</div>
+<div class="code" title="File: Functors.v
+Line: 27
+Time: 0.176s">
+<div class="time" style="width: 89.340101522843%"></div>
+<pre>
+
+    Definition left_kan_extension_adjunction
+    : left_kan_extension_functor -| pullback_along D p
+      := adjunction__of__initial_morphism has_left_kan_extensions.</pre>
+</div>
+<div class="code" title="File: Functors.v
+Line: 31
+Time: 0.008s">
+<div class="time" style="width: 4.0609137055838%"></div>
+<pre>
+  End lan.</pre>
+</div>
+<div class="code" title="File: Functors.v
+Line: 32
+Time: 0s">
+<div class="time" style="width: 0%"></div>
+<pre>
+
+
+  Section ran.</pre>
+</div>
+<div class="code" title="File: Functors.v
+Line: 35
+Time: 0.127s">
+<div class="time" style="width: 64.467005076142%"></div>
+<pre>
+    Context `(has_right_kan_extensions
+              : forall h : object (C -&gt; D),
+                  @IsRightKanExtensionAlong _ _ _ _ p h (right_kan_extensions h)).</pre>
+</div>
+<div class="code" title="File: Functors.v
+Line: 38
+Time: 0.13s">
+<div class="time" style="width: 65.989847715736%"></div>
+<pre>
+
+    Definition right_kan_extension_functor
+    : Functor (C -&gt; D) (C' -&gt; D)
+      := functor__of__terminal_morphism has_right_kan_extensions.</pre>
+</div>
+<div class="code" title="File: Functors.v
+Line: 42
+Time: 0.197s">
+<div class="time" style="width: 100%"></div>
+<pre>
+
+    Definition right_kan_extension_adjunction
+    : pullback_along D p -| right_kan_extension_functor
+      := adjunction__of__terminal_morphism has_right_kan_extensions.</pre>
+</div>
+<div class="code" title="File: Functors.v
+Line: 46
+Time: 0.008s">
+<div class="time" style="width: 4.0609137055838%"></div>
+<pre>
+  End ran.</pre>
+</div>
+<div class="code" title="File: Functors.v
+Line: 47
+Time: 0.047s">
+<div class="time" style="width: 23.857868020305%"></div>
+<pre>
+End kan_extension_functors.</pre>
+</div>
+<div class="code" title="File: Functors.v
+Line: 49
+Time: 0s">
+<div class="time" style="width: 0%"></div>
+<pre>
+
+</pre>
+</div>
+</body>
+</html>
+

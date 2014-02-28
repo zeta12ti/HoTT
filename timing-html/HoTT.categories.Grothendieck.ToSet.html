@@ -1,0 +1,418 @@
+<html>
+<head>
+<title>ToSet.v</title>
+<style>
+.time {
+  background-color: #ffaaaa;
+  height: 100%;
+  z-index: -1;
+  position: absolute;
+}
+.code {
+  z-index: 0;
+  position: relative;
+  border-style: solid;
+  border-color: transparent;
+  border-width: 1px;
+}
+.code:hover {
+  border-style: solid;
+  border-color: black;
+  border-width: 1px;
+}
+pre {
+  margin: 1px;
+}
+</style>
+</head>
+<body>
+<h1>Timings for ToSet.v</h1>
+
+<div class="code" title="File: ToSet.v
+Line: 1
+Time: 0.005s">
+<div class="time" style="width: 0.13642564802183%"></div>
+<pre>Require Import Category.Core Functor.Core.</pre>
+</div>
+<div class="code" title="File: ToSet.v
+Line: 1
+Time: 0.027s">
+<div class="time" style="width: 0.73669849931787%"></div>
+<pre>
+Require Import SetCategory.Core.</pre>
+</div>
+<div class="code" title="File: ToSet.v
+Line: 2
+Time: 0.001s">
+<div class="time" style="width: 0.027285129604366%"></div>
+<pre>
+Require Import HSet types.Sigma.</pre>
+</div>
+<div class="code" title="File: ToSet.v
+Line: 3
+Time: 0s">
+<div class="time" style="width: 0%"></div>
+<pre>
+
+Set Universe Polymorphism.</pre>
+</div>
+<div class="code" title="File: ToSet.v
+Line: 5
+Time: 0s">
+<div class="time" style="width: 0%"></div>
+<pre>
+Set Implicit Arguments.</pre>
+</div>
+<div class="code" title="File: ToSet.v
+Line: 6
+Time: 0s">
+<div class="time" style="width: 0%"></div>
+<pre>
+Generalizable All Variables.</pre>
+</div>
+<div class="code" title="File: ToSet.v
+Line: 7
+Time: 0s">
+<div class="time" style="width: 0%"></div>
+<pre>
+Set Asymmetric Patterns.</pre>
+</div>
+<div class="code" title="File: ToSet.v
+Line: 8
+Time: 0s">
+<div class="time" style="width: 0%"></div>
+<pre>
+
+Local Open Scope morphism_scope.</pre>
+</div>
+<div class="code" title="File: ToSet.v
+Line: 10
+Time: 0s">
+<div class="time" style="width: 0%"></div>
+<pre>
+
+Section Grothendieck.</pre>
+</div>
+<div class="code" title="File: ToSet.v
+Line: 12
+Time: 0s">
+<div class="time" style="width: 0%"></div>
+<pre>
+  Context `{Funext}.</pre>
+</div>
+<div class="code" title="File: ToSet.v
+Line: 13
+Time: 0s">
+<div class="time" style="width: 0%"></div>
+<pre>
+
+  (**
+     Quoting Wikipedia:
+
+     The Grothendieck construction is an auxiliary construction used
+     in the mathematical field of category theory.
+
+     Let
+
+&lt;&lt;
+     F : C → Set
+&gt;&gt;
+
+     be a functor from any small category to the category of sets.
+     The Grothendieck construct for [F] is the category [Γ F] whose
+     objects are pairs [(c, x)], where [c : C] is an object and [x : F
+     c] is an element, and for which the set [Hom (Γ F) (c1, x1) (c2,
+     x2)] is the set of morphisms [f : c1 → c2] in [C] such that
+     [F₁ f x1 = x2].  *)
+
+ </pre>
+</div>
+<div class="code" title="File: ToSet.v
+Line: 34
+Time: 0s">
+<div class="time" style="width: 0%"></div>
+<pre>Variable C : PreCategory.</pre>
+</div>
+<div class="code" title="File: ToSet.v
+Line: 34
+Time: 0.001s">
+<div class="time" style="width: 0.027285129604366%"></div>
+<pre>
+  Variable F : Functor C set_cat.</pre>
+</div>
+<div class="code" title="File: ToSet.v
+Line: 35
+Time: 0.009s">
+<div class="time" style="width: 0.24556616643929%"></div>
+<pre>
+
+  Record Pair :=
+    {
+      c : C;
+      x : F c
+    }.</pre>
+</div>
+<div class="code" title="File: ToSet.v
+Line: 41
+Time: 0s">
+<div class="time" style="width: 0%"></div>
+<pre>
+
+  Local Notation morphism s d :=
+    { f : morphism C s.(c) d.(c)
+    | morphism_of F f s.(x) = d.(x) }.</pre>
+</div>
+<div class="code" title="File: ToSet.v
+Line: 45
+Time: 0.023s">
+<div class="time" style="width: 0.62755798090041%"></div>
+<pre>
+
+  Definition compose_H s d d'
+             (m1 : morphism d d')
+             (m2 : morphism s d)
+  : (F _1 (m1 .1 o m2 .1)) s.(x) = d'.(x).</pre>
+</div>
+<div class="code" title="File: ToSet.v
+Line: 50
+Time: 0s">
+<div class="time" style="width: 0%"></div>
+<pre>
+  Proof.</pre>
+</div>
+<div class="code" title="File: ToSet.v
+Line: 51
+Time: 0.139s">
+<div class="time" style="width: 3.7926330150068%"></div>
+<pre>
+    etransitivity; [ | exact (m1.2) ].</pre>
+</div>
+<div class="code" title="File: ToSet.v
+Line: 52
+Time: 0.218s">
+<div class="time" style="width: 5.9481582537517%"></div>
+<pre>
+    etransitivity; [ | apply ap; exact (m2.2) ].</pre>
+</div>
+<div class="code" title="File: ToSet.v
+Line: 53
+Time: 0.022s">
+<div class="time" style="width: 0.60027285129604%"></div>
+<pre>
+    match goal with
+      | [ |- ?f ?x = ?g (?h ?x) ] =&gt; change (f x = (g o h) x)
+    end.</pre>
+</div>
+<div class="code" title="File: ToSet.v
+Line: 56
+Time: 0.172s">
+<div class="time" style="width: 4.6930422919509%"></div>
+<pre>
+    match goal with
+      | [ |- ?f ?x = ?g ?x ] =&gt; apply (@apD10 _ _ f g)
+    end.</pre>
+</div>
+<div class="code" title="File: ToSet.v
+Line: 59
+Time: 0.031s">
+<div class="time" style="width: 0.84583901773533%"></div>
+<pre>
+    apply (composition_of F).</pre>
+</div>
+<div class="code" title="File: ToSet.v
+Line: 60
+Time: 0.086s">
+<div class="time" style="width: 2.3465211459754%"></div>
+<pre>
+  Defined.</pre>
+</div>
+<div class="code" title="File: ToSet.v
+Line: 61
+Time: 0.012s">
+<div class="time" style="width: 0.32742155525239%"></div>
+<pre>
+
+  Definition compose s d d'
+             (m1 : morphism d d')
+             (m2 : morphism s d)
+  : morphism s d'.</pre>
+</div>
+<div class="code" title="File: ToSet.v
+Line: 66
+Time: 0s">
+<div class="time" style="width: 0%"></div>
+<pre>
+  Proof.</pre>
+</div>
+<div class="code" title="File: ToSet.v
+Line: 67
+Time: 0.029s">
+<div class="time" style="width: 0.7912687585266%"></div>
+<pre>
+    exists (m1.1 o m2.1).</pre>
+</div>
+<div class="code" title="File: ToSet.v
+Line: 68
+Time: 0.005s">
+<div class="time" style="width: 0.13642564802183%"></div>
+<pre>
+    apply compose_H.</pre>
+</div>
+<div class="code" title="File: ToSet.v
+Line: 69
+Time: 0.024s">
+<div class="time" style="width: 0.65484311050477%"></div>
+<pre>
+  Defined.</pre>
+</div>
+<div class="code" title="File: ToSet.v
+Line: 70
+Time: 0.01s">
+<div class="time" style="width: 0.27285129604366%"></div>
+<pre>
+
+  Definition identity_H s
+    := apD10 (identity_of F s.(c)) s.(x).</pre>
+</div>
+<div class="code" title="File: ToSet.v
+Line: 73
+Time: 0.004s">
+<div class="time" style="width: 0.10914051841746%"></div>
+<pre>
+
+  Definition identity s : morphism s s.</pre>
+</div>
+<div class="code" title="File: ToSet.v
+Line: 75
+Time: 0s">
+<div class="time" style="width: 0%"></div>
+<pre>
+  Proof.</pre>
+</div>
+<div class="code" title="File: ToSet.v
+Line: 76
+Time: 0.007s">
+<div class="time" style="width: 0.19099590723056%"></div>
+<pre>
+    exists 1.</pre>
+</div>
+<div class="code" title="File: ToSet.v
+Line: 77
+Time: 0.002s">
+<div class="time" style="width: 0.054570259208731%"></div>
+<pre>
+    apply identity_H.</pre>
+</div>
+<div class="code" title="File: ToSet.v
+Line: 78
+Time: 0.005s">
+<div class="time" style="width: 0.13642564802183%"></div>
+<pre>
+  Defined.</pre>
+</div>
+<div class="code" title="File: ToSet.v
+Line: 79
+Time: 0s">
+<div class="time" style="width: 0%"></div>
+<pre>
+
+  Global Arguments compose_H : simpl never.</pre>
+</div>
+<div class="code" title="File: ToSet.v
+Line: 81
+Time: 0s">
+<div class="time" style="width: 0%"></div>
+<pre>
+  Global Arguments identity_H : simpl never.</pre>
+</div>
+<div class="code" title="File: ToSet.v
+Line: 82
+Time: 0s">
+<div class="time" style="width: 0%"></div>
+<pre>
+  Global Arguments identity _ / .</pre>
+</div>
+<div class="code" title="File: ToSet.v
+Line: 83
+Time: 0s">
+<div class="time" style="width: 0%"></div>
+<pre>
+  Global Arguments compose _ _ _ _ _ / .</pre>
+</div>
+<div class="code" title="File: ToSet.v
+Line: 84
+Time: 0s">
+<div class="time" style="width: 0%"></div>
+<pre>
+
+  Definition category : PreCategory.</pre>
+</div>
+<div class="code" title="File: ToSet.v
+Line: 86
+Time: 0s">
+<div class="time" style="width: 0%"></div>
+<pre>
+  Proof.</pre>
+</div>
+<div class="code" title="File: ToSet.v
+Line: 87
+Time: 3.665s">
+<div class="time" style="width: 100%"></div>
+<pre>
+    refine (@Build_PreCategory
+              Pair
+              (fun s d =&gt; morphism s d)
+              identity
+              compose
+              _
+              _
+              _
+              _);
+    abstract (
+        repeat intro;
+        apply path_sigma_uncurried; simpl;
+        ((exists (associativity _ _ _ _ _ _ _ _))
+           || (exists (left_identity _ _ _ _))
+           || (exists (right_identity _ _ _ _)));
+        exact (center _)
+      ).</pre>
+</div>
+<div class="code" title="File: ToSet.v
+Line: 104
+Time: 0.013s">
+<div class="time" style="width: 0.35470668485675%"></div>
+<pre>
+  Defined.</pre>
+</div>
+<div class="code" title="File: ToSet.v
+Line: 105
+Time: 0.043s">
+<div class="time" style="width: 1.1732605729877%"></div>
+<pre>
+
+  Definition pr1 : Functor category C
+    := Build_Functor
+         category C
+         c
+         (fun s d =&gt; @projT1 _ _)
+         (fun _ _ _ _ _ =&gt; idpath)
+         (fun _ =&gt; idpath).</pre>
+</div>
+<div class="code" title="File: ToSet.v
+Line: 113
+Time: 0.046s">
+<div class="time" style="width: 1.2551159618008%"></div>
+<pre>
+End Grothendieck.</pre>
+</div>
+<div class="code" title="File: ToSet.v
+Line: 115
+Time: 0s">
+<div class="time" style="width: 0%"></div>
+<pre>
+
+</pre>
+</div>
+</body>
+</html>
+

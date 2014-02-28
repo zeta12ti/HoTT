@@ -1,0 +1,328 @@
+<html>
+<head>
+<title>OnObjects.v</title>
+<style>
+.time {
+  background-color: #ffaaaa;
+  height: 100%;
+  z-index: -1;
+  position: absolute;
+}
+.code {
+  z-index: 0;
+  position: relative;
+  border-style: solid;
+  border-color: transparent;
+  border-width: 1px;
+}
+.code:hover {
+  border-style: solid;
+  border-color: black;
+  border-width: 1px;
+}
+pre {
+  margin: 1px;
+}
+</style>
+</head>
+<body>
+<h1>Timings for OnObjects.v</h1>
+
+<div class="code" title="File: OnObjects.v
+Line: 1
+Time: 0.009s">
+<div class="time" style="width: 1.219512195122%"></div>
+<pre>Require Import types.Unit.</pre>
+</div>
+<div class="code" title="File: OnObjects.v
+Line: 1
+Time: 0.018s">
+<div class="time" style="width: 2.4390243902439%"></div>
+<pre>
+Require Import Category.Core Functor.Core Category.Sigma.Core.</pre>
+</div>
+<div class="code" title="File: OnObjects.v
+Line: 2
+Time: 0.001s">
+<div class="time" style="width: 0.13550135501355%"></div>
+<pre>
+Require Functor.Composition.Core Functor.Identity.</pre>
+</div>
+<div class="code" title="File: OnObjects.v
+Line: 3
+Time: 0.006s">
+<div class="time" style="width: 0.8130081300813%"></div>
+<pre>
+Require Import Functor.Paths.</pre>
+</div>
+<div class="code" title="File: OnObjects.v
+Line: 4
+Time: 0s">
+<div class="time" style="width: 0%"></div>
+<pre>
+Import Functor.Identity.FunctorIdentityNotations.</pre>
+</div>
+<div class="code" title="File: OnObjects.v
+Line: 5
+Time: 0s">
+<div class="time" style="width: 0%"></div>
+<pre>
+Import Functor.Composition.Core.FunctorCompositionCoreNotations.</pre>
+</div>
+<div class="code" title="File: OnObjects.v
+Line: 6
+Time: 0s">
+<div class="time" style="width: 0%"></div>
+<pre>
+
+Set Universe Polymorphism.</pre>
+</div>
+<div class="code" title="File: OnObjects.v
+Line: 8
+Time: 0s">
+<div class="time" style="width: 0%"></div>
+<pre>
+Set Implicit Arguments.</pre>
+</div>
+<div class="code" title="File: OnObjects.v
+Line: 9
+Time: 0s">
+<div class="time" style="width: 0%"></div>
+<pre>
+Generalizable All Variables.</pre>
+</div>
+<div class="code" title="File: OnObjects.v
+Line: 10
+Time: 0s">
+<div class="time" style="width: 0%"></div>
+<pre>
+Set Asymmetric Patterns.</pre>
+</div>
+<div class="code" title="File: OnObjects.v
+Line: 11
+Time: 0s">
+<div class="time" style="width: 0%"></div>
+<pre>
+
+Local Notation sigT_type := Coq.Init.Specif.sigT.</pre>
+</div>
+<div class="code" title="File: OnObjects.v
+Line: 13
+Time: 0s">
+<div class="time" style="width: 0%"></div>
+<pre>
+Local Notation projT1_type := Coq.Init.Specif.projT1.</pre>
+</div>
+<div class="code" title="File: OnObjects.v
+Line: 14
+Time: 0s">
+<div class="time" style="width: 0%"></div>
+<pre>
+
+Local Open Scope morphism_scope.</pre>
+</div>
+<div class="code" title="File: OnObjects.v
+Line: 16
+Time: 0s">
+<div class="time" style="width: 0%"></div>
+<pre>
+Local Open Scope functor_scope.</pre>
+</div>
+<div class="code" title="File: OnObjects.v
+Line: 17
+Time: 0s">
+<div class="time" style="width: 0%"></div>
+<pre>
+
+Section sigT_obj.</pre>
+</div>
+<div class="code" title="File: OnObjects.v
+Line: 19
+Time: 0s">
+<div class="time" style="width: 0%"></div>
+<pre>
+  Variable A : PreCategory.</pre>
+</div>
+<div class="code" title="File: OnObjects.v
+Line: 20
+Time: 0s">
+<div class="time" style="width: 0%"></div>
+<pre>
+  Variable Pobj : A -&gt; Type.</pre>
+</div>
+<div class="code" title="File: OnObjects.v
+Line: 21
+Time: 0s">
+<div class="time" style="width: 0%"></div>
+<pre>
+
+  Definition sigT_obj : PreCategory.</pre>
+</div>
+<div class="code" title="File: OnObjects.v
+Line: 23
+Time: 0s">
+<div class="time" style="width: 0%"></div>
+<pre>
+  Proof.</pre>
+</div>
+<div class="code" title="File: OnObjects.v
+Line: 24
+Time: 0.248s">
+<div class="time" style="width: 33.60433604336%"></div>
+<pre>
+    refine (@Build_PreCategory
+              (sigT_type Pobj)
+              (fun s d =&gt; morphism A (projT1_type s) (projT1_type d))
+              (fun x =&gt; @identity A (projT1_type x))
+              (fun s d d' m1 m2 =&gt; m1 o m2)%morphism
+              _
+              _
+              _
+              _
+           );
+    simpl; intros; auto with category.</pre>
+</div>
+<div class="code" title="File: OnObjects.v
+Line: 35
+Time: 0.045s">
+<div class="time" style="width: 6.0975609756098%"></div>
+<pre>
+  Defined.</pre>
+</div>
+<div class="code" title="File: OnObjects.v
+Line: 36
+Time: 0.046s">
+<div class="time" style="width: 6.2330623306233%"></div>
+<pre>
+
+  Definition pr1_obj : Functor sigT_obj A
+    := Build_Functor
+         sigT_obj A
+         (@projT1_type _ _)
+         (fun s d m =&gt; m)
+         (fun _ _ _ _ _ =&gt; idpath)
+         (fun _ =&gt; idpath).</pre>
+</div>
+<div class="code" title="File: OnObjects.v
+Line: 44
+Time: 0.076s">
+<div class="time" style="width: 10.29810298103%"></div>
+<pre>
+
+  Definition sigT_obj_as_sigT : PreCategory
+    := @sig A Pobj (fun _ _ _ =&gt; Unit) _ (fun _ =&gt; tt) (fun _ _ _ _ _ _ _ =&gt; tt).</pre>
+</div>
+<div class="code" title="File: OnObjects.v
+Line: 47
+Time: 0.233s">
+<div class="time" style="width: 31.571815718157%"></div>
+<pre>
+
+  Definition sigT_functor_obj : Functor sigT_obj_as_sigT sigT_obj
+    := Build_Functor sigT_obj_as_sigT sigT_obj
+                     (fun x =&gt; x)
+                     (fun _ _ =&gt; @projT1_type _ _)
+                     (fun _ _ _ _ _ =&gt; idpath)
+                     (fun _ =&gt; idpath).</pre>
+</div>
+<div class="code" title="File: OnObjects.v
+Line: 54
+Time: 0.047s">
+<div class="time" style="width: 6.3685636856369%"></div>
+<pre>
+
+  Definition sigT_functor_obj_inv : Functor sigT_obj sigT_obj_as_sigT
+    := Build_Functor sigT_obj sigT_obj_as_sigT
+                     (fun x =&gt; x)
+                     (fun _ _ m =&gt; existT _ m tt)
+                     (fun _ _ _ _ _ =&gt; idpath)
+                     (fun _ =&gt; idpath).</pre>
+</div>
+<div class="code" title="File: OnObjects.v
+Line: 61
+Time: 0s">
+<div class="time" style="width: 0%"></div>
+<pre>
+
+  Local Open Scope functor_scope.</pre>
+</div>
+<div class="code" title="File: OnObjects.v
+Line: 63
+Time: 0.031s">
+<div class="time" style="width: 4.2005420054201%"></div>
+<pre>
+
+  Lemma sigT_obj_eq `{Funext}
+  : sigT_functor_obj o sigT_functor_obj_inv = 1
+    /\ sigT_functor_obj_inv o sigT_functor_obj = 1.</pre>
+</div>
+<div class="code" title="File: OnObjects.v
+Line: 67
+Time: 0s">
+<div class="time" style="width: 0%"></div>
+<pre>
+  Proof.</pre>
+</div>
+<div class="code" title="File: OnObjects.v
+Line: 68
+Time: 0.196s">
+<div class="time" style="width: 26.558265582656%"></div>
+<pre>
+    split; path_functor; trivial.</pre>
+</div>
+<div class="code" title="File: OnObjects.v
+Line: 69
+Time: 0.738s">
+<div class="time" style="width: 100%"></div>
+<pre>
+    repeat (intros [] || intro || apply path_forall).</pre>
+</div>
+<div class="code" title="File: OnObjects.v
+Line: 70
+Time: 0.032s">
+<div class="time" style="width: 4.3360433604336%"></div>
+<pre>
+    reflexivity.</pre>
+</div>
+<div class="code" title="File: OnObjects.v
+Line: 71
+Time: 0.455s">
+<div class="time" style="width: 61.653116531165%"></div>
+<pre>
+  Qed.</pre>
+</div>
+<div class="code" title="File: OnObjects.v
+Line: 72
+Time: 0.437s">
+<div class="time" style="width: 59.214092140921%"></div>
+<pre>
+
+  Definition sigT_obj_compat : pr1_obj o sigT_functor_obj = pr1
+    := idpath.</pre>
+</div>
+<div class="code" title="File: OnObjects.v
+Line: 75
+Time: 0.023s">
+<div class="time" style="width: 3.1165311653117%"></div>
+<pre>
+End sigT_obj.</pre>
+</div>
+<div class="code" title="File: OnObjects.v
+Line: 76
+Time: 0s">
+<div class="time" style="width: 0%"></div>
+<pre>
+
+Arguments pr1_obj {A Pobj}.</pre>
+</div>
+<div class="code" title="File: OnObjects.v
+Line: 79
+Time: 0s">
+<div class="time" style="width: 0%"></div>
+<pre>
+
+</pre>
+</div>
+</body>
+</html>
+

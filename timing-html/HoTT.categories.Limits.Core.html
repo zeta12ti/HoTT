@@ -1,0 +1,546 @@
+<html>
+<head>
+<title>Core.v</title>
+<style>
+.time {
+  background-color: #ffaaaa;
+  height: 100%;
+  z-index: -1;
+  position: absolute;
+}
+.code {
+  z-index: 0;
+  position: relative;
+  border-style: solid;
+  border-color: transparent;
+  border-width: 1px;
+}
+.code:hover {
+  border-style: solid;
+  border-color: black;
+  border-width: 1px;
+}
+pre {
+  margin: 1px;
+}
+</style>
+</head>
+<body>
+<h1>Timings for Core.v</h1>
+
+<div class="code" title="File: Core.v
+Line: 1
+Time: 0.005s">
+<div class="time" style="width: 0.51493305870237%"></div>
+<pre>Require Import Category.Core Functor.Core NaturalTransformation.Core.</pre>
+</div>
+<div class="code" title="File: Core.v
+Line: 1
+Time: 0s">
+<div class="time" style="width: 0%"></div>
+<pre>
+Require Import Functor.Composition.Core.</pre>
+</div>
+<div class="code" title="File: Core.v
+Line: 2
+Time: 0.071s">
+<div class="time" style="width: 7.3120494335736%"></div>
+<pre>
+Require Import ExponentialLaws.Law1.Functors FunctorCategory.Core.</pre>
+</div>
+<div class="code" title="File: Core.v
+Line: 3
+Time: 0.003s">
+<div class="time" style="width: 0.30895983522142%"></div>
+<pre>
+Require Import Functor.Composition.Functorial.</pre>
+</div>
+<div class="code" title="File: Core.v
+Line: 4
+Time: 0.013s">
+<div class="time" style="width: 1.3388259526262%"></div>
+<pre>
+Require Import UniversalProperties KanExtensions.Core InitialTerminalCategory NatCategory.</pre>
+</div>
+<div class="code" title="File: Core.v
+Line: 5
+Time: 0s">
+<div class="time" style="width: 0%"></div>
+<pre>
+Require Import Functor.Paths NaturalTransformation.Paths.</pre>
+</div>
+<div class="code" title="File: Core.v
+Line: 6
+Time: 0.001s">
+<div class="time" style="width: 0.10298661174047%"></div>
+<pre>
+Require Import Comma.Core.</pre>
+</div>
+<div class="code" title="File: Core.v
+Line: 7
+Time: 0s">
+<div class="time" style="width: 0%"></div>
+<pre>
+Require Import Equivalences.</pre>
+</div>
+<div class="code" title="File: Core.v
+Line: 8
+Time: 0s">
+<div class="time" style="width: 0%"></div>
+<pre>
+
+Set Universe Polymorphism.</pre>
+</div>
+<div class="code" title="File: Core.v
+Line: 10
+Time: 0s">
+<div class="time" style="width: 0%"></div>
+<pre>
+Set Implicit Arguments.</pre>
+</div>
+<div class="code" title="File: Core.v
+Line: 11
+Time: 0s">
+<div class="time" style="width: 0%"></div>
+<pre>
+Generalizable All Variables.</pre>
+</div>
+<div class="code" title="File: Core.v
+Line: 12
+Time: 0s">
+<div class="time" style="width: 0%"></div>
+<pre>
+Set Asymmetric Patterns.</pre>
+</div>
+<div class="code" title="File: Core.v
+Line: 13
+Time: 0s">
+<div class="time" style="width: 0%"></div>
+<pre>
+
+Local Open Scope equiv_scope.</pre>
+</div>
+<div class="code" title="File: Core.v
+Line: 15
+Time: 0s">
+<div class="time" style="width: 0%"></div>
+<pre>
+Local Open Scope functor_scope.</pre>
+</div>
+<div class="code" title="File: Core.v
+Line: 16
+Time: 0s">
+<div class="time" style="width: 0%"></div>
+<pre>
+Local Open Scope category_scope.</pre>
+</div>
+<div class="code" title="File: Core.v
+Line: 17
+Time: 0s">
+<div class="time" style="width: 0%"></div>
+<pre>
+
+Section diagonal_functor.</pre>
+</div>
+<div class="code" title="File: Core.v
+Line: 19
+Time: 0s">
+<div class="time" style="width: 0%"></div>
+<pre>
+  Context `{Funext}.</pre>
+</div>
+<div class="code" title="File: Core.v
+Line: 20
+Time: 0s">
+<div class="time" style="width: 0%"></div>
+<pre>
+  Variable C : PreCategory.</pre>
+</div>
+<div class="code" title="File: Core.v
+Line: 21
+Time: 0s">
+<div class="time" style="width: 0%"></div>
+<pre>
+  Variable D : PreCategory.</pre>
+</div>
+<div class="code" title="File: Core.v
+Line: 22
+Time: 0s">
+<div class="time" style="width: 0%"></div>
+<pre>
+
+  (**
+     Quoting Dwyer and Spalinski:
+
+     There is a diagonal or ``constant diagram'' functor
+
+&lt;&lt;
+     Δ : C → Cᴰ,
+&gt;&gt;
+
+     which carries an object [X : C] to the constant functor [Δ X : D
+     -&gt; C] (by definition, this ``constant functor'' sends each object
+     of [D] to [X] and each morphism of [D] to [Identity X]). The
+     functor Δ assigns to each morphism [f : X -&gt; X'] of [C] the
+     constant natural transformation [t(f) : Δ X -&gt; Δ X'] determined
+     by the formula [t(f) d = f] for each object [d] of [D].  **)
+
+  (** We use [C¹] rather than [C] for judgemental compatibility with
+      Kan extensions. *)
+
+ </pre>
+</div>
+<div class="code" title="File: Core.v
+Line: 43
+Time: 0.102s">
+<div class="time" style="width: 10.504634397528%"></div>
+<pre>Definition diagonal_functor : Functor (1 -&gt; C) (D -&gt; C)
+    := @pullback_along _ D 1 C (Functors.to_terminal _).</pre>
+</div>
+<div class="code" title="File: Core.v
+Line: 44
+Time: 0.175s">
+<div class="time" style="width: 18.022657054583%"></div>
+<pre>
+
+  Definition diagonal_functor' : Functor C (D -&gt; C)
+    := diagonal_functor o ExponentialLaws.Law1.Functors.inverse _.</pre>
+</div>
+<div class="code" title="File: Core.v
+Line: 47
+Time: 0s">
+<div class="time" style="width: 0%"></div>
+<pre>
+
+  Section convert.</pre>
+</div>
+<div class="code" title="File: Core.v
+Line: 49
+Time: 0.129s">
+<div class="time" style="width: 13.285272914521%"></div>
+<pre>
+    Lemma diagonal_functor_diagonal_functor' X
+    : diagonal_functor X = diagonal_functor' (X (center _)).</pre>
+</div>
+<div class="code" title="File: Core.v
+Line: 51
+Time: 0s">
+<div class="time" style="width: 0%"></div>
+<pre>
+    Proof.</pre>
+</div>
+<div class="code" title="File: Core.v
+Line: 52
+Time: 0.114s">
+<div class="time" style="width: 11.740473738414%"></div>
+<pre>
+      path_functor.</pre>
+</div>
+<div class="code" title="File: Core.v
+Line: 53
+Time: 0.001s">
+<div class="time" style="width: 0.10298661174047%"></div>
+<pre>
+      simpl.</pre>
+</div>
+<div class="code" title="File: Core.v
+Line: 54
+Time: 0.051s">
+<div class="time" style="width: 5.2523171987642%"></div>
+<pre>
+      repeat (apply path_forall || intro).</pre>
+</div>
+<div class="code" title="File: Core.v
+Line: 55
+Time: 0.012s">
+<div class="time" style="width: 1.2358393408857%"></div>
+<pre>
+      apply identity_of.</pre>
+</div>
+<div class="code" title="File: Core.v
+Line: 56
+Time: 0.145s">
+<div class="time" style="width: 14.933058702369%"></div>
+<pre>
+    Qed.</pre>
+</div>
+<div class="code" title="File: Core.v
+Line: 57
+Time: 0.001s">
+<div class="time" style="width: 0.10298661174047%"></div>
+<pre>
+  End convert.</pre>
+</div>
+<div class="code" title="File: Core.v
+Line: 58
+Time: 0.006s">
+<div class="time" style="width: 0.61791967044284%"></div>
+<pre>
+End diagonal_functor.</pre>
+</div>
+<div class="code" title="File: Core.v
+Line: 59
+Time: 0s">
+<div class="time" style="width: 0%"></div>
+<pre>
+
+Arguments diagonal_functor : simpl never.</pre>
+</div>
+<div class="code" title="File: Core.v
+Line: 61
+Time: 0s">
+<div class="time" style="width: 0%"></div>
+<pre>
+
+Section diagonal_functor_lemmas.</pre>
+</div>
+<div class="code" title="File: Core.v
+Line: 63
+Time: 0.001s">
+<div class="time" style="width: 0.10298661174047%"></div>
+<pre>
+  Context `{Funext}.</pre>
+</div>
+<div class="code" title="File: Core.v
+Line: 64
+Time: 0s">
+<div class="time" style="width: 0%"></div>
+<pre>
+  Variable C : PreCategory.</pre>
+</div>
+<div class="code" title="File: Core.v
+Line: 65
+Time: 0s">
+<div class="time" style="width: 0%"></div>
+<pre>
+  Variable D : PreCategory.</pre>
+</div>
+<div class="code" title="File: Core.v
+Line: 66
+Time: 0s">
+<div class="time" style="width: 0%"></div>
+<pre>
+  Variable D' : PreCategory.</pre>
+</div>
+<div class="code" title="File: Core.v
+Line: 67
+Time: 0.088s">
+<div class="time" style="width: 9.0628218331617%"></div>
+<pre>
+
+  Lemma compose_diagonal_functor x (F : Functor D' D)
+  : diagonal_functor C D x o F = diagonal_functor _ _ x.</pre>
+</div>
+<div class="code" title="File: Core.v
+Line: 70
+Time: 0s">
+<div class="time" style="width: 0%"></div>
+<pre>
+  Proof.</pre>
+</div>
+<div class="code" title="File: Core.v
+Line: 71
+Time: 0.089s">
+<div class="time" style="width: 9.1658084449022%"></div>
+<pre>
+    path_functor.</pre>
+</div>
+<div class="code" title="File: Core.v
+Line: 72
+Time: 0.174s">
+<div class="time" style="width: 17.919670442842%"></div>
+<pre>
+  Qed.</pre>
+</div>
+<div class="code" title="File: Core.v
+Line: 73
+Time: 0.971s">
+<div class="time" style="width: 100%"></div>
+<pre>
+
+  Definition compose_diagonal_functor_natural_transformation
+             x (F : Functor D' D)
+  : NaturalTransformation (diagonal_functor C D x o F) (diagonal_functor _ _ x)
+    := Build_NaturalTransformation
+         (diagonal_functor C D x o F)
+         (diagonal_functor _ _ x)
+         (fun z =&gt; identity _)
+         (fun _ _ _ =&gt; transitivity
+                         _ _ _
+                         (left_identity _ _ _ _)
+                         (symmetry
+                            _ _
+                            (right_identity _ _ _ _))).</pre>
+</div>
+<div class="code" title="File: Core.v
+Line: 87
+Time: 0.011s">
+<div class="time" style="width: 1.1328527291452%"></div>
+<pre>
+End diagonal_functor_lemmas.</pre>
+</div>
+<div class="code" title="File: Core.v
+Line: 88
+Time: 0.055s">
+<div class="time" style="width: 5.6642636457261%"></div>
+<pre>
+
+Hint Rewrite @compose_diagonal_functor : category.</pre>
+</div>
+<div class="code" title="File: Core.v
+Line: 90
+Time: 0s">
+<div class="time" style="width: 0%"></div>
+<pre>
+
+Section Limit.</pre>
+</div>
+<div class="code" title="File: Core.v
+Line: 92
+Time: 0s">
+<div class="time" style="width: 0%"></div>
+<pre>
+  Context `{Funext}.</pre>
+</div>
+<div class="code" title="File: Core.v
+Line: 93
+Time: 0s">
+<div class="time" style="width: 0%"></div>
+<pre>
+  Variable C : PreCategory.</pre>
+</div>
+<div class="code" title="File: Core.v
+Line: 94
+Time: 0s">
+<div class="time" style="width: 0%"></div>
+<pre>
+  Variable D : PreCategory.</pre>
+</div>
+<div class="code" title="File: Core.v
+Line: 95
+Time: 0.001s">
+<div class="time" style="width: 0.10298661174047%"></div>
+<pre>
+  Variable F : Functor D C.</pre>
+</div>
+<div class="code" title="File: Core.v
+Line: 96
+Time: 0s">
+<div class="time" style="width: 0%"></div>
+<pre>
+
+  (**
+     Quoting Dwyer and Spalinski:
+
+     Let [D] be a small category and [F : D -&gt; C] a functor. A limit
+     for [F] is an object [L] of [C] together with a natural
+     transformation [t : Δ L -&gt; F] such that for every object [X] of
+     [C] and every natural transformation [s : Δ X -&gt; F], there exists
+     a unique map [s' : X -&gt; L] in [C] such that [t (Δ s') = s].  **)
+
+ </pre>
+</div>
+<div class="code" title="File: Core.v
+Line: 107
+Time: 0.12s">
+<div class="time" style="width: 12.358393408857%"></div>
+<pre>Definition IsLimit
+    := @IsRightKanExtensionAlong _ D 1 C (Functors.to_terminal _) F.</pre>
+</div>
+<div class="code" title="File: Core.v
+Line: 108
+Time: 0s">
+<div class="time" style="width: 0%"></div>
+<pre>
+  (*Definition IsLimit' := @IsTerminalMorphism (_ -&gt; _) (_ -&gt; _) (diagonal_functor C D) F.*)
+  (*  Definition Limit (L : C) :=
+    { t : SmallNaturalTransformation ((diagonal_functor C D) L) F &amp;
+      forall X : C, forall s : SmallNaturalTransformation ((diagonal_functor C D) X) F,
+        { s' : C.(Morphism) X L |
+          unique
+          (fun s' =&gt; SNTComposeT t ((diagonal_functor C D).(MorphismOf) s') = s)
+          s'
+        }
+    }.*)
+
+  (**
+     Quoting Dwyer and Spalinski:
+
+     Let [D] be a small category and [F : D -&gt; C] a functor. A colimit
+     for [F] is an object [c] of [C] together with a natural
+     transformation [t : F -&gt; Δ c] such that for every object [X] of
+     [C] and every natural transformation [s : F -&gt; Δ X], there exists
+     a unique map [s' : c -&gt; X] in [C] such that [(Δ s') t = s].  **)
+
+ </pre>
+</div>
+<div class="code" title="File: Core.v
+Line: 129
+Time: 0.057s">
+<div class="time" style="width: 5.870236869207%"></div>
+<pre>Definition IsColimit
+    := @IsLeftKanExtensionAlong _ D 1 C (Functors.to_terminal _) F.</pre>
+</div>
+<div class="code" title="File: Core.v
+Line: 130
+Time: 0s">
+<div class="time" style="width: 0%"></div>
+<pre>
+  (*Definition IsColimit' := @IsInitialMorphism (_ -&gt; _) (_ -&gt; _) F (diagonal_functor C D).*)
+  (*  Definition Colimit (c : C) :=
+    { t : SmallNaturalTransformation F ((diagonal_functor C D) c) &amp;
+      forall X : C, forall s : SmallNaturalTransformation F ((diagonal_functor C D) X),
+        { s' : C.(Morphism) c X | is_unique s' /\
+          SNTComposeT ((diagonal_functor C D).(MorphismOf) s') t = s
+        }
+    }.*)
+  (** TODO(JasonGross): Figure out how to get good introduction and elimination rules working, which don't mention spurious identities. *)
+  (*Section AbstractionBarrier.
+    Section Limit.
+      Set Printing  Implicit.
+      Section IntroductionAbstractionBarrier.
+        Local Open Scope morphism_scope.
+
+        Definition Build_IsLimit
+                 (lim_obj : C)
+                 (lim_mor : morphism (D -&gt; C)
+                                     (diagonal_functor' C D lim_obj)
+                                     F)
+                 (lim := CommaCategory.Build_object
+                           (diagonal_functor C D)
+                           !(F : object (_ -&gt; _))
+                           !lim_obj
+                           (center _)
+                           lim_mor)
+                 (UniversalProperty
+                  : forall (lim_obj' : C)
+                           (lim_mor' : morphism (D -&gt; C)
+                                                (diagonal_functor' C D lim_obj')
+                                                F),
+                      Contr { m : morphism C lim_obj' lim_obj
+                            | lim_mor o morphism_of (diagonal_functor' C D) m = lim_mor' })
+        : IsTerminalMorphism lim.
+        Proof.
+          apply Build_IsTerminalMorphism.
+          intros A' p'.
+          specialize (UniversalProperty (A' (center _))).*)</pre>
+</div>
+<div class="code" title="File: Core.v
+Line: 168
+Time: 0.022s">
+<div class="time" style="width: 2.2657054582904%"></div>
+<pre>End Limit.</pre>
+</div>
+<div class="code" title="File: Core.v
+Line: 169
+Time: 0s">
+<div class="time" style="width: 0%"></div>
+<pre>
+
+(** TODO(JasonGross): Port MorphismsBetweenLimits from catdb *)
+
+</pre>
+</div>
+</body>
+</html>
+

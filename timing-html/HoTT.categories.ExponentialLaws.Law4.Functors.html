@@ -1,0 +1,635 @@
+<html>
+<head>
+<title>Functors.v</title>
+<style>
+.time {
+  background-color: #ffaaaa;
+  height: 100%;
+  z-index: -1;
+  position: absolute;
+}
+.code {
+  z-index: 0;
+  position: relative;
+  border-style: solid;
+  border-color: transparent;
+  border-width: 1px;
+}
+.code:hover {
+  border-style: solid;
+  border-color: black;
+  border-width: 1px;
+}
+pre {
+  margin: 1px;
+}
+</style>
+</head>
+<body>
+<h1>Timings for Functors.v</h1>
+
+<div class="code" title="File: Functors.v
+Line: 1
+Time: 0.041s">
+<div class="time" style="width: 0.18730013704888%"></div>
+<pre>Require Import Category.Core Category.Prod FunctorCategory.Core Functor.Core NaturalTransformation.Core NaturalTransformation.Paths.</pre>
+</div>
+<div class="code" title="File: Functors.v
+Line: 1
+Time: 0s">
+<div class="time" style="width: 0%"></div>
+<pre>
+
+Set Universe Polymorphism.</pre>
+</div>
+<div class="code" title="File: Functors.v
+Line: 3
+Time: 0s">
+<div class="time" style="width: 0%"></div>
+<pre>
+Set Implicit Arguments.</pre>
+</div>
+<div class="code" title="File: Functors.v
+Line: 4
+Time: 0s">
+<div class="time" style="width: 0%"></div>
+<pre>
+Generalizable All Variables.</pre>
+</div>
+<div class="code" title="File: Functors.v
+Line: 5
+Time: 0s">
+<div class="time" style="width: 0%"></div>
+<pre>
+Set Asymmetric Patterns.</pre>
+</div>
+<div class="code" title="File: Functors.v
+Line: 6
+Time: 0s">
+<div class="time" style="width: 0%"></div>
+<pre>
+
+Local Open Scope functor_scope.</pre>
+</div>
+<div class="code" title="File: Functors.v
+Line: 8
+Time: 0s">
+<div class="time" style="width: 0%"></div>
+<pre>
+
+Section law4.</pre>
+</div>
+<div class="code" title="File: Functors.v
+Line: 10
+Time: 0s">
+<div class="time" style="width: 0%"></div>
+<pre>
+  Context `{Funext}.</pre>
+</div>
+<div class="code" title="File: Functors.v
+Line: 11
+Time: 0s">
+<div class="time" style="width: 0%"></div>
+<pre>
+  Variable C1 : PreCategory.</pre>
+</div>
+<div class="code" title="File: Functors.v
+Line: 12
+Time: 0s">
+<div class="time" style="width: 0%"></div>
+<pre>
+  Variable C2 : PreCategory.</pre>
+</div>
+<div class="code" title="File: Functors.v
+Line: 13
+Time: 0s">
+<div class="time" style="width: 0%"></div>
+<pre>
+  Variable D : PreCategory.</pre>
+</div>
+<div class="code" title="File: Functors.v
+Line: 14
+Time: 0s">
+<div class="time" style="width: 0%"></div>
+<pre>
+
+  Local Open Scope morphism_scope.</pre>
+</div>
+<div class="code" title="File: Functors.v
+Line: 16
+Time: 0s">
+<div class="time" style="width: 0%"></div>
+<pre>
+
+  Local Ltac do_exponential4_helper rew_comp :=
+    intros; simpl;
+    repeat (simpl;
+            match goal with
+              | _ =&gt; reflexivity
+              | _ =&gt; progress rew_comp
+              | _ =&gt; rewrite !identity_of
+              | _ =&gt; rewrite !left_identity
+              | _ =&gt; rewrite !right_identity
+              | _ =&gt; rewrite ?associativity; progress f_ap
+              | _ =&gt; rewrite &lt;- ?associativity; progress f_ap
+              | _ =&gt; rewrite !commutes
+              | _ =&gt; rewrite ?associativity, !commutes
+              | _ =&gt; rewrite &lt;- ?associativity, !commutes
+            end).</pre>
+</div>
+<div class="code" title="File: Functors.v
+Line: 32
+Time: 0s">
+<div class="time" style="width: 0%"></div>
+<pre>
+
+  Section functor.</pre>
+</div>
+<div class="code" title="File: Functors.v
+Line: 34
+Time: 0s">
+<div class="time" style="width: 0%"></div>
+<pre>
+    Local Ltac do_exponential4
+      := do_exponential4_helper ltac:(rewrite !composition_of).</pre>
+</div>
+<div class="code" title="File: Functors.v
+Line: 36
+Time: 0.161s">
+<div class="time" style="width: 0.73549566011878%"></div>
+<pre>
+
+    Definition functor_object_of
+    : (C1 -&gt; (C2 -&gt; D))%category -&gt; (C1 * C2 -&gt; D)%category.</pre>
+</div>
+<div class="code" title="File: Functors.v
+Line: 39
+Time: 0s">
+<div class="time" style="width: 0%"></div>
+<pre>
+    Proof.</pre>
+</div>
+<div class="code" title="File: Functors.v
+Line: 40
+Time: 0.002s">
+<div class="time" style="width: 0.0091365920511649%"></div>
+<pre>
+      intro F; hnf in F |- *.</pre>
+</div>
+<div class="code" title="File: Functors.v
+Line: 41
+Time: 16.51s">
+<div class="time" style="width: 75.422567382366%"></div>
+<pre>
+      refine (Build_Functor
+                (C1 * C2) D
+                (fun c1c2 =&gt; F (fst c1c2) (snd c1c2))
+                (fun s d m =&gt; F (fst d) _1 (snd m) o (F _1 (fst m)) (snd s))
+                _
+                _);
+        abstract do_exponential4.</pre>
+</div>
+<div class="code" title="File: Functors.v
+Line: 48
+Time: 0.148s">
+<div class="time" style="width: 0.6761078117862%"></div>
+<pre>
+    Defined.</pre>
+</div>
+<div class="code" title="File: Functors.v
+Line: 49
+Time: 0.315s">
+<div class="time" style="width: 1.4390132480585%"></div>
+<pre>
+
+    Definition functor_morphism_of
+               s d (m : morphism (C1 -&gt; (C2 -&gt; D)) s d)
+    : morphism (C1 * C2 -&gt; D)
+               (functor_object_of s)
+               (functor_object_of d).</pre>
+</div>
+<div class="code" title="File: Functors.v
+Line: 55
+Time: 0s">
+<div class="time" style="width: 0%"></div>
+<pre>
+    Proof.</pre>
+</div>
+<div class="code" title="File: Functors.v
+Line: 56
+Time: 0.007s">
+<div class="time" style="width: 0.031978072179077%"></div>
+<pre>
+      simpl.</pre>
+</div>
+<div class="code" title="File: Functors.v
+Line: 57
+Time: 21.452s">
+<div class="time" style="width: 97.999086340795%"></div>
+<pre>
+      refine (Build_NaturalTransformation
+                (functor_object_of s)
+                (functor_object_of d)
+                (fun c =&gt; m (fst c) (snd c))
+                _);
+        abstract (
+            repeat match goal with
+                     | [ |- appcontext[components_of ?T ?x o components_of ?U ?x] ] =&gt;
+                       change (T x o U x) with ((compose (C := (_ -&gt; _)) T U) x)
+                     | _ =&gt; f_ap
+                     | _ =&gt; rewrite !commutes
+                     | _ =&gt; do_exponential4
+                   end
+          ).</pre>
+</div>
+<div class="code" title="File: Functors.v
+Line: 71
+Time: 0.949s">
+<div class="time" style="width: 4.3353129282778%"></div>
+<pre>
+    Defined.</pre>
+</div>
+<div class="code" title="File: Functors.v
+Line: 72
+Time: 0.516s">
+<div class="time" style="width: 2.3572407492005%"></div>
+<pre>
+
+    Definition functor
+    : Functor (C1 -&gt; (C2 -&gt; D)) (C1 * C2 -&gt; D).</pre>
+</div>
+<div class="code" title="File: Functors.v
+Line: 75
+Time: 0s">
+<div class="time" style="width: 0%"></div>
+<pre>
+    Proof.</pre>
+</div>
+<div class="code" title="File: Functors.v
+Line: 76
+Time: 9.407s">
+<div class="time" style="width: 42.973960712654%"></div>
+<pre>
+      refine (Build_Functor
+                (C1 -&gt; (C2 -&gt; D)) (C1 * C2 -&gt; D)
+                functor_object_of
+                functor_morphism_of
+                _
+                _);
+      abstract by path_natural_transformation.</pre>
+</div>
+<div class="code" title="File: Functors.v
+Line: 83
+Time: 0.636s">
+<div class="time" style="width: 2.9054362722704%"></div>
+<pre>
+    Defined.</pre>
+</div>
+<div class="code" title="File: Functors.v
+Line: 84
+Time: 0.111s">
+<div class="time" style="width: 0.50708085883965%"></div>
+<pre>
+  End functor.</pre>
+</div>
+<div class="code" title="File: Functors.v
+Line: 85
+Time: 0s">
+<div class="time" style="width: 0%"></div>
+<pre>
+
+  Section inverse.</pre>
+</div>
+<div class="code" title="File: Functors.v
+Line: 87
+Time: 0s">
+<div class="time" style="width: 0%"></div>
+<pre>
+    Local Ltac do_exponential4_inverse
+      := do_exponential4_helper ltac:(rewrite &lt;- !composition_of).</pre>
+</div>
+<div class="code" title="File: Functors.v
+Line: 89
+Time: 0s">
+<div class="time" style="width: 0%"></div>
+<pre>
+
+    Section object_of.</pre>
+</div>
+<div class="code" title="File: Functors.v
+Line: 91
+Time: 0.031s">
+<div class="time" style="width: 0.14161717679306%"></div>
+<pre>
+      Variable F : Functor (C1 * C2) D.</pre>
+</div>
+<div class="code" title="File: Functors.v
+Line: 92
+Time: 0.151s">
+<div class="time" style="width: 0.68981269986295%"></div>
+<pre>
+
+      Definition inverse_object_of_object_of
+      : C1 -&gt; (C2 -&gt; D)%category.</pre>
+</div>
+<div class="code" title="File: Functors.v
+Line: 95
+Time: 0s">
+<div class="time" style="width: 0%"></div>
+<pre>
+      Proof.</pre>
+</div>
+<div class="code" title="File: Functors.v
+Line: 96
+Time: 0.003s">
+<div class="time" style="width: 0.013704888076747%"></div>
+<pre>
+        intro c1.</pre>
+</div>
+<div class="code" title="File: Functors.v
+Line: 97
+Time: 3.298s">
+<div class="time" style="width: 15.066240292371%"></div>
+<pre>
+        refine (Build_Functor
+                  C2 D
+                  (fun c2 =&gt; F (c1, c2))
+                  (fun s2 d2 m2 =&gt; morphism_of
+                                     F
+                                     (s := (c1, s2))
+                                     (d := (c1, d2))
+                                     (identity c1, m2))
+                  _
+                  _);
+          abstract do_exponential4_inverse.</pre>
+</div>
+<div class="code" title="File: Functors.v
+Line: 108
+Time: 0.163s">
+<div class="time" style="width: 0.74463225216994%"></div>
+<pre>
+      Defined.</pre>
+</div>
+<div class="code" title="File: Functors.v
+Line: 109
+Time: 0.28s">
+<div class="time" style="width: 1.2791228871631%"></div>
+<pre>
+
+      Definition inverse_object_of_morphism_of
+                 s d (m : morphism C1 s d)
+      : morphism (C2 -&gt; D)
+                 (inverse_object_of_object_of s)
+                 (inverse_object_of_object_of d).</pre>
+</div>
+<div class="code" title="File: Functors.v
+Line: 115
+Time: 0s">
+<div class="time" style="width: 0%"></div>
+<pre>
+      Proof.</pre>
+</div>
+<div class="code" title="File: Functors.v
+Line: 116
+Time: 5.068s">
+<div class="time" style="width: 23.152124257652%"></div>
+<pre>
+        refine (Build_NaturalTransformation
+                  (inverse_object_of_object_of s)
+                  (inverse_object_of_object_of d)
+                  (fun c =&gt; morphism_of
+                              F
+                              (s := (s, c))
+                              (d := (d, c))
+                              (m, identity c))
+                  _);
+        abstract do_exponential4_inverse.</pre>
+</div>
+<div class="code" title="File: Functors.v
+Line: 126
+Time: 0.311s">
+<div class="time" style="width: 1.4207400639561%"></div>
+<pre>
+      Defined.</pre>
+</div>
+<div class="code" title="File: Functors.v
+Line: 127
+Time: 0.3s">
+<div class="time" style="width: 1.3704888076747%"></div>
+<pre>
+
+      Definition inverse_object_of
+      : (C1 -&gt; (C2 -&gt; D))%category.</pre>
+</div>
+<div class="code" title="File: Functors.v
+Line: 130
+Time: 0s">
+<div class="time" style="width: 0%"></div>
+<pre>
+      Proof.</pre>
+</div>
+<div class="code" title="File: Functors.v
+Line: 131
+Time: 5.504s">
+<div class="time" style="width: 25.143901324806%"></div>
+<pre>
+        refine (Build_Functor
+                  C1 (C2 -&gt; D)
+                  inverse_object_of_object_of
+                  inverse_object_of_morphism_of
+                  _
+                  _);
+        abstract (path_natural_transformation; do_exponential4_inverse).</pre>
+</div>
+<div class="code" title="File: Functors.v
+Line: 138
+Time: 0.304s">
+<div class="time" style="width: 1.3887619917771%"></div>
+<pre>
+      Defined.</pre>
+</div>
+<div class="code" title="File: Functors.v
+Line: 139
+Time: 0.031s">
+<div class="time" style="width: 0.14161717679306%"></div>
+<pre>
+    End object_of.</pre>
+</div>
+<div class="code" title="File: Functors.v
+Line: 140
+Time: 0s">
+<div class="time" style="width: 0%"></div>
+<pre>
+
+    Section morphism_of.</pre>
+</div>
+<div class="code" title="File: Functors.v
+Line: 142
+Time: 0.531s">
+<div class="time" style="width: 2.4257651895843%"></div>
+<pre>
+      Definition inverse_morphism_of_components_of
+                 s d (m : morphism (C1 * C2 -&gt; D) s d)
+      : forall c, morphism (C2 -&gt; D)
+                           ((inverse_object_of s) c)
+                           ((inverse_object_of d) c).</pre>
+</div>
+<div class="code" title="File: Functors.v
+Line: 147
+Time: 0s">
+<div class="time" style="width: 0%"></div>
+<pre>
+      Proof.</pre>
+</div>
+<div class="code" title="File: Functors.v
+Line: 148
+Time: 0.009s">
+<div class="time" style="width: 0.041114664230242%"></div>
+<pre>
+        intro c.</pre>
+</div>
+<div class="code" title="File: Functors.v
+Line: 149
+Time: 0.844s">
+<div class="time" style="width: 3.8556418455916%"></div>
+<pre>
+        refine (Build_NaturalTransformation
+                  ((inverse_object_of s) c)
+                  ((inverse_object_of d) c)
+                  (fun c' =&gt; m (c, c'))
+                  _).</pre>
+</div>
+<div class="code" title="File: Functors.v
+Line: 154
+Time: 3.787s">
+<div class="time" style="width: 17.300137048881%"></div>
+<pre>
+        abstract do_exponential4_inverse.</pre>
+</div>
+<div class="code" title="File: Functors.v
+Line: 155
+Time: 0.741s">
+<div class="time" style="width: 3.3851073549566%"></div>
+<pre>
+      Defined.</pre>
+</div>
+<div class="code" title="File: Functors.v
+Line: 156
+Time: 0.743s">
+<div class="time" style="width: 3.3942439470078%"></div>
+<pre>
+
+      Definition inverse_morphism_of
+                 s d (m : morphism (C1 * C2 -&gt; D) s d)
+      : morphism (C1 -&gt; (C2 -&gt; D))
+                 (inverse_object_of s)
+                 (inverse_object_of d).</pre>
+</div>
+<div class="code" title="File: Functors.v
+Line: 162
+Time: 0s">
+<div class="time" style="width: 0%"></div>
+<pre>
+      Proof.</pre>
+</div>
+<div class="code" title="File: Functors.v
+Line: 163
+Time: 1.663s">
+<div class="time" style="width: 7.5970762905436%"></div>
+<pre>
+        refine (Build_NaturalTransformation
+                  (inverse_object_of s)
+                  (inverse_object_of d)
+                  (inverse_morphism_of_components_of m)
+                  _).</pre>
+</div>
+<div class="code" title="File: Functors.v
+Line: 168
+Time: 10.233s">
+<div class="time" style="width: 46.747373229785%"></div>
+<pre>
+        abstract (path_natural_transformation; do_exponential4_inverse).</pre>
+</div>
+<div class="code" title="File: Functors.v
+Line: 169
+Time: 1.178s">
+<div class="time" style="width: 5.3814527181361%"></div>
+<pre>
+      Defined.</pre>
+</div>
+<div class="code" title="File: Functors.v
+Line: 170
+Time: 0.083s">
+<div class="time" style="width: 0.37916857012334%"></div>
+<pre>
+    End morphism_of.</pre>
+</div>
+<div class="code" title="File: Functors.v
+Line: 171
+Time: 0.001s">
+<div class="time" style="width: 0.0045682960255825%"></div>
+<pre>
+
+    Arguments inverse_morphism_of_components_of / _ _ _ _ .</pre>
+</div>
+<div class="code" title="File: Functors.v
+Line: 173
+Time: 0.809s">
+<div class="time" style="width: 3.6957514846962%"></div>
+<pre>
+
+    Definition inverse
+    : Functor (C1 * C2 -&gt; D) (C1 -&gt; (C2 -&gt; D)).</pre>
+</div>
+<div class="code" title="File: Functors.v
+Line: 176
+Time: 0s">
+<div class="time" style="width: 0%"></div>
+<pre>
+    Proof.</pre>
+</div>
+<div class="code" title="File: Functors.v
+Line: 177
+Time: 21.89s">
+<div class="time" style="width: 100%"></div>
+<pre>
+      refine (Build_Functor
+                (C1 * C2 -&gt; D) (C1 -&gt; (C2 -&gt; D))
+                inverse_object_of
+                inverse_morphism_of
+                _
+                _);
+      abstract by path_natural_transformation.</pre>
+</div>
+<div class="code" title="File: Functors.v
+Line: 184
+Time: 1.114s">
+<div class="time" style="width: 5.0890817724989%"></div>
+<pre>
+    Defined.</pre>
+</div>
+<div class="code" title="File: Functors.v
+Line: 185
+Time: 0.196s">
+<div class="time" style="width: 0.89538602101416%"></div>
+<pre>
+  End inverse.</pre>
+</div>
+<div class="code" title="File: Functors.v
+Line: 186
+Time: 0.682s">
+<div class="time" style="width: 3.1155778894472%"></div>
+<pre>
+End law4.</pre>
+</div>
+<div class="code" title="File: Functors.v
+Line: 188
+Time: 0s">
+<div class="time" style="width: 0%"></div>
+<pre>
+
+</pre>
+</div>
+</body>
+</html>
+

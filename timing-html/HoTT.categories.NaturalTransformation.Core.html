@@ -1,0 +1,231 @@
+<html>
+<head>
+<title>Core.v</title>
+<style>
+.time {
+  background-color: #ffaaaa;
+  height: 100%;
+  z-index: -1;
+  position: absolute;
+}
+.code {
+  z-index: 0;
+  position: relative;
+  border-style: solid;
+  border-color: transparent;
+  border-width: 1px;
+}
+.code:hover {
+  border-style: solid;
+  border-color: black;
+  border-width: 1px;
+}
+pre {
+  margin: 1px;
+}
+</style>
+</head>
+<body>
+<h1>Timings for Core.v</h1>
+
+<div class="code" title="File: Core.v
+Line: 1
+Time: 0.005s">
+<div class="time" style="width: 4.4247787610619%"></div>
+<pre>Require Import Category.Core Functor.Core.</pre>
+</div>
+<div class="code" title="File: Core.v
+Line: 1
+Time: 0s">
+<div class="time" style="width: 0%"></div>
+<pre>
+
+Set Universe Polymorphism.</pre>
+</div>
+<div class="code" title="File: Core.v
+Line: 3
+Time: 0s">
+<div class="time" style="width: 0%"></div>
+<pre>
+Set Implicit Arguments.</pre>
+</div>
+<div class="code" title="File: Core.v
+Line: 4
+Time: 0s">
+<div class="time" style="width: 0%"></div>
+<pre>
+Generalizable All Variables.</pre>
+</div>
+<div class="code" title="File: Core.v
+Line: 5
+Time: 0s">
+<div class="time" style="width: 0%"></div>
+<pre>
+Set Asymmetric Patterns.</pre>
+</div>
+<div class="code" title="File: Core.v
+Line: 6
+Time: 0s">
+<div class="time" style="width: 0%"></div>
+<pre>
+
+Delimit Scope natural_transformation_scope with natural_transformation.</pre>
+</div>
+<div class="code" title="File: Core.v
+Line: 8
+Time: 0s">
+<div class="time" style="width: 0%"></div>
+<pre>
+
+Local Open Scope morphism_scope.</pre>
+</div>
+<div class="code" title="File: Core.v
+Line: 10
+Time: 0s">
+<div class="time" style="width: 0%"></div>
+<pre>
+Local Open Scope natural_transformation_scope.</pre>
+</div>
+<div class="code" title="File: Core.v
+Line: 11
+Time: 0s">
+<div class="time" style="width: 0%"></div>
+<pre>
+
+Section NaturalTransformation.</pre>
+</div>
+<div class="code" title="File: Core.v
+Line: 13
+Time: 0s">
+<div class="time" style="width: 0%"></div>
+<pre>
+  Variable C : PreCategory.</pre>
+</div>
+<div class="code" title="File: Core.v
+Line: 14
+Time: 0s">
+<div class="time" style="width: 0%"></div>
+<pre>
+  Variable D : PreCategory.</pre>
+</div>
+<div class="code" title="File: Core.v
+Line: 15
+Time: 0s">
+<div class="time" style="width: 0%"></div>
+<pre>
+  Variables F G : Functor C D.</pre>
+</div>
+<div class="code" title="File: Core.v
+Line: 16
+Time: 0s">
+<div class="time" style="width: 0%"></div>
+<pre>
+
+  (**
+     Quoting from the lecture notes for 18.705, Commutative Algebra:
+
+     A map of functors is known as a natural transformation. Namely,
+     given two functors [F : C -&gt; D], [G : C -&gt; D], a natural
+     transformation [T: F -&gt; G] is a collection of maps [T A : F A -&gt;
+     G A], one for each object [A] of [C], such that [(T B) ∘ (F m) =
+     (G m) ∘ (T A)] for every map [m : A -&gt; B] of [C]; that is, the
+     following diagram is commutative:
+
+&lt;&lt;
+           F m
+     F A -------&gt; F B
+      |            |
+      |            |
+      | T A        | T B
+      |            |
+      V    G m     V
+     G A --------&gt; G B
+&gt;&gt;
+     **)
+
+ </pre>
+</div>
+<div class="code" title="File: Core.v
+Line: 40
+Time: 0.113s">
+<div class="time" style="width: 100%"></div>
+<pre>Record NaturalTransformation :=
+    Build_NaturalTransformation' {
+        components_of :&gt; forall c, morphism D (F c) (G c);
+        commutes : forall s d (m : morphism C s d),
+                     components_of d o F _1 m = G _1 m o components_of s;
+        (* We require the following symmetrized version so that for eta-expanded [T], we have [(T^op)^op = T] judgementally. *)
+        commutes_sym : forall s d (m : C.(morphism) s d),
+                         G _1 m o components_of s = components_of d o F _1 m
+      }.</pre>
+</div>
+<div class="code" title="File: Core.v
+Line: 48
+Time: 0.036s">
+<div class="time" style="width: 31.858407079646%"></div>
+<pre>
+
+  Definition Build_NaturalTransformation CO COM
+    := Build_NaturalTransformation'
+         CO
+         COM
+         (fun _ _ _ =&gt; symmetry _ _ (COM _ _ _)).</pre>
+</div>
+<div class="code" title="File: Core.v
+Line: 54
+Time: 0.03s">
+<div class="time" style="width: 26.548672566372%"></div>
+<pre>
+End NaturalTransformation.</pre>
+</div>
+<div class="code" title="File: Core.v
+Line: 55
+Time: 0s">
+<div class="time" style="width: 0%"></div>
+<pre>
+
+Bind Scope natural_transformation_scope with NaturalTransformation.</pre>
+</div>
+<div class="code" title="File: Core.v
+Line: 57
+Time: 0s">
+<div class="time" style="width: 0%"></div>
+<pre>
+
+Create HintDb natural_transformation discriminated.</pre>
+</div>
+<div class="code" title="File: Core.v
+Line: 59
+Time: 0s">
+<div class="time" style="width: 0%"></div>
+<pre>
+
+Arguments components_of {C D}%category {F G}%functor T%natural_transformation
+          c%object : rename, simpl nomatch.</pre>
+</div>
+<div class="code" title="File: Core.v
+Line: 62
+Time: 0s">
+<div class="time" style="width: 0%"></div>
+<pre>
+Arguments commutes [C D F G] T _ _ _ : rename.</pre>
+</div>
+<div class="code" title="File: Core.v
+Line: 63
+Time: 0.001s">
+<div class="time" style="width: 0.88495575221239%"></div>
+<pre>
+
+Hint Resolve @commutes : category natural_transformation.</pre>
+</div>
+<div class="code" title="File: Core.v
+Line: 66
+Time: 0s">
+<div class="time" style="width: 0%"></div>
+<pre>
+
+</pre>
+</div>
+</body>
+</html>
+
