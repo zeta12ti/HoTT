@@ -22,13 +22,13 @@
 </div>
 
 <div class="doc">
-<a name="lab100"></a><h1 class="section">Varieties of function extensionality</h1>
+<a name="lab101"></a><h1 class="section">Varieties of function extensionality</h1>
 
 </div>
 <div class="code">
 
 <br/>
-<span class="id" type="keyword">Require</span> <span class="id" type="keyword">Import</span> <a class="idref" href="HoTT.Overture.html#"><span class="id" type="library">Overture</span></a> <a class="idref" href="HoTT.PathGroupoids.html#"><span class="id" type="library">PathGroupoids</span></a> <a class="idref" href="HoTT.Contractible.html#"><span class="id" type="library">Contractible</span></a> <a class="idref" href="HoTT.Equivalences.html#"><span class="id" type="library">Equivalences</span></a>.<br/>
+<span class="id" type="keyword">Require</span> <span class="id" type="keyword">Import</span> <a class="idref" href="HoTT.Overture.html#"><span class="id" type="library">Overture</span></a> <a class="idref" href="HoTT.PathGroupoids.html#"><span class="id" type="library">PathGroupoids</span></a> <a class="idref" href="HoTT.Contractible.html#"><span class="id" type="library">Contractible</span></a> <a class="idref" href="HoTT.Equivalences.html#"><span class="id" type="library">Equivalences</span></a> <a class="idref" href="HoTT.types.UniverseLevel.html#"><span class="id" type="library">types.UniverseLevel</span></a>.<br/>
 <span class="id" type="keyword">Local</span>&nbsp;<span class="id" type="keyword">Open</span> <span class="id" type="keyword">Scope</span> <span class="id" type="var">path_scope</span>.<br/>
 
 <br/>
@@ -193,6 +193,30 @@ We add some hints to the typeclass database, so if we happen to have hypotheses 
 
 <br/>
 <span class="id" type="keyword">Hint Immediate</span> <span class="id" type="var">WeakFunext_implies_Funext</span> <span class="id" type="var">NaiveFunext_implies_Funext</span> : <span class="id" type="var">typeclass_instances</span>.<br/>
+
+<br/>
+</div>
+
+<div class="doc">
+<a name="lab102"></a><h2 class="section">Functional extensionality is downward closed</h2>
+ If universe <span class="inlinecode"><span class="id" type="var">U_i</span></span> is functionally extensional, then so are universes <span class="inlinecode"><span class="id" type="var">U_j</span></span> for <span class="inlinecode"><a class="idref" href="HoTT.categories.Category.Morphisms.html#j"><span class="id" type="variable">j</span></a></span> <span class="inlinecode">≤</span> <span class="inlinecode"><a class="idref" href="HoTT.PathGroupoids.html#i"><span class="id" type="variable">i</span></a></span>. 
+</div>
+<div class="code">
+<span class="id" type="keyword">Lemma</span> <a name="Funext_downward_closed"><span class="id" type="lemma">Funext_downward_closed</span></a> `{<span class="id" type="var">H</span> : <a class="idref" href="HoTT.Overture.html#Funext"><span class="id" type="class">Funext</span></a>} : <a class="idref" href="HoTT.Overture.html#Funext"><span class="id" type="class">Funext</span></a>.<br/>
+<span class="id" type="keyword">Proof</span>.<br/>
+&nbsp;&nbsp;<span class="id" type="tactic">constructor</span>.<br/>
+&nbsp;&nbsp;<span class="id" type="tactic">intros</span> <span class="id" type="var">A</span> <span class="id" type="var">P</span>.<br/>
+&nbsp;&nbsp;<span class="id" type="tactic">exact</span> (@<a class="idref" href="HoTT.Overture.html#isequiv_apD10"><span class="id" type="method">isequiv_apD10</span></a> <span class="id" type="var">H</span> (<a class="idref" href="HoTT.types.UniverseLevel.html#Lift"><span class="id" type="definition">Lift</span></a> <span class="id" type="var">A</span>) (<span class="id" type="keyword">fun</span> <span class="id" type="var">a</span> ⇒ <a class="idref" href="HoTT.types.UniverseLevel.html#Lift"><span class="id" type="definition">Lift</span></a> (<span class="id" type="var">P</span> <a class="idref" href="HoTT.FunextVarieties.html#a"><span class="id" type="variable">a</span></a>))).<br/>
+<span class="id" type="keyword">Defined</span>.<br/>
+
+<br/>
+</div>
+
+<div class="doc">
+We permit the use of <span class="inlinecode"><a class="idref" href="HoTT.FunextVarieties.html#Funext_downward_closed"><span class="id" type="lemma">Funext_downward_closed</span></a></span> exactly once in typeclass resolution.  So long as typeclass resolution backtracks on instances of functional extensionality, this will hopefully mean that we'll never need to worry about instances of functional extensionality, at least when we make definitions all in one go. 
+</div>
+<div class="code">
+<span class="id" type="keyword">Hint Immediate</span> <span class="id" type="var">Funext_downward_closed</span> : <span class="id" type="var">typeclass_instances</span>.<br/>
 </div>
 </div>
 
