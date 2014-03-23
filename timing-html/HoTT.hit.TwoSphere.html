@@ -1,0 +1,176 @@
+<html>
+<head>
+<title>TwoSphere.v</title>
+<style>
+.time {
+  background-color: #ffaaaa;
+  height: 100%;
+  z-index: -1;
+  position: absolute;
+}
+.code {
+  z-index: 0;
+  position: relative;
+  border-style: solid;
+  border-color: transparent;
+  border-width: 1px;
+}
+.code:hover {
+  border-style: solid;
+  border-color: black;
+  border-width: 1px;
+}
+pre {
+  margin: 1px;
+}
+</style>
+</head>
+<body>
+<h1>Timings for TwoSphere.v</h1>
+
+<div class="code" title="File: TwoSphere.v
+Line: 1
+Time: 0s">
+<div class="time" style="width: 0%"></div>
+<pre>(* -*- mode: coq; mode: visual-line -*- *)
+
+(** * Theorems about the 2-sphere [S²]. *)
+
+</pre>
+</div>
+<div class="code" title="File: TwoSphere.v
+Line: 4
+Time: 0.033s">
+<div class="time" style="width: 100%"></div>
+<pre>Require Import Overture PathGroupoids Equivalences Trunc HSet.</pre>
+</div>
+<div class="code" title="File: TwoSphere.v
+Line: 4
+Time: 0.005s">
+<div class="time" style="width: 15.151515151515%"></div>
+<pre>
+Require Import types.Paths types.Forall types.Arrow types.Universe types.Empty types.Unit.</pre>
+</div>
+<div class="code" title="File: TwoSphere.v
+Line: 5
+Time: 0s">
+<div class="time" style="width: 0%"></div>
+<pre>
+Local Open Scope path_scope.</pre>
+</div>
+<div class="code" title="File: TwoSphere.v
+Line: 6
+Time: 0s">
+<div class="time" style="width: 0%"></div>
+<pre>
+Local Open Scope equiv_scope.</pre>
+</div>
+<div class="code" title="File: TwoSphere.v
+Line: 7
+Time: 0s">
+<div class="time" style="width: 0%"></div>
+<pre>
+Generalizable Variables X A B f g n.</pre>
+</div>
+<div class="code" title="File: TwoSphere.v
+Line: 8
+Time: 0s">
+<div class="time" style="width: 0%"></div>
+<pre>
+
+(* ** Definition of the circle. *)
+
+</pre>
+</div>
+<div class="code" title="File: TwoSphere.v
+Line: 11
+Time: 0s">
+<div class="time" style="width: 0%"></div>
+<pre>Module Export TwoSphere.</pre>
+</div>
+<div class="code" title="File: TwoSphere.v
+Line: 11
+Time: 0s">
+<div class="time" style="width: 0%"></div>
+<pre>
+
+Local Inductive S2 : Set :=
+| base : S2.</pre>
+</div>
+<div class="code" title="File: TwoSphere.v
+Line: 14
+Time: 0s">
+<div class="time" style="width: 0%"></div>
+<pre>
+
+Axiom surf : idpath base = idpath base.</pre>
+</div>
+<div class="code" title="File: TwoSphere.v
+Line: 16
+Time: 0.006s">
+<div class="time" style="width: 18.181818181818%"></div>
+<pre>
+
+Definition S2_rect (P : S2 -&gt; Type) (b : P base) (l : transport2 P surf b = idpath b)
+  : forall (x:S2), P x
+  := fun x =&gt; match x with base =&gt; fun _ =&gt; b end l.</pre>
+</div>
+<div class="code" title="File: TwoSphere.v
+Line: 20
+Time: 0.015s">
+<div class="time" style="width: 45.454545454545%"></div>
+<pre>
+
+Axiom S2_rect_beta_loop
+  : forall (P : S2 -&gt; Type) (b : P base) (l : transport2 P surf b = idpath b),
+      apD02 (S2_rect P b l) surf = l^ @ (concat_p1 _)^.</pre>
+</div>
+<div class="code" title="File: TwoSphere.v
+Line: 24
+Time: 0s">
+<div class="time" style="width: 0%"></div>
+<pre>
+
+End TwoSphere.</pre>
+</div>
+<div class="code" title="File: TwoSphere.v
+Line: 26
+Time: 0s">
+<div class="time" style="width: 0%"></div>
+<pre>
+
+(* ** The non-dependent eliminator *)
+
+</pre>
+</div>
+<div class="code" title="File: TwoSphere.v
+Line: 29
+Time: 0.011s">
+<div class="time" style="width: 33.333333333333%"></div>
+<pre>Definition S2_rectnd (P : Type) (b : P) (l : idpath b = idpath b)
+  : S2 -&gt; P
+  := S2_rect (fun _ =&gt; P) b ((concat_p1 _)^ @ (transport2_const surf b)^ @ l).</pre>
+</div>
+<div class="code" title="File: TwoSphere.v
+Line: 32
+Time: 0s">
+<div class="time" style="width: 0%"></div>
+<pre>
+
+(** TODO: Write the non-dependent eliminator.  It's probably something like
+&lt;&lt;
+Definition S1_rectnd_beta_loop (P : Type) (b : P) (l : idpath b = idpath b)
+: ap02 (S2_rectnd P b l) surf = l^ @ (concat_p1 _)^.
+Proof.
+  unfold S2_rectnd.
+  refine (cancelL (transport2_const surf b)^ _ _ _).
+  refine (cancelL ((concat_p1 (transport2 (fun _ : S2 =&gt; P) surf b))^) _ _ _).
+...
+&gt;&gt;
+*)
+
+</pre>
+</div>
+</body>
+</html>
+
