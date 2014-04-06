@@ -30,28 +30,34 @@ pre {
 
 <div class="code" title="File: Core.v
 Line: 1
+Time: 0s">
+<div class="time" style="width: 0%"></div>
+<pre>(** * Kan Extensions *)</pre>
+</div>
+<div class="code" title="File: Core.v
+Line: 1
 Time: 0.007s">
-<div class="time" style="width: 3.0434782608696%"></div>
+<div class="time" style="width: 2.6923076923077%"></div>
 <pre>Require Import Category.Core Functor.Core NaturalTransformation.Core.</pre>
 </div>
 <div class="code" title="File: Core.v
 Line: 1
-Time: 0.042s">
-<div class="time" style="width: 18.260869565217%"></div>
+Time: 0.044s">
+<div class="time" style="width: 16.923076923077%"></div>
 <pre>
 Require Import ExponentialLaws.Law4.Functors FunctorCategory.Core.</pre>
 </div>
 <div class="code" title="File: Core.v
 Line: 2
-Time: 0.001s">
-<div class="time" style="width: 0.43478260869565%"></div>
+Time: 0.002s">
+<div class="time" style="width: 0.76923076923077%"></div>
 <pre>
 Require Import Functor.Composition.Functorial.</pre>
 </div>
 <div class="code" title="File: Core.v
 Line: 3
-Time: 0.049s">
-<div class="time" style="width: 21.304347826087%"></div>
+Time: 0.056s">
+<div class="time" style="width: 21.538461538462%"></div>
 <pre>
 Require Import UniversalProperties.</pre>
 </div>
@@ -109,7 +115,7 @@ Time: 0s">
     C
     |
     | p
-    v
+    ↓
     C'
 &gt;&gt;
 
@@ -122,7 +128,7 @@ Time: 0s">
     |       ↗
     | p   /
     |   /
-    v /
+    ↓ /
     C'
 &gt;&gt;
 
@@ -137,7 +143,7 @@ Time: 0s">
 &lt;&lt;
     D'
     |
-    v
+    ↓
     D
 &gt;&gt;
 
@@ -149,7 +155,7 @@ Time: 0s">
             /   |
         F̂ /     |
         /       |
-      /   F     v
+      /   F     ↓
     C --------&gt; D
 &gt;&gt;
 
@@ -227,37 +233,38 @@ Time: 0s">
    *)
 
 
+  (** *** Pullback-along functor *)
  </pre>
 </div>
 <div class="code" title="File: Core.v
-Line: 129
+Line: 130
 Time: 0s">
 <div class="time" style="width: 0%"></div>
 <pre>Context `{Funext}.</pre>
-</div>
-<div class="code" title="File: Core.v
-Line: 129
-Time: 0s">
-<div class="time" style="width: 0%"></div>
-<pre>
-  Variable C  : PreCategory.</pre>
 </div>
 <div class="code" title="File: Core.v
 Line: 130
 Time: 0s">
 <div class="time" style="width: 0%"></div>
 <pre>
-  Variable C' : PreCategory.</pre>
+  Variable C  : PreCategory.</pre>
 </div>
 <div class="code" title="File: Core.v
 Line: 131
 Time: 0s">
 <div class="time" style="width: 0%"></div>
 <pre>
-  Variable D  : PreCategory.</pre>
+  Variable C' : PreCategory.</pre>
 </div>
 <div class="code" title="File: Core.v
 Line: 132
+Time: 0s">
+<div class="time" style="width: 0%"></div>
+<pre>
+  Variable D  : PreCategory.</pre>
+</div>
+<div class="code" title="File: Core.v
+Line: 133
 Time: 0s">
 <div class="time" style="width: 0%"></div>
 <pre>
@@ -265,17 +272,17 @@ Time: 0s">
   Section pullback_along.</pre>
 </div>
 <div class="code" title="File: Core.v
-Line: 134
-Time: 0.124s">
-<div class="time" style="width: 53.913043478261%"></div>
+Line: 135
+Time: 0.14s">
+<div class="time" style="width: 53.846153846154%"></div>
 <pre>
     Definition pullback_along_functor
     : object ((C -&gt; C') -&gt; (C' -&gt; D) -&gt; (C -&gt; D))
       := Functor.Composition.Functorial.compose_functor _ _ _.</pre>
 </div>
 <div class="code" title="File: Core.v
-Line: 137
-Time: 0.23s">
+Line: 138
+Time: 0.26s">
 <div class="time" style="width: 100%"></div>
 <pre>
 
@@ -284,14 +291,14 @@ Time: 0.23s">
       := Eval hnf in pullback_along_functor p.</pre>
 </div>
 <div class="code" title="File: Core.v
-Line: 141
+Line: 142
 Time: 0.004s">
-<div class="time" style="width: 1.7391304347826%"></div>
+<div class="time" style="width: 1.5384615384615%"></div>
 <pre>
   End pullback_along.</pre>
 </div>
 <div class="code" title="File: Core.v
-Line: 142
+Line: 143
 Time: 0s">
 <div class="time" style="width: 0%"></div>
 <pre>
@@ -316,41 +323,43 @@ Time: 0s">
 
       - the right Kan extension operation forms the limit of a functor. *)
 
+  (** *** Left Kan extensions *)
   (** Colimits are initial morphisms. *)
  </pre>
 </div>
 <div class="code" title="File: Core.v
-Line: 165
-Time: 0.183s">
-<div class="time" style="width: 79.565217391304%"></div>
+Line: 167
+Time: 0.21s">
+<div class="time" style="width: 80.769230769231%"></div>
 <pre>Definition IsLeftKanExtensionAlong (p : Functor C C') (h : Functor C D)
     := @IsInitialMorphism (_ -&gt; _) _ h (pullback_along p).</pre>
 </div>
 <div class="code" title="File: Core.v
-Line: 166
+Line: 168
 Time: 0s">
 <div class="time" style="width: 0%"></div>
 <pre>
 
+  (** *** Right Kan extensions *)
   (** Limits are terminal morphisms *)
  </pre>
 </div>
 <div class="code" title="File: Core.v
-Line: 169
-Time: 0.055s">
-<div class="time" style="width: 23.913043478261%"></div>
+Line: 172
+Time: 0.062s">
+<div class="time" style="width: 23.846153846154%"></div>
 <pre>Definition IsRightKanExtensionAlong (p : Functor C C') (h : Functor C D)
     := @IsTerminalMorphism _ (_ -&gt; _) (pullback_along p) h.</pre>
 </div>
 <div class="code" title="File: Core.v
-Line: 170
-Time: 0.016s">
-<div class="time" style="width: 6.9565217391304%"></div>
+Line: 173
+Time: 0.018s">
+<div class="time" style="width: 6.9230769230769%"></div>
 <pre>
 End kan_extensions.</pre>
 </div>
 <div class="code" title="File: Core.v
-Line: 172
+Line: 175
 Time: 0s">
 <div class="time" style="width: 0%"></div>
 <pre>

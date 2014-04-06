@@ -30,8 +30,14 @@ pre {
 
 <div class="code" title="File: Core.v
 Line: 1
-Time: 0.041s">
-<div class="time" style="width: 16.532258064516%"></div>
+Time: 0s">
+<div class="time" style="width: 0%"></div>
+<pre>(** * Groupoids *)</pre>
+</div>
+<div class="code" title="File: Core.v
+Line: 1
+Time: 0.037s">
+<div class="time" style="width: 15.416666666667%"></div>
 <pre>Require Import Category.Core Category.Morphisms Category.Strict.</pre>
 </div>
 <div class="code" title="File: Core.v
@@ -91,37 +97,39 @@ Time: 0s">
 <div class="time" style="width: 0%"></div>
 <pre>
 
+(** A groupoid is a precategory where every morphism is an isomorphism.  Since 1-types are 1-groupoids, we can construct the category corresponding to the 1-groupoid of a 1-type. *)
+
 (** We don't want access to all of the internals of a groupoid category at top level. *)</pre>
 </div>
 <div class="code" title="File: Core.v
-Line: 12
+Line: 14
 Time: 0s">
 <div class="time" style="width: 0%"></div>
 <pre>Module GroupoidCategoryInternals.</pre>
 </div>
 <div class="code" title="File: Core.v
-Line: 12
+Line: 14
 Time: 0s">
 <div class="time" style="width: 0%"></div>
 <pre>
   Section groupoid_category.</pre>
 </div>
 <div class="code" title="File: Core.v
-Line: 13
+Line: 15
 Time: 0s">
 <div class="time" style="width: 0%"></div>
 <pre>
     Variable X : Type.</pre>
 </div>
 <div class="code" title="File: Core.v
-Line: 14
+Line: 16
 Time: 0.001s">
-<div class="time" style="width: 0.40322580645161%"></div>
+<div class="time" style="width: 0.41666666666667%"></div>
 <pre>
     Context `{IsTrunc 1 X}.</pre>
 </div>
 <div class="code" title="File: Core.v
-Line: 15
+Line: 17
 Time: 0s">
 <div class="time" style="width: 0%"></div>
 <pre>
@@ -129,9 +137,9 @@ Time: 0s">
     Local Notation morphism := (@paths X).</pre>
 </div>
 <div class="code" title="File: Core.v
-Line: 17
-Time: 0.008s">
-<div class="time" style="width: 3.2258064516129%"></div>
+Line: 19
+Time: 0.007s">
+<div class="time" style="width: 2.9166666666667%"></div>
 <pre>
 
     Definition compose s d d' (m : morphism d d') (m' : morphism s d)
@@ -139,16 +147,16 @@ Time: 0.008s">
       := transitivity s d d' m' m.</pre>
 </div>
 <div class="code" title="File: Core.v
-Line: 21
-Time: 0.005s">
-<div class="time" style="width: 2.0161290322581%"></div>
+Line: 23
+Time: 0.004s">
+<div class="time" style="width: 1.6666666666667%"></div>
 <pre>
 
     Definition identity x : morphism x x
       := reflexivity _.</pre>
 </div>
 <div class="code" title="File: Core.v
-Line: 24
+Line: 26
 Time: 0s">
 <div class="time" style="width: 0%"></div>
 <pre>
@@ -156,44 +164,50 @@ Time: 0s">
     Global Arguments compose [s d d'] m m' / .</pre>
 </div>
 <div class="code" title="File: Core.v
-Line: 26
+Line: 28
 Time: 0s">
 <div class="time" style="width: 0%"></div>
 <pre>
     Global Arguments identity x / .</pre>
 </div>
 <div class="code" title="File: Core.v
-Line: 27
+Line: 29
 Time: 0s">
 <div class="time" style="width: 0%"></div>
 <pre>
   End groupoid_category.</pre>
 </div>
 <div class="code" title="File: Core.v
-Line: 28
+Line: 30
 Time: 0s">
 <div class="time" style="width: 0%"></div>
 <pre>
 End GroupoidCategoryInternals.</pre>
 </div>
 <div class="code" title="File: Core.v
-Line: 29
-Time: 0.001s">
-<div class="time" style="width: 0.40322580645161%"></div>
+Line: 31
+Time: 0s">
+<div class="time" style="width: 0%"></div>
 <pre>
 
-Definition groupoid_category X `{IsTrunc 1 X} : PreCategory.</pre>
+(** ** Categorification of the groupoid of a 1-type *)</pre>
 </div>
 <div class="code" title="File: Core.v
-Line: 31
+Line: 33
+Time: 0.001s">
+<div class="time" style="width: 0.41666666666667%"></div>
+<pre>Definition groupoid_category X `{IsTrunc 1 X} : PreCategory.</pre>
+</div>
+<div class="code" title="File: Core.v
+Line: 33
 Time: 0s">
 <div class="time" style="width: 0%"></div>
 <pre>
 Proof.</pre>
 </div>
 <div class="code" title="File: Core.v
-Line: 32
-Time: 0.248s">
+Line: 34
+Time: 0.24s">
 <div class="time" style="width: 100%"></div>
 <pre>
   refine (@Build_PreCategory X
@@ -207,14 +221,14 @@ Time: 0.248s">
   simpl; intros; path_induction; reflexivity.</pre>
 </div>
 <div class="code" title="File: Core.v
-Line: 41
+Line: 43
 Time: 0.03s">
-<div class="time" style="width: 12.096774193548%"></div>
+<div class="time" style="width: 12.5%"></div>
 <pre>
 Defined.</pre>
 </div>
 <div class="code" title="File: Core.v
-Line: 42
+Line: 44
 Time: 0s">
 <div class="time" style="width: 0%"></div>
 <pre>
@@ -222,37 +236,43 @@ Time: 0s">
 Arguments groupoid_category X {_}.</pre>
 </div>
 <div class="code" title="File: Core.v
-Line: 44
-Time: 0.011s">
-<div class="time" style="width: 4.4354838709677%"></div>
+Line: 46
+Time: 0s">
+<div class="time" style="width: 0%"></div>
 <pre>
 
-Lemma isstrict_groupoid_category X `{IsHSet X}
+(** ** 0-types give rise to strict (groupoid) categories *)</pre>
+</div>
+<div class="code" title="File: Core.v
+Line: 48
+Time: 0.01s">
+<div class="time" style="width: 4.1666666666667%"></div>
+<pre>Lemma isstrict_groupoid_category X `{IsHSet X}
 : IsStrictCategory (groupoid_category X).</pre>
 </div>
 <div class="code" title="File: Core.v
-Line: 47
+Line: 49
 Time: 0s">
 <div class="time" style="width: 0%"></div>
 <pre>
 Proof.</pre>
 </div>
 <div class="code" title="File: Core.v
-Line: 48
-Time: 0.003s">
-<div class="time" style="width: 1.2096774193548%"></div>
+Line: 50
+Time: 0.002s">
+<div class="time" style="width: 0.83333333333333%"></div>
 <pre>
   typeclasses eauto.</pre>
 </div>
 <div class="code" title="File: Core.v
-Line: 49
-Time: 0.008s">
-<div class="time" style="width: 3.2258064516129%"></div>
+Line: 51
+Time: 0.007s">
+<div class="time" style="width: 2.9166666666667%"></div>
 <pre>
 Defined.</pre>
 </div>
 <div class="code" title="File: Core.v
-Line: 51
+Line: 53
 Time: 0s">
 <div class="time" style="width: 0%"></div>
 <pre>

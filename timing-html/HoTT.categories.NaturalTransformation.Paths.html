@@ -30,14 +30,20 @@ pre {
 
 <div class="code" title="File: Paths.v
 Line: 1
-Time: 0.009s">
-<div class="time" style="width: 0.90543259557344%"></div>
+Time: 0s">
+<div class="time" style="width: 0%"></div>
+<pre>(** * Classify the path space of natural transformations *)</pre>
+</div>
+<div class="code" title="File: Paths.v
+Line: 1
+Time: 0.007s">
+<div class="time" style="width: 0.77777777777778%"></div>
 <pre>Require Import Category.Core Functor.Core NaturalTransformation.Core.</pre>
 </div>
 <div class="code" title="File: Paths.v
 Line: 1
-Time: 0.026s">
-<div class="time" style="width: 2.6156941649899%"></div>
+Time: 0.021s">
+<div class="time" style="width: 2.3333333333333%"></div>
 <pre>
 Require Import Equivalences types.Sigma Trunc.</pre>
 </div>
@@ -118,7 +124,7 @@ Time: 0s">
 <div class="code" title="File: Paths.v
 Line: 16
 Time: 0.001s">
-<div class="time" style="width: 0.10060362173038%"></div>
+<div class="time" style="width: 0.11111111111111%"></div>
 <pre>
   Variables F G : Functor C D.</pre>
 </div>
@@ -132,26 +138,33 @@ Time: 0s">
 </div>
 <div class="code" title="File: Paths.v
 Line: 19
-Time: 0.021s">
-<div class="time" style="width: 2.112676056338%"></div>
+Time: 0s">
+<div class="time" style="width: 0%"></div>
 <pre>
 
-  Lemma equiv_sig_natural_transformation
+  (** ** Equivalence between record and sigma versions of natural transformation *)
+ </pre>
+</div>
+<div class="code" title="File: Paths.v
+Line: 22
+Time: 0.019s">
+<div class="time" style="width: 2.1111111111111%"></div>
+<pre>Lemma equiv_sig_natural_transformation
   : { CO : forall x, morphism D (F x) (G x)
     | forall s d (m : morphism C s d),
         CO d o F _1 m = G _1 m o CO s }
       &lt;~&gt; NaturalTransformation F G.</pre>
 </div>
 <div class="code" title="File: Paths.v
-Line: 25
+Line: 26
 Time: 0s">
 <div class="time" style="width: 0%"></div>
 <pre>
   Proof.</pre>
 </div>
 <div class="code" title="File: Paths.v
-Line: 26
-Time: 0.994s">
+Line: 27
+Time: 0.9s">
 <div class="time" style="width: 100%"></div>
 <pre>
     let build := constr:(@Build_NaturalTransformation _ _ F G) in
@@ -164,51 +177,58 @@ Time: 0.994s">
       | intros; apply eta_sigma ].</pre>
 </div>
 <div class="code" title="File: Paths.v
-Line: 34
-Time: 0.334s">
-<div class="time" style="width: 33.601609657948%"></div>
+Line: 35
+Time: 0.285s">
+<div class="time" style="width: 31.666666666667%"></div>
 <pre>
   Defined.</pre>
 </div>
 <div class="code" title="File: Paths.v
-Line: 35
-Time: 0.002s">
-<div class="time" style="width: 0.20120724346076%"></div>
+Line: 36
+Time: 0s">
+<div class="time" style="width: 0%"></div>
 <pre>
 
-  Global Instance trunc_natural_transformation
+  (** ** The type of natural transformations is an hSet *)
+ </pre>
+</div>
+<div class="code" title="File: Paths.v
+Line: 39
+Time: 0.001s">
+<div class="time" style="width: 0.11111111111111%"></div>
+<pre>Global Instance trunc_natural_transformation
   : IsHSet (NaturalTransformation F G).</pre>
 </div>
 <div class="code" title="File: Paths.v
-Line: 38
+Line: 40
 Time: 0s">
 <div class="time" style="width: 0%"></div>
 <pre>
   Proof.</pre>
 </div>
 <div class="code" title="File: Paths.v
-Line: 39
-Time: 0.008s">
-<div class="time" style="width: 0.80482897384306%"></div>
+Line: 41
+Time: 0.006s">
+<div class="time" style="width: 0.66666666666667%"></div>
 <pre>
     eapply trunc_equiv'; [ exact equiv_sig_natural_transformation | ].</pre>
 </div>
 <div class="code" title="File: Paths.v
-Line: 40
-Time: 0.171s">
-<div class="time" style="width: 17.203219315895%"></div>
+Line: 42
+Time: 0.14s">
+<div class="time" style="width: 15.555555555556%"></div>
 <pre>
     typeclasses eauto.</pre>
 </div>
 <div class="code" title="File: Paths.v
-Line: 41
-Time: 0.104s">
-<div class="time" style="width: 10.46277665996%"></div>
+Line: 43
+Time: 0.097s">
+<div class="time" style="width: 10.777777777778%"></div>
 <pre>
   Qed.</pre>
 </div>
 <div class="code" title="File: Paths.v
-Line: 42
+Line: 44
 Time: 0s">
 <div class="time" style="width: 0%"></div>
 <pre>
@@ -216,69 +236,76 @@ Time: 0s">
   Section path.</pre>
 </div>
 <div class="code" title="File: Paths.v
-Line: 44
-Time: 0.003s">
-<div class="time" style="width: 0.30181086519115%"></div>
+Line: 46
+Time: 0.002s">
+<div class="time" style="width: 0.22222222222222%"></div>
 <pre>
     Variables T U : NaturalTransformation F G.</pre>
 </div>
 <div class="code" title="File: Paths.v
-Line: 45
-Time: 0.018s">
-<div class="time" style="width: 1.8108651911469%"></div>
+Line: 47
+Time: 0s">
+<div class="time" style="width: 0%"></div>
 <pre>
 
-    Lemma path'_natural_transformation
+    (** ** Equality of natural transformations is implied by equality of components *)
+   </pre>
+</div>
+<div class="code" title="File: Paths.v
+Line: 50
+Time: 0.013s">
+<div class="time" style="width: 1.4444444444444%"></div>
+<pre>Lemma path'_natural_transformation
     : components_of T = components_of U
       -&gt; T = U.</pre>
 </div>
 <div class="code" title="File: Paths.v
-Line: 49
+Line: 52
 Time: 0s">
 <div class="time" style="width: 0%"></div>
 <pre>
     Proof.</pre>
 </div>
 <div class="code" title="File: Paths.v
-Line: 50
-Time: 0.005s">
-<div class="time" style="width: 0.50301810865191%"></div>
+Line: 53
+Time: 0.004s">
+<div class="time" style="width: 0.44444444444444%"></div>
 <pre>
       intros.</pre>
 </div>
 <div class="code" title="File: Paths.v
-Line: 51
-Time: 0.211s">
-<div class="time" style="width: 21.227364185111%"></div>
+Line: 54
+Time: 0.159s">
+<div class="time" style="width: 17.666666666667%"></div>
 <pre>
       destruct T, U; simpl in *.</pre>
 </div>
 <div class="code" title="File: Paths.v
-Line: 52
-Time: 0.08s">
-<div class="time" style="width: 8.0482897384306%"></div>
+Line: 55
+Time: 0.071s">
+<div class="time" style="width: 7.8888888888889%"></div>
 <pre>
       path_induction.</pre>
 </div>
 <div class="code" title="File: Paths.v
-Line: 53
-Time: 0.807s">
-<div class="time" style="width: 81.187122736419%"></div>
+Line: 56
+Time: 0.697s">
+<div class="time" style="width: 77.444444444444%"></div>
 <pre>
       f_ap;
         refine (center _).</pre>
 </div>
 <div class="code" title="File: Paths.v
-Line: 55
-Time: 0.347s">
-<div class="time" style="width: 34.909456740443%"></div>
+Line: 58
+Time: 0.263s">
+<div class="time" style="width: 29.222222222222%"></div>
 <pre>
     Qed.</pre>
 </div>
 <div class="code" title="File: Paths.v
-Line: 56
-Time: 0.009s">
-<div class="time" style="width: 0.90543259557344%"></div>
+Line: 59
+Time: 0.006s">
+<div class="time" style="width: 0.66666666666667%"></div>
 <pre>
 
     Lemma path_natural_transformation
@@ -286,44 +313,44 @@ Time: 0.009s">
       -&gt; T = U.</pre>
 </div>
 <div class="code" title="File: Paths.v
-Line: 60
+Line: 63
 Time: 0s">
 <div class="time" style="width: 0%"></div>
 <pre>
     Proof.</pre>
 </div>
 <div class="code" title="File: Paths.v
-Line: 61
-Time: 0.005s">
-<div class="time" style="width: 0.50301810865191%"></div>
+Line: 64
+Time: 0.004s">
+<div class="time" style="width: 0.44444444444444%"></div>
 <pre>
       intros.</pre>
 </div>
 <div class="code" title="File: Paths.v
-Line: 62
-Time: 0.008s">
-<div class="time" style="width: 0.80482897384306%"></div>
+Line: 65
+Time: 0.006s">
+<div class="time" style="width: 0.66666666666667%"></div>
 <pre>
       apply path'_natural_transformation.</pre>
 </div>
 <div class="code" title="File: Paths.v
-Line: 63
-Time: 0.017s">
-<div class="time" style="width: 1.7102615694165%"></div>
+Line: 66
+Time: 0.012s">
+<div class="time" style="width: 1.3333333333333%"></div>
 <pre>
       apply path_forall; assumption.</pre>
 </div>
 <div class="code" title="File: Paths.v
-Line: 64
-Time: 0.033s">
-<div class="time" style="width: 3.3199195171026%"></div>
+Line: 67
+Time: 0.024s">
+<div class="time" style="width: 2.6666666666667%"></div>
 <pre>
     Qed.</pre>
 </div>
 <div class="code" title="File: Paths.v
-Line: 65
-Time: 0.043s">
-<div class="time" style="width: 4.3259557344064%"></div>
+Line: 68
+Time: 0.031s">
+<div class="time" style="width: 3.4444444444444%"></div>
 <pre>
 
     Let path_inv
@@ -331,83 +358,83 @@ Time: 0.043s">
       := (fun H _ =&gt; match H with idpath =&gt; idpath end).</pre>
 </div>
 <div class="code" title="File: Paths.v
-Line: 69
-Time: 0.04s">
-<div class="time" style="width: 4.0241448692153%"></div>
+Line: 72
+Time: 0.03s">
+<div class="time" style="width: 3.3333333333333%"></div>
 <pre>
 
     Lemma eisretr_path_natural_transformation
     : Sect path_natural_transformation path_inv.</pre>
 </div>
 <div class="code" title="File: Paths.v
-Line: 72
+Line: 75
 Time: 0s">
 <div class="time" style="width: 0%"></div>
 <pre>
     Proof.</pre>
 </div>
 <div class="code" title="File: Paths.v
-Line: 73
-Time: 0.007s">
-<div class="time" style="width: 0.70422535211268%"></div>
+Line: 76
+Time: 0.005s">
+<div class="time" style="width: 0.55555555555556%"></div>
 <pre>
       repeat intro.</pre>
 </div>
 <div class="code" title="File: Paths.v
-Line: 74
-Time: 0.148s">
-<div class="time" style="width: 14.889336016097%"></div>
+Line: 77
+Time: 0.11s">
+<div class="time" style="width: 12.222222222222%"></div>
 <pre>
       refine (center _).</pre>
 </div>
 <div class="code" title="File: Paths.v
-Line: 75
-Time: 0.122s">
-<div class="time" style="width: 12.273641851107%"></div>
+Line: 78
+Time: 0.1s">
+<div class="time" style="width: 11.111111111111%"></div>
 <pre>
     Qed.</pre>
 </div>
 <div class="code" title="File: Paths.v
-Line: 76
-Time: 0.055s">
-<div class="time" style="width: 5.533199195171%"></div>
+Line: 79
+Time: 0.041s">
+<div class="time" style="width: 4.5555555555556%"></div>
 <pre>
 
     Lemma eissect_path_natural_transformation
     : Sect path_inv path_natural_transformation.</pre>
 </div>
 <div class="code" title="File: Paths.v
-Line: 79
+Line: 82
 Time: 0s">
 <div class="time" style="width: 0%"></div>
 <pre>
     Proof.</pre>
 </div>
 <div class="code" title="File: Paths.v
-Line: 80
-Time: 0.004s">
-<div class="time" style="width: 0.40241448692153%"></div>
+Line: 83
+Time: 0.003s">
+<div class="time" style="width: 0.33333333333333%"></div>
 <pre>
       repeat intro.</pre>
 </div>
 <div class="code" title="File: Paths.v
-Line: 81
-Time: 0.043s">
-<div class="time" style="width: 4.3259557344064%"></div>
+Line: 84
+Time: 0.033s">
+<div class="time" style="width: 3.6666666666667%"></div>
 <pre>
       refine (center _).</pre>
 </div>
 <div class="code" title="File: Paths.v
-Line: 82
-Time: 0.077s">
-<div class="time" style="width: 7.7464788732394%"></div>
+Line: 85
+Time: 0.061s">
+<div class="time" style="width: 6.7777777777778%"></div>
 <pre>
     Qed.</pre>
 </div>
 <div class="code" title="File: Paths.v
-Line: 83
-Time: 0.104s">
-<div class="time" style="width: 10.46277665996%"></div>
+Line: 86
+Time: 0.077s">
+<div class="time" style="width: 8.5555555555556%"></div>
 <pre>
 
     Lemma eisadj_path_natural_transformation
@@ -416,103 +443,116 @@ Time: 0.104s">
         = ap path_inv (eissect_path_natural_transformation x).</pre>
 </div>
 <div class="code" title="File: Paths.v
-Line: 88
+Line: 91
 Time: 0s">
 <div class="time" style="width: 0%"></div>
 <pre>
     Proof.</pre>
 </div>
 <div class="code" title="File: Paths.v
-Line: 89
-Time: 0.006s">
-<div class="time" style="width: 0.60362173038229%"></div>
+Line: 92
+Time: 0.004s">
+<div class="time" style="width: 0.44444444444444%"></div>
 <pre>
       repeat intro.</pre>
 </div>
 <div class="code" title="File: Paths.v
-Line: 90
-Time: 0.327s">
-<div class="time" style="width: 32.897384305835%"></div>
+Line: 93
+Time: 0.268s">
+<div class="time" style="width: 29.777777777778%"></div>
 <pre>
       refine (center _).</pre>
 </div>
 <div class="code" title="File: Paths.v
-Line: 91
-Time: 0.271s">
-<div class="time" style="width: 27.263581488934%"></div>
+Line: 94
+Time: 0.255s">
+<div class="time" style="width: 28.333333333333%"></div>
 <pre>
     Qed.</pre>
-</div>
-<div class="code" title="File: Paths.v
-Line: 92
-Time: 0.01s">
-<div class="time" style="width: 1.0060362173038%"></div>
-<pre>
-
-    Lemma equiv_path_natural_transformation
-    : T = U &lt;~&gt; (components_of T == components_of U).</pre>
 </div>
 <div class="code" title="File: Paths.v
 Line: 95
 Time: 0s">
 <div class="time" style="width: 0%"></div>
 <pre>
+
+    (** ** Equality of natural transformations is equivalent to equality of components *)
+   </pre>
+</div>
+<div class="code" title="File: Paths.v
+Line: 98
+Time: 0.01s">
+<div class="time" style="width: 1.1111111111111%"></div>
+<pre>Lemma equiv_path_natural_transformation
+    : T = U &lt;~&gt; (components_of T == components_of U).</pre>
+</div>
+<div class="code" title="File: Paths.v
+Line: 99
+Time: 0s">
+<div class="time" style="width: 0%"></div>
+<pre>
     Proof.</pre>
 </div>
 <div class="code" title="File: Paths.v
-Line: 96
-Time: 0.016s">
-<div class="time" style="width: 1.6096579476861%"></div>
+Line: 100
+Time: 0.015s">
+<div class="time" style="width: 1.6666666666667%"></div>
 <pre>
       econstructor.</pre>
 </div>
 <div class="code" title="File: Paths.v
-Line: 97
+Line: 101
 Time: 0.06s">
-<div class="time" style="width: 6.0362173038229%"></div>
+<div class="time" style="width: 6.6666666666667%"></div>
 <pre> econstructor.</pre>
 </div>
 <div class="code" title="File: Paths.v
-Line: 97
+Line: 101
 Time: 0.06s">
-<div class="time" style="width: 6.0362173038229%"></div>
+<div class="time" style="width: 6.6666666666667%"></div>
 <pre> exact eisadj_path_natural_transformation.</pre>
 </div>
 <div class="code" title="File: Paths.v
-Line: 97
-Time: 0.112s">
-<div class="time" style="width: 11.267605633803%"></div>
+Line: 101
+Time: 0.11s">
+<div class="time" style="width: 12.222222222222%"></div>
 <pre>
     Defined.</pre>
 </div>
 <div class="code" title="File: Paths.v
-Line: 98
+Line: 102
 Time: 0.013s">
-<div class="time" style="width: 1.307847082495%"></div>
+<div class="time" style="width: 1.4444444444444%"></div>
 <pre>
   End path.</pre>
 </div>
 <div class="code" title="File: Paths.v
-Line: 99
-Time: 0.081s">
-<div class="time" style="width: 8.148893360161%"></div>
+Line: 103
+Time: 0.085s">
+<div class="time" style="width: 9.4444444444444%"></div>
 <pre>
 End path_natural_transformation.</pre>
 </div>
 <div class="code" title="File: Paths.v
-Line: 100
+Line: 104
 Time: 0s">
 <div class="time" style="width: 0%"></div>
 <pre>
 
-Ltac path_natural_transformation :=
+(** ** Tactic for proving equality of natural transformations *)</pre>
+</div>
+<div class="code" title="File: Paths.v
+Line: 106
+Time: 0s">
+<div class="time" style="width: 0%"></div>
+<pre>Ltac path_natural_transformation :=
   repeat match goal with
            | _ =&gt; intro
            | _ =&gt; apply path_natural_transformation; simpl
          end.</pre>
 </div>
 <div class="code" title="File: Paths.v
-Line: 107
+Line: 111
 Time: 0s">
 <div class="time" style="width: 0%"></div>
 <pre>

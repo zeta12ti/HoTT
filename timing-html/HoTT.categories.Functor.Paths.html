@@ -30,14 +30,20 @@ pre {
 
 <div class="code" title="File: Paths.v
 Line: 1
+Time: 0s">
+<div class="time" style="width: 0%"></div>
+<pre>(** * Classification of path spaces of functors *)</pre>
+</div>
+<div class="code" title="File: Paths.v
+Line: 1
 Time: 0.006s">
-<div class="time" style="width: 0.20318320352184%"></div>
+<div class="time" style="width: 0.23800079333598%"></div>
 <pre>Require Import Category.Core Functor.Core.</pre>
 </div>
 <div class="code" title="File: Paths.v
 Line: 1
-Time: 0.033s">
-<div class="time" style="width: 1.1175076193701%"></div>
+Time: 0.032s">
+<div class="time" style="width: 1.2693375644585%"></div>
 <pre>
 Require Import HProp HoTT.Tactics Equivalences PathGroupoids types.Sigma Trunc types.Record.</pre>
 </div>
@@ -140,36 +146,43 @@ Time: 0s">
 </div>
 <div class="code" title="File: Paths.v
 Line: 27
-Time: 0.022s">
-<div class="time" style="width: 0.74500507958009%"></div>
+Time: 0s">
+<div class="time" style="width: 0%"></div>
 <pre>
 
-  Lemma equiv_sig_functor
-  : functor_sig_T &lt;~&gt; Functor C D.</pre>
+  (** ** Equivalence between the record and sigma-type versions of a functor *)
+ </pre>
 </div>
 <div class="code" title="File: Paths.v
 Line: 30
+Time: 0.022s">
+<div class="time" style="width: 0.87266957556525%"></div>
+<pre>Lemma equiv_sig_functor
+  : functor_sig_T &lt;~&gt; Functor C D.</pre>
+</div>
+<div class="code" title="File: Paths.v
+Line: 31
 Time: 0s">
 <div class="time" style="width: 0%"></div>
 <pre>
   Proof.</pre>
 </div>
 <div class="code" title="File: Paths.v
-Line: 31
-Time: 2.401s">
-<div class="time" style="width: 81.307145275991%"></div>
+Line: 32
+Time: 2.328s">
+<div class="time" style="width: 92.344307814359%"></div>
 <pre>
     issig (@Build_Functor C D) (@object_of C D) (@morphism_of C D) (@composition_of C D) (@identity_of C D).</pre>
 </div>
 <div class="code" title="File: Paths.v
-Line: 32
-Time: 0.979s">
-<div class="time" style="width: 33.152726041314%"></div>
+Line: 33
+Time: 0.995s">
+<div class="time" style="width: 39.468464894883%"></div>
 <pre>
   Defined.</pre>
 </div>
 <div class="code" title="File: Paths.v
-Line: 33
+Line: 34
 Time: 0s">
 <div class="time" style="width: 0%"></div>
 <pre>
@@ -179,7 +192,7 @@ Time: 0s">
  </pre>
 </div>
 <div class="code" title="File: Paths.v
-Line: 37
+Line: 38
 Time: 0s">
 <div class="time" style="width: 0%"></div>
 <pre>Local Notation path_functor'_T F G
@@ -191,14 +204,16 @@ Time: 0s">
          (only parsing).</pre>
 </div>
 <div class="code" title="File: Paths.v
-Line: 43
+Line: 44
 Time: 0s">
 <div class="time" style="width: 0%"></div>
 <pre>
 
   (** We could just go prove that the path space of [functor_sig_T] is equivalent to [path_functor'_T], but unification is far too slow to do this effectively.  So instead we explicitly classify [path_functor'_T], and provide an equivalence between it and the path space of [Functor C D]. *)
 
-  (*Definition equiv_path_functor'_sig_sig (F G : Functor C D)
+  (**
+&lt;&lt;
+  Definition equiv_path_functor'_sig_sig (F G : Functor C D)
   : path_functor'_T F G &lt;~&gt; (@equiv_inv _ _ _ equiv_sig_functor F
                               = @equiv_inv _ _ _ equiv_sig_functor G).
   Proof.
@@ -208,105 +223,78 @@ Time: 0s">
              | [ |- appcontext[(@equiv_inv ?A ?B ?f ?H ?F).1] ]
                =&gt; change ((@equiv_inv A B f H F).1) with (object_of F)
            end.
-    exact (isequiv_idmap (object_of F = object_of G)).
-  Abort.*)
+    Time exact (isequiv_idmap (object_of F = object_of G)). (* 13.411 secs *)
+  Abort.
+&gt;&gt;
+   *)
 
+  (** ** Classify sufficient conditions to prove functors equal *)
  </pre>
 </div>
 <div class="code" title="File: Paths.v
-Line: 60
-Time: 0.013s">
-<div class="time" style="width: 0.44023027429732%"></div>
+Line: 66
+Time: 0.014s">
+<div class="time" style="width: 0.55533518445061%"></div>
 <pre>Definition path_functor'_sig (F G : Functor C D) : path_functor'_T F G -&gt; F = G.</pre>
 </div>
 <div class="code" title="File: Paths.v
-Line: 60
+Line: 66
 Time: 0s">
 <div class="time" style="width: 0%"></div>
 <pre>
   Proof.</pre>
 </div>
 <div class="code" title="File: Paths.v
-Line: 61
-Time: 0.047s">
-<div class="time" style="width: 1.5916017609211%"></div>
+Line: 67
+Time: 0.051s">
+<div class="time" style="width: 2.0230067433558%"></div>
 <pre>
     intros [? ?].</pre>
 </div>
 <div class="code" title="File: Paths.v
-Line: 62
-Time: 0.122s">
-<div class="time" style="width: 4.1313918049441%"></div>
+Line: 68
+Time: 0.121s">
+<div class="time" style="width: 4.7996826656089%"></div>
 <pre>
     destruct F, G; simpl in *.</pre>
 </div>
 <div class="code" title="File: Paths.v
-Line: 63
-Time: 0.119s">
-<div class="time" style="width: 4.0298002031832%"></div>
+Line: 69
+Time: 0.113s">
+<div class="time" style="width: 4.4823482744942%"></div>
 <pre>
     path_induction; simpl.</pre>
 </div>
 <div class="code" title="File: Paths.v
-Line: 64
-Time: 0.494s">
-<div class="time" style="width: 16.728750423298%"></div>
+Line: 70
+Time: 0.503s">
+<div class="time" style="width: 19.952399841333%"></div>
 <pre>
     f_ap;
       eapply @center; abstract exact _.</pre>
 </div>
 <div class="code" title="File: Paths.v
-Line: 66
-Time: 0.162s">
-<div class="time" style="width: 5.4859464950897%"></div>
+Line: 72
+Time: 0.156s">
+<div class="time" style="width: 6.1880206267354%"></div>
 <pre>
   Defined.</pre>
 </div>
 <div class="code" title="File: Paths.v
-Line: 67
-Time: 0.059s">
-<div class="time" style="width: 1.9979681679648%"></div>
-<pre>
-
-  Lemma path_functor'_sig_fst F G HO HM
-  : ap object_of (@path_functor'_sig F G (HO; HM)) = HO.</pre>
-</div>
-<div class="code" title="File: Paths.v
-Line: 70
+Line: 73
 Time: 0s">
 <div class="time" style="width: 0%"></div>
 <pre>
-  Proof.</pre>
-</div>
-<div class="code" title="File: Paths.v
-Line: 71
-Time: 0.35s">
-<div class="time" style="width: 11.852353538774%"></div>
-<pre>
-    destruct F, G; simpl in *.</pre>
-</div>
-<div class="code" title="File: Paths.v
-Line: 72
-Time: 1.293s">
-<div class="time" style="width: 43.785980358957%"></div>
-<pre>
-    path_induction_hammer.</pre>
-</div>
-<div class="code" title="File: Paths.v
-Line: 73
-Time: 0.624s">
-<div class="time" style="width: 21.131053166272%"></div>
-<pre>
-  Qed.</pre>
-</div>
-<div class="code" title="File: Paths.v
-Line: 74
-Time: 0.031s">
-<div class="time" style="width: 1.0497798848629%"></div>
-<pre>
 
-  Lemma path_functor'_sig_idpath F
-  : @path_functor'_sig F F (idpath; idpath) = idpath.</pre>
+  (** *** Said proof respects [object_of] *)
+ </pre>
+</div>
+<div class="code" title="File: Paths.v
+Line: 76
+Time: 0.055s">
+<div class="time" style="width: 2.1816739389131%"></div>
+<pre>Lemma path_functor'_sig_fst F G HO HM
+  : ap object_of (@path_functor'_sig F G (HO; HM)) = HO.</pre>
 </div>
 <div class="code" title="File: Paths.v
 Line: 77
@@ -317,96 +305,161 @@ Time: 0s">
 </div>
 <div class="code" title="File: Paths.v
 Line: 78
-Time: 0.086s">
-<div class="time" style="width: 2.9122925838131%"></div>
+Time: 0.307s">
+<div class="time" style="width: 12.177707259024%"></div>
 <pre>
-    destruct F; simpl in *.</pre>
+    destruct F, G; simpl in *.</pre>
 </div>
 <div class="code" title="File: Paths.v
 Line: 79
-Time: 0.2s">
-<div class="time" style="width: 6.7727734507281%"></div>
+Time: 1.262s">
+<div class="time" style="width: 50.059500198334%"></div>
 <pre>
-    rewrite !(contr idpath).</pre>
+    path_induction_hammer.</pre>
 </div>
 <div class="code" title="File: Paths.v
 Line: 80
-Time: 0.013s">
-<div class="time" style="width: 0.44023027429732%"></div>
-<pre>
-    reflexivity.</pre>
-</div>
-<div class="code" title="File: Paths.v
-Line: 81
-Time: 0.178s">
-<div class="time" style="width: 6.027768371148%"></div>
+Time: 0.581s">
+<div class="time" style="width: 23.046410154701%"></div>
 <pre>
   Qed.</pre>
 </div>
 <div class="code" title="File: Paths.v
-Line: 82
-Time: 0.098s">
-<div class="time" style="width: 3.3186589908568%"></div>
+Line: 81
+Time: 0s">
+<div class="time" style="width: 0%"></div>
 <pre>
 
-  Definition path_functor'_sig_inv (F G : Functor C D) : F = G -&gt; path_functor'_T F G
-    := fun H'
-       =&gt; (ap object_of H';
-           (transport_compose _ _ _ _) ^ @ apD (@morphism_of _ _) H')%path.</pre>
+  (** *** Said proof respects [idpath] *)
+ </pre>
 </div>
 <div class="code" title="File: Paths.v
-Line: 87
-Time: 0.024s">
-<div class="time" style="width: 0.81273281408737%"></div>
-<pre>
-
-  Lemma path_functor' (F G : Functor C D)
-  : forall HO : object_of F = object_of G,
-      transport (fun GO =&gt; forall s d, morphism C s d -&gt; morphism D (GO s) (GO d)) HO (morphism_of F) = morphism_of G
-      -&gt; F = G.</pre>
+Line: 84
+Time: 0.029s">
+<div class="time" style="width: 1.1503371677906%"></div>
+<pre>Lemma path_functor'_sig_idpath F
+  : @path_functor'_sig F F (idpath; idpath) = idpath.</pre>
 </div>
 <div class="code" title="File: Paths.v
-Line: 92
+Line: 85
 Time: 0s">
 <div class="time" style="width: 0%"></div>
 <pre>
   Proof.</pre>
 </div>
 <div class="code" title="File: Paths.v
+Line: 86
+Time: 0.082s">
+<div class="time" style="width: 3.252677508925%"></div>
+<pre>
+    destruct F; simpl in *.</pre>
+</div>
+<div class="code" title="File: Paths.v
+Line: 87
+Time: 0.197s">
+<div class="time" style="width: 7.8143593811979%"></div>
+<pre>
+    rewrite !(contr idpath).</pre>
+</div>
+<div class="code" title="File: Paths.v
+Line: 88
+Time: 0.012s">
+<div class="time" style="width: 0.47600158667196%"></div>
+<pre>
+    reflexivity.</pre>
+</div>
+<div class="code" title="File: Paths.v
+Line: 89
+Time: 0.185s">
+<div class="time" style="width: 7.338357794526%"></div>
+<pre>
+  Qed.</pre>
+</div>
+<div class="code" title="File: Paths.v
+Line: 90
+Time: 0s">
+<div class="time" style="width: 0%"></div>
+<pre>
+
+  (** ** Equality of functors gives rise to an inhabitant of the path-classifying-type *)
+ </pre>
+</div>
+<div class="code" title="File: Paths.v
 Line: 93
-Time: 0.011s">
-<div class="time" style="width: 0.37250253979004%"></div>
+Time: 0.1s">
+<div class="time" style="width: 3.966679888933%"></div>
+<pre>Definition path_functor'_sig_inv (F G : Functor C D) : F = G -&gt; path_functor'_T F G
+    := fun H'
+       =&gt; (ap object_of H';
+           (transport_compose _ _ _ _) ^ @ apD (@morphism_of _ _) H')%path.</pre>
+</div>
+<div class="code" title="File: Paths.v
+Line: 96
+Time: 0s">
+<div class="time" style="width: 0%"></div>
+<pre>
+
+  (** ** Curried version of path classifying lemma *)
+ </pre>
+</div>
+<div class="code" title="File: Paths.v
+Line: 99
+Time: 0.023s">
+<div class="time" style="width: 0.91233637445458%"></div>
+<pre>Lemma path_functor' (F G : Functor C D)
+  : forall HO : object_of F = object_of G,
+      transport (fun GO =&gt; forall s d, morphism C s d -&gt; morphism D (GO s) (GO d)) HO (morphism_of F) = morphism_of G
+      -&gt; F = G.</pre>
+</div>
+<div class="code" title="File: Paths.v
+Line: 102
+Time: 0s">
+<div class="time" style="width: 0%"></div>
+<pre>
+  Proof.</pre>
+</div>
+<div class="code" title="File: Paths.v
+Line: 103
+Time: 0.01s">
+<div class="time" style="width: 0.3966679888933%"></div>
 <pre>
     intros.</pre>
 </div>
 <div class="code" title="File: Paths.v
-Line: 94
-Time: 0.021s">
-<div class="time" style="width: 0.71114121232645%"></div>
+Line: 104
+Time: 0.019s">
+<div class="time" style="width: 0.75366917889726%"></div>
 <pre>
     apply path_functor'_sig.</pre>
 </div>
 <div class="code" title="File: Paths.v
-Line: 95
-Time: 0.033s">
-<div class="time" style="width: 1.1175076193701%"></div>
+Line: 105
+Time: 0.031s">
+<div class="time" style="width: 1.2296707655692%"></div>
 <pre>
     esplit; eassumption.</pre>
 </div>
 <div class="code" title="File: Paths.v
-Line: 96
-Time: 0.078s">
-<div class="time" style="width: 2.6413816457839%"></div>
+Line: 106
+Time: 0.074s">
+<div class="time" style="width: 2.9353431178104%"></div>
 <pre>
   Defined.</pre>
 </div>
 <div class="code" title="File: Paths.v
-Line: 97
-Time: 0.024s">
-<div class="time" style="width: 0.81273281408737%"></div>
+Line: 107
+Time: 0s">
+<div class="time" style="width: 0%"></div>
 <pre>
 
-  Lemma path_functor (F G : Functor C D)
+  (** ** Curried version of path classifying lemma, using [forall] in place of equality of functions *)
+ </pre>
+</div>
+<div class="code" title="File: Paths.v
+Line: 110
+Time: 0.024s">
+<div class="time" style="width: 0.95200317334391%"></div>
+<pre>Lemma path_functor (F G : Functor C D)
   : forall HO : object_of F == object_of G,
       (forall s d m,
          transport (fun GO =&gt; forall s d, morphism C s d -&gt; morphism D (GO s) (GO d))
@@ -417,192 +470,212 @@ Time: 0.024s">
       -&gt; F = G.</pre>
 </div>
 <div class="code" title="File: Paths.v
-Line: 107
-Time: 0s">
-<div class="time" style="width: 0%"></div>
-<pre>
-  Proof.</pre>
-</div>
-<div class="code" title="File: Paths.v
-Line: 108
-Time: 0.012s">
-<div class="time" style="width: 0.40636640704368%"></div>
-<pre>
-    intros.</pre>
-</div>
-<div class="code" title="File: Paths.v
-Line: 109
-Time: 0.027s">
-<div class="time" style="width: 0.91432441584829%"></div>
-<pre>
-    eapply (path_functor' F G (path_forall _ _ HO)).</pre>
-</div>
-<div class="code" title="File: Paths.v
-Line: 110
-Time: 0.123s">
-<div class="time" style="width: 4.1652556721978%"></div>
-<pre>
-    repeat (apply path_forall; intro); apply_hyp.</pre>
-</div>
-<div class="code" title="File: Paths.v
-Line: 111
-Time: 0.106s">
-<div class="time" style="width: 3.5895699288859%"></div>
-<pre>
-  Defined.</pre>
-</div>
-<div class="code" title="File: Paths.v
-Line: 112
-Time: 0.032s">
-<div class="time" style="width: 1.0836437521165%"></div>
-<pre>
-
-  Lemma equiv_path_functor'_sig (F G : Functor C D)
-  : path_functor'_T F G &lt;~&gt; F = G.</pre>
-</div>
-<div class="code" title="File: Paths.v
-Line: 115
-Time: 0s">
-<div class="time" style="width: 0%"></div>
-<pre>
-  Proof.</pre>
-</div>
-<div class="code" title="File: Paths.v
-Line: 116
-Time: 0.128s">
-<div class="time" style="width: 4.334575008466%"></div>
-<pre>
-    apply (equiv_adjointify (@path_functor'_sig F G)
-                            (@path_functor'_sig_inv F G)).</pre>
-</div>
-<div class="code" title="File: Paths.v
 Line: 118
 Time: 0s">
 <div class="time" style="width: 0%"></div>
 <pre>
-    -</pre>
+  Proof.</pre>
 </div>
 <div class="code" title="File: Paths.v
 Line: 119
-Time: 0.001s">
-<div class="time" style="width: 0.03386386725364%"></div>
-<pre> hnf.</pre>
-</div>
-<div class="code" title="File: Paths.v
-Line: 119
-Time: 0.051s">
-<div class="time" style="width: 1.7270572299357%"></div>
+Time: 0.012s">
+<div class="time" style="width: 0.47600158667196%"></div>
 <pre>
-      intros [].</pre>
+    intros.</pre>
 </div>
 <div class="code" title="File: Paths.v
 Line: 120
-Time: 0.071s">
-<div class="time" style="width: 2.4043345750085%"></div>
+Time: 0.027s">
+<div class="time" style="width: 1.0710035700119%"></div>
 <pre>
-      apply path_functor'_sig_idpath.</pre>
+    eapply (path_functor' F G (path_forall _ _ HO)).</pre>
 </div>
 <div class="code" title="File: Paths.v
 Line: 121
-Time: 0s">
-<div class="time" style="width: 0%"></div>
+Time: 0.117s">
+<div class="time" style="width: 4.6410154700516%"></div>
 <pre>
-    -</pre>
+    repeat (apply path_forall; intro); apply_hyp.</pre>
 </div>
 <div class="code" title="File: Paths.v
 Line: 122
-Time: 0.001s">
-<div class="time" style="width: 0.03386386725364%"></div>
-<pre> hnf.</pre>
-</div>
-<div class="code" title="File: Paths.v
-Line: 122
-Time: 0.193s">
-<div class="time" style="width: 6.5357263799526%"></div>
-<pre>
-      intros [? ?].</pre>
-</div>
-<div class="code" title="File: Paths.v
-Line: 123
-Time: 0.118s">
-<div class="time" style="width: 3.9959363359296%"></div>
-<pre>
-      apply path_sigma_uncurried.</pre>
-</div>
-<div class="code" title="File: Paths.v
-Line: 124
-Time: 0.975s">
-<div class="time" style="width: 33.017270572299%"></div>
-<pre>
-      exists (path_functor'_sig_fst _ _ _).</pre>
-</div>
-<div class="code" title="File: Paths.v
-Line: 125
-Time: 2.953s">
-<div class="time" style="width: 100%"></div>
-<pre>
-      exact (center _).</pre>
-</div>
-<div class="code" title="File: Paths.v
-Line: 126
-Time: 1.026s">
-<div class="time" style="width: 34.744327802235%"></div>
+Time: 0.1s">
+<div class="time" style="width: 3.966679888933%"></div>
 <pre>
   Defined.</pre>
 </div>
 <div class="code" title="File: Paths.v
-Line: 127
-Time: 0.005s">
-<div class="time" style="width: 0.1693193362682%"></div>
+Line: 123
+Time: 0s">
+<div class="time" style="width: 0%"></div>
 <pre>
 
-  Global Instance trunc_functor `{IsTrunc n D} `{forall s d, IsTrunc n (morphism D s d)}
-  : IsTrunc n (Functor C D).</pre>
+  (** ** Classify equality of functors up to equivalence *)
+ </pre>
+</div>
+<div class="code" title="File: Paths.v
+Line: 126
+Time: 0.033s">
+<div class="time" style="width: 1.3090043633479%"></div>
+<pre>Lemma equiv_path_functor'_sig (F G : Functor C D)
+  : path_functor'_T F G &lt;~&gt; F = G.</pre>
+</div>
+<div class="code" title="File: Paths.v
+Line: 127
+Time: 0s">
+<div class="time" style="width: 0%"></div>
+<pre>
+  Proof.</pre>
+</div>
+<div class="code" title="File: Paths.v
+Line: 128
+Time: 0.126s">
+<div class="time" style="width: 4.9980166600555%"></div>
+<pre>
+    apply (equiv_adjointify (@path_functor'_sig F G)
+                            (@path_functor'_sig_inv F G)).</pre>
 </div>
 <div class="code" title="File: Paths.v
 Line: 130
 Time: 0s">
 <div class="time" style="width: 0%"></div>
 <pre>
-  Proof.</pre>
+    -</pre>
 </div>
 <div class="code" title="File: Paths.v
 Line: 131
-Time: 0.009s">
-<div class="time" style="width: 0.30477480528276%"></div>
+Time: 0.001s">
+<div class="time" style="width: 0.03966679888933%"></div>
+<pre> hnf.</pre>
+</div>
+<div class="code" title="File: Paths.v
+Line: 131
+Time: 0.052s">
+<div class="time" style="width: 2.0626735422451%"></div>
+<pre>
+      intros [].</pre>
+</div>
+<div class="code" title="File: Paths.v
+Line: 132
+Time: 0.067s">
+<div class="time" style="width: 2.6576755255851%"></div>
+<pre>
+      apply path_functor'_sig_idpath.</pre>
+</div>
+<div class="code" title="File: Paths.v
+Line: 133
+Time: 0s">
+<div class="time" style="width: 0%"></div>
+<pre>
+    -</pre>
+</div>
+<div class="code" title="File: Paths.v
+Line: 134
+Time: 0.001s">
+<div class="time" style="width: 0.03966679888933%"></div>
+<pre> hnf.</pre>
+</div>
+<div class="code" title="File: Paths.v
+Line: 134
+Time: 0.168s">
+<div class="time" style="width: 6.6640222134074%"></div>
+<pre>
+      intros [? ?].</pre>
+</div>
+<div class="code" title="File: Paths.v
+Line: 135
+Time: 0.096s">
+<div class="time" style="width: 3.8080126933756%"></div>
+<pre>
+      apply path_sigma_uncurried.</pre>
+</div>
+<div class="code" title="File: Paths.v
+Line: 136
+Time: 0.804s">
+<div class="time" style="width: 31.892106307021%"></div>
+<pre>
+      exists (path_functor'_sig_fst _ _ _).</pre>
+</div>
+<div class="code" title="File: Paths.v
+Line: 137
+Time: 2.521s">
+<div class="time" style="width: 100%"></div>
+<pre>
+      exact (center _).</pre>
+</div>
+<div class="code" title="File: Paths.v
+Line: 138
+Time: 0.761s">
+<div class="time" style="width: 30.18643395478%"></div>
+<pre>
+  Defined.</pre>
+</div>
+<div class="code" title="File: Paths.v
+Line: 139
+Time: 0s">
+<div class="time" style="width: 0%"></div>
+<pre>
+
+  (** ** If the objects in [D] are n-truncated, then so is the type of  functors [C → D] *)
+ </pre>
+</div>
+<div class="code" title="File: Paths.v
+Line: 142
+Time: 0.004s">
+<div class="time" style="width: 0.15866719555732%"></div>
+<pre>Global Instance trunc_functor `{IsTrunc n D} `{forall s d, IsTrunc n (morphism D s d)}
+  : IsTrunc n (Functor C D).</pre>
+</div>
+<div class="code" title="File: Paths.v
+Line: 143
+Time: 0s">
+<div class="time" style="width: 0%"></div>
+<pre>
+  Proof.</pre>
+</div>
+<div class="code" title="File: Paths.v
+Line: 144
+Time: 0.008s">
+<div class="time" style="width: 0.31733439111464%"></div>
 <pre>
     eapply trunc_equiv'; [ exact equiv_sig_functor | ].</pre>
 </div>
 <div class="code" title="File: Paths.v
-Line: 132
-Time: 1.116s">
-<div class="time" style="width: 37.792075855063%"></div>
+Line: 145
+Time: 1.03s">
+<div class="time" style="width: 40.85680285601%"></div>
 <pre>
     induction n;
     simpl; intros;
     typeclasses eauto.</pre>
 </div>
 <div class="code" title="File: Paths.v
-Line: 135
-Time: 0.753s">
-<div class="time" style="width: 25.499492041991%"></div>
+Line: 148
+Time: 0.646s">
+<div class="time" style="width: 25.624752082507%"></div>
 <pre>
   Qed.</pre>
 </div>
 <div class="code" title="File: Paths.v
-Line: 136
-Time: 0.172s">
-<div class="time" style="width: 5.8245851676261%"></div>
+Line: 149
+Time: 0.146s">
+<div class="time" style="width: 5.7913526378421%"></div>
 <pre>
 End path_functor.</pre>
 </div>
 <div class="code" title="File: Paths.v
-Line: 137
+Line: 150
 Time: 0s">
 <div class="time" style="width: 0%"></div>
 <pre>
 
-Ltac path_functor :=
+(** ** Tactic for proving equality of functors *)</pre>
+</div>
+<div class="code" title="File: Paths.v
+Line: 152
+Time: 0s">
+<div class="time" style="width: 0%"></div>
+<pre>Ltac path_functor :=
   repeat match goal with
            | _ =&gt; intro
            | _ =&gt; reflexivity
@@ -611,7 +684,7 @@ Ltac path_functor :=
          end.</pre>
 </div>
 <div class="code" title="File: Paths.v
-Line: 145
+Line: 158
 Time: 0s">
 <div class="time" style="width: 0%"></div>
 <pre>
@@ -619,7 +692,7 @@ Time: 0s">
 Global Arguments path_functor'_sig : simpl never.</pre>
 </div>
 <div class="code" title="File: Paths.v
-Line: 148
+Line: 161
 Time: 0s">
 <div class="time" style="width: 0%"></div>
 <pre>

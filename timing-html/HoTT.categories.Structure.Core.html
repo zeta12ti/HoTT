@@ -30,14 +30,20 @@ pre {
 
 <div class="code" title="File: Core.v
 Line: 1
-Time: 0.005s">
-<div class="time" style="width: 0.083194675540765%"></div>
+Time: 0s">
+<div class="time" style="width: 0%"></div>
+<pre>(** * Notions of Structure *)</pre>
+</div>
+<div class="code" title="File: Core.v
+Line: 1
+Time: 0.004s">
+<div class="time" style="width: 0.066968022769128%"></div>
 <pre>Require Import Category.Core.</pre>
 </div>
 <div class="code" title="File: Core.v
 Line: 1
-Time: 0.034s">
-<div class="time" style="width: 0.5657237936772%"></div>
+Time: 0.03s">
+<div class="time" style="width: 0.50226017076846%"></div>
 <pre>
 Require Import HProp HSet types.Sigma types.Record Trunc.</pre>
 </div>
@@ -142,6 +148,7 @@ Time: 0s">
     be the category of [U]-small sets, where [U] is a univalent type
     universe. *)
 
+(** *** Notion of Structure *)
 (** Definition: A _notion of structure_ [(P,H)] over [X] consists of
     the following.  We use [X₀] to denote the objects of [X], and
     [homₓ(x, y)] to denote the morphisms [morphism X x y] of [X].
@@ -169,9 +176,9 @@ Time: 0s">
 </pre>
 </div>
 <div class="code" title="File: Core.v
-Line: 61
-Time: 0.091s">
-<div class="time" style="width: 1.5141430948419%"></div>
+Line: 62
+Time: 0.08s">
+<div class="time" style="width: 1.3393604553826%"></div>
 <pre>Record NotionOfStructure (X : PreCategory) :=
   {
     structure :&gt; X -&gt; Type;
@@ -195,7 +202,7 @@ Time: 0.091s">
   }.</pre>
 </div>
 <div class="code" title="File: Core.v
-Line: 81
+Line: 82
 Time: 0s">
 <div class="time" style="width: 0%"></div>
 <pre>
@@ -219,13 +226,13 @@ Time: 0s">
 </pre>
 </div>
 <div class="code" title="File: Core.v
-Line: 98
+Line: 99
 Time: 0.001s">
-<div class="time" style="width: 0.016638935108153%"></div>
+<div class="time" style="width: 0.016742005692282%"></div>
 <pre>Existing Instance istrunc_is_structure_homomorphism.</pre>
 </div>
 <div class="code" title="File: Core.v
-Line: 98
+Line: 99
 Time: 0s">
 <div class="time" style="width: 0%"></div>
 <pre>
@@ -233,7 +240,7 @@ Time: 0s">
 Create HintDb structure_homomorphisms discriminated.</pre>
 </div>
 <div class="code" title="File: Core.v
-Line: 100
+Line: 101
 Time: 0s">
 <div class="time" style="width: 0%"></div>
 <pre>
@@ -241,7 +248,7 @@ Time: 0s">
 Hint Resolve is_structure_homomorphism_identity is_structure_homomorphism_composition : structure_homomorphisms.</pre>
 </div>
 <div class="code" title="File: Core.v
-Line: 102
+Line: 103
 Time: 0s">
 <div class="time" style="width: 0%"></div>
 <pre>
@@ -255,20 +262,20 @@ Time: 0s">
 </pre>
 </div>
 <div class="code" title="File: Core.v
-Line: 109
+Line: 110
 Time: 0s">
 <div class="time" style="width: 0%"></div>
 <pre>Local Notation "a &lt;=_{ x } b" := (is_structure_homomorphism _ x x (identity x) a b) (at level 70, no associativity) : long_structure_scope.</pre>
 </div>
 <div class="code" title="File: Core.v
-Line: 109
+Line: 110
 Time: 0s">
 <div class="time" style="width: 0%"></div>
 <pre>
 Local Notation "a &lt;= b" := (a &lt;=_{ _ } b)%long_structure : structure_scope.</pre>
 </div>
 <div class="code" title="File: Core.v
-Line: 110
+Line: 111
 Time: 0s">
 <div class="time" style="width: 0%"></div>
 <pre>
@@ -276,57 +283,58 @@ Time: 0s">
 (** By (iii) and (iv), this is a preorder with [P x] its type of objects. *)
 
 
-</pre>
+(** *** Being a structure homomorphism is a preorder *)</pre>
 </div>
 <div class="code" title="File: Core.v
-Line: 114
-Time: 0.009s">
-<div class="time" style="width: 0.14975041597338%"></div>
+Line: 116
+Time: 0.008s">
+<div class="time" style="width: 0.13393604553826%"></div>
 <pre>Global Instance preorder_is_structure_homomorphism
        X (P : NotionOfStructure X) x
 : PreOrder (is_structure_homomorphism P x x (identity x)).</pre>
 </div>
 <div class="code" title="File: Core.v
-Line: 116
+Line: 118
 Time: 0s">
 <div class="time" style="width: 0%"></div>
 <pre>
 Proof.</pre>
 </div>
 <div class="code" title="File: Core.v
-Line: 117
-Time: 0.07s">
-<div class="time" style="width: 1.1647254575707%"></div>
+Line: 119
+Time: 0.066s">
+<div class="time" style="width: 1.1049723756906%"></div>
 <pre>
   split; repeat intro; eauto with structure_homomorphisms.</pre>
 </div>
 <div class="code" title="File: Core.v
-Line: 118
-Time: 0.018s">
-<div class="time" style="width: 0.29950083194676%"></div>
+Line: 120
+Time: 0.016s">
+<div class="time" style="width: 0.26787209107651%"></div>
 <pre>
   rewrite &lt;- identity_identity.</pre>
 </div>
 <div class="code" title="File: Core.v
-Line: 119
-Time: 0.408s">
-<div class="time" style="width: 6.7886855241265%"></div>
+Line: 121
+Time: 0.383s">
+<div class="time" style="width: 6.412188180144%"></div>
 <pre>
   eauto with structure_homomorphisms.</pre>
 </div>
 <div class="code" title="File: Core.v
-Line: 120
-Time: 0.037s">
-<div class="time" style="width: 0.61564059900166%"></div>
+Line: 122
+Time: 0.036s">
+<div class="time" style="width: 0.60271220492215%"></div>
 <pre>
 Defined.</pre>
 </div>
 <div class="code" title="File: Core.v
-Line: 121
+Line: 123
 Time: 0s">
 <div class="time" style="width: 0%"></div>
 <pre>
 
+(** *** Standard notion of structure *)
 (** We say that [(P, H)] is a _standard notion of structure_ if this
     preorder is in fact a partial order, for all [x : X]. *)
 
@@ -336,15 +344,15 @@ Time: 0s">
 </pre>
 </div>
 <div class="code" title="File: Core.v
-Line: 128
-Time: 0.013s">
-<div class="time" style="width: 0.21630615640599%"></div>
+Line: 131
+Time: 0.011s">
+<div class="time" style="width: 0.1841620626151%"></div>
 <pre>Class IsStandardNotionOfStructure X (P : NotionOfStructure X) :=
   antisymmetry_structure : forall x (a b : P x),
                              a &lt;= b -&gt; b &lt;= a -&gt; a = b.</pre>
 </div>
 <div class="code" title="File: Core.v
-Line: 130
+Line: 133
 Time: 0s">
 <div class="time" style="width: 0%"></div>
 <pre>
@@ -355,68 +363,69 @@ Time: 0s">
 </pre>
 </div>
 <div class="code" title="File: Core.v
-Line: 134
-Time: 0.004s">
-<div class="time" style="width: 0.066555740432612%"></div>
+Line: 137
+Time: 0.003s">
+<div class="time" style="width: 0.050226017076846%"></div>
 <pre>Global Instance istrunc_homomorphism_standard_notion_of_structure
        X P `{@IsStandardNotionOfStructure X P} x
 : IsHSet (P x).</pre>
 </div>
 <div class="code" title="File: Core.v
-Line: 136
+Line: 139
 Time: 0s">
 <div class="time" style="width: 0%"></div>
 <pre>
 Proof.</pre>
 </div>
 <div class="code" title="File: Core.v
-Line: 137
-Time: 0.061s">
-<div class="time" style="width: 1.0149750415973%"></div>
+Line: 140
+Time: 0.057s">
+<div class="time" style="width: 0.95429432446007%"></div>
 <pre>
   eapply (@isset_hrel_subpaths
             _ (fun a b =&gt; (a &lt;= b) * (b &lt;= a)));
   try typeclasses eauto.</pre>
 </div>
 <div class="code" title="File: Core.v
-Line: 140
-Time: 0s">
-<div class="time" style="width: 0%"></div>
-<pre>
-  -</pre>
-</div>
-<div class="code" title="File: Core.v
-Line: 141
-Time: 0.05s">
-<div class="time" style="width: 0.83194675540765%"></div>
-<pre> repeat intro; split; apply reflexivity.</pre>
-</div>
-<div class="code" title="File: Core.v
-Line: 141
-Time: 0s">
-<div class="time" style="width: 0%"></div>
-<pre>
-  -</pre>
-</div>
-<div class="code" title="File: Core.v
-Line: 142
-Time: 0.029s">
-<div class="time" style="width: 0.48252911813644%"></div>
-<pre> intros ? ? [? ?]; apply antisymmetry_structure; assumption.</pre>
-</div>
-<div class="code" title="File: Core.v
-Line: 142
-Time: 0.037s">
-<div class="time" style="width: 0.61564059900166%"></div>
-<pre>
-Defined.</pre>
-</div>
-<div class="code" title="File: Core.v
 Line: 143
 Time: 0s">
 <div class="time" style="width: 0%"></div>
 <pre>
+  -</pre>
+</div>
+<div class="code" title="File: Core.v
+Line: 144
+Time: 0.049s">
+<div class="time" style="width: 0.82035827892181%"></div>
+<pre> repeat intro; split; apply reflexivity.</pre>
+</div>
+<div class="code" title="File: Core.v
+Line: 144
+Time: 0s">
+<div class="time" style="width: 0%"></div>
+<pre>
+  -</pre>
+</div>
+<div class="code" title="File: Core.v
+Line: 145
+Time: 0.028s">
+<div class="time" style="width: 0.46877615938389%"></div>
+<pre> intros ? ? [? ?]; apply antisymmetry_structure; assumption.</pre>
+</div>
+<div class="code" title="File: Core.v
+Line: 145
+Time: 0.031s">
+<div class="time" style="width: 0.51900217646074%"></div>
+<pre>
+Defined.</pre>
+</div>
+<div class="code" title="File: Core.v
+Line: 146
+Time: 0s">
+<div class="time" style="width: 0%"></div>
+<pre>
 
+(** *** Precategory of structures *)
 (** We now define, for any notion of structure [(P, H)], a
     _precategory of [(P, H)]-structures_,
 
@@ -435,27 +444,27 @@ Time: 0s">
 </pre>
 </div>
 <div class="code" title="File: Core.v
-Line: 159
+Line: 163
 Time: 0s">
 <div class="time" style="width: 0%"></div>
 <pre>Module PreCategoryOfStructures.</pre>
 </div>
 <div class="code" title="File: Core.v
-Line: 159
+Line: 163
 Time: 0s">
 <div class="time" style="width: 0%"></div>
 <pre>
   Local Open Scope equiv_scope.</pre>
 </div>
 <div class="code" title="File: Core.v
-Line: 160
+Line: 164
 Time: 0s">
 <div class="time" style="width: 0%"></div>
 <pre>
   Section precategory.</pre>
 </div>
 <div class="code" title="File: Core.v
-Line: 161
+Line: 165
 Time: 0s">
 <div class="time" style="width: 0%"></div>
 <pre>
@@ -464,20 +473,20 @@ Time: 0s">
    </pre>
 </div>
 <div class="code" title="File: Core.v
-Line: 164
+Line: 168
 Time: 0s">
 <div class="time" style="width: 0%"></div>
 <pre>Variable X : PreCategory.</pre>
 </div>
 <div class="code" title="File: Core.v
-Line: 164
+Line: 168
 Time: 0.001s">
-<div class="time" style="width: 0.016638935108153%"></div>
+<div class="time" style="width: 0.016742005692282%"></div>
 <pre>
     Variable P : NotionOfStructure X.</pre>
 </div>
 <div class="code" title="File: Core.v
-Line: 165
+Line: 169
 Time: 0s">
 <div class="time" style="width: 0%"></div>
 <pre>
@@ -485,7 +494,7 @@ Time: 0s">
     Local Notation object := { x : X | P x }.</pre>
 </div>
 <div class="code" title="File: Core.v
-Line: 167
+Line: 171
 Time: 0s">
 <div class="time" style="width: 0%"></div>
 <pre>
@@ -507,17 +516,17 @@ Time: 0s">
    </pre>
 </div>
 <div class="code" title="File: Core.v
-Line: 183
-Time: 0.228s">
-<div class="time" style="width: 3.7936772046589%"></div>
+Line: 187
+Time: 0.223s">
+<div class="time" style="width: 3.7334672693789%"></div>
 <pre>Record morphism (xa yb : object) :=
       { f : Category.Core.morphism X xa.1 yb.1;
         h : is_structure_homomorphism _ _ _ f xa.2 yb.2 }.</pre>
 </div>
 <div class="code" title="File: Core.v
-Line: 185
+Line: 189
 Time: 0.053s">
-<div class="time" style="width: 0.88186356073211%"></div>
+<div class="time" style="width: 0.88732630169094%"></div>
 <pre>
 
     Lemma issig_morphism xa yb
@@ -526,30 +535,30 @@ Time: 0.053s">
         &lt;~&gt; morphism xa yb.</pre>
 </div>
 <div class="code" title="File: Core.v
-Line: 190
+Line: 194
 Time: 0s">
 <div class="time" style="width: 0%"></div>
 <pre>
     Proof.</pre>
 </div>
 <div class="code" title="File: Core.v
-Line: 191
-Time: 4.006s">
-<div class="time" style="width: 66.655574043261%"></div>
+Line: 195
+Time: 3.013s">
+<div class="time" style="width: 50.443663150845%"></div>
 <pre>
       issig (@Build_morphism xa yb) (@f xa yb) (@h xa yb).</pre>
 </div>
 <div class="code" title="File: Core.v
-Line: 192
-Time: 1.735s">
-<div class="time" style="width: 28.868552412646%"></div>
+Line: 196
+Time: 1.273s">
+<div class="time" style="width: 21.312573246275%"></div>
 <pre>
     Defined.</pre>
 </div>
 <div class="code" title="File: Core.v
-Line: 193
-Time: 0.007s">
-<div class="time" style="width: 0.11647254575707%"></div>
+Line: 197
+Time: 0.005s">
+<div class="time" style="width: 0.08371002846141%"></div>
 <pre>
 
     Lemma path_morphism
@@ -557,42 +566,42 @@ Time: 0.007s">
         f fh = f gi -&gt; fh = gi.</pre>
 </div>
 <div class="code" title="File: Core.v
-Line: 197
+Line: 201
 Time: 0s">
 <div class="time" style="width: 0%"></div>
 <pre>
     Proof.</pre>
 </div>
 <div class="code" title="File: Core.v
-Line: 198
-Time: 0.243s">
-<div class="time" style="width: 4.0432612312812%"></div>
+Line: 202
+Time: 0.181s">
+<div class="time" style="width: 3.030303030303%"></div>
 <pre>
       intros ? ? [? ?] [? ?] H; simpl in *; path_induction; apply ap.</pre>
 </div>
 <div class="code" title="File: Core.v
-Line: 199
-Time: 0.056s">
-<div class="time" style="width: 0.93178036605657%"></div>
+Line: 203
+Time: 0.04s">
+<div class="time" style="width: 0.66968022769128%"></div>
 <pre>
       apply allpath_hprop.</pre>
 </div>
 <div class="code" title="File: Core.v
-Line: 200
-Time: 0.129s">
-<div class="time" style="width: 2.1464226289517%"></div>
+Line: 204
+Time: 0.094s">
+<div class="time" style="width: 1.5737485350745%"></div>
 <pre>
     Defined.</pre>
 </div>
 <div class="code" title="File: Core.v
-Line: 201
-Time: 0.06s">
-<div class="time" style="width: 0.99833610648918%"></div>
+Line: 205
+Time: 0.051s">
+<div class="time" style="width: 0.85384229030638%"></div>
 <pre>
   End precategory.</pre>
 </div>
 <div class="code" title="File: Core.v
-Line: 202
+Line: 206
 Time: 0s">
 <div class="time" style="width: 0%"></div>
 <pre>
@@ -601,20 +610,20 @@ Time: 0s">
  </pre>
 </div>
 <div class="code" title="File: Core.v
-Line: 205
+Line: 209
 Time: 0s">
 <div class="time" style="width: 0%"></div>
 <pre>Global Arguments path_morphism {X P xa yb fh gi} H.</pre>
 </div>
 <div class="code" title="File: Core.v
-Line: 205
+Line: 209
 Time: 0s">
 <div class="time" style="width: 0%"></div>
 <pre>
 End PreCategoryOfStructures.</pre>
 </div>
 <div class="code" title="File: Core.v
-Line: 206
+Line: 210
 Time: 0s">
 <div class="time" style="width: 0%"></div>
 <pre>
@@ -622,30 +631,30 @@ Time: 0s">
 Section precategory.</pre>
 </div>
 <div class="code" title="File: Core.v
-Line: 208
+Line: 212
 Time: 0s">
 <div class="time" style="width: 0%"></div>
 <pre>
   Import PreCategoryOfStructures.</pre>
 </div>
 <div class="code" title="File: Core.v
-Line: 209
+Line: 213
 Time: 0.002s">
-<div class="time" style="width: 0.033277870216306%"></div>
+<div class="time" style="width: 0.033484011384564%"></div>
 <pre>
 
   Definition precategory_of_structures X (P : NotionOfStructure X) : PreCategory.</pre>
 </div>
 <div class="code" title="File: Core.v
-Line: 211
+Line: 215
 Time: 0s">
 <div class="time" style="width: 0%"></div>
 <pre>
   Proof.</pre>
 </div>
 <div class="code" title="File: Core.v
-Line: 212
-Time: 6.01s">
+Line: 216
+Time: 5.973s">
 <div class="time" style="width: 100%"></div>
 <pre>
     refine (@Build_PreCategory
@@ -671,21 +680,21 @@ Time: 6.01s">
       ).</pre>
 </div>
 <div class="code" title="File: Core.v
-Line: 233
-Time: 0.471s">
-<div class="time" style="width: 7.8369384359401%"></div>
+Line: 237
+Time: 0.47s">
+<div class="time" style="width: 7.8687426753725%"></div>
 <pre>
   Defined.</pre>
 </div>
 <div class="code" title="File: Core.v
-Line: 234
-Time: 0.026s">
-<div class="time" style="width: 0.43261231281198%"></div>
+Line: 238
+Time: 0.024s">
+<div class="time" style="width: 0.40180813661477%"></div>
 <pre>
 End precategory.</pre>
 </div>
 <div class="code" title="File: Core.v
-Line: 235
+Line: 239
 Time: 0s">
 <div class="time" style="width: 0%"></div>
 <pre>
@@ -693,28 +702,28 @@ Time: 0s">
 Module Export StructureCoreNotations.</pre>
 </div>
 <div class="code" title="File: Core.v
-Line: 237
+Line: 241
 Time: 0s">
 <div class="time" style="width: 0%"></div>
 <pre>
   Notation "a &lt;=_{ x } b" := (is_structure_homomorphism _ x x (identity x) a b) (at level 70, no associativity) : long_structure_scope.</pre>
 </div>
 <div class="code" title="File: Core.v
-Line: 238
+Line: 242
 Time: 0s">
 <div class="time" style="width: 0%"></div>
 <pre>
   Notation "a &lt;= b" := (a &lt;=_{ _ } b)%long_structure : structure_scope.</pre>
 </div>
 <div class="code" title="File: Core.v
-Line: 239
+Line: 243
 Time: 0s">
 <div class="time" style="width: 0%"></div>
 <pre>
 End StructureCoreNotations.</pre>
 </div>
 <div class="code" title="File: Core.v
-Line: 241
+Line: 245
 Time: 0s">
 <div class="time" style="width: 0%"></div>
 <pre>

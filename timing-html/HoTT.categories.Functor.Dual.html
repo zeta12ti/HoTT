@@ -30,8 +30,14 @@ pre {
 
 <div class="code" title="File: Dual.v
 Line: 1
+Time: 0s">
+<div class="time" style="width: 0%"></div>
+<pre>(** * Opposite functors *)</pre>
+</div>
+<div class="code" title="File: Dual.v
+Line: 1
 Time: 0.038s">
-<div class="time" style="width: 7.378640776699%"></div>
+<div class="time" style="width: 7.4803149606299%"></div>
 <pre>Require Category.Dual.</pre>
 </div>
 <div class="code" title="File: Dual.v
@@ -44,7 +50,7 @@ Import Category.Dual.CategoryDualNotations.</pre>
 <div class="code" title="File: Dual.v
 Line: 2
 Time: 0.002s">
-<div class="time" style="width: 0.38834951456311%"></div>
+<div class="time" style="width: 0.39370078740157%"></div>
 <pre>
 Require Import Category.Core Functor.Core.</pre>
 </div>
@@ -91,7 +97,13 @@ Time: 0s">
 <div class="time" style="width: 0%"></div>
 <pre>
 
-Section opposite.</pre>
+(** ** Definition of [Fᵒᵖ], and a variant for stripping [ᵒᵖ]s off of categories *)</pre>
+</div>
+<div class="code" title="File: Dual.v
+Line: 12
+Time: 0s">
+<div class="time" style="width: 0%"></div>
+<pre>Section opposite.</pre>
 </div>
 <div class="code" title="File: Dual.v
 Line: 12
@@ -110,7 +122,7 @@ Time: 0s">
 <div class="code" title="File: Dual.v
 Line: 14
 Time: 0.032s">
-<div class="time" style="width: 6.2135922330097%"></div>
+<div class="time" style="width: 6.2992125984252%"></div>
 <pre>
 
   Definition opposite (F : Functor C D) : Functor C^op D^op
@@ -133,7 +145,7 @@ Time: 0s">
 <div class="code" title="File: Dual.v
 Line: 25
 Time: 0.037s">
-<div class="time" style="width: 7.1844660194175%"></div>
+<div class="time" style="width: 7.2834645669291%"></div>
 <pre>Definition opposite_inv (F : Functor C^op D^op) : Functor C D
     := Build_Functor C D
                      (object_of F)
@@ -144,7 +156,7 @@ Time: 0.037s">
 <div class="code" title="File: Dual.v
 Line: 30
 Time: 0.001s">
-<div class="time" style="width: 0.19417475728155%"></div>
+<div class="time" style="width: 0.19685039370079%"></div>
 <pre>
 End opposite.</pre>
 </div>
@@ -188,105 +200,112 @@ Time: 0s">
 </div>
 <div class="code" title="File: Dual.v
 Line: 39
-Time: 0.024s">
-<div class="time" style="width: 4.6601941747573%"></div>
+Time: 0s">
+<div class="time" style="width: 0%"></div>
 <pre>
 
-  Lemma opposite_involutive C D (F : Functor C D)
+  (** ** [ᵒᵖ] is propositionally involutive *)
+ </pre>
+</div>
+<div class="code" title="File: Dual.v
+Line: 42
+Time: 0.024s">
+<div class="time" style="width: 4.7244094488189%"></div>
+<pre>Lemma opposite_involutive C D (F : Functor C D)
   : match op_op_id C in (_ = C), op_op_id D in (_ = D) return Functor C D with
       | idpath, idpath =&gt; ((F^op)^op)%functor
     end = F.</pre>
 </div>
 <div class="code" title="File: Dual.v
-Line: 44
+Line: 45
 Time: 0s">
 <div class="time" style="width: 0%"></div>
 <pre>
   Proof.</pre>
 </div>
 <div class="code" title="File: Dual.v
-Line: 45
-Time: 0.515s">
+Line: 46
+Time: 0.508s">
 <div class="time" style="width: 100%"></div>
 <pre>
     destruct F, C, D; reflexivity.</pre>
 </div>
 <div class="code" title="File: Dual.v
-Line: 46
-Time: 0.065s">
-<div class="time" style="width: 12.621359223301%"></div>
+Line: 47
+Time: 0.068s">
+<div class="time" style="width: 13.385826771654%"></div>
 <pre>
   Defined.</pre>
 </div>
 <div class="code" title="File: Dual.v
-Line: 47
+Line: 48
 Time: 0.002s">
-<div class="time" style="width: 0.38834951456311%"></div>
+<div class="time" style="width: 0.39370078740157%"></div>
 <pre>
 
   Lemma opposite_law C D (F : Functor C D)
   : F^op^op' = F.</pre>
 </div>
 <div class="code" title="File: Dual.v
-Line: 50
+Line: 51
 Time: 0s">
 <div class="time" style="width: 0%"></div>
 <pre>
   Proof.</pre>
 </div>
 <div class="code" title="File: Dual.v
-Line: 51
-Time: 0.022s">
-<div class="time" style="width: 4.2718446601942%"></div>
+Line: 52
+Time: 0.023s">
+<div class="time" style="width: 4.5275590551181%"></div>
 <pre>
     destruct F; reflexivity.</pre>
 </div>
 <div class="code" title="File: Dual.v
-Line: 52
-Time: 0.006s">
-<div class="time" style="width: 1.1650485436893%"></div>
+Line: 53
+Time: 0.007s">
+<div class="time" style="width: 1.3779527559055%"></div>
 <pre>
   Defined.</pre>
 </div>
 <div class="code" title="File: Dual.v
-Line: 53
+Line: 54
 Time: 0.004s">
-<div class="time" style="width: 0.77669902912621%"></div>
+<div class="time" style="width: 0.78740157480315%"></div>
 <pre>
 
   Lemma opposite'_law C D (F : Functor C^op D^op)
   : F^op'^op = F.</pre>
 </div>
 <div class="code" title="File: Dual.v
-Line: 56
+Line: 57
 Time: 0s">
 <div class="time" style="width: 0%"></div>
 <pre>
   Proof.</pre>
 </div>
 <div class="code" title="File: Dual.v
-Line: 57
-Time: 0.042s">
-<div class="time" style="width: 8.1553398058252%"></div>
+Line: 58
+Time: 0.044s">
+<div class="time" style="width: 8.6614173228346%"></div>
 <pre>
     destruct F; reflexivity.</pre>
 </div>
 <div class="code" title="File: Dual.v
-Line: 58
-Time: 0.016s">
-<div class="time" style="width: 3.1067961165049%"></div>
+Line: 59
+Time: 0.017s">
+<div class="time" style="width: 3.3464566929134%"></div>
 <pre>
   Defined.</pre>
 </div>
 <div class="code" title="File: Dual.v
-Line: 59
+Line: 60
 Time: 0.004s">
-<div class="time" style="width: 0.77669902912621%"></div>
+<div class="time" style="width: 0.78740157480315%"></div>
 <pre>
 End opposite_involutive.</pre>
 </div>
 <div class="code" title="File: Dual.v
-Line: 60
+Line: 61
 Time: 0s">
 <div class="time" style="width: 0%"></div>
 <pre>
@@ -294,28 +313,28 @@ Time: 0s">
 Module Export FunctorDualNotations.</pre>
 </div>
 <div class="code" title="File: Dual.v
-Line: 62
+Line: 63
 Time: 0s">
 <div class="time" style="width: 0%"></div>
 <pre>
   Notation "F ^op" := (opposite F) : functor_scope.</pre>
 </div>
 <div class="code" title="File: Dual.v
-Line: 63
+Line: 64
 Time: 0s">
 <div class="time" style="width: 0%"></div>
 <pre>
   Notation "F ^op'" := (opposite_inv F) (at level 3) : functor_scope.</pre>
 </div>
 <div class="code" title="File: Dual.v
-Line: 64
+Line: 65
 Time: 0s">
 <div class="time" style="width: 0%"></div>
 <pre>
 End FunctorDualNotations.</pre>
 </div>
 <div class="code" title="File: Dual.v
-Line: 66
+Line: 67
 Time: 0s">
 <div class="time" style="width: 0%"></div>
 <pre>

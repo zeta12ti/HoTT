@@ -30,21 +30,27 @@ pre {
 
 <div class="code" title="File: Yoneda.v
 Line: 1
-Time: 0.006s">
-<div class="time" style="width: 0.51325919589393%"></div>
+Time: 0s">
+<div class="time" style="width: 0%"></div>
+<pre>(** * The Yoneda Lemma *)</pre>
+</div>
+<div class="code" title="File: Yoneda.v
+Line: 1
+Time: 0.007s">
+<div class="time" style="width: 0.54815974941269%"></div>
 <pre>Require Import Category.Core Functor.Core NaturalTransformation.Core.</pre>
 </div>
 <div class="code" title="File: Yoneda.v
 Line: 1
-Time: 0.034s">
-<div class="time" style="width: 2.9084687767323%"></div>
+Time: 0.037s">
+<div class="time" style="width: 2.8974158183242%"></div>
 <pre>
 Require Import Category.Dual.</pre>
 </div>
 <div class="code" title="File: Yoneda.v
 Line: 2
 Time: 0.001s">
-<div class="time" style="width: 0.085543199315654%"></div>
+<div class="time" style="width: 0.078308535630384%"></div>
 <pre>
 Require Import Category.Prod.</pre>
 </div>
@@ -58,35 +64,35 @@ Require Import Functor.Composition.Core.</pre>
 <div class="code" title="File: Yoneda.v
 Line: 4
 Time: 0.001s">
-<div class="time" style="width: 0.085543199315654%"></div>
+<div class="time" style="width: 0.078308535630384%"></div>
 <pre>
 Require Import Category.Morphisms.</pre>
 </div>
 <div class="code" title="File: Yoneda.v
 Line: 5
-Time: 0.013s">
-<div class="time" style="width: 1.1120615911035%"></div>
+Time: 0.014s">
+<div class="time" style="width: 1.0963194988254%"></div>
 <pre>
 Require Import SetCategory.</pre>
 </div>
 <div class="code" title="File: Yoneda.v
 Line: 6
-Time: 0.038s">
-<div class="time" style="width: 3.2506415739949%"></div>
+Time: 0.04s">
+<div class="time" style="width: 3.1323414252153%"></div>
 <pre>
 Require Import Functor.Attributes.</pre>
 </div>
 <div class="code" title="File: Yoneda.v
 Line: 7
-Time: 0.009s">
-<div class="time" style="width: 0.76988879384089%"></div>
+Time: 0.01s">
+<div class="time" style="width: 0.78308535630384%"></div>
 <pre>
 Require ExponentialLaws.Law4.Functors.</pre>
 </div>
 <div class="code" title="File: Yoneda.v
 Line: 8
-Time: 0.149s">
-<div class="time" style="width: 12.745936698033%"></div>
+Time: 0.16s">
+<div class="time" style="width: 12.529365700861%"></div>
 <pre>
 Require ProductLaws.</pre>
 </div>
@@ -114,7 +120,7 @@ Require Import NaturalTransformation.Paths.</pre>
 <div class="code" title="File: Yoneda.v
 Line: 12
 Time: 0.001s">
-<div class="time" style="width: 0.085543199315654%"></div>
+<div class="time" style="width: 0.078308535630384%"></div>
 <pre>
 Require Import HSet HoTT.Tactics.</pre>
 </div>
@@ -185,7 +191,7 @@ Time: 0s">
     modern developments in algebraic geometry and representation
     theory. It is named after Nobuo Yoneda.
 
-    * Generalities
+    ** Generalities
 
     The Yoneda lemma suggests that instead of studying the (locally
     small) category [A], one should study the category of all functors
@@ -202,9 +208,9 @@ Time: 0s">
     category of modules over the ring is a category of functors
     defined on [A].
 
-    * Formal statement
+    ** Formal statement
 
-    ** General version
+    *** General version
 
     Yoneda's lemma concerns functors from a fixed category [A] to the
     category of sets, [Set]. If [A] is a locally small category
@@ -223,30 +229,30 @@ Time: 0s">
     [f ↦ Hom(a, f) = ⟦ Hom(a, x) ∋ g ↦ f ∘ g ∈ Hom(a,y) ⟧].
  *)
 
-</pre>
+(** ** The (co)yoneda functors [A → (Aᵒᵖ → set)] *)</pre>
 </div>
 <div class="code" title="File: Yoneda.v
-Line: 77
+Line: 78
 Time: 0s">
 <div class="time" style="width: 0%"></div>
 <pre>Section yoneda.</pre>
-</div>
-<div class="code" title="File: Yoneda.v
-Line: 77
-Time: 0s">
-<div class="time" style="width: 0%"></div>
-<pre>
-  Context `{Funext}.</pre>
 </div>
 <div class="code" title="File: Yoneda.v
 Line: 78
 Time: 0s">
 <div class="time" style="width: 0%"></div>
 <pre>
-  Variable A : PreCategory.</pre>
+  Context `{Funext}.</pre>
 </div>
 <div class="code" title="File: Yoneda.v
 Line: 79
+Time: 0s">
+<div class="time" style="width: 0%"></div>
+<pre>
+  Variable A : PreCategory.</pre>
+</div>
+<div class="code" title="File: Yoneda.v
+Line: 80
 Time: 0s">
 <div class="time" style="width: 0%"></div>
 <pre>
@@ -256,52 +262,58 @@ Time: 0s">
  </pre>
 </div>
 <div class="code" title="File: Yoneda.v
-Line: 83
-Time: 0.02s">
-<div class="time" style="width: 1.7108639863131%"></div>
+Line: 84
+Time: 0.022s">
+<div class="time" style="width: 1.7227877838684%"></div>
 <pre>Definition coyoneda : Functor A^op (A -&gt; set_cat)
     := ExponentialLaws.Law4.Functors.inverse _ _ _ (hom_functor A).</pre>
 </div>
 <div class="code" title="File: Yoneda.v
-Line: 84
-Time: 0.024s">
-<div class="time" style="width: 2.0530367835757%"></div>
+Line: 85
+Time: 0.025s">
+<div class="time" style="width: 1.9577133907596%"></div>
 <pre>
 
   Definition yoneda : Functor A (A^op -&gt; set_cat)
     := ExponentialLaws.Law4.Functors.inverse _ _ _ (hom_functor A o ProductLaws.Swap.functor _ _).</pre>
 </div>
 <div class="code" title="File: Yoneda.v
-Line: 87
-Time: 0.002s">
-<div class="time" style="width: 0.17108639863131%"></div>
+Line: 88
+Time: 0.001s">
+<div class="time" style="width: 0.078308535630384%"></div>
 <pre>
 End yoneda.</pre>
 </div>
 <div class="code" title="File: Yoneda.v
-Line: 88
+Line: 89
 Time: 0s">
 <div class="time" style="width: 0%"></div>
 <pre>
 
-Section coyoneda_lemma.</pre>
+(** ** The (co)yoneda lemma *)</pre>
 </div>
 <div class="code" title="File: Yoneda.v
-Line: 90
+Line: 91
 Time: 0s">
 <div class="time" style="width: 0%"></div>
-<pre>
-  Context `{Funext}.</pre>
+<pre>Section coyoneda_lemma.</pre>
 </div>
 <div class="code" title="File: Yoneda.v
 Line: 91
 Time: 0s">
 <div class="time" style="width: 0%"></div>
 <pre>
-  Variable A : PreCategory.</pre>
+  Context `{Funext}.</pre>
 </div>
 <div class="code" title="File: Yoneda.v
 Line: 92
+Time: 0s">
+<div class="time" style="width: 0%"></div>
+<pre>
+  Variable A : PreCategory.</pre>
+</div>
+<div class="code" title="File: Yoneda.v
+Line: 93
 Time: 0s">
 <div class="time" style="width: 0%"></div>
 <pre>
@@ -310,13 +322,13 @@ Time: 0s">
  </pre>
 </div>
 <div class="code" title="File: Yoneda.v
-Line: 95
+Line: 96
 Time: 0.008s">
-<div class="time" style="width: 0.68434559452524%"></div>
+<div class="time" style="width: 0.62646828504307%"></div>
 <pre>Variable F : object (A -&gt; set_cat).</pre>
 </div>
 <div class="code" title="File: Yoneda.v
-Line: 95
+Line: 96
 Time: 0s">
 <div class="time" style="width: 0%"></div>
 <pre>
@@ -324,13 +336,13 @@ Time: 0s">
  </pre>
 </div>
 <div class="code" title="File: Yoneda.v
-Line: 97
+Line: 98
 Time: 0s">
 <div class="time" style="width: 0%"></div>
 <pre>Variable a : A.</pre>
 </div>
 <div class="code" title="File: Yoneda.v
-Line: 97
+Line: 98
 Time: 0s">
 <div class="time" style="width: 0%"></div>
 <pre>
@@ -349,9 +361,9 @@ Time: 0s">
  </pre>
 </div>
 <div class="code" title="File: Yoneda.v
-Line: 110
-Time: 0.084s">
-<div class="time" style="width: 7.185628742515%"></div>
+Line: 111
+Time: 0.09s">
+<div class="time" style="width: 7.0477682067345%"></div>
 <pre>Definition coyoneda_lemma_morphism
   : morphism set_cat
              (BuildhSet
@@ -361,7 +373,7 @@ Time: 0.084s">
     := fun phi =&gt; phi a 1%morphism.</pre>
 </div>
 <div class="code" title="File: Yoneda.v
-Line: 116
+Line: 117
 Time: 0s">
 <div class="time" style="width: 0%"></div>
 <pre>
@@ -369,9 +381,9 @@ Time: 0s">
   Local Arguments Overture.compose / .</pre>
 </div>
 <div class="code" title="File: Yoneda.v
-Line: 118
-Time: 0.039s">
-<div class="time" style="width: 3.3361847733105%"></div>
+Line: 119
+Time: 0.042s">
+<div class="time" style="width: 3.2889584964761%"></div>
 <pre>
 
   Definition coyoneda_lemma_morphism_inverse
@@ -382,30 +394,30 @@ Time: 0.039s">
                 _).</pre>
 </div>
 <div class="code" title="File: Yoneda.v
-Line: 125
+Line: 126
 Time: 0s">
 <div class="time" style="width: 0%"></div>
 <pre>
   Proof.</pre>
 </div>
 <div class="code" title="File: Yoneda.v
-Line: 126
-Time: 0s">
-<div class="time" style="width: 0%"></div>
+Line: 127
+Time: 0.001s">
+<div class="time" style="width: 0.078308535630384%"></div>
 <pre>
     intro Fa.</pre>
 </div>
 <div class="code" title="File: Yoneda.v
-Line: 127
+Line: 128
 Time: 0s">
 <div class="time" style="width: 0%"></div>
 <pre>
     hnf.</pre>
 </div>
 <div class="code" title="File: Yoneda.v
-Line: 128
-Time: 0.072s">
-<div class="time" style="width: 6.1591103507271%"></div>
+Line: 129
+Time: 0.078s">
+<div class="time" style="width: 6.1080657791699%"></div>
 <pre>
     let F0 := match goal with |- NaturalTransformation ?F ?G =&gt; constr:(F) end in
     let G0 := match goal with |- NaturalTransformation ?F ?G =&gt; constr:(G) end in
@@ -416,16 +428,16 @@ Time: 0.072s">
            ).</pre>
 </div>
 <div class="code" title="File: Yoneda.v
-Line: 135
+Line: 136
 Time: 0.006s">
-<div class="time" style="width: 0.51325919589393%"></div>
+<div class="time" style="width: 0.4698512137823%"></div>
 <pre>
     simpl.</pre>
 </div>
 <div class="code" title="File: Yoneda.v
-Line: 136
-Time: 0.206s">
-<div class="time" style="width: 17.621899059025%"></div>
+Line: 137
+Time: 0.208s">
+<div class="time" style="width: 16.28817541112%"></div>
 <pre>
     abstract (
         repeat first [ reflexivity
@@ -435,14 +447,14 @@ Time: 0.206s">
       ).</pre>
 </div>
 <div class="code" title="File: Yoneda.v
-Line: 142
-Time: 0.03s">
-<div class="time" style="width: 2.5662959794696%"></div>
+Line: 143
+Time: 0.034s">
+<div class="time" style="width: 2.662490211433%"></div>
 <pre>
   Defined.</pre>
 </div>
 <div class="code" title="File: Yoneda.v
-Line: 143
+Line: 144
 Time: 0s">
 <div class="time" style="width: 0%"></div>
 <pre>
@@ -450,31 +462,31 @@ Time: 0s">
   Local Arguments coyoneda_lemma_morphism / .</pre>
 </div>
 <div class="code" title="File: Yoneda.v
-Line: 145
+Line: 146
 Time: 0s">
 <div class="time" style="width: 0%"></div>
 <pre>
   Local Arguments coyoneda_lemma_morphism_inverse / .</pre>
 </div>
 <div class="code" title="File: Yoneda.v
-Line: 146
-Time: 0.004s">
-<div class="time" style="width: 0.34217279726262%"></div>
+Line: 147
+Time: 0.005s">
+<div class="time" style="width: 0.39154267815192%"></div>
 <pre>
 
   Global Instance coyoneda_lemma : IsIsomorphism coyoneda_lemma_morphism.</pre>
 </div>
 <div class="code" title="File: Yoneda.v
-Line: 148
+Line: 149
 Time: 0s">
 <div class="time" style="width: 0%"></div>
 <pre>
   Proof.</pre>
 </div>
 <div class="code" title="File: Yoneda.v
-Line: 149
-Time: 0.915s">
-<div class="time" style="width: 78.272027373824%"></div>
+Line: 150
+Time: 0.98s">
+<div class="time" style="width: 76.742364917776%"></div>
 <pre>
     exists coyoneda_lemma_morphism_inverse;
     abstract (
@@ -488,21 +500,21 @@ Time: 0.915s">
       ).</pre>
 </div>
 <div class="code" title="File: Yoneda.v
-Line: 159
-Time: 0.024s">
-<div class="time" style="width: 2.0530367835757%"></div>
+Line: 160
+Time: 0.025s">
+<div class="time" style="width: 1.9577133907596%"></div>
 <pre>
   Defined.</pre>
 </div>
 <div class="code" title="File: Yoneda.v
-Line: 160
-Time: 0.022s">
-<div class="time" style="width: 1.8819503849444%"></div>
+Line: 161
+Time: 0.024s">
+<div class="time" style="width: 1.8794048551292%"></div>
 <pre>
 End coyoneda_lemma.</pre>
 </div>
 <div class="code" title="File: Yoneda.v
-Line: 161
+Line: 162
 Time: 0s">
 <div class="time" style="width: 0%"></div>
 <pre>
@@ -510,35 +522,35 @@ Time: 0s">
 Section yoneda_lemma.</pre>
 </div>
 <div class="code" title="File: Yoneda.v
-Line: 163
+Line: 164
 Time: 0s">
 <div class="time" style="width: 0%"></div>
 <pre>
   Context `{Funext}.</pre>
 </div>
 <div class="code" title="File: Yoneda.v
-Line: 164
+Line: 165
 Time: 0s">
 <div class="time" style="width: 0%"></div>
 <pre>
   Variable A : PreCategory.</pre>
 </div>
 <div class="code" title="File: Yoneda.v
-Line: 165
+Line: 166
 Time: 0.005s">
-<div class="time" style="width: 0.42771599657827%"></div>
+<div class="time" style="width: 0.39154267815192%"></div>
 <pre>
   Variable G : object (A^op -&gt; set_cat).</pre>
 </div>
 <div class="code" title="File: Yoneda.v
-Line: 166
+Line: 167
 Time: 0s">
 <div class="time" style="width: 0%"></div>
 <pre>
   Variable a : A.</pre>
 </div>
 <div class="code" title="File: Yoneda.v
-Line: 167
+Line: 168
 Time: 0s">
 <div class="time" style="width: 0%"></div>
 <pre>
@@ -557,9 +569,9 @@ Time: 0s">
  </pre>
 </div>
 <div class="code" title="File: Yoneda.v
-Line: 180
-Time: 0.066s">
-<div class="time" style="width: 5.6458511548332%"></div>
+Line: 181
+Time: 0.074s">
+<div class="time" style="width: 5.7948316366484%"></div>
 <pre>Definition yoneda_lemma_morphism
   : morphism set_cat
              (BuildhSet
@@ -569,7 +581,7 @@ Time: 0.066s">
     := fun phi =&gt; phi a 1%morphism.</pre>
 </div>
 <div class="code" title="File: Yoneda.v
-Line: 186
+Line: 187
 Time: 0s">
 <div class="time" style="width: 0%"></div>
 <pre>
@@ -577,9 +589,9 @@ Time: 0s">
   Local Arguments Overture.compose / .</pre>
 </div>
 <div class="code" title="File: Yoneda.v
-Line: 188
-Time: 0.026s">
-<div class="time" style="width: 2.224123182207%"></div>
+Line: 189
+Time: 0.029s">
+<div class="time" style="width: 2.2709475332811%"></div>
 <pre>
 
   Definition yoneda_lemma_morphism_inverse
@@ -590,30 +602,30 @@ Time: 0.026s">
                 _).</pre>
 </div>
 <div class="code" title="File: Yoneda.v
-Line: 195
+Line: 196
 Time: 0s">
 <div class="time" style="width: 0%"></div>
 <pre>
   Proof.</pre>
 </div>
 <div class="code" title="File: Yoneda.v
-Line: 196
+Line: 197
 Time: 0s">
 <div class="time" style="width: 0%"></div>
 <pre>
     intro Ga.</pre>
 </div>
 <div class="code" title="File: Yoneda.v
-Line: 197
+Line: 198
 Time: 0s">
 <div class="time" style="width: 0%"></div>
 <pre>
     hnf.</pre>
 </div>
 <div class="code" title="File: Yoneda.v
-Line: 198
-Time: 0.059s">
-<div class="time" style="width: 5.0470487596236%"></div>
+Line: 199
+Time: 0.067s">
+<div class="time" style="width: 5.2466718872357%"></div>
 <pre>
     let F0 := match goal with |- NaturalTransformation ?F ?G =&gt; constr:(F) end in
     let G0 := match goal with |- NaturalTransformation ?F ?G =&gt; constr:(G) end in
@@ -624,16 +636,16 @@ Time: 0.059s">
            ).</pre>
 </div>
 <div class="code" title="File: Yoneda.v
-Line: 205
-Time: 0.007s">
-<div class="time" style="width: 0.59880239520958%"></div>
+Line: 206
+Time: 0.008s">
+<div class="time" style="width: 0.62646828504307%"></div>
 <pre>
     simpl in *.</pre>
 </div>
 <div class="code" title="File: Yoneda.v
-Line: 206
-Time: 0.126s">
-<div class="time" style="width: 10.778443113772%"></div>
+Line: 207
+Time: 0.138s">
+<div class="time" style="width: 10.806577916993%"></div>
 <pre>
     abstract (
         repeat first [ reflexivity
@@ -648,14 +660,14 @@ Time: 0.126s">
       ).</pre>
 </div>
 <div class="code" title="File: Yoneda.v
-Line: 217
-Time: 0.037s">
-<div class="time" style="width: 3.1650983746792%"></div>
+Line: 218
+Time: 0.041s">
+<div class="time" style="width: 3.2106499608457%"></div>
 <pre>
   Defined.</pre>
 </div>
 <div class="code" title="File: Yoneda.v
-Line: 218
+Line: 219
 Time: 0s">
 <div class="time" style="width: 0%"></div>
 <pre>
@@ -663,30 +675,30 @@ Time: 0s">
   Local Arguments yoneda_lemma_morphism / .</pre>
 </div>
 <div class="code" title="File: Yoneda.v
-Line: 220
+Line: 221
 Time: 0s">
 <div class="time" style="width: 0%"></div>
 <pre>
   Local Arguments yoneda_lemma_morphism_inverse / .</pre>
 </div>
 <div class="code" title="File: Yoneda.v
-Line: 221
+Line: 222
 Time: 0.005s">
-<div class="time" style="width: 0.42771599657827%"></div>
+<div class="time" style="width: 0.39154267815192%"></div>
 <pre>
 
   Global Instance yoneda_lemma : IsIsomorphism yoneda_lemma_morphism.</pre>
 </div>
 <div class="code" title="File: Yoneda.v
-Line: 223
+Line: 224
 Time: 0s">
 <div class="time" style="width: 0%"></div>
 <pre>
   Proof.</pre>
 </div>
 <div class="code" title="File: Yoneda.v
-Line: 224
-Time: 1.169s">
+Line: 225
+Time: 1.277s">
 <div class="time" style="width: 100%"></div>
 <pre>
     exists yoneda_lemma_morphism_inverse;
@@ -703,21 +715,21 @@ Time: 1.169s">
       ).</pre>
 </div>
 <div class="code" title="File: Yoneda.v
-Line: 236
-Time: 0.023s">
-<div class="time" style="width: 1.9674935842601%"></div>
+Line: 237
+Time: 0.025s">
+<div class="time" style="width: 1.9577133907596%"></div>
 <pre>
   Defined.</pre>
 </div>
 <div class="code" title="File: Yoneda.v
-Line: 237
-Time: 0.024s">
-<div class="time" style="width: 2.0530367835757%"></div>
+Line: 238
+Time: 0.026s">
+<div class="time" style="width: 2.03602192639%"></div>
 <pre>
 End yoneda_lemma.</pre>
 </div>
 <div class="code" title="File: Yoneda.v
-Line: 238
+Line: 239
 Time: 0s">
 <div class="time" style="width: 0%"></div>
 <pre>
@@ -767,27 +779,27 @@ Time: 0s">
 </pre>
 </div>
 <div class="code" title="File: Yoneda.v
-Line: 281
+Line: 282
 Time: 0s">
 <div class="time" style="width: 0%"></div>
 <pre>Section FullyFaithful.</pre>
-</div>
-<div class="code" title="File: Yoneda.v
-Line: 281
-Time: 0s">
-<div class="time" style="width: 0%"></div>
-<pre>
-  Context `{Funext}.</pre>
 </div>
 <div class="code" title="File: Yoneda.v
 Line: 282
 Time: 0s">
 <div class="time" style="width: 0%"></div>
 <pre>
-  Variable A : PreCategory.</pre>
+  Context `{Funext}.</pre>
 </div>
 <div class="code" title="File: Yoneda.v
 Line: 283
+Time: 0s">
+<div class="time" style="width: 0%"></div>
+<pre>
+  Variable A : PreCategory.</pre>
+</div>
+<div class="code" title="File: Yoneda.v
+Line: 284
 Time: 0s">
 <div class="time" style="width: 0%"></div>
 <pre>
@@ -795,38 +807,38 @@ Time: 0s">
   Local Arguments Overture.compose / .</pre>
 </div>
 <div class="code" title="File: Yoneda.v
-Line: 285
+Line: 286
 Time: 0.002s">
-<div class="time" style="width: 0.17108639863131%"></div>
+<div class="time" style="width: 0.15661707126077%"></div>
 <pre>
 
   Definition coyoneda_embedding : IsFullyFaithful (coyoneda A).</pre>
-</div>
-<div class="code" title="File: Yoneda.v
-Line: 287
-Time: 0s">
-<div class="time" style="width: 0%"></div>
-<pre>
-  Proof.</pre>
 </div>
 <div class="code" title="File: Yoneda.v
 Line: 288
 Time: 0s">
 <div class="time" style="width: 0%"></div>
 <pre>
-    intros a b.</pre>
+  Proof.</pre>
 </div>
 <div class="code" title="File: Yoneda.v
 Line: 289
-Time: 0.004s">
-<div class="time" style="width: 0.34217279726262%"></div>
+Time: 0s">
+<div class="time" style="width: 0%"></div>
+<pre>
+    intros a b.</pre>
+</div>
+<div class="code" title="File: Yoneda.v
+Line: 290
+Time: 0.005s">
+<div class="time" style="width: 0.39154267815192%"></div>
 <pre>
     pose (coyoneda_lemma (A := A) (coyoneda A b) a) as YL.</pre>
 </div>
 <div class="code" title="File: Yoneda.v
-Line: 290
-Time: 1.157s">
-<div class="time" style="width: 98.973481608212%"></div>
+Line: 291
+Time: 1.162s">
+<div class="time" style="width: 90.994518402506%"></div>
 <pre>
     exists (coyoneda_lemma_morphism (F := coyoneda A b) (a := a));
       [ eapply iso_moveR_Mp
@@ -837,45 +849,45 @@ Time: 1.157s">
         reflexivity.</pre>
 </div>
 <div class="code" title="File: Yoneda.v
-Line: 297
-Time: 0.645s">
-<div class="time" style="width: 55.175363558597%"></div>
+Line: 298
+Time: 0.642s">
+<div class="time" style="width: 50.274079874706%"></div>
 <pre>
   Qed.</pre>
 </div>
 <div class="code" title="File: Yoneda.v
-Line: 298
+Line: 299
 Time: 0.002s">
-<div class="time" style="width: 0.17108639863131%"></div>
+<div class="time" style="width: 0.15661707126077%"></div>
 <pre>
 
   Definition yoneda_embedding : IsFullyFaithful (yoneda A).</pre>
-</div>
-<div class="code" title="File: Yoneda.v
-Line: 300
-Time: 0s">
-<div class="time" style="width: 0%"></div>
-<pre>
-  Proof.</pre>
 </div>
 <div class="code" title="File: Yoneda.v
 Line: 301
 Time: 0s">
 <div class="time" style="width: 0%"></div>
 <pre>
-    intros a b.</pre>
+  Proof.</pre>
 </div>
 <div class="code" title="File: Yoneda.v
 Line: 302
-Time: 0.004s">
-<div class="time" style="width: 0.34217279726262%"></div>
+Time: 0s">
+<div class="time" style="width: 0%"></div>
+<pre>
+    intros a b.</pre>
+</div>
+<div class="code" title="File: Yoneda.v
+Line: 303
+Time: 0.006s">
+<div class="time" style="width: 0.4698512137823%"></div>
 <pre>
     pose (yoneda_lemma (A := A) (yoneda A b) a) as YL.</pre>
 </div>
 <div class="code" title="File: Yoneda.v
-Line: 303
-Time: 1.02s">
-<div class="time" style="width: 87.254063301967%"></div>
+Line: 304
+Time: 1.156s">
+<div class="time" style="width: 90.524667188724%"></div>
 <pre>
     exists (yoneda_lemma_morphism (G := yoneda A b) (a := a));
       [ eapply iso_moveR_Mp
@@ -886,21 +898,21 @@ Time: 1.02s">
         reflexivity.</pre>
 </div>
 <div class="code" title="File: Yoneda.v
-Line: 310
-Time: 0.594s">
-<div class="time" style="width: 50.812660393499%"></div>
+Line: 311
+Time: 0.612s">
+<div class="time" style="width: 47.924823805795%"></div>
 <pre>
   Qed.</pre>
 </div>
 <div class="code" title="File: Yoneda.v
-Line: 311
+Line: 312
 Time: 0.022s">
-<div class="time" style="width: 1.8819503849444%"></div>
+<div class="time" style="width: 1.7227877838684%"></div>
 <pre>
 End FullyFaithful.</pre>
 </div>
 <div class="code" title="File: Yoneda.v
-Line: 313
+Line: 314
 Time: 0s">
 <div class="time" style="width: 0%"></div>
 <pre>

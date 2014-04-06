@@ -30,14 +30,20 @@ pre {
 
 <div class="code" title="File: Core.v
 Line: 1
+Time: 0s">
+<div class="time" style="width: 0%"></div>
+<pre>(** * ∑-categories - exploded Grothendieck constructions, or generalizations of subcategories *)</pre>
+</div>
+<div class="code" title="File: Core.v
+Line: 1
 Time: 0.007s">
-<div class="time" style="width: 0.50432276657061%"></div>
+<div class="time" style="width: 0.48678720445063%"></div>
 <pre>Require Import Category.Core Functor.Core.</pre>
 </div>
 <div class="code" title="File: Core.v
 Line: 1
 Time: 0.029s">
-<div class="time" style="width: 2.0893371757925%"></div>
+<div class="time" style="width: 2.0166898470097%"></div>
 <pre>
 Require Import types.Sigma HProp.</pre>
 </div>
@@ -84,24 +90,32 @@ Time: 0s">
 <div class="time" style="width: 0%"></div>
 <pre>
 
-Section sigT_obj_mor.</pre>
+(** We can generalize the notion of [sigT] to categories.  This is, essentially, a type-theoretic perspecitive on the Grothendieck construction. *)
+
+</pre>
 </div>
 <div class="code" title="File: Core.v
-Line: 11
+Line: 12
 Time: 0s">
 <div class="time" style="width: 0%"></div>
-<pre>
-  Variable A : PreCategory.</pre>
+<pre>Section sigT_obj_mor.</pre>
 </div>
 <div class="code" title="File: Core.v
 Line: 12
 Time: 0s">
 <div class="time" style="width: 0%"></div>
 <pre>
-  Variable Pobj : A -&gt; Type.</pre>
+  Variable A : PreCategory.</pre>
 </div>
 <div class="code" title="File: Core.v
 Line: 13
+Time: 0s">
+<div class="time" style="width: 0%"></div>
+<pre>
+  Variable Pobj : A -&gt; Type.</pre>
+</div>
+<div class="code" title="File: Core.v
+Line: 14
 Time: 0s">
 <div class="time" style="width: 0%"></div>
 <pre>
@@ -109,15 +123,15 @@ Time: 0s">
   Local Notation obj := (sigT Pobj).</pre>
 </div>
 <div class="code" title="File: Core.v
-Line: 15
+Line: 16
 Time: 0.006s">
-<div class="time" style="width: 0.43227665706052%"></div>
+<div class="time" style="width: 0.41724617524339%"></div>
 <pre>
 
   Variable Pmor : forall s d : obj, morphism A s.1 d.1 -&gt; Type.</pre>
 </div>
 <div class="code" title="File: Core.v
-Line: 17
+Line: 18
 Time: 0s">
 <div class="time" style="width: 0%"></div>
 <pre>
@@ -125,24 +139,24 @@ Time: 0s">
   Local Notation mor s d := (sigT (Pmor s d)).</pre>
 </div>
 <div class="code" title="File: Core.v
-Line: 19
+Line: 20
 Time: 0.007s">
-<div class="time" style="width: 0.50432276657061%"></div>
+<div class="time" style="width: 0.48678720445063%"></div>
 <pre>
   Context `(HPmor : forall s d, IsHSet (mor s d)).</pre>
 </div>
 <div class="code" title="File: Core.v
-Line: 20
+Line: 21
 Time: 0.003s">
-<div class="time" style="width: 0.21613832853026%"></div>
+<div class="time" style="width: 0.2086230876217%"></div>
 <pre>
 
   Variable Pidentity : forall x, @Pmor x x (@identity A _).</pre>
 </div>
 <div class="code" title="File: Core.v
-Line: 22
-Time: 0.015s">
-<div class="time" style="width: 1.0806916426513%"></div>
+Line: 23
+Time: 0.014s">
+<div class="time" style="width: 0.97357440890125%"></div>
 <pre>
   Variable Pcompose : forall s d d' m1 m2,
                         @Pmor d d' m1
@@ -150,7 +164,7 @@ Time: 0.015s">
                         -&gt; @Pmor s d' (m1 o m2).</pre>
 </div>
 <div class="code" title="File: Core.v
-Line: 26
+Line: 27
 Time: 0s">
 <div class="time" style="width: 0%"></div>
 <pre>
@@ -158,16 +172,16 @@ Time: 0s">
   Local Notation identity x := (@identity A x.1; @Pidentity x).</pre>
 </div>
 <div class="code" title="File: Core.v
-Line: 28
+Line: 29
 Time: 0s">
 <div class="time" style="width: 0%"></div>
 <pre>
   Local Notation compose m1 m2 := (m1.1 o m2.1; @Pcompose _ _ _ m1.1 m2.1 m1.2 m2.2)%morphism.</pre>
 </div>
 <div class="code" title="File: Core.v
-Line: 29
-Time: 0.694s">
-<div class="time" style="width: 50%"></div>
+Line: 30
+Time: 0.702s">
+<div class="time" style="width: 48.817802503477%"></div>
 <pre>
 
   Hypothesis P_associativity
@@ -175,9 +189,9 @@ Time: 0.694s">
       compose (compose m3 m2) m1 = compose m3 (compose m2 m1).</pre>
 </div>
 <div class="code" title="File: Core.v
-Line: 33
-Time: 0.05s">
-<div class="time" style="width: 3.6023054755043%"></div>
+Line: 34
+Time: 0.048s">
+<div class="time" style="width: 3.3379694019471%"></div>
 <pre>
 
   Hypothesis P_LeftIdentity
@@ -185,9 +199,9 @@ Time: 0.05s">
       compose (identity b) f = f.</pre>
 </div>
 <div class="code" title="File: Core.v
-Line: 37
+Line: 38
 Time: 0.059s">
-<div class="time" style="width: 4.2507204610951%"></div>
+<div class="time" style="width: 4.1029207232267%"></div>
 <pre>
 
   Hypothesis P_RightIdentity
@@ -195,24 +209,31 @@ Time: 0.059s">
       compose f (identity a) = f.</pre>
 </div>
 <div class="code" title="File: Core.v
-Line: 41
-Time: 0.014s">
-<div class="time" style="width: 1.0086455331412%"></div>
+Line: 42
+Time: 0s">
+<div class="time" style="width: 0%"></div>
 <pre>
 
-  Definition sigT : PreCategory.</pre>
+  (** ** Definition of a [sigT]-precategory *)
+ </pre>
 </div>
 <div class="code" title="File: Core.v
-Line: 43
+Line: 45
+Time: 0.014s">
+<div class="time" style="width: 0.97357440890125%"></div>
+<pre>Definition sigT : PreCategory.</pre>
+</div>
+<div class="code" title="File: Core.v
+Line: 45
 Time: 0s">
 <div class="time" style="width: 0%"></div>
 <pre>
   Proof.</pre>
 </div>
 <div class="code" title="File: Core.v
-Line: 44
-Time: 0.909s">
-<div class="time" style="width: 65.489913544669%"></div>
+Line: 46
+Time: 0.894s">
+<div class="time" style="width: 62.169680111266%"></div>
 <pre>
     refine (@Build_PreCategory
               obj
@@ -226,19 +247,26 @@ Time: 0.909s">
     assumption.</pre>
 </div>
 <div class="code" title="File: Core.v
-Line: 54
-Time: 0.02s">
-<div class="time" style="width: 1.4409221902017%"></div>
+Line: 56
+Time: 0.021s">
+<div class="time" style="width: 1.4603616133519%"></div>
 <pre>
   Defined.</pre>
 </div>
 <div class="code" title="File: Core.v
-Line: 55
-Time: 0.023s">
-<div class="time" style="width: 1.657060518732%"></div>
+Line: 57
+Time: 0s">
+<div class="time" style="width: 0%"></div>
 <pre>
 
-  Definition pr1 : Functor sigT A
+  (** ** First projection functor *)
+ </pre>
+</div>
+<div class="code" title="File: Core.v
+Line: 60
+Time: 0.025s">
+<div class="time" style="width: 1.7385257301808%"></div>
+<pre>Definition pr1 : Functor sigT A
     := Build_Functor
          sigT A
          (@pr1 _ _)
@@ -247,44 +275,50 @@ Time: 0.023s">
          (fun _ =&gt; idpath).</pre>
 </div>
 <div class="code" title="File: Core.v
-Line: 63
-Time: 0.037s">
-<div class="time" style="width: 2.6657060518732%"></div>
+Line: 66
+Time: 0.041s">
+<div class="time" style="width: 2.8511821974965%"></div>
 <pre>
 End sigT_obj_mor.</pre>
 </div>
 <div class="code" title="File: Core.v
-Line: 64
-Time: 0.011s">
-<div class="time" style="width: 0.79250720461095%"></div>
+Line: 67
+Time: 0.012s">
+<div class="time" style="width: 0.83449235048679%"></div>
 <pre>
 
 Arguments pr1 {A Pobj Pmor HPmor Pidentity Pcompose P_associativity P_LeftIdentity P_RightIdentity}.</pre>
-</div>
-<div class="code" title="File: Core.v
-Line: 66
-Time: 0s">
-<div class="time" style="width: 0%"></div>
-<pre>
-
-Section sigT_obj_mor_hProp.</pre>
-</div>
-<div class="code" title="File: Core.v
-Line: 68
-Time: 0s">
-<div class="time" style="width: 0%"></div>
-<pre>
-  Variable A : PreCategory.</pre>
 </div>
 <div class="code" title="File: Core.v
 Line: 69
 Time: 0s">
 <div class="time" style="width: 0%"></div>
 <pre>
+
+(** ** Variant of [sigT]-precategory when we are taking a subset of morphisms *)</pre>
+</div>
+<div class="code" title="File: Core.v
+Line: 71
+Time: 0s">
+<div class="time" style="width: 0%"></div>
+<pre>Section sigT_obj_mor_hProp.</pre>
+</div>
+<div class="code" title="File: Core.v
+Line: 71
+Time: 0s">
+<div class="time" style="width: 0%"></div>
+<pre>
+  Variable A : PreCategory.</pre>
+</div>
+<div class="code" title="File: Core.v
+Line: 72
+Time: 0s">
+<div class="time" style="width: 0%"></div>
+<pre>
   Variable Pobj : A -&gt; Type.</pre>
 </div>
 <div class="code" title="File: Core.v
-Line: 70
+Line: 73
 Time: 0s">
 <div class="time" style="width: 0%"></div>
 <pre>
@@ -292,15 +326,15 @@ Time: 0s">
   Local Notation obj := (sigT_type Pobj).</pre>
 </div>
 <div class="code" title="File: Core.v
-Line: 72
+Line: 75
 Time: 0.005s">
-<div class="time" style="width: 0.36023054755043%"></div>
+<div class="time" style="width: 0.34770514603616%"></div>
 <pre>
 
   Variable Pmor : forall s d : obj, morphism A s.1 d.1 -&gt; Type.</pre>
 </div>
 <div class="code" title="File: Core.v
-Line: 74
+Line: 77
 Time: 0s">
 <div class="time" style="width: 0%"></div>
 <pre>
@@ -308,24 +342,24 @@ Time: 0s">
   Local Notation mor s d := (sigT_type (Pmor s d)).</pre>
 </div>
 <div class="code" title="File: Core.v
-Line: 76
+Line: 79
 Time: 0.005s">
-<div class="time" style="width: 0.36023054755043%"></div>
+<div class="time" style="width: 0.34770514603616%"></div>
 <pre>
   Context `(HPmor : forall s d m, IsHProp (Pmor s d m)).</pre>
 </div>
 <div class="code" title="File: Core.v
-Line: 77
+Line: 80
 Time: 0.003s">
-<div class="time" style="width: 0.21613832853026%"></div>
+<div class="time" style="width: 0.2086230876217%"></div>
 <pre>
 
   Variable Pidentity : forall x, @Pmor x x (@identity A _).</pre>
 </div>
 <div class="code" title="File: Core.v
-Line: 79
+Line: 82
 Time: 0.013s">
-<div class="time" style="width: 0.93659942363112%"></div>
+<div class="time" style="width: 0.90403337969402%"></div>
 <pre>
   Variable Pcompose : forall s d d' m1 m2,
                         @Pmor d d' m1
@@ -333,7 +367,7 @@ Time: 0.013s">
                         -&gt; @Pmor s d' (m1 o m2).</pre>
 </div>
 <div class="code" title="File: Core.v
-Line: 83
+Line: 86
 Time: 0s">
 <div class="time" style="width: 0%"></div>
 <pre>
@@ -341,14 +375,14 @@ Time: 0s">
   Local Notation identity x := (@identity A x.1; @Pidentity x).</pre>
 </div>
 <div class="code" title="File: Core.v
-Line: 85
+Line: 88
 Time: 0s">
 <div class="time" style="width: 0%"></div>
 <pre>
   Local Notation compose m1 m2 := (m1.1 o m2.1; @Pcompose _ _ _ m1.1 m2.1 m1.2 m2.2)%morphism.</pre>
 </div>
 <div class="code" title="File: Core.v
-Line: 86
+Line: 89
 Time: 0s">
 <div class="time" style="width: 0%"></div>
 <pre>
@@ -362,9 +396,9 @@ Time: 0s">
     apply allpath_hprop.</pre>
 </div>
 <div class="code" title="File: Core.v
-Line: 94
-Time: 0.553s">
-<div class="time" style="width: 39.841498559078%"></div>
+Line: 97
+Time: 0.576s">
+<div class="time" style="width: 40.055632823366%"></div>
 <pre>
 
   Let P_associativity
@@ -372,31 +406,31 @@ Time: 0.553s">
       compose (compose m3 m2) m1 = compose m3 (compose m2 m1).</pre>
 </div>
 <div class="code" title="File: Core.v
-Line: 98
+Line: 101
 Time: 0s">
 <div class="time" style="width: 0%"></div>
 <pre>
   Proof.</pre>
 </div>
 <div class="code" title="File: Core.v
-Line: 99
-Time: 1.388s">
+Line: 102
+Time: 1.438s">
 <div class="time" style="width: 100%"></div>
 <pre>
     abstract t ltac:(exists (associativity _ _ _ _ _ _ _ _))
       using P_associativity_core_subproof.</pre>
 </div>
 <div class="code" title="File: Core.v
-Line: 101
-Time: 0.135s">
-<div class="time" style="width: 9.7262247838617%"></div>
+Line: 104
+Time: 0.14s">
+<div class="time" style="width: 9.7357440890125%"></div>
 <pre>
   Defined.</pre>
 </div>
 <div class="code" title="File: Core.v
-Line: 102
-Time: 0.058s">
-<div class="time" style="width: 4.178674351585%"></div>
+Line: 105
+Time: 0.061s">
+<div class="time" style="width: 4.2420027816412%"></div>
 <pre>
 
   Let P_left_identity
@@ -404,38 +438,38 @@ Time: 0.058s">
       compose (identity b) f = f.</pre>
 </div>
 <div class="code" title="File: Core.v
-Line: 106
+Line: 109
 Time: 0s">
 <div class="time" style="width: 0%"></div>
 <pre>
   Proof.</pre>
 </div>
 <div class="code" title="File: Core.v
-Line: 107
-Time: 0.016s">
-<div class="time" style="width: 1.1527377521614%"></div>
+Line: 110
+Time: 0.017s">
+<div class="time" style="width: 1.1821974965229%"></div>
 <pre>
     clear P_associativity.</pre>
 </div>
 <div class="code" title="File: Core.v
-Line: 108
-Time: 0.391s">
-<div class="time" style="width: 28.170028818444%"></div>
+Line: 111
+Time: 0.405s">
+<div class="time" style="width: 28.164116828929%"></div>
 <pre>
     abstract t ltac:(exists (left_identity _ _ _ _))
       using P_left_identity_core_subproof.</pre>
 </div>
 <div class="code" title="File: Core.v
-Line: 110
-Time: 0.03s">
-<div class="time" style="width: 2.1613832853026%"></div>
+Line: 113
+Time: 0.031s">
+<div class="time" style="width: 2.1557719054242%"></div>
 <pre>
   Defined.</pre>
 </div>
 <div class="code" title="File: Core.v
-Line: 111
-Time: 0.064s">
-<div class="time" style="width: 4.6109510086455%"></div>
+Line: 114
+Time: 0.067s">
+<div class="time" style="width: 4.6592489568846%"></div>
 <pre>
 
   Let P_right_identity
@@ -443,59 +477,50 @@ Time: 0.064s">
       compose f (identity a) = f.</pre>
 </div>
 <div class="code" title="File: Core.v
-Line: 115
+Line: 118
 Time: 0s">
 <div class="time" style="width: 0%"></div>
 <pre>
   Proof.</pre>
 </div>
 <div class="code" title="File: Core.v
-Line: 116
+Line: 119
 Time: 0.02s">
-<div class="time" style="width: 1.4409221902017%"></div>
+<div class="time" style="width: 1.3908205841446%"></div>
 <pre>
     clear P_associativity P_left_identity.</pre>
 </div>
 <div class="code" title="File: Core.v
-Line: 117
-Time: 0.383s">
-<div class="time" style="width: 27.593659942363%"></div>
+Line: 120
+Time: 0.397s">
+<div class="time" style="width: 27.607788595271%"></div>
 <pre>
     abstract t ltac:(exists (right_identity _ _ _ _))
       using P_right_identity_core_subproof.</pre>
 </div>
 <div class="code" title="File: Core.v
-Line: 119
-Time: 0.028s">
-<div class="time" style="width: 2.0172910662824%"></div>
+Line: 122
+Time: 0.029s">
+<div class="time" style="width: 2.0166898470097%"></div>
 <pre>
   Defined.</pre>
 </div>
 <div class="code" title="File: Core.v
-Line: 120
-Time: 0.283s">
-<div class="time" style="width: 20.389048991354%"></div>
+Line: 123
+Time: 0s">
+<div class="time" style="width: 0%"></div>
 <pre>
 
-  Definition sig : PreCategory
+  (** *** Definition of [sig]-precategory *)
+ </pre>
+</div>
+<div class="code" title="File: Core.v
+Line: 126
+Time: 0.298s">
+<div class="time" style="width: 20.723226703755%"></div>
+<pre>Definition sig : PreCategory
     := Eval cbv delta [P_associativity P_left_identity P_right_identity]
       in @sigT A Pobj Pmor _ Pidentity Pcompose P_associativity P_left_identity P_right_identity.</pre>
-</div>
-<div class="code" title="File: Core.v
-Line: 124
-Time: 0.207s">
-<div class="time" style="width: 14.913544668588%"></div>
-<pre>
-
-  Definition proj1_sig : Functor sig A
-    := pr1.</pre>
-</div>
-<div class="code" title="File: Core.v
-Line: 127
-Time: 0.04s">
-<div class="time" style="width: 2.8818443804035%"></div>
-<pre>
-End sigT_obj_mor_hProp.</pre>
 </div>
 <div class="code" title="File: Core.v
 Line: 128
@@ -503,10 +528,33 @@ Time: 0s">
 <div class="time" style="width: 0%"></div>
 <pre>
 
+  (** *** First projection functor *)
+ </pre>
+</div>
+<div class="code" title="File: Core.v
+Line: 131
+Time: 0.216s">
+<div class="time" style="width: 15.020862308762%"></div>
+<pre>Definition proj1_sig : Functor sig A
+    := pr1.</pre>
+</div>
+<div class="code" title="File: Core.v
+Line: 132
+Time: 0.043s">
+<div class="time" style="width: 2.990264255911%"></div>
+<pre>
+End sigT_obj_mor_hProp.</pre>
+</div>
+<div class="code" title="File: Core.v
+Line: 133
+Time: 0s">
+<div class="time" style="width: 0%"></div>
+<pre>
+
 Arguments proj1_sig {A Pobj Pmor HPmor Pidentity Pcompose}.</pre>
 </div>
 <div class="code" title="File: Core.v
-Line: 130
+Line: 135
 Time: 0s">
 <div class="time" style="width: 0%"></div>
 <pre>
@@ -514,7 +562,7 @@ Time: 0s">
 Notation subcategory := sig.</pre>
 </div>
 <div class="code" title="File: Core.v
-Line: 133
+Line: 138
 Time: 0s">
 <div class="time" style="width: 0%"></div>
 <pre>

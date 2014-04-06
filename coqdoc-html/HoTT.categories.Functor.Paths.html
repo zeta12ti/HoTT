@@ -19,6 +19,13 @@
 <h1 class="libtitle">Library HoTT.categories.Functor.Paths</h1>
 
 <div class="code">
+</div>
+
+<div class="doc">
+<a name="lab285"></a><h1 class="section">Classification of path spaces of functors</h1>
+
+</div>
+<div class="code">
 <span class="id" type="keyword">Require</span> <span class="id" type="keyword">Import</span> <a class="idref" href="HoTT.categories.Category.Core.html#"><span class="id" type="library">Category.Core</span></a> <a class="idref" href="HoTT.categories.Functor.Core.html#"><span class="id" type="library">Functor.Core</span></a>.<br/>
 <span class="id" type="keyword">Require</span> <span class="id" type="keyword">Import</span> <a class="idref" href="HoTT.HProp.html#"><span class="id" type="library">HProp</span></a> <a class="idref" href="HoTT.Tactics.html#"><span class="id" type="library">HoTT.Tactics</span></a> <a class="idref" href="HoTT.Equivalences.html#"><span class="id" type="library">Equivalences</span></a> <a class="idref" href="HoTT.PathGroupoids.html#"><span class="id" type="library">PathGroupoids</span></a> <a class="idref" href="HoTT.types.Sigma.html#"><span class="id" type="library">types.Sigma</span></a> <a class="idref" href="HoTT.Trunc.html#"><span class="id" type="library">Trunc</span></a> <a class="idref" href="HoTT.types.Record.html#"><span class="id" type="library">types.Record</span></a>.<br/>
 
@@ -54,6 +61,13 @@
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;(<span class="id" type="var">only</span> <span class="id" type="var">parsing</span>).<br/>
 
 <br/>
+</div>
+
+<div class="doc">
+<a name="lab286"></a><h2 class="section">Equivalence between the record and sigma-type versions of a functor</h2>
+
+</div>
+<div class="code">
 &nbsp;&nbsp;<span class="id" type="keyword">Lemma</span> <a name="equiv_sig_functor"><span class="id" type="lemma">equiv_sig_functor</span></a><br/>
 &nbsp;&nbsp;: <a class="idref" href="HoTT.categories.Functor.Paths.html#functor_sig_T"><span class="id" type="abbreviation">functor_sig_T</span></a> <a class="idref" href="HoTT.Overture.html#:equiv_scope:x_'<~>'_x"><span class="id" type="notation">&lt;~&gt;</span></a> <a class="idref" href="HoTT.categories.Functor.Core.html#Functor"><span class="id" type="record">Functor</span></a> <a class="idref" href="HoTT.categories.Functor.Paths.html#path_functor.C"><span class="id" type="variable">C</span></a> <a class="idref" href="HoTT.categories.Functor.Paths.html#path_functor.D"><span class="id" type="variable">D</span></a>.<br/>
 &nbsp;&nbsp;<span class="id" type="keyword">Proof</span>.<br/>
@@ -82,12 +96,32 @@ We could leave it at that and be done with it, but we want a more convenient for
 
 <div class="doc">
 We could just go prove that the path space of <span class="inlinecode"><a class="idref" href="HoTT.categories.Functor.Paths.html#functor_sig_T"><span class="id" type="abbreviation">functor_sig_T</span></a></span> is equivalent to <span class="inlinecode"><a class="idref" href="HoTT.categories.Functor.Paths.html#path_functor'_T"><span class="id" type="abbreviation">path_functor'_T</span></a></span>, but unification is far too slow to do this effectively.  So instead we explicitly classify <span class="inlinecode"><a class="idref" href="HoTT.categories.Functor.Paths.html#path_functor'_T"><span class="id" type="abbreviation">path_functor'_T</span></a></span>, and provide an equivalence between it and the path space of <span class="inlinecode"><a class="idref" href="HoTT.categories.Functor.Core.html#Functor"><span class="id" type="record">Functor</span></a></span> <span class="inlinecode"><a class="idref" href="HoTTBookExercises.html#Book_4_5.parts.C"><span class="id" type="variable">C</span></a></span> <span class="inlinecode"><a class="idref" href="HoTTBookExercises.html#Book_4_5.parts.D"><span class="id" type="variable">D</span></a></span>. 
+<div class="paragraph"> </div>
+
+
+<div class="paragraph"> </div>
+
+<pre>
+  Definition equiv_path_functor'_sig_sig (F G : Functor C D)
+  : path_functor'_T F G &lt;~&gt; (@equiv_inv _ _ _ equiv_sig_functor F
+                              = @equiv_inv _ _ _ equiv_sig_functor G).
+  Proof.
+    etransitivity; [ | by apply equiv_path_sigma ].
+    eapply @equiv_functor_sigma.
+    repeat match goal with
+             | [ |- appcontext[(@equiv_inv ?A ?B ?f ?H ?F).1] ]
+               =&gt; change ((@equiv_inv A B f H F).1) with (object_of F)
+           end.
+    Time exact (isequiv_idmap (object_of F = object_of G)). (* 13.411 secs *)
+  Abort.
+</pre>
+   
+<div class="paragraph"> </div>
+
+<a name="lab287"></a><h2 class="section">Classify sufficient conditions to prove functors equal</h2>
+
 </div>
 <div class="code">
-
-<br/>
-
-<br/>
 &nbsp;&nbsp;<span class="id" type="keyword">Definition</span> <a name="path_functor'_sig"><span class="id" type="definition">path_functor'_sig</span></a> (<span class="id" type="var">F</span> <span class="id" type="var">G</span> : <a class="idref" href="HoTT.categories.Functor.Core.html#Functor"><span class="id" type="record">Functor</span></a> <a class="idref" href="HoTT.categories.Functor.Paths.html#path_functor.C"><span class="id" type="variable">C</span></a> <a class="idref" href="HoTT.categories.Functor.Paths.html#path_functor.D"><span class="id" type="variable">D</span></a>) : <a class="idref" href="HoTT.categories.Functor.Paths.html#path_functor'_T"><span class="id" type="abbreviation">path_functor'_T</span></a> <a class="idref" href="HoTT.categories.Functor.Paths.html#F"><span class="id" type="variable">F</span></a> <a class="idref" href="HoTT.categories.Functor.Paths.html#G"><span class="id" type="variable">G</span></a> <a class="idref" href="Coq.Init.Logic.html#:type_scope:x_'->'_x"><span class="id" type="notation">→</span></a> <a class="idref" href="HoTT.categories.Functor.Paths.html#F"><span class="id" type="variable">F</span></a> <a class="idref" href="HoTT.Overture.html#:type_scope:x_'='_x"><span class="id" type="notation">=</span></a> <a class="idref" href="HoTT.categories.Functor.Paths.html#G"><span class="id" type="variable">G</span></a>.<br/>
 &nbsp;&nbsp;<span class="id" type="keyword">Proof</span>.<br/>
 &nbsp;&nbsp;&nbsp;&nbsp;<span class="id" type="tactic">intros</span> [? ?].<br/>
@@ -98,6 +132,13 @@ We could just go prove that the path space of <span class="inlinecode"><a class=
 &nbsp;&nbsp;<span class="id" type="keyword">Defined</span>.<br/>
 
 <br/>
+</div>
+
+<div class="doc">
+<a name="lab288"></a><h3 class="section">Said proof respects <span class="inlinecode"><a class="idref" href="HoTT.categories.ExponentialLaws.Law4.Functors.html#law4.inverse.object_of"><span class="id" type="section">object_of</span></a></span></h3>
+
+</div>
+<div class="code">
 &nbsp;&nbsp;<span class="id" type="keyword">Lemma</span> <a name="path_functor'_sig_fst"><span class="id" type="lemma">path_functor'_sig_fst</span></a> <span class="id" type="var">F</span> <span class="id" type="var">G</span> <span class="id" type="var">HO</span> <span class="id" type="var">HM</span><br/>
 &nbsp;&nbsp;: <a class="idref" href="HoTT.Overture.html#ap"><span class="id" type="definition">ap</span></a> <a class="idref" href="HoTT.categories.Functor.Core.html#object_of"><span class="id" type="projection">object_of</span></a> (@<a class="idref" href="HoTT.categories.Functor.Paths.html#path_functor'_sig"><span class="id" type="definition">path_functor'_sig</span></a> <a class="idref" href="HoTT.categories.Functor.Paths.html#F"><span class="id" type="variable">F</span></a> <a class="idref" href="HoTT.categories.Functor.Paths.html#G"><span class="id" type="variable">G</span></a> <a class="idref" href="HoTT.Overture.html#:fibration_scope:'('_x_';'_x_')'"><span class="id" type="notation">(</span></a><a class="idref" href="HoTT.categories.Functor.Paths.html#HO"><span class="id" type="variable">HO</span></a><a class="idref" href="HoTT.Overture.html#:fibration_scope:'('_x_';'_x_')'"><span class="id" type="notation">;</span></a> <a class="idref" href="HoTT.categories.Functor.Paths.html#HM"><span class="id" type="variable">HM</span></a><a class="idref" href="HoTT.Overture.html#:fibration_scope:'('_x_';'_x_')'"><span class="id" type="notation">)</span></a>) <a class="idref" href="HoTT.Overture.html#:type_scope:x_'='_x"><span class="id" type="notation">=</span></a> <a class="idref" href="HoTT.categories.Functor.Paths.html#HO"><span class="id" type="variable">HO</span></a>.<br/>
 &nbsp;&nbsp;<span class="id" type="keyword">Proof</span>.<br/>
@@ -106,6 +147,13 @@ We could just go prove that the path space of <span class="inlinecode"><a class=
 &nbsp;&nbsp;<span class="id" type="keyword">Qed</span>.<br/>
 
 <br/>
+</div>
+
+<div class="doc">
+<a name="lab289"></a><h3 class="section">Said proof respects <span class="inlinecode"><a class="idref" href="HoTT.Overture.html#idpath"><span class="id" type="constructor">idpath</span></a></span></h3>
+
+</div>
+<div class="code">
 &nbsp;&nbsp;<span class="id" type="keyword">Lemma</span> <a name="path_functor'_sig_idpath"><span class="id" type="lemma">path_functor'_sig_idpath</span></a> <span class="id" type="var">F</span><br/>
 &nbsp;&nbsp;: @<a class="idref" href="HoTT.categories.Functor.Paths.html#path_functor'_sig"><span class="id" type="definition">path_functor'_sig</span></a> <a class="idref" href="HoTT.categories.Functor.Paths.html#F"><span class="id" type="variable">F</span></a> <a class="idref" href="HoTT.categories.Functor.Paths.html#F"><span class="id" type="variable">F</span></a> <a class="idref" href="HoTT.Overture.html#:fibration_scope:'('_x_';'_x_')'"><span class="id" type="notation">(</span></a><a class="idref" href="HoTT.Overture.html#idpath"><span class="id" type="constructor">idpath</span></a><a class="idref" href="HoTT.Overture.html#:fibration_scope:'('_x_';'_x_')'"><span class="id" type="notation">;</span></a> <a class="idref" href="HoTT.Overture.html#idpath"><span class="id" type="constructor">idpath</span></a><a class="idref" href="HoTT.Overture.html#:fibration_scope:'('_x_';'_x_')'"><span class="id" type="notation">)</span></a> <a class="idref" href="HoTT.Overture.html#:type_scope:x_'='_x"><span class="id" type="notation">=</span></a> <a class="idref" href="HoTT.Overture.html#idpath"><span class="id" type="constructor">idpath</span></a>.<br/>
 &nbsp;&nbsp;<span class="id" type="keyword">Proof</span>.<br/>
@@ -115,12 +163,26 @@ We could just go prove that the path space of <span class="inlinecode"><a class=
 &nbsp;&nbsp;<span class="id" type="keyword">Qed</span>.<br/>
 
 <br/>
+</div>
+
+<div class="doc">
+<a name="lab290"></a><h2 class="section">Equality of functors gives rise to an inhabitant of the path-classifying-type</h2>
+
+</div>
+<div class="code">
 &nbsp;&nbsp;<span class="id" type="keyword">Definition</span> <a name="path_functor'_sig_inv"><span class="id" type="definition">path_functor'_sig_inv</span></a> (<span class="id" type="var">F</span> <span class="id" type="var">G</span> : <a class="idref" href="HoTT.categories.Functor.Core.html#Functor"><span class="id" type="record">Functor</span></a> <a class="idref" href="HoTT.categories.Functor.Paths.html#path_functor.C"><span class="id" type="variable">C</span></a> <a class="idref" href="HoTT.categories.Functor.Paths.html#path_functor.D"><span class="id" type="variable">D</span></a>) : <a class="idref" href="HoTT.categories.Functor.Paths.html#F"><span class="id" type="variable">F</span></a> <a class="idref" href="HoTT.Overture.html#:type_scope:x_'='_x"><span class="id" type="notation">=</span></a> <a class="idref" href="HoTT.categories.Functor.Paths.html#G"><span class="id" type="variable">G</span></a> <a class="idref" href="Coq.Init.Logic.html#:type_scope:x_'->'_x"><span class="id" type="notation">→</span></a> <a class="idref" href="HoTT.categories.Functor.Paths.html#path_functor'_T"><span class="id" type="abbreviation">path_functor'_T</span></a> <a class="idref" href="HoTT.categories.Functor.Paths.html#F"><span class="id" type="variable">F</span></a> <a class="idref" href="HoTT.categories.Functor.Paths.html#G"><span class="id" type="variable">G</span></a><br/>
 &nbsp;&nbsp;&nbsp;&nbsp;:= <span class="id" type="keyword">fun</span> <span class="id" type="var">H'</span><br/>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;⇒ <a class="idref" href="HoTT.Overture.html#:fibration_scope:'('_x_';'_x_')'"><span class="id" type="notation">(</span></a><a class="idref" href="HoTT.Overture.html#ap"><span class="id" type="definition">ap</span></a> <a class="idref" href="HoTT.categories.Functor.Core.html#object_of"><span class="id" type="projection">object_of</span></a> <a class="idref" href="HoTT.categories.Functor.Paths.html#H'"><span class="id" type="variable">H'</span></a><a class="idref" href="HoTT.Overture.html#:fibration_scope:'('_x_';'_x_')'"><span class="id" type="notation">;</span></a><br/>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a class="idref" href="HoTT.Overture.html#:path_scope:x_'^'"><span class="id" type="notation">(</span></a><a class="idref" href="HoTT.PathGroupoids.html#transport_compose"><span class="id" type="lemma">transport_compose</span></a> <span class="id" type="var">_</span> <span class="id" type="var">_</span> <span class="id" type="var">_</span> <span class="id" type="var">_</span><a class="idref" href="HoTT.Overture.html#:path_scope:x_'^'"><span class="id" type="notation">)</span></a> <a class="idref" href="HoTT.Overture.html#:path_scope:x_'^'"><span class="id" type="notation">^</span></a> <a class="idref" href="HoTT.Overture.html#:path_scope:x_'@'_x"><span class="id" type="notation">@</span></a> <a class="idref" href="HoTT.Overture.html#apD"><span class="id" type="definition">apD</span></a> (@<a class="idref" href="HoTT.categories.Functor.Core.html#morphism_of"><span class="id" type="projection">morphism_of</span></a> <span class="id" type="var">_</span> <span class="id" type="var">_</span>) <a class="idref" href="HoTT.categories.Functor.Paths.html#H'"><span class="id" type="variable">H'</span></a><a class="idref" href="HoTT.Overture.html#:fibration_scope:'('_x_';'_x_')'"><span class="id" type="notation">)</span></a>%<span class="id" type="var">path</span>.<br/>
 
 <br/>
+</div>
+
+<div class="doc">
+<a name="lab291"></a><h2 class="section">Curried version of path classifying lemma</h2>
+
+</div>
+<div class="code">
 &nbsp;&nbsp;<span class="id" type="keyword">Lemma</span> <a name="path_functor'"><span class="id" type="lemma">path_functor'</span></a> (<span class="id" type="var">F</span> <span class="id" type="var">G</span> : <a class="idref" href="HoTT.categories.Functor.Core.html#Functor"><span class="id" type="record">Functor</span></a> <a class="idref" href="HoTT.categories.Functor.Paths.html#path_functor.C"><span class="id" type="variable">C</span></a> <a class="idref" href="HoTT.categories.Functor.Paths.html#path_functor.D"><span class="id" type="variable">D</span></a>)<br/>
 &nbsp;&nbsp;: <span class="id" type="keyword">∀</span> <span class="id" type="var">HO</span> : <a class="idref" href="HoTT.categories.Functor.Core.html#object_of"><span class="id" type="projection">object_of</span></a> <a class="idref" href="HoTT.categories.Functor.Paths.html#F"><span class="id" type="variable">F</span></a> <a class="idref" href="HoTT.Overture.html#:type_scope:x_'='_x"><span class="id" type="notation">=</span></a> <a class="idref" href="HoTT.categories.Functor.Core.html#object_of"><span class="id" type="projection">object_of</span></a> <a class="idref" href="HoTT.categories.Functor.Paths.html#G"><span class="id" type="variable">G</span></a>,<br/>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a class="idref" href="HoTT.Overture.html#transport"><span class="id" type="definition">transport</span></a> (<span class="id" type="keyword">fun</span> <span class="id" type="var">GO</span> ⇒ <span class="id" type="keyword">∀</span> <span class="id" type="var">s</span> <span class="id" type="var">d</span>, <a class="idref" href="HoTT.categories.Category.Core.html#morphism"><span class="id" type="projection">morphism</span></a> <a class="idref" href="HoTT.categories.Functor.Paths.html#path_functor.C"><span class="id" type="variable">C</span></a> <a class="idref" href="HoTT.categories.Functor.Paths.html#s"><span class="id" type="variable">s</span></a> <a class="idref" href="HoTT.categories.Functor.Paths.html#d"><span class="id" type="variable">d</span></a> <a class="idref" href="Coq.Init.Logic.html#:type_scope:x_'->'_x"><span class="id" type="notation">→</span></a> <a class="idref" href="HoTT.categories.Category.Core.html#morphism"><span class="id" type="projection">morphism</span></a> <a class="idref" href="HoTT.categories.Functor.Paths.html#path_functor.D"><span class="id" type="variable">D</span></a> (<a class="idref" href="HoTT.categories.Functor.Paths.html#GO"><span class="id" type="variable">GO</span></a> <a class="idref" href="HoTT.categories.Functor.Paths.html#s"><span class="id" type="variable">s</span></a>) (<a class="idref" href="HoTT.categories.Functor.Paths.html#GO"><span class="id" type="variable">GO</span></a> <a class="idref" href="HoTT.categories.Functor.Paths.html#d"><span class="id" type="variable">d</span></a>)) <a class="idref" href="HoTT.categories.Functor.Paths.html#HO"><span class="id" type="variable">HO</span></a> (<a class="idref" href="HoTT.categories.Functor.Core.html#morphism_of"><span class="id" type="projection">morphism_of</span></a> <a class="idref" href="HoTT.categories.Functor.Paths.html#F"><span class="id" type="variable">F</span></a>) <a class="idref" href="HoTT.Overture.html#:type_scope:x_'='_x"><span class="id" type="notation">=</span></a> <a class="idref" href="HoTT.categories.Functor.Core.html#morphism_of"><span class="id" type="projection">morphism_of</span></a> <a class="idref" href="HoTT.categories.Functor.Paths.html#G"><span class="id" type="variable">G</span></a><br/>
@@ -132,6 +194,13 @@ We could just go prove that the path space of <span class="inlinecode"><a class=
 &nbsp;&nbsp;<span class="id" type="keyword">Defined</span>.<br/>
 
 <br/>
+</div>
+
+<div class="doc">
+<a name="lab292"></a><h2 class="section">Curried version of path classifying lemma, using <span class="inlinecode"><span class="id" type="keyword">∀</span></span> in place of equality of functions</h2>
+
+</div>
+<div class="code">
 &nbsp;&nbsp;<span class="id" type="keyword">Lemma</span> <a name="path_functor"><span class="id" type="lemma">path_functor</span></a> (<span class="id" type="var">F</span> <span class="id" type="var">G</span> : <a class="idref" href="HoTT.categories.Functor.Core.html#Functor"><span class="id" type="record">Functor</span></a> <a class="idref" href="HoTT.categories.Functor.Paths.html#path_functor.C"><span class="id" type="variable">C</span></a> <a class="idref" href="HoTT.categories.Functor.Paths.html#path_functor.D"><span class="id" type="variable">D</span></a>)<br/>
 &nbsp;&nbsp;: <span class="id" type="keyword">∀</span> <span class="id" type="var">HO</span> : <a class="idref" href="HoTT.categories.Functor.Core.html#object_of"><span class="id" type="projection">object_of</span></a> <a class="idref" href="HoTT.categories.Functor.Paths.html#F"><span class="id" type="variable">F</span></a> <a class="idref" href="HoTT.Overture.html#:type_scope:x_'=='_x"><span class="id" type="notation">==</span></a> <a class="idref" href="HoTT.categories.Functor.Core.html#object_of"><span class="id" type="projection">object_of</span></a> <a class="idref" href="HoTT.categories.Functor.Paths.html#G"><span class="id" type="variable">G</span></a>,<br/>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a class="idref" href="Coq.Init.Logic.html#:type_scope:x_'->'_x"><span class="id" type="notation">(</span></a><span class="id" type="keyword">∀</span> <span class="id" type="var">s</span> <span class="id" type="var">d</span> <span class="id" type="var">m</span>,<br/>
@@ -148,6 +217,13 @@ We could just go prove that the path space of <span class="inlinecode"><a class=
 &nbsp;&nbsp;<span class="id" type="keyword">Defined</span>.<br/>
 
 <br/>
+</div>
+
+<div class="doc">
+<a name="lab293"></a><h2 class="section">Classify equality of functors up to equivalence</h2>
+
+</div>
+<div class="code">
 &nbsp;&nbsp;<span class="id" type="keyword">Lemma</span> <a name="equiv_path_functor'_sig"><span class="id" type="lemma">equiv_path_functor'_sig</span></a> (<span class="id" type="var">F</span> <span class="id" type="var">G</span> : <a class="idref" href="HoTT.categories.Functor.Core.html#Functor"><span class="id" type="record">Functor</span></a> <a class="idref" href="HoTT.categories.Functor.Paths.html#path_functor.C"><span class="id" type="variable">C</span></a> <a class="idref" href="HoTT.categories.Functor.Paths.html#path_functor.D"><span class="id" type="variable">D</span></a>)<br/>
 &nbsp;&nbsp;: <a class="idref" href="HoTT.categories.Functor.Paths.html#path_functor'_T"><span class="id" type="abbreviation">path_functor'_T</span></a> <a class="idref" href="HoTT.categories.Functor.Paths.html#F"><span class="id" type="variable">F</span></a> <a class="idref" href="HoTT.categories.Functor.Paths.html#G"><span class="id" type="variable">G</span></a> <a class="idref" href="HoTT.Overture.html#:equiv_scope:x_'<~>'_x"><span class="id" type="notation">&lt;~&gt;</span></a> <a class="idref" href="HoTT.categories.Functor.Paths.html#F"><span class="id" type="variable">F</span></a> <a class="idref" href="HoTT.Overture.html#:type_scope:x_'='_x"><span class="id" type="notation">=</span></a> <a class="idref" href="HoTT.categories.Functor.Paths.html#G"><span class="id" type="variable">G</span></a>.<br/>
 &nbsp;&nbsp;<span class="id" type="keyword">Proof</span>.<br/>
@@ -164,6 +240,13 @@ We could just go prove that the path space of <span class="inlinecode"><a class=
 &nbsp;&nbsp;<span class="id" type="keyword">Defined</span>.<br/>
 
 <br/>
+</div>
+
+<div class="doc">
+<a name="lab294"></a><h2 class="section">If the objects in <span class="inlinecode"><a class="idref" href="HoTTBookExercises.html#Book_4_5.parts.D"><span class="id" type="variable">D</span></a></span> are n-truncated, then so is the type of  functors <span class="inlinecode"><a class="idref" href="HoTT.categories.Category.Core.html#"><span class="id" type="library">C</span></a></span> <span class="inlinecode"><a class="idref" href="HoTT.categories.Category.Core.html#"><span class="id" type="library">→</span></a></span> <span class="inlinecode"><a class="idref" href="HoTTBookExercises.html#Book_4_5.parts.D"><span class="id" type="variable">D</span></a></span></h2>
+
+</div>
+<div class="code">
 &nbsp;&nbsp;<span class="id" type="keyword">Global Instance</span> <a name="trunc_functor"><span class="id" type="instance">trunc_functor</span></a> `{<a class="idref" href="HoTT.Overture.html#IsTrunc"><span class="id" type="class">IsTrunc</span></a> <span class="id" type="var">n</span> <a class="idref" href="HoTT.categories.Functor.Paths.html#path_functor.D"><span class="id" type="variable">D</span></a>} `{<span class="id" type="keyword">∀</span> <span class="id" type="var">s</span> <span class="id" type="var">d</span>, <a class="idref" href="HoTT.Overture.html#IsTrunc"><span class="id" type="class">IsTrunc</span></a> <a class="idref" href="HoTT.categories.Functor.Paths.html#n"><span class="id" type="variable">n</span></a> (<a class="idref" href="HoTT.categories.Category.Core.html#morphism"><span class="id" type="projection">morphism</span></a> <a class="idref" href="HoTT.categories.Functor.Paths.html#path_functor.D"><span class="id" type="variable">D</span></a> <a class="idref" href="HoTT.categories.Functor.Paths.html#s"><span class="id" type="variable">s</span></a> <a class="idref" href="HoTT.categories.Functor.Paths.html#d"><span class="id" type="variable">d</span></a>)}<br/>
 &nbsp;&nbsp;: <a class="idref" href="HoTT.Overture.html#IsTrunc"><span class="id" type="class">IsTrunc</span></a> <a class="idref" href="HoTT.categories.Functor.Paths.html#n"><span class="id" type="variable">n</span></a> (<a class="idref" href="HoTT.categories.Functor.Core.html#Functor"><span class="id" type="record">Functor</span></a> <a class="idref" href="HoTT.categories.Functor.Paths.html#path_functor.C"><span class="id" type="variable">C</span></a> <a class="idref" href="HoTT.categories.Functor.Paths.html#path_functor.D"><span class="id" type="variable">D</span></a>).<br/>
 &nbsp;&nbsp;<span class="id" type="keyword">Proof</span>.<br/>
@@ -175,6 +258,13 @@ We could just go prove that the path space of <span class="inlinecode"><a class=
 <span class="id" type="keyword">End</span> <a class="idref" href="HoTT.categories.Functor.Paths.html#path_functor"><span class="id" type="section">path_functor</span></a>.<br/>
 
 <br/>
+</div>
+
+<div class="doc">
+<a name="lab295"></a><h2 class="section">Tactic for proving equality of functors</h2>
+
+</div>
+<div class="code">
 <span class="id" type="keyword">Ltac</span> <span class="id" type="var">path_functor</span> :=<br/>
 &nbsp;&nbsp;<span class="id" type="tactic">repeat</span> <span class="id" type="keyword">match</span> <span class="id" type="keyword">goal</span> <span class="id" type="keyword">with</span><br/>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;| <span class="id" type="var">_</span> ⇒ <span class="id" type="tactic">intro</span><br/>
