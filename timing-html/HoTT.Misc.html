@@ -50,8 +50,8 @@ Conversely, several files in [hit] now depend on this file; so we should probabl
 </div>
 <div class="code" title="File: Misc.v
 Line: 14
-Time: 0.048s">
-<div class="time" style="width: 75%"></div>
+Time: 0.044s">
+<div class="time" style="width: 100%"></div>
 <pre>Require Import Overture PathGroupoids Trunc Equivalences HProp types.Sigma types.Paths types.Record types.Arrow EquivalenceVarieties types.Forall types.Bool.</pre>
 </div>
 <div class="code" title="File: Misc.v
@@ -103,14 +103,14 @@ Time: 0s">
 <div class="code" title="File: Misc.v
 Line: 24
 Time: 0.001s">
-<div class="time" style="width: 1.5625%"></div>
+<div class="time" style="width: 2.2727272727273%"></div>
 <pre>Definition NullHomotopy {X Y : Type} (f : X -&gt; Y)
   := {y : Y &amp; forall x:X, f x = y}.</pre>
 </div>
 <div class="code" title="File: Misc.v
 Line: 25
 Time: 0.001s">
-<div class="time" style="width: 1.5625%"></div>
+<div class="time" style="width: 2.2727272727273%"></div>
 <pre>
 
 Lemma istrunc_nullhomotopy {n : trunc_index}
@@ -127,7 +127,7 @@ Proof.</pre>
 <div class="code" title="File: Misc.v
 Line: 30
 Time: 0.002s">
-<div class="time" style="width: 3.125%"></div>
+<div class="time" style="width: 4.5454545454545%"></div>
 <pre>
   apply @trunc_sigma; auto.</pre>
 </div>
@@ -141,7 +141,7 @@ Time: 0s">
 <div class="code" title="File: Misc.v
 Line: 32
 Time: 0.001s">
-<div class="time" style="width: 1.5625%"></div>
+<div class="time" style="width: 2.2727272727273%"></div>
 <pre> apply (@trunc_forall _).</pre>
 </div>
 <div class="code" title="File: Misc.v
@@ -154,13 +154,13 @@ Time: 0s">
 <div class="code" title="File: Misc.v
 Line: 33
 Time: 0.003s">
-<div class="time" style="width: 4.6875%"></div>
+<div class="time" style="width: 6.8181818181818%"></div>
 <pre> apply trunc_succ.</pre>
 </div>
 <div class="code" title="File: Misc.v
 Line: 33
 Time: 0.003s">
-<div class="time" style="width: 4.6875%"></div>
+<div class="time" style="width: 6.8181818181818%"></div>
 <pre>
 Defined.</pre>
 </div>
@@ -178,188 +178,19 @@ Time: 0s">
 <div class="time" style="width: 0%"></div>
 <pre>
 
-(** ** Sigmas of hprops. *)</pre>
-</div>
-<div class="code" title="File: Misc.v
-Line: 38
-Time: 0s">
-<div class="time" style="width: 0%"></div>
-<pre>Section SigmaHProp.</pre>
-</div>
-<div class="code" title="File: Misc.v
-Line: 38
-Time: 0s">
-<div class="time" style="width: 0%"></div>
-<pre>
-
-Context `{Funext}.</pre>
-</div>
-<div class="code" title="File: Misc.v
-Line: 40
-Time: 0s">
-<div class="time" style="width: 0%"></div>
-<pre>
-
-(** *** Paths between equivalences *)
-
-(** (These could fit in [EquivalenceVarieties], if the lemma [equiv_path_sigma_hprop] were available there. *)
-
-</pre>
-</div>
-<div class="code" title="File: Misc.v
-Line: 45
-Time: 0.002s">
-<div class="time" style="width: 3.125%"></div>
-<pre>Lemma equiv_path_equiv {A B : Type} (e1 e2 : A &lt;~&gt; B)
-  : (e1 = e2 :&gt; (A -&gt; B)) &lt;~&gt; (e1 = e2 :&gt; (A &lt;~&gt; B)).</pre>
-</div>
-<div class="code" title="File: Misc.v
-Line: 46
-Time: 0s">
-<div class="time" style="width: 0%"></div>
-<pre>
-Proof.</pre>
-</div>
-<div class="code" title="File: Misc.v
-Line: 47
-Time: 0.032s">
-<div class="time" style="width: 50%"></div>
-<pre>
-  equiv_via ((issig_equiv A B) ^-1 e1 = (issig_equiv A B) ^-1 e2).</pre>
-</div>
-<div class="code" title="File: Misc.v
-Line: 48
-Time: 0.038s">
-<div class="time" style="width: 59.375%"></div>
-<pre>
-    2: apply symmetry, equiv_ap; refine _.</pre>
-</div>
-<div class="code" title="File: Misc.v
-Line: 49
-Time: 0s">
-<div class="time" style="width: 0%"></div>
-<pre>
-(* TODO: why does this get the wrong type if [hprop_isequiv] is not supplied? *)
- </pre>
-</div>
-<div class="code" title="File: Misc.v
-Line: 51
-Time: 0.064s">
-<div class="time" style="width: 100%"></div>
-<pre>exact (@equiv_path_sigma_hprop _ _ hprop_isequiv
-    ((issig_equiv A B) ^-1 e1) ((issig_equiv A B) ^-1 e2)).</pre>
-</div>
-<div class="code" title="File: Misc.v
-Line: 52
-Time: 0.019s">
-<div class="time" style="width: 29.6875%"></div>
-<pre>
-Defined.</pre>
-</div>
-<div class="code" title="File: Misc.v
-Line: 53
-Time: 0.006s">
-<div class="time" style="width: 9.375%"></div>
-<pre>
-
-Definition path_equiv {A B : Type} {e1 e2 : A &lt;~&gt; B}
-  : (e1 = e2 :&gt; (A -&gt; B)) -&gt; (e1 = e2 :&gt; (A &lt;~&gt; B))
-:= equiv_path_equiv e1 e2.</pre>
-</div>
-<div class="code" title="File: Misc.v
-Line: 57
-Time: 0.006s">
-<div class="time" style="width: 9.375%"></div>
-<pre>
-
-Definition isequiv_path_equiv {A B : Type} {e1 e2 : A &lt;~&gt; B}
-  : IsEquiv (@path_equiv _ _ e1 e2)
-:= equiv_path_equiv e1 e2.</pre>
-</div>
-<div class="code" title="File: Misc.v
-Line: 61
-Time: 0.001s">
-<div class="time" style="width: 1.5625%"></div>
-<pre>
-
-Lemma istrunc_equiv {n : trunc_index} {A B : Type} `{IsTrunc (trunc_S n) B}
-  : IsTrunc (trunc_S n) (A &lt;~&gt; B).</pre>
-</div>
-<div class="code" title="File: Misc.v
-Line: 64
-Time: 0s">
-<div class="time" style="width: 0%"></div>
-<pre>
-Proof.</pre>
-</div>
-<div class="code" title="File: Misc.v
-Line: 65
-Time: 0s">
-<div class="time" style="width: 0%"></div>
-<pre>
-  simpl.</pre>
-</div>
-<div class="code" title="File: Misc.v
-Line: 66
-Time: 0s">
-<div class="time" style="width: 0%"></div>
-<pre> intros e1 e2.</pre>
-</div>
-<div class="code" title="File: Misc.v
-Line: 66
-Time: 0.009s">
-<div class="time" style="width: 14.0625%"></div>
-<pre>
-  apply (@trunc_equiv _ _ (equiv_path_equiv e1 e2)).</pre>
-</div>
-<div class="code" title="File: Misc.v
-Line: 67
-Time: 0.004s">
-<div class="time" style="width: 6.25%"></div>
-<pre>
-    apply (@trunc_arrow _ A B (trunc_S n) _).</pre>
-</div>
-<div class="code" title="File: Misc.v
-Line: 68
-Time: 0.005s">
-<div class="time" style="width: 7.8125%"></div>
-<pre>
-  apply equiv_isequiv.</pre>
-</div>
-<div class="code" title="File: Misc.v
-Line: 69
-Time: 0.008s">
-<div class="time" style="width: 12.5%"></div>
-<pre>
-Defined.</pre>
-</div>
-<div class="code" title="File: Misc.v
-Line: 70
-Time: 0.004s">
-<div class="time" style="width: 6.25%"></div>
-<pre>
-
-End SigmaHProp.</pre>
-</div>
-<div class="code" title="File: Misc.v
-Line: 72
-Time: 0s">
-<div class="time" style="width: 0%"></div>
-<pre>
-
 (** ** [Bool &lt;~&gt; (Bool &lt;~&gt; Bool)]
 
     This should go in [types/Bool.v], but it depends on a lemma above. *)</pre>
 </div>
 <div class="code" title="File: Misc.v
-Line: 76
+Line: 40
 Time: 0.003s">
-<div class="time" style="width: 4.6875%"></div>
+<div class="time" style="width: 6.8181818181818%"></div>
 <pre>Definition equiv_bool_equiv_bool_bool `{Funext} : Bool &lt;~&gt; (Bool &lt;~&gt; Bool)
   := @equiv_bool_equiv_bool_bool_helper _ (@path_equiv _ _ _).</pre>
 </div>
 <div class="code" title="File: Misc.v
-Line: 77
+Line: 41
 Time: 0s">
 <div class="time" style="width: 0%"></div>
 <pre>
@@ -367,13 +198,13 @@ Time: 0s">
 (** ** Equivalences between contractible types *)</pre>
 </div>
 <div class="code" title="File: Misc.v
-Line: 79
+Line: 43
 Time: 0s">
 <div class="time" style="width: 0%"></div>
 <pre>Section EquivContr.</pre>
 </div>
 <div class="code" title="File: Misc.v
-Line: 79
+Line: 43
 Time: 0s">
 <div class="time" style="width: 0%"></div>
 <pre>
@@ -385,93 +216,93 @@ Time: 0s">
 </pre>
 </div>
 <div class="code" title="File: Misc.v
-Line: 84
+Line: 48
 Time: 0s">
 <div class="time" style="width: 0%"></div>
 <pre>Lemma equiv_contr_contr {A B : Type} `{Contr A} `{Contr B}
   : (A &lt;~&gt; B).</pre>
 </div>
 <div class="code" title="File: Misc.v
-Line: 85
+Line: 49
 Time: 0s">
 <div class="time" style="width: 0%"></div>
 <pre>
 Proof.</pre>
 </div>
 <div class="code" title="File: Misc.v
-Line: 86
+Line: 50
 Time: 0.004s">
-<div class="time" style="width: 6.25%"></div>
+<div class="time" style="width: 9.0909090909091%"></div>
 <pre>
   apply equiv_adjointify with (fun _ =&gt; center B) (fun _ =&gt; center A);
   intros ?; apply contr.</pre>
 </div>
 <div class="code" title="File: Misc.v
-Line: 88
+Line: 52
 Time: 0.001s">
-<div class="time" style="width: 1.5625%"></div>
+<div class="time" style="width: 2.2727272727273%"></div>
 <pre>
 Defined.</pre>
 </div>
 <div class="code" title="File: Misc.v
-Line: 89
+Line: 53
 Time: 0.001s">
-<div class="time" style="width: 1.5625%"></div>
+<div class="time" style="width: 2.2727272727273%"></div>
 <pre>
 
 Lemma contr_equiv_contr_contr `{Funext} {A B : Type} `{Contr A} `{Contr B}
   : Contr (A &lt;~&gt; B).</pre>
 </div>
 <div class="code" title="File: Misc.v
-Line: 92
+Line: 56
 Time: 0s">
 <div class="time" style="width: 0%"></div>
 <pre>
 Proof.</pre>
 </div>
 <div class="code" title="File: Misc.v
-Line: 93
+Line: 57
 Time: 0.001s">
-<div class="time" style="width: 1.5625%"></div>
+<div class="time" style="width: 2.2727272727273%"></div>
 <pre>
   exists equiv_contr_contr.</pre>
 </div>
 <div class="code" title="File: Misc.v
-Line: 94
+Line: 58
 Time: 0s">
 <div class="time" style="width: 0%"></div>
 <pre>
   intros e.</pre>
 </div>
 <div class="code" title="File: Misc.v
-Line: 95
-Time: 0.006s">
-<div class="time" style="width: 9.375%"></div>
+Line: 59
+Time: 0.005s">
+<div class="time" style="width: 11.363636363636%"></div>
 <pre> apply path_equiv, path_forall.</pre>
 </div>
 <div class="code" title="File: Misc.v
-Line: 95
-Time: 0.013s">
-<div class="time" style="width: 20.3125%"></div>
+Line: 59
+Time: 0.011s">
+<div class="time" style="width: 25%"></div>
 <pre> intros ?; apply contr.</pre>
 </div>
 <div class="code" title="File: Misc.v
-Line: 95
-Time: 0.004s">
-<div class="time" style="width: 6.25%"></div>
+Line: 59
+Time: 0.003s">
+<div class="time" style="width: 6.8181818181818%"></div>
 <pre>
 Defined.</pre>
 </div>
 <div class="code" title="File: Misc.v
-Line: 96
-Time: 0.001s">
-<div class="time" style="width: 1.5625%"></div>
+Line: 60
+Time: 0s">
+<div class="time" style="width: 0%"></div>
 <pre>
 
 End EquivContr.</pre>
 </div>
 <div class="code" title="File: Misc.v
-Line: 99
+Line: 63
 Time: 0s">
 <div class="time" style="width: 0%"></div>
 <pre>
