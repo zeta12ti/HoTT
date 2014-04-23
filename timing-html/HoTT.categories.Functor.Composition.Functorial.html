@@ -30,191 +30,20 @@ pre {
 
 <div class="code" title="File: Functorial.v
 Line: 1
-Time: 0s">
-<div class="time" style="width: 0%"></div>
-<pre>(** * Functoriality of functor composition *)</pre>
+Time: 0.216s">
+<div class="time" style="width: 100%"></div>
+<pre>Require Functor.Composition.Functorial.Core.</pre>
 </div>
 <div class="code" title="File: Functorial.v
 Line: 1
-Time: 0.01s">
-<div class="time" style="width: 0.2556890820762%"></div>
-<pre>Require Import Category.Core Functor.Core NaturalTransformation.Core.</pre>
-</div>
-<div class="code" title="File: Functorial.v
-Line: 1
-Time: 0.002s">
-<div class="time" style="width: 0.051137816415239%"></div>
-<pre>
-Require Import Functor.Composition.Core NaturalTransformation.Composition.Core.</pre>
-</div>
-<div class="code" title="File: Functorial.v
-Line: 2
-Time: 0.065s">
-<div class="time" style="width: 1.6619790334953%"></div>
-<pre>
-Require Import Category.Prod FunctorCategory.Core NaturalTransformation.Composition.Functorial NaturalTransformation.Composition.Laws ExponentialLaws.Law4.Functors.</pre>
-</div>
-<div class="code" title="File: Functorial.v
-Line: 3
 Time: 0s">
 <div class="time" style="width: 0%"></div>
 <pre>
-Require Import NaturalTransformation.Paths.</pre>
+
+Include Functor.Composition.Functorial.Core.</pre>
 </div>
 <div class="code" title="File: Functorial.v
 Line: 4
-Time: 0s">
-<div class="time" style="width: 0%"></div>
-<pre>
-
-Set Universe Polymorphism.</pre>
-</div>
-<div class="code" title="File: Functorial.v
-Line: 6
-Time: 0s">
-<div class="time" style="width: 0%"></div>
-<pre>
-Set Implicit Arguments.</pre>
-</div>
-<div class="code" title="File: Functorial.v
-Line: 7
-Time: 0s">
-<div class="time" style="width: 0%"></div>
-<pre>
-Generalizable All Variables.</pre>
-</div>
-<div class="code" title="File: Functorial.v
-Line: 8
-Time: 0s">
-<div class="time" style="width: 0%"></div>
-<pre>
-Set Asymmetric Patterns.</pre>
-</div>
-<div class="code" title="File: Functorial.v
-Line: 9
-Time: 0s">
-<div class="time" style="width: 0%"></div>
-<pre>
-
-(** * Construction of the functor [_∘_ : (C → D) × (D → E) → (C → E)] and it's curried variant *)</pre>
-</div>
-<div class="code" title="File: Functorial.v
-Line: 11
-Time: 0s">
-<div class="time" style="width: 0%"></div>
-<pre>Section functorial_composition.</pre>
-</div>
-<div class="code" title="File: Functorial.v
-Line: 11
-Time: 0.001s">
-<div class="time" style="width: 0.02556890820762%"></div>
-<pre>
-  Context `{Funext}.</pre>
-</div>
-<div class="code" title="File: Functorial.v
-Line: 12
-Time: 0s">
-<div class="time" style="width: 0%"></div>
-<pre>
-  Variable C : PreCategory.</pre>
-</div>
-<div class="code" title="File: Functorial.v
-Line: 13
-Time: 0s">
-<div class="time" style="width: 0%"></div>
-<pre>
-  Variable D : PreCategory.</pre>
-</div>
-<div class="code" title="File: Functorial.v
-Line: 14
-Time: 0s">
-<div class="time" style="width: 0%"></div>
-<pre>
-  Variable E : PreCategory.</pre>
-</div>
-<div class="code" title="File: Functorial.v
-Line: 15
-Time: 0s">
-<div class="time" style="width: 0%"></div>
-<pre>
-
-  Local Open Scope natural_transformation_scope.</pre>
-</div>
-<div class="code" title="File: Functorial.v
-Line: 17
-Time: 0.831s">
-<div class="time" style="width: 21.247762720532%"></div>
-<pre>
-
-  Definition compose_functor_morphism_of
-             s d (m : morphism (C -&gt; D) s d)
-  : morphism ((D -&gt; E) -&gt; (C -&gt; E))
-             (whiskerR_functor _ s)
-             (whiskerR_functor _ d)
-    := Build_NaturalTransformation
-         (whiskerR_functor E s)
-         (whiskerR_functor E d)
-         (fun x =&gt; x oL m)
-         (fun _ _ _ =&gt; exchange_whisker _ _).</pre>
-</div>
-<div class="code" title="File: Functorial.v
-Line: 28
-Time: 0.363s">
-<div class="time" style="width: 9.2815136793659%"></div>
-<pre>
-
-  Definition compose_functor : object ((C -&gt; D) -&gt; ((D -&gt; E) -&gt; (C -&gt; E))).</pre>
-</div>
-<div class="code" title="File: Functorial.v
-Line: 30
-Time: 0s">
-<div class="time" style="width: 0%"></div>
-<pre>
-  Proof.</pre>
-</div>
-<div class="code" title="File: Functorial.v
-Line: 31
-Time: 3.911s">
-<div class="time" style="width: 100%"></div>
-<pre>
-    refine (Build_Functor
-              (C -&gt; D) ((D -&gt; E) -&gt; (C -&gt; E))
-              (@whiskerR_functor _ _ _ _)
-              compose_functor_morphism_of
-              _
-              _);
-    abstract (
-        path_natural_transformation;
-        rewrite ?composition_of, ?identity_of;
-        reflexivity
-      ).</pre>
-</div>
-<div class="code" title="File: Functorial.v
-Line: 42
-Time: 0.172s">
-<div class="time" style="width: 4.3978522117106%"></div>
-<pre>
-  Defined.</pre>
-</div>
-<div class="code" title="File: Functorial.v
-Line: 43
-Time: 0.635s">
-<div class="time" style="width: 16.236256711838%"></div>
-<pre>
-
-  Definition compose_functor_uncurried
-  : object ((C -&gt; D) * (D -&gt; E) -&gt; (C -&gt; E))
-    := ExponentialLaws.Law4.Functors.functor _ _ _ compose_functor.</pre>
-</div>
-<div class="code" title="File: Functorial.v
-Line: 47
-Time: 0.066s">
-<div class="time" style="width: 1.6875479417029%"></div>
-<pre>
-End functorial_composition.</pre>
-</div>
-<div class="code" title="File: Functorial.v
-Line: 49
 Time: 0s">
 <div class="time" style="width: 0%"></div>
 <pre>
