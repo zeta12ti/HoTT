@@ -1,0 +1,296 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
+"http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
+<link href="coqdoc.css" rel="stylesheet" type="text/css"/>
+<title>HoTT.categories.PseudonaturalTransformation.Core</title>
+</head>
+
+<body>
+
+<div id="page">
+
+<div id="header">
+</div>
+
+<div id="main">
+
+<h1 class="libtitle">Library HoTT.categories.PseudonaturalTransformation.Core</h1>
+
+<div class="code">
+</div>
+
+<div class="doc">
+<a name="lab668"></a><h1 class="section">Definition of pseudonatural transformation</h1>
+
+</div>
+<div class="code">
+<span class="id" type="keyword">Require</span> <span class="id" type="keyword">Import</span> <a class="idref" href="HoTT.categories.Category.Core.html#"><span class="id" type="library">Category.Core</span></a> <a class="idref" href="HoTT.categories.Functor.Core.html#"><span class="id" type="library">Functor.Core</span></a> <a class="idref" href="HoTT.categories.NaturalTransformation.Core.html#"><span class="id" type="library">NaturalTransformation.Core</span></a>.<br/>
+<span class="id" type="keyword">Require</span> <span class="id" type="keyword">Import</span> <a class="idref" href="HoTT.categories.Pseudofunctor.Core.html#"><span class="id" type="library">Pseudofunctor.Core</span></a>.<br/>
+<span class="id" type="keyword">Require</span> <span class="id" type="keyword">Import</span> <a class="idref" href="HoTT.categories.Category.Pi.html#"><span class="id" type="library">Category.Pi</span></a>.<br/>
+<span class="id" type="keyword">Require</span> <span class="id" type="keyword">Import</span> <a class="idref" href="HoTT.categories.FunctorCategory.Core.html#"><span class="id" type="library">FunctorCategory.Core</span></a>.<br/>
+<span class="id" type="keyword">Require</span> <span class="id" type="keyword">Import</span> <a class="idref" href="HoTT.categories.Category.Morphisms.html#"><span class="id" type="library">Category.Morphisms</span></a> <a class="idref" href="HoTT.categories.FunctorCategory.Morphisms.html#"><span class="id" type="library">FunctorCategory.Morphisms</span></a>.<br/>
+<span class="id" type="keyword">Require</span> <span class="id" type="keyword">Import</span> <a class="idref" href="HoTT.categories.Functor.Composition.Core.html#"><span class="id" type="library">Functor.Composition.Core</span></a> <a class="idref" href="HoTT.categories.Functor.Identity.html#"><span class="id" type="library">Functor.Identity</span></a>.<br/>
+<span class="id" type="keyword">Require</span> <span class="id" type="keyword">Import</span> <a class="idref" href="HoTT.categories.NaturalTransformation.Composition.Core.html#"><span class="id" type="library">NaturalTransformation.Composition.Core</span></a> <a class="idref" href="HoTT.categories.NaturalTransformation.Composition.Laws.html#"><span class="id" type="library">NaturalTransformation.Composition.Laws</span></a>.<br/>
+<span class="id" type="keyword">Require</span> <span class="id" type="keyword">Import</span> <a class="idref" href="HoTT.categories.NaturalTransformation.Identity.html#"><span class="id" type="library">NaturalTransformation.Identity</span></a>.<br/>
+<span class="id" type="keyword">Require</span> <span class="id" type="keyword">Import</span> <a class="idref" href="HoTT.categories.NaturalTransformation.Isomorphisms.html#"><span class="id" type="library">NaturalTransformation.Isomorphisms</span></a>.<br/>
+<span class="id" type="keyword">Require</span> <span class="id" type="keyword">Import</span> <a class="idref" href="HoTT.categories.NaturalTransformation.Paths.html#"><span class="id" type="library">NaturalTransformation.Paths</span></a>.<br/>
+<span class="id" type="keyword">Require</span> <span class="id" type="keyword">Import</span> <a class="idref" href="HoTT.categories.FunctorCategory.Core.html#"><span class="id" type="library">FunctorCategory.Core</span></a>.<br/>
+<span class="id" type="keyword">Require</span> <span class="id" type="keyword">Import</span> <a class="idref" href="HoTT.Tactics.html#"><span class="id" type="library">HoTT.Tactics</span></a>.<br/>
+
+<br/>
+<span class="id" type="keyword">Set</span> <span class="id" type="var">Universe</span> <span class="id" type="var">Polymorphism</span>.<br/>
+<span class="id" type="keyword">Set Implicit Arguments</span>.<br/>
+<span class="id" type="keyword">Generalizable</span> <span class="id" type="keyword">All</span> <span class="id" type="keyword">Variables</span>.<br/>
+<span class="id" type="keyword">Set</span> <span class="id" type="var">Asymmetric</span> <span class="id" type="var">Patterns</span>.<br/>
+
+<br/>
+<span class="id" type="keyword">Delimit</span> <span class="id" type="keyword">Scope</span> <span class="id" type="var">pseudonatural_transformation_scope</span> <span class="id" type="keyword">with</span> <span class="id" type="var">pseudonatural_transformation</span>.<br/>
+
+<br/>
+<span class="id" type="keyword">Local</span>&nbsp;<span class="id" type="keyword">Open</span> <span class="id" type="keyword">Scope</span> <span class="id" type="var">natural_transformation_scope</span>.<br/>
+<span class="id" type="keyword">Local</span>&nbsp;<span class="id" type="keyword">Open</span> <span class="id" type="keyword">Scope</span> <span class="id" type="var">functor_scope</span>.<br/>
+<span class="id" type="keyword">Local</span>&nbsp;<span class="id" type="keyword">Open</span> <span class="id" type="keyword">Scope</span> <span class="id" type="var">morphism_scope</span>.<br/>
+<span class="id" type="keyword">Local</span>&nbsp;<span class="id" type="keyword">Open</span> <span class="id" type="keyword">Scope</span> <span class="id" type="var">pseudonatural_transformation_scope</span>.<br/>
+
+<br/>
+</div>
+
+<div class="doc">
+Quoting Michael Shulman from an email:
+
+<div class="paragraph"> </div>
+
+    The 2-limit in question is sometimes called a "descent object", or
+    the totalization of a truncated cosimplicial object.  It's a
+    generalization of an equalizer.  The set of natural
+    transformations between two ordinary functors <span class="inlinecode"><a class="idref" href="HoTT.categories.Limits.Core.html#Limit.F"><span class="id" type="variable">F</span></a></span>,<span class="inlinecode"><a class="idref" href="HoTT.categories.Yoneda.html#yoneda_lemma.G"><span class="id" type="variable">G</span></a></span> <span class="inlinecode">:</span> <span class="inlinecode"><a class="idref" href="HoTTBookExercises.html#Book_4_5.parts.C"><span class="id" type="variable">C</span></a></span> <span class="inlinecode">→</span> <span class="inlinecode"><a class="idref" href="HoTTBookExercises.html#Book_4_5.parts.D"><span class="id" type="variable">D</span></a></span> is
+    the equalizer of
+
+<div class="paragraph"> </div>
+
+    <span class="inlinecode"><span class="id" type="var">Π_x</span></span> <span class="inlinecode"><a class="idref" href="HoTTBookExercises.html#Book_4_5.parts.D"><span class="id" type="variable">D</span></a>(<span class="id" type="var">Fx</span>,<span class="id" type="var">Gx</span>)</span> <span class="inlinecode">⇉</span> <span class="inlinecode"><span class="id" type="var">Π_</span>{<a class="idref" href="HoTT.categories.Grothendieck.PseudofunctorToCat.html#x"><span class="id" type="projection">x</span></a>→<a class="idref" href="HoTT.categories.Functor.Attributes.html#fully_faithful_helpers.y"><span class="id" type="variable">y</span></a>}</span> <span class="inlinecode"><a class="idref" href="HoTTBookExercises.html#Book_4_5.parts.D"><span class="id" type="variable">D</span></a>(<span class="id" type="var">Fx</span>,<span class="id" type="var">Gy</span>)</span>
+
+<div class="paragraph"> </div>
+
+    The category of pseudonatural transformations between two
+    2-functors is the descent object of
+
+<div class="paragraph"> </div>
+
+    <span class="inlinecode"><span class="id" type="var">Π_x</span></span> <span class="inlinecode"><a class="idref" href="HoTTBookExercises.html#Book_4_5.parts.D"><span class="id" type="variable">D</span></a>(<span class="id" type="var">Fx</span>,<span class="id" type="var">Gx</span>)</span> <span class="inlinecode">⇉</span> <span class="inlinecode"><span class="id" type="var">Π_</span>{<a class="idref" href="HoTT.categories.Grothendieck.PseudofunctorToCat.html#x"><span class="id" type="projection">x</span></a>→<a class="idref" href="HoTT.categories.Functor.Attributes.html#fully_faithful_helpers.y"><span class="id" type="variable">y</span></a>}</span> <span class="inlinecode"><a class="idref" href="HoTTBookExercises.html#Book_4_5.parts.D"><span class="id" type="variable">D</span></a>(<span class="id" type="var">Fx</span>,<span class="id" type="var">Gy</span>)</span> <span class="inlinecode">⇛</span> <span class="inlinecode"><span class="id" type="var">Π_</span>{<a class="idref" href="HoTT.categories.Grothendieck.PseudofunctorToCat.html#x"><span class="id" type="projection">x</span></a>→<a class="idref" href="HoTT.categories.Functor.Attributes.html#fully_faithful_helpers.y"><span class="id" type="variable">y</span></a>→<a class="idref" href="Coq.Init.Logic_Type.html#identity_is_a_congruence.z"><span class="id" type="variable">z</span></a>}</span> <span class="inlinecode"><a class="idref" href="HoTTBookExercises.html#Book_4_5.parts.D"><span class="id" type="variable">D</span></a>(<span class="id" type="var">Fx</span>,<span class="id" type="var">Gz</span>)</span>
+
+<div class="paragraph"> </div>
+
+    where there are three maps from the second product to the third,
+    corresponding to picking out <span class="inlinecode"><a class="idref" href="HoTT.categories.Grothendieck.PseudofunctorToCat.html#x"><span class="id" type="projection">x</span></a>→<a class="idref" href="HoTT.categories.Functor.Attributes.html#fully_faithful_helpers.y"><span class="id" type="variable">y</span></a></span>, <span class="inlinecode"><a class="idref" href="HoTT.categories.Functor.Attributes.html#fully_faithful_helpers.y"><span class="id" type="variable">y</span></a>→<a class="idref" href="Coq.Init.Logic_Type.html#identity_is_a_congruence.z"><span class="id" type="variable">z</span></a></span>, and <span class="inlinecode"><a class="idref" href="HoTT.categories.Grothendieck.PseudofunctorToCat.html#x"><span class="id" type="projection">x</span></a>→<a class="idref" href="Coq.Init.Logic_Type.html#identity_is_a_congruence.z"><span class="id" type="variable">z</span></a></span>.
+
+<div class="paragraph"> </div>
+
+    In general, the descent object of
+
+<div class="paragraph"> </div>
+
+    <span class="inlinecode"><a class="idref" href="HoTTBookExercises.html#Book_4_5.parts.A"><span class="id" type="variable">A</span></a></span> <span class="inlinecode">⇉</span> <span class="inlinecode"><a class="idref" href="HoTTBookExercises.html#Book_4_5.parts.B"><span class="id" type="variable">B</span></a></span> <span class="inlinecode">⇛</span> <span class="inlinecode"><a class="idref" href="HoTTBookExercises.html#Book_4_5.parts.C"><span class="id" type="variable">C</span></a></span>
+
+<div class="paragraph"> </div>
+
+    is the category of objects <span class="inlinecode"><a class="idref" href="HoTT.categories.Comma.InducedFunctors.html#slice_category_induced_functor.slice_coslice.a"><span class="id" type="variable">a</span></a>∈<a class="idref" href="HoTTBookExercises.html#Book_4_5.parts.A"><span class="id" type="variable">A</span></a></span> equipped with an isomorphism
+    between their two images in <span class="inlinecode"><a class="idref" href="HoTTBookExercises.html#Book_4_5.parts.B"><span class="id" type="variable">B</span></a></span> which results in a commutative
+    triangle between their three images in <span class="inlinecode"><a class="idref" href="HoTTBookExercises.html#Book_4_5.parts.C"><span class="id" type="variable">C</span></a></span>. 
+<div class="paragraph"> </div>
+
+ Later, he said (https://github.com/HoTT/HoTT/pull/382issuecomment-41240787):
+
+    The "naturality" axiom is only necessary if the domain is a
+    2-category rather than a 1-category. However, the respect for
+    units axiom really is necessary; I guess I forgot to mention that
+    in the email. The way it comes up in the descent object is that
+    there's a map from [B] to [A] given by projecting the components
+    of identities, and the coherence cell has to become an identity
+    when composed with that map. *)
+
+(** We construct the parts as above, but inline the resulting definitions for speed.
+<<
+Module PseudonaturalTransformationParts.
+  Section PseudonaturalTransformation.
+    Context `{Funext}.
+
+    Variable X : PreCategory.
+
+    Variables F G : Pseudofunctor X.
+
+
+    Definition A : PreCategory
+      := (forall x : X, F x -> G x)%category.
+    Definition B : PreCategory
+      := (forall x y (m : morphism X x y), F x -> G y)%category.
+    Definition C : PreCategory
+      := (forall x y z (m1 : morphism X y z) (m2 : morphism X x y), F x -> G z)%category.
+
+    Definition a_part := Eval simpl in object A.
+
+    Definition A_to_B_1 : Functor A B.
+    Proof.
+      refine (Build_Functor
+                A B
+                (fun x__Fx_to_Gx => fun x y m => x__Fx_to_Gx y o p_morphism_of F m)%functor
+                (fun x__s x__d x__m => fun x y m => x__m y oR p_morphism_of F m)
+                _
+                _);
+      simpl; repeat (intro || apply path_forall);
+      [ apply composition_of_whisker_r
+      | apply whisker_r_left_identity ].
+    Defined.
+
+    Definition A_to_B_2 : Functor A B.
+    Proof.
+      refine (Build_Functor
+                A B
+                (fun x__Fx_to_Gx => fun x y m => p_morphism_of G m o x__Fx_to_Gx x)%functor
+                (fun x__s x__d x__m => fun x y m => p_morphism_of G m oL x__m x)
+                _
+                _);
+      simpl; repeat (intro || apply path_forall);
+      [ apply composition_of_whisker_l
+      | apply whisker_l_right_identity ].
+    Defined.
+
+    Definition b_part (a : a_part)
+      := Eval simpl in forall x y m, (A_to_B_1 a x y m <~=~> A_to_B_2 a x y m).
+
+    Definition B_to_A : Functor B A
+      := Build_Functor
+           B A
+           (fun xym__Fx_to_Gy => fun x => xym__Fx_to_Gy x x 1)
+           (fun x__s x__d x__m => fun x => x__m x x 1)
+           (fun _ _ _ _ _ => idpath)
+           (fun _ => idpath).
+
+    Definition b_id_part (a : a_part) (b : b_part a)
+      := Eval simpl in
+          forall x,
+            (((left_identity_natural_transformation_1 _)
+                o (p_identity_of G _ oR _)
+                o (B_to_A _1 b x)
+                o (_ oL (p_identity_of F _)^-1)
+                o (left_identity_natural_transformation_2 _))
+             = 1)%natural_transformation.
+
+    Definition B_to_C_1 : Functor B C.
+    Proof.
+      refine (Build_Functor
+                B C
+                (fun xym__Fx_to_Gy => fun x y z m1 m2 => xym__Fx_to_Gy y z m1 o p_morphism_of F m2)%functor
+                (fun xym__s xym__d xym__m => fun x y z m1 m2 => xym__m y z m1 oR p_morphism_of F m2)
+                _
+                _);
+      simpl; repeat (intro || apply path_forall);
+      [ apply composition_of_whisker_r
+      | apply whisker_r_left_identity ].
+    Defined.
+
+    Definition B_to_C_2 : Functor B C.
+    Proof.
+      refine (Build_Functor
+                B C
+                (fun xym__Fx_to_Gy => fun x y z m1 m2 => p_morphism_of G m1 o xym__Fx_to_Gy x y m2)%functor
+                (fun xym__s xym__d xym__m => fun x y z m1 m2 => p_morphism_of G m1 oL xym__m x y m2)
+                _
+                _);
+      simpl; repeat (intro || apply path_forall);
+      [ apply composition_of_whisker_l
+      | apply whisker_l_right_identity ].
+    Defined.
+
+    Definition B_to_C_3 : Functor B C
+      := Build_Functor
+           B C
+           (fun xym__Fx_to_Gy => fun x y z m1 m2 => xym__Fx_to_Gy x z (m1 o m2))
+           (fun xym__s xym__d xym__m => fun x y z m1 m2 => xym__m x z (m1 o m2))
+           (fun _ _ _ _ _ => idpath)
+           (fun _ => idpath).
+
+    Definition c_part' (a : a_part) (b : b_part a)
+    : forall (x y z : X) (m1 : morphism X y z) (m2 : morphism X x y), Type.
+    Proof.
+      hnf in a, b.
+      pose (fun x y m => (b x y m : morphism _ _ _)) as bB; simpl in *.
+      intros x y z m1 m2.
+      exact (((associator_2 _ _ _)
+                o (B_to_C_2 _1 bB x y z m1 m2)
+                o (associator_1 _ _ _)
+                o (B_to_C_1 _1 bB x y z m1 m2)
+                o (associator_2 _ _ _))
+             = ((p_composition_of G _ _ _ m1 m2 oR _)
+                  o (B_to_C_3 _1 bB x y z m1 m2)
+                  o (_ oL (p_composition_of F _ _ _ m1 m2)^-1)))%natural_transformation.
+    Defined.
+
+    Arguments c_part' / .
+
+    Definition c_part (a : a_part) (b : b_part a)
+      := Eval simpl in forall x y z m1 m2, @c_part' a b x y z m1 m2.
+
+    (** We would like to define [PseudonaturalTransformation] here, then our types are η-expanded. *)
+  (*Record PseudonaturalTransformation :=
+      { p_components_of :> a_part;
+        p_commutes : b_part p_components_of;
+        p_commutes_coherent : c_part p_commutes }.*)
+  End PseudonaturalTransformation.
+End PseudonaturalTransformationParts.
+
+Print PseudonaturalTransformationParts.a_part.
+Print PseudonaturalTransformationParts.b_part.
+Print PseudonaturalTransformationParts.b_id_part.
+Print PseudonaturalTransformationParts.c_part.
+>> *)
+
+Record PseudonaturalTransformation `{Funext} (X : PreCategory)
+       (F G : Pseudofunctor X) :=
+  { p_components_of
+      :> forall a : X, Functor (F a) (G a);
+    p_commutes
+    : forall (x y : X) (m : morphism X x y),
+        ((p_components_of y o p_morphism_of F m)%functor <~=~> (p_morphism_of G m o p_components_of x)%functor)%natural_transformation;
+    p_commutes_respects_identity
+    : forall x : X,
+        ((left_identity_natural_transformation_1 (p_components_of x))
+           o (p_identity_of G x oR p_components_of x)
+           o (p_commutes x x 1%morphism)
+           o (p_components_of x oL (p_identity_of F x) ^-1)
+           o (left_identity_natural_transformation_2 (p_components_of x))
+         = 1)%natural_transformation;
+    p_commutes_respects_composition
+    : forall (x y z : X) (m1 : morphism X y z) (m2 : morphism X x y),
+        (((associator_2 (p_morphism_of G m1) (p_morphism_of G m2) (p_components_of x))
+            o (p_morphism_of G m1 oL p_commutes x y m2)
+            o (associator_1 (p_morphism_of G m1) (p_components_of y) (p_morphism_of F m2))
+            o (p_commutes y z m1 oR p_morphism_of F m2)
+            o (associator_2 (p_components_of z) (p_morphism_of F m1) (p_morphism_of F m2)))
+         = ((p_composition_of G x y z m1 m2 oR p_components_of x o p_commutes x z (m1 o m2)%morphism)
+              o (p_components_of z oL (p_composition_of F x y z m1 m2) ^-1)))%natural_transformation }.
+
+Bind Scope pseudonatural_transformation_scope with PseudonaturalTransformation.
+
+Create HintDb pseuodnatural_transformation discriminated.
+
+Arguments p_components_of {_} {X}%category {F G}%pseudofunctor T%pseudonatural_transformation
+          a%object : rename, simpl nomatch.
+
+Hint Resolve @p_commutes_respects_identity @p_commutes_respects_composition : category pseudonatural_transformation.
+
+</div>
+<div class="code">
+</div>
+</div>
+
+<div id="footer">
+<hr/><a href="index.html">Index</a><hr/>This page has been generated by <a href="http://coq.inria.fr/">coqdoc</a>
+</div>
+
+</div>
+
+</body>
+</html>
