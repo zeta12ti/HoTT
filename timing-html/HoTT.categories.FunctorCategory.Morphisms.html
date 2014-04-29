@@ -36,8 +36,8 @@ Time: 0s">
 </div>
 <div class="code" title="File: Morphisms.v
 Line: 1
-Time: 0.05s">
-<div class="time" style="width: 4.2992261392949%"></div>
+Time: 0.063s">
+<div class="time" style="width: 4.5161290322581%"></div>
 <pre>Require Import Category.Core Functor.Core NaturalTransformation.Paths FunctorCategory.Core Category.Morphisms NaturalTransformation.Core NaturalTransformation.Composition.Core.</pre>
 </div>
 <div class="code" title="File: Morphisms.v
@@ -101,8 +101,8 @@ Time: 0s">
 </div>
 <div class="code" title="File: Morphisms.v
 Line: 12
-Time: 0.05s">
-<div class="time" style="width: 4.2992261392949%"></div>
+Time: 0.061s">
+<div class="time" style="width: 4.3727598566308%"></div>
 <pre>Definition NaturalIsomorphism `{Funext} (C D : PreCategory) F G :=
   @Isomorphic (C -&gt; D) F G.</pre>
 </div>
@@ -116,8 +116,8 @@ Arguments NaturalIsomorphism {_} [C D] F G / .</pre>
 </div>
 <div class="code" title="File: Morphisms.v
 Line: 15
-Time: 0.106s">
-<div class="time" style="width: 9.1143594153052%"></div>
+Time: 0.133s">
+<div class="time" style="width: 9.5340501792115%"></div>
 <pre>
 
 Coercion natural_transformation_of_natural_isomorphism `{Funext} C D F G
@@ -143,8 +143,8 @@ Time: 0s">
 </div>
 <div class="code" title="File: Morphisms.v
 Line: 24
-Time: 0.079s">
-<div class="time" style="width: 6.792777300086%"></div>
+Time: 0.103s">
+<div class="time" style="width: 7.3835125448029%"></div>
 <pre>Definition isisomorphism_components_of `{Funext}
            `{@IsIsomorphism (C -&gt; D) F G T} x
 : IsIsomorphism (T x).</pre>
@@ -158,8 +158,8 @@ Proof.</pre>
 </div>
 <div class="code" title="File: Morphisms.v
 Line: 27
-Time: 0.085s">
-<div class="time" style="width: 7.3086844368014%"></div>
+Time: 0.105s">
+<div class="time" style="width: 7.5268817204301%"></div>
 <pre>
   exists (T^-1 x).</pre>
 </div>
@@ -172,8 +172,8 @@ Time: 0s">
 </div>
 <div class="code" title="File: Morphisms.v
 Line: 29
-Time: 0.256s">
-<div class="time" style="width: 22.01203783319%"></div>
+Time: 0.328s">
+<div class="time" style="width: 23.512544802867%"></div>
 <pre> exact (apD10 (ap components_of left_inverse) x).</pre>
 </div>
 <div class="code" title="File: Morphisms.v
@@ -185,29 +185,44 @@ Time: 0s">
 </div>
 <div class="code" title="File: Morphisms.v
 Line: 30
-Time: 0.079s">
-<div class="time" style="width: 6.792777300086%"></div>
+Time: 0.096s">
+<div class="time" style="width: 6.8817204301075%"></div>
 <pre> exact (apD10 (ap components_of right_inverse) x).</pre>
 </div>
 <div class="code" title="File: Morphisms.v
 Line: 30
-Time: 0.096s">
-<div class="time" style="width: 8.2545141874463%"></div>
+Time: 0.115s">
+<div class="time" style="width: 8.2437275985663%"></div>
 <pre>
 Defined.</pre>
 </div>
 <div class="code" title="File: Morphisms.v
 Line: 31
 Time: 0.001s">
-<div class="time" style="width: 0.085984522785899%"></div>
+<div class="time" style="width: 0.07168458781362%"></div>
 <pre>
 
 Hint Immediate isisomorphism_components_of : typeclass_instances.</pre>
 </div>
 <div class="code" title="File: Morphisms.v
 Line: 33
-Time: 0.006s">
-<div class="time" style="width: 0.51590713671539%"></div>
+Time: 0s">
+<div class="time" style="width: 0%"></div>
+<pre>
+(** When one of the functors is the identity functor, we fail to match correctly, because [apply] is stupid.  So we do its work for it. *)</pre>
+</div>
+<div class="code" title="File: Morphisms.v
+Line: 34
+Time: 0s">
+<div class="time" style="width: 0%"></div>
+<pre>Hint Extern 10 (@IsIsomorphism _ _ _ (@components_of ?C ?D ?F ?G ?T ?x))
+=&gt; apply (fun H' =&gt; @isisomorphism_components_of _ C D F G T H' x)
+   : typeclass_instances.</pre>
+</div>
+<div class="code" title="File: Morphisms.v
+Line: 36
+Time: 0.008s">
+<div class="time" style="width: 0.57347670250896%"></div>
 <pre>
 
 Definition inverse `{Funext}
@@ -216,16 +231,16 @@ Definition inverse `{Funext}
 : NaturalTransformation G F.</pre>
 </div>
 <div class="code" title="File: Morphisms.v
-Line: 38
+Line: 41
 Time: 0s">
 <div class="time" style="width: 0%"></div>
 <pre>
 Proof.</pre>
 </div>
 <div class="code" title="File: Morphisms.v
-Line: 39
-Time: 0.464s">
-<div class="time" style="width: 39.896818572657%"></div>
+Line: 42
+Time: 0.524s">
+<div class="time" style="width: 37.562724014337%"></div>
 <pre>
   exists (fun x =&gt; (T x)^-1);
   abstract (
@@ -236,14 +251,14 @@ Time: 0.464s">
     ).</pre>
 </div>
 <div class="code" title="File: Morphisms.v
-Line: 46
-Time: 0.013s">
-<div class="time" style="width: 1.1177987962167%"></div>
+Line: 49
+Time: 0.015s">
+<div class="time" style="width: 1.0752688172043%"></div>
 <pre>
 Defined.</pre>
 </div>
 <div class="code" title="File: Morphisms.v
-Line: 47
+Line: 50
 Time: 0s">
 <div class="time" style="width: 0%"></div>
 <pre>
@@ -251,25 +266,25 @@ Time: 0s">
 (** ** If [T x] is an isomorphism for all [x], then so is [T] *)</pre>
 </div>
 <div class="code" title="File: Morphisms.v
-Line: 49
-Time: 0.031s">
-<div class="time" style="width: 2.6655202063629%"></div>
+Line: 52
+Time: 0.034s">
+<div class="time" style="width: 2.4372759856631%"></div>
 <pre>Definition isisomorphism_natural_transformation `{Funext}
            C D F G (T : NaturalTransformation F G)
            `{forall x, IsIsomorphism (T x)}
 : @IsIsomorphism (C -&gt; D) F G T.</pre>
 </div>
 <div class="code" title="File: Morphisms.v
-Line: 52
+Line: 55
 Time: 0s">
 <div class="time" style="width: 0%"></div>
 <pre>
 Proof.</pre>
 </div>
 <div class="code" title="File: Morphisms.v
-Line: 53
-Time: 0.466s">
-<div class="time" style="width: 40.068787618229%"></div>
+Line: 56
+Time: 0.56s">
+<div class="time" style="width: 40.143369175627%"></div>
 <pre>
   exists (inverse _);
   abstract (
@@ -279,22 +294,22 @@ Time: 0.466s">
     ).</pre>
 </div>
 <div class="code" title="File: Morphisms.v
-Line: 59
-Time: 0.058s">
-<div class="time" style="width: 4.9871023215821%"></div>
+Line: 62
+Time: 0.049s">
+<div class="time" style="width: 3.5125448028674%"></div>
 <pre>
 Defined.</pre>
 </div>
 <div class="code" title="File: Morphisms.v
-Line: 60
-Time: 0.007s">
-<div class="time" style="width: 0.60189165950129%"></div>
+Line: 63
+Time: 0.008s">
+<div class="time" style="width: 0.57347670250896%"></div>
 <pre>
 
 Hint Immediate isisomorphism_natural_transformation : typeclass_instances.</pre>
 </div>
 <div class="code" title="File: Morphisms.v
-Line: 62
+Line: 65
 Time: 0s">
 <div class="time" style="width: 0%"></div>
 <pre>
@@ -302,36 +317,36 @@ Time: 0s">
 (** ** Variant of [idtoiso] for natural transformations *)</pre>
 </div>
 <div class="code" title="File: Morphisms.v
-Line: 64
+Line: 67
 Time: 0s">
 <div class="time" style="width: 0%"></div>
 <pre>Section idtoiso.</pre>
 </div>
 <div class="code" title="File: Morphisms.v
-Line: 64
+Line: 67
 Time: 0.001s">
-<div class="time" style="width: 0.085984522785899%"></div>
+<div class="time" style="width: 0.07168458781362%"></div>
 <pre>
   Context `{Funext}.</pre>
 </div>
 <div class="code" title="File: Morphisms.v
-Line: 65
+Line: 68
 Time: 0s">
 <div class="time" style="width: 0%"></div>
 <pre>
   Variable C : PreCategory.</pre>
 </div>
 <div class="code" title="File: Morphisms.v
-Line: 66
+Line: 69
 Time: 0s">
 <div class="time" style="width: 0%"></div>
 <pre>
   Variable D : PreCategory.</pre>
 </div>
 <div class="code" title="File: Morphisms.v
-Line: 67
-Time: 0.061s">
-<div class="time" style="width: 5.2450558899398%"></div>
+Line: 70
+Time: 0.072s">
+<div class="time" style="width: 5.1612903225806%"></div>
 <pre>
 
   Definition idtoiso_natural_transformation
@@ -340,16 +355,16 @@ Time: 0.061s">
   : NaturalTransformation F G.</pre>
 </div>
 <div class="code" title="File: Morphisms.v
-Line: 72
+Line: 75
 Time: 0s">
 <div class="time" style="width: 0%"></div>
 <pre>
   Proof.</pre>
 </div>
 <div class="code" title="File: Morphisms.v
-Line: 73
-Time: 0.672s">
-<div class="time" style="width: 57.781599312124%"></div>
+Line: 76
+Time: 0.765s">
+<div class="time" style="width: 54.838709677419%"></div>
 <pre>
     refine (Build_NaturalTransformation'
               F G
@@ -361,16 +376,16 @@ Time: 0.672s">
     | exact (right_identity _ _ _ _ @ (left_identity _ _ _ _)^) ].</pre>
 </div>
 <div class="code" title="File: Morphisms.v
-Line: 81
-Time: 0.25s">
-<div class="time" style="width: 21.496130696475%"></div>
+Line: 84
+Time: 0.293s">
+<div class="time" style="width: 21.003584229391%"></div>
 <pre>
   Defined.</pre>
 </div>
 <div class="code" title="File: Morphisms.v
-Line: 82
-Time: 0.032s">
-<div class="time" style="width: 2.7515047291488%"></div>
+Line: 85
+Time: 0.037s">
+<div class="time" style="width: 2.6523297491039%"></div>
 <pre>
 
   Definition idtoiso
@@ -379,38 +394,38 @@ Time: 0.032s">
   : F &lt;~=~&gt; G.</pre>
 </div>
 <div class="code" title="File: Morphisms.v
-Line: 87
+Line: 90
 Time: 0s">
 <div class="time" style="width: 0%"></div>
 <pre>
   Proof.</pre>
 </div>
 <div class="code" title="File: Morphisms.v
-Line: 88
-Time: 0.024s">
-<div class="time" style="width: 2.0636285468616%"></div>
+Line: 91
+Time: 0.026s">
+<div class="time" style="width: 1.8637992831541%"></div>
 <pre>
     exists (idtoiso_natural_transformation T).</pre>
 </div>
 <div class="code" title="File: Morphisms.v
-Line: 89
-Time: 1.163s">
+Line: 92
+Time: 1.395s">
 <div class="time" style="width: 100%"></div>
 <pre>
     exists (idtoiso_natural_transformation (T^)%path);
       abstract (path_natural_transformation; case T; simpl; auto with morphism).</pre>
 </div>
 <div class="code" title="File: Morphisms.v
-Line: 91
-Time: 0.089s">
-<div class="time" style="width: 7.652622527945%"></div>
+Line: 94
+Time: 0.111s">
+<div class="time" style="width: 7.9569892473118%"></div>
 <pre>
   Defined.</pre>
 </div>
 <div class="code" title="File: Morphisms.v
-Line: 92
-Time: 0.073s">
-<div class="time" style="width: 6.2768701633706%"></div>
+Line: 95
+Time: 0.085s">
+<div class="time" style="width: 6.0931899641577%"></div>
 <pre>
 
   Lemma eta_idtoiso
@@ -419,49 +434,49 @@ Time: 0.073s">
   : Morphisms.idtoiso _ T = idtoiso T.</pre>
 </div>
 <div class="code" title="File: Morphisms.v
-Line: 97
+Line: 100
 Time: 0s">
 <div class="time" style="width: 0%"></div>
 <pre>
   Proof.</pre>
 </div>
 <div class="code" title="File: Morphisms.v
-Line: 98
-Time: 0.061s">
-<div class="time" style="width: 5.2450558899398%"></div>
+Line: 101
+Time: 0.047s">
+<div class="time" style="width: 3.3691756272401%"></div>
 <pre>
     case T.</pre>
 </div>
 <div class="code" title="File: Morphisms.v
-Line: 99
-Time: 0.218s">
-<div class="time" style="width: 18.744625967326%"></div>
+Line: 102
+Time: 0.263s">
+<div class="time" style="width: 18.853046594982%"></div>
 <pre>
     expand; f_ap.</pre>
 </div>
 <div class="code" title="File: Morphisms.v
-Line: 100
-Time: 0.277s">
-<div class="time" style="width: 23.817712811694%"></div>
+Line: 103
+Time: 0.459s">
+<div class="time" style="width: 32.903225806452%"></div>
 <pre>
     exact (center _).</pre>
 </div>
 <div class="code" title="File: Morphisms.v
-Line: 101
-Time: 0.282s">
-<div class="time" style="width: 24.247635425623%"></div>
+Line: 104
+Time: 0.595s">
+<div class="time" style="width: 42.652329749104%"></div>
 <pre>
   Qed.</pre>
 </div>
 <div class="code" title="File: Morphisms.v
-Line: 102
-Time: 0.027s">
-<div class="time" style="width: 2.3215821152193%"></div>
+Line: 105
+Time: 0.035s">
+<div class="time" style="width: 2.5089605734767%"></div>
 <pre>
 End idtoiso.</pre>
 </div>
 <div class="code" title="File: Morphisms.v
-Line: 103
+Line: 106
 Time: 0s">
 <div class="time" style="width: 0%"></div>
 <pre>
@@ -469,21 +484,21 @@ Time: 0s">
 Module Export FunctorCategoryMorphismsNotations.</pre>
 </div>
 <div class="code" title="File: Morphisms.v
-Line: 105
+Line: 108
 Time: 0s">
 <div class="time" style="width: 0%"></div>
 <pre>
   Infix "&lt;~=~&gt;" := NaturalIsomorphism : natural_transformation_scope.</pre>
 </div>
 <div class="code" title="File: Morphisms.v
-Line: 106
+Line: 109
 Time: 0s">
 <div class="time" style="width: 0%"></div>
 <pre>
 End FunctorCategoryMorphismsNotations.</pre>
 </div>
 <div class="code" title="File: Morphisms.v
-Line: 108
+Line: 111
 Time: 0s">
 <div class="time" style="width: 0%"></div>
 <pre>
