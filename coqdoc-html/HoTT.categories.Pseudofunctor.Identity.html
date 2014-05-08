@@ -1,0 +1,145 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
+"http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
+<link href="coqdoc.css" rel="stylesheet" type="text/css"/>
+<title>HoTT.categories.Pseudofunctor.Identity</title>
+</head>
+
+<body>
+
+<div id="page">
+
+<div id="header">
+</div>
+
+<div id="main">
+
+<h1 class="libtitle">Library HoTT.categories.Pseudofunctor.Identity</h1>
+
+<div class="code">
+</div>
+
+<div class="doc">
+<a name="lab680"></a><h1 class="section">Identity pseudofunctor</h1>
+
+</div>
+<div class="code">
+<span class="id" type="keyword">Require</span> <span class="id" type="keyword">Import</span> <a class="idref" href="HoTT.categories.Category.Core.html#"><span class="id" type="library">Category.Core</span></a> <a class="idref" href="HoTT.categories.Functor.Core.html#"><span class="id" type="library">Functor.Core</span></a> <a class="idref" href="HoTT.categories.NaturalTransformation.Core.html#"><span class="id" type="library">NaturalTransformation.Core</span></a>.<br/>
+<span class="id" type="keyword">Require</span> <span class="id" type="keyword">Import</span> <a class="idref" href="HoTT.categories.NaturalTransformation.Isomorphisms.html#"><span class="id" type="library">NaturalTransformation.Isomorphisms</span></a>.<br/>
+<span class="id" type="keyword">Require</span> <span class="id" type="keyword">Import</span> <a class="idref" href="HoTT.categories.NaturalTransformation.Paths.html#"><span class="id" type="library">NaturalTransformation.Paths</span></a>.<br/>
+<span class="id" type="keyword">Require</span> <span class="id" type="keyword">Import</span> <a class="idref" href="HoTT.categories.Cat.Core.html#"><span class="id" type="library">Cat.Core</span></a>.<br/>
+<span class="id" type="keyword">Require</span> <span class="id" type="keyword">Import</span> <a class="idref" href="HoTT.categories.Pseudofunctor.Core.html#"><span class="id" type="library">Pseudofunctor.Core</span></a>.<br/>
+
+<br/>
+</div>
+
+<div class="doc">
+Bring things into scope. 
+</div>
+<div class="code">
+<span class="id" type="keyword">Import</span> <span class="id" type="var">NaturalTransformation.Identity</span>.<br/>
+<span class="id" type="keyword">Import</span> <span class="id" type="var">NaturalTransformation.Composition.Core</span> <span class="id" type="var">NaturalTransformation.Composition.Laws</span>.<br/>
+<span class="id" type="keyword">Import</span> <span class="id" type="var">Category.Morphisms</span>.<br/>
+<span class="id" type="keyword">Import</span> <span class="id" type="var">FunctorCategory.Core</span>.<br/>
+
+<br/>
+<span class="id" type="keyword">Require</span> <span class="id" type="keyword">Import</span> <a class="idref" href="HoTT.PathGroupoids.html#"><span class="id" type="library">PathGroupoids</span></a>.<br/>
+
+<br/>
+<span class="id" type="keyword">Set</span> <span class="id" type="var">Universe</span> <span class="id" type="var">Polymorphism</span>.<br/>
+<span class="id" type="keyword">Set Implicit Arguments</span>.<br/>
+<span class="id" type="keyword">Generalizable</span> <span class="id" type="keyword">All</span> <span class="id" type="keyword">Variables</span>.<br/>
+<span class="id" type="keyword">Set</span> <span class="id" type="var">Asymmetric</span> <span class="id" type="var">Patterns</span>.<br/>
+
+<br/>
+<span class="id" type="keyword">Local</span>&nbsp;<span class="id" type="keyword">Open</span> <span class="id" type="keyword">Scope</span> <span class="id" type="var">natural_transformation_scope</span>.<br/>
+
+<br/>
+<span class="id" type="keyword">Section</span> <a name="identity"><span class="id" type="section">identity</span></a>.<br/>
+&nbsp;&nbsp;<span class="id" type="keyword">Context</span> `{<a class="idref" href="HoTT.Overture.html#Funext"><span class="id" type="class">Funext</span></a>}.<br/>
+
+<br/>
+&nbsp;&nbsp;<span class="id" type="keyword">Variable</span> <a name="identity.P"><span class="id" type="variable">P</span></a> : <a class="idref" href="HoTT.categories.Category.Core.html#PreCategory"><span class="id" type="record">PreCategory</span></a> <a class="idref" href="Coq.Init.Logic.html#:type_scope:x_'->'_x"><span class="id" type="notation">→</span></a> <span class="id" type="keyword">Type</span>.<br/>
+&nbsp;&nbsp;<span class="id" type="keyword">Context</span> `{<span class="id" type="var">HF</span> : <span class="id" type="keyword">∀</span> <span class="id" type="var">C</span> <span class="id" type="var">D</span>, <a class="idref" href="HoTT.categories.Pseudofunctor.Identity.html#identity.P"><span class="id" type="variable">P</span></a> <a class="idref" href="HoTT.categories.Pseudofunctor.Identity.html#C"><span class="id" type="variable">C</span></a> <a class="idref" href="Coq.Init.Logic.html#:type_scope:x_'->'_x"><span class="id" type="notation">→</span></a> <a class="idref" href="HoTT.categories.Pseudofunctor.Identity.html#identity.P"><span class="id" type="variable">P</span></a> <a class="idref" href="HoTT.categories.Pseudofunctor.Identity.html#D"><span class="id" type="variable">D</span></a> <a class="idref" href="Coq.Init.Logic.html#:type_scope:x_'->'_x"><span class="id" type="notation">→</span></a> <a class="idref" href="HoTT.Overture.html#IsHSet"><span class="id" type="abbreviation">IsHSet</span></a> (<a class="idref" href="HoTT.categories.Functor.Core.html#Functor"><span class="id" type="record">Functor</span></a> <a class="idref" href="HoTT.categories.Pseudofunctor.Identity.html#C"><span class="id" type="variable">C</span></a> <a class="idref" href="HoTT.categories.Pseudofunctor.Identity.html#D"><span class="id" type="variable">D</span></a>)}.<br/>
+
+<br/>
+&nbsp;&nbsp;<span class="id" type="keyword">Local</span>&nbsp;<span class="id" type="keyword">Notation</span> <a name="cat"><span class="id" type="abbreviation">cat</span></a> := (@<a class="idref" href="HoTT.categories.Cat.Core.html#sub_pre_cat"><span class="id" type="definition">sub_pre_cat</span></a> <span class="id" type="var">_</span> <a class="idref" href="HoTT.categories.Pseudofunctor.Identity.html#identity.P"><span class="id" type="variable">P</span></a> <a class="idref" href="HoTT.categories.Pseudofunctor.Identity.html#identity.HF"><span class="id" type="variable">HF</span></a>).<br/>
+
+<br/>
+&nbsp;&nbsp;<span class="id" type="keyword">Local</span>&nbsp;<span class="id" type="keyword">Ltac</span> <span class="id" type="var">t</span> :=<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="id" type="var">path_natural_transformation</span>;<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="id" type="tactic">abstract</span> (<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="id" type="tactic">autorewrite</span> <span class="id" type="keyword">with</span> <span class="id" type="var">functor</span> <span class="id" type="var">morphism</span>;<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="id" type="tactic">rewrite</span> <a class="idref" href="HoTT.PathGroupoids.html#ap_idmap"><span class="id" type="definition">ap_idmap</span></a>, <a class="idref" href="HoTT.categories.NaturalTransformation.Isomorphisms.html#idtoiso_components_of"><span class="id" type="definition">idtoiso_components_of</span></a>;<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="id" type="tactic">rewrite</span> ?<a class="idref" href="HoTT.categories.Functor.Composition.Laws.html#associativity_fst"><span class="id" type="definition">Functor.Composition.Laws.associativity_fst</span></a>,<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;?<a class="idref" href="HoTT.categories.Functor.Composition.Laws.html#left_identity_fst"><span class="id" type="definition">Functor.Composition.Laws.left_identity_fst</span></a>,<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;?<a class="idref" href="HoTT.categories.Functor.Composition.Laws.html#right_identity_fst"><span class="id" type="definition">Functor.Composition.Laws.right_identity_fst</span></a>;<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="id" type="tactic">reflexivity</span><br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;).<br/>
+
+<br/>
+&nbsp;&nbsp;<span class="id" type="keyword">Lemma</span> <a name="identity_associativity"><span class="id" type="lemma">identity_associativity</span></a><br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;(<span class="id" type="var">w</span> <span class="id" type="var">x</span> <span class="id" type="var">y</span> <span class="id" type="var">z</span> : <a class="idref" href="HoTT.categories.Category.Core.html#PreCategory"><span class="id" type="record">PreCategory</span></a>) (<span class="id" type="var">f</span> : <a class="idref" href="HoTT.categories.Functor.Core.html#Functor"><span class="id" type="record">Functor</span></a> <a class="idref" href="HoTT.categories.Pseudofunctor.Identity.html#w"><span class="id" type="variable">w</span></a> <a class="idref" href="HoTT.categories.Pseudofunctor.Identity.html#x"><span class="id" type="variable">x</span></a>)<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;(<span class="id" type="var">g</span> : <a class="idref" href="HoTT.categories.Functor.Core.html#Functor"><span class="id" type="record">Functor</span></a> <a class="idref" href="HoTT.categories.Pseudofunctor.Identity.html#x"><span class="id" type="variable">x</span></a> <a class="idref" href="HoTT.categories.Pseudofunctor.Identity.html#y"><span class="id" type="variable">y</span></a>) (<span class="id" type="var">h</span> : <a class="idref" href="HoTT.categories.Functor.Core.html#Functor"><span class="id" type="record">Functor</span></a> <a class="idref" href="HoTT.categories.Pseudofunctor.Identity.html#y"><span class="id" type="variable">y</span></a> <a class="idref" href="HoTT.categories.Pseudofunctor.Identity.html#z"><span class="id" type="variable">z</span></a>)<br/>
+&nbsp;&nbsp;: <a class="idref" href="HoTT.categories.NaturalTransformation.Composition.Laws.html#associator_1"><span class="id" type="definition">associator_1</span></a> <a class="idref" href="HoTT.categories.Pseudofunctor.Identity.html#h"><span class="id" type="variable">h</span></a> <a class="idref" href="HoTT.categories.Pseudofunctor.Identity.html#g"><span class="id" type="variable">g</span></a> <a class="idref" href="HoTT.categories.Pseudofunctor.Identity.html#f"><span class="id" type="variable">f</span></a> <a class="idref" href="HoTT.categories.NaturalTransformation.Composition.Core.html#NaturalTransformationCompositionCoreNotations.:natural_transformation_scope:x_'o'_x"><span class="id" type="notation">o</span></a> <a class="idref" href="HoTT.categories.NaturalTransformation.Composition.Core.html#NaturalTransformationCompositionCoreNotations.:natural_transformation_scope:x_'o'_x"><span class="id" type="notation">(</span></a>1 <a class="idref" href="HoTT.categories.NaturalTransformation.Composition.Core.html#NaturalTransformationCompositionCoreNotations.:natural_transformation_scope:x_'oR'_x"><span class="id" type="notation">oR</span></a> <a class="idref" href="HoTT.categories.Pseudofunctor.Identity.html#f"><span class="id" type="variable">f</span></a> <a class="idref" href="HoTT.categories.NaturalTransformation.Composition.Core.html#NaturalTransformationCompositionCoreNotations.:natural_transformation_scope:x_'o'_x"><span class="id" type="notation">o</span></a> 1<a class="idref" href="HoTT.categories.NaturalTransformation.Composition.Core.html#NaturalTransformationCompositionCoreNotations.:natural_transformation_scope:x_'o'_x"><span class="id" type="notation">)</span></a> <a class="idref" href="HoTT.Overture.html#:type_scope:x_'='_x"><span class="id" type="notation">=</span></a><br/>
+&nbsp;&nbsp;&nbsp;&nbsp;<a class="idref" href="HoTT.categories.Pseudofunctor.Identity.html#h"><span class="id" type="variable">h</span></a> <a class="idref" href="HoTT.categories.NaturalTransformation.Composition.Core.html#NaturalTransformationCompositionCoreNotations.:natural_transformation_scope:x_'oL'_x"><span class="id" type="notation">oL</span></a> 1 <a class="idref" href="HoTT.categories.NaturalTransformation.Composition.Core.html#NaturalTransformationCompositionCoreNotations.:natural_transformation_scope:x_'o'_x"><span class="id" type="notation">o</span></a> <a class="idref" href="HoTT.categories.NaturalTransformation.Composition.Core.html#NaturalTransformationCompositionCoreNotations.:natural_transformation_scope:x_'o'_x"><span class="id" type="notation">(</span></a>1 <a class="idref" href="HoTT.categories.NaturalTransformation.Composition.Core.html#NaturalTransformationCompositionCoreNotations.:natural_transformation_scope:x_'o'_x"><span class="id" type="notation">o</span></a> @<a class="idref" href="HoTT.categories.Category.Morphisms.html#morphism_isomorphic"><span class="id" type="method">morphism_isomorphic</span></a> <span class="id" type="var">_</span> <span class="id" type="var">_</span> <span class="id" type="var">_</span> (<a class="idref" href="HoTT.categories.Category.Morphisms.html#idtoiso"><span class="id" type="definition">idtoiso</span></a> (<a class="idref" href="HoTT.categories.Pseudofunctor.Identity.html#w"><span class="id" type="variable">w</span></a> <a class="idref" href="HoTT.categories.FunctorCategory.Core.html#FunctorCategoryCoreNotations.:category_scope:x_'->'_x"><span class="id" type="notation">→</span></a> <a class="idref" href="HoTT.categories.Pseudofunctor.Identity.html#z"><span class="id" type="variable">z</span></a>) (<a class="idref" href="HoTT.Overture.html#ap"><span class="id" type="definition">ap</span></a> <a class="idref" href="HoTT.Overture.html#idmap"><span class="id" type="abbreviation">idmap</span></a> (<a class="idref" href="HoTT.categories.Functor.Composition.Laws.html#associativity"><span class="id" type="lemma">Functor.Composition.Laws.associativity</span></a> <a class="idref" href="HoTT.categories.Pseudofunctor.Identity.html#f"><span class="id" type="variable">f</span></a> <a class="idref" href="HoTT.categories.Pseudofunctor.Identity.html#g"><span class="id" type="variable">g</span></a> <a class="idref" href="HoTT.categories.Pseudofunctor.Identity.html#h"><span class="id" type="variable">h</span></a>)))<a class="idref" href="HoTT.categories.NaturalTransformation.Composition.Core.html#NaturalTransformationCompositionCoreNotations.:natural_transformation_scope:x_'o'_x"><span class="id" type="notation">)</span></a>.<br/>
+&nbsp;&nbsp;<span class="id" type="keyword">Proof</span>.<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="id" type="var">t</span>.<br/>
+&nbsp;&nbsp;<span class="id" type="keyword">Defined</span>.<br/>
+
+<br/>
+&nbsp;&nbsp;<span class="id" type="keyword">Lemma</span> <a name="identity_left_identity"><span class="id" type="lemma">identity_left_identity</span></a><br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;(<span class="id" type="var">x</span> <span class="id" type="var">y</span> : <a class="idref" href="HoTT.categories.Category.Core.html#PreCategory"><span class="id" type="record">PreCategory</span></a>) (<span class="id" type="var">f</span> : <a class="idref" href="HoTT.categories.Functor.Core.html#Functor"><span class="id" type="record">Functor</span></a> <a class="idref" href="HoTT.categories.Pseudofunctor.Identity.html#x"><span class="id" type="variable">x</span></a> <a class="idref" href="HoTT.categories.Pseudofunctor.Identity.html#y"><span class="id" type="variable">y</span></a>)<br/>
+&nbsp;&nbsp;: 1 <a class="idref" href="HoTT.categories.NaturalTransformation.Composition.Core.html#NaturalTransformationCompositionCoreNotations.:natural_transformation_scope:x_'oR'_x"><span class="id" type="notation">oR</span></a> <a class="idref" href="HoTT.categories.Pseudofunctor.Identity.html#f"><span class="id" type="variable">f</span></a> <a class="idref" href="HoTT.categories.NaturalTransformation.Composition.Core.html#NaturalTransformationCompositionCoreNotations.:natural_transformation_scope:x_'o'_x"><span class="id" type="notation">o</span></a> 1 <a class="idref" href="HoTT.Overture.html#:type_scope:x_'='_x"><span class="id" type="notation">=</span></a><br/>
+&nbsp;&nbsp;&nbsp;&nbsp;<a class="idref" href="HoTT.categories.NaturalTransformation.Composition.Core.html#NaturalTransformationCompositionCoreNotations.:natural_transformation_scope:x_'o'_x"><span class="id" type="notation">(</span></a><a class="idref" href="HoTT.categories.NaturalTransformation.Composition.Laws.html#left_identity_natural_transformation_2"><span class="id" type="definition">left_identity_natural_transformation_2</span></a> <a class="idref" href="HoTT.categories.Pseudofunctor.Identity.html#f"><span class="id" type="variable">f</span></a><a class="idref" href="HoTT.categories.NaturalTransformation.Composition.Core.html#NaturalTransformationCompositionCoreNotations.:natural_transformation_scope:x_'o'_x"><span class="id" type="notation">)</span></a><br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a class="idref" href="HoTT.categories.NaturalTransformation.Composition.Core.html#NaturalTransformationCompositionCoreNotations.:natural_transformation_scope:x_'o'_x"><span class="id" type="notation">o</span></a> @<a class="idref" href="HoTT.categories.Category.Morphisms.html#morphism_isomorphic"><span class="id" type="method">morphism_isomorphic</span></a> <span class="id" type="var">_</span> <span class="id" type="var">_</span> <span class="id" type="var">_</span> (<a class="idref" href="HoTT.categories.Category.Morphisms.html#idtoiso"><span class="id" type="definition">idtoiso</span></a> (<a class="idref" href="HoTT.categories.Pseudofunctor.Identity.html#x"><span class="id" type="variable">x</span></a> <a class="idref" href="HoTT.categories.FunctorCategory.Core.html#FunctorCategoryCoreNotations.:category_scope:x_'->'_x"><span class="id" type="notation">→</span></a> <a class="idref" href="HoTT.categories.Pseudofunctor.Identity.html#y"><span class="id" type="variable">y</span></a>) (<a class="idref" href="HoTT.Overture.html#ap"><span class="id" type="definition">ap</span></a> <a class="idref" href="HoTT.Overture.html#idmap"><span class="id" type="abbreviation">idmap</span></a> (<a class="idref" href="HoTT.categories.Functor.Composition.Laws.html#left_identity"><span class="id" type="lemma">Functor.Composition.Laws.left_identity</span></a> <a class="idref" href="HoTT.categories.Pseudofunctor.Identity.html#f"><span class="id" type="variable">f</span></a>))).<br/>
+&nbsp;&nbsp;<span class="id" type="keyword">Proof</span>.<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="id" type="var">t</span>.<br/>
+&nbsp;&nbsp;<span class="id" type="keyword">Defined</span>.<br/>
+
+<br/>
+&nbsp;&nbsp;<span class="id" type="keyword">Lemma</span> <a name="identity_right_identity"><span class="id" type="lemma">identity_right_identity</span></a><br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;(<span class="id" type="var">x</span> <span class="id" type="var">y</span> : <a class="idref" href="HoTT.categories.Category.Core.html#PreCategory"><span class="id" type="record">PreCategory</span></a>) (<span class="id" type="var">f</span> : <a class="idref" href="HoTT.categories.Functor.Core.html#Functor"><span class="id" type="record">Functor</span></a> <a class="idref" href="HoTT.categories.Pseudofunctor.Identity.html#x"><span class="id" type="variable">x</span></a> <a class="idref" href="HoTT.categories.Pseudofunctor.Identity.html#y"><span class="id" type="variable">y</span></a>)<br/>
+&nbsp;&nbsp;: <a class="idref" href="HoTT.categories.Pseudofunctor.Identity.html#f"><span class="id" type="variable">f</span></a> <a class="idref" href="HoTT.categories.NaturalTransformation.Composition.Core.html#NaturalTransformationCompositionCoreNotations.:natural_transformation_scope:x_'oL'_x"><span class="id" type="notation">oL</span></a> 1 <a class="idref" href="HoTT.categories.NaturalTransformation.Composition.Core.html#NaturalTransformationCompositionCoreNotations.:natural_transformation_scope:x_'o'_x"><span class="id" type="notation">o</span></a> 1 <a class="idref" href="HoTT.Overture.html#:type_scope:x_'='_x"><span class="id" type="notation">=</span></a><br/>
+&nbsp;&nbsp;&nbsp;&nbsp;<a class="idref" href="HoTT.categories.NaturalTransformation.Composition.Core.html#NaturalTransformationCompositionCoreNotations.:natural_transformation_scope:x_'o'_x"><span class="id" type="notation">(</span></a><a class="idref" href="HoTT.categories.NaturalTransformation.Composition.Laws.html#right_identity_natural_transformation_2"><span class="id" type="definition">right_identity_natural_transformation_2</span></a> <a class="idref" href="HoTT.categories.Pseudofunctor.Identity.html#f"><span class="id" type="variable">f</span></a><a class="idref" href="HoTT.categories.NaturalTransformation.Composition.Core.html#NaturalTransformationCompositionCoreNotations.:natural_transformation_scope:x_'o'_x"><span class="id" type="notation">)</span></a><br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a class="idref" href="HoTT.categories.NaturalTransformation.Composition.Core.html#NaturalTransformationCompositionCoreNotations.:natural_transformation_scope:x_'o'_x"><span class="id" type="notation">o</span></a> @<a class="idref" href="HoTT.categories.Category.Morphisms.html#morphism_isomorphic"><span class="id" type="method">morphism_isomorphic</span></a> <span class="id" type="var">_</span> <span class="id" type="var">_</span> <span class="id" type="var">_</span> (<a class="idref" href="HoTT.categories.Category.Morphisms.html#idtoiso"><span class="id" type="definition">idtoiso</span></a> (<a class="idref" href="HoTT.categories.Pseudofunctor.Identity.html#x"><span class="id" type="variable">x</span></a> <a class="idref" href="HoTT.categories.FunctorCategory.Core.html#FunctorCategoryCoreNotations.:category_scope:x_'->'_x"><span class="id" type="notation">→</span></a> <a class="idref" href="HoTT.categories.Pseudofunctor.Identity.html#y"><span class="id" type="variable">y</span></a>) (<a class="idref" href="HoTT.Overture.html#ap"><span class="id" type="definition">ap</span></a> <a class="idref" href="HoTT.Overture.html#idmap"><span class="id" type="abbreviation">idmap</span></a> (<a class="idref" href="HoTT.categories.Functor.Composition.Laws.html#right_identity"><span class="id" type="lemma">Functor.Composition.Laws.right_identity</span></a> <a class="idref" href="HoTT.categories.Pseudofunctor.Identity.html#f"><span class="id" type="variable">f</span></a>))).<br/>
+&nbsp;&nbsp;<span class="id" type="keyword">Proof</span>.<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="id" type="var">t</span>.<br/>
+&nbsp;&nbsp;<span class="id" type="keyword">Defined</span>.<br/>
+
+<br/>
+</div>
+
+<div class="doc">
+There is an identity pseudofunctor.  It does the obvious thing. 
+</div>
+<div class="code">
+&nbsp;&nbsp;<span class="id" type="keyword">Definition</span> <a name="identity"><span class="id" type="definition">identity</span></a> : <a class="idref" href="HoTT.categories.Pseudofunctor.Core.html#Pseudofunctor"><span class="id" type="record">Pseudofunctor</span></a> <a class="idref" href="HoTT.categories.Pseudofunctor.Identity.html#cat"><span class="id" type="abbreviation">cat</span></a><br/>
+&nbsp;&nbsp;&nbsp;&nbsp;:= <a class="idref" href="HoTT.categories.Pseudofunctor.Core.html#Build_Pseudofunctor"><span class="id" type="constructor">Build_Pseudofunctor</span></a><br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a class="idref" href="HoTT.categories.Pseudofunctor.Identity.html#cat"><span class="id" type="abbreviation">cat</span></a><br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;(<span class="id" type="keyword">fun</span> <span class="id" type="var">C</span> ⇒ <a class="idref" href="HoTT.categories.Pseudofunctor.Identity.html#C"><span class="id" type="variable">C</span></a><a class="idref" href="HoTT.Overture.html#:fibration_scope:x_'.1'"><span class="id" type="notation">.1</span></a>)<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;(<span class="id" type="keyword">fun</span> <span class="id" type="var">_</span> <span class="id" type="var">_</span> <span class="id" type="var">F</span> ⇒ <a class="idref" href="HoTT.categories.Pseudofunctor.Identity.html#F"><span class="id" type="variable">F</span></a>)<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;(<span class="id" type="keyword">fun</span> <span class="id" type="var">_</span> <span class="id" type="var">_</span> <span class="id" type="var">_</span> <span class="id" type="var">_</span> <span class="id" type="var">_</span> ⇒ <a class="idref" href="HoTT.Overture.html#reflexivity"><span class="id" type="definition">reflexivity</span></a> <span class="id" type="var">_</span>)<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;(<span class="id" type="keyword">fun</span> <span class="id" type="var">_</span> ⇒ <a class="idref" href="HoTT.Overture.html#reflexivity"><span class="id" type="definition">reflexivity</span></a> <span class="id" type="var">_</span>)<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;(<span class="id" type="keyword">fun</span> <span class="id" type="var">x</span> <span class="id" type="var">y</span> <span class="id" type="var">z</span> <span class="id" type="var">w</span> ⇒ @<a class="idref" href="HoTT.categories.Pseudofunctor.Identity.html#identity_associativity"><span class="id" type="lemma">identity_associativity</span></a> <a class="idref" href="HoTT.categories.Pseudofunctor.Identity.html#x"><span class="id" type="variable">x</span></a><a class="idref" href="HoTT.Overture.html#:fibration_scope:x_'.1'"><span class="id" type="notation">.1</span></a> <a class="idref" href="HoTT.categories.Pseudofunctor.Identity.html#y"><span class="id" type="variable">y</span></a><a class="idref" href="HoTT.Overture.html#:fibration_scope:x_'.1'"><span class="id" type="notation">.1</span></a> <a class="idref" href="HoTT.categories.Pseudofunctor.Identity.html#z"><span class="id" type="variable">z</span></a><a class="idref" href="HoTT.Overture.html#:fibration_scope:x_'.1'"><span class="id" type="notation">.1</span></a> <a class="idref" href="HoTT.categories.Pseudofunctor.Identity.html#w"><span class="id" type="variable">w</span></a><a class="idref" href="HoTT.Overture.html#:fibration_scope:x_'.1'"><span class="id" type="notation">.1</span></a>)<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;(<span class="id" type="keyword">fun</span> <span class="id" type="var">x</span> <span class="id" type="var">y</span> ⇒ @<a class="idref" href="HoTT.categories.Pseudofunctor.Identity.html#identity_left_identity"><span class="id" type="lemma">identity_left_identity</span></a> <a class="idref" href="HoTT.categories.Pseudofunctor.Identity.html#x"><span class="id" type="variable">x</span></a><a class="idref" href="HoTT.Overture.html#:fibration_scope:x_'.1'"><span class="id" type="notation">.1</span></a> <a class="idref" href="HoTT.categories.Pseudofunctor.Identity.html#y"><span class="id" type="variable">y</span></a><a class="idref" href="HoTT.Overture.html#:fibration_scope:x_'.1'"><span class="id" type="notation">.1</span></a>)<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;(<span class="id" type="keyword">fun</span> <span class="id" type="var">x</span> <span class="id" type="var">y</span> ⇒ @<a class="idref" href="HoTT.categories.Pseudofunctor.Identity.html#identity_right_identity"><span class="id" type="lemma">identity_right_identity</span></a> <a class="idref" href="HoTT.categories.Pseudofunctor.Identity.html#x"><span class="id" type="variable">x</span></a><a class="idref" href="HoTT.Overture.html#:fibration_scope:x_'.1'"><span class="id" type="notation">.1</span></a> <a class="idref" href="HoTT.categories.Pseudofunctor.Identity.html#y"><span class="id" type="variable">y</span></a><a class="idref" href="HoTT.Overture.html#:fibration_scope:x_'.1'"><span class="id" type="notation">.1</span></a>).<br/>
+<span class="id" type="keyword">End</span> <a class="idref" href="HoTT.categories.Pseudofunctor.Identity.html#identity"><span class="id" type="section">identity</span></a>.<br/>
+
+<br/>
+<span class="id" type="keyword">Module</span> <span class="id" type="keyword">Export</span> <a name="PseudofunctorIdentityNotations"><span class="id" type="module">PseudofunctorIdentityNotations</span></a>.<br/>
+&nbsp;&nbsp;<span class="id" type="keyword">Notation</span> <a name="PseudofunctorIdentityNotations.:pseudofunctor_scope:'1'"><span class="id" type="notation">"</span></a>1" := (<a class="idref" href="HoTT.categories.Pseudofunctor.Identity.html#PseudofunctorIdentityNotations.identity"><span class="id" type="definition">identity</span></a> <span class="id" type="var">_</span>) : <span class="id" type="var">pseudofunctor_scope</span>.<br/>
+<span class="id" type="keyword">End</span> <a class="idref" href="HoTT.categories.Pseudofunctor.Identity.html#"><span class="id" type="module">PseudofunctorIdentityNotations</span></a>.<br/>
+</div>
+</div>
+
+<div id="footer">
+<hr/><a href="index.html">Index</a><hr/>This page has been generated by <a href="http://coq.inria.fr/">coqdoc</a>
+</div>
+
+</div>
+
+</body>
+</html>

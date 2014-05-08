@@ -1,0 +1,100 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
+"http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
+<link href="coqdoc.css" rel="stylesheet" type="text/css"/>
+<title>HoTT.categories.InitialTerminalCategory.Core</title>
+</head>
+
+<body>
+
+<div id="page">
+
+<div id="header">
+</div>
+
+<div id="main">
+
+<h1 class="libtitle">Library HoTT.categories.InitialTerminalCategory.Core</h1>
+
+<div class="code">
+</div>
+
+<div class="doc">
+<a name="lab500"></a><h1 class="section">Initial and terminal category definitions</h1>
+
+</div>
+<div class="code">
+<span class="id" type="keyword">Require</span> <span class="id" type="keyword">Import</span> <a class="idref" href="HoTT.categories.Category.Core.html#"><span class="id" type="library">Category.Core</span></a>.<br/>
+<span class="id" type="keyword">Require</span> <span class="id" type="keyword">Import</span> <a class="idref" href="HoTT.categories.NatCategory.html#"><span class="id" type="library">NatCategory</span></a> <a class="idref" href="HoTT.Contractible.html#"><span class="id" type="library">Contractible</span></a>.<br/>
+
+<br/>
+<span class="id" type="keyword">Set</span> <span class="id" type="var">Universe</span> <span class="id" type="var">Polymorphism</span>.<br/>
+<span class="id" type="keyword">Set Implicit Arguments</span>.<br/>
+<span class="id" type="keyword">Generalizable</span> <span class="id" type="keyword">All</span> <span class="id" type="keyword">Variables</span>.<br/>
+<span class="id" type="keyword">Set</span> <span class="id" type="var">Asymmetric</span> <span class="id" type="var">Patterns</span>.<br/>
+
+<br/>
+<span class="id" type="keyword">Notation</span> <a name="initial_category"><span class="id" type="abbreviation">initial_category</span></a> := (<a class="idref" href="HoTT.categories.NatCategory.html#Core.nat_category"><span class="id" type="definition">nat_category</span></a> 0) (<span class="id" type="var">only</span> <span class="id" type="var">parsing</span>).<br/>
+<span class="id" type="keyword">Notation</span> <a name="terminal_category"><span class="id" type="abbreviation">terminal_category</span></a> := (<a class="idref" href="HoTT.categories.NatCategory.html#Core.nat_category"><span class="id" type="definition">nat_category</span></a> 1) (<span class="id" type="var">only</span> <span class="id" type="var">parsing</span>).<br/>
+
+<br/>
+</div>
+
+<div class="doc">
+<a name="lab501"></a><h2 class="section">Terminal categories</h2>
+ A precategory is terminal if its objects and morphisms are contractible types. 
+</div>
+<div class="code">
+<span class="id" type="keyword">Class</span> <a name="IsTerminalCategory"><span class="id" type="record">IsTerminalCategory</span></a> (<span class="id" type="var">C</span> : <a class="idref" href="HoTT.categories.Category.Core.html#PreCategory"><span class="id" type="record">PreCategory</span></a>)<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;`{<a class="idref" href="HoTT.Overture.html#Contr"><span class="id" type="abbreviation">Contr</span></a> (<a class="idref" href="HoTT.categories.Category.Core.html#object"><span class="id" type="projection">object</span></a> <a class="idref" href="HoTT.categories.InitialTerminalCategory.Core.html#C"><span class="id" type="variable">C</span></a>)}<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;`{<span class="id" type="keyword">∀</span> <span class="id" type="var">s</span> <span class="id" type="var">d</span>, <a class="idref" href="HoTT.Overture.html#Contr"><span class="id" type="abbreviation">Contr</span></a> (<a class="idref" href="HoTT.categories.Category.Core.html#morphism"><span class="id" type="projection">morphism</span></a> <a class="idref" href="HoTT.categories.InitialTerminalCategory.Core.html#C"><span class="id" type="variable">C</span></a> <a class="idref" href="HoTT.categories.InitialTerminalCategory.Core.html#s"><span class="id" type="variable">s</span></a> <a class="idref" href="HoTT.categories.InitialTerminalCategory.Core.html#d"><span class="id" type="variable">d</span></a>)} := {}.<br/>
+
+<br/>
+</div>
+
+<div class="doc">
+<a name="lab502"></a><h2 class="section">Initial categories</h2>
+ An initial precategory is one whose objects have the recursion priniciple of the empty type 
+</div>
+<div class="code">
+<span class="id" type="keyword">Class</span> <a name="IsInitialCategory"><span class="id" type="record">IsInitialCategory</span></a> (<span class="id" type="var">C</span> : <a class="idref" href="HoTT.categories.Category.Core.html#PreCategory"><span class="id" type="record">PreCategory</span></a>)<br/>
+&nbsp;&nbsp;:= <a name="initial_category_rect"><span class="id" type="projection">initial_category_rect</span></a> : <span class="id" type="keyword">∀</span> <span class="id" type="var">P</span> : <span class="id" type="keyword">Type</span>, <a class="idref" href="HoTT.categories.InitialTerminalCategory.Core.html#C"><span class="id" type="variable">C</span></a> <a class="idref" href="Coq.Init.Logic.html#:type_scope:x_'->'_x"><span class="id" type="notation">→</span></a> <a class="idref" href="HoTT.categories.InitialTerminalCategory.Core.html#P"><span class="id" type="variable">P</span></a>.<br/>
+
+<br/>
+<span class="id" type="keyword">Instance</span> <a name="trunc_initial_category"><span class="id" type="instance">trunc_initial_category</span></a> `{<a class="idref" href="HoTT.categories.InitialTerminalCategory.Core.html#IsInitialCategory"><span class="id" type="class">IsInitialCategory</span></a> <span class="id" type="var">C</span>}<br/>
+: <a class="idref" href="HoTT.Overture.html#IsHProp"><span class="id" type="abbreviation">IsHProp</span></a> <a class="idref" href="HoTT.categories.InitialTerminalCategory.Core.html#C"><span class="id" type="variable">C</span></a><br/>
+&nbsp;&nbsp;:= <span class="id" type="keyword">fun</span> <span class="id" type="var">x</span> <span class="id" type="var">y</span> ⇒ <a class="idref" href="HoTT.categories.InitialTerminalCategory.Core.html#initial_category_rect"><span class="id" type="definition">initial_category_rect</span></a> <span class="id" type="var">_</span> <a class="idref" href="HoTT.categories.InitialTerminalCategory.Core.html#x"><span class="id" type="variable">x</span></a>.<br/>
+<span class="id" type="keyword">Instance</span> <a name="trunc_initial_category_mor"><span class="id" type="instance">trunc_initial_category_mor</span></a> `{<a class="idref" href="HoTT.categories.InitialTerminalCategory.Core.html#IsInitialCategory"><span class="id" type="class">IsInitialCategory</span></a> <span class="id" type="var">C</span>} <span class="id" type="var">x</span> <span class="id" type="var">y</span><br/>
+: <a class="idref" href="HoTT.Overture.html#Contr"><span class="id" type="abbreviation">Contr</span></a> (<a class="idref" href="HoTT.categories.Category.Core.html#morphism"><span class="id" type="projection">morphism</span></a> <a class="idref" href="HoTT.categories.InitialTerminalCategory.Core.html#C"><span class="id" type="variable">C</span></a> <a class="idref" href="HoTT.categories.InitialTerminalCategory.Core.html#x"><span class="id" type="variable">x</span></a> <a class="idref" href="HoTT.categories.InitialTerminalCategory.Core.html#y"><span class="id" type="variable">y</span></a>)<br/>
+&nbsp;&nbsp;:= <a class="idref" href="HoTT.categories.InitialTerminalCategory.Core.html#initial_category_rect"><span class="id" type="definition">initial_category_rect</span></a> <span class="id" type="var">_</span> <span class="id" type="var">x</span>.<br/>
+
+<br/>
+</div>
+
+<div class="doc">
+<a name="lab503"></a><h2 class="section">Default intitial (<span class="inlinecode">0</span>) and terminal (<span class="inlinecode">1</span>) precategories.</h2>
+
+</div>
+<div class="code">
+<span class="id" type="keyword">Instance</span> <a name="is_initial_category_0"><span class="id" type="instance">is_initial_category_0</span></a> : <a class="idref" href="HoTT.categories.InitialTerminalCategory.Core.html#IsInitialCategory"><span class="id" type="class">IsInitialCategory</span></a> 0 := (<span class="id" type="keyword">fun</span> <span class="id" type="var">T</span> ⇒ @<a class="idref" href="HoTT.Overture.html#Empty_rect"><span class="id" type="definition">Empty_rect</span></a> (<span class="id" type="keyword">fun</span> <span class="id" type="var">_</span> ⇒ <a class="idref" href="HoTT.categories.InitialTerminalCategory.Core.html#T"><span class="id" type="variable">T</span></a>)).<br/>
+<span class="id" type="keyword">Instance</span>: <a class="idref" href="HoTT.categories.InitialTerminalCategory.Core.html#IsTerminalCategory"><span class="id" type="class">IsTerminalCategory</span></a> 1 | 0.<br/>
+<span class="id" type="keyword">Instance</span>: <a class="idref" href="HoTT.Overture.html#Contr"><span class="id" type="abbreviation">Contr</span></a> (<a class="idref" href="HoTT.categories.Category.Core.html#object"><span class="id" type="projection">object</span></a> 1) | 0 := <span class="id" type="var">_</span>.<br/>
+<span class="id" type="keyword">Instance</span>: <a class="idref" href="HoTT.Overture.html#Contr"><span class="id" type="abbreviation">Contr</span></a> (<a class="idref" href="HoTT.categories.Category.Core.html#morphism"><span class="id" type="projection">morphism</span></a> 1 <span class="id" type="var">x</span> <span class="id" type="var">y</span>) | 0 := <span class="id" type="keyword">fun</span> <span class="id" type="var">x</span> <span class="id" type="var">y</span> ⇒ <span class="id" type="var">_</span>.<br/>
+<span class="id" type="keyword">Instance</span> <a name="default_terminal"><span class="id" type="instance">default_terminal</span></a> <span class="id" type="var">C</span> {<span class="id" type="var">H</span> <span class="id" type="var">H1</span>} : @<a class="idref" href="HoTT.categories.InitialTerminalCategory.Core.html#IsTerminalCategory"><span class="id" type="class">IsTerminalCategory</span></a> <a class="idref" href="HoTT.categories.InitialTerminalCategory.Core.html#C"><span class="id" type="variable">C</span></a> <a class="idref" href="HoTT.categories.InitialTerminalCategory.Core.html#H"><span class="id" type="variable">H</span></a> <a class="idref" href="HoTT.categories.InitialTerminalCategory.Core.html#H1"><span class="id" type="variable">H1</span></a> | 10.<br/>
+
+<br/>
+<span class="id" type="var">Arguments</span> <a class="idref" href="HoTT.categories.InitialTerminalCategory.Core.html#initial_category_rect"><span class="id" type="definition">initial_category_rect</span></a> / .<br/>
+<span class="id" type="var">Arguments</span> <a class="idref" href="HoTT.categories.InitialTerminalCategory.Core.html#is_initial_category_0"><span class="id" type="instance">is_initial_category_0</span></a> / .<br/>
+</div>
+</div>
+
+<div id="footer">
+<hr/><a href="index.html">Index</a><hr/>This page has been generated by <a href="http://coq.inria.fr/">coqdoc</a>
+</div>
+
+</div>
+
+</body>
+</html>
