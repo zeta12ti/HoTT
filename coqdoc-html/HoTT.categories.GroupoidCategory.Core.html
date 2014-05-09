@@ -22,12 +22,12 @@
 </div>
 
 <div class="doc">
-<a name="lab482"></a><h1 class="section">Groupoids</h1>
+<a name="lab483"></a><h1 class="section">Groupoids</h1>
 
 </div>
 <div class="code">
 <span class="id" type="keyword">Require</span> <span class="id" type="keyword">Import</span> <a class="idref" href="HoTT.categories.Category.Core.html#"><span class="id" type="library">Category.Core</span></a> <a class="idref" href="HoTT.categories.Category.Morphisms.html#"><span class="id" type="library">Category.Morphisms</span></a> <a class="idref" href="HoTT.categories.Category.Strict.html#"><span class="id" type="library">Category.Strict</span></a>.<br/>
-<span class="id" type="keyword">Require</span> <span class="id" type="keyword">Import</span> <a class="idref" href="HoTT.Trunc.html#"><span class="id" type="library">Trunc</span></a>.<br/>
+<span class="id" type="keyword">Require</span> <span class="id" type="keyword">Import</span> <a class="idref" href="HoTT.Trunc.html#"><span class="id" type="library">Trunc</span></a> <a class="idref" href="HoTT.types.Forall.html#"><span class="id" type="library">types.Forall</span></a> <a class="idref" href="HoTT.PathGroupoids.html#"><span class="id" type="library">PathGroupoids</span></a>.<br/>
 
 <br/>
 <span class="id" type="keyword">Set</span> <span class="id" type="var">Universe</span> <span class="id" type="var">Polymorphism</span>.<br/>
@@ -46,7 +46,23 @@
 A groupoid is a precategory where every morphism is an isomorphism.  Since 1-types are 1-groupoids, we can construct the category corresponding to the 1-groupoid of a 1-type. 
 <div class="paragraph"> </div>
 
- We don't want access to all of the internals of a groupoid category at top level. 
+<a name="lab484"></a><h2 class="section">Definition of what it means to be a groupoid</h2>
+
+</div>
+<div class="code">
+<span class="id" type="keyword">Class</span> <a name="IsGroupoid"><span class="id" type="record">IsGroupoid</span></a> (<span class="id" type="var">C</span> : <a class="idref" href="HoTT.categories.Category.Core.html#PreCategory"><span class="id" type="record">PreCategory</span></a>)<br/>
+&nbsp;&nbsp;:= <a name="isgroupoid"><span class="id" type="projection">isgroupoid</span></a> : <span class="id" type="keyword">∀</span> <span class="id" type="var">s</span> <span class="id" type="var">d</span> (<span class="id" type="var">m</span> : <a class="idref" href="HoTT.categories.Category.Core.html#morphism"><span class="id" type="projection">morphism</span></a> <a class="idref" href="HoTT.categories.GroupoidCategory.Core.html#C"><span class="id" type="variable">C</span></a> <a class="idref" href="HoTT.categories.GroupoidCategory.Core.html#s"><span class="id" type="variable">s</span></a> <a class="idref" href="HoTT.categories.GroupoidCategory.Core.html#d"><span class="id" type="variable">d</span></a>),<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a class="idref" href="HoTT.categories.Category.Morphisms.html#IsIsomorphism"><span class="id" type="class">IsIsomorphism</span></a> <a class="idref" href="HoTT.categories.GroupoidCategory.Core.html#m"><span class="id" type="variable">m</span></a>.<br/>
+
+<br/>
+<span class="id" type="keyword">Instance</span> <a name="trunc_isgroupoid"><span class="id" type="instance">trunc_isgroupoid</span></a> `{<a class="idref" href="HoTT.Overture.html#Funext"><span class="id" type="class">Funext</span></a>} <span class="id" type="var">C</span> : <a class="idref" href="HoTT.Overture.html#IsHProp"><span class="id" type="abbreviation">IsHProp</span></a> (<a class="idref" href="HoTT.categories.GroupoidCategory.Core.html#IsGroupoid"><span class="id" type="class">IsGroupoid</span></a> <a class="idref" href="HoTT.categories.GroupoidCategory.Core.html#C"><span class="id" type="variable">C</span></a>)<br/>
+&nbsp;&nbsp;:= <a class="idref" href="HoTT.types.Forall.html#trunc_forall"><span class="id" type="instance">trunc_forall</span></a>.<br/>
+
+<br/>
+</div>
+
+<div class="doc">
+We don't want access to all of the internals of a groupoid category at top level. 
 </div>
 <div class="code">
 <span class="id" type="keyword">Module</span> <a name="GroupoidCategoryInternals"><span class="id" type="module">GroupoidCategoryInternals</span></a>.<br/>
@@ -76,7 +92,7 @@ A groupoid is a precategory where every morphism is an isomorphism.  Since 1-typ
 </div>
 
 <div class="doc">
-<a name="lab483"></a><h2 class="section">Categorification of the groupoid of a 1-type</h2>
+<a name="lab485"></a><h2 class="section">Categorification of the groupoid of a 1-type</h2>
 
 </div>
 <div class="code">
@@ -97,10 +113,23 @@ A groupoid is a precategory where every morphism is an isomorphism.  Since 1-typ
 <span class="id" type="var">Arguments</span> <a class="idref" href="HoTT.categories.GroupoidCategory.Core.html#groupoid_category"><span class="id" type="definition">groupoid_category</span></a> <span class="id" type="var">X</span> {<span class="id" type="var">_</span>}.<br/>
 
 <br/>
+<span class="id" type="keyword">Instance</span> <a name="isgroupoid_groupoid_category"><span class="id" type="instance">isgroupoid_groupoid_category</span></a> <span class="id" type="var">X</span> `{<a class="idref" href="HoTT.Overture.html#IsTrunc"><span class="id" type="class">IsTrunc</span></a> 1 <a class="idref" href="HoTT.categories.GroupoidCategory.Core.html#X"><span class="id" type="variable">X</span></a>}<br/>
+: <a class="idref" href="HoTT.categories.GroupoidCategory.Core.html#IsGroupoid"><span class="id" type="class">IsGroupoid</span></a> (<a class="idref" href="HoTT.categories.GroupoidCategory.Core.html#groupoid_category"><span class="id" type="definition">groupoid_category</span></a> <a class="idref" href="HoTT.categories.GroupoidCategory.Core.html#X"><span class="id" type="variable">X</span></a>).<br/>
+&nbsp;<span class="id" type="keyword">Proof</span>.<br/>
+&nbsp;&nbsp;<span class="id" type="tactic">intros</span> <span class="id" type="var">s</span> <span class="id" type="var">d</span> <span class="id" type="var">m</span>; <span class="id" type="tactic">simpl</span> <span class="id" type="keyword">in</span> ×.<br/>
+&nbsp;&nbsp;<span class="id" type="tactic">exact</span> (<a class="idref" href="HoTT.categories.Category.Morphisms.html#Build_IsIsomorphism"><span class="id" type="constructor">Build_IsIsomorphism</span></a><br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;(<a class="idref" href="HoTT.categories.GroupoidCategory.Core.html#groupoid_category"><span class="id" type="definition">groupoid_category</span></a> <span class="id" type="var">X</span>)<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="id" type="var">s</span> <span class="id" type="var">d</span><br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="id" type="var">m</span> <span class="id" type="var">m</span><a class="idref" href="HoTT.Overture.html#:path_scope:x_'^'"><span class="id" type="notation">^</span></a>%<span class="id" type="var">path</span><br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;(<a class="idref" href="HoTT.PathGroupoids.html#concat_pV"><span class="id" type="definition">concat_pV</span></a> <span class="id" type="var">m</span>)<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;(<a class="idref" href="HoTT.PathGroupoids.html#concat_Vp"><span class="id" type="definition">concat_Vp</span></a> <span class="id" type="var">m</span>)).<br/>
+<span class="id" type="keyword">Defined</span>.<br/>
+
+<br/>
 </div>
 
 <div class="doc">
-<a name="lab484"></a><h2 class="section">0-types give rise to strict (groupoid) categories</h2>
+<a name="lab486"></a><h2 class="section">0-types give rise to strict (groupoid) categories</h2>
 
 </div>
 <div class="code">
