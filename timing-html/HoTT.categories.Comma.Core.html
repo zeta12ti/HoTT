@@ -36,35 +36,35 @@ Time: 0s">
 </div>
 <div class="code" title="File: Core.v
 Line: 1
-Time: 0.007s">
-<div class="time" style="width: 0.34263338228096%"></div>
+Time: 0.005s">
+<div class="time" style="width: 0.29274004683841%"></div>
 <pre>Require Import Category.Core Functor.Core.</pre>
 </div>
 <div class="code" title="File: Core.v
 Line: 1
-Time: 0.098s">
-<div class="time" style="width: 4.7968673519334%"></div>
+Time: 0.079s">
+<div class="time" style="width: 4.6252927400468%"></div>
 <pre>
 Require Import InitialTerminalCategory.Core InitialTerminalCategory.Functors.</pre>
 </div>
 <div class="code" title="File: Core.v
 Line: 2
-Time: 0.001s">
-<div class="time" style="width: 0.048947626040137%"></div>
+Time: 0s">
+<div class="time" style="width: 0%"></div>
 <pre>
 Require Functor.Identity.</pre>
 </div>
 <div class="code" title="File: Core.v
 Line: 3
-Time: 0.001s">
-<div class="time" style="width: 0.048947626040137%"></div>
+Time: 0s">
+<div class="time" style="width: 0%"></div>
 <pre>
 Require Import Category.Strict.</pre>
 </div>
 <div class="code" title="File: Core.v
 Line: 4
-Time: 0.002s">
-<div class="time" style="width: 0.097895252080274%"></div>
+Time: 0.001s">
+<div class="time" style="width: 0.058548009367682%"></div>
 <pre>
 Require Import types.Record Trunc HoTT.Tactics.</pre>
 </div>
@@ -217,8 +217,8 @@ Time: 0s">
 </div>
 <div class="code" title="File: Core.v
 Line: 56
-Time: 0.015s">
-<div class="time" style="width: 0.73421439060206%"></div>
+Time: 0.014s">
+<div class="time" style="width: 0.81967213114754%"></div>
 <pre>
 
     Record object :=
@@ -241,8 +241,8 @@ Time: 0s">
 </div>
 <div class="code" title="File: Core.v
 Line: 68
-Time: 0.008s">
-<div class="time" style="width: 0.3915810083211%"></div>
+Time: 0.007s">
+<div class="time" style="width: 0.40983606557377%"></div>
 <pre>
 
     Lemma issig_object
@@ -257,8 +257,8 @@ Time: 0s">
 </div>
 <div class="code" title="File: Core.v
 Line: 72
-Time: 0.149s">
-<div class="time" style="width: 7.2931962799804%"></div>
+Time: 0.121s">
+<div class="time" style="width: 7.0843091334895%"></div>
 <pre>
       issig (@Build_object)
             (@a)
@@ -267,15 +267,15 @@ Time: 0.149s">
 </div>
 <div class="code" title="File: Core.v
 Line: 76
-Time: 0.042s">
-<div class="time" style="width: 2.0558002936858%"></div>
+Time: 0.036s">
+<div class="time" style="width: 2.1077283372365%"></div>
 <pre>
     Defined.</pre>
 </div>
 <div class="code" title="File: Core.v
 Line: 77
-Time: 0.009s">
-<div class="time" style="width: 0.44052863436123%"></div>
+Time: 0.007s">
+<div class="time" style="width: 0.40983606557377%"></div>
 <pre>
 
     Global Instance trunc_object `{IsTrunc n A, IsTrunc n B}
@@ -291,158 +291,161 @@ Time: 0s">
 </div>
 <div class="code" title="File: Core.v
 Line: 82
-Time: 0.009s">
-<div class="time" style="width: 0.44052863436123%"></div>
+Time: 0.006s">
+<div class="time" style="width: 0.35128805620609%"></div>
 <pre>
       eapply trunc_equiv';
       [ exact issig_object | ].</pre>
 </div>
 <div class="code" title="File: Core.v
 Line: 84
-Time: 0.032s">
-<div class="time" style="width: 1.5663240332844%"></div>
+Time: 0.026s">
+<div class="time" style="width: 1.5222482435597%"></div>
 <pre>
       typeclasses eauto.</pre>
 </div>
 <div class="code" title="File: Core.v
 Line: 85
-Time: 0.033s">
-<div class="time" style="width: 1.6152716593245%"></div>
+Time: 0.026s">
+<div class="time" style="width: 1.5222482435597%"></div>
 <pre>
     Qed.</pre>
 </div>
 <div class="code" title="File: Core.v
 Line: 86
-Time: 0.027s">
-<div class="time" style="width: 1.3215859030837%"></div>
+Time: 0.023s">
+<div class="time" style="width: 1.3466042154567%"></div>
 <pre>
 
     Lemma path_object' (x y : object)
     : forall (Ha : x.(a) = y.(a))
              (Hb : x.(b) = y.(b)),
-        match Ha in _ = X, Hb in _ = Y return morphism C (S X) (T Y) with
-          | idpath, idpath =&gt; x.(f)
-        end = y.(f)
+        transport (fun X =&gt; morphism C (S X) _)
+                  Ha
+                  (transport (fun Y =&gt; morphism C _ (T Y))
+                             Hb
+                             x.(f))
+        = y.(f)
         -&gt; x = y.</pre>
 </div>
 <div class="code" title="File: Core.v
-Line: 94
+Line: 97
 Time: 0s">
 <div class="time" style="width: 0%"></div>
 <pre>
     Proof.</pre>
 </div>
 <div class="code" title="File: Core.v
-Line: 95
-Time: 0.07s">
-<div class="time" style="width: 3.4263338228096%"></div>
+Line: 98
+Time: 0.06s">
+<div class="time" style="width: 3.5128805620609%"></div>
 <pre>
       destruct x, y; simpl.</pre>
 </div>
 <div class="code" title="File: Core.v
-Line: 96
-Time: 0.102s">
-<div class="time" style="width: 4.992657856094%"></div>
+Line: 99
+Time: 0.111s">
+<div class="time" style="width: 6.4988290398126%"></div>
 <pre>
       intros; path_induction; reflexivity.</pre>
 </div>
 <div class="code" title="File: Core.v
-Line: 97
-Time: 0.089s">
-<div class="time" style="width: 4.3563387175722%"></div>
+Line: 100
+Time: 0.075s">
+<div class="time" style="width: 4.3911007025761%"></div>
 <pre>
     Defined.</pre>
 </div>
 <div class="code" title="File: Core.v
-Line: 98
-Time: 0.04s">
-<div class="time" style="width: 1.9579050416055%"></div>
+Line: 101
+Time: 0.006s">
+<div class="time" style="width: 0.35128805620609%"></div>
 <pre>
 
     Lemma ap_a_path_object' x y Ha Hb Hf
     : ap (@a) (@path_object' x y Ha Hb Hf) = Ha.</pre>
 </div>
 <div class="code" title="File: Core.v
-Line: 101
+Line: 104
 Time: 0s">
 <div class="time" style="width: 0%"></div>
 <pre>
     Proof.</pre>
 </div>
 <div class="code" title="File: Core.v
-Line: 102
-Time: 0.061s">
-<div class="time" style="width: 2.9858051884484%"></div>
+Line: 105
+Time: 0.064s">
+<div class="time" style="width: 3.7470725995316%"></div>
 <pre>
       destruct x, y; simpl in *.</pre>
 </div>
 <div class="code" title="File: Core.v
-Line: 103
-Time: 0.261s">
-<div class="time" style="width: 12.775330396476%"></div>
+Line: 106
+Time: 0.363s">
+<div class="time" style="width: 21.252927400468%"></div>
 <pre>
       destruct Ha, Hb, Hf; simpl in *.</pre>
 </div>
 <div class="code" title="File: Core.v
-Line: 104
+Line: 107
 Time: 0.001s">
-<div class="time" style="width: 0.048947626040137%"></div>
+<div class="time" style="width: 0.058548009367682%"></div>
 <pre>
       reflexivity.</pre>
 </div>
 <div class="code" title="File: Core.v
-Line: 105
-Time: 0.124s">
-<div class="time" style="width: 6.069505628977%"></div>
+Line: 108
+Time: 0.127s">
+<div class="time" style="width: 7.4355971896956%"></div>
 <pre>
     Qed.</pre>
 </div>
 <div class="code" title="File: Core.v
-Line: 106
-Time: 0.009s">
-<div class="time" style="width: 0.44052863436123%"></div>
+Line: 109
+Time: 0.008s">
+<div class="time" style="width: 0.46838407494145%"></div>
 <pre>
 
     Lemma ap_b_path_object' x y Ha Hb Hf
     : ap (@b) (@path_object' x y Ha Hb Hf) = Hb.</pre>
 </div>
 <div class="code" title="File: Core.v
-Line: 109
+Line: 112
 Time: 0s">
 <div class="time" style="width: 0%"></div>
 <pre>
     Proof.</pre>
 </div>
 <div class="code" title="File: Core.v
-Line: 110
-Time: 0.09s">
-<div class="time" style="width: 4.4052863436123%"></div>
+Line: 113
+Time: 0.089s">
+<div class="time" style="width: 5.2107728337237%"></div>
 <pre>
       destruct x, y; simpl in *.</pre>
 </div>
 <div class="code" title="File: Core.v
-Line: 111
-Time: 0.263s">
-<div class="time" style="width: 12.873225648556%"></div>
+Line: 114
+Time: 0.402s">
+<div class="time" style="width: 23.536299765808%"></div>
 <pre>
       destruct Ha, Hb, Hf; simpl in *.</pre>
 </div>
 <div class="code" title="File: Core.v
-Line: 112
+Line: 115
 Time: 0.001s">
-<div class="time" style="width: 0.048947626040137%"></div>
+<div class="time" style="width: 0.058548009367682%"></div>
 <pre>
       reflexivity.</pre>
 </div>
 <div class="code" title="File: Core.v
-Line: 113
-Time: 0.131s">
-<div class="time" style="width: 6.412139011258%"></div>
+Line: 116
+Time: 0.138s">
+<div class="time" style="width: 8.07962529274%"></div>
 <pre>
     Qed.</pre>
 </div>
 <div class="code" title="File: Core.v
-Line: 114
+Line: 117
 Time: 0s">
 <div class="time" style="width: 0%"></div>
 <pre>
@@ -450,9 +453,9 @@ Time: 0s">
     Global Arguments path_object' : simpl never.</pre>
 </div>
 <div class="code" title="File: Core.v
-Line: 116
-Time: 0.057s">
-<div class="time" style="width: 2.7900146842878%"></div>
+Line: 119
+Time: 0.051s">
+<div class="time" style="width: 2.9859484777518%"></div>
 <pre>
 
     Record morphism (abf a'b'f' : object) :=
@@ -463,7 +466,7 @@ Time: 0.057s">
       }.</pre>
 </div>
 <div class="code" title="File: Core.v
-Line: 123
+Line: 126
 Time: 0s">
 <div class="time" style="width: 0%"></div>
 <pre>
@@ -474,9 +477,9 @@ Time: 0s">
          | T _1 h o abf.(f) = a'b'f'.(f) o S _1 g }}).</pre>
 </div>
 <div class="code" title="File: Core.v
-Line: 128
-Time: 0.015s">
-<div class="time" style="width: 0.73421439060206%"></div>
+Line: 131
+Time: 0.013s">
+<div class="time" style="width: 0.76112412177986%"></div>
 <pre>
 
     Lemma issig_morphism abf a'b'f'
@@ -484,16 +487,16 @@ Time: 0.015s">
         &lt;~&gt; morphism abf a'b'f'.</pre>
 </div>
 <div class="code" title="File: Core.v
-Line: 132
+Line: 135
 Time: 0s">
 <div class="time" style="width: 0%"></div>
 <pre>
     Proof.</pre>
 </div>
 <div class="code" title="File: Core.v
-Line: 133
-Time: 0.251s">
-<div class="time" style="width: 12.285854136074%"></div>
+Line: 136
+Time: 0.23s">
+<div class="time" style="width: 13.466042154567%"></div>
 <pre>
       issig (@Build_morphism abf a'b'f')
             (@g abf a'b'f')
@@ -501,16 +504,16 @@ Time: 0.251s">
             (@p abf a'b'f').</pre>
 </div>
 <div class="code" title="File: Core.v
-Line: 137
-Time: 0.094s">
-<div class="time" style="width: 4.6010768477729%"></div>
+Line: 140
+Time: 0.083s">
+<div class="time" style="width: 4.8594847775176%"></div>
 <pre>
     Defined.</pre>
 </div>
 <div class="code" title="File: Core.v
-Line: 138
-Time: 0.038s">
-<div class="time" style="width: 1.8600097895252%"></div>
+Line: 141
+Time: 0.033s">
+<div class="time" style="width: 1.9320843091335%"></div>
 <pre>
 
     Global Instance trunc_morphism abf a'b'f'
@@ -521,38 +524,38 @@ Time: 0.038s">
     : IsTrunc n (morphism abf a'b'f').</pre>
 </div>
 <div class="code" title="File: Core.v
-Line: 145
+Line: 148
 Time: 0s">
 <div class="time" style="width: 0%"></div>
 <pre>
     Proof.</pre>
 </div>
 <div class="code" title="File: Core.v
-Line: 146
-Time: 0.01s">
-<div class="time" style="width: 0.48947626040137%"></div>
+Line: 149
+Time: 0.009s">
+<div class="time" style="width: 0.52693208430913%"></div>
 <pre>
       eapply trunc_equiv';
       [ exact (issig_morphism _ _) | ].</pre>
 </div>
 <div class="code" title="File: Core.v
-Line: 148
-Time: 0.056s">
-<div class="time" style="width: 2.7410670582477%"></div>
+Line: 151
+Time: 0.049s">
+<div class="time" style="width: 2.8688524590164%"></div>
 <pre>
       typeclasses eauto.</pre>
 </div>
 <div class="code" title="File: Core.v
-Line: 149
-Time: 0.053s">
-<div class="time" style="width: 2.5942241801273%"></div>
+Line: 152
+Time: 0.045s">
+<div class="time" style="width: 2.6346604215457%"></div>
 <pre>
     Qed.</pre>
 </div>
 <div class="code" title="File: Core.v
-Line: 150
-Time: 0.009s">
-<div class="time" style="width: 0.44052863436123%"></div>
+Line: 153
+Time: 0.007s">
+<div class="time" style="width: 0.40983606557377%"></div>
 <pre>
 
     Lemma path_morphism abf a'b'f'
@@ -562,51 +565,51 @@ Time: 0.009s">
       -&gt; gh = g'h'.</pre>
 </div>
 <div class="code" title="File: Core.v
-Line: 156
+Line: 159
 Time: 0s">
 <div class="time" style="width: 0%"></div>
 <pre>
     Proof.</pre>
 </div>
 <div class="code" title="File: Core.v
-Line: 157
-Time: 0.079s">
-<div class="time" style="width: 3.8668624571708%"></div>
+Line: 160
+Time: 0.069s">
+<div class="time" style="width: 4.03981264637%"></div>
 <pre>
       destruct gh, g'h'; simpl.</pre>
 </div>
 <div class="code" title="File: Core.v
-Line: 158
-Time: 0.163s">
-<div class="time" style="width: 7.9784630445423%"></div>
+Line: 161
+Time: 0.141s">
+<div class="time" style="width: 8.2552693208431%"></div>
 <pre>
       intros; path_induction.</pre>
 </div>
 <div class="code" title="File: Core.v
-Line: 159
-Time: 0.032s">
-<div class="time" style="width: 1.5663240332844%"></div>
+Line: 162
+Time: 0.027s">
+<div class="time" style="width: 1.5807962529274%"></div>
 <pre>
       f_ap.</pre>
 </div>
 <div class="code" title="File: Core.v
-Line: 160
-Time: 0.13s">
-<div class="time" style="width: 6.3631913852178%"></div>
+Line: 163
+Time: 0.102s">
+<div class="time" style="width: 5.9718969555035%"></div>
 <pre>
       exact (center _).</pre>
 </div>
 <div class="code" title="File: Core.v
-Line: 161
-Time: 0.113s">
-<div class="time" style="width: 5.5310817425355%"></div>
+Line: 164
+Time: 0.09s">
+<div class="time" style="width: 5.2693208430913%"></div>
 <pre>
     Qed.</pre>
 </div>
 <div class="code" title="File: Core.v
-Line: 162
-Time: 0.005s">
-<div class="time" style="width: 0.24473813020069%"></div>
+Line: 165
+Time: 0.004s">
+<div class="time" style="width: 0.23419203747073%"></div>
 <pre>
 
     Definition compose s d d'
@@ -614,30 +617,30 @@ Time: 0.005s">
     : morphism s d'.</pre>
 </div>
 <div class="code" title="File: Core.v
-Line: 166
+Line: 169
 Time: 0s">
 <div class="time" style="width: 0%"></div>
 <pre>
     Proof.</pre>
 </div>
 <div class="code" title="File: Core.v
-Line: 167
-Time: 0.006s">
-<div class="time" style="width: 0.29368575624082%"></div>
+Line: 170
+Time: 0.005s">
+<div class="time" style="width: 0.29274004683841%"></div>
 <pre>
       exists (gh.(g) o g'h'.(g)) (gh.(h) o g'h'.(h)).</pre>
 </div>
 <div class="code" title="File: Core.v
-Line: 168
-Time: 0.002s">
-<div class="time" style="width: 0.097895252080274%"></div>
+Line: 171
+Time: 0.001s">
+<div class="time" style="width: 0.058548009367682%"></div>
 <pre>
       hnf in *; simpl in *.</pre>
 </div>
 <div class="code" title="File: Core.v
-Line: 169
-Time: 0.868s">
-<div class="time" style="width: 42.486539402839%"></div>
+Line: 172
+Time: 0.7s">
+<div class="time" style="width: 40.983606557377%"></div>
 <pre>
       abstract (
           destruct_head morphism;
@@ -646,14 +649,14 @@ Time: 0.868s">
         ).</pre>
 </div>
 <div class="code" title="File: Core.v
-Line: 174
+Line: 177
 Time: 0.011s">
-<div class="time" style="width: 0.53842388644151%"></div>
+<div class="time" style="width: 0.6440281030445%"></div>
 <pre>
     Defined.</pre>
 </div>
 <div class="code" title="File: Core.v
-Line: 175
+Line: 178
 Time: 0s">
 <div class="time" style="width: 0%"></div>
 <pre>
@@ -661,45 +664,45 @@ Time: 0s">
     Global Arguments compose _ _ _ _ _ / .</pre>
 </div>
 <div class="code" title="File: Core.v
-Line: 177
+Line: 180
 Time: 0.001s">
-<div class="time" style="width: 0.048947626040137%"></div>
+<div class="time" style="width: 0.058548009367682%"></div>
 <pre>
 
     Definition identity x : morphism x x.</pre>
 </div>
 <div class="code" title="File: Core.v
-Line: 179
+Line: 182
 Time: 0s">
 <div class="time" style="width: 0%"></div>
 <pre>
     Proof.</pre>
 </div>
 <div class="code" title="File: Core.v
-Line: 180
+Line: 183
 Time: 0.003s">
-<div class="time" style="width: 0.14684287812041%"></div>
+<div class="time" style="width: 0.17564402810304%"></div>
 <pre>
       exists (identity (x.(a))) (identity (x.(b))).</pre>
 </div>
 <div class="code" title="File: Core.v
-Line: 181
-Time: 0.231s">
-<div class="time" style="width: 11.306901615272%"></div>
+Line: 184
+Time: 0.234s">
+<div class="time" style="width: 13.700234192037%"></div>
 <pre>
       abstract (
           simpl; autorewrite with category; reflexivity
         ).</pre>
 </div>
 <div class="code" title="File: Core.v
-Line: 184
+Line: 187
 Time: 0.001s">
-<div class="time" style="width: 0.048947626040137%"></div>
+<div class="time" style="width: 0.058548009367682%"></div>
 <pre>
     Defined.</pre>
 </div>
 <div class="code" title="File: Core.v
-Line: 185
+Line: 188
 Time: 0s">
 <div class="time" style="width: 0%"></div>
 <pre>
@@ -707,21 +710,21 @@ Time: 0s">
     Global Arguments identity _ / .</pre>
 </div>
 <div class="code" title="File: Core.v
-Line: 187
-Time: 0.175s">
-<div class="time" style="width: 8.565834557024%"></div>
+Line: 190
+Time: 0.162s">
+<div class="time" style="width: 9.4847775175644%"></div>
 <pre>
   End comma_category_parts.</pre>
 </div>
 <div class="code" title="File: Core.v
-Line: 188
-Time: 0.012s">
-<div class="time" style="width: 0.58737151248164%"></div>
+Line: 191
+Time: 0.01s">
+<div class="time" style="width: 0.58548009367681%"></div>
 <pre>
 End CommaCategory.</pre>
 </div>
 <div class="code" title="File: Core.v
-Line: 189
+Line: 192
 Time: 0s">
 <div class="time" style="width: 0%"></div>
 <pre>
@@ -729,7 +732,7 @@ Time: 0s">
 Global Arguments CommaCategory.path_object' : simpl never.</pre>
 </div>
 <div class="code" title="File: Core.v
-Line: 191
+Line: 194
 Time: 0s">
 <div class="time" style="width: 0%"></div>
 <pre>
@@ -741,24 +744,24 @@ Local Ltac path_comma_t :=
   auto with morphism.</pre>
 </div>
 <div class="code" title="File: Core.v
-Line: 197
-Time: 0.018s">
-<div class="time" style="width: 0.88105726872247%"></div>
+Line: 200
+Time: 0.015s">
+<div class="time" style="width: 0.87822014051522%"></div>
 <pre>
 
 Definition comma_category A B C (S : Functor A C) (T : Functor B C)
 : PreCategory.</pre>
 </div>
 <div class="code" title="File: Core.v
-Line: 200
+Line: 203
 Time: 0s">
 <div class="time" style="width: 0%"></div>
 <pre>
 Proof.</pre>
 </div>
 <div class="code" title="File: Core.v
-Line: 201
-Time: 2.043s">
+Line: 204
+Time: 1.708s">
 <div class="time" style="width: 100%"></div>
 <pre>
   refine (@Build_PreCategory
@@ -774,16 +777,16 @@ Time: 2.043s">
   abstract path_comma_t.</pre>
 </div>
 <div class="code" title="File: Core.v
-Line: 212
-Time: 0.189s">
-<div class="time" style="width: 9.2511013215859%"></div>
+Line: 215
+Time: 0.15s">
+<div class="time" style="width: 8.7822014051522%"></div>
 <pre>
 Defined.</pre>
 </div>
 <div class="code" title="File: Core.v
-Line: 213
-Time: 0.042s">
-<div class="time" style="width: 2.0558002936858%"></div>
+Line: 216
+Time: 0.032s">
+<div class="time" style="width: 1.8735362997658%"></div>
 <pre>
 
 Global Instance isstrict_comma_category A B C S T
@@ -791,28 +794,28 @@ Global Instance isstrict_comma_category A B C S T
 : IsStrictCategory (@comma_category A B C S T).</pre>
 </div>
 <div class="code" title="File: Core.v
-Line: 217
+Line: 220
 Time: 0s">
 <div class="time" style="width: 0%"></div>
 <pre>
 Proof.</pre>
 </div>
 <div class="code" title="File: Core.v
-Line: 218
-Time: 0.079s">
-<div class="time" style="width: 3.8668624571708%"></div>
+Line: 221
+Time: 0.062s">
+<div class="time" style="width: 3.6299765807963%"></div>
 <pre>
   typeclasses eauto.</pre>
 </div>
 <div class="code" title="File: Core.v
-Line: 219
-Time: 0.079s">
-<div class="time" style="width: 3.8668624571708%"></div>
+Line: 222
+Time: 0.061s">
+<div class="time" style="width: 3.5714285714286%"></div>
 <pre>
 Qed.</pre>
 </div>
 <div class="code" title="File: Core.v
-Line: 220
+Line: 223
 Time: 0s">
 <div class="time" style="width: 0%"></div>
 <pre>
@@ -844,20 +847,20 @@ Time: 0s">
 </pre>
 </div>
 <div class="code" title="File: Core.v
-Line: 245
+Line: 248
 Time: 0s">
 <div class="time" style="width: 0%"></div>
 <pre>Hint Unfold compose identity : category.</pre>
 </div>
 <div class="code" title="File: Core.v
-Line: 245
+Line: 248
 Time: 0.002s">
-<div class="time" style="width: 0.097895252080274%"></div>
+<div class="time" style="width: 0.11709601873536%"></div>
 <pre>
 Hint Constructors morphism object : category.</pre>
 </div>
 <div class="code" title="File: Core.v
-Line: 246
+Line: 249
 Time: 0s">
 <div class="time" style="width: 0%"></div>
 <pre>
@@ -865,56 +868,56 @@ Time: 0s">
 (** ** (co)slice category [(a / F)], [(F / a)] *)</pre>
 </div>
 <div class="code" title="File: Core.v
-Line: 248
+Line: 251
 Time: 0s">
 <div class="time" style="width: 0%"></div>
 <pre>Section slice_category.</pre>
 </div>
 <div class="code" title="File: Core.v
-Line: 248
+Line: 251
 Time: 0.001s">
-<div class="time" style="width: 0.048947626040137%"></div>
+<div class="time" style="width: 0.058548009367682%"></div>
 <pre>
   Variable A : PreCategory.</pre>
 </div>
 <div class="code" title="File: Core.v
-Line: 249
+Line: 252
 Time: 0.001s">
-<div class="time" style="width: 0.048947626040137%"></div>
+<div class="time" style="width: 0.058548009367682%"></div>
 <pre>
   Variable C : PreCategory.</pre>
 </div>
 <div class="code" title="File: Core.v
-Line: 250
-Time: 0.002s">
-<div class="time" style="width: 0.097895252080274%"></div>
+Line: 253
+Time: 0.001s">
+<div class="time" style="width: 0.058548009367682%"></div>
 <pre>
   Variable a : C.</pre>
 </div>
 <div class="code" title="File: Core.v
-Line: 251
+Line: 254
 Time: 0.003s">
-<div class="time" style="width: 0.14684287812041%"></div>
+<div class="time" style="width: 0.17564402810304%"></div>
 <pre>
   Variable S : Functor A C.</pre>
 </div>
 <div class="code" title="File: Core.v
-Line: 252
-Time: 0.067s">
-<div class="time" style="width: 3.2794909446892%"></div>
+Line: 255
+Time: 0.069s">
+<div class="time" style="width: 4.03981264637%"></div>
 <pre>
 
   Definition slice_category := comma_category S (Functors.from_terminal C a).</pre>
 </div>
 <div class="code" title="File: Core.v
-Line: 254
-Time: 0.031s">
-<div class="time" style="width: 1.5173764072442%"></div>
+Line: 257
+Time: 0.058s">
+<div class="time" style="width: 3.3957845433255%"></div>
 <pre>
   Definition coslice_category := comma_category (Functors.from_terminal C a) S.</pre>
 </div>
 <div class="code" title="File: Core.v
-Line: 255
+Line: 258
 Time: 0s">
 <div class="time" style="width: 0%"></div>
 <pre>
@@ -922,13 +925,13 @@ Time: 0s">
   (** [x ↓ F] is a coslice category; [F ↓ x] is a slice category; [x ↓ F] deals with morphisms [x -&gt; F y]; [F ↓ x] has morphisms [F y -&gt; x] *)</pre>
 </div>
 <div class="code" title="File: Core.v
-Line: 257
-Time: 0.004s">
-<div class="time" style="width: 0.19579050416055%"></div>
+Line: 260
+Time: 0.003s">
+<div class="time" style="width: 0.17564402810304%"></div>
 <pre>End slice_category.</pre>
 </div>
 <div class="code" title="File: Core.v
-Line: 257
+Line: 260
 Time: 0s">
 <div class="time" style="width: 0%"></div>
 <pre>
@@ -936,49 +939,49 @@ Time: 0s">
 (** ** (co)slice category over [(a / C)], [(C / a)] *)</pre>
 </div>
 <div class="code" title="File: Core.v
-Line: 259
+Line: 262
 Time: 0s">
 <div class="time" style="width: 0%"></div>
 <pre>Section slice_category_over.</pre>
 </div>
 <div class="code" title="File: Core.v
-Line: 259
+Line: 262
 Time: 0s">
 <div class="time" style="width: 0%"></div>
 <pre>
   Variable C : PreCategory.</pre>
 </div>
 <div class="code" title="File: Core.v
-Line: 260
-Time: 0.001s">
-<div class="time" style="width: 0.048947626040137%"></div>
+Line: 263
+Time: 0s">
+<div class="time" style="width: 0%"></div>
 <pre>
   Variable a : C.</pre>
 </div>
 <div class="code" title="File: Core.v
-Line: 261
-Time: 0.042s">
-<div class="time" style="width: 2.0558002936858%"></div>
+Line: 264
+Time: 0.02s">
+<div class="time" style="width: 1.1709601873536%"></div>
 <pre>
 
   Definition slice_category_over := slice_category a (Functor.Identity.identity C).</pre>
 </div>
 <div class="code" title="File: Core.v
-Line: 263
-Time: 0.034s">
-<div class="time" style="width: 1.6642192853647%"></div>
+Line: 266
+Time: 0.018s">
+<div class="time" style="width: 1.0538641686183%"></div>
 <pre>
   Definition coslice_category_over := coslice_category a (Functor.Identity.identity C).</pre>
 </div>
 <div class="code" title="File: Core.v
-Line: 264
-Time: 0.004s">
-<div class="time" style="width: 0.19579050416055%"></div>
+Line: 267
+Time: 0.002s">
+<div class="time" style="width: 0.11709601873536%"></div>
 <pre>
 End slice_category_over.</pre>
 </div>
 <div class="code" title="File: Core.v
-Line: 265
+Line: 268
 Time: 0s">
 <div class="time" style="width: 0%"></div>
 <pre>
@@ -986,80 +989,80 @@ Time: 0s">
 (** ** category of arrows *)</pre>
 </div>
 <div class="code" title="File: Core.v
-Line: 267
+Line: 270
 Time: 0s">
 <div class="time" style="width: 0%"></div>
 <pre>Section arrow_category.</pre>
-</div>
-<div class="code" title="File: Core.v
-Line: 267
-Time: 0.001s">
-<div class="time" style="width: 0.048947626040137%"></div>
-<pre>
-  Variable C : PreCategory.</pre>
-</div>
-<div class="code" title="File: Core.v
-Line: 268
-Time: 0.032s">
-<div class="time" style="width: 1.5663240332844%"></div>
-<pre>
-
-  Definition arrow_category := comma_category (Functor.Identity.identity C) (Functor.Identity.identity C).</pre>
 </div>
 <div class="code" title="File: Core.v
 Line: 270
 Time: 0s">
 <div class="time" style="width: 0%"></div>
 <pre>
-End arrow_category.</pre>
+  Variable C : PreCategory.</pre>
 </div>
 <div class="code" title="File: Core.v
 Line: 271
-Time: 0.007s">
-<div class="time" style="width: 0.34263338228096%"></div>
+Time: 0.021s">
+<div class="time" style="width: 1.2295081967213%"></div>
+<pre>
+
+  Definition arrow_category := comma_category (Functor.Identity.identity C) (Functor.Identity.identity C).</pre>
+</div>
+<div class="code" title="File: Core.v
+Line: 273
+Time: 0s">
+<div class="time" style="width: 0%"></div>
+<pre>
+End arrow_category.</pre>
+</div>
+<div class="code" title="File: Core.v
+Line: 274
+Time: 0.004s">
+<div class="time" style="width: 0.23419203747073%"></div>
 <pre>
 
 Definition CC_Functor' (C : PreCategory) (D : PreCategory) := Functor C D.</pre>
 </div>
 <div class="code" title="File: Core.v
-Line: 273
-Time: 0.04s">
-<div class="time" style="width: 1.9579050416055%"></div>
+Line: 276
+Time: 0.033s">
+<div class="time" style="width: 1.9320843091335%"></div>
 <pre>
 Coercion cc_functor_from_terminal' (C : PreCategory) (x : C) : CC_Functor' _ C
   := Functors.from_terminal C x.</pre>
 </div>
 <div class="code" title="File: Core.v
-Line: 275
-Time: 0.017s">
-<div class="time" style="width: 0.83210964268233%"></div>
+Line: 278
+Time: 0.011s">
+<div class="time" style="width: 0.6440281030445%"></div>
 <pre>
 Coercion cc_identity_functor' (C : PreCategory) : CC_Functor' C C
   := 1%functor.</pre>
 </div>
 <div class="code" title="File: Core.v
-Line: 277
+Line: 280
 Time: 0s">
 <div class="time" style="width: 0%"></div>
 <pre>
 Global Arguments CC_Functor' / .</pre>
 </div>
 <div class="code" title="File: Core.v
-Line: 278
+Line: 281
 Time: 0s">
 <div class="time" style="width: 0%"></div>
 <pre>
 Global Arguments cc_functor_from_terminal' / .</pre>
 </div>
 <div class="code" title="File: Core.v
-Line: 279
+Line: 282
 Time: 0s">
 <div class="time" style="width: 0%"></div>
 <pre>
 Global Arguments cc_identity_functor' / .</pre>
 </div>
 <div class="code" title="File: Core.v
-Line: 280
+Line: 283
 Time: 0s">
 <div class="time" style="width: 0%"></div>
 <pre>
@@ -1067,7 +1070,7 @@ Time: 0s">
 Module Export CommaCoreNotations.</pre>
 </div>
 <div class="code" title="File: Core.v
-Line: 282
+Line: 285
 Time: 0s">
 <div class="time" style="width: 0%"></div>
 <pre>
@@ -1076,48 +1079,48 @@ Time: 0s">
  </pre>
 </div>
 <div class="code" title="File: Core.v
-Line: 285
+Line: 288
 Time: 0s">
 <div class="time" style="width: 0%"></div>
 <pre>Notation "C / a" := (@slice_category_over C a) : category_scope.</pre>
-</div>
-<div class="code" title="File: Core.v
-Line: 285
-Time: 0s">
-<div class="time" style="width: 0%"></div>
-<pre>
-  Notation "a \ C" := (@coslice_category_over C a) (at level 40, left associativity) : category_scope.</pre>
-</div>
-<div class="code" title="File: Core.v
-Line: 286
-Time: 0s">
-<div class="time" style="width: 0%"></div>
-<pre>
-  Notation "a / C" := (@coslice_category_over C a) : category_scope.</pre>
-</div>
-<div class="code" title="File: Core.v
-Line: 287
-Time: 0s">
-<div class="time" style="width: 0%"></div>
-<pre>
-  Notation "x / F" := (coslice_category x F) : category_scope.</pre>
 </div>
 <div class="code" title="File: Core.v
 Line: 288
 Time: 0s">
 <div class="time" style="width: 0%"></div>
 <pre>
-  Notation "F / x" := (slice_category x F) : category_scope.</pre>
+  Notation "a \ C" := (@coslice_category_over C a) (at level 40, left associativity) : category_scope.</pre>
 </div>
 <div class="code" title="File: Core.v
 Line: 289
 Time: 0s">
 <div class="time" style="width: 0%"></div>
 <pre>
-  Notation "S / T" := (comma_category S T) : category_scope.</pre>
+  Notation "a / C" := (@coslice_category_over C a) : category_scope.</pre>
 </div>
 <div class="code" title="File: Core.v
 Line: 290
+Time: 0s">
+<div class="time" style="width: 0%"></div>
+<pre>
+  Notation "x / F" := (coslice_category x F) : category_scope.</pre>
+</div>
+<div class="code" title="File: Core.v
+Line: 291
+Time: 0s">
+<div class="time" style="width: 0%"></div>
+<pre>
+  Notation "F / x" := (slice_category x F) : category_scope.</pre>
+</div>
+<div class="code" title="File: Core.v
+Line: 292
+Time: 0s">
+<div class="time" style="width: 0%"></div>
+<pre>
+  Notation "S / T" := (comma_category S T) : category_scope.</pre>
+</div>
+<div class="code" title="File: Core.v
+Line: 293
 Time: 0s">
 <div class="time" style="width: 0%"></div>
 <pre>
@@ -1125,21 +1128,21 @@ Time: 0s">
  </pre>
 </div>
 <div class="code" title="File: Core.v
-Line: 292
+Line: 295
 Time: 0s">
 <div class="time" style="width: 0%"></div>
 <pre>Notation "S / T" := (comma_category (S : CC_Functor' _ _)
                                       (T : CC_Functor' _ _)) : category_scope.</pre>
 </div>
 <div class="code" title="File: Core.v
-Line: 293
+Line: 296
 Time: 0s">
 <div class="time" style="width: 0%"></div>
 <pre>
 End CommaCoreNotations.</pre>
 </div>
 <div class="code" title="File: Core.v
-Line: 295
+Line: 298
 Time: 0s">
 <div class="time" style="width: 0%"></div>
 <pre>
