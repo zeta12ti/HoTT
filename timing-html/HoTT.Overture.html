@@ -491,8 +491,8 @@ Time: 0s">
 </div>
 <div class="code" title="File: Overture.v
 Line: 112
-Time: 0s">
-<div class="time" style="width: 0%"></div>
+Time: 0.001s">
+<div class="time" style="width: 16.666666666667%"></div>
 <pre>Definition transport {A : Type} (P : A -&gt; Type) {x y : A} (p : x = y) (u : P x) : P y :=
   match p with idpath =&gt; u end.</pre>
 </div>
@@ -1008,8 +1008,8 @@ Arguments IsTrunc_internal n A : simpl nomatch.</pre>
 </div>
 <div class="code" title="File: Overture.v
 Line: 270
-Time: 0s">
-<div class="time" style="width: 0%"></div>
+Time: 0.001s">
+<div class="time" style="width: 16.666666666667%"></div>
 <pre>
 
 Class IsTrunc (n : trunc_index) (A : Type) : Type :=
@@ -1161,8 +1161,8 @@ Definition path_forall `{Funext} {A : Type} {P : A -&gt; Type} (f g : forall x :
 </div>
 <div class="code" title="File: Overture.v
 Line: 311
-Time: 0.004s">
-<div class="time" style="width: 66.666666666667%"></div>
+Time: 0.005s">
+<div class="time" style="width: 83.333333333333%"></div>
 <pre>
 
 Definition path_forall2 `{Funext} {A B : Type} {P : A -&gt; B -&gt; Type} (f g : forall x y, P x y) :
@@ -1370,6 +1370,7 @@ Line: 385
 Time: 0s">
 <div class="time" style="width: 0%"></div>
 <pre>Ltac f_ap :=
+  idtac;
   lazymatch goal with
     | [ |- ?f ?x = ?g ?x ] =&gt; apply (@apD10 _ _ f g);
                              try (done || f_ap)
@@ -1379,7 +1380,7 @@ Time: 0s">
   end.</pre>
 </div>
 <div class="code" title="File: Overture.v
-Line: 392
+Line: 393
 Time: 0s">
 <div class="time" style="width: 0%"></div>
 <pre>
@@ -1387,10 +1388,11 @@ Time: 0s">
 (** [expand] replaces both terms of an equality (either [paths] or [pointwise_paths] in the goal with their head normal forms *)</pre>
 </div>
 <div class="code" title="File: Overture.v
-Line: 394
+Line: 395
 Time: 0s">
 <div class="time" style="width: 0%"></div>
 <pre>Ltac expand :=
+  idtac;
   match goal with
     | [ |- ?X = ?Y ] =&gt;
       let X' := eval hnf in X in let Y' := eval hnf in Y in change (X' = Y')
@@ -1399,7 +1401,7 @@ Time: 0s">
   end; simpl.</pre>
 </div>
 <div class="code" title="File: Overture.v
-Line: 400
+Line: 402
 Time: 0s">
 <div class="time" style="width: 0%"></div>
 <pre>
@@ -1407,10 +1409,11 @@ Time: 0s">
 (** [atomic x] is the same as [idtac] if [x] is a variable or hypothesis, but is [fail 0] if [x] has internal structure. *)</pre>
 </div>
 <div class="code" title="File: Overture.v
-Line: 402
+Line: 404
 Time: 0s">
 <div class="time" style="width: 0%"></div>
 <pre>Ltac atomic x :=
+  idtac;
   match x with
     | ?f _ =&gt; fail 1 x "is not atomic"
     | (fun _ =&gt; _) =&gt; fail 1 x "is not atomic"
@@ -1419,7 +1422,7 @@ Time: 0s">
   end.</pre>
 </div>
 <div class="code" title="File: Overture.v
-Line: 409
+Line: 412
 Time: 0s">
 <div class="time" style="width: 0%"></div>
 <pre>
