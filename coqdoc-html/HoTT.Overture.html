@@ -92,6 +92,15 @@ But this gives "Error: in Tacinterp.add_tacdef: Reserved Ltac name symmetry.".  
 </div>
 <div class="code">
 <span class="id" type="keyword">Notation</span> <a name="Type0"><span class="id" type="abbreviation">Type0</span></a> := <span class="id" type="keyword">Set</span>.<br/>
+</div>
+
+<div class="doc">
+Define <span class="inlinecode"><span class="id" type="var">Type₁</span></span> (really, <span class="inlinecode"><span class="id" type="var">Type_i</span></span> for any <span class="inlinecode"><a class="idref" href="HoTT.PathGroupoids.html#i"><span class="id" type="variable">i</span></a></span> <span class="inlinecode">&gt;</span> <span class="inlinecode">0</span>) so that we can enforce having universes that are not <span class="inlinecode"><span class="id" type="keyword">Set</span></span>.  In trunk, universes will not be unified with <span class="inlinecode"><span class="id" type="keyword">Set</span></span> in most places, so we want to never use <span class="inlinecode"><span class="id" type="keyword">Set</span></span> at all. 
+</div>
+<div class="code">
+<span class="id" type="keyword">Definition</span> <a name="Type1"><span class="id" type="definition">Type1</span></a> := <span class="id" type="keyword">Eval</span> <span class="id" type="tactic">hnf</span> <span class="id" type="keyword">in</span> <span class="id" type="keyword">let</span> <span class="id" type="var">U</span> := <span class="id" type="keyword">Type</span> <span class="id" type="keyword">in</span> <span class="id" type="keyword">let</span> <span class="id" type="var">gt</span> := (<span class="id" type="keyword">Set</span> : <a class="idref" href="HoTT.Overture.html#U"><span class="id" type="variable">U</span></a>) <span class="id" type="keyword">in</span> <a class="idref" href="HoTT.Overture.html#U"><span class="id" type="variable">U</span></a>.<br/>
+<span class="id" type="var">Arguments</span> <a class="idref" href="HoTT.Overture.html#Type1"><span class="id" type="definition">Type1</span></a> / .<br/>
+<span class="id" type="keyword">Identity</span> <span class="id" type="keyword">Coercion</span> <span class="id" type="var">unfold_Type1</span> : <span class="id" type="var">Type1</span> &gt;-&gt; <span class="id" type="var">Sortclass</span>.<br/>
 
 <br/>
 </div>
@@ -742,10 +751,15 @@ Picking up the <span class="inlinecode"><span class="id" type="keyword">∀</spa
 </div>
 
 <div class="doc">
-We put <span class="inlinecode"><a class="idref" href="HoTT.Overture.html#Empty"><span class="id" type="inductive">Empty</span></a></span> here, instead of in <span class="inlinecode"><span class="id" type="var">Empty.v</span></span>, because <span class="inlinecode"><span class="id" type="keyword">Ltac</span></span> <span class="inlinecode"><span class="id" type="var">done</span></span> uses it. 
+We put <span class="inlinecode"><a class="idref" href="HoTT.Overture.html#Empty"><span class="id" type="inductive">Empty</span></a></span> here, instead of in <span class="inlinecode"><span class="id" type="var">Empty.v</span></span>, because <span class="inlinecode"><span class="id" type="keyword">Ltac</span></span> <span class="inlinecode"><span class="id" type="var">done</span></span> uses it.  HoTT/coq is broken and somehow interprets <span class="inlinecode"><a class="idref" href="HoTT.Overture.html#Type1"><span class="id" type="definition">Type1</span></a></span> as <span class="inlinecode"><span class="id" type="keyword">Prop</span></span> with regard to elimination schemes. 
 </div>
 <div class="code">
-<span class="id" type="keyword">Inductive</span> <a name="Empty"><span class="id" type="inductive">Empty</span></a> : <a class="idref" href="HoTT.Overture.html#Type0"><span class="id" type="abbreviation">Type0</span></a> := .<br/>
+<span class="id" type="keyword">Unset</span> <span class="id" type="var">Elimination</span> <span class="id" type="var">Schemes</span>.<br/>
+<span class="id" type="keyword">Inductive</span> <a name="Empty"><span class="id" type="inductive">Empty</span></a> : <a class="idref" href="HoTT.Overture.html#Type1"><span class="id" type="definition">Type1</span></a> := .<br/>
+<span class="id" type="keyword">Scheme</span> <a name="Empty_rect"><span class="id" type="definition">Empty_rect</span></a> := <span class="id" type="keyword">Induction</span> <span class="id" type="keyword">for</span> <a class="idref" href="HoTT.Overture.html#Empty"><span class="id" type="inductive">Empty</span></a> <span class="id" type="keyword">Sort</span> <span class="id" type="keyword">Type</span>.<br/>
+<span class="id" type="keyword">Scheme</span> <a name="Empty_rec"><span class="id" type="definition">Empty_rec</span></a> := <span class="id" type="keyword">Induction</span> <span class="id" type="keyword">for</span> <a class="idref" href="HoTT.Overture.html#Empty"><span class="id" type="inductive">Empty</span></a> <span class="id" type="keyword">Sort</span> <span class="id" type="keyword">Set</span>.<br/>
+<span class="id" type="keyword">Scheme</span> <a name="Empty_ind"><span class="id" type="definition">Empty_ind</span></a> := <span class="id" type="keyword">Induction</span> <span class="id" type="keyword">for</span> <a class="idref" href="HoTT.Overture.html#Empty"><span class="id" type="inductive">Empty</span></a> <span class="id" type="keyword">Sort</span> <span class="id" type="keyword">Prop</span>.<br/>
+<span class="id" type="keyword">Set</span> <span class="id" type="var">Elimination</span> <span class="id" type="var">Schemes</span>.<br/>
 
 <br/>
 <span class="id" type="keyword">Definition</span> <a name="not"><span class="id" type="definition">not</span></a> (<span class="id" type="var">A</span>:<span class="id" type="keyword">Type</span>) : <span class="id" type="keyword">Type</span> := <a class="idref" href="HoTT.Overture.html#A"><span class="id" type="variable">A</span></a> <a class="idref" href="Coq.Init.Logic.html#:type_scope:x_'->'_x"><span class="id" type="notation">→</span></a> <a class="idref" href="HoTT.Overture.html#Empty"><span class="id" type="inductive">Empty</span></a>.<br/>
