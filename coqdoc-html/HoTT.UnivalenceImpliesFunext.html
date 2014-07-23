@@ -29,17 +29,21 @@
 </div>
 
 <div class="doc">
-<a name="lab120"></a><h1 class="section">Univalence Implies Functional Extensionality</h1>
+<a name="lab121"></a><h1 class="section">Univalence Implies Functional Extensionality</h1>
 
 <div class="paragraph"> </div>
 
  Here we prove that univalence implies function extensionality. 
+<div class="paragraph"> </div>
+
+ We define an axiom-free variant of <span class="inlinecode"><a class="idref" href="HoTT.types.Universe.html#Univalence"><span class="id" type="section">Univalence</span></a></span> 
 </div>
 <div class="code">
+<span class="id" type="keyword">Definition</span> <a name="Univalence_type"><span class="id" type="definition">Univalence_type</span></a> := <span class="id" type="keyword">∀</span> (<span class="id" type="var">A</span> <span class="id" type="var">B</span> : <span class="id" type="keyword">Type</span>), <a class="idref" href="HoTT.Overture.html#IsEquiv"><span class="id" type="class">IsEquiv</span></a> (<a class="idref" href="HoTT.types.Universe.html#equiv_path"><span class="id" type="definition">equiv_path</span></a> <a class="idref" href="HoTT.UnivalenceImpliesFunext.html#A"><span class="id" type="variable">A</span></a> <a class="idref" href="HoTT.UnivalenceImpliesFunext.html#B"><span class="id" type="variable">B</span></a>).<br/>
 
 <br/>
 <span class="id" type="keyword">Section</span> <a name="UnivalenceImpliesFunext"><span class="id" type="section">UnivalenceImpliesFunext</span></a>.<br/>
-&nbsp;&nbsp;<span class="id" type="keyword">Context</span> `{<a class="idref" href="HoTT.types.Universe.html#Univalence"><span class="id" type="class">Univalence</span></a>}.<br/>
+&nbsp;&nbsp;<span class="id" type="keyword">Context</span> `{<span class="id" type="var">ua</span> : <a class="idref" href="HoTT.UnivalenceImpliesFunext.html#Univalence_type"><span class="id" type="definition">Univalence_type</span></a>}.<br/>
 
 <br/>
 </div>
@@ -54,6 +58,7 @@ Exponentiation preserves equivalences, i.e., if <span class="inlinecode"><a clas
 <br/>
 &nbsp;&nbsp;<span class="id" type="keyword">Theorem</span> <a name="univalence_isequiv_postcompose"><span class="id" type="lemma">univalence_isequiv_postcompose</span></a> `{<span class="id" type="var">H0</span> : <a class="idref" href="HoTT.Overture.html#IsEquiv"><span class="id" type="class">IsEquiv</span></a> <span class="id" type="var">A</span> <span class="id" type="var">B</span> <span class="id" type="var">w</span>} <span class="id" type="var">C</span> : <a class="idref" href="HoTT.Overture.html#IsEquiv"><span class="id" type="class">IsEquiv</span></a> (@<a class="idref" href="HoTT.Overture.html#compose"><span class="id" type="definition">compose</span></a> <a class="idref" href="HoTT.UnivalenceImpliesFunext.html#C"><span class="id" type="variable">C</span></a> <a class="idref" href="HoTT.UnivalenceImpliesFunext.html#A"><span class="id" type="variable">A</span></a> <a class="idref" href="HoTT.UnivalenceImpliesFunext.html#B"><span class="id" type="variable">B</span></a> <a class="idref" href="HoTT.UnivalenceImpliesFunext.html#w"><span class="id" type="variable">w</span></a>).<br/>
 &nbsp;&nbsp;<span class="id" type="keyword">Proof</span>.<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="id" type="tactic">unfold</span> <a class="idref" href="HoTT.UnivalenceImpliesFunext.html#Univalence_type"><span class="id" type="definition">Univalence_type</span></a> <span class="id" type="keyword">in</span> ×.<br/>
 &nbsp;&nbsp;&nbsp;&nbsp;<span class="id" type="tactic">refine</span> (<a class="idref" href="HoTT.Equivalences.html#isequiv_adjointify"><span class="id" type="definition">isequiv_adjointify</span></a><br/>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;(@<a class="idref" href="HoTT.Overture.html#compose"><span class="id" type="definition">compose</span></a> <span class="id" type="var">C</span> <span class="id" type="var">A</span> <span class="id" type="var">B</span> <span class="id" type="var">w</span>)<br/>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;(@<a class="idref" href="HoTT.Overture.html#compose"><span class="id" type="definition">compose</span></a> <span class="id" type="var">C</span> <span class="id" type="var">B</span> <span class="id" type="var">A</span> <span class="id" type="var">w</span><a class="idref" href="HoTT.Overture.html#:equiv_scope:x_'^-1'"><span class="id" type="notation">^-1</span></a>)%<span class="id" type="var">equiv</span><br/>
@@ -64,8 +69,8 @@ Exponentiation preserves equivalences, i.e., if <span class="inlinecode"><a clas
 &nbsp;&nbsp;&nbsp;&nbsp;<span class="id" type="tactic">change</span> <span class="id" type="var">H0</span> <span class="id" type="keyword">with</span> (@<a class="idref" href="HoTT.Overture.html#equiv_isequiv"><span class="id" type="projection">equiv_isequiv</span></a> <span class="id" type="var">_</span> <span class="id" type="var">_</span> <span class="id" type="var">w'</span>);<br/>
 &nbsp;&nbsp;&nbsp;&nbsp;<span class="id" type="tactic">change</span> <span class="id" type="var">w</span> <span class="id" type="keyword">with</span> (@<a class="idref" href="HoTT.Overture.html#equiv_fun"><span class="id" type="projection">equiv_fun</span></a> <span class="id" type="var">_</span> <span class="id" type="var">_</span> <span class="id" type="var">w'</span>);<br/>
 &nbsp;&nbsp;&nbsp;&nbsp;<span class="id" type="var">clearbody</span> <span class="id" type="var">w'</span>; <span class="id" type="tactic">clear</span> <span class="id" type="var">H0</span> <span class="id" type="var">w</span>;<br/>
-&nbsp;&nbsp;&nbsp;&nbsp;<span class="id" type="tactic">rewrite</span> &lt;- (@<a class="idref" href="HoTT.Overture.html#eisretr"><span class="id" type="method">eisretr</span></a> <span class="id" type="var">_</span> <span class="id" type="var">_</span> <span class="id" type="var">_</span> (@<a class="idref" href="HoTT.types.Universe.html#isequiv_equiv_path"><span class="id" type="method">isequiv_equiv_path</span></a> <span class="id" type="var">_</span> <span class="id" type="var">A</span> <span class="id" type="var">B</span>) <span class="id" type="var">w'</span>);<br/>
-&nbsp;&nbsp;&nbsp;&nbsp;<span class="id" type="tactic">generalize</span> (<a class="idref" href="HoTT.Overture.html#:equiv_scope:x_'^-1'"><span class="id" type="notation">(</span></a><a class="idref" href="HoTT.types.Universe.html#equiv_path"><span class="id" type="definition">equiv_path</span></a> <span class="id" type="var">A</span> <span class="id" type="var">B</span><a class="idref" href="HoTT.Overture.html#:equiv_scope:x_'^-1'"><span class="id" type="notation">)^-1</span></a> <span class="id" type="var">w'</span>)%<span class="id" type="var">equiv</span>;<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="id" type="tactic">rewrite</span> &lt;- (@<a class="idref" href="HoTT.Overture.html#eisretr"><span class="id" type="method">eisretr</span></a> <span class="id" type="var">_</span> <span class="id" type="var">_</span> (@<a class="idref" href="HoTT.types.Universe.html#equiv_path"><span class="id" type="definition">equiv_path</span></a> <span class="id" type="var">A</span> <span class="id" type="var">B</span>) (<a class="idref" href="HoTT.UnivalenceImpliesFunext.html#UnivalenceImpliesFunext.ua"><span class="id" type="variable">ua</span></a> <span class="id" type="var">A</span> <span class="id" type="var">B</span>) <span class="id" type="var">w'</span>);<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="id" type="tactic">generalize</span> ((@<a class="idref" href="HoTT.Overture.html#equiv_inv"><span class="id" type="method">equiv_inv</span></a> <span class="id" type="var">_</span> <span class="id" type="var">_</span> (<a class="idref" href="HoTT.types.Universe.html#equiv_path"><span class="id" type="definition">equiv_path</span></a> <span class="id" type="var">A</span> <span class="id" type="var">B</span>) (<a class="idref" href="HoTT.UnivalenceImpliesFunext.html#UnivalenceImpliesFunext.ua"><span class="id" type="variable">ua</span></a> <span class="id" type="var">A</span> <span class="id" type="var">B</span>)) <span class="id" type="var">w'</span>)%<span class="id" type="var">equiv</span>;<br/>
 &nbsp;&nbsp;&nbsp;&nbsp;<span class="id" type="tactic">intro</span> <span class="id" type="var">p</span>;<br/>
 &nbsp;&nbsp;&nbsp;&nbsp;<span class="id" type="tactic">clear</span> <span class="id" type="var">w'</span>;<br/>
 &nbsp;&nbsp;&nbsp;&nbsp;<span class="id" type="tactic">destruct</span> <span class="id" type="var">p</span>;<br/>
@@ -150,7 +155,7 @@ Since composition with <span class="inlinecode"><span class="id" type="var">src<
 
 <br/>
 <span class="id" type="keyword">Section</span> <a name="UnivalenceImpliesWeakFunext"><span class="id" type="section">UnivalenceImpliesWeakFunext</span></a>.<br/>
-&nbsp;&nbsp;<span class="id" type="keyword">Context</span> `{<span class="id" type="var">ua1</span> : <a class="idref" href="HoTT.types.Universe.html#Univalence"><span class="id" type="class">Univalence</span></a>, <span class="id" type="var">ua2</span> : <a class="idref" href="HoTT.types.Universe.html#Univalence"><span class="id" type="class">Univalence</span></a>}.<br/>
+&nbsp;&nbsp;<span class="id" type="keyword">Context</span> `{<span class="id" type="var">ua1</span> : <a class="idref" href="HoTT.UnivalenceImpliesFunext.html#Univalence_type"><span class="id" type="definition">Univalence_type</span></a>, <span class="id" type="var">ua2</span> : <a class="idref" href="HoTT.UnivalenceImpliesFunext.html#Univalence_type"><span class="id" type="definition">Univalence_type</span></a>}.<br/>
 </div>
 
 <div class="doc">
@@ -170,9 +175,9 @@ We are going to replace <span class="inlinecode"><a class="idref" href="HoTT.cat
 <div class="code">
 &nbsp;&nbsp;&nbsp;&nbsp;<span class="id" type="tactic">pose</span> (<span class="id" type="var">U</span> := (<span class="id" type="keyword">fun</span> (<span class="id" type="var">_</span> : <span class="id" type="var">A</span>) ⇒ <a class="idref" href="HoTT.types.Unit.html#Unit"><span class="id" type="inductive">Unit</span></a>)).<br/>
 &nbsp;&nbsp;&nbsp;&nbsp;<span class="id" type="tactic">assert</span> (<span class="id" type="var">p</span> : <span class="id" type="var">P</span> <a class="idref" href="HoTT.Overture.html#:type_scope:x_'='_x"><span class="id" type="notation">=</span></a> <span class="id" type="var">U</span>).<br/>
-&nbsp;&nbsp;&nbsp;&nbsp;- <span class="id" type="tactic">apply</span> <a class="idref" href="HoTT.UnivalenceImpliesFunext.html#Univalence_implies_FunextNondep"><span class="id" type="lemma">Univalence_implies_FunextNondep</span></a>.<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;- <span class="id" type="tactic">apply</span> (@<a class="idref" href="HoTT.UnivalenceImpliesFunext.html#Univalence_implies_FunextNondep"><span class="id" type="lemma">Univalence_implies_FunextNondep</span></a> <a class="idref" href="HoTT.UnivalenceImpliesFunext.html#UnivalenceImpliesWeakFunext.ua2"><span class="id" type="variable">ua2</span></a>).<br/>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="id" type="tactic">intro</span> <span class="id" type="var">x</span>.<br/>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="id" type="tactic">apply</span> (@<a class="idref" href="HoTT.types.Universe.html#path_universe_uncurried"><span class="id" type="definition">path_universe_uncurried</span></a> <a class="idref" href="HoTT.UnivalenceImpliesFunext.html#UnivalenceImpliesWeakFunext.ua1"><span class="id" type="variable">ua1</span></a>).<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="id" type="tactic">apply</span> (@<a class="idref" href="HoTT.Overture.html#equiv_inv"><span class="id" type="method">equiv_inv</span></a> <span class="id" type="var">_</span> <span class="id" type="var">_</span> <span class="id" type="var">_</span> (<a class="idref" href="HoTT.UnivalenceImpliesFunext.html#UnivalenceImpliesWeakFunext.ua1"><span class="id" type="variable">ua1</span></a> <span class="id" type="var">_</span> <span class="id" type="var">_</span>)).<br/>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="id" type="tactic">apply</span> <a class="idref" href="HoTT.types.Unit.html#equiv_contr_unit"><span class="id" type="definition">equiv_contr_unit</span></a>.<br/>
 &nbsp;&nbsp;&nbsp;&nbsp;- </div>
 
@@ -192,11 +197,18 @@ Now this is much easier.
 <span class="id" type="keyword">End</span> <a class="idref" href="HoTT.UnivalenceImpliesFunext.html#UnivalenceImpliesWeakFunext"><span class="id" type="section">UnivalenceImpliesWeakFunext</span></a>.<br/>
 
 <br/>
-<span class="id" type="keyword">Definition</span> <a name="Univalence_implies_Funext"><span class="id" type="definition">Univalence_implies_Funext</span></a> `{<span class="id" type="var">ua1</span> : <a class="idref" href="HoTT.types.Universe.html#Univalence"><span class="id" type="class">Univalence</span></a>, <span class="id" type="var">ua2</span> : <a class="idref" href="HoTT.types.Universe.html#Univalence"><span class="id" type="class">Univalence</span></a>} : <a class="idref" href="HoTT.Overture.html#Funext"><span class="id" type="class">Funext</span></a><br/>
+<span class="id" type="keyword">Definition</span> <a name="Univalence_type_implies_Funext_type"><span class="id" type="definition">Univalence_type_implies_Funext_type</span></a> `{<span class="id" type="var">ua1</span> : <a class="idref" href="HoTT.UnivalenceImpliesFunext.html#Univalence_type"><span class="id" type="definition">Univalence_type</span></a>, <span class="id" type="var">ua2</span> : <a class="idref" href="HoTT.UnivalenceImpliesFunext.html#Univalence_type"><span class="id" type="definition">Univalence_type</span></a>} : <a class="idref" href="HoTT.FunextVarieties.html#Funext_type"><span class="id" type="definition">Funext_type</span></a><br/>
 &nbsp;&nbsp;:= <a class="idref" href="HoTT.FunextVarieties.html#WeakFunext_implies_Funext"><span class="id" type="lemma">WeakFunext_implies_Funext</span></a> (@<a class="idref" href="HoTT.UnivalenceImpliesFunext.html#Univalence_implies_WeakFunext"><span class="id" type="lemma">Univalence_implies_WeakFunext</span></a> <a class="idref" href="HoTT.UnivalenceImpliesFunext.html#ua1"><span class="id" type="variable">ua1</span></a> <a class="idref" href="HoTT.UnivalenceImpliesFunext.html#ua2"><span class="id" type="variable">ua2</span></a>).<br/>
 
 <br/>
-<span class="id" type="keyword">Hint Immediate</span> <span class="id" type="var">Univalence_implies_Funext</span> : <span class="id" type="var">typeclass_instances</span>.<br/>
+</div>
+
+<div class="doc">
+As justified by the above proof, we may assume <span class="inlinecode"><a class="idref" href="HoTT.types.Universe.html#Univalence"><span class="id" type="section">Univalence</span></a></span> <span class="inlinecode">→</span> <span class="inlinecode"><a class="idref" href="HoTT.Overture.html#Funext"><span class="id" type="record">Funext</span></a></span>. 
+</div>
+<div class="code">
+<span class="id" type="keyword">Global Instance</span> <a name="Univalence_implies_Funext"><span class="id" type="instance">Univalence_implies_Funext</span></a> `{<a class="idref" href="HoTT.types.Universe.html#Univalence"><span class="id" type="class">Univalence</span></a>} : <a class="idref" href="HoTT.Overture.html#Funext"><span class="id" type="class">Funext</span></a>.<br/>
+<span class="id" type="var">Admitted</span>.<br/>
 </div>
 </div>
 
