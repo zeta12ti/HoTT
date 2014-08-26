@@ -40,7 +40,7 @@ Time: 0s">
 </div>
 <div class="code" title="File: Truncations.v
 Line: 4
-Time: 0.033s">
+Time: 0.029s">
 <div class="time" style="width: 100%"></div>
 <pre>Require Import Overture PathGroupoids Equivalences Trunc types.Sigma.</pre>
 </div>
@@ -98,41 +98,55 @@ Line: 22
 Time: 0s">
 <div class="time" style="width: 0%"></div>
 <pre>
-
-Private Inductive Truncation (n : trunc_index) (A :Type) : Type :=
-  truncation_incl : A -&gt; Truncation n A.</pre>
+Delimit Scope trunc_scope with trunc.</pre>
 </div>
 <div class="code" title="File: Truncations.v
-Line: 25
+Line: 23
 Time: 0s">
 <div class="time" style="width: 0%"></div>
 <pre>
-Arguments truncation_incl {n A} a.</pre>
+
+Private Inductive Truncation (n : trunc_index) (A :Type) : Type :=
+  truncation_incl : A -&gt; Truncation n A.</pre>
 </div>
 <div class="code" title="File: Truncations.v
 Line: 26
 Time: 0s">
 <div class="time" style="width: 0%"></div>
 <pre>
-(** Make the priority 1, so that we don't override, e.g., [Unit]. *)</pre>
-</div>
-<div class="code" title="File: Truncations.v
-Line: 27
-Time: 0s">
-<div class="time" style="width: 0%"></div>
-<pre>Instance istrunc_truncation : forall n A, IsTrunc n (Truncation n A) | 1.</pre>
+Bind Scope trunc_scope with Truncation.</pre>
 </div>
 <div class="code" title="File: Truncations.v
 Line: 27
 Time: 0s">
 <div class="time" style="width: 0%"></div>
 <pre>
-Admitted.</pre>
+Arguments truncation_incl {n A} a.</pre>
 </div>
 <div class="code" title="File: Truncations.v
 Line: 28
+Time: 0s">
+<div class="time" style="width: 0%"></div>
+<pre>
+(** Make the priority 1, so that we don't override, e.g., [Unit]. *)</pre>
+</div>
+<div class="code" title="File: Truncations.v
+Line: 29
+Time: 0s">
+<div class="time" style="width: 0%"></div>
+<pre>Instance istrunc_truncation : forall n A, IsTrunc n (Truncation n A) | 1.</pre>
+</div>
+<div class="code" title="File: Truncations.v
+Line: 29
+Time: 0s">
+<div class="time" style="width: 0%"></div>
+<pre>
+Admitted.</pre>
+</div>
+<div class="code" title="File: Truncations.v
+Line: 30
 Time: 0.002s">
-<div class="time" style="width: 6.0606060606061%"></div>
+<div class="time" style="width: 6.8965517241379%"></div>
 <pre>
 
 Definition Truncation_rect {n A}
@@ -141,7 +155,7 @@ Definition Truncation_rect {n A}
 := (fun f aa =&gt; match aa with truncation_incl a =&gt; f a end).</pre>
 </div>
 <div class="code" title="File: Truncations.v
-Line: 33
+Line: 35
 Time: 0s">
 <div class="time" style="width: 0%"></div>
 <pre>
@@ -149,7 +163,7 @@ Time: 0s">
 End Truncation.</pre>
 </div>
 <div class="code" title="File: Truncations.v
-Line: 35
+Line: 37
 Time: 0s">
 <div class="time" style="width: 0%"></div>
 <pre>
@@ -159,15 +173,15 @@ Time: 0s">
 </pre>
 </div>
 <div class="code" title="File: Truncations.v
-Line: 38
+Line: 40
 Time: 0.002s">
-<div class="time" style="width: 6.0606060606061%"></div>
+<div class="time" style="width: 6.8965517241379%"></div>
 <pre>Definition Truncation_rect_nondep {n A X} `{IsTrunc n X}
   : (A -&gt; X) -&gt; (Truncation n A -&gt; X)
 := Truncation_rect (fun _ =&gt; X).</pre>
 </div>
 <div class="code" title="File: Truncations.v
-Line: 40
+Line: 42
 Time: 0s">
 <div class="time" style="width: 0%"></div>
 <pre>
@@ -175,41 +189,41 @@ Time: 0s">
 (** ** Functoriality *)</pre>
 </div>
 <div class="code" title="File: Truncations.v
-Line: 42
+Line: 44
 Time: 0s">
 <div class="time" style="width: 0%"></div>
 <pre>Definition functor_Truncation {n : trunc_index} {X Y} (f : X -&gt; Y)
   : Truncation n X -&gt; Truncation n Y.</pre>
 </div>
 <div class="code" title="File: Truncations.v
-Line: 43
+Line: 45
 Time: 0s">
 <div class="time" style="width: 0%"></div>
 <pre>
 Proof.</pre>
 </div>
 <div class="code" title="File: Truncations.v
-Line: 44
+Line: 46
 Time: 0s">
 <div class="time" style="width: 0%"></div>
 <pre>
   apply Truncation_rect_nondep.</pre>
 </div>
 <div class="code" title="File: Truncations.v
-Line: 45
+Line: 47
 Time: 0s">
 <div class="time" style="width: 0%"></div>
 <pre> exact (fun x =&gt; truncation_incl (f x)).</pre>
 </div>
 <div class="code" title="File: Truncations.v
-Line: 45
+Line: 47
 Time: 0s">
 <div class="time" style="width: 0%"></div>
 <pre>
 Defined.</pre>
 </div>
 <div class="code" title="File: Truncations.v
-Line: 46
+Line: 48
 Time: 0s">
 <div class="time" style="width: 0%"></div>
 <pre>
@@ -218,106 +232,106 @@ Definition functor_Truncation_idmap `{Funext} {n : trunc_index} (X : Type)
   : @functor_Truncation n X X idmap == idmap.</pre>
 </div>
 <div class="code" title="File: Truncations.v
-Line: 49
+Line: 51
 Time: 0s">
 <div class="time" style="width: 0%"></div>
 <pre>
 Proof.</pre>
-</div>
-<div class="code" title="File: Truncations.v
-Line: 50
-Time: 0s">
-<div class="time" style="width: 0%"></div>
-<pre>
-  unfold pointwise_paths.</pre>
-</div>
-<div class="code" title="File: Truncations.v
-Line: 51
-Time: 0s">
-<div class="time" style="width: 0%"></div>
-<pre> apply @Truncation_rect.</pre>
-</div>
-<div class="code" title="File: Truncations.v
-Line: 51
-Time: 0.003s">
-<div class="time" style="width: 9.0909090909091%"></div>
-<pre>
-    intros ?; apply trunc_succ.</pre>
 </div>
 <div class="code" title="File: Truncations.v
 Line: 52
 Time: 0s">
 <div class="time" style="width: 0%"></div>
 <pre>
-  intros a; exact 1.</pre>
+  unfold pointwise_paths.</pre>
 </div>
 <div class="code" title="File: Truncations.v
 Line: 53
+Time: 0s">
+<div class="time" style="width: 0%"></div>
+<pre> apply @Truncation_rect.</pre>
+</div>
+<div class="code" title="File: Truncations.v
+Line: 53
+Time: 0.003s">
+<div class="time" style="width: 10.344827586207%"></div>
+<pre>
+    intros ?; apply trunc_succ.</pre>
+</div>
+<div class="code" title="File: Truncations.v
+Line: 54
+Time: 0s">
+<div class="time" style="width: 0%"></div>
+<pre>
+  intros a; exact 1.</pre>
+</div>
+<div class="code" title="File: Truncations.v
+Line: 55
 Time: 0.001s">
-<div class="time" style="width: 3.030303030303%"></div>
+<div class="time" style="width: 3.448275862069%"></div>
 <pre>
 Defined.</pre>
 </div>
 <div class="code" title="File: Truncations.v
-Line: 54
+Line: 56
 Time: 0.001s">
-<div class="time" style="width: 3.030303030303%"></div>
+<div class="time" style="width: 3.448275862069%"></div>
 <pre>
 
 Definition isequiv_functor_Truncation {n : trunc_index} {X Y} (f : X -&gt; Y)
   `{IsEquiv _ _ f} : IsEquiv (functor_Truncation (n:=n) f).</pre>
 </div>
 <div class="code" title="File: Truncations.v
-Line: 57
+Line: 59
 Time: 0s">
 <div class="time" style="width: 0%"></div>
 <pre>
 Proof.</pre>
 </div>
 <div class="code" title="File: Truncations.v
-Line: 58
-Time: 0.011s">
-<div class="time" style="width: 33.333333333333%"></div>
+Line: 60
+Time: 0.01s">
+<div class="time" style="width: 34.48275862069%"></div>
 <pre>
   refine (isequiv_adjointify _ (functor_Truncation (f ^-1)) _ _);
     unfold Sect; apply @Truncation_rect;
     try (intros ?; apply trunc_succ).</pre>
 </div>
 <div class="code" title="File: Truncations.v
-Line: 61
+Line: 63
 Time: 0s">
 <div class="time" style="width: 0%"></div>
 <pre>
   intros y; simpl.</pre>
 </div>
 <div class="code" title="File: Truncations.v
-Line: 62
+Line: 64
 Time: 0.001s">
-<div class="time" style="width: 3.030303030303%"></div>
+<div class="time" style="width: 3.448275862069%"></div>
 <pre> apply ap, eisretr.</pre>
 </div>
 <div class="code" title="File: Truncations.v
-Line: 62
+Line: 64
 Time: 0s">
 <div class="time" style="width: 0%"></div>
 <pre>
   intros x; simpl.</pre>
 </div>
 <div class="code" title="File: Truncations.v
-Line: 63
+Line: 65
 Time: 0.001s">
-<div class="time" style="width: 3.030303030303%"></div>
+<div class="time" style="width: 3.448275862069%"></div>
 <pre> apply ap, eissect.</pre>
 </div>
 <div class="code" title="File: Truncations.v
-Line: 63
-Time: 0.005s">
-<div class="time" style="width: 15.151515151515%"></div>
+Line: 65
+Time: 0.004s">
+<div class="time" style="width: 13.793103448276%"></div>
 <pre>
 Defined.</pre>
 </div>
 <div class="code" title="File: Truncations.v
-Line: 65
+Line: 67
 Time: 0s">
 <div class="time" style="width: 0%"></div>
 <pre>
