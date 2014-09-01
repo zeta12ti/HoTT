@@ -931,6 +931,25 @@ The tactic <span class="inlinecode"><span class="id" type="var">f_ap</span></spa
 </div>
 
 <div class="doc">
+Test if a tactic succeeds, but always roll-back the results 
+</div>
+<div class="code">
+<span class="id" type="keyword">Tactic Notation</span> "test" <span class="id" type="var">tactic3</span>(<span class="id" type="var">tac</span>) :=<br/>
+&nbsp;&nbsp;<span class="id" type="tactic">try</span> (<span class="id" type="tactic">first</span> [ <span class="id" type="var">tac</span> | <span class="id" type="tactic">fail</span> 2 <span class="id" type="var">tac</span> "does not succeed" ]; <span class="id" type="tactic">fail</span> <span class="id" type="var">tac</span> "succeeds"; []).<br/>
+
+<br/>
+</div>
+
+<div class="doc">
+<span class="inlinecode"><a class="idref" href="HoTT.Overture.html#not"><span class="id" type="definition">not</span></a></span> <span class="inlinecode"><span class="id" type="var">tac</span></span> is equivalent to <span class="inlinecode"><span class="id" type="tactic">fail</span></span> <span class="inlinecode"><span class="id" type="var">tac</span></span> <span class="inlinecode">"<span class="id" type="var">succeeds</span>"</span> if <span class="inlinecode"><span class="id" type="var">tac</span></span> succeeds, and is equivalent to <span class="inlinecode"><span class="id" type="tactic">idtac</span></span> if <span class="inlinecode"><span class="id" type="var">tac</span></span> fails 
+</div>
+<div class="code">
+<span class="id" type="keyword">Tactic Notation</span> "not" <span class="id" type="var">tactic3</span>(<span class="id" type="var">tac</span>) := <span class="id" type="tactic">try</span> ((<span class="id" type="var">test</span> <span class="id" type="var">tac</span>); <span class="id" type="tactic">fail</span> 1 <span class="id" type="var">tac</span> "succeeds").<br/>
+
+<br/>
+</div>
+
+<div class="doc">
 <span class="inlinecode"><span class="id" type="var">atomic</span></span> <span class="inlinecode"><a class="idref" href="HoTT.categories.Grothendieck.PseudofunctorToCat.html#x"><span class="id" type="projection">x</span></a></span> is the same as <span class="inlinecode"><span class="id" type="tactic">idtac</span></span> if <span class="inlinecode"><a class="idref" href="HoTT.categories.Grothendieck.PseudofunctorToCat.html#x"><span class="id" type="projection">x</span></a></span> is a variable or hypothesis, but is <span class="inlinecode"><span class="id" type="tactic">fail</span></span> <span class="inlinecode">0</span> if <span class="inlinecode"><a class="idref" href="HoTT.categories.Grothendieck.PseudofunctorToCat.html#x"><span class="id" type="projection">x</span></a></span> has internal structure. 
 </div>
 <div class="code">
