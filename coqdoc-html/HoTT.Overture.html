@@ -35,6 +35,12 @@
 <span class="id" type="keyword">Definition</span> <a name="relation"><span class="id" type="definition">relation</span></a> (<span class="id" type="var">A</span> : <span class="id" type="keyword">Type</span>) := <a class="idref" href="HoTT.Overture.html#A"><span class="id" type="variable">A</span></a> <a class="idref" href="Coq.Init.Logic.html#:type_scope:x_'->'_x"><span class="id" type="notation">→</span></a> <a class="idref" href="HoTT.Overture.html#A"><span class="id" type="variable">A</span></a> <a class="idref" href="Coq.Init.Logic.html#:type_scope:x_'->'_x"><span class="id" type="notation">→</span></a> <span class="id" type="keyword">Type</span>.<br/>
 
 <br/>
+</div>
+
+<div class="doc">
+TODO: Should we make <span class="inlinecode"><span class="id" type="tactic">reflexivity</span></span>, <span class="inlinecode"><span class="id" type="tactic">symmetry</span></span>, and <span class="inlinecode"><span class="id" type="tactic">transitivity</span></span> unfold under <span class="inlinecode"><span class="id" type="tactic">simpl</span></span>, to, e.g., <span class="inlinecode"><a class="idref" href="HoTT.Overture.html#idpath"><span class="id" type="constructor">idpath</span></a></span>, <span class="inlinecode"><a class="idref" href="HoTT.categories.ProductLaws.html#Law1.inverse"><span class="id" type="definition">inverse</span></a></span>, and <span class="inlinecode"><a class="idref" href="HoTT.Overture.html#concat"><span class="id" type="definition">concat</span></a></span>? 
+</div>
+<div class="code">
 <span class="id" type="keyword">Class</span> <a name="Reflexive"><span class="id" type="record">Reflexive</span></a> {<span class="id" type="var">A</span>} (<span class="id" type="var">R</span> : <a class="idref" href="HoTT.Overture.html#relation"><span class="id" type="definition">relation</span></a> <a class="idref" href="HoTT.Overture.html#A"><span class="id" type="variable">A</span></a>) :=<br/>
 &nbsp;&nbsp;<a name="reflexivity"><span class="id" type="projection">reflexivity</span></a> : <span class="id" type="keyword">∀</span> <span class="id" type="var">x</span> : <a class="idref" href="HoTT.Overture.html#A"><span class="id" type="variable">A</span></a>, <a class="idref" href="HoTT.Overture.html#R"><span class="id" type="variable">R</span></a> <a class="idref" href="HoTT.Overture.html#x"><span class="id" type="variable">x</span></a> <a class="idref" href="HoTT.Overture.html#x"><span class="id" type="variable">x</span></a>.<br/>
 
@@ -71,19 +77,24 @@ A <span class="inlinecode"><a class="idref" href="HoTT.Overture.html#PreOrder"><
 </div>
 
 <div class="doc">
-We would like to redefine <span class="inlinecode"><span class="id" type="tactic">symmetry</span></span>, which is too smart for its own good, as follows:
+We redefine <span class="inlinecode"><span class="id" type="tactic">transitivity</span></span> to work without needing to include <span class="inlinecode"><span class="id" type="var">Setoid</span></span> or be using Leibniz equality, and to give proofs that unfold to <span class="inlinecode"><a class="idref" href="HoTT.Overture.html#concat"><span class="id" type="definition">concat</span></a></span>. 
+</div>
+<div class="code">
+<span class="id" type="keyword">Ltac</span> <span class="id" type="tactic">transitivity</span> <span class="id" type="var">x</span> := <span class="id" type="var">etransitivity</span> <span class="id" type="var">x</span>.<br/>
 
-<div class="paragraph"> </div>
+<br/>
+</div>
 
-<pre>
-Ltac symmetry := refine (@symmetry _ _ _ _ _ _).
-</pre>
+<div class="doc">
+We redefine <span class="inlinecode"><span class="id" type="tactic">symmetry</span></span>, which is too smart for its own good. 
+</div>
+<div class="code">
+<span class="id" type="keyword">Ltac</span> <span class="id" type="tactic">symmetry</span> := <span class="id" type="tactic">refine</span> (@<a class="idref" href="HoTT.Overture.html#symmetry"><span class="id" type="definition">symmetry</span></a> <span class="id" type="var">_</span> <span class="id" type="var">_</span> <span class="id" type="var">_</span> <span class="id" type="var">_</span> <span class="id" type="var">_</span> <span class="id" type="var">_</span>).<br/>
 
-<div class="paragraph"> </div>
+<br/>
+</div>
 
-But this gives "Error: in Tacinterp.add_tacdef: Reserved Ltac name symmetry.".  This might be fixed with https://coq.inria.fr/bugs/show_bug.cgi?id=3113.  For now, you can <span class="inlinecode"><span class="id" type="tactic">apply</span></span> <span class="inlinecode"><span class="id" type="tactic">symmetry</span></span> or <span class="inlinecode"><span class="id" type="tactic">eapply</span></span> <span class="inlinecode"><span class="id" type="tactic">symmetry</span></span>.  (Note that we can get around this error message by using <span class="inlinecode"><span class="id" type="keyword">Tactic</span></span> <span class="inlinecode"><span class="id" type="keyword">Notation</span></span> <span class="inlinecode">"<span class="id" type="tactic">symmetry</span>"</span>, but, confusingly, this tactic notation never gets called. 
-<div class="paragraph"> </div>
-
+<div class="doc">
 <a name="lab5"></a><h2 class="section">Basic definitions</h2>
 
 <div class="paragraph"> </div>
@@ -824,10 +835,6 @@ There is a canonical function to a contractible type.
 <span class="id" type="keyword">Hint Resolve</span> @<a class="idref" href="HoTT.Overture.html#idpath"><span class="id" type="constructor">idpath</span></a> : <span class="id" type="var">core</span>.<br/>
 
 <br/>
-<span class="id" type="keyword">Ltac</span> <span class="id" type="var">path_via</span> <span class="id" type="var">mid</span> :=<br/>
-&nbsp;&nbsp;<span class="id" type="tactic">apply</span> @<a class="idref" href="HoTT.Overture.html#concat"><span class="id" type="definition">concat</span></a> <span class="id" type="keyword">with</span> (<span class="id" type="var">y</span> := <span class="id" type="var">mid</span>); <span class="id" type="tactic">auto</span> <span class="id" type="keyword">with</span> <span class="id" type="var">path_hints</span>.<br/>
-
-<br/>
 </div>
 
 <div class="doc">
@@ -890,7 +897,7 @@ Ssreflect tactics, adapted by Robbert Krebbers
 &nbsp;&nbsp;<span class="id" type="tactic">trivial</span>; <span class="id" type="tactic">intros</span>; <span class="id" type="tactic">solve</span><br/>
 &nbsp;&nbsp;&nbsp;&nbsp;[ <span class="id" type="tactic">repeat</span> <span class="id" type="tactic">first</span><br/>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;[ <span class="id" type="tactic">solve</span> [<span class="id" type="tactic">trivial</span>]<br/>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;| <span class="id" type="tactic">solve</span> [<span class="id" type="tactic">eapply</span> <a class="idref" href="HoTT.Overture.html#symmetry"><span class="id" type="definition">symmetry</span></a>; <span class="id" type="tactic">trivial</span>]<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;| <span class="id" type="tactic">solve</span> [<span class="id" type="tactic">symmetry</span>; <span class="id" type="tactic">trivial</span>]<br/>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;| <span class="id" type="tactic">reflexivity</span><br/>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<br/>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<br/>
