@@ -30,7 +30,7 @@ pre {
 
 <div class="code" title="File: Functorish.v
 Line: 1
-Time: 0.032s">
+Time: 0.037s">
 <div class="time" style="width: 100%"></div>
 <pre>Require Import Overture TruncType types.Universe Equivalences PathGroupoids.</pre>
 </div>
@@ -83,160 +83,26 @@ Time: 0s">
 <div class="time" style="width: 0%"></div>
 <pre>
 
-Lemma equiv_rect {A0 : Type} (P : forall A1 : Type, (A0 &lt;~&gt; A1) -&gt; Type)
-  (d0 : P A0 (equiv_idmap A0))
-: forall (A1 : Type) (e : A0 &lt;~&gt; A1), P A1 e.</pre>
-</div>
-<div class="code" title="File: Functorish.v
-Line: 12
-Time: 0s">
-<div class="time" style="width: 0%"></div>
-<pre>
-Proof.</pre>
-</div>
-<div class="code" title="File: Functorish.v
-Line: 13
-Time: 0.003s">
-<div class="time" style="width: 9.375%"></div>
-<pre>
-  assert (H1 : forall (A1 : Type) (p : A0 = A1), P A1 (equiv_path _ _ p))
-   by (by destruct p).</pre>
-</div>
-<div class="code" title="File: Functorish.v
-Line: 15
-Time: 0s">
-<div class="time" style="width: 0%"></div>
-<pre>
-  intros A1 e.</pre>
-</div>
-<div class="code" title="File: Functorish.v
-Line: 16
-Time: 0.001s">
-<div class="time" style="width: 3.125%"></div>
-<pre>
-  assert (H2 := H1 A1 (path_universe e)).</pre>
-</div>
-<div class="code" title="File: Functorish.v
-Line: 17
-Time: 0s">
-<div class="time" style="width: 0%"></div>
-<pre>
-  refine (transport _ _ H2).</pre>
-</div>
-<div class="code" title="File: Functorish.v
-Line: 18
-Time: 0.001s">
-<div class="time" style="width: 3.125%"></div>
-<pre>
-  destruct e as [e_fun e_isequiv].</pre>
-</div>
-<div class="code" title="File: Functorish.v
-Line: 19
-Time: 0.001s">
-<div class="time" style="width: 3.125%"></div>
-<pre> apply eisretr.</pre>
-</div>
-<div class="code" title="File: Functorish.v
-Line: 19
-Time: 0.003s">
-<div class="time" style="width: 9.375%"></div>
-<pre>
-Defined.</pre>
-</div>
-<div class="code" title="File: Functorish.v
-Line: 20
-Time: 0s">
-<div class="time" style="width: 0%"></div>
-<pre>
-
-(** Surely should be able to simplify this!? *)</pre>
-</div>
-<div class="code" title="File: Functorish.v
-Line: 22
-Time: 0.001s">
-<div class="time" style="width: 3.125%"></div>
-<pre>Lemma equiv_comp {A0 : Type} (P : forall A1 : Type, (A0 &lt;~&gt; A1) -&gt; Type)
-  (d0 : P A0 (equiv_idmap A0))
-: equiv_rect P d0 A0 (equiv_idmap A0) = d0.</pre>
-</div>
-<div class="code" title="File: Functorish.v
-Line: 24
-Time: 0s">
-<div class="time" style="width: 0%"></div>
-<pre>
-Proof.</pre>
-</div>
-<div class="code" title="File: Functorish.v
-Line: 25
-Time: 0.012s">
-<div class="time" style="width: 37.5%"></div>
-<pre>
-  assert (lem : forall (q : A0 = A0) (r : 1 = q),
-    @transport _ (P A0) _ _ (ap (equiv_path _ _) r^)
-     (match q as p in (_ = y) return (P y (equiv_path A0 y p))
-        with 1 =&gt; d0 end) = d0) by (by destruct r).</pre>
-</div>
-<div class="code" title="File: Functorish.v
-Line: 29
-Time: 0s">
-<div class="time" style="width: 0%"></div>
-<pre>
-  unfold equiv_rect; simpl.</pre>
-</div>
-<div class="code" title="File: Functorish.v
-Line: 30
-Time: 0.012s">
-<div class="time" style="width: 37.5%"></div>
-<pre>
-  rewrite (eisadj (equiv_path A0 A0) 1).</pre>
-</div>
-<div class="code" title="File: Functorish.v
-Line: 31
-Time: 0.015s">
-<div class="time" style="width: 46.875%"></div>
-<pre>
-  rewrite &lt;- (inv_V (eissect (equiv_path A0 A0) 1)).</pre>
-</div>
-<div class="code" title="File: Functorish.v
-Line: 32
-Time: 0.011s">
-<div class="time" style="width: 34.375%"></div>
-<pre>
-  apply lem.</pre>
-</div>
-<div class="code" title="File: Functorish.v
-Line: 33
-Time: 0.031s">
-<div class="time" style="width: 96.875%"></div>
-<pre>
-Defined.</pre>
-</div>
-<div class="code" title="File: Functorish.v
-Line: 34
-Time: 0s">
-<div class="time" style="width: 0%"></div>
-<pre>
-
 Section Functorish.</pre>
 </div>
 <div class="code" title="File: Functorish.v
-Line: 36
+Line: 10
 Time: 0s">
 <div class="time" style="width: 0%"></div>
 <pre>
 (* We do not need composition to be preserved. *)</pre>
 </div>
 <div class="code" title="File: Functorish.v
-Line: 37
+Line: 11
 Time: 0.002s">
-<div class="time" style="width: 6.25%"></div>
+<div class="time" style="width: 5.4054054054054%"></div>
 <pre>Global Class Functorish (F : Type -&gt; Type) := {
   fmap {A B} (f : A -&gt; B) : F A -&gt; F B ;
   fmap_idmap (A:Type) : fmap (idmap : A -&gt; A) = idmap
 }.</pre>
 </div>
 <div class="code" title="File: Functorish.v
-Line: 40
+Line: 14
 Time: 0s">
 <div class="time" style="width: 0%"></div>
 <pre>
@@ -244,14 +110,14 @@ Time: 0s">
 Global Arguments fmap F {FF} {A B} f _ : rename.</pre>
 </div>
 <div class="code" title="File: Functorish.v
-Line: 42
+Line: 16
 Time: 0s">
 <div class="time" style="width: 0%"></div>
 <pre>
 Global Arguments fmap_idmap F {FF A} : rename.</pre>
 </div>
 <div class="code" title="File: Functorish.v
-Line: 43
+Line: 17
 Time: 0s">
 <div class="time" style="width: 0%"></div>
 <pre>
@@ -259,145 +125,145 @@ Time: 0s">
 Context (F : Type -&gt; Type).</pre>
 </div>
 <div class="code" title="File: Functorish.v
-Line: 45
+Line: 19
 Time: 0s">
 <div class="time" style="width: 0%"></div>
 <pre>
 Context {FF : Functorish F}.</pre>
 </div>
 <div class="code" title="File: Functorish.v
-Line: 46
+Line: 20
 Time: 0.001s">
-<div class="time" style="width: 3.125%"></div>
+<div class="time" style="width: 2.7027027027027%"></div>
 <pre>
 
 Proposition isequiv_fmap {A B} (f : A -&gt; B) `{IsEquiv _ _ f}
   : IsEquiv (fmap F f).</pre>
 </div>
 <div class="code" title="File: Functorish.v
-Line: 49
+Line: 23
 Time: 0s">
 <div class="time" style="width: 0%"></div>
 <pre>
 Proof.</pre>
 </div>
 <div class="code" title="File: Functorish.v
-Line: 50
+Line: 24
 Time: 0.001s">
-<div class="time" style="width: 3.125%"></div>
+<div class="time" style="width: 2.7027027027027%"></div>
 <pre>
-  refine (equiv_rect (fun A' e =&gt; IsEquiv (fmap F e)) _ _ (BuildEquiv _ _ f _)).</pre>
+  refine (equiv_induction (fun A' e =&gt; IsEquiv (fmap F e)) _ _ (BuildEquiv _ _ f _)).</pre>
 </div>
 <div class="code" title="File: Functorish.v
-Line: 51
+Line: 25
 Time: 0.001s">
-<div class="time" style="width: 3.125%"></div>
+<div class="time" style="width: 2.7027027027027%"></div>
 <pre>
   refine (transport _ (fmap_idmap F)^ _);
     try apply isequiv_idmap.</pre>
 </div>
 <div class="code" title="File: Functorish.v
-Line: 53
+Line: 27
 Time: 0s">
 <div class="time" style="width: 0%"></div>
 <pre> (* This line may not be needed in a new enough coq. *)</pre>
 </div>
 <div class="code" title="File: Functorish.v
-Line: 53
+Line: 27
 Time: 0.001s">
-<div class="time" style="width: 3.125%"></div>
+<div class="time" style="width: 2.7027027027027%"></div>
 <pre>Defined.</pre>
 </div>
 <div class="code" title="File: Functorish.v
-Line: 53
+Line: 27
 Time: 0.002s">
-<div class="time" style="width: 6.25%"></div>
+<div class="time" style="width: 5.4054054054054%"></div>
 <pre>
 
 Proposition fmap_agrees_with_univalence {A B} (f : A -&gt; B) `{IsEquiv _ _ f}
   : fmap F f = equiv_path _ _ (ap F (path_universe f)).</pre>
 </div>
 <div class="code" title="File: Functorish.v
-Line: 56
+Line: 30
 Time: 0s">
 <div class="time" style="width: 0%"></div>
 <pre>
 Proof.</pre>
 </div>
 <div class="code" title="File: Functorish.v
-Line: 57
-Time: 0.013s">
-<div class="time" style="width: 40.625%"></div>
+Line: 31
+Time: 0.014s">
+<div class="time" style="width: 37.837837837838%"></div>
 <pre>
-  refine (equiv_rect
+  refine (equiv_induction
     (fun A' e =&gt; fmap F e = equiv_path _ _ (ap F (path_universe e)))
     _ _ (BuildEquiv _ _ f _)).</pre>
 </div>
 <div class="code" title="File: Functorish.v
-Line: 60
+Line: 34
 Time: 0.001s">
-<div class="time" style="width: 3.125%"></div>
+<div class="time" style="width: 2.7027027027027%"></div>
 <pre>
   transitivity (idmap : F A -&gt; F A).</pre>
 </div>
 <div class="code" title="File: Functorish.v
-Line: 61
+Line: 35
 Time: 0s">
 <div class="time" style="width: 0%"></div>
 <pre>
     apply fmap_idmap.</pre>
 </div>
 <div class="code" title="File: Functorish.v
-Line: 62
+Line: 36
 Time: 0.003s">
-<div class="time" style="width: 9.375%"></div>
+<div class="time" style="width: 8.1081081081081%"></div>
 <pre>
   change (equiv_idmap A) with (equiv_path A A 1).</pre>
 </div>
 <div class="code" title="File: Functorish.v
-Line: 63
-Time: 0.007s">
-<div class="time" style="width: 21.875%"></div>
+Line: 37
+Time: 0.008s">
+<div class="time" style="width: 21.621621621622%"></div>
 <pre>
   rewrite (@eta_path_universe _ A A 1).</pre>
 </div>
 <div class="code" title="File: Functorish.v
-Line: 64
+Line: 38
 Time: 0s">
 <div class="time" style="width: 0%"></div>
 <pre> exact 1.</pre>
 </div>
 <div class="code" title="File: Functorish.v
-Line: 64
+Line: 38
 Time: 0.005s">
-<div class="time" style="width: 15.625%"></div>
+<div class="time" style="width: 13.513513513514%"></div>
 <pre>
 Defined.</pre>
 </div>
 <div class="code" title="File: Functorish.v
-Line: 65
+Line: 39
 Time: 0.001s">
-<div class="time" style="width: 3.125%"></div>
+<div class="time" style="width: 2.7027027027027%"></div>
 <pre>
 
 End Functorish.</pre>
 </div>
 <div class="code" title="File: Functorish.v
-Line: 67
+Line: 41
 Time: 0.001s">
-<div class="time" style="width: 3.125%"></div>
+<div class="time" style="width: 2.7027027027027%"></div>
 <pre>
 End AssumeFunext.</pre>
 </div>
 <div class="code" title="File: Functorish.v
-Line: 68
-Time: 0.007s">
-<div class="time" style="width: 21.875%"></div>
+Line: 42
+Time: 0.002s">
+<div class="time" style="width: 5.4054054054054%"></div>
 <pre>
 End AssumeUnivalence.</pre>
 </div>
 <div class="code" title="File: Functorish.v
-Line: 70
+Line: 44
 Time: 0s">
 <div class="time" style="width: 0%"></div>
 <pre>

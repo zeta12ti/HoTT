@@ -39,14 +39,14 @@ Time: 0s">
 </div>
 <div class="code" title="File: Universe.v
 Line: 3
-Time: 0.011s">
-<div class="time" style="width: 44%"></div>
+Time: 0.013s">
+<div class="time" style="width: 43.333333333333%"></div>
 <pre>Require Import Overture PathGroupoids Equivalences.</pre>
 </div>
 <div class="code" title="File: Universe.v
 Line: 3
-Time: 0.016s">
-<div class="time" style="width: 64%"></div>
+Time: 0.019s">
+<div class="time" style="width: 63.333333333333%"></div>
 <pre>
 Require Import HProp EquivalenceVarieties Trunc types.Sigma.</pre>
 </div>
@@ -84,7 +84,7 @@ Time: 0s">
 </div>
 <div class="code" title="File: Universe.v
 Line: 11
-Time: 0.025s">
+Time: 0.03s">
 <div class="time" style="width: 100%"></div>
 <pre>Instance isequiv_path {A B : Type} (p : A = B)
   : IsEquiv (transport (fun X:Type =&gt; X) p) | 0
@@ -100,7 +100,7 @@ Time: 0.025s">
 <div class="code" title="File: Universe.v
 Line: 20
 Time: 0.001s">
-<div class="time" style="width: 4%"></div>
+<div class="time" style="width: 3.3333333333333%"></div>
 <pre>
 
 Definition equiv_path (A B : Type) (p : A = B) : A &lt;~&gt; B
@@ -109,7 +109,7 @@ Definition equiv_path (A B : Type) (p : A = B) : A &lt;~&gt; B
 <div class="code" title="File: Universe.v
 Line: 23
 Time: 0.001s">
-<div class="time" style="width: 4%"></div>
+<div class="time" style="width: 3.3333333333333%"></div>
 <pre>
 
 Definition equiv_path_V `{Funext} (A B : Type) (p : A = B) :
@@ -125,7 +125,7 @@ Proof.</pre>
 <div class="code" title="File: Universe.v
 Line: 27
 Time: 0.001s">
-<div class="time" style="width: 4%"></div>
+<div class="time" style="width: 3.3333333333333%"></div>
 <pre>
   destruct p.</pre>
 </div>
@@ -144,26 +144,26 @@ Time: 0s">
 <div class="code" title="File: Universe.v
 Line: 28
 Time: 0.001s">
-<div class="time" style="width: 4%"></div>
+<div class="time" style="width: 3.3333333333333%"></div>
 <pre> simpl.</pre>
 </div>
 <div class="code" title="File: Universe.v
 Line: 28
 Time: 0.002s">
-<div class="time" style="width: 8%"></div>
+<div class="time" style="width: 6.6666666666667%"></div>
 <pre> apply ap.</pre>
 </div>
 <div class="code" title="File: Universe.v
 Line: 28
-Time: 0.001s">
-<div class="time" style="width: 4%"></div>
+Time: 0.002s">
+<div class="time" style="width: 6.6666666666667%"></div>
 <pre>
   refine (@allpath_hprop _ (hprop_isequiv _) _ _).</pre>
 </div>
 <div class="code" title="File: Universe.v
 Line: 29
-Time: 0.006s">
-<div class="time" style="width: 24%"></div>
+Time: 0.007s">
+<div class="time" style="width: 23.333333333333%"></div>
 <pre>
 Defined.</pre>
 </div>
@@ -183,8 +183,8 @@ Time: 0s">
 </div>
 <div class="code" title="File: Universe.v
 Line: 32
-Time: 0s">
-<div class="time" style="width: 0%"></div>
+Time: 0.001s">
+<div class="time" style="width: 3.3333333333333%"></div>
 <pre>
 Axiom isequiv_equiv_path : forall `{Univalence} (A B : Type), IsEquiv (equiv_path A B).</pre>
 </div>
@@ -205,8 +205,8 @@ Context `{Univalence}.</pre>
 </div>
 <div class="code" title="File: Universe.v
 Line: 36
-Time: 0.002s">
-<div class="time" style="width: 8%"></div>
+Time: 0.003s">
+<div class="time" style="width: 10%"></div>
 <pre>
 
 Definition path_universe_uncurried {A B : Type} (f : A &lt;~&gt; B) : A = B
@@ -215,7 +215,7 @@ Definition path_universe_uncurried {A B : Type} (f : A &lt;~&gt; B) : A = B
 <div class="code" title="File: Universe.v
 Line: 39
 Time: 0.001s">
-<div class="time" style="width: 4%"></div>
+<div class="time" style="width: 3.3333333333333%"></div>
 <pre>
 
 Definition path_universe {A B : Type} (f : A -&gt; B) {feq : IsEquiv f} : (A = B)
@@ -223,16 +223,146 @@ Definition path_universe {A B : Type} (f : A -&gt; B) {feq : IsEquiv f} : (A = B
 </div>
 <div class="code" title="File: Universe.v
 Line: 42
-Time: 0.005s">
-<div class="time" style="width: 20%"></div>
+Time: 0.003s">
+<div class="time" style="width: 10%"></div>
 <pre>
 
-Definition transport_path_universe {A B : Type} (f : A -&gt; B) {feq : IsEquiv f} (z : A)
+Definition eta_path_universe {A B : Type} (p : A = B)
+  : path_universe (equiv_path A B p) = p
+  := eissect (equiv_path A B) p.</pre>
+</div>
+<div class="code" title="File: Universe.v
+Line: 46
+Time: 0.005s">
+<div class="time" style="width: 16.666666666667%"></div>
+<pre>
+
+Definition isequiv_path_universe {A B : Type}
+  : IsEquiv (@path_universe_uncurried A B)
+ := _.</pre>
+</div>
+<div class="code" title="File: Universe.v
+Line: 50
+Time: 0.001s">
+<div class="time" style="width: 3.3333333333333%"></div>
+<pre>
+
+Definition equiv_path_universe (A B : Type) : (A &lt;~&gt; B) &lt;~&gt; (A = B)
+  := BuildEquiv _ _ (@path_universe_uncurried A B) isequiv_path_universe.</pre>
+</div>
+<div class="code" title="File: Universe.v
+Line: 53
+Time: 0.001s">
+<div class="time" style="width: 3.3333333333333%"></div>
+<pre>
+
+Definition path_universe_V_uncurried `{Funext} {A B : Type} (f : A &lt;~&gt; B)
+  : path_universe_uncurried (equiv_inverse f) = (path_universe_uncurried f)^.</pre>
+</div>
+<div class="code" title="File: Universe.v
+Line: 56
+Time: 0s">
+<div class="time" style="width: 0%"></div>
+<pre>
+Proof.</pre>
+</div>
+<div class="code" title="File: Universe.v
+Line: 57
+Time: 0s">
+<div class="time" style="width: 0%"></div>
+<pre>
+  revert f.</pre>
+</div>
+<div class="code" title="File: Universe.v
+Line: 58
+Time: 0.007s">
+<div class="time" style="width: 23.333333333333%"></div>
+<pre> equiv_intro ((equiv_path_universe A B)^-1) p.</pre>
+</div>
+<div class="code" title="File: Universe.v
+Line: 58
+Time: 0.003s">
+<div class="time" style="width: 10%"></div>
+<pre> simpl.</pre>
+</div>
+<div class="code" title="File: Universe.v
+Line: 58
+Time: 0.001s">
+<div class="time" style="width: 3.3333333333333%"></div>
+<pre>
+  transitivity (p^).</pre>
+</div>
+<div class="code" title="File: Universe.v
+Line: 59
+Time: 0.009s">
+<div class="time" style="width: 30%"></div>
+<pre>
+    2: exact (inverse2 (eisretr (equiv_path_universe A B) p)^).</pre>
+</div>
+<div class="code" title="File: Universe.v
+Line: 60
+Time: 0s">
+<div class="time" style="width: 0%"></div>
+<pre>
+  unfold compose.</pre>
+</div>
+<div class="code" title="File: Universe.v
+Line: 61
+Time: 0.002s">
+<div class="time" style="width: 6.6666666666667%"></div>
+<pre> transitivity (path_universe_uncurried (equiv_path B A p^)).</pre>
+</div>
+<div class="code" title="File: Universe.v
+Line: 61
+Time: 0.001s">
+<div class="time" style="width: 3.3333333333333%"></div>
+<pre>
+    by refine (ap _ (equiv_path_V A B p)^).</pre>
+</div>
+<div class="code" title="File: Universe.v
+Line: 62
+Time: 0.009s">
+<div class="time" style="width: 30%"></div>
+<pre>
+  by refine (eissect (equiv_path B A) p^).</pre>
+</div>
+<div class="code" title="File: Universe.v
+Line: 63
+Time: 0.015s">
+<div class="time" style="width: 50%"></div>
+<pre>
+Defined.</pre>
+</div>
+<div class="code" title="File: Universe.v
+Line: 64
+Time: 0.004s">
+<div class="time" style="width: 13.333333333333%"></div>
+<pre>
+
+Definition path_universe_V `{Funext} `(f : A -&gt; B) `{IsEquiv A B f}
+  : path_universe (f^-1) = (path_universe f)^
+  := path_universe_V_uncurried (BuildEquiv A B f _).</pre>
+</div>
+<div class="code" title="File: Universe.v
+Line: 68
+Time: 0s">
+<div class="time" style="width: 0%"></div>
+<pre>
+
+(** ** Transport *)
+
+</pre>
+</div>
+<div class="code" title="File: Universe.v
+Line: 71
+Time: 0.006s">
+<div class="time" style="width: 20%"></div>
+<pre>Definition transport_path_universe {A B : Type} (f : A -&gt; B) {feq : IsEquiv f} (z : A)
   : transport (fun X:Type =&gt; X) (path_universe f) z = f z
   := ap10 (ap equiv_fun (eisretr (equiv_path A B) (BuildEquiv _ _ f feq))) z.</pre>
 </div>
 <div class="code" title="File: Universe.v
-Line: 46
+Line: 73
 Time: 0s">
 <div class="time" style="width: 0%"></div>
 <pre>
@@ -240,9 +370,9 @@ Time: 0s">
 (* This somewhat fancier version is useful when working with HITs. *)</pre>
 </div>
 <div class="code" title="File: Universe.v
-Line: 48
-Time: 0.009s">
-<div class="time" style="width: 36%"></div>
+Line: 75
+Time: 0.011s">
+<div class="time" style="width: 36.666666666667%"></div>
 <pre>Definition transport_path_universe'
   {A : Type} (P : A -&gt; Type) {x y : A} (p : x = y)
   (f : P x &lt;~&gt; P y) (q : ap P p = path_universe f) (u : P x)
@@ -252,222 +382,93 @@ Time: 0.009s">
    @ transport_path_universe f u.</pre>
 </div>
 <div class="code" title="File: Universe.v
-Line: 54
-Time: 0.002s">
-<div class="time" style="width: 8%"></div>
+Line: 81
+Time: 0.007s">
+<div class="time" style="width: 23.333333333333%"></div>
 <pre>
 
-Definition eta_path_universe {A B : Type} (p : A = B)
-  : path_universe (equiv_path A B p) = p
-  := eissect (equiv_path A B) p.</pre>
+Definition transport_path_universe_V `{Funext} {A B : Type} (f : A -&gt; B) {feq : IsEquiv f} (z : B)
+  : transport (fun X:Type =&gt; X) (path_universe f)^ z = f^-1 z
+  := (transport2 idmap (path_universe_V f) z)^
+   @ (transport_path_universe (f^-1) z).</pre>
 </div>
 <div class="code" title="File: Universe.v
-Line: 58
-Time: 0.004s">
-<div class="time" style="width: 16%"></div>
+Line: 86
+Time: 0s">
+<div class="time" style="width: 0%"></div>
 <pre>
 
-Definition isequiv_path_universe {A B : Type}
-  : IsEquiv (@path_universe_uncurried A B)
- := _.</pre>
-</div>
-<div class="code" title="File: Universe.v
-Line: 62
-Time: 0.001s">
-<div class="time" style="width: 4%"></div>
-<pre>
+(** ** Equivalence induction *)
 
-Definition equiv_path_universe (A B : Type) : (A &lt;~&gt; B) &lt;~&gt; (A = B)
-  := BuildEquiv _ _ (@path_universe_uncurried A B) isequiv_path_universe.</pre>
+(** Paulin-Mohring style *)</pre>
 </div>
 <div class="code" title="File: Universe.v
-Line: 65
-Time: 0.001s">
-<div class="time" style="width: 4%"></div>
-<pre>
-
-Definition path_universe_V_uncurried `{Funext} {A B : Type} (f : A &lt;~&gt; B)
-  : path_universe_uncurried (equiv_inverse f) = (path_universe_uncurried f)^.</pre>
+Line: 90
+Time: 0s">
+<div class="time" style="width: 0%"></div>
+<pre>Theorem equiv_induction {U : Type} (P : forall V, U &lt;~&gt; V -&gt; Type) :
+  (P U (equiv_idmap U)) -&gt; (forall V (w : U &lt;~&gt; V), P V w).</pre>
 </div>
 <div class="code" title="File: Universe.v
-Line: 68
+Line: 91
 Time: 0s">
 <div class="time" style="width: 0%"></div>
 <pre>
 Proof.</pre>
 </div>
 <div class="code" title="File: Universe.v
-Line: 69
+Line: 92
 Time: 0s">
 <div class="time" style="width: 0%"></div>
 <pre>
-  revert f.</pre>
+  intros H0 V w.</pre>
 </div>
 <div class="code" title="File: Universe.v
-Line: 70
-Time: 0.006s">
-<div class="time" style="width: 24%"></div>
-<pre> equiv_intro ((equiv_path_universe A B)^-1) p.</pre>
-</div>
-<div class="code" title="File: Universe.v
-Line: 70
+Line: 93
 Time: 0.002s">
-<div class="time" style="width: 8%"></div>
-<pre> simpl.</pre>
-</div>
-<div class="code" title="File: Universe.v
-Line: 70
-Time: 0.001s">
-<div class="time" style="width: 4%"></div>
+<div class="time" style="width: 6.6666666666667%"></div>
 <pre>
-  transitivity (p^).</pre>
+  apply (equiv_rect (equiv_path U V)).</pre>
 </div>
 <div class="code" title="File: Universe.v
-Line: 71
-Time: 0.008s">
-<div class="time" style="width: 32%"></div>
+Line: 94
+Time: 0.002s">
+<div class="time" style="width: 6.6666666666667%"></div>
 <pre>
-    2: exact (inverse2 (eisretr (equiv_path_universe A B) p)^).</pre>
+  exact (paths_rect U (fun Y p =&gt; P Y (equiv_path U Y p)) H0 V).</pre>
 </div>
 <div class="code" title="File: Universe.v
-Line: 72
-Time: 0s">
-<div class="time" style="width: 0%"></div>
-<pre>
-  unfold compose.</pre>
-</div>
-<div class="code" title="File: Universe.v
-Line: 73
-Time: 0.001s">
-<div class="time" style="width: 4%"></div>
-<pre> transitivity (path_universe_uncurried (equiv_path B A p^)).</pre>
-</div>
-<div class="code" title="File: Universe.v
-Line: 73
-Time: 0.001s">
-<div class="time" style="width: 4%"></div>
-<pre>
-    by refine (ap _ (equiv_path_V A B p)^).</pre>
-</div>
-<div class="code" title="File: Universe.v
-Line: 74
-Time: 0.008s">
-<div class="time" style="width: 32%"></div>
-<pre>
-  by refine (eissect (equiv_path B A) p^).</pre>
-</div>
-<div class="code" title="File: Universe.v
-Line: 75
-Time: 0.013s">
-<div class="time" style="width: 52%"></div>
+Line: 95
+Time: 0.002s">
+<div class="time" style="width: 6.6666666666667%"></div>
 <pre>
 Defined.</pre>
 </div>
 <div class="code" title="File: Universe.v
-Line: 76
-Time: 0.004s">
-<div class="time" style="width: 16%"></div>
+Line: 96
+Time: 0.011s">
+<div class="time" style="width: 36.666666666667%"></div>
 <pre>
 
-Definition path_universe_V `{Funext} `(f : A -&gt; B) `{IsEquiv A B f}
-  : path_universe (f^-1) = (path_universe f)^
-  := path_universe_V_uncurried (BuildEquiv A B f _).</pre>
-</div>
-<div class="code" title="File: Universe.v
-Line: 80
-Time: 0s">
-<div class="time" style="width: 0%"></div>
-<pre>
-
-(** It would be nice for these to go in [HProp.v], but this file depends on that one, and these depend on having [Univalence]. *)</pre>
-</div>
-<div class="code" title="File: Universe.v
-Line: 82
-Time: 0s">
-<div class="time" style="width: 0%"></div>
-<pre>Instance trunc_path_IsHProp `{Funext} X Y `{IsHProp Y}
-: IsHProp (X = Y).</pre>
-</div>
-<div class="code" title="File: Universe.v
-Line: 83
-Time: 0s">
-<div class="time" style="width: 0%"></div>
-<pre>
-Proof.</pre>
-</div>
-<div class="code" title="File: Universe.v
-Line: 84
-Time: 0s">
-<div class="time" style="width: 0%"></div>
-<pre>
-  apply hprop_allpath.</pre>
-</div>
-<div class="code" title="File: Universe.v
-Line: 85
-Time: 0s">
-<div class="time" style="width: 0%"></div>
-<pre>
-  intros pf1 pf2.</pre>
-</div>
-<div class="code" title="File: Universe.v
-Line: 86
-Time: 0.001s">
-<div class="time" style="width: 4%"></div>
-<pre>
-  rewrite &lt;- (eta_path_universe pf1), &lt;- (eta_path_universe pf2).</pre>
-</div>
-<div class="code" title="File: Universe.v
-Line: 87
-Time: 0.013s">
-<div class="time" style="width: 52%"></div>
-<pre>
-  lazymatch goal with
-    | [ |- @path_universe _ _ (equiv_fun ?f) ?Hf
-           = @path_universe _ _ (equiv_fun ?g) ?Hg ]
-      =&gt; change Hf with (equiv_isequiv f);
-        change Hg with (equiv_isequiv g);
-        generalize (equiv_isequiv f) (equiv_isequiv g);
-        generalize (equiv_fun f) (equiv_fun g)
-  end.</pre>
-</div>
-<div class="code" title="File: Universe.v
-Line: 95
-Time: 0.005s">
-<div class="time" style="width: 20%"></div>
-<pre>
-  let f' := fresh in
-  let g' := fresh in
-  intros f' g' ? ?;
-    assert (f' = g'); [ | path_induction; apply ap; apply allpath_hprop ].</pre>
-</div>
-<div class="code" title="File: Universe.v
-Line: 99
-Time: 0s">
-<div class="time" style="width: 0%"></div>
-<pre>
-  apply path_forall; intro.</pre>
-</div>
-<div class="code" title="File: Universe.v
-Line: 100
-Time: 0s">
-<div class="time" style="width: 0%"></div>
-<pre>
-  apply allpath_hprop.</pre>
+Definition equiv_induction_comp {U : Type} (P : forall V, U &lt;~&gt; V -&gt; Type)
+  (didmap : P U (equiv_idmap U))
+  : equiv_induction P didmap U (equiv_idmap U) = didmap
+  := (equiv_rect_comp (P U) _ 1).</pre>
 </div>
 <div class="code" title="File: Universe.v
 Line: 101
-Time: 0.008s">
-<div class="time" style="width: 32%"></div>
-<pre>
-Qed.</pre>
-</div>
-<div class="code" title="File: Universe.v
-Line: 102
 Time: 0s">
 <div class="time" style="width: 0%"></div>
 <pre>
 
-Global Instance isset_hProp `{Funext} : IsHSet hProp | 0.</pre>
+(** Martin-Lof style *)</pre>
+</div>
+<div class="code" title="File: Universe.v
+Line: 103
+Time: 0.001s">
+<div class="time" style="width: 3.3333333333333%"></div>
+<pre>Theorem equiv_induction' (P : forall U V, U &lt;~&gt; V -&gt; Type) :
+  (forall T, P T T (equiv_idmap T)) -&gt; (forall U V (w : U &lt;~&gt; V), P U V w).</pre>
 </div>
 <div class="code" title="File: Universe.v
 Line: 104
@@ -481,61 +482,205 @@ Line: 105
 Time: 0s">
 <div class="time" style="width: 0%"></div>
 <pre>
-  eapply trunc_equiv'; [ apply issig_hProp | ].</pre>
+  intros H0 U V w.</pre>
 </div>
 <div class="code" title="File: Universe.v
 Line: 106
+Time: 0.002s">
+<div class="time" style="width: 6.6666666666667%"></div>
+<pre>
+  apply (equiv_rect (equiv_path U V)).</pre>
+</div>
+<div class="code" title="File: Universe.v
+Line: 107
+Time: 0.002s">
+<div class="time" style="width: 6.6666666666667%"></div>
+<pre>
+  exact (paths_rect' (fun X Y p =&gt; P X Y (equiv_path X Y p)) H0 U V).</pre>
+</div>
+<div class="code" title="File: Universe.v
+Line: 108
+Time: 0.002s">
+<div class="time" style="width: 6.6666666666667%"></div>
+<pre>
+Defined.</pre>
+</div>
+<div class="code" title="File: Universe.v
+Line: 109
+Time: 0.011s">
+<div class="time" style="width: 36.666666666667%"></div>
+<pre>
+
+Definition equiv_induction'_comp (P : forall U V, U &lt;~&gt; V -&gt; Type)
+  (didmap : forall T, P T T (equiv_idmap T)) (U : Type)
+  : equiv_induction' P didmap U U (equiv_idmap U) = didmap U
+  := (equiv_rect_comp (P U U) _ 1).</pre>
+</div>
+<div class="code" title="File: Universe.v
+Line: 114
+Time: 0s">
+<div class="time" style="width: 0%"></div>
+<pre>
+
+(** ** Facts about HProps using univalence *)
+
+(** It would be nice for these to go in [HProp.v], but this file depends on that one, and these depend on having [Univalence]. *)</pre>
+</div>
+<div class="code" title="File: Universe.v
+Line: 118
+Time: 0s">
+<div class="time" style="width: 0%"></div>
+<pre>Instance trunc_path_IsHProp `{Funext} X Y `{IsHProp Y}
+: IsHProp (X = Y).</pre>
+</div>
+<div class="code" title="File: Universe.v
+Line: 119
+Time: 0s">
+<div class="time" style="width: 0%"></div>
+<pre>
+Proof.</pre>
+</div>
+<div class="code" title="File: Universe.v
+Line: 120
+Time: 0s">
+<div class="time" style="width: 0%"></div>
+<pre>
+  apply hprop_allpath.</pre>
+</div>
+<div class="code" title="File: Universe.v
+Line: 121
+Time: 0s">
+<div class="time" style="width: 0%"></div>
+<pre>
+  intros pf1 pf2.</pre>
+</div>
+<div class="code" title="File: Universe.v
+Line: 122
+Time: 0.002s">
+<div class="time" style="width: 6.6666666666667%"></div>
+<pre>
+  rewrite &lt;- (eta_path_universe pf1), &lt;- (eta_path_universe pf2).</pre>
+</div>
+<div class="code" title="File: Universe.v
+Line: 123
+Time: 0.016s">
+<div class="time" style="width: 53.333333333333%"></div>
+<pre>
+  lazymatch goal with
+    | [ |- @path_universe _ _ (equiv_fun ?f) ?Hf
+           = @path_universe _ _ (equiv_fun ?g) ?Hg ]
+      =&gt; change Hf with (equiv_isequiv f);
+        change Hg with (equiv_isequiv g);
+        generalize (equiv_isequiv f) (equiv_isequiv g);
+        generalize (equiv_fun f) (equiv_fun g)
+  end.</pre>
+</div>
+<div class="code" title="File: Universe.v
+Line: 131
+Time: 0.006s">
+<div class="time" style="width: 20%"></div>
+<pre>
+  let f' := fresh in
+  let g' := fresh in
+  intros f' g' ? ?;
+    assert (f' = g'); [ | path_induction; apply ap; apply allpath_hprop ].</pre>
+</div>
+<div class="code" title="File: Universe.v
+Line: 135
+Time: 0s">
+<div class="time" style="width: 0%"></div>
+<pre>
+  apply path_forall; intro.</pre>
+</div>
+<div class="code" title="File: Universe.v
+Line: 136
+Time: 0s">
+<div class="time" style="width: 0%"></div>
+<pre>
+  apply allpath_hprop.</pre>
+</div>
+<div class="code" title="File: Universe.v
+Line: 137
+Time: 0.009s">
+<div class="time" style="width: 30%"></div>
+<pre>
+Qed.</pre>
+</div>
+<div class="code" title="File: Universe.v
+Line: 138
+Time: 0s">
+<div class="time" style="width: 0%"></div>
+<pre>
+
+Global Instance isset_hProp `{Funext} : IsHSet hProp | 0.</pre>
+</div>
+<div class="code" title="File: Universe.v
+Line: 140
+Time: 0s">
+<div class="time" style="width: 0%"></div>
+<pre>
+Proof.</pre>
+</div>
+<div class="code" title="File: Universe.v
+Line: 141
+Time: 0s">
+<div class="time" style="width: 0%"></div>
+<pre>
+  eapply trunc_equiv'; [ apply issig_hProp | ].</pre>
+</div>
+<div class="code" title="File: Universe.v
+Line: 142
 Time: 0.001s">
-<div class="time" style="width: 4%"></div>
+<div class="time" style="width: 3.3333333333333%"></div>
 <pre>
   (intros ? [? ?]).</pre>
 </div>
 <div class="code" title="File: Universe.v
-Line: 107
+Line: 143
 Time: 0s">
 <div class="time" style="width: 0%"></div>
 <pre>
   refine (hprop_allpath _ _).</pre>
 </div>
 <div class="code" title="File: Universe.v
-Line: 108
+Line: 144
 Time: 0s">
 <div class="time" style="width: 0%"></div>
 <pre>
   intros.</pre>
 </div>
 <div class="code" title="File: Universe.v
-Line: 109
+Line: 145
 Time: 0.001s">
-<div class="time" style="width: 4%"></div>
+<div class="time" style="width: 3.3333333333333%"></div>
 <pre>
   apply path_path_sigma_uncurried.</pre>
 </div>
 <div class="code" title="File: Universe.v
-Line: 110
-Time: 0.009s">
-<div class="time" style="width: 36%"></div>
+Line: 146
+Time: 0.01s">
+<div class="time" style="width: 33.333333333333%"></div>
 <pre>
   (exists (allpath_hprop _ _)).</pre>
 </div>
 <div class="code" title="File: Universe.v
-Line: 111
-Time: 0.003s">
-<div class="time" style="width: 12%"></div>
+Line: 147
+Time: 0.004s">
+<div class="time" style="width: 13.333333333333%"></div>
 <pre>
   by apply allpath_hprop.</pre>
 </div>
 <div class="code" title="File: Universe.v
-Line: 112
-Time: 0.013s">
-<div class="time" style="width: 52%"></div>
+Line: 148
+Time: 0.016s">
+<div class="time" style="width: 53.333333333333%"></div>
 <pre>
 Qed.</pre>
 </div>
 <div class="code" title="File: Universe.v
-Line: 113
+Line: 149
 Time: 0.002s">
-<div class="time" style="width: 8%"></div>
+<div class="time" style="width: 6.6666666666667%"></div>
 <pre>
 
 Definition path_iff_hprop_uncurried `{IsHProp A, IsHProp B}
@@ -543,9 +688,9 @@ Definition path_iff_hprop_uncurried `{IsHProp A, IsHProp B}
   := @path_universe_uncurried A B o equiv_iff_hprop_uncurried.</pre>
 </div>
 <div class="code" title="File: Universe.v
-Line: 117
-Time: 0.002s">
-<div class="time" style="width: 8%"></div>
+Line: 153
+Time: 0.003s">
+<div class="time" style="width: 10%"></div>
 <pre>
 
 Definition path_iff_hProp_uncurried `{Funext} {A B : hProp}
@@ -553,9 +698,9 @@ Definition path_iff_hProp_uncurried `{Funext} {A B : hProp}
   := (@path_hprop _ A B) o path_iff_hprop_uncurried.</pre>
 </div>
 <div class="code" title="File: Universe.v
-Line: 121
-Time: 0.01s">
-<div class="time" style="width: 40%"></div>
+Line: 157
+Time: 0.011s">
+<div class="time" style="width: 36.666666666667%"></div>
 <pre>
 
 Global Instance isequiv_path_iff_hprop_uncurried `{Funext} `{IsHProp A, IsHProp B}
@@ -563,7 +708,7 @@ Global Instance isequiv_path_iff_hprop_uncurried `{Funext} `{IsHProp A, IsHProp 
   := _.</pre>
 </div>
 <div class="code" title="File: Universe.v
-Line: 125
+Line: 161
 Time: 0s">
 <div class="time" style="width: 0%"></div>
 <pre>
@@ -572,75 +717,75 @@ Global Instance isequiv_path_iff_hProp_uncurried `{Funext} {A B : hProp}
 : IsEquiv (@path_iff_hProp_uncurried _ A B).</pre>
 </div>
 <div class="code" title="File: Universe.v
-Line: 128
+Line: 164
 Time: 0s">
 <div class="time" style="width: 0%"></div>
 <pre>
 Proof.</pre>
 </div>
 <div class="code" title="File: Universe.v
-Line: 129
+Line: 165
 Time: 0s">
 <div class="time" style="width: 0%"></div>
 <pre>
   unfold path_iff_hProp_uncurried.</pre>
 </div>
 <div class="code" title="File: Universe.v
-Line: 130
+Line: 166
 Time: 0s">
 <div class="time" style="width: 0%"></div>
 <pre>
   apply (@isequiv_compose).</pre>
 </div>
 <div class="code" title="File: Universe.v
-Line: 131
+Line: 167
 Time: 0s">
 <div class="time" style="width: 0%"></div>
 <pre>
   -</pre>
 </div>
 <div class="code" title="File: Universe.v
-Line: 132
+Line: 168
 Time: 0s">
 <div class="time" style="width: 0%"></div>
 <pre> typeclasses eauto.</pre>
 </div>
 <div class="code" title="File: Universe.v
-Line: 132
+Line: 168
 Time: 0s">
 <div class="time" style="width: 0%"></div>
 <pre>
   -</pre>
 </div>
 <div class="code" title="File: Universe.v
-Line: 133
+Line: 169
 Time: 0s">
 <div class="time" style="width: 0%"></div>
 <pre> unfold path_hprop.</pre>
 </div>
 <div class="code" title="File: Universe.v
-Line: 133
+Line: 169
 Time: 0s">
 <div class="time" style="width: 0%"></div>
 <pre>
     apply isequiv_inverse.</pre>
 </div>
 <div class="code" title="File: Universe.v
-Line: 134
-Time: 0.001s">
-<div class="time" style="width: 4%"></div>
+Line: 170
+Time: 0.002s">
+<div class="time" style="width: 6.6666666666667%"></div>
 <pre>
 Defined.</pre>
 </div>
 <div class="code" title="File: Universe.v
-Line: 135
-Time: 0.016s">
-<div class="time" style="width: 64%"></div>
+Line: 171
+Time: 0.022s">
+<div class="time" style="width: 73.333333333333%"></div>
 <pre>
 End Univalence.</pre>
 </div>
 <div class="code" title="File: Universe.v
-Line: 137
+Line: 173
 Time: 0s">
 <div class="time" style="width: 0%"></div>
 <pre>
