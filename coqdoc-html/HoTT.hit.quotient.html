@@ -19,17 +19,18 @@
 <h1 class="libtitle">Library HoTT.hit.quotient</h1>
 
 <div class="code">
-<span class="id" type="keyword">Require</span> <span class="id" type="keyword">Import</span> <a class="idref" href="HoTT.Overture.html#"><span class="id" type="library">Overture</span></a> <a class="idref" href="HoTT.types.Universe.html#"><span class="id" type="library">types.Universe</span></a> <a class="idref" href="HoTT.HSet.html#"><span class="id" type="library">HSet</span></a> <a class="idref" href="HoTT.PathGroupoids.html#"><span class="id" type="library">PathGroupoids</span></a> <a class="idref" href="HoTT.HProp.html#"><span class="id" type="library">HProp</span></a> <a class="idref" href="HoTT.Equivalences.html#"><span class="id" type="library">Equivalences</span></a> <a class="idref" href="HoTT.UnivalenceImpliesFunext.html#"><span class="id" type="library">UnivalenceImpliesFunext</span></a>.<br/>
+<span class="id" type="keyword">Require</span> <span class="id" type="keyword">Import</span> <a class="idref" href="HoTT.Overture.html#"><span class="id" type="library">Overture</span></a> <a class="idref" href="HoTT.Fibrations.html#"><span class="id" type="library">Fibrations</span></a> <a class="idref" href="HoTT.types.Universe.html#"><span class="id" type="library">types.Universe</span></a> <a class="idref" href="HoTT.HSet.html#"><span class="id" type="library">HSet</span></a> <a class="idref" href="HoTT.PathGroupoids.html#"><span class="id" type="library">PathGroupoids</span></a> <a class="idref" href="HoTT.HProp.html#"><span class="id" type="library">HProp</span></a> <a class="idref" href="HoTT.Equivalences.html#"><span class="id" type="library">Equivalences</span></a> <a class="idref" href="HoTT.UnivalenceImpliesFunext.html#"><span class="id" type="library">UnivalenceImpliesFunext</span></a>.<br/>
 <span class="id" type="keyword">Require</span> <span class="id" type="keyword">Import</span> <a class="idref" href="HoTT.hit.epi.html#"><span class="id" type="library">hit.epi</span></a> <a class="idref" href="HoTT.hit.minus1Trunc.html#"><span class="id" type="library">minus1Trunc</span></a>.<br/>
 
 <br/>
 <span class="id" type="keyword">Open</span> <span class="id" type="keyword">Local</span> <span class="id" type="keyword">Scope</span> <span class="id" type="var">path_scope</span>.<br/>
+<span class="id" type="keyword">Open</span> <span class="id" type="keyword">Local</span> <span class="id" type="keyword">Scope</span> <span class="id" type="var">equiv_scope</span>.<br/>
 
 <br/>
 </div>
 
 <div class="doc">
-<a name="lab179"></a><h2 class="section">Quotient of a Type by a set-valued relation</h2>
+<a name="lab179"></a><h2 class="section">Quotient of a Type by an hprop-valued relation</h2>
 
 
 <div class="paragraph"> </div>
@@ -328,6 +329,79 @@ http://perso.crans.org/cohen/work/quotients/
 
 <br/>
 <span class="id" type="keyword">End</span> <a class="idref" href="HoTT.hit.quotient.html#Equiv"><span class="id" type="section">Equiv</span></a>.<br/>
+
+<br/>
+<span class="id" type="keyword">Section</span> <a name="Kernel"><span class="id" type="section">Kernel</span></a>.<br/>
+
+<br/>
+</div>
+
+<div class="doc">
+<a name="lab180"></a><h2 class="section">Quotients of kernels of maps to sets give a surjection/mono factorization.</h2>
+
+</div>
+<div class="code">
+
+<br/>
+<span class="id" type="keyword">Context</span> {<span class="id" type="var">fs</span> : <a class="idref" href="HoTT.Overture.html#Funext"><span class="id" type="class">Funext</span></a>}.<br/>
+
+<br/>
+</div>
+
+<div class="doc">
+A function we want to factor. 
+</div>
+<div class="code">
+<span class="id" type="keyword">Context</span> {<span class="id" type="var">A</span> <span class="id" type="var">B</span> : <span class="id" type="keyword">Type</span>} `{<a class="idref" href="HoTT.Overture.html#IsHSet"><span class="id" type="abbreviation">IsHSet</span></a> <a class="idref" href="HoTT.hit.quotient.html#B"><span class="id" type="variable">B</span></a>} (<span class="id" type="var">f</span> : <a class="idref" href="HoTT.hit.quotient.html#A"><span class="id" type="variable">A</span></a> <a class="idref" href="Coq.Init.Logic.html#:type_scope:x_'->'_x"><span class="id" type="notation">→</span></a> <a class="idref" href="HoTT.hit.quotient.html#B"><span class="id" type="variable">B</span></a>).<br/>
+
+<br/>
+</div>
+
+<div class="doc">
+A mere relation equivalent to its kernel. 
+</div>
+<div class="code">
+<span class="id" type="keyword">Context</span> (<span class="id" type="var">R</span> : <a class="idref" href="HoTT.Overture.html#relation"><span class="id" type="definition">relation</span></a> <a class="idref" href="HoTT.hit.quotient.html#Kernel.A"><span class="id" type="variable">A</span></a>) {<span class="id" type="var">sR</span> : <a class="idref" href="HoTT.Overture.html#is_mere_relation"><span class="id" type="abbreviation">is_mere_relation</span></a> <a class="idref" href="HoTT.hit.quotient.html#R"><span class="id" type="variable">R</span></a>}.<br/>
+<span class="id" type="keyword">Context</span> (<span class="id" type="var">is_ker</span> : <span class="id" type="keyword">∀</span> <span class="id" type="var">x</span> <span class="id" type="var">y</span>, <a class="idref" href="HoTT.hit.quotient.html#Kernel.f"><span class="id" type="variable">f</span></a> <a class="idref" href="HoTT.hit.quotient.html#x"><span class="id" type="variable">x</span></a> <a class="idref" href="HoTT.Overture.html#:type_scope:x_'='_x"><span class="id" type="notation">=</span></a> <a class="idref" href="HoTT.hit.quotient.html#Kernel.f"><span class="id" type="variable">f</span></a> <a class="idref" href="HoTT.hit.quotient.html#y"><span class="id" type="variable">y</span></a> <a class="idref" href="HoTT.Overture.html#:equiv_scope:x_'<~>'_x"><span class="id" type="notation">&lt;~&gt;</span></a> <a class="idref" href="HoTT.hit.quotient.html#Kernel.R"><span class="id" type="variable">R</span></a> <a class="idref" href="HoTT.hit.quotient.html#x"><span class="id" type="variable">x</span></a> <a class="idref" href="HoTT.hit.quotient.html#y"><span class="id" type="variable">y</span></a>).<br/>
+
+<br/>
+<span class="id" type="keyword">Theorem</span> <a name="quotient_kernel_factor"><span class="id" type="lemma">quotient_kernel_factor</span></a><br/>
+&nbsp;&nbsp;: <a class="idref" href="Coq.Init.Specif.html#:type_scope:'exists'_x_'..'_x_','_x"><span class="id" type="notation">∃</span></a> <a class="idref" href="Coq.Init.Specif.html#:type_scope:'exists'_x_'..'_x_','_x"><span class="id" type="notation">(</span></a><span class="id" type="var">C</span> : <span class="id" type="keyword">Type</span>) (<span class="id" type="var">e</span> : <a class="idref" href="HoTT.hit.quotient.html#Kernel.A"><span class="id" type="variable">A</span></a> <a class="idref" href="Coq.Init.Logic.html#:type_scope:x_'->'_x"><span class="id" type="notation">→</span></a> <a class="idref" href="HoTT.hit.quotient.html#C"><span class="id" type="variable">C</span></a>) (<span class="id" type="var">m</span> : <a class="idref" href="HoTT.hit.quotient.html#C"><span class="id" type="variable">C</span></a> <a class="idref" href="Coq.Init.Logic.html#:type_scope:x_'->'_x"><span class="id" type="notation">→</span></a> <a class="idref" href="HoTT.hit.quotient.html#Kernel.B"><span class="id" type="variable">B</span></a><a class="idref" href="Coq.Init.Specif.html#:type_scope:'exists'_x_'..'_x_','_x"><span class="id" type="notation">),</span></a><br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a class="idref" href="HoTT.Overture.html#IsHSet"><span class="id" type="abbreviation">IsHSet</span></a> <a class="idref" href="HoTT.hit.quotient.html#C"><span class="id" type="variable">C</span></a> <a class="idref" href="Coq.Init.Datatypes.html#:type_scope:x_'*'_x"><span class="id" type="notation">×</span></a> <a class="idref" href="HoTT.hit.epi.html#issurj"><span class="id" type="definition">issurj</span></a> <a class="idref" href="HoTT.hit.quotient.html#e"><span class="id" type="variable">e</span></a> <a class="idref" href="Coq.Init.Datatypes.html#:type_scope:x_'*'_x"><span class="id" type="notation">×</span></a> <a class="idref" href="HoTT.hit.minus1Trunc.html#is_mono"><span class="id" type="definition">is_mono</span></a> <a class="idref" href="HoTT.hit.quotient.html#m"><span class="id" type="variable">m</span></a> <a class="idref" href="Coq.Init.Datatypes.html#:type_scope:x_'*'_x"><span class="id" type="notation">×</span></a> <a class="idref" href="Coq.Init.Datatypes.html#:type_scope:x_'*'_x"><span class="id" type="notation">(</span></a><a class="idref" href="HoTT.hit.quotient.html#Kernel.f"><span class="id" type="variable">f</span></a> <a class="idref" href="HoTT.Overture.html#:type_scope:x_'='_x"><span class="id" type="notation">=</span></a> <a class="idref" href="HoTT.hit.quotient.html#m"><span class="id" type="variable">m</span></a> <a class="idref" href="HoTT.Overture.html#:function_scope:x_'o'_x"><span class="id" type="notation">o</span></a> <a class="idref" href="HoTT.hit.quotient.html#e"><span class="id" type="variable">e</span></a><a class="idref" href="Coq.Init.Datatypes.html#:type_scope:x_'*'_x"><span class="id" type="notation">)</span></a>.<br/>
+<span class="id" type="keyword">Proof</span>.<br/>
+&nbsp;&nbsp;<span class="id" type="tactic">pose</span> (<span class="id" type="var">C</span> := <a class="idref" href="HoTT.hit.quotient.html#Quotient.quotient"><span class="id" type="inductive">quotient</span></a> <a class="idref" href="HoTT.hit.quotient.html#Kernel.R"><span class="id" type="variable">R</span></a>).<br/>
+&nbsp;&nbsp;<span class="id" type="tactic">assert</span> (<a class="idref" href="HoTT.Overture.html#IsHSet"><span class="id" type="abbreviation">IsHSet</span></a> <span class="id" type="var">C</span>) <span class="id" type="tactic">by</span> (<span class="id" type="tactic">unfold</span> <span class="id" type="var">C</span>; <span class="id" type="tactic">apply</span> <span class="id" type="var">_</span>).<br/>
+&nbsp;&nbsp;<span class="id" type="tactic">∃</span> <span class="id" type="var">C</span>.<br/>
+&nbsp;&nbsp;<span class="id" type="tactic">pose</span> (<span class="id" type="var">e</span> := <a class="idref" href="HoTT.hit.quotient.html#Quotient.class_of"><span class="id" type="constructor">class_of</span></a> <a class="idref" href="HoTT.hit.quotient.html#Kernel.R"><span class="id" type="variable">R</span></a>).<br/>
+&nbsp;&nbsp;<span class="id" type="tactic">∃</span> <span class="id" type="var">e</span>.<br/>
+&nbsp;&nbsp;<span class="id" type="var">transparent</span> <span class="id" type="tactic">assert</span> (<span class="id" type="var">m</span> : (<span class="id" type="var">C</span> <a class="idref" href="Coq.Init.Logic.html#:type_scope:x_'->'_x"><span class="id" type="notation">→</span></a> <a class="idref" href="HoTT.hit.quotient.html#Kernel.B"><span class="id" type="variable">B</span></a>)).<br/>
+&nbsp;&nbsp;{ <span class="id" type="tactic">apply</span> <a class="idref" href="HoTT.hit.quotient.html#Quotient.quotient_rect"><span class="id" type="definition">quotient_rect</span></a> <span class="id" type="keyword">with</span> <a class="idref" href="HoTT.hit.quotient.html#Kernel.f"><span class="id" type="variable">f</span></a>.<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="id" type="tactic">intros</span> <span class="id" type="var">x</span> <span class="id" type="var">y</span> <span class="id" type="var">H</span>. <span class="id" type="var">path_via</span> (<a class="idref" href="HoTT.hit.quotient.html#Kernel.f"><span class="id" type="variable">f</span></a> <span class="id" type="var">x</span>).<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;- <span class="id" type="tactic">apply</span> <a class="idref" href="HoTT.PathGroupoids.html#transport_const"><span class="id" type="definition">transport_const</span></a>.<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;- <span class="id" type="tactic">exact</span> (<a class="idref" href="HoTT.Overture.html#:equiv_scope:x_'^-1'"><span class="id" type="notation">(</span></a><a class="idref" href="HoTT.hit.quotient.html#Kernel.is_ker"><span class="id" type="variable">is_ker</span></a> <span class="id" type="var">x</span> <span class="id" type="var">y</span><a class="idref" href="HoTT.Overture.html#:equiv_scope:x_'^-1'"><span class="id" type="notation">)</span></a> <a class="idref" href="HoTT.Overture.html#:equiv_scope:x_'^-1'"><span class="id" type="notation">^-1</span></a> <span class="id" type="var">H</span>). }<br/>
+&nbsp;&nbsp;<span class="id" type="tactic">∃</span> <span class="id" type="var">m</span>.<br/>
+&nbsp;&nbsp;<span class="id" type="tactic">split</span>. <span class="id" type="tactic">split</span>. <span class="id" type="tactic">split</span>.<br/>
+&nbsp;&nbsp;- <span class="id" type="tactic">assumption</span>.<br/>
+&nbsp;&nbsp;- <span class="id" type="tactic">apply</span> <a class="idref" href="HoTT.hit.quotient.html#quotient_surjective"><span class="id" type="lemma">quotient_surjective</span></a>.<br/>
+&nbsp;&nbsp;- <span class="id" type="tactic">unfold</span> <a class="idref" href="HoTT.hit.minus1Trunc.html#is_mono"><span class="id" type="definition">is_mono</span></a>. <span class="id" type="tactic">intro</span> <span class="id" type="var">u</span>.<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="id" type="tactic">apply</span> <a class="idref" href="HoTT.HProp.html#hprop_allpath"><span class="id" type="lemma">hprop_allpath</span></a>.<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="id" type="tactic">assert</span> (<span class="id" type="var">H</span> : <span class="id" type="keyword">∀</span> (<span class="id" type="var">x</span> <span class="id" type="var">y</span> : <span class="id" type="var">C</span>) (<span class="id" type="var">p</span> : <span class="id" type="var">m</span> <a class="idref" href="HoTT.hit.quotient.html#x"><span class="id" type="variable">x</span></a> <a class="idref" href="HoTT.Overture.html#:type_scope:x_'='_x"><span class="id" type="notation">=</span></a> <span class="id" type="var">u</span>) (<span class="id" type="var">p'</span> : <span class="id" type="var">m</span> <a class="idref" href="HoTT.hit.quotient.html#y"><span class="id" type="variable">y</span></a> <a class="idref" href="HoTT.Overture.html#:type_scope:x_'='_x"><span class="id" type="notation">=</span></a> <span class="id" type="var">u</span>), <a class="idref" href="HoTT.hit.quotient.html#x"><span class="id" type="variable">x</span></a> <a class="idref" href="HoTT.Overture.html#:type_scope:x_'='_x"><span class="id" type="notation">=</span></a> <a class="idref" href="HoTT.hit.quotient.html#y"><span class="id" type="variable">y</span></a>).<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;{ <span class="id" type="tactic">refine</span> (<a class="idref" href="HoTT.hit.quotient.html#Quotient.quotient_rect"><span class="id" type="definition">quotient_rect</span></a> <a class="idref" href="HoTT.hit.quotient.html#Kernel.R"><span class="id" type="variable">R</span></a> <span class="id" type="var">_</span> <span class="id" type="var">_</span> <span class="id" type="var">_</span>). <span class="id" type="tactic">intro</span> <span class="id" type="var">a</span>.<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="id" type="tactic">refine</span> (<a class="idref" href="HoTT.hit.quotient.html#Quotient.quotient_rect"><span class="id" type="definition">quotient_rect</span></a> <a class="idref" href="HoTT.hit.quotient.html#Kernel.R"><span class="id" type="variable">R</span></a> <span class="id" type="var">_</span> <span class="id" type="var">_</span> <span class="id" type="var">_</span>). <span class="id" type="tactic">intros</span> <span class="id" type="var">a'</span> <span class="id" type="var">p</span> <span class="id" type="var">p'</span>; <span class="id" type="tactic">fold</span> <span class="id" type="var">e</span> <span class="id" type="keyword">in</span> <span class="id" type="var">p</span>, <span class="id" type="var">p'</span>.<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;+ <span class="id" type="tactic">apply</span> <a class="idref" href="HoTT.hit.quotient.html#Quotient.related_classes_eq"><span class="id" type="axiom">related_classes_eq</span></a>.<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="id" type="tactic">refine</span> (<a class="idref" href="HoTT.hit.quotient.html#Kernel.is_ker"><span class="id" type="variable">is_ker</span></a> <span class="id" type="var">a</span> <span class="id" type="var">a'</span> <span class="id" type="var">_</span>).<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="id" type="tactic">change</span> (<span class="id" type="var">m</span> (<span class="id" type="var">e</span> <span class="id" type="var">a</span>) <a class="idref" href="HoTT.Overture.html#:type_scope:x_'='_x"><span class="id" type="notation">=</span></a> <span class="id" type="var">m</span> (<span class="id" type="var">e</span> <span class="id" type="var">a'</span>)).<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="id" type="tactic">exact</span> (<span class="id" type="var">p</span> <a class="idref" href="HoTT.Overture.html#:path_scope:x_'@'_x"><span class="id" type="notation">@</span></a> <span class="id" type="var">p'</span><a class="idref" href="HoTT.Overture.html#:path_scope:x_'^'"><span class="id" type="notation">^</span></a>).<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;+ <span class="id" type="tactic">intros</span>; <span class="id" type="tactic">apply</span> <a class="idref" href="HoTT.HProp.html#allpath_hprop"><span class="id" type="lemma">allpath_hprop</span></a>.<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;+ <span class="id" type="tactic">intros</span>; <span class="id" type="tactic">apply</span> <a class="idref" href="HoTT.HProp.html#allpath_hprop"><span class="id" type="lemma">allpath_hprop</span></a>. }<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="id" type="tactic">intros</span> [<span class="id" type="var">x</span> <span class="id" type="var">p</span>] [<span class="id" type="var">y</span> <span class="id" type="var">p'</span>].<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="id" type="tactic">apply</span> <a class="idref" href="HoTT.HProp.html#path_sigma_hprop"><span class="id" type="definition">path_sigma_hprop</span></a>; <span class="id" type="tactic">simpl</span>.<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="id" type="tactic">exact</span> (<span class="id" type="var">H</span> <span class="id" type="var">x</span> <span class="id" type="var">y</span> <span class="id" type="var">p</span> <span class="id" type="var">p'</span>).<br/>
+&nbsp;&nbsp;- <span class="id" type="tactic">reflexivity</span>.<br/>
+<span class="id" type="keyword">Defined</span>.<br/>
+
+<br/>
+<span class="id" type="keyword">End</span> <a class="idref" href="HoTT.hit.quotient.html#Kernel"><span class="id" type="section">Kernel</span></a>.<br/>
 </div>
 </div>
 
