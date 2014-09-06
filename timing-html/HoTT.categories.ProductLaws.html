@@ -36,8 +36,8 @@ Time: 0s">
 </div>
 <div class="code" title="File: ProductLaws.v
 Line: 1
-Time: 0.088s">
-<div class="time" style="width: 27.16049382716%"></div>
+Time: 0.054s">
+<div class="time" style="width: 38.297872340426%"></div>
 <pre>Require Import Category.Core Functor.Core InitialTerminalCategory.Core InitialTerminalCategory.Functors Category.Prod Functor.Prod Functor.Composition.Core Functor.Identity Functor.Prod.Universal Functor.Composition.Laws Functor.Prod.Universal.</pre>
 </div>
 <div class="code" title="File: ProductLaws.v
@@ -49,8 +49,8 @@ Require Import Functor.Paths.</pre>
 </div>
 <div class="code" title="File: ProductLaws.v
 Line: 2
-Time: 0.004s">
-<div class="time" style="width: 1.2345679012346%"></div>
+Time: 0.002s">
+<div class="time" style="width: 1.4184397163121%"></div>
 <pre>
 Require Import types.Prod types.Forall HoTT.Tactics.</pre>
 </div>
@@ -143,8 +143,8 @@ Time: 0s">
 </div>
 <div class="code" title="File: ProductLaws.v
 Line: 18
-Time: 0.033s">
-<div class="time" style="width: 10.185185185185%"></div>
+Time: 0.02s">
+<div class="time" style="width: 14.184397163121%"></div>
 <pre>
   Definition functor (C D : PreCategory)
   : Functor (C * D) (D * C)
@@ -156,8 +156,8 @@ Time: 0.033s">
 </div>
 <div class="code" title="File: ProductLaws.v
 Line: 25
-Time: 0.034s">
-<div class="time" style="width: 10.493827160494%"></div>
+Time: 0.021s">
+<div class="time" style="width: 14.893617021277%"></div>
 <pre>
 
   Definition law (C D : PreCategory)
@@ -177,44 +177,148 @@ Time: 0s">
 <div class="time" style="width: 0%"></div>
 <pre>
 
-(** ** Laws about the initial category [0] *)</pre>
+(** ** [A * (B * C) ≅ (A * B) * C] *)</pre>
 </div>
 <div class="code" title="File: ProductLaws.v
 Line: 32
 Time: 0s">
 <div class="time" style="width: 0%"></div>
-<pre>Module Law0.</pre>
+<pre>Module Associativity.</pre>
 </div>
 <div class="code" title="File: ProductLaws.v
 Line: 32
 Time: 0s">
 <div class="time" style="width: 0%"></div>
 <pre>
-  Section law0.</pre>
+  Section associativity.</pre>
 </div>
 <div class="code" title="File: ProductLaws.v
 Line: 33
 Time: 0s">
 <div class="time" style="width: 0%"></div>
 <pre>
-    Context `{Funext}.</pre>
+    Variable A : PreCategory.</pre>
 </div>
 <div class="code" title="File: ProductLaws.v
 Line: 34
 Time: 0s">
 <div class="time" style="width: 0%"></div>
 <pre>
-    Context `{IsInitialCategory zero}.</pre>
+    Variable B : PreCategory.</pre>
 </div>
 <div class="code" title="File: ProductLaws.v
 Line: 35
 Time: 0s">
 <div class="time" style="width: 0%"></div>
 <pre>
-    Local Notation "0" := zero : category_scope.</pre>
+    Variable C : PreCategory.</pre>
 </div>
 <div class="code" title="File: ProductLaws.v
 Line: 36
+Time: 0.009s">
+<div class="time" style="width: 6.3829787234043%"></div>
+<pre>
+
+    Definition functor : Functor (A * (B * C)) ((A * B) * C)
+      := (fst * (fst o snd)) * (snd o snd).</pre>
+</div>
+<div class="code" title="File: ProductLaws.v
+Line: 39
+Time: 0.01s">
+<div class="time" style="width: 7.0921985815603%"></div>
+<pre>
+    Definition inverse : Functor ((A * B) * C) (A * (B * C))
+      := (fst o fst) * ((snd o fst) * snd).</pre>
+</div>
+<div class="code" title="File: ProductLaws.v
+Line: 41
+Time: 0.007s">
+<div class="time" style="width: 4.9645390070922%"></div>
+<pre>
+
+    Definition law
+    : functor o inverse = 1
+      /\ inverse o functor = 1.</pre>
+</div>
+<div class="code" title="File: ProductLaws.v
+Line: 45
+Time: 0s">
+<div class="time" style="width: 0%"></div>
+<pre>
+    Proof.</pre>
+</div>
+<div class="code" title="File: ProductLaws.v
+Line: 46
+Time: 0.141s">
+<div class="time" style="width: 100%"></div>
+<pre>
+      split; expand; reflexivity.</pre>
+</div>
+<div class="code" title="File: ProductLaws.v
+Line: 47
+Time: 0.05s">
+<div class="time" style="width: 35.460992907801%"></div>
+<pre>
+    Defined.</pre>
+</div>
+<div class="code" title="File: ProductLaws.v
+Line: 48
+Time: 0.007s">
+<div class="time" style="width: 4.9645390070922%"></div>
+<pre>
+  End associativity.</pre>
+</div>
+<div class="code" title="File: ProductLaws.v
+Line: 49
+Time: 0s">
+<div class="time" style="width: 0%"></div>
+<pre>
+End Associativity.</pre>
+</div>
+<div class="code" title="File: ProductLaws.v
+Line: 50
+Time: 0s">
+<div class="time" style="width: 0%"></div>
+<pre>
+
+(** ** Laws about the initial category [0] *)</pre>
+</div>
+<div class="code" title="File: ProductLaws.v
+Line: 52
+Time: 0s">
+<div class="time" style="width: 0%"></div>
+<pre>Module Law0.</pre>
+</div>
+<div class="code" title="File: ProductLaws.v
+Line: 52
+Time: 0s">
+<div class="time" style="width: 0%"></div>
+<pre>
+  Section law0.</pre>
+</div>
+<div class="code" title="File: ProductLaws.v
+Line: 53
+Time: 0s">
+<div class="time" style="width: 0%"></div>
+<pre>
+    Context `{Funext}.</pre>
+</div>
+<div class="code" title="File: ProductLaws.v
+Line: 54
+Time: 0s">
+<div class="time" style="width: 0%"></div>
+<pre>
+    Context `{IsInitialCategory zero}.</pre>
+</div>
+<div class="code" title="File: ProductLaws.v
+Line: 55
+Time: 0s">
+<div class="time" style="width: 0%"></div>
+<pre>
+    Local Notation "0" := zero : category_scope.</pre>
+</div>
+<div class="code" title="File: ProductLaws.v
+Line: 56
 Time: 0s">
 <div class="time" style="width: 0%"></div>
 <pre>
@@ -222,9 +326,9 @@ Time: 0s">
     Variable C : PreCategory.</pre>
 </div>
 <div class="code" title="File: ProductLaws.v
-Line: 38
-Time: 0.004s">
-<div class="time" style="width: 1.2345679012346%"></div>
+Line: 58
+Time: 0.002s">
+<div class="time" style="width: 1.4184397163121%"></div>
 <pre>
 
     Global Instance is_initial_category__product
@@ -232,9 +336,9 @@ Time: 0.004s">
       := fun P c =&gt; initial_category_rect P (snd c).</pre>
 </div>
 <div class="code" title="File: ProductLaws.v
-Line: 42
-Time: 0.005s">
-<div class="time" style="width: 1.5432098765432%"></div>
+Line: 62
+Time: 0.002s">
+<div class="time" style="width: 1.4184397163121%"></div>
 <pre>
 
     Global Instance is_initial_category__product'
@@ -242,36 +346,36 @@ Time: 0.005s">
       := fun P c =&gt; initial_category_rect P (fst c).</pre>
 </div>
 <div class="code" title="File: ProductLaws.v
-Line: 46
-Time: 0.003s">
-<div class="time" style="width: 0.92592592592593%"></div>
+Line: 66
+Time: 0.002s">
+<div class="time" style="width: 1.4184397163121%"></div>
 <pre>
 
     Definition functor : Functor (C * 0) 0 := Functors.from_initial _.</pre>
 </div>
 <div class="code" title="File: ProductLaws.v
-Line: 48
-Time: 0.002s">
-<div class="time" style="width: 0.61728395061728%"></div>
+Line: 68
+Time: 0.001s">
+<div class="time" style="width: 0.70921985815603%"></div>
 <pre>
     Definition functor' : Functor (0 * C) 0 := Functors.from_initial _.</pre>
 </div>
 <div class="code" title="File: ProductLaws.v
-Line: 49
-Time: 0.003s">
-<div class="time" style="width: 0.92592592592593%"></div>
+Line: 69
+Time: 0.002s">
+<div class="time" style="width: 1.4184397163121%"></div>
 <pre>
     Definition inverse : Functor 0 (C * 0) := Functors.from_initial _.</pre>
 </div>
 <div class="code" title="File: ProductLaws.v
-Line: 50
-Time: 0.003s">
-<div class="time" style="width: 0.92592592592593%"></div>
+Line: 70
+Time: 0.001s">
+<div class="time" style="width: 0.70921985815603%"></div>
 <pre>
     Definition inverse' : Functor 0 (0 * C) := Functors.from_initial _.</pre>
 </div>
 <div class="code" title="File: ProductLaws.v
-Line: 51
+Line: 71
 Time: 0s">
 <div class="time" style="width: 0%"></div>
 <pre>
@@ -280,16 +384,16 @@ Time: 0s">
    </pre>
 </div>
 <div class="code" title="File: ProductLaws.v
-Line: 54
-Time: 0.035s">
-<div class="time" style="width: 10.802469135802%"></div>
+Line: 74
+Time: 0.02s">
+<div class="time" style="width: 14.184397163121%"></div>
 <pre>Definition law
     : functor o inverse = 1
       /\ inverse o functor = 1
       := center _.</pre>
 </div>
 <div class="code" title="File: ProductLaws.v
-Line: 57
+Line: 77
 Time: 0s">
 <div class="time" style="width: 0%"></div>
 <pre>
@@ -298,30 +402,30 @@ Time: 0s">
    </pre>
 </div>
 <div class="code" title="File: ProductLaws.v
-Line: 60
-Time: 0.068s">
-<div class="time" style="width: 20.987654320988%"></div>
+Line: 80
+Time: 0.019s">
+<div class="time" style="width: 13.475177304965%"></div>
 <pre>Definition law'
     : functor' o inverse' = 1
       /\ inverse' o functor' = 1
       := center _.</pre>
 </div>
 <div class="code" title="File: ProductLaws.v
-Line: 63
-Time: 0.02s">
-<div class="time" style="width: 6.1728395061728%"></div>
+Line: 83
+Time: 0.007s">
+<div class="time" style="width: 4.9645390070922%"></div>
 <pre>
   End law0.</pre>
 </div>
 <div class="code" title="File: ProductLaws.v
-Line: 64
+Line: 84
 Time: 0s">
 <div class="time" style="width: 0%"></div>
 <pre>
 End Law0.</pre>
 </div>
 <div class="code" title="File: ProductLaws.v
-Line: 65
+Line: 85
 Time: 0s">
 <div class="time" style="width: 0%"></div>
 <pre>
@@ -329,84 +433,84 @@ Time: 0s">
 (** ** Laws about the terminal category [1] *)</pre>
 </div>
 <div class="code" title="File: ProductLaws.v
-Line: 67
+Line: 87
 Time: 0s">
 <div class="time" style="width: 0%"></div>
 <pre>Module Law1.</pre>
 </div>
 <div class="code" title="File: ProductLaws.v
-Line: 67
+Line: 87
 Time: 0s">
 <div class="time" style="width: 0%"></div>
 <pre>
   Section law1.</pre>
 </div>
 <div class="code" title="File: ProductLaws.v
-Line: 68
-Time: 0.004s">
-<div class="time" style="width: 1.2345679012346%"></div>
+Line: 88
+Time: 0s">
+<div class="time" style="width: 0%"></div>
 <pre>
     Context `{Funext}.</pre>
 </div>
 <div class="code" title="File: ProductLaws.v
-Line: 69
-Time: 0.001s">
-<div class="time" style="width: 0.30864197530864%"></div>
+Line: 89
+Time: 0s">
+<div class="time" style="width: 0%"></div>
 <pre>
     Context `{IsTerminalCategory one}.</pre>
 </div>
 <div class="code" title="File: ProductLaws.v
-Line: 70
+Line: 90
 Time: 0s">
 <div class="time" style="width: 0%"></div>
 <pre>
     Local Notation "1" := one : category_scope.</pre>
 </div>
 <div class="code" title="File: ProductLaws.v
-Line: 71
+Line: 91
 Time: 0s">
 <div class="time" style="width: 0%"></div>
 <pre>
     Variable C : PreCategory.</pre>
 </div>
 <div class="code" title="File: ProductLaws.v
-Line: 72
-Time: 0.002s">
-<div class="time" style="width: 0.61728395061728%"></div>
+Line: 92
+Time: 0.001s">
+<div class="time" style="width: 0.70921985815603%"></div>
 <pre>
 
     Definition functor : Functor (C * 1) C
       := fst.</pre>
 </div>
 <div class="code" title="File: ProductLaws.v
-Line: 75
-Time: 0.005s">
-<div class="time" style="width: 1.5432098765432%"></div>
+Line: 95
+Time: 0.002s">
+<div class="time" style="width: 1.4184397163121%"></div>
 <pre>
 
     Definition functor' : Functor (1 * C) C
       := snd.</pre>
 </div>
 <div class="code" title="File: ProductLaws.v
-Line: 78
-Time: 0.004s">
-<div class="time" style="width: 1.2345679012346%"></div>
+Line: 98
+Time: 0.002s">
+<div class="time" style="width: 1.4184397163121%"></div>
 <pre>
 
     Definition inverse : Functor C (C * 1)
       := 1 * Functors.to_terminal _.</pre>
 </div>
 <div class="code" title="File: ProductLaws.v
-Line: 81
-Time: 0.009s">
-<div class="time" style="width: 2.7777777777778%"></div>
+Line: 101
+Time: 0.002s">
+<div class="time" style="width: 1.4184397163121%"></div>
 <pre>
 
     Definition inverse' : Functor C (1 * C)
       := Functors.to_terminal _ * 1.</pre>
 </div>
 <div class="code" title="File: ProductLaws.v
-Line: 84
+Line: 104
 Time: 0s">
 <div class="time" style="width: 0%"></div>
 <pre>
@@ -418,7 +522,7 @@ Time: 0s">
    </pre>
 </div>
 <div class="code" title="File: ProductLaws.v
-Line: 90
+Line: 110
 Time: 0s">
 <div class="time" style="width: 0%"></div>
 <pre>Local Ltac t_prod :=
@@ -435,7 +539,7 @@ Time: 0s">
       try (reflexivity || exact (center _)).</pre>
 </div>
 <div class="code" title="File: ProductLaws.v
-Line: 101
+Line: 121
 Time: 0s">
 <div class="time" style="width: 0%"></div>
 <pre>
@@ -444,43 +548,43 @@ Time: 0s">
    </pre>
 </div>
 <div class="code" title="File: ProductLaws.v
-Line: 104
-Time: 0.004s">
-<div class="time" style="width: 1.2345679012346%"></div>
+Line: 124
+Time: 0.002s">
+<div class="time" style="width: 1.4184397163121%"></div>
 <pre>Lemma law1
     : functor o inverse = 1
       /\ inverse o functor = 1.</pre>
 </div>
 <div class="code" title="File: ProductLaws.v
-Line: 106
+Line: 126
 Time: 0s">
 <div class="time" style="width: 0%"></div>
 <pre>
     Proof.</pre>
 </div>
 <div class="code" title="File: ProductLaws.v
-Line: 107
+Line: 127
 Time: 0s">
 <div class="time" style="width: 0%"></div>
 <pre>
       unfold functor, inverse.</pre>
 </div>
 <div class="code" title="File: ProductLaws.v
-Line: 108
-Time: 0.324s">
-<div class="time" style="width: 100%"></div>
+Line: 128
+Time: 0.124s">
+<div class="time" style="width: 87.943262411348%"></div>
 <pre>
       t_prod.</pre>
 </div>
 <div class="code" title="File: ProductLaws.v
-Line: 109
-Time: 0.048s">
-<div class="time" style="width: 14.814814814815%"></div>
+Line: 129
+Time: 0.013s">
+<div class="time" style="width: 9.2198581560284%"></div>
 <pre>
     Qed.</pre>
 </div>
 <div class="code" title="File: ProductLaws.v
-Line: 110
+Line: 130
 Time: 0s">
 <div class="time" style="width: 0%"></div>
 <pre>
@@ -489,57 +593,57 @@ Time: 0s">
    </pre>
 </div>
 <div class="code" title="File: ProductLaws.v
-Line: 113
-Time: 0.002s">
-<div class="time" style="width: 0.61728395061728%"></div>
+Line: 133
+Time: 0.001s">
+<div class="time" style="width: 0.70921985815603%"></div>
 <pre>Lemma law1'
     : functor' o inverse' = 1
       /\ inverse' o functor' = 1.</pre>
 </div>
 <div class="code" title="File: ProductLaws.v
-Line: 115
+Line: 135
 Time: 0s">
 <div class="time" style="width: 0%"></div>
 <pre>
     Proof.</pre>
 </div>
 <div class="code" title="File: ProductLaws.v
-Line: 116
+Line: 136
 Time: 0s">
 <div class="time" style="width: 0%"></div>
 <pre>
       unfold functor', inverse'.</pre>
 </div>
 <div class="code" title="File: ProductLaws.v
-Line: 117
-Time: 0.158s">
-<div class="time" style="width: 48.765432098765%"></div>
+Line: 137
+Time: 0.11s">
+<div class="time" style="width: 78.014184397163%"></div>
 <pre>
       t_prod.</pre>
 </div>
 <div class="code" title="File: ProductLaws.v
-Line: 118
-Time: 0.021s">
-<div class="time" style="width: 6.4814814814815%"></div>
+Line: 138
+Time: 0.012s">
+<div class="time" style="width: 8.5106382978723%"></div>
 <pre>
     Qed.</pre>
 </div>
 <div class="code" title="File: ProductLaws.v
-Line: 119
-Time: 0.011s">
-<div class="time" style="width: 3.3950617283951%"></div>
+Line: 139
+Time: 0.007s">
+<div class="time" style="width: 4.9645390070922%"></div>
 <pre>
   End law1.</pre>
 </div>
 <div class="code" title="File: ProductLaws.v
-Line: 120
+Line: 140
 Time: 0s">
 <div class="time" style="width: 0%"></div>
 <pre>
 End Law1.</pre>
 </div>
 <div class="code" title="File: ProductLaws.v
-Line: 122
+Line: 142
 Time: 0s">
 <div class="time" style="width: 0%"></div>
 <pre>
