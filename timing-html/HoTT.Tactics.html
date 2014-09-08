@@ -38,27 +38,19 @@ Time: 0s">
 </div>
 <div class="code" title="File: Tactics.v
 Line: 2
-Time: 0.034s">
-<div class="time" style="width: 77.272727272727%"></div>
+Time: 0.023s">
+<div class="time" style="width: 95.833333333333%"></div>
 <pre>Require Import Overture types.Prod types.Forall PathGroupoids Contractible types.Paths.</pre>
 </div>
 <div class="code" title="File: Tactics.v
 Line: 2
-Time: 0.003s">
-<div class="time" style="width: 6.8181818181818%"></div>
+Time: 0.001s">
+<div class="time" style="width: 4.1666666666667%"></div>
 <pre>
 Require Export Tactics.BinderApply.</pre>
 </div>
 <div class="code" title="File: Tactics.v
 Line: 3
-Time: 0s">
-<div class="time" style="width: 0%"></div>
-<pre>
-
-Set Implicit Arguments.</pre>
-</div>
-<div class="code" title="File: Tactics.v
-Line: 5
 Time: 0s">
 <div class="time" style="width: 0%"></div>
 <pre>
@@ -79,7 +71,7 @@ The way the tactic does this is by creating an evar for [P] and an evar for the 
 (** First, we prove some helpful lemmas about [path_forall] and [transport] *)</pre>
 </div>
 <div class="code" title="File: Tactics.v
-Line: 20
+Line: 18
 Time: 0s">
 <div class="time" style="width: 0%"></div>
 <pre>Local Ltac path_forall_beta_t :=
@@ -98,7 +90,7 @@ Time: 0s">
   reflexivity.</pre>
 </div>
 <div class="code" title="File: Tactics.v
-Line: 33
+Line: 31
 Time: 0s">
 <div class="time" style="width: 0%"></div>
 <pre>
@@ -106,36 +98,36 @@ Time: 0s">
 (** The basic idea is expressed in the type of this lemma. *)</pre>
 </div>
 <div class="code" title="File: Tactics.v
-Line: 35
-Time: 0.004s">
-<div class="time" style="width: 9.0909090909091%"></div>
+Line: 33
+Time: 0.003s">
+<div class="time" style="width: 12.5%"></div>
 <pre>Lemma path_forall_1_beta `{Funext} A B x P f g e Px
 : @transport (forall a : A, B a) (fun f =&gt; P (f x)) f g (@path_forall _ _ _ _ _ e) Px
   = @transport (B x) P (f x) (g x) (e x) Px.</pre>
 </div>
 <div class="code" title="File: Tactics.v
-Line: 37
+Line: 35
 Time: 0s">
 <div class="time" style="width: 0%"></div>
 <pre>
 Proof.</pre>
 </div>
 <div class="code" title="File: Tactics.v
-Line: 38
-Time: 0.021s">
-<div class="time" style="width: 47.727272727273%"></div>
+Line: 36
+Time: 0.013s">
+<div class="time" style="width: 54.166666666667%"></div>
 <pre>
   path_forall_beta_t.</pre>
 </div>
 <div class="code" title="File: Tactics.v
-Line: 39
-Time: 0.006s">
-<div class="time" style="width: 13.636363636364%"></div>
+Line: 37
+Time: 0.004s">
+<div class="time" style="width: 16.666666666667%"></div>
 <pre>
 Defined.</pre>
 </div>
 <div class="code" title="File: Tactics.v
-Line: 40
+Line: 38
 Time: 0s">
 <div class="time" style="width: 0%"></div>
 <pre>
@@ -143,9 +135,9 @@ Time: 0s">
 (** The powerful recursive case *)</pre>
 </div>
 <div class="code" title="File: Tactics.v
-Line: 42
-Time: 0.009s">
-<div class="time" style="width: 20.454545454545%"></div>
+Line: 40
+Time: 0.005s">
+<div class="time" style="width: 20.833333333333%"></div>
 <pre>Lemma path_forall_recr_beta' `{Funext} A B x0 P f g e Px
 : @transport (forall a : A, B a)
              (fun f =&gt; P f (f x0))
@@ -161,28 +153,28 @@ Time: 0.009s">
                Px.</pre>
 </div>
 <div class="code" title="File: Tactics.v
-Line: 54
+Line: 52
 Time: 0s">
 <div class="time" style="width: 0%"></div>
 <pre>
 Proof.</pre>
 </div>
 <div class="code" title="File: Tactics.v
-Line: 55
-Time: 0.038s">
-<div class="time" style="width: 86.363636363636%"></div>
+Line: 53
+Time: 0.023s">
+<div class="time" style="width: 95.833333333333%"></div>
 <pre>
   path_forall_beta_t.</pre>
 </div>
 <div class="code" title="File: Tactics.v
-Line: 56
-Time: 0.012s">
-<div class="time" style="width: 27.272727272727%"></div>
+Line: 54
+Time: 0.007s">
+<div class="time" style="width: 29.166666666667%"></div>
 <pre>
 Defined.</pre>
 </div>
 <div class="code" title="File: Tactics.v
-Line: 57
+Line: 55
 Time: 0s">
 <div class="time" style="width: 0%"></div>
 <pre>
@@ -190,46 +182,46 @@ Time: 0s">
 (** Two lemmas about [transport]ing across [path_prod'], used for cleanup *)</pre>
 </div>
 <div class="code" title="File: Tactics.v
-Line: 59
-Time: 0.006s">
-<div class="time" style="width: 13.636363636364%"></div>
+Line: 57
+Time: 0.003s">
+<div class="time" style="width: 12.5%"></div>
 <pre>Definition transport_path_prod'_beta A B P (x x' : A) (y y' : B) (HA : x = x') (HB : y = y') (Px : P (x, y))
 : @transport (A * B) P (x, y) (x', y') (@path_prod' A B x x' y y' HA HB) Px
   = @transport A (fun x =&gt; P (x, y')) x x' HA
                (@transport B (fun y =&gt; P (x, y)) y y' HB Px).</pre>
 </div>
 <div class="code" title="File: Tactics.v
-Line: 62
+Line: 60
 Time: 0s">
 <div class="time" style="width: 0%"></div>
 <pre>
 Proof.</pre>
 </div>
 <div class="code" title="File: Tactics.v
-Line: 63
-Time: 0.004s">
-<div class="time" style="width: 9.0909090909091%"></div>
+Line: 61
+Time: 0.002s">
+<div class="time" style="width: 8.3333333333333%"></div>
 <pre>
   path_induction.</pre>
 </div>
 <div class="code" title="File: Tactics.v
-Line: 64
+Line: 62
 Time: 0s">
 <div class="time" style="width: 0%"></div>
 <pre>
   reflexivity.</pre>
 </div>
 <div class="code" title="File: Tactics.v
-Line: 65
-Time: 0.005s">
-<div class="time" style="width: 11.363636363636%"></div>
+Line: 63
+Time: 0.002s">
+<div class="time" style="width: 8.3333333333333%"></div>
 <pre>
 Defined.</pre>
 </div>
 <div class="code" title="File: Tactics.v
-Line: 66
-Time: 0.005s">
-<div class="time" style="width: 11.363636363636%"></div>
+Line: 64
+Time: 0.003s">
+<div class="time" style="width: 12.5%"></div>
 <pre>
 
 Definition transport_path_prod'_beta' A B P (x x' : A) (y y' : B) (HA : x = x') (HB : y = y') (Px : P x y)
@@ -238,35 +230,35 @@ Definition transport_path_prod'_beta' A B P (x x' : A) (y y' : B) (HA : x = x') 
                (@transport B (fun y =&gt; P x y) y y' HB Px).</pre>
 </div>
 <div class="code" title="File: Tactics.v
-Line: 71
+Line: 69
 Time: 0s">
 <div class="time" style="width: 0%"></div>
 <pre>
 Proof.</pre>
 </div>
 <div class="code" title="File: Tactics.v
-Line: 72
-Time: 0.003s">
-<div class="time" style="width: 6.8181818181818%"></div>
+Line: 70
+Time: 0.002s">
+<div class="time" style="width: 8.3333333333333%"></div>
 <pre>
   path_induction.</pre>
 </div>
 <div class="code" title="File: Tactics.v
-Line: 73
+Line: 71
 Time: 0s">
 <div class="time" style="width: 0%"></div>
 <pre>
   reflexivity.</pre>
 </div>
 <div class="code" title="File: Tactics.v
-Line: 74
-Time: 0.005s">
-<div class="time" style="width: 11.363636363636%"></div>
+Line: 72
+Time: 0.002s">
+<div class="time" style="width: 8.3333333333333%"></div>
 <pre>
 Defined.</pre>
 </div>
 <div class="code" title="File: Tactics.v
-Line: 75
+Line: 73
 Time: 0s">
 <div class="time" style="width: 0%"></div>
 <pre>
@@ -274,9 +266,9 @@ Time: 0s">
 (** Rewrite the recursive case after clean-up *)</pre>
 </div>
 <div class="code" title="File: Tactics.v
-Line: 77
-Time: 0.006s">
-<div class="time" style="width: 13.636363636364%"></div>
+Line: 75
+Time: 0.003s">
+<div class="time" style="width: 12.5%"></div>
 <pre>Lemma path_forall_recr_beta `{Funext} A B x0 P f g e Px
 : @transport (forall a : A, B a)
              (fun f =&gt; P f (f x0))
@@ -297,54 +289,54 @@ Time: 0.006s">
                            Px).</pre>
 </div>
 <div class="code" title="File: Tactics.v
-Line: 94
+Line: 92
 Time: 0s">
 <div class="time" style="width: 0%"></div>
 <pre>
 Proof.</pre>
 </div>
 <div class="code" title="File: Tactics.v
-Line: 95
-Time: 0.003s">
-<div class="time" style="width: 6.8181818181818%"></div>
+Line: 93
+Time: 0.002s">
+<div class="time" style="width: 8.3333333333333%"></div>
 <pre>
   etransitivity.</pre>
 </div>
 <div class="code" title="File: Tactics.v
-Line: 96
+Line: 94
 Time: 0s">
 <div class="time" style="width: 0%"></div>
 <pre>
   -</pre>
 </div>
 <div class="code" title="File: Tactics.v
-Line: 97
+Line: 95
 Time: 0.001s">
-<div class="time" style="width: 2.2727272727273%"></div>
+<div class="time" style="width: 4.1666666666667%"></div>
 <pre> apply path_forall_recr_beta'.</pre>
 </div>
 <div class="code" title="File: Tactics.v
-Line: 97
+Line: 95
 Time: 0s">
 <div class="time" style="width: 0%"></div>
 <pre>
   -</pre>
 </div>
 <div class="code" title="File: Tactics.v
-Line: 98
+Line: 96
 Time: 0.001s">
-<div class="time" style="width: 2.2727272727273%"></div>
+<div class="time" style="width: 4.1666666666667%"></div>
 <pre> apply transport_path_prod'_beta'.</pre>
 </div>
 <div class="code" title="File: Tactics.v
-Line: 98
-Time: 0.005s">
-<div class="time" style="width: 11.363636363636%"></div>
+Line: 96
+Time: 0.003s">
+<div class="time" style="width: 12.5%"></div>
 <pre>
 Defined.</pre>
 </div>
 <div class="code" title="File: Tactics.v
-Line: 99
+Line: 97
 Time: 0s">
 <div class="time" style="width: 0%"></div>
 <pre>
@@ -355,7 +347,7 @@ Time: 0s">
 (** This helper tactic takes a [term] and a function [f], finds [f x] in [term] and patterns that, returning a pair [(x, term')] such that [term' (f x) ≡ term]. *)</pre>
 </div>
 <div class="code" title="File: Tactics.v
-Line: 104
+Line: 102
 Time: 0s">
 <div class="time" style="width: 0%"></div>
 <pre>Ltac pull_app term f :=
@@ -368,9 +360,9 @@ Time: 0s">
   end.</pre>
 </div>
 <div class="code" title="File: Tactics.v
-Line: 111
-Time: 0.001s">
-<div class="time" style="width: 2.2727272727273%"></div>
+Line: 109
+Time: 0s">
+<div class="time" style="width: 0%"></div>
 <pre>
 
 Ltac infer_path_forall_recr_beta term :=
@@ -394,7 +386,7 @@ Ltac infer_path_forall_recr_beta term :=
   constr:(ret' : retT').</pre>
 </div>
 <div class="code" title="File: Tactics.v
-Line: 131
+Line: 129
 Time: 0s">
 <div class="time" style="width: 0%"></div>
 <pre>
@@ -411,7 +403,7 @@ Ltac transport_path_forall_hammer_helper :=
     cbv beta.</pre>
 </div>
 <div class="code" title="File: Tactics.v
-Line: 142
+Line: 140
 Time: 0s">
 <div class="time" style="width: 0%"></div>
 <pre>
@@ -425,7 +417,7 @@ Ltac transport_path_forall_hammer :=
     ).</pre>
 </div>
 <div class="code" title="File: Tactics.v
-Line: 150
+Line: 148
 Time: 0s">
 <div class="time" style="width: 0%"></div>
 <pre>
@@ -433,31 +425,31 @@ Time: 0s">
 (** An example showing that it works *)</pre>
 </div>
 <div class="code" title="File: Tactics.v
-Line: 152
-Time: 0.006s">
-<div class="time" style="width: 13.636363636364%"></div>
+Line: 150
+Time: 0.004s">
+<div class="time" style="width: 16.666666666667%"></div>
 <pre>Lemma path_forall_2_beta' `{Funext} A B x0 x1 P f g e Px
 : @transport (forall a : A, B a) (fun f =&gt; P (f x0) (f x1)) f g (@path_forall _ _ _ _ _ e) Px
   = @transport (B x0 * B x1)%type (fun x =&gt; P (fst x) (snd x)) (f x0, f x1) (g x0, g x1) (path_prod' (e x0) (e x1)) Px.</pre>
 </div>
 <div class="code" title="File: Tactics.v
-Line: 154
+Line: 152
 Time: 0s">
 <div class="time" style="width: 0%"></div>
 <pre>
 Proof.</pre>
 </div>
 <div class="code" title="File: Tactics.v
-Line: 155
-Time: 0.044s">
+Line: 153
+Time: 0.024s">
 <div class="time" style="width: 100%"></div>
 <pre>
   transport_path_forall_hammer.</pre>
 </div>
 <div class="code" title="File: Tactics.v
-Line: 156
-Time: 0.009s">
-<div class="time" style="width: 20.454545454545%"></div>
+Line: 154
+Time: 0.007s">
+<div class="time" style="width: 29.166666666667%"></div>
 <pre>
   repeat match goal with
            | [ |- appcontext[e ?x] ] =&gt; induction (e x)
@@ -465,23 +457,23 @@ Time: 0.009s">
     simpl.</pre>
 </div>
 <div class="code" title="File: Tactics.v
-Line: 160
+Line: 158
 Time: 0s">
 <div class="time" style="width: 0%"></div>
 <pre>
   reflexivity.</pre>
 </div>
 <div class="code" title="File: Tactics.v
-Line: 161
-Time: 0.016s">
-<div class="time" style="width: 36.363636363636%"></div>
+Line: 159
+Time: 0.015s">
+<div class="time" style="width: 62.5%"></div>
 <pre>
 Qed.</pre>
 </div>
 <div class="code" title="File: Tactics.v
-Line: 162
-Time: 0.005s">
-<div class="time" style="width: 11.363636363636%"></div>
+Line: 160
+Time: 0.004s">
+<div class="time" style="width: 16.666666666667%"></div>
 <pre>
 
 Lemma path_forall_2_beta `{Funext} A B x0 x1 P f g e Px
@@ -490,35 +482,35 @@ Lemma path_forall_2_beta `{Funext} A B x0 x1 P f g e Px
      (transport (fun y : B x0 =&gt; P y (f x1)) (e x0) Px).</pre>
 </div>
 <div class="code" title="File: Tactics.v
-Line: 167
+Line: 165
 Time: 0s">
 <div class="time" style="width: 0%"></div>
 <pre>
 Proof.</pre>
 </div>
 <div class="code" title="File: Tactics.v
-Line: 168
-Time: 0.027s">
-<div class="time" style="width: 61.363636363636%"></div>
+Line: 166
+Time: 0.021s">
+<div class="time" style="width: 87.5%"></div>
 <pre>
   transport_path_forall_hammer.</pre>
 </div>
 <div class="code" title="File: Tactics.v
-Line: 169
+Line: 167
 Time: 0s">
 <div class="time" style="width: 0%"></div>
 <pre>
   reflexivity.</pre>
 </div>
 <div class="code" title="File: Tactics.v
-Line: 170
-Time: 0.013s">
-<div class="time" style="width: 29.545454545455%"></div>
+Line: 168
+Time: 0.01s">
+<div class="time" style="width: 41.666666666667%"></div>
 <pre>
 Qed.</pre>
 </div>
 <div class="code" title="File: Tactics.v
-Line: 171
+Line: 169
 Time: 0s">
 <div class="time" style="width: 0%"></div>
 <pre>
@@ -529,14 +521,14 @@ Time: 0s">
 (** A variant of [induction] which also tries [destruct] and [case], and may be extended to using other [destruct]-like tactics. *)</pre>
 </div>
 <div class="code" title="File: Tactics.v
-Line: 176
+Line: 174
 Time: 0s">
 <div class="time" style="width: 0%"></div>
 <pre>Ltac induction_hammer H :=
   destruct H || induction H || (case H; clear H).</pre>
 </div>
 <div class="code" title="File: Tactics.v
-Line: 177
+Line: 175
 Time: 0s">
 <div class="time" style="width: 0%"></div>
 <pre>
@@ -544,7 +536,7 @@ Time: 0s">
 (** Takes a term of type [_ = _], and tries to replace it by [idpath] by trying to prove that it's an hProp.  The ordering of attempts is tuned for speed. *)</pre>
 </div>
 <div class="code" title="File: Tactics.v
-Line: 179
+Line: 177
 Time: 0s">
 <div class="time" style="width: 0%"></div>
 <pre>Ltac clear_contr_path p :=
@@ -568,7 +560,7 @@ Time: 0s">
     ).</pre>
 </div>
 <div class="code" title="File: Tactics.v
-Line: 197
+Line: 195
 Time: 0s">
 <div class="time" style="width: 0%"></div>
 <pre>
@@ -576,14 +568,14 @@ Time: 0s">
 (** Use both [induction_hammer] and [clear_contr_path] on a path, to try to get rid of it *)</pre>
 </div>
 <div class="code" title="File: Tactics.v
-Line: 199
+Line: 197
 Time: 0s">
 <div class="time" style="width: 0%"></div>
 <pre>Ltac clear_path_no_check p :=
   induction_hammer p || clear_contr_path p.</pre>
 </div>
 <div class="code" title="File: Tactics.v
-Line: 200
+Line: 198
 Time: 0s">
 <div class="time" style="width: 0%"></div>
 <pre>
@@ -595,7 +587,7 @@ Ltac clear_path p :=
   end.</pre>
 </div>
 <div class="code" title="File: Tactics.v
-Line: 206
+Line: 204
 Time: 0s">
 <div class="time" style="width: 0%"></div>
 <pre>
@@ -604,7 +596,7 @@ Time: 0s">
 (** We don't match only on things of type [_ = _], because maybe that's the head normal form, but it's hiding behind something else; [clear_path] will make sure it's of the right type.  We include some redundant cases at the top, for speed; it is faster to try to destruct everything first, and then do the full battery of tactics, than to just run the hammer. *)</pre>
 </div>
 <div class="code" title="File: Tactics.v
-Line: 209
+Line: 207
 Time: 0s">
 <div class="time" style="width: 0%"></div>
 <pre>Ltac step_clear_paths :=
@@ -616,14 +608,14 @@ Time: 0s">
   end.</pre>
 </div>
 <div class="code" title="File: Tactics.v
-Line: 215
+Line: 213
 Time: 0s">
 <div class="time" style="width: 0%"></div>
 <pre>
 Ltac clear_paths := progress repeat step_clear_paths.</pre>
 </div>
 <div class="code" title="File: Tactics.v
-Line: 216
+Line: 214
 Time: 0s">
 <div class="time" style="width: 0%"></div>
 <pre>
@@ -631,7 +623,7 @@ Time: 0s">
 (** Run [clear_path] on anything inside a [match] *)</pre>
 </div>
 <div class="code" title="File: Tactics.v
-Line: 218
+Line: 216
 Time: 0s">
 <div class="time" style="width: 0%"></div>
 <pre>Ltac step_clear_paths_in_match :=
@@ -642,14 +634,14 @@ Time: 0s">
   end.</pre>
 </div>
 <div class="code" title="File: Tactics.v
-Line: 223
+Line: 221
 Time: 0s">
 <div class="time" style="width: 0%"></div>
 <pre>
 Ltac clear_paths_in_match := progress repeat step_clear_paths_in_match.</pre>
 </div>
 <div class="code" title="File: Tactics.v
-Line: 224
+Line: 222
 Time: 0s">
 <div class="time" style="width: 0%"></div>
 <pre>
@@ -657,22 +649,22 @@ Time: 0s">
 (** Now some lemmas about trivial [match]es *)</pre>
 </div>
 <div class="code" title="File: Tactics.v
-Line: 226
+Line: 224
 Time: 0.002s">
-<div class="time" style="width: 4.5454545454545%"></div>
-<pre>Definition match_eta T (x y : T) (H0 : x = y)
+<div class="time" style="width: 8.3333333333333%"></div>
+<pre>Definition match_eta {T} {x y : T} (H0 : x = y)
 : (H0 = match H0 in (_ = y) return (x = y) with
           | idpath =&gt; idpath
         end)
   := match H0 with idpath =&gt; idpath end.</pre>
 </div>
 <div class="code" title="File: Tactics.v
-Line: 230
-Time: 0.002s">
-<div class="time" style="width: 4.5454545454545%"></div>
+Line: 228
+Time: 0.003s">
+<div class="time" style="width: 12.5%"></div>
 <pre>
 
-Definition match_eta1 T (x : T) (E : x = x)
+Definition match_eta1 {T} {x : T} (E : x = x)
 : (match E in (_ = y) return (x = y) with
      | idpath =&gt; idpath
    end = idpath)
@@ -680,12 +672,12 @@ Definition match_eta1 T (x : T) (E : x = x)
   := fun H =&gt; ((H # match_eta E) ^)%path.</pre>
 </div>
 <div class="code" title="File: Tactics.v
-Line: 237
+Line: 235
 Time: 0.002s">
-<div class="time" style="width: 4.5454545454545%"></div>
+<div class="time" style="width: 8.3333333333333%"></div>
 <pre>
 
-Definition match_eta2 T (x : T) (E : x = x)
+Definition match_eta2 {T} {x : T} (E : x = x)
 : (idpath
    = match E in (_ = y) return (x = y) with
        | idpath =&gt; idpath
@@ -694,7 +686,7 @@ Definition match_eta2 T (x : T) (E : x = x)
   := fun H =&gt; match_eta1 E (H ^)%path.</pre>
 </div>
 <div class="code" title="File: Tactics.v
-Line: 245
+Line: 243
 Time: 0s">
 <div class="time" style="width: 0%"></div>
 <pre>
@@ -702,7 +694,7 @@ Time: 0s">
 (** And now the actual tactic.  Note that the order of the cases in the [match goal with ... end] is somewhat finely tuned for speed. *)</pre>
 </div>
 <div class="code" title="File: Tactics.v
-Line: 247
+Line: 245
 Time: 0s">
 <div class="time" style="width: 0%"></div>
 <pre>Ltac step_path_induction_hammer :=
@@ -726,7 +718,7 @@ Time: 0s">
   end.</pre>
 </div>
 <div class="code" title="File: Tactics.v
-Line: 265
+Line: 263
 Time: 0s">
 <div class="time" style="width: 0%"></div>
 <pre>
@@ -734,7 +726,7 @@ Time: 0s">
 Ltac path_induction_hammer := progress repeat step_path_induction_hammer.</pre>
 </div>
 <div class="code" title="File: Tactics.v
-Line: 267
+Line: 265
 Time: 0s">
 <div class="time" style="width: 0%"></div>
 <pre>
@@ -744,7 +736,7 @@ Time: 0s">
 (** Substitute all hypotheses with bodies, i.e., of the form [H := _]. *)</pre>
 </div>
 <div class="code" title="File: Tactics.v
-Line: 271
+Line: 269
 Time: 0s">
 <div class="time" style="width: 0%"></div>
 <pre>Ltac subst_body :=
@@ -753,7 +745,7 @@ Time: 0s">
          end.</pre>
 </div>
 <div class="code" title="File: Tactics.v
-Line: 274
+Line: 272
 Time: 0s">
 <div class="time" style="width: 0%"></div>
 <pre>
@@ -763,7 +755,7 @@ Time: 0s">
 </pre>
 </div>
 <div class="code" title="File: Tactics.v
-Line: 277
+Line: 275
 Time: 0s">
 <div class="time" style="width: 0%"></div>
 <pre>Ltac do_with_hyp tac :=
@@ -773,7 +765,7 @@ Time: 0s">
   end.</pre>
 </div>
 <div class="code" title="File: Tactics.v
-Line: 281
+Line: 279
 Time: 0s">
 <div class="time" style="width: 0%"></div>
 <pre>
@@ -781,28 +773,28 @@ Time: 0s">
 Ltac rewrite_hyp' := do_with_hyp ltac:(fun H =&gt; rewrite H).</pre>
 </div>
 <div class="code" title="File: Tactics.v
-Line: 283
+Line: 281
 Time: 0s">
 <div class="time" style="width: 0%"></div>
 <pre>
 Ltac rewrite_hyp := repeat rewrite_hyp'.</pre>
 </div>
 <div class="code" title="File: Tactics.v
-Line: 284
+Line: 282
 Time: 0s">
 <div class="time" style="width: 0%"></div>
 <pre>
 Ltac rewrite_rev_hyp' := do_with_hyp ltac:(fun H =&gt; rewrite &lt;- H).</pre>
 </div>
 <div class="code" title="File: Tactics.v
-Line: 285
+Line: 283
 Time: 0s">
 <div class="time" style="width: 0%"></div>
 <pre>
 Ltac rewrite_rev_hyp := repeat rewrite_rev_hyp'.</pre>
 </div>
 <div class="code" title="File: Tactics.v
-Line: 286
+Line: 284
 Time: 0s">
 <div class="time" style="width: 0%"></div>
 <pre>
@@ -810,28 +802,28 @@ Time: 0s">
 Ltac apply_hyp' := do_with_hyp ltac:(fun H =&gt; apply H).</pre>
 </div>
 <div class="code" title="File: Tactics.v
-Line: 288
+Line: 286
 Time: 0s">
 <div class="time" style="width: 0%"></div>
 <pre>
 Ltac apply_hyp := repeat apply_hyp'.</pre>
 </div>
 <div class="code" title="File: Tactics.v
-Line: 289
+Line: 287
 Time: 0s">
 <div class="time" style="width: 0%"></div>
 <pre>
 Ltac eapply_hyp' := do_with_hyp ltac:(fun H =&gt; eapply H).</pre>
 </div>
 <div class="code" title="File: Tactics.v
-Line: 290
+Line: 288
 Time: 0s">
 <div class="time" style="width: 0%"></div>
 <pre>
 Ltac eapply_hyp := repeat eapply_hyp'.</pre>
 </div>
 <div class="code" title="File: Tactics.v
-Line: 291
+Line: 289
 Time: 0s">
 <div class="time" style="width: 0%"></div>
 <pre>
@@ -839,7 +831,7 @@ Time: 0s">
 (** Run [simpl] on a hypothesis before rewriting with it. *)</pre>
 </div>
 <div class="code" title="File: Tactics.v
-Line: 293
+Line: 291
 Time: 0s">
 <div class="time" style="width: 0%"></div>
 <pre>Ltac simpl_do_clear tac term :=
@@ -850,7 +842,7 @@ Time: 0s">
     clear H.</pre>
 </div>
 <div class="code" title="File: Tactics.v
-Line: 298
+Line: 296
 Time: 0s">
 <div class="time" style="width: 0%"></div>
 <pre>
@@ -858,21 +850,21 @@ Time: 0s">
 Tactic Notation "simpl" "rewrite"      constr(term) := simpl_do_clear ltac:(fun H =&gt; rewrite    H) term.</pre>
 </div>
 <div class="code" title="File: Tactics.v
-Line: 300
+Line: 298
 Time: 0s">
 <div class="time" style="width: 0%"></div>
 <pre>
 Tactic Notation "simpl" "rewrite" "-&gt;" constr(term) := simpl_do_clear ltac:(fun H =&gt; rewrite -&gt; H) term.</pre>
 </div>
 <div class="code" title="File: Tactics.v
-Line: 301
+Line: 299
 Time: 0s">
 <div class="time" style="width: 0%"></div>
 <pre>
 Tactic Notation "simpl" "rewrite" "&lt;-" constr(term) := simpl_do_clear ltac:(fun H =&gt; rewrite &lt;- H) term.</pre>
 </div>
 <div class="code" title="File: Tactics.v
-Line: 302
+Line: 300
 Time: 0s">
 <div class="time" style="width: 0%"></div>
 <pre>
@@ -880,21 +872,21 @@ Time: 0s">
 Tactic Notation "simpl" "rewrite"      constr(term) "in" hyp(hyp) := simpl_do_clear ltac:(fun H =&gt; rewrite    H in hyp) term.</pre>
 </div>
 <div class="code" title="File: Tactics.v
-Line: 304
+Line: 302
 Time: 0s">
 <div class="time" style="width: 0%"></div>
 <pre>
 Tactic Notation "simpl" "rewrite" "-&gt;" constr(term) "in" hyp(hyp) := simpl_do_clear ltac:(fun H =&gt; rewrite -&gt; H in hyp) term.</pre>
 </div>
 <div class="code" title="File: Tactics.v
-Line: 305
+Line: 303
 Time: 0s">
 <div class="time" style="width: 0%"></div>
 <pre>
 Tactic Notation "simpl" "rewrite" "&lt;-" constr(term) "in" hyp(hyp) := simpl_do_clear ltac:(fun H =&gt; rewrite &lt;- H in hyp) term.</pre>
 </div>
 <div class="code" title="File: Tactics.v
-Line: 306
+Line: 304
 Time: 0s">
 <div class="time" style="width: 0%"></div>
 <pre>
@@ -902,21 +894,21 @@ Time: 0s">
 Tactic Notation "simpl" "rewrite"      constr(term) "in" "*" := simpl_do_clear ltac:(fun H =&gt; rewrite    H in * ) term.</pre>
 </div>
 <div class="code" title="File: Tactics.v
-Line: 308
+Line: 306
 Time: 0s">
 <div class="time" style="width: 0%"></div>
 <pre>
 Tactic Notation "simpl" "rewrite" "-&gt;" constr(term) "in" "*" := simpl_do_clear ltac:(fun H =&gt; rewrite -&gt; H in * ) term.</pre>
 </div>
 <div class="code" title="File: Tactics.v
-Line: 309
+Line: 307
 Time: 0s">
 <div class="time" style="width: 0%"></div>
 <pre>
 Tactic Notation "simpl" "rewrite" "&lt;-" constr(term) "in" "*" := simpl_do_clear ltac:(fun H =&gt; rewrite &lt;- H in * ) term.</pre>
 </div>
 <div class="code" title="File: Tactics.v
-Line: 310
+Line: 308
 Time: 0s">
 <div class="time" style="width: 0%"></div>
 <pre>
@@ -924,21 +916,21 @@ Time: 0s">
 Tactic Notation "simpl" "rewrite"      constr(term) "in" hyp(hyp) "|-" "*" := simpl_do_clear ltac:(fun H =&gt; rewrite    H in hyp |- * ) term.</pre>
 </div>
 <div class="code" title="File: Tactics.v
-Line: 312
+Line: 310
 Time: 0s">
 <div class="time" style="width: 0%"></div>
 <pre>
 Tactic Notation "simpl" "rewrite" "-&gt;" constr(term) "in" hyp(hyp) "|-" "*" := simpl_do_clear ltac:(fun H =&gt; rewrite -&gt; H in hyp |- * ) term.</pre>
 </div>
 <div class="code" title="File: Tactics.v
-Line: 313
+Line: 311
 Time: 0s">
 <div class="time" style="width: 0%"></div>
 <pre>
 Tactic Notation "simpl" "rewrite" "&lt;-" constr(term) "in" hyp(hyp) "|-" "*" := simpl_do_clear ltac:(fun H =&gt; rewrite &lt;- H in hyp |- * ) term.</pre>
 </div>
 <div class="code" title="File: Tactics.v
-Line: 314
+Line: 312
 Time: 0s">
 <div class="time" style="width: 0%"></div>
 <pre>
@@ -946,21 +938,21 @@ Time: 0s">
 Tactic Notation "simpl" "rewrite"      constr(term) "in" "*" "|-" := simpl_do_clear ltac:(fun H =&gt; rewrite    H in * |- ) term.</pre>
 </div>
 <div class="code" title="File: Tactics.v
-Line: 316
+Line: 314
 Time: 0s">
 <div class="time" style="width: 0%"></div>
 <pre>
 Tactic Notation "simpl" "rewrite" "-&gt;" constr(term) "in" "*" "|-" := simpl_do_clear ltac:(fun H =&gt; rewrite -&gt; H in * |- ) term.</pre>
 </div>
 <div class="code" title="File: Tactics.v
-Line: 317
+Line: 315
 Time: 0s">
 <div class="time" style="width: 0%"></div>
 <pre>
 Tactic Notation "simpl" "rewrite" "&lt;-" constr(term) "in" "*" "|-" := simpl_do_clear ltac:(fun H =&gt; rewrite &lt;- H in * |- ) term.</pre>
 </div>
 <div class="code" title="File: Tactics.v
-Line: 318
+Line: 316
 Time: 0s">
 <div class="time" style="width: 0%"></div>
 <pre>
@@ -969,21 +961,21 @@ Time: 0s">
 Tactic Notation "simpl" "rewrite"      "!" constr(term) := simpl_do_clear ltac:(fun H =&gt; rewrite    !H) term.</pre>
 </div>
 <div class="code" title="File: Tactics.v
-Line: 321
+Line: 319
 Time: 0s">
 <div class="time" style="width: 0%"></div>
 <pre>
 Tactic Notation "simpl" "rewrite" "-&gt;" "!" constr(term) := simpl_do_clear ltac:(fun H =&gt; rewrite -&gt; !H) term.</pre>
 </div>
 <div class="code" title="File: Tactics.v
-Line: 322
+Line: 320
 Time: 0s">
 <div class="time" style="width: 0%"></div>
 <pre>
 Tactic Notation "simpl" "rewrite" "&lt;-" "!" constr(term) := simpl_do_clear ltac:(fun H =&gt; rewrite &lt;- !H) term.</pre>
 </div>
 <div class="code" title="File: Tactics.v
-Line: 323
+Line: 321
 Time: 0s">
 <div class="time" style="width: 0%"></div>
 <pre>
@@ -991,21 +983,21 @@ Time: 0s">
 Tactic Notation "simpl" "rewrite"      "!" constr(term) "in" hyp(hyp) := simpl_do_clear ltac:(fun H =&gt; rewrite    !H in hyp) term.</pre>
 </div>
 <div class="code" title="File: Tactics.v
-Line: 325
+Line: 323
 Time: 0s">
 <div class="time" style="width: 0%"></div>
 <pre>
 Tactic Notation "simpl" "rewrite" "-&gt;" "!" constr(term) "in" hyp(hyp) := simpl_do_clear ltac:(fun H =&gt; rewrite -&gt; !H in hyp) term.</pre>
 </div>
 <div class="code" title="File: Tactics.v
-Line: 326
+Line: 324
 Time: 0s">
 <div class="time" style="width: 0%"></div>
 <pre>
 Tactic Notation "simpl" "rewrite" "&lt;-" "!" constr(term) "in" hyp(hyp) := simpl_do_clear ltac:(fun H =&gt; rewrite &lt;- !H in hyp) term.</pre>
 </div>
 <div class="code" title="File: Tactics.v
-Line: 327
+Line: 325
 Time: 0s">
 <div class="time" style="width: 0%"></div>
 <pre>
@@ -1013,21 +1005,21 @@ Time: 0s">
 Tactic Notation "simpl" "rewrite"      "!" constr(term) "in" "*" := simpl_do_clear ltac:(fun H =&gt; rewrite    !H in * ) term.</pre>
 </div>
 <div class="code" title="File: Tactics.v
-Line: 329
+Line: 327
 Time: 0s">
 <div class="time" style="width: 0%"></div>
 <pre>
 Tactic Notation "simpl" "rewrite" "-&gt;" "!" constr(term) "in" "*" := simpl_do_clear ltac:(fun H =&gt; rewrite -&gt; !H in * ) term.</pre>
 </div>
 <div class="code" title="File: Tactics.v
-Line: 330
+Line: 328
 Time: 0s">
 <div class="time" style="width: 0%"></div>
 <pre>
 Tactic Notation "simpl" "rewrite" "&lt;-" "!" constr(term) "in" "*" := simpl_do_clear ltac:(fun H =&gt; rewrite &lt;- !H in * ) term.</pre>
 </div>
 <div class="code" title="File: Tactics.v
-Line: 331
+Line: 329
 Time: 0s">
 <div class="time" style="width: 0%"></div>
 <pre>
@@ -1035,21 +1027,21 @@ Time: 0s">
 Tactic Notation "simpl" "rewrite"      "!" constr(term) "in" hyp(hyp) "|-" "*" := simpl_do_clear ltac:(fun H =&gt; rewrite    !H in hyp |- * ) term.</pre>
 </div>
 <div class="code" title="File: Tactics.v
-Line: 333
+Line: 331
 Time: 0s">
 <div class="time" style="width: 0%"></div>
 <pre>
 Tactic Notation "simpl" "rewrite" "-&gt;" "!" constr(term) "in" hyp(hyp) "|-" "*" := simpl_do_clear ltac:(fun H =&gt; rewrite -&gt; !H in hyp |- * ) term.</pre>
 </div>
 <div class="code" title="File: Tactics.v
-Line: 334
+Line: 332
 Time: 0s">
 <div class="time" style="width: 0%"></div>
 <pre>
 Tactic Notation "simpl" "rewrite" "&lt;-" "!" constr(term) "in" hyp(hyp) "|-" "*" := simpl_do_clear ltac:(fun H =&gt; rewrite &lt;- !H in hyp |- * ) term.</pre>
 </div>
 <div class="code" title="File: Tactics.v
-Line: 335
+Line: 333
 Time: 0s">
 <div class="time" style="width: 0%"></div>
 <pre>
@@ -1057,21 +1049,21 @@ Time: 0s">
 Tactic Notation "simpl" "rewrite"      "!" constr(term) "in" "*" "|-" := simpl_do_clear ltac:(fun H =&gt; rewrite    !H in * |- ) term.</pre>
 </div>
 <div class="code" title="File: Tactics.v
-Line: 337
+Line: 335
 Time: 0s">
 <div class="time" style="width: 0%"></div>
 <pre>
 Tactic Notation "simpl" "rewrite" "-&gt;" "!" constr(term) "in" "*" "|-" := simpl_do_clear ltac:(fun H =&gt; rewrite -&gt; !H in * |- ) term.</pre>
 </div>
 <div class="code" title="File: Tactics.v
-Line: 338
+Line: 336
 Time: 0s">
 <div class="time" style="width: 0%"></div>
 <pre>
 Tactic Notation "simpl" "rewrite" "&lt;-" "!" constr(term) "in" "*" "|-" := simpl_do_clear ltac:(fun H =&gt; rewrite &lt;- !H in * |- ) term.</pre>
 </div>
 <div class="code" title="File: Tactics.v
-Line: 339
+Line: 337
 Time: 0s">
 <div class="time" style="width: 0%"></div>
 <pre>
@@ -1080,21 +1072,21 @@ Time: 0s">
 Tactic Notation "simpl" "rewrite"      "?" constr(term) := simpl_do_clear ltac:(fun H =&gt; rewrite    ?H) term.</pre>
 </div>
 <div class="code" title="File: Tactics.v
-Line: 342
+Line: 340
 Time: 0s">
 <div class="time" style="width: 0%"></div>
 <pre>
 Tactic Notation "simpl" "rewrite" "-&gt;" "?" constr(term) := simpl_do_clear ltac:(fun H =&gt; rewrite -&gt; ?H) term.</pre>
 </div>
 <div class="code" title="File: Tactics.v
-Line: 343
+Line: 341
 Time: 0s">
 <div class="time" style="width: 0%"></div>
 <pre>
 Tactic Notation "simpl" "rewrite" "&lt;-" "?" constr(term) := simpl_do_clear ltac:(fun H =&gt; rewrite &lt;- ?H) term.</pre>
 </div>
 <div class="code" title="File: Tactics.v
-Line: 344
+Line: 342
 Time: 0s">
 <div class="time" style="width: 0%"></div>
 <pre>
@@ -1102,21 +1094,21 @@ Time: 0s">
 Tactic Notation "simpl" "rewrite"      "?" constr(term) "in" hyp(hyp) := simpl_do_clear ltac:(fun H =&gt; rewrite    ?H in hyp) term.</pre>
 </div>
 <div class="code" title="File: Tactics.v
-Line: 346
+Line: 344
 Time: 0s">
 <div class="time" style="width: 0%"></div>
 <pre>
 Tactic Notation "simpl" "rewrite" "-&gt;" "?" constr(term) "in" hyp(hyp) := simpl_do_clear ltac:(fun H =&gt; rewrite -&gt; ?H in hyp) term.</pre>
 </div>
 <div class="code" title="File: Tactics.v
-Line: 347
+Line: 345
 Time: 0s">
 <div class="time" style="width: 0%"></div>
 <pre>
 Tactic Notation "simpl" "rewrite" "&lt;-" "?" constr(term) "in" hyp(hyp) := simpl_do_clear ltac:(fun H =&gt; rewrite &lt;- ?H in hyp) term.</pre>
 </div>
 <div class="code" title="File: Tactics.v
-Line: 348
+Line: 346
 Time: 0s">
 <div class="time" style="width: 0%"></div>
 <pre>
@@ -1124,21 +1116,21 @@ Time: 0s">
 Tactic Notation "simpl" "rewrite"      "?" constr(term) "in" "*" := simpl_do_clear ltac:(fun H =&gt; rewrite    ?H in * ) term.</pre>
 </div>
 <div class="code" title="File: Tactics.v
-Line: 350
+Line: 348
 Time: 0s">
 <div class="time" style="width: 0%"></div>
 <pre>
 Tactic Notation "simpl" "rewrite" "-&gt;" "?" constr(term) "in" "*" := simpl_do_clear ltac:(fun H =&gt; rewrite -&gt; ?H in * ) term.</pre>
 </div>
 <div class="code" title="File: Tactics.v
-Line: 351
+Line: 349
 Time: 0s">
 <div class="time" style="width: 0%"></div>
 <pre>
 Tactic Notation "simpl" "rewrite" "&lt;-" "?" constr(term) "in" "*" := simpl_do_clear ltac:(fun H =&gt; rewrite &lt;- ?H in * ) term.</pre>
 </div>
 <div class="code" title="File: Tactics.v
-Line: 352
+Line: 350
 Time: 0s">
 <div class="time" style="width: 0%"></div>
 <pre>
@@ -1146,21 +1138,21 @@ Time: 0s">
 Tactic Notation "simpl" "rewrite"      "?" constr(term) "in" hyp(hyp) "|-" "*" := simpl_do_clear ltac:(fun H =&gt; rewrite    ?H in hyp |- * ) term.</pre>
 </div>
 <div class="code" title="File: Tactics.v
-Line: 354
+Line: 352
 Time: 0s">
 <div class="time" style="width: 0%"></div>
 <pre>
 Tactic Notation "simpl" "rewrite" "-&gt;" "?" constr(term) "in" hyp(hyp) "|-" "*" := simpl_do_clear ltac:(fun H =&gt; rewrite -&gt; ?H in hyp |- * ) term.</pre>
 </div>
 <div class="code" title="File: Tactics.v
-Line: 355
+Line: 353
 Time: 0s">
 <div class="time" style="width: 0%"></div>
 <pre>
 Tactic Notation "simpl" "rewrite" "&lt;-" "?" constr(term) "in" hyp(hyp) "|-" "*" := simpl_do_clear ltac:(fun H =&gt; rewrite &lt;- ?H in hyp |- * ) term.</pre>
 </div>
 <div class="code" title="File: Tactics.v
-Line: 356
+Line: 354
 Time: 0s">
 <div class="time" style="width: 0%"></div>
 <pre>
@@ -1168,21 +1160,21 @@ Time: 0s">
 Tactic Notation "simpl" "rewrite"      "?" constr(term) "in" "*" "|-" := simpl_do_clear ltac:(fun H =&gt; rewrite    ?H in * |- ) term.</pre>
 </div>
 <div class="code" title="File: Tactics.v
-Line: 358
+Line: 356
 Time: 0s">
 <div class="time" style="width: 0%"></div>
 <pre>
 Tactic Notation "simpl" "rewrite" "-&gt;" "?" constr(term) "in" "*" "|-" := simpl_do_clear ltac:(fun H =&gt; rewrite -&gt; ?H in * |- ) term.</pre>
 </div>
 <div class="code" title="File: Tactics.v
-Line: 359
+Line: 357
 Time: 0s">
 <div class="time" style="width: 0%"></div>
 <pre>
 Tactic Notation "simpl" "rewrite" "&lt;-" "?" constr(term) "in" "*" "|-" := simpl_do_clear ltac:(fun H =&gt; rewrite &lt;- ?H in * |- ) term.</pre>
 </div>
 <div class="code" title="File: Tactics.v
-Line: 360
+Line: 358
 Time: 0s">
 <div class="time" style="width: 0%"></div>
 <pre>
@@ -1190,7 +1182,7 @@ Time: 0s">
 (** find the head of the given expression *)</pre>
 </div>
 <div class="code" title="File: Tactics.v
-Line: 362
+Line: 360
 Time: 0s">
 <div class="time" style="width: 0%"></div>
 <pre>Ltac head expr :=
@@ -1200,7 +1192,7 @@ Time: 0s">
   end.</pre>
 </div>
 <div class="code" title="File: Tactics.v
-Line: 366
+Line: 364
 Time: 0s">
 <div class="time" style="width: 0%"></div>
 <pre>
@@ -1208,7 +1200,7 @@ Time: 0s">
 Ltac head_hnf expr := let expr' := eval hnf in expr in head expr'.</pre>
 </div>
 <div class="code" title="File: Tactics.v
-Line: 368
+Line: 366
 Time: 0s">
 <div class="time" style="width: 0%"></div>
 <pre>
@@ -1221,7 +1213,7 @@ Time: 0s">
    speed things up. *)</pre>
 </div>
 <div class="code" title="File: Tactics.v
-Line: 375
+Line: 373
 Time: 0s">
 <div class="time" style="width: 0%"></div>
 <pre>Ltac destruct_all_matches_then matcher tac :=
@@ -1230,7 +1222,7 @@ Time: 0s">
          end.</pre>
 </div>
 <div class="code" title="File: Tactics.v
-Line: 378
+Line: 376
 Time: 0s">
 <div class="time" style="width: 0%"></div>
 <pre>
@@ -1238,14 +1230,14 @@ Time: 0s">
 Ltac destruct_all_matches matcher := destruct_all_matches_then matcher ltac:(simpl in *).</pre>
 </div>
 <div class="code" title="File: Tactics.v
-Line: 380
+Line: 378
 Time: 0s">
 <div class="time" style="width: 0%"></div>
 <pre>
 Ltac destruct_all_matches' matcher := destruct_all_matches_then matcher idtac.</pre>
 </div>
 <div class="code" title="File: Tactics.v
-Line: 381
+Line: 379
 Time: 0s">
 <div class="time" style="width: 0%"></div>
 <pre>
@@ -1253,7 +1245,7 @@ Time: 0s">
 (** matches anything whose type has a [T] in it *)</pre>
 </div>
 <div class="code" title="File: Tactics.v
-Line: 383
+Line: 381
 Time: 0s">
 <div class="time" style="width: 0%"></div>
 <pre>Ltac destruct_type_matcher T HT :=
@@ -1262,21 +1254,21 @@ Time: 0s">
   end.</pre>
 </div>
 <div class="code" title="File: Tactics.v
-Line: 386
+Line: 384
 Time: 0s">
 <div class="time" style="width: 0%"></div>
 <pre>
 Ltac destruct_type T := destruct_all_matches ltac:(destruct_type_matcher T).</pre>
 </div>
 <div class="code" title="File: Tactics.v
-Line: 387
+Line: 385
 Time: 0s">
 <div class="time" style="width: 0%"></div>
 <pre>
 Ltac destruct_type' T := destruct_all_matches' ltac:(destruct_type_matcher T).</pre>
 </div>
 <div class="code" title="File: Tactics.v
-Line: 388
+Line: 386
 Time: 0s">
 <div class="time" style="width: 0%"></div>
 <pre>
@@ -1287,21 +1279,21 @@ Ltac destruct_head_matcher T HT :=
   end.</pre>
 </div>
 <div class="code" title="File: Tactics.v
-Line: 393
+Line: 391
 Time: 0s">
 <div class="time" style="width: 0%"></div>
 <pre>
 Ltac destruct_head T := destruct_all_matches ltac:(destruct_head_matcher T).</pre>
 </div>
 <div class="code" title="File: Tactics.v
-Line: 394
+Line: 392
 Time: 0s">
 <div class="time" style="width: 0%"></div>
 <pre>
 Ltac destruct_head' T := destruct_all_matches' ltac:(destruct_head_matcher T).</pre>
 </div>
 <div class="code" title="File: Tactics.v
-Line: 395
+Line: 393
 Time: 0s">
 <div class="time" style="width: 0%"></div>
 <pre>
@@ -1312,21 +1304,21 @@ Ltac destruct_head_hnf_matcher T HT :=
   end.</pre>
 </div>
 <div class="code" title="File: Tactics.v
-Line: 400
+Line: 398
 Time: 0s">
 <div class="time" style="width: 0%"></div>
 <pre>
 Ltac destruct_head_hnf T := destruct_all_matches ltac:(destruct_head_hnf_matcher T).</pre>
 </div>
 <div class="code" title="File: Tactics.v
-Line: 401
+Line: 399
 Time: 0s">
 <div class="time" style="width: 0%"></div>
 <pre>
 Ltac destruct_head_hnf' T := destruct_all_matches' ltac:(destruct_head_hnf_matcher T).</pre>
 </div>
 <div class="code" title="File: Tactics.v
-Line: 403
+Line: 401
 Time: 0s">
 <div class="time" style="width: 0%"></div>
 <pre>
