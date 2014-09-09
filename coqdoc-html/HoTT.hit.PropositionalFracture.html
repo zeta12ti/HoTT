@@ -1,0 +1,159 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
+"http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
+<link href="coqdoc.css" rel="stylesheet" type="text/css"/>
+<title>HoTT.hit.PropositionalFracture</title>
+</head>
+
+<body>
+
+<div id="page">
+
+<div id="header">
+</div>
+
+<div id="main">
+
+<h1 class="libtitle">Library HoTT.hit.PropositionalFracture</h1>
+
+<div class="code">
+<span class="id" type="keyword">Require</span> <span class="id" type="keyword">Import</span> <a class="idref" href="HoTT.Overture.html#"><span class="id" type="library">Overture</span></a> <a class="idref" href="HoTT.PathGroupoids.html#"><span class="id" type="library">PathGroupoids</span></a> <a class="idref" href="HoTT.Contractible.html#"><span class="id" type="library">Contractible</span></a> <a class="idref" href="HoTT.HProp.html#"><span class="id" type="library">HProp</span></a> <a class="idref" href="HoTT.Equivalences.html#"><span class="id" type="library">Equivalences</span></a> <a class="idref" href="HoTT.EquivalenceVarieties.html#"><span class="id" type="library">EquivalenceVarieties</span></a><br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a class="idref" href="HoTT.UnivalenceImpliesFunext.html#"><span class="id" type="library">UnivalenceImpliesFunext</span></a>.<br/>
+<span class="id" type="keyword">Require</span> <span class="id" type="keyword">Import</span> <a class="idref" href="HoTT.types.Empty.html#"><span class="id" type="library">types.Empty</span></a> <a class="idref" href="HoTT.types.Unit.html#"><span class="id" type="library">types.Unit</span></a> <a class="idref" href="HoTT.types.Arrow.html#"><span class="id" type="library">types.Arrow</span></a> <a class="idref" href="HoTT.types.Sigma.html#"><span class="id" type="library">types.Sigma</span></a> <a class="idref" href="HoTT.types.Paths.html#"><span class="id" type="library">types.Paths</span></a><br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a class="idref" href="HoTT.types.Forall.html#"><span class="id" type="library">types.Forall</span></a> <a class="idref" href="HoTT.types.Prod.html#"><span class="id" type="library">types.Prod</span></a> <a class="idref" href="HoTT.types.Universe.html#"><span class="id" type="library">types.Universe</span></a>.<br/>
+<span class="id" type="keyword">Require</span> <span class="id" type="keyword">Import</span> <a class="idref" href="HoTT.ReflectiveSubuniverse.html#"><span class="id" type="library">ReflectiveSubuniverse</span></a> <a class="idref" href="HoTT.Modality.html#"><span class="id" type="library">Modality</span></a>.<br/>
+<span class="id" type="keyword">Require</span> <span class="id" type="keyword">Import</span> <a class="idref" href="HoTT.hit.Pushout.html#"><span class="id" type="library">hit.Pushout</span></a> <a class="idref" href="HoTT.hit.Join.html#"><span class="id" type="library">hit.Join</span></a>.<br/>
+
+<br/>
+<span class="id" type="keyword">Local</span>&nbsp;<span class="id" type="keyword">Open</span> <span class="id" type="keyword">Scope</span> <span class="id" type="var">path_scope</span>.<br/>
+<span class="id" type="keyword">Local</span>&nbsp;<span class="id" type="keyword">Open</span> <span class="id" type="keyword">Scope</span> <span class="id" type="var">equiv_scope</span>.<br/>
+
+<br/>
+</div>
+
+<div class="doc">
+<a name="lab187"></a><h1 class="section">Open and closed modalities and the propositional fracture theorem</h1>
+
+<div class="paragraph"> </div>
+
+ Exercise 7.13(i): Open modalities 
+</div>
+<div class="code">
+<span class="id" type="keyword">Definition</span> <a name="open_modality"><span class="id" type="definition">open_modality</span></a> `{<a class="idref" href="HoTT.Overture.html#Funext"><span class="id" type="class">Funext</span></a>} (<span class="id" type="var">U</span> : <a class="idref" href="HoTT.HProp.html#hProp"><span class="id" type="record">hProp</span></a>) : <a class="idref" href="HoTT.Modality.html#Modality"><span class="id" type="class">Modality</span></a>.<br/>
+<span class="id" type="keyword">Proof</span>.<br/>
+&nbsp;&nbsp;<span class="id" type="tactic">refine</span> (<a class="idref" href="HoTT.Modality.html#Build_Modality"><span class="id" type="constructor">Build_Modality</span></a><br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;(<a class="idref" href="HoTT.ReflectiveSubuniverse.html#Build_UnitSubuniverse"><span class="id" type="constructor">Build_UnitSubuniverse</span></a><br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;(<span class="id" type="keyword">fun</span> <span class="id" type="var">X</span> ⇒ <span class="id" type="var">U</span> <a class="idref" href="Coq.Init.Logic.html#:type_scope:x_'->'_x"><span class="id" type="notation">→</span></a> <a class="idref" href="HoTT.hit.PropositionalFracture.html#X"><span class="id" type="variable">X</span></a>)<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;(<span class="id" type="keyword">fun</span> <span class="id" type="var">X</span> <span class="id" type="var">x</span> <span class="id" type="var">u</span> ⇒ <a class="idref" href="HoTT.hit.PropositionalFracture.html#x"><span class="id" type="variable">x</span></a>))<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="id" type="var">_</span> <span class="id" type="var">_</span> <span class="id" type="var">_</span>); <span class="id" type="tactic">unfold</span> <a class="idref" href="HoTT.ReflectiveSubuniverse.html#O"><span class="id" type="method">O</span></a>, <a class="idref" href="HoTT.ReflectiveSubuniverse.html#inO"><span class="id" type="class">inO</span></a>, <a class="idref" href="HoTT.ReflectiveSubuniverse.html#O_unit"><span class="id" type="method">O_unit</span></a>.<br/>
+&nbsp;&nbsp;- <span class="id" type="tactic">intros</span> <span class="id" type="var">A</span> <span class="id" type="var">B</span> <span class="id" type="var">f</span> <span class="id" type="var">z</span> <span class="id" type="var">u</span>.<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="id" type="tactic">refine</span> (<a class="idref" href="HoTT.Overture.html#transport"><span class="id" type="definition">transport</span></a> <span class="id" type="var">B</span> <span class="id" type="var">_</span> (<span class="id" type="var">f</span> (<span class="id" type="var">z</span> <span class="id" type="var">u</span>) <span class="id" type="var">u</span>)).<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="id" type="tactic">apply</span> <a class="idref" href="HoTT.types.Arrow.html#path_arrow"><span class="id" type="definition">path_arrow</span></a>; <span class="id" type="tactic">intros</span> <span class="id" type="var">u'</span>.<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="id" type="tactic">apply</span> <a class="idref" href="HoTT.Overture.html#ap"><span class="id" type="definition">ap</span></a>; <span class="id" type="tactic">apply</span> <a class="idref" href="HoTT.HProp.html#allpath_hprop"><span class="id" type="lemma">allpath_hprop</span></a>.<br/>
+&nbsp;&nbsp;- <span class="id" type="tactic">intros</span> <span class="id" type="var">A</span> <span class="id" type="var">B</span> <span class="id" type="var">f</span> <span class="id" type="var">a</span>.<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="id" type="tactic">apply</span> <a class="idref" href="HoTT.types.Arrow.html#path_arrow"><span class="id" type="definition">path_arrow</span></a>; <span class="id" type="tactic">intros</span> <span class="id" type="var">u</span>.<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="id" type="tactic">transitivity</span> (<a class="idref" href="HoTT.Overture.html#transport"><span class="id" type="definition">transport</span></a> <span class="id" type="var">B</span> 1 (<span class="id" type="var">f</span> <span class="id" type="var">a</span> <span class="id" type="var">u</span>));<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="id" type="tactic">auto</span> <span class="id" type="keyword">with</span> <span class="id" type="var">path_hints</span>.<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="id" type="tactic">apply</span> (<a class="idref" href="HoTT.Overture.html#ap"><span class="id" type="definition">ap</span></a> (<span class="id" type="keyword">fun</span> <span class="id" type="var">p</span> ⇒ <a class="idref" href="HoTT.Overture.html#transport"><span class="id" type="definition">transport</span></a> <span class="id" type="var">B</span> <a class="idref" href="HoTT.hit.PropositionalFracture.html#p"><span class="id" type="variable">p</span></a> (<span class="id" type="var">f</span> <span class="id" type="var">a</span> <span class="id" type="var">u</span>))).<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="id" type="tactic">transitivity</span> (<a class="idref" href="HoTT.types.Arrow.html#path_arrow"><span class="id" type="definition">path_arrow</span></a> (<span class="id" type="keyword">fun</span> <span class="id" type="var">_</span> ⇒ <span class="id" type="var">a</span>) (<span class="id" type="keyword">fun</span> <span class="id" type="var">_</span> ⇒ <span class="id" type="var">a</span>) (@<a class="idref" href="HoTT.Overture.html#ap10"><span class="id" type="definition">ap10</span></a> <span class="id" type="var">U</span> <span class="id" type="var">_</span> <span class="id" type="var">_</span> <span class="id" type="var">_</span> 1));<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="id" type="tactic">auto</span> <span class="id" type="keyword">with</span> <span class="id" type="var">path_hints</span>.<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;× <span class="id" type="tactic">apply</span> <a class="idref" href="HoTT.Overture.html#ap"><span class="id" type="definition">ap</span></a>.<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="id" type="tactic">apply</span> <a class="idref" href="HoTT.Overture.html#path_forall"><span class="id" type="definition">path_forall</span></a>; <span class="id" type="tactic">intros</span> <span class="id" type="var">u'</span>.<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="id" type="tactic">apply</span> <a class="idref" href="HoTT.PathGroupoids.html#ap_const"><span class="id" type="definition">ap_const</span></a>.<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;× <span class="id" type="tactic">apply</span> <a class="idref" href="HoTT.types.Arrow.html#eta_path_arrow"><span class="id" type="definition">eta_path_arrow</span></a>.<br/>
+&nbsp;&nbsp;- <span class="id" type="tactic">intros</span> <span class="id" type="var">A</span> <span class="id" type="var">z</span> <span class="id" type="var">z'</span>.<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="id" type="tactic">refine</span> (<a class="idref" href="HoTT.Equivalences.html#isequiv_adjointify"><span class="id" type="definition">isequiv_adjointify</span></a> <span class="id" type="var">_</span> <span class="id" type="var">_</span> <span class="id" type="var">_</span> <span class="id" type="var">_</span>); <span class="id" type="tactic">unfold</span> <a class="idref" href="HoTT.ReflectiveSubuniverse.html#O"><span class="id" type="method">O</span></a>.<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;× <span class="id" type="tactic">intros</span> <span class="id" type="var">f</span>; <span class="id" type="tactic">apply</span> <a class="idref" href="HoTT.types.Arrow.html#path_arrow"><span class="id" type="definition">path_arrow</span></a>; <span class="id" type="tactic">intros</span> <span class="id" type="var">u</span>.<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="id" type="tactic">exact</span> (<a class="idref" href="HoTT.Overture.html#ap10"><span class="id" type="definition">ap10</span></a> (<span class="id" type="var">f</span> <span class="id" type="var">u</span>) <span class="id" type="var">u</span>).<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;× <span class="id" type="tactic">intros</span> <span class="id" type="var">f</span>; <span class="id" type="tactic">apply</span> <a class="idref" href="HoTT.types.Arrow.html#path_arrow"><span class="id" type="definition">path_arrow</span></a>; <span class="id" type="tactic">intros</span> <span class="id" type="var">u</span>.<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="id" type="tactic">transitivity</span> (<a class="idref" href="HoTT.types.Arrow.html#path_arrow"><span class="id" type="definition">path_arrow</span></a> <span class="id" type="var">z</span> <span class="id" type="var">z'</span> (<a class="idref" href="HoTT.Overture.html#ap10"><span class="id" type="definition">ap10</span></a> (<span class="id" type="var">f</span> <span class="id" type="var">u</span>))).<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;+ <span class="id" type="tactic">apply</span> <a class="idref" href="HoTT.Overture.html#ap"><span class="id" type="definition">ap</span></a>.<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="id" type="tactic">apply</span> <a class="idref" href="HoTT.Overture.html#path_forall"><span class="id" type="definition">path_forall</span></a>; <span class="id" type="tactic">intros</span> <span class="id" type="var">u'</span>.<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="id" type="tactic">apply</span> (<a class="idref" href="HoTT.Overture.html#ap"><span class="id" type="definition">ap</span></a> (<span class="id" type="keyword">fun</span> <span class="id" type="var">u0</span> ⇒ <a class="idref" href="HoTT.Overture.html#ap10"><span class="id" type="definition">ap10</span></a> (<span class="id" type="var">f</span> <a class="idref" href="HoTT.hit.PropositionalFracture.html#u0"><span class="id" type="variable">u0</span></a>) <span class="id" type="var">u'</span>)).<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="id" type="tactic">apply</span> <a class="idref" href="HoTT.HProp.html#allpath_hprop"><span class="id" type="lemma">allpath_hprop</span></a>.<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;+ <span class="id" type="tactic">apply</span> <a class="idref" href="HoTT.types.Arrow.html#eta_path_arrow"><span class="id" type="definition">eta_path_arrow</span></a>.<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;× <span class="id" type="tactic">intros</span> <span class="id" type="var">p</span>.<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="id" type="tactic">apply</span> <a class="idref" href="HoTT.types.Arrow.html#eta_path_arrow"><span class="id" type="definition">eta_path_arrow</span></a>.<br/>
+<span class="id" type="keyword">Defined</span>.<br/>
+
+<br/>
+</div>
+
+<div class="doc">
+Exercise 7.13(ii): Closed modalities 
+</div>
+<div class="code">
+<span class="id" type="keyword">Section</span> <a name="ClosedModality"><span class="id" type="section">ClosedModality</span></a>.<br/>
+
+<br/>
+&nbsp;&nbsp;<span class="id" type="keyword">Context</span> `{<a class="idref" href="HoTT.Overture.html#Funext"><span class="id" type="class">Funext</span></a>} (<span class="id" type="var">U</span> : <a class="idref" href="HoTT.HProp.html#hProp"><span class="id" type="record">hProp</span></a>).<br/>
+
+<br/>
+&nbsp;&nbsp;<span class="id" type="keyword">Local</span>&nbsp;<span class="id" type="keyword">Instance</span> <a name="closed_unitsubuniverse"><span class="id" type="instance">closed_unitsubuniverse</span></a> : <a class="idref" href="HoTT.ReflectiveSubuniverse.html#UnitSubuniverse"><span class="id" type="class">UnitSubuniverse</span></a><br/>
+&nbsp;&nbsp;&nbsp;&nbsp;:= (<a class="idref" href="HoTT.ReflectiveSubuniverse.html#Build_UnitSubuniverse"><span class="id" type="constructor">Build_UnitSubuniverse</span></a><br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;(<span class="id" type="keyword">fun</span> <span class="id" type="var">X</span> ⇒ <a class="idref" href="HoTT.hit.Join.html#join"><span class="id" type="definition">join</span></a> <a class="idref" href="HoTT.hit.PropositionalFracture.html#ClosedModality.U"><span class="id" type="variable">U</span></a> <a class="idref" href="HoTT.hit.PropositionalFracture.html#X"><span class="id" type="variable">X</span></a>)<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;(<span class="id" type="keyword">fun</span> <span class="id" type="var">X</span> ⇒ <a class="idref" href="HoTT.hit.Pushout.html#Pushout.push"><span class="id" type="constructor">push</span></a> <a class="idref" href="HoTT.Overture.html#:function_scope:x_'o'_x"><span class="id" type="notation">o</span></a> <a class="idref" href="HoTT.Overture.html#:function_scope:x_'o'_x"><span class="id" type="notation">(</span></a>@<a class="idref" href="Coq.Init.Datatypes.html#inr"><span class="id" type="constructor">inr</span></a> <a class="idref" href="HoTT.hit.PropositionalFracture.html#ClosedModality.U"><span class="id" type="variable">U</span></a> <a class="idref" href="HoTT.hit.PropositionalFracture.html#X"><span class="id" type="variable">X</span></a><a class="idref" href="HoTT.Overture.html#:function_scope:x_'o'_x"><span class="id" type="notation">)</span></a>)).<br/>
+
+<br/>
+&nbsp;&nbsp;<span class="id" type="keyword">Definition</span> <a name="inO_closed"><span class="id" type="definition">inO_closed</span></a> (<span class="id" type="var">A</span> : <span class="id" type="keyword">Type</span>)<br/>
+&nbsp;&nbsp;: <a class="idref" href="HoTT.ReflectiveSubuniverse.html#inO"><span class="id" type="class">inO</span></a> <a class="idref" href="HoTT.hit.PropositionalFracture.html#A"><span class="id" type="variable">A</span></a> <a class="idref" href="Coq.Init.Datatypes.html#:type_scope:x_'<->'_x"><span class="id" type="notation">↔</span></a> <a class="idref" href="Coq.Init.Datatypes.html#:type_scope:x_'<->'_x"><span class="id" type="notation">(</span></a><a class="idref" href="HoTT.hit.PropositionalFracture.html#ClosedModality.U"><span class="id" type="variable">U</span></a> <a class="idref" href="Coq.Init.Logic.html#:type_scope:x_'->'_x"><span class="id" type="notation">→</span></a> <a class="idref" href="HoTT.Overture.html#Contr"><span class="id" type="abbreviation">Contr</span></a> <a class="idref" href="HoTT.hit.PropositionalFracture.html#A"><span class="id" type="variable">A</span></a><a class="idref" href="Coq.Init.Datatypes.html#:type_scope:x_'<->'_x"><span class="id" type="notation">)</span></a>.<br/>
+&nbsp;&nbsp;<span class="id" type="keyword">Proof</span>.<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="id" type="tactic">split</span>.<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;- <span class="id" type="tactic">intros</span> ? <span class="id" type="var">u</span>.<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="id" type="tactic">refine</span> (@<a class="idref" href="HoTT.Equivalences.html#contr_equiv"><span class="id" type="lemma">contr_equiv</span></a> (<a class="idref" href="HoTT.hit.Join.html#join"><span class="id" type="definition">join</span></a> <a class="idref" href="HoTT.hit.PropositionalFracture.html#ClosedModality.U"><span class="id" type="variable">U</span></a> <span class="id" type="var">A</span>) <span class="id" type="var">A</span> <a class="idref" href="HoTT.Overture.html#:equiv_scope:x_'^-1'"><span class="id" type="notation">(</span></a><a class="idref" href="HoTT.ReflectiveSubuniverse.html#O_unit"><span class="id" type="method">O_unit</span></a> <span class="id" type="var">A</span><a class="idref" href="HoTT.Overture.html#:equiv_scope:x_'^-1'"><span class="id" type="notation">)^-1</span></a> <span class="id" type="var">_</span> <span class="id" type="var">_</span>).<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="id" type="tactic">pose</span> (<a class="idref" href="HoTT.HProp.html#contr_inhabited_hprop"><span class="id" type="lemma">contr_inhabited_hprop</span></a> <a class="idref" href="HoTT.hit.PropositionalFracture.html#ClosedModality.U"><span class="id" type="variable">U</span></a> <span class="id" type="var">u</span>).<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="id" type="tactic">exact</span> <span class="id" type="var">_</span>.<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;- <span class="id" type="tactic">intros</span> <span class="id" type="var">uac</span>.<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="id" type="tactic">refine</span> (<a class="idref" href="HoTT.Equivalences.html#isequiv_adjointify"><span class="id" type="definition">isequiv_adjointify</span></a> <span class="id" type="var">_</span> <span class="id" type="var">_</span> <span class="id" type="var">_</span> <span class="id" type="var">_</span>);<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="id" type="tactic">unfold</span> <a class="idref" href="HoTT.ReflectiveSubuniverse.html#O"><span class="id" type="method">O</span></a>, <a class="idref" href="HoTT.ReflectiveSubuniverse.html#O_unit"><span class="id" type="method">O_unit</span></a>, <a class="idref" href="HoTT.hit.PropositionalFracture.html#closed_unitsubuniverse"><span class="id" type="instance">closed_unitsubuniverse</span></a>.<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;× <span class="id" type="tactic">refine</span> (<a class="idref" href="HoTT.hit.Pushout.html#pushout_rectnd"><span class="id" type="definition">pushout_rectnd</span></a> <span class="id" type="var">A</span> <span class="id" type="var">_</span> <span class="id" type="var">_</span>).<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;+ <span class="id" type="tactic">intros</span> [<span class="id" type="var">u</span> | <span class="id" type="var">a</span>].<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;{ <span class="id" type="tactic">pose</span> (<span class="id" type="var">uac</span> <span class="id" type="var">u</span>). <span class="id" type="tactic">exact</span> (<a class="idref" href="HoTT.Overture.html#center"><span class="id" type="method">center</span></a> <span class="id" type="var">A</span>). }<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;{ <span class="id" type="tactic">assumption</span>. }<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;+ <span class="id" type="tactic">intros</span> [<span class="id" type="var">u</span> <span class="id" type="var">a</span>]. <span class="id" type="tactic">simpl</span>.<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="id" type="tactic">pose</span> (<span class="id" type="var">uac</span> <span class="id" type="var">u</span>). <span class="id" type="tactic">apply</span> <a class="idref" href="HoTT.Overture.html#contr"><span class="id" type="method">contr</span></a>.<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;× <span class="id" type="tactic">intros</span> <span class="id" type="var">z</span>. <span class="id" type="tactic">pattern</span> <span class="id" type="var">z</span>.<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="id" type="tactic">refine</span> (<a class="idref" href="HoTT.hit.Pushout.html#Pushout.pushout_rect"><span class="id" type="definition">pushout_rect</span></a> <a class="idref" href="Coq.Init.Datatypes.html#fst"><span class="id" type="projection">fst</span></a> <a class="idref" href="Coq.Init.Datatypes.html#snd"><span class="id" type="projection">snd</span></a> <span class="id" type="var">_</span> <span class="id" type="var">_</span> <span class="id" type="var">_</span> <span class="id" type="var">z</span>).<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;+ <span class="id" type="tactic">intros</span> [<span class="id" type="var">u</span> | <span class="id" type="var">a</span>].<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;{ <span class="id" type="tactic">pose</span> (<a class="idref" href="HoTT.HProp.html#contr_inhabited_hprop"><span class="id" type="lemma">contr_inhabited_hprop</span></a> <a class="idref" href="HoTT.hit.PropositionalFracture.html#ClosedModality.U"><span class="id" type="variable">U</span></a> <span class="id" type="var">u</span>).<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="id" type="tactic">apply</span> <a class="idref" href="HoTT.Contractible.html#path_contr"><span class="id" type="definition">path_contr</span></a>. } <br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;{ <span class="id" type="tactic">reflexivity</span>. }<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;+ <span class="id" type="tactic">intros</span> [<span class="id" type="var">u</span> <span class="id" type="var">a</span>]; <span class="id" type="tactic">pose</span> (<a class="idref" href="HoTT.HProp.html#contr_inhabited_hprop"><span class="id" type="lemma">contr_inhabited_hprop</span></a> <a class="idref" href="HoTT.hit.PropositionalFracture.html#ClosedModality.U"><span class="id" type="variable">U</span></a> <span class="id" type="var">u</span>).<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="id" type="tactic">apply</span> <a class="idref" href="HoTT.Contractible.html#path_contr"><span class="id" type="definition">path_contr</span></a>.<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;× <span class="id" type="tactic">intros</span> <span class="id" type="var">a</span>. <span class="id" type="tactic">reflexivity</span>.<br/>
+&nbsp;&nbsp;<span class="id" type="keyword">Defined</span>.<br/>
+
+<br/>
+&nbsp;&nbsp;<span class="id" type="keyword">Local</span>&nbsp;<span class="id" type="keyword">Instance</span> <a name="closed_modality"><span class="id" type="instance">closed_modality</span></a> : <a class="idref" href="HoTT.Modality.html#Modality"><span class="id" type="class">Modality</span></a>.<br/>
+&nbsp;&nbsp;<span class="id" type="keyword">Proof</span>.<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="id" type="tactic">refine</span> (<a class="idref" href="HoTT.Modality.html#Build_Modality"><span class="id" type="constructor">Build_Modality</span></a> <a class="idref" href="HoTT.hit.PropositionalFracture.html#closed_unitsubuniverse"><span class="id" type="instance">closed_unitsubuniverse</span></a> <span class="id" type="var">_</span> <span class="id" type="var">_</span> <span class="id" type="var">_</span>).<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;- <span class="id" type="tactic">intros</span> <span class="id" type="var">A</span> <span class="id" type="var">B</span> <span class="id" type="var">f</span> <span class="id" type="var">z</span>.<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="id" type="tactic">refine</span> (<a class="idref" href="HoTT.hit.Pushout.html#Pushout.pushout_rect"><span class="id" type="definition">pushout_rect</span></a> <span class="id" type="var">_</span> <span class="id" type="var">_</span> (<span class="id" type="keyword">fun</span> <span class="id" type="var">z'</span> ⇒ <a class="idref" href="HoTT.hit.Join.html#join"><span class="id" type="definition">join</span></a> <a class="idref" href="HoTT.hit.PropositionalFracture.html#ClosedModality.U"><span class="id" type="variable">U</span></a> (<span class="id" type="var">B</span> <a class="idref" href="HoTT.hit.PropositionalFracture.html#z'"><span class="id" type="variable">z'</span></a>)) <span class="id" type="var">_</span> <span class="id" type="var">_</span> <span class="id" type="var">z</span>).<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;× <span class="id" type="tactic">intros</span> [<span class="id" type="var">u</span> | <span class="id" type="var">a</span>].<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;+ <span class="id" type="tactic">exact</span> (<a class="idref" href="HoTT.hit.Pushout.html#Pushout.push"><span class="id" type="constructor">push</span></a> (<a class="idref" href="Coq.Init.Datatypes.html#inl"><span class="id" type="constructor">inl</span></a> <span class="id" type="var">u</span>)).<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;+ <span class="id" type="tactic">apply</span> <span class="id" type="var">f</span>.<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;× <span class="id" type="tactic">intros</span> [<span class="id" type="var">u</span> <span class="id" type="var">a</span>].<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="id" type="tactic">pose</span> (<a class="idref" href="HoTT.HProp.html#contr_inhabited_hprop"><span class="id" type="lemma">contr_inhabited_hprop</span></a> <a class="idref" href="HoTT.hit.PropositionalFracture.html#ClosedModality.U"><span class="id" type="variable">U</span></a> <span class="id" type="var">u</span>).<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="id" type="tactic">apply</span> <a class="idref" href="HoTT.Contractible.html#path_contr"><span class="id" type="definition">path_contr</span></a>.<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;- <span class="id" type="tactic">reflexivity</span>.<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;- <span class="id" type="tactic">intros</span> <span class="id" type="var">A</span> <span class="id" type="var">z</span> <span class="id" type="var">z'</span>.<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="id" type="tactic">apply</span> (<a class="idref" href="Coq.Init.Datatypes.html#snd"><span class="id" type="projection">snd</span></a> (<a class="idref" href="HoTT.hit.PropositionalFracture.html#inO_closed"><span class="id" type="definition">inO_closed</span></a> (<span class="id" type="var">z</span> <a class="idref" href="HoTT.Overture.html#:type_scope:x_'='_x"><span class="id" type="notation">=</span></a> <span class="id" type="var">z'</span>))).<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="id" type="tactic">intros</span> <span class="id" type="var">u</span>; <span class="id" type="tactic">pose</span> (<a class="idref" href="HoTT.HProp.html#contr_inhabited_hprop"><span class="id" type="lemma">contr_inhabited_hprop</span></a> <a class="idref" href="HoTT.hit.PropositionalFracture.html#ClosedModality.U"><span class="id" type="variable">U</span></a> <span class="id" type="var">u</span>).<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="id" type="tactic">exact</span> <span class="id" type="var">_</span>.<br/>
+&nbsp;&nbsp;<span class="id" type="keyword">Defined</span>.<br/>
+
+<br/>
+<span class="id" type="keyword">End</span> <a class="idref" href="HoTT.hit.PropositionalFracture.html#ClosedModality"><span class="id" type="section">ClosedModality</span></a>.<br/>
+</div>
+</div>
+
+<div id="footer">
+<hr/><a href="index.html">Index</a><hr/>This page has been generated by <a href="http://coq.inria.fr/">coqdoc</a>
+</div>
+
+</div>
+
+</body>
+</html>
