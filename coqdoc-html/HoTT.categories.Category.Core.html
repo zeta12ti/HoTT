@@ -33,6 +33,7 @@
 <span class="id" type="keyword">Set Implicit Arguments</span>.<br/>
 <span class="id" type="keyword">Generalizable</span> <span class="id" type="keyword">All</span> <span class="id" type="keyword">Variables</span>.<br/>
 <span class="id" type="keyword">Set</span> <span class="id" type="var">Asymmetric</span> <span class="id" type="var">Patterns</span>.<br/>
+<span class="id" type="keyword">Local</span>&nbsp;<span class="id" type="keyword">Set</span> <span class="id" type="var">Primitive</span> <span class="id" type="var">Projections</span>.<br/>
 
 <br/>
 <span class="id" type="keyword">Delimit</span> <span class="id" type="keyword">Scope</span> <span class="id" type="var">morphism_scope</span> <span class="id" type="keyword">with</span> <span class="id" type="var">morphism</span>.<br/>
@@ -137,10 +138,16 @@ Ask for the double-identity version so that <span class="inlinecode"><span class
 <span class="id" type="keyword">Bind</span> <span class="id" type="keyword">Scope</span> <span class="id" type="var">morphism_scope</span> <span class="id" type="keyword">with</span> <span class="id" type="var">morphism</span>.<br/>
 
 <br/>
-<span class="id" type="var">Arguments</span> <a class="idref" href="HoTT.categories.Category.Core.html#object"><span class="id" type="projection">object</span></a> <span class="id" type="var">C</span>%<span class="id" type="var">category</span> : <span class="id" type="tactic">rename</span>.<br/>
-<span class="id" type="var">Arguments</span> <a class="idref" href="HoTT.categories.Category.Core.html#morphism"><span class="id" type="projection">morphism</span></a> !<span class="id" type="var">C</span>%<span class="id" type="var">category</span> <span class="id" type="var">s</span> <span class="id" type="var">d</span> : <span class="id" type="tactic">rename</span>.<br/>
-<span class="id" type="var">Arguments</span> <a class="idref" href="HoTT.categories.Category.Core.html#identity"><span class="id" type="projection">identity</span></a> [!<span class="id" type="var">C</span>%<span class="id" type="var">category</span>] <span class="id" type="var">x</span>%<span class="id" type="var">object</span> : <span class="id" type="tactic">rename</span>.<br/>
-<span class="id" type="var">Arguments</span> <a class="idref" href="HoTT.categories.Category.Core.html#compose"><span class="id" type="projection">compose</span></a> [!<span class="id" type="var">C</span>%<span class="id" type="var">category</span> <span class="id" type="var">s</span>%<span class="id" type="var">object</span> <span class="id" type="var">d</span>%<span class="id" type="var">object</span> <span class="id" type="var">d'</span>%<span class="id" type="var">object</span>] <span class="id" type="var">m1</span>%<span class="id" type="var">morphism</span> <span class="id" type="var">m2</span>%<span class="id" type="var">morphism</span> : <span class="id" type="tactic">rename</span>.<br/>
+</div>
+
+<div class="doc">
+We want eta-expanded primitive projections to <span class="inlinecode"><span class="id" type="tactic">simpl</span></span> away. 
+</div>
+<div class="code">
+<span class="id" type="var">Arguments</span> <a class="idref" href="HoTT.categories.Category.Core.html#object"><span class="id" type="projection">object</span></a> !<span class="id" type="var">C</span>%<span class="id" type="var">category</span> / : <span class="id" type="tactic">rename</span>.<br/>
+<span class="id" type="var">Arguments</span> <a class="idref" href="HoTT.categories.Category.Core.html#morphism"><span class="id" type="projection">morphism</span></a> !<span class="id" type="var">C</span>%<span class="id" type="var">category</span> / <span class="id" type="var">s</span> <span class="id" type="var">d</span> : <span class="id" type="tactic">rename</span>.<br/>
+<span class="id" type="var">Arguments</span> <a class="idref" href="HoTT.categories.Category.Core.html#identity"><span class="id" type="projection">identity</span></a> {!<span class="id" type="var">C</span>%<span class="id" type="var">category</span>} / <span class="id" type="var">x</span>%<span class="id" type="var">object</span> : <span class="id" type="tactic">rename</span>.<br/>
+<span class="id" type="var">Arguments</span> <a class="idref" href="HoTT.categories.Category.Core.html#compose"><span class="id" type="projection">compose</span></a> {!<span class="id" type="var">C</span>%<span class="id" type="var">category</span>} / {<span class="id" type="var">s</span> <span class="id" type="var">d</span> <span class="id" type="var">d'</span>}%<span class="id" type="var">object</span> (<span class="id" type="var">m1</span> <span class="id" type="var">m2</span>)%<span class="id" type="var">morphism</span> : <span class="id" type="tactic">rename</span>.<br/>
 
 <br/>
 <span class="id" type="keyword">Local</span>&nbsp;<span class="id" type="keyword">Infix</span> <a name=":morphism_scope:x_'o'_x"><span class="id" type="notation">"</span></a>o" := <a class="idref" href="HoTT.categories.Category.Core.html#compose"><span class="id" type="projection">compose</span></a> : <span class="id" type="var">morphism_scope</span>.<br/>
@@ -150,7 +157,7 @@ Ask for the double-identity version so that <span class="inlinecode"><span class
 Perhaps we should consider making this notation more global.  Perhaps we should pre-reserve all of the notations. 
 </div>
 <div class="code">
-<span class="id" type="keyword">Local</span>&nbsp;<span class="id" type="keyword">Notation</span> <a name=":type_scope:x_'-->'_x"><span class="id" type="notation">"</span></a>x --&gt; y" := (@<a class="idref" href="HoTT.categories.Category.Core.html#morphism"><span class="id" type="projection">morphism</span></a> <span class="id" type="var">_</span> <span class="id" type="var">x</span> <span class="id" type="var">y</span>) (<span class="id" type="tactic">at</span> <span class="id" type="keyword">level</span> 99, <span class="id" type="tactic">right</span> <span class="id" type="keyword">associativity</span>, <span class="id" type="var">y</span> <span class="id" type="tactic">at</span> <span class="id" type="keyword">level</span> 200) : <span class="id" type="var">type_scope</span>.<br/>
+<span class="id" type="keyword">Local</span>&nbsp;<span class="id" type="keyword">Notation</span> <a name=":type_scope:x_'-->'_x"><span class="id" type="notation">"</span></a>x --&gt; y" := (<a class="idref" href="HoTT.categories.Category.Core.html#morphism"><span class="id" type="projection">morphism</span></a> <span class="id" type="var">_</span> <span class="id" type="var">x</span> <span class="id" type="var">y</span>) (<span class="id" type="tactic">at</span> <span class="id" type="keyword">level</span> 99, <span class="id" type="tactic">right</span> <span class="id" type="keyword">associativity</span>, <span class="id" type="var">y</span> <span class="id" type="tactic">at</span> <span class="id" type="keyword">level</span> 200) : <span class="id" type="var">type_scope</span>.<br/>
 <span class="id" type="keyword">Local</span>&nbsp;<span class="id" type="keyword">Notation</span> <a name=":morphism_scope:'1'"><span class="id" type="notation">"</span></a>1" := (<a class="idref" href="HoTT.categories.Category.Core.html#identity"><span class="id" type="projection">identity</span></a> <span class="id" type="var">_</span>) : <span class="id" type="var">morphism_scope</span>.<br/>
 
 <br/>
@@ -254,6 +261,14 @@ Make a separate module for Notations, which can be exported/imported separately.
 </div>
 <div class="code">
 <span class="id" type="keyword">Module</span> <span class="id" type="keyword">Export</span> <a name="CategoryCoreNotations"><span class="id" type="module">CategoryCoreNotations</span></a>.<br/>
+</div>
+
+<div class="doc">
+We have notations for both the eta-expanded and non-eta-expanded
+      forms. 
+</div>
+<div class="code">
+&nbsp;&nbsp;<span class="id" type="keyword">Infix</span> <a name="CategoryCoreNotations.:morphism_scope:x_'o'_x"><span class="id" type="notation">"</span></a>o" := (@<a class="idref" href="HoTT.categories.Category.Core.html#CategoryCoreNotations.compose"><span class="id" type="projection">compose</span></a> <span class="id" type="var">_</span> <span class="id" type="var">_</span> <span class="id" type="var">_</span> <span class="id" type="var">_</span>) : <span class="id" type="var">morphism_scope</span>.<br/>
 &nbsp;&nbsp;<span class="id" type="keyword">Infix</span> <a name="CategoryCoreNotations.:morphism_scope:x_'o'_x"><span class="id" type="notation">"</span></a>o" := <a class="idref" href="HoTT.categories.Category.Core.html#CategoryCoreNotations.compose"><span class="id" type="projection">compose</span></a> : <span class="id" type="var">morphism_scope</span>.<br/>
 </div>
 
@@ -262,6 +277,7 @@ Perhaps we should consider making this notation more global.  Perhaps we should 
 </div>
 <div class="code">
 &nbsp;&nbsp;<span class="id" type="keyword">Local</span>&nbsp;<span class="id" type="keyword">Notation</span> <a name="CategoryCoreNotations.:type_scope:x_'-->'_x"><span class="id" type="notation">"</span></a>x --&gt; y" := (@<a class="idref" href="HoTT.categories.Category.Core.html#CategoryCoreNotations.morphism"><span class="id" type="projection">morphism</span></a> <span class="id" type="var">_</span> <span class="id" type="var">x</span> <span class="id" type="var">y</span>) (<span class="id" type="tactic">at</span> <span class="id" type="keyword">level</span> 99, <span class="id" type="tactic">right</span> <span class="id" type="keyword">associativity</span>, <span class="id" type="var">y</span> <span class="id" type="tactic">at</span> <span class="id" type="keyword">level</span> 200) : <span class="id" type="var">type_scope</span>.<br/>
+&nbsp;&nbsp;<span class="id" type="keyword">Local</span>&nbsp;<span class="id" type="keyword">Notation</span> <a name="CategoryCoreNotations.:type_scope:x_'-->'_x"><span class="id" type="notation">"</span></a>x --&gt; y" := (<a class="idref" href="HoTT.categories.Category.Core.html#CategoryCoreNotations.morphism"><span class="id" type="projection">morphism</span></a> <span class="id" type="var">_</span> <span class="id" type="var">x</span> <span class="id" type="var">y</span>) (<span class="id" type="tactic">at</span> <span class="id" type="keyword">level</span> 99, <span class="id" type="tactic">right</span> <span class="id" type="keyword">associativity</span>, <span class="id" type="var">y</span> <span class="id" type="tactic">at</span> <span class="id" type="keyword">level</span> 200) : <span class="id" type="var">type_scope</span>.<br/>
 &nbsp;&nbsp;<span class="id" type="keyword">Notation</span> <a name="CategoryCoreNotations.:morphism_scope:'1'"><span class="id" type="notation">"</span></a>1" := (<a class="idref" href="HoTT.categories.Category.Core.html#CategoryCoreNotations.identity"><span class="id" type="projection">identity</span></a> <span class="id" type="var">_</span>) : <span class="id" type="var">morphism_scope</span>.<br/>
 <span class="id" type="keyword">End</span> <a class="idref" href="HoTT.categories.Category.Core.html#"><span class="id" type="module">CategoryCoreNotations</span></a>.<br/>
 
@@ -269,10 +285,15 @@ Perhaps we should consider making this notation more global.  Perhaps we should 
 </div>
 
 <div class="doc">
-We have a tactic for trying to run a tactic after associating morphisms either all the way to the left, or all the way to the right 
+We have a tactic for trying to run a tactic after associating morphisms either all the way to the left, or all the way to the right  We must first eta-contract primitive projections so that <span class="inlinecode"><span class="id" type="tactic">rewrite</span></span> works 
 </div>
 <div class="code">
 <span class="id" type="keyword">Tactic Notation</span> "try_associativity_quick" <span class="id" type="var">tactic</span>(<span class="id" type="var">tac</span>) :=<br/>
+&nbsp;&nbsp;<span class="id" type="tactic">repeat</span> <span class="id" type="keyword">match</span> <span class="id" type="keyword">goal</span> <span class="id" type="keyword">with</span><br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;| [ |- <span class="id" type="keyword">context</span>[@<a class="idref" href="HoTT.categories.Category.Core.html#compose"><span class="id" type="projection">compose</span></a> ?<span class="id" type="var">C</span> ?<span class="id" type="var">s</span> ?<span class="id" type="var">d</span> ?<span class="id" type="var">d'</span> ?<span class="id" type="var">m1</span> ?<span class="id" type="var">m2</span>] ]<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;⇒ <span class="id" type="tactic">progress</span> <span class="id" type="tactic">change</span> (@<a class="idref" href="HoTT.categories.Category.Core.html#compose"><span class="id" type="projection">compose</span></a> <span class="id" type="var">C</span> <span class="id" type="var">s</span> <span class="id" type="var">d</span> <span class="id" type="var">d'</span> <span class="id" type="var">m1</span> <span class="id" type="var">m2</span>)<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="id" type="keyword">with</span> (<a class="idref" href="HoTT.categories.Category.Core.html#compose"><span class="id" type="projection">compose</span></a> (<span class="id" type="var">C</span> := <span class="id" type="var">C</span>) (<span class="id" type="var">s</span> := <span class="id" type="var">s</span>) (<span class="id" type="var">d</span> := <span class="id" type="var">d</span>) (<span class="id" type="var">d'</span> := <span class="id" type="var">d'</span>) <span class="id" type="var">m1</span> <span class="id" type="var">m2</span>)<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="id" type="keyword">end</span>;<br/>
 &nbsp;&nbsp;<span class="id" type="tactic">first</span> [ <span class="id" type="tactic">rewrite</span> &lt;- ?<span class="id" type="keyword">associativity</span>; <span class="id" type="var">tac</span><br/>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;| <span class="id" type="tactic">rewrite</span> → ?<span class="id" type="keyword">associativity</span>; <span class="id" type="var">tac</span> ].<br/>
 </div>
