@@ -32,60 +32,51 @@ pre {
 Line: 1
 Time: 0s">
 <div class="time" style="width: 0%"></div>
-<pre>(* -*- mode: coq; mode: visual-line -*- *)
-
-</pre>
+<pre>(* -*- mode: coq; mode: visual-line -*- *)</pre>
 </div>
 <div class="code" title="File: Pushout.v
-Line: 2
-Time: 0.013s">
-<div class="time" style="width: 22.413793103448%"></div>
-<pre>Require Import Overture PathGroupoids Equivalences.</pre>
+Line: 1
+Time: 0.017s">
+<div class="time" style="width: 27.41935483871%"></div>
+<pre>Require Import Basics.</pre>
 </div>
 <div class="code" title="File: Pushout.v
-Line: 2
-Time: 0.018s">
-<div class="time" style="width: 31.034482758621%"></div>
+Line: 1
+Time: 0.028s">
+<div class="time" style="width: 45.161290322581%"></div>
 <pre>
-Require Import types.Forall types.Sigma types.Arrow types.Universe.</pre>
+Require Import types.Paths types.Forall types.Sigma types.Arrow types.Universe types.Unit types.Sum.</pre>
+</div>
+<div class="code" title="File: Pushout.v
+Line: 2
+Time: 0.001s">
+<div class="time" style="width: 1.6129032258065%"></div>
+<pre>
+Require Import HSet.</pre>
 </div>
 <div class="code" title="File: Pushout.v
 Line: 3
-Time: 0.006s">
-<div class="time" style="width: 10.344827586207%"></div>
-<pre>
-Require Import types.Unit HSet types.Sum types.Paths.</pre>
-</div>
-<div class="code" title="File: Pushout.v
-Line: 4
-Time: 0.001s">
-<div class="time" style="width: 1.7241379310345%"></div>
-<pre>
-Require Import Trunc Contractible.</pre>
-</div>
-<div class="code" title="File: Pushout.v
-Line: 5
 Time: 0.01s">
-<div class="time" style="width: 17.241379310345%"></div>
+<div class="time" style="width: 16.129032258065%"></div>
 <pre>
 Require Import hit.Truncations.</pre>
 </div>
 <div class="code" title="File: Pushout.v
-Line: 6
+Line: 4
 Time: 0s">
 <div class="time" style="width: 0%"></div>
 <pre>
 Local Open Scope path_scope.</pre>
 </div>
 <div class="code" title="File: Pushout.v
-Line: 7
+Line: 5
 Time: 0s">
 <div class="time" style="width: 0%"></div>
 <pre>
 Local Open Scope equiv_scope.</pre>
 </div>
 <div class="code" title="File: Pushout.v
-Line: 8
+Line: 6
 Time: 0s">
 <div class="time" style="width: 0%"></div>
 <pre>
@@ -107,22 +98,22 @@ Record Cocone (S : Span) (D : Type) :=
 </pre>
 </div>
 <div class="code" title="File: Pushout.v
-Line: 23
+Line: 21
 Time: 0s">
 <div class="time" style="width: 0%"></div>
 <pre>Module Export Pushout.</pre>
 </div>
 <div class="code" title="File: Pushout.v
-Line: 23
+Line: 21
 Time: 0.001s">
-<div class="time" style="width: 1.7241379310345%"></div>
+<div class="time" style="width: 1.6129032258065%"></div>
 <pre>
 
 Private Inductive pushout {A B C : Type} (f : A -&gt; B) (g : A -&gt; C) : Type :=
 | push : B + C -&gt; pushout f g.</pre>
 </div>
 <div class="code" title="File: Pushout.v
-Line: 26
+Line: 24
 Time: 0s">
 <div class="time" style="width: 0%"></div>
 <pre>
@@ -130,32 +121,32 @@ Time: 0s">
 Arguments push {A B C f g} a.</pre>
 </div>
 <div class="code" title="File: Pushout.v
-Line: 28
+Line: 26
 Time: 0.001s">
-<div class="time" style="width: 1.7241379310345%"></div>
+<div class="time" style="width: 1.6129032258065%"></div>
 <pre>
 
 Definition pushl {A B C} {f : A -&gt; B} {g : A -&gt; C} (a : A) : pushout f g := push (inl (f a)).</pre>
 </div>
 <div class="code" title="File: Pushout.v
-Line: 30
+Line: 28
 Time: 0.001s">
-<div class="time" style="width: 1.7241379310345%"></div>
+<div class="time" style="width: 1.6129032258065%"></div>
 <pre>
 Definition pushr {A B C} {f : A -&gt; B} {g : A -&gt; C} (a : A) : pushout f g := push (inr (g a)).</pre>
 </div>
 <div class="code" title="File: Pushout.v
-Line: 31
+Line: 29
 Time: 0.001s">
-<div class="time" style="width: 1.7241379310345%"></div>
+<div class="time" style="width: 1.6129032258065%"></div>
 <pre>
 
 Axiom pp : forall {A B C f g} (a:A), @pushl A B C f g a = pushr a.</pre>
 </div>
 <div class="code" title="File: Pushout.v
-Line: 33
-Time: 0.006s">
-<div class="time" style="width: 10.344827586207%"></div>
+Line: 31
+Time: 0.007s">
+<div class="time" style="width: 11.290322580645%"></div>
 <pre>
 
 Definition pushout_rect {A B C} (f : A -&gt; B) (g : A -&gt; C) (P : pushout f g -&gt; Type)
@@ -165,9 +156,9 @@ Definition pushout_rect {A B C} (f : A -&gt; B) (g : A -&gt; C) (P : pushout f g
   := fun w =&gt; match w with push a =&gt; fun _ =&gt; push' a end pp'.</pre>
 </div>
 <div class="code" title="File: Pushout.v
-Line: 39
+Line: 37
 Time: 0.008s">
-<div class="time" style="width: 13.793103448276%"></div>
+<div class="time" style="width: 12.903225806452%"></div>
 <pre>
 
 Axiom pushout_rect_beta_pp
@@ -178,7 +169,7 @@ Axiom pushout_rect_beta_pp
   apD (pushout_rect f g P push' pp') (pp a) = pp' a.</pre>
 </div>
 <div class="code" title="File: Pushout.v
-Line: 46
+Line: 44
 Time: 0s">
 <div class="time" style="width: 0%"></div>
 <pre>
@@ -186,7 +177,7 @@ Time: 0s">
 End Pushout.</pre>
 </div>
 <div class="code" title="File: Pushout.v
-Line: 48
+Line: 46
 Time: 0s">
 <div class="time" style="width: 0%"></div>
 <pre>
@@ -196,9 +187,9 @@ Time: 0s">
 </pre>
 </div>
 <div class="code" title="File: Pushout.v
-Line: 51
+Line: 49
 Time: 0.006s">
-<div class="time" style="width: 10.344827586207%"></div>
+<div class="time" style="width: 9.6774193548387%"></div>
 <pre>Definition pushout_rectnd {A B C} {f : A -&gt; B} {g : A -&gt; C} (P : Type)
   (push' : B + C -&gt; P)
   (pp' : forall a : A, push' (inl (f a)) = push' (inr (g a)))
@@ -206,9 +197,9 @@ Time: 0.006s">
   := pushout_rect f g (fun _ =&gt; P) push' (fun a =&gt; transport_const _ _ @ pp' a).</pre>
 </div>
 <div class="code" title="File: Pushout.v
-Line: 55
+Line: 53
 Time: 0.004s">
-<div class="time" style="width: 6.8965517241379%"></div>
+<div class="time" style="width: 6.4516129032258%"></div>
 <pre>
 
 Definition pushout_rectnd_beta_pp {A B C f g} (P : Type)
@@ -218,49 +209,49 @@ Definition pushout_rectnd_beta_pp {A B C f g} (P : Type)
   : ap (pushout_rectnd P push' pp') (pp a) = pp' a.</pre>
 </div>
 <div class="code" title="File: Pushout.v
-Line: 61
+Line: 59
 Time: 0s">
 <div class="time" style="width: 0%"></div>
 <pre>
 Proof.</pre>
 </div>
 <div class="code" title="File: Pushout.v
-Line: 62
+Line: 60
 Time: 0s">
 <div class="time" style="width: 0%"></div>
 <pre>
   unfold pushout_rectnd.</pre>
 </div>
 <div class="code" title="File: Pushout.v
-Line: 63
-Time: 0.005s">
-<div class="time" style="width: 8.6206896551724%"></div>
+Line: 61
+Time: 0.006s">
+<div class="time" style="width: 9.6774193548387%"></div>
 <pre>
   eapply (cancelL (transport_const (pp a) _)).</pre>
 </div>
 <div class="code" title="File: Pushout.v
-Line: 64
-Time: 0.058s">
+Line: 62
+Time: 0.062s">
 <div class="time" style="width: 100%"></div>
 <pre>
   refine ((apD_const (@pushout_rect A B C f g (fun _ =&gt; P) push' _) (pp a))^ @ _).</pre>
 </div>
 <div class="code" title="File: Pushout.v
-Line: 65
+Line: 63
 Time: 0.005s">
-<div class="time" style="width: 8.6206896551724%"></div>
+<div class="time" style="width: 8.0645161290323%"></div>
 <pre>
   refine (pushout_rect_beta_pp (fun _ =&gt; P) _ _ _).</pre>
 </div>
 <div class="code" title="File: Pushout.v
-Line: 66
-Time: 0.049s">
-<div class="time" style="width: 84.48275862069%"></div>
+Line: 64
+Time: 0.057s">
+<div class="time" style="width: 91.935483870968%"></div>
 <pre>
 Defined.</pre>
 </div>
 <div class="code" title="File: Pushout.v
-Line: 67
+Line: 65
 Time: 0s">
 <div class="time" style="width: 0%"></div>
 <pre>
@@ -270,51 +261,51 @@ Time: 0s">
 </pre>
 </div>
 <div class="code" title="File: Pushout.v
-Line: 70
+Line: 68
 Time: 0s">
 <div class="time" style="width: 0%"></div>
 <pre>Section SetCone.</pre>
 </div>
 <div class="code" title="File: Pushout.v
-Line: 70
+Line: 68
 Time: 0s">
 <div class="time" style="width: 0%"></div>
 <pre>
   Context {A B : hSet} (f : A -&gt; B).</pre>
 </div>
 <div class="code" title="File: Pushout.v
-Line: 71
+Line: 69
 Time: 0.001s">
-<div class="time" style="width: 1.7241379310345%"></div>
+<div class="time" style="width: 1.6129032258065%"></div>
 <pre>
 
   Definition setcone := Truncation 0 (pushout f (const tt)).</pre>
 </div>
 <div class="code" title="File: Pushout.v
-Line: 73
+Line: 71
 Time: 0.001s">
-<div class="time" style="width: 1.7241379310345%"></div>
+<div class="time" style="width: 1.6129032258065%"></div>
 <pre>
 
   Global Instance istrunc_setcone : IsHSet setcone := _.</pre>
 </div>
 <div class="code" title="File: Pushout.v
-Line: 75
+Line: 73
 Time: 0.001s">
-<div class="time" style="width: 1.7241379310345%"></div>
+<div class="time" style="width: 1.6129032258065%"></div>
 <pre>
 
   Definition setcone_point : setcone := truncation_incl (push (inr tt)).</pre>
 </div>
 <div class="code" title="File: Pushout.v
-Line: 77
+Line: 75
 Time: 0.001s">
-<div class="time" style="width: 1.7241379310345%"></div>
+<div class="time" style="width: 1.6129032258065%"></div>
 <pre>
 End SetCone.</pre>
 </div>
 <div class="code" title="File: Pushout.v
-Line: 79
+Line: 77
 Time: 0s">
 <div class="time" style="width: 0%"></div>
 <pre>

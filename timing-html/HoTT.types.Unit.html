@@ -39,9 +39,9 @@ Time: 0s">
 </div>
 <div class="code" title="File: Unit.v
 Line: 3
-Time: 0.014s">
+Time: 0.017s">
 <div class="time" style="width: 100%"></div>
-<pre>Require Import Overture PathGroupoids Equivalences.</pre>
+<pre>Require Import Basics.</pre>
 </div>
 <div class="code" title="File: Unit.v
 Line: 3
@@ -70,70 +70,19 @@ Time: 0s">
 <div class="time" style="width: 0%"></div>
 <pre>
 
-(** coq calls it "unit", we call it "Unit" *)
-(** HoTT/coq is broken and somehow interprets [Type1] as [Prop] with regard to elimination schemes. *)</pre>
-</div>
-<div class="code" title="File: Unit.v
-Line: 9
-Time: 0s">
-<div class="time" style="width: 0%"></div>
-<pre>Unset Elimination Schemes.</pre>
-</div>
-<div class="code" title="File: Unit.v
-Line: 9
-Time: 0s">
-<div class="time" style="width: 0%"></div>
-<pre>
-Inductive Unit : Type1 :=
-    tt : Unit.</pre>
-</div>
-<div class="code" title="File: Unit.v
-Line: 11
-Time: 0s">
-<div class="time" style="width: 0%"></div>
-<pre>
-Scheme Unit_rect := Induction for Unit Sort Type.</pre>
-</div>
-<div class="code" title="File: Unit.v
-Line: 12
-Time: 0s">
-<div class="time" style="width: 0%"></div>
-<pre>
-Scheme Unit_rec := Induction for Unit Sort Set.</pre>
-</div>
-<div class="code" title="File: Unit.v
-Line: 13
-Time: 0s">
-<div class="time" style="width: 0%"></div>
-<pre>
-Scheme Unit_ind := Induction for Unit Sort Prop.</pre>
-</div>
-<div class="code" title="File: Unit.v
-Line: 14
-Time: 0s">
-<div class="time" style="width: 0%"></div>
-<pre>
-Set Elimination Schemes.</pre>
-</div>
-<div class="code" title="File: Unit.v
-Line: 15
-Time: 0s">
-<div class="time" style="width: 0%"></div>
-<pre>
-
 (** ** Eta conversion *)
 
 </pre>
 </div>
 <div class="code" title="File: Unit.v
-Line: 18
-Time: 0s">
-<div class="time" style="width: 0%"></div>
+Line: 9
+Time: 0.001s">
+<div class="time" style="width: 5.8823529411765%"></div>
 <pre>Definition eta_unit (z : Unit) : tt = z
   := match z with tt =&gt; 1 end.</pre>
 </div>
 <div class="code" title="File: Unit.v
-Line: 19
+Line: 10
 Time: 0s">
 <div class="time" style="width: 0%"></div>
 <pre>
@@ -145,14 +94,14 @@ Time: 0s">
 </pre>
 </div>
 <div class="code" title="File: Unit.v
-Line: 24
+Line: 15
 Time: 0.001s">
-<div class="time" style="width: 7.1428571428571%"></div>
+<div class="time" style="width: 5.8823529411765%"></div>
 <pre>Definition path_unit_uncurried (z z' : Unit) : Unit -&gt; z = z'
   := fun _ =&gt; match z, z' with tt, tt =&gt; 1 end.</pre>
 </div>
 <div class="code" title="File: Unit.v
-Line: 25
+Line: 16
 Time: 0s">
 <div class="time" style="width: 0%"></div>
 <pre>
@@ -161,7 +110,7 @@ Definition path_unit (z z' : Unit) : z = z'
   := path_unit_uncurried z z' tt.</pre>
 </div>
 <div class="code" title="File: Unit.v
-Line: 28
+Line: 19
 Time: 0s">
 <div class="time" style="width: 0%"></div>
 <pre>
@@ -170,40 +119,40 @@ Definition eta_path_unit {z z' : Unit} (p : z = z') :
   path_unit z z' = p.</pre>
 </div>
 <div class="code" title="File: Unit.v
-Line: 31
+Line: 22
 Time: 0s">
 <div class="time" style="width: 0%"></div>
 <pre>
 Proof.</pre>
 </div>
 <div class="code" title="File: Unit.v
-Line: 32
-Time: 0s">
-<div class="time" style="width: 0%"></div>
+Line: 23
+Time: 0.001s">
+<div class="time" style="width: 5.8823529411765%"></div>
 <pre>
   destruct p.</pre>
 </div>
 <div class="code" title="File: Unit.v
-Line: 33
+Line: 24
 Time: 0s">
 <div class="time" style="width: 0%"></div>
 <pre> destruct z.</pre>
 </div>
 <div class="code" title="File: Unit.v
-Line: 33
+Line: 24
 Time: 0s">
 <div class="time" style="width: 0%"></div>
 <pre> reflexivity.</pre>
 </div>
 <div class="code" title="File: Unit.v
-Line: 33
+Line: 24
 Time: 0s">
 <div class="time" style="width: 0%"></div>
 <pre>
 Defined.</pre>
 </div>
 <div class="code" title="File: Unit.v
-Line: 34
+Line: 25
 Time: 0s">
 <div class="time" style="width: 0%"></div>
 <pre>
@@ -211,9 +160,9 @@ Time: 0s">
 Instance isequiv_path_unit (z z' : Unit) : IsEquiv (path_unit_uncurried z z') | 0.</pre>
 </div>
 <div class="code" title="File: Unit.v
-Line: 36
+Line: 27
 Time: 0.005s">
-<div class="time" style="width: 35.714285714286%"></div>
+<div class="time" style="width: 29.411764705882%"></div>
 <pre>
   refine (BuildIsEquiv _ _ (path_unit_uncurried z z') (fun _ =&gt; tt)
     (fun p:z=z' =&gt;
@@ -225,30 +174,30 @@ Time: 0.005s">
     (fun x =&gt; match x with tt =&gt; 1 end) _).</pre>
 </div>
 <div class="code" title="File: Unit.v
-Line: 44
-Time: 0.003s">
-<div class="time" style="width: 21.428571428571%"></div>
+Line: 35
+Time: 0.004s">
+<div class="time" style="width: 23.529411764706%"></div>
 <pre>
   intros []; destruct z, z'; reflexivity.</pre>
 </div>
 <div class="code" title="File: Unit.v
-Line: 45
-Time: 0.004s">
-<div class="time" style="width: 28.571428571429%"></div>
+Line: 36
+Time: 0.005s">
+<div class="time" style="width: 29.411764705882%"></div>
 <pre>
 Defined.</pre>
 </div>
 <div class="code" title="File: Unit.v
-Line: 46
+Line: 37
 Time: 0.001s">
-<div class="time" style="width: 7.1428571428571%"></div>
+<div class="time" style="width: 5.8823529411765%"></div>
 <pre>
 
 Definition equiv_path_unit (z z' : Unit) : Unit &lt;~&gt; (z = z')
   := BuildEquiv _ _ (path_unit_uncurried z z') _.</pre>
 </div>
 <div class="code" title="File: Unit.v
-Line: 49
+Line: 40
 Time: 0s">
 <div class="time" style="width: 0%"></div>
 <pre>
@@ -262,15 +211,15 @@ Time: 0s">
 (* The positive universal property *)</pre>
 </div>
 <div class="code" title="File: Unit.v
-Line: 57
+Line: 48
 Time: 0s">
 <div class="time" style="width: 0%"></div>
 <pre>Arguments Unit_rect [A] a u : rename.</pre>
 </div>
 <div class="code" title="File: Unit.v
-Line: 57
+Line: 48
 Time: 0.003s">
-<div class="time" style="width: 21.428571428571%"></div>
+<div class="time" style="width: 17.647058823529%"></div>
 <pre>
 
 Instance isequiv_unit_rect `{Funext} (A : Type) : IsEquiv (@Unit_rect (fun _ =&gt; A)) | 0
@@ -281,7 +230,7 @@ Instance isequiv_unit_rect `{Funext} (A : Type) : IsEquiv (@Unit_rect (fun _ =&g
   (fun _ =&gt; 1).</pre>
 </div>
 <div class="code" title="File: Unit.v
-Line: 64
+Line: 55
 Time: 0s">
 <div class="time" style="width: 0%"></div>
 <pre>
@@ -289,13 +238,13 @@ Time: 0s">
 (* For various reasons, it is typically more convenient to define functions out of the unit as constant maps, rather than [Unit_rect]. *)</pre>
 </div>
 <div class="code" title="File: Unit.v
-Line: 66
+Line: 57
 Time: 0s">
 <div class="time" style="width: 0%"></div>
 <pre>Notation unit_name x := (fun (_ : Unit) =&gt; x).</pre>
 </div>
 <div class="code" title="File: Unit.v
-Line: 66
+Line: 57
 Time: 0s">
 <div class="time" style="width: 0%"></div>
 <pre>
@@ -303,14 +252,14 @@ Time: 0s">
 (* The negative universal property *)</pre>
 </div>
 <div class="code" title="File: Unit.v
-Line: 68
+Line: 59
 Time: 0s">
 <div class="time" style="width: 0%"></div>
 <pre>Definition unit_corect {A : Type} : Unit -&gt; (A -&gt; Unit)
   := fun _ _ =&gt; tt.</pre>
 </div>
 <div class="code" title="File: Unit.v
-Line: 69
+Line: 60
 Time: 0s">
 <div class="time" style="width: 0%"></div>
 <pre>
@@ -321,55 +270,55 @@ Instance isequiv_unit_corect `{Funext} (A : Type) : IsEquiv (@unit_corect A) | 0
   _ _.</pre>
 </div>
 <div class="code" title="File: Unit.v
-Line: 74
+Line: 65
 Time: 0s">
 <div class="time" style="width: 0%"></div>
 <pre>
 Proof.</pre>
 </div>
 <div class="code" title="File: Unit.v
-Line: 75
+Line: 66
 Time: 0s">
 <div class="time" style="width: 0%"></div>
 <pre>
   -</pre>
 </div>
 <div class="code" title="File: Unit.v
-Line: 76
+Line: 67
 Time: 0s">
 <div class="time" style="width: 0%"></div>
 <pre> intro f.</pre>
 </div>
 <div class="code" title="File: Unit.v
-Line: 76
+Line: 67
 Time: 0s">
 <div class="time" style="width: 0%"></div>
 <pre> apply path_forall; intros x; apply path_unit.</pre>
 </div>
 <div class="code" title="File: Unit.v
-Line: 76
+Line: 67
 Time: 0s">
 <div class="time" style="width: 0%"></div>
 <pre>
   -</pre>
 </div>
 <div class="code" title="File: Unit.v
-Line: 77
+Line: 68
 Time: 0s">
 <div class="time" style="width: 0%"></div>
 <pre> intro x; destruct x; reflexivity.</pre>
 </div>
 <div class="code" title="File: Unit.v
-Line: 77
+Line: 68
 Time: 0.001s">
-<div class="time" style="width: 7.1428571428571%"></div>
+<div class="time" style="width: 5.8823529411765%"></div>
 <pre>
 Defined.</pre>
 </div>
 <div class="code" title="File: Unit.v
-Line: 78
+Line: 69
 Time: 0.001s">
-<div class="time" style="width: 7.1428571428571%"></div>
+<div class="time" style="width: 5.8823529411765%"></div>
 <pre>
 
 Definition equiv_unit_corect `{Funext} (A : Type)
@@ -377,7 +326,7 @@ Definition equiv_unit_corect `{Funext} (A : Type)
   := BuildEquiv _ _ (@unit_corect A) _.</pre>
 </div>
 <div class="code" title="File: Unit.v
-Line: 82
+Line: 73
 Time: 0s">
 <div class="time" style="width: 0%"></div>
 <pre>
@@ -388,16 +337,16 @@ Time: 0s">
 (** Because [Contr] is a notation, and [Contr_internal] is the record, we need to iota expand to fool Coq's typeclass machinery into accepting supposedly "mismatched" contexts. *)</pre>
 </div>
 <div class="code" title="File: Unit.v
-Line: 87
+Line: 78
 Time: 0.001s">
-<div class="time" style="width: 7.1428571428571%"></div>
+<div class="time" style="width: 5.8823529411765%"></div>
 <pre>Instance contr_unit : Contr Unit | 0 := let x := {|
   center := tt;
   contr := fun t : Unit =&gt; match t with tt =&gt; 1 end
 |} in x.</pre>
 </div>
 <div class="code" title="File: Unit.v
-Line: 90
+Line: 81
 Time: 0s">
 <div class="time" style="width: 0%"></div>
 <pre>
@@ -407,22 +356,22 @@ Time: 0s">
 (** A contractible type is equivalent to [Unit]. *)</pre>
 </div>
 <div class="code" title="File: Unit.v
-Line: 94
+Line: 85
 Time: 0s">
 <div class="time" style="width: 0%"></div>
 <pre>Definition equiv_contr_unit `{Contr A} : A &lt;~&gt; Unit.</pre>
 </div>
 <div class="code" title="File: Unit.v
-Line: 94
+Line: 85
 Time: 0s">
 <div class="time" style="width: 0%"></div>
 <pre>
 Proof.</pre>
 </div>
 <div class="code" title="File: Unit.v
-Line: 95
-Time: 0.003s">
-<div class="time" style="width: 21.428571428571%"></div>
+Line: 86
+Time: 0.004s">
+<div class="time" style="width: 23.529411764706%"></div>
 <pre>
   refine (BuildEquiv _ _
     (fun (_ : A) =&gt; tt)
@@ -432,27 +381,27 @@ Time: 0.003s">
       (fun x : A =&gt; contr x) _)).</pre>
 </div>
 <div class="code" title="File: Unit.v
-Line: 101
+Line: 92
 Time: 0s">
 <div class="time" style="width: 0%"></div>
 <pre>
   intro x.</pre>
 </div>
 <div class="code" title="File: Unit.v
-Line: 102
+Line: 93
 Time: 0.002s">
-<div class="time" style="width: 14.285714285714%"></div>
+<div class="time" style="width: 11.764705882353%"></div>
 <pre> symmetry; apply ap_const.</pre>
 </div>
 <div class="code" title="File: Unit.v
-Line: 102
+Line: 93
 Time: 0.002s">
-<div class="time" style="width: 14.285714285714%"></div>
+<div class="time" style="width: 11.764705882353%"></div>
 <pre>
 Defined.</pre>
 </div>
 <div class="code" title="File: Unit.v
-Line: 103
+Line: 94
 Time: 0s">
 <div class="time" style="width: 0%"></div>
 <pre>
@@ -460,15 +409,15 @@ Time: 0s">
 (* Conversely, a type equivalent to [Unit] is contractible. *)</pre>
 </div>
 <div class="code" title="File: Unit.v
-Line: 105
-Time: 0.006s">
-<div class="time" style="width: 42.857142857143%"></div>
+Line: 96
+Time: 0.007s">
+<div class="time" style="width: 41.176470588235%"></div>
 <pre>Instance contr_equiv_unit (A : Type) (f : A &lt;~&gt; Unit) : Contr A | 10000
   := BuildContr A (f^-1 tt)
   (fun a =&gt; ap f^-1 (contr (f a)) @ eissect f a).</pre>
 </div>
 <div class="code" title="File: Unit.v
-Line: 108
+Line: 99
 Time: 0s">
 <div class="time" style="width: 0%"></div>
 <pre>

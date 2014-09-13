@@ -1,0 +1,89 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
+"http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
+<link href="coqdoc.css" rel="stylesheet" type="text/css"/>
+<title>HoTT.Basics.UniverseLevel</title>
+</head>
+
+<body>
+
+<div id="page">
+
+<div id="header">
+</div>
+
+<div id="main">
+
+<h1 class="libtitle">Library HoTT.Basics.UniverseLevel</h1>
+
+<div class="code">
+<span class="id" type="keyword">Require</span> <span class="id" type="keyword">Import</span> <a class="idref" href="HoTT.Basics.Overture.html#"><span class="id" type="library">Overture</span></a>.<br/>
+
+<br/>
+</div>
+
+<div class="doc">
+<a name="lab17"></a><h1 class="section">Universe Levels</h1>
+
+<div class="paragraph"> </div>
+
+ We provide casting definitions for raising universe levels. 
+</div>
+<div class="code">
+
+<br/>
+<span class="id" type="keyword">Section</span> <a name="local"><span class="id" type="section">local</span></a>.<br/>
+&nbsp;&nbsp;<span class="id" type="keyword">Let</span> <a name="local.type_cast_up_type"><span class="id" type="variable">type_cast_up_type</span></a> : <span class="id" type="keyword">Type</span>.<br/>
+&nbsp;&nbsp;<span class="id" type="keyword">Proof</span>.<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="id" type="keyword">let</span> <span class="id" type="var">U0</span> := <span class="id" type="keyword">constr</span>:(<span class="id" type="keyword">Type</span>) <span class="id" type="keyword">in</span><br/>
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="id" type="keyword">let</span> <span class="id" type="var">U1</span> := <span class="id" type="keyword">constr</span>:(<span class="id" type="keyword">Type</span>) <span class="id" type="keyword">in</span><br/>
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="id" type="keyword">let</span> <span class="id" type="var">unif</span> := <span class="id" type="keyword">constr</span>:(<span class="id" type="var">U0</span> : <span class="id" type="var">U1</span>) <span class="id" type="keyword">in</span><br/>
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="id" type="tactic">exact</span> (<span class="id" type="var">U0</span> <a class="idref" href="Coq.Init.Logic.html#:type_scope:x_'->'_x"><span class="id" type="notation">→</span></a> <span class="id" type="var">U1</span>).<br/>
+&nbsp;&nbsp;<span class="id" type="keyword">Defined</span>.<br/>
+
+<br/>
+</div>
+
+<div class="doc">
+Because we have cumulativity (that <span class="inlinecode"><a class="idref" href="HoTT.categories.LaxComma.CoreLaws.html#LaxCommaCategory.lax_comma_category_parts.T"><span class="id" type="variable">T</span></a></span> <span class="inlinecode">:</span> <span class="inlinecode"><a class="idref" href="HoTT.categories.UniversalProperties.html#UniversalMorphism.TerminalMorphism.U"><span class="id" type="variable">U</span></a>ᵢ</span> gives us <span class="inlinecode"><a class="idref" href="HoTT.categories.LaxComma.CoreLaws.html#LaxCommaCategory.lax_comma_category_parts.T"><span class="id" type="variable">T</span></a></span> <span class="inlinecode">:</span> <span class="inlinecode"><a class="idref" href="HoTT.categories.UniversalProperties.html#UniversalMorphism.TerminalMorphism.U"><span class="id" type="variable">U</span></a>ᵢ₊<span class="id" type="var">₁</span></span>), we may define <span class="inlinecode"><a class="idref" href="HoTT.Basics.UniverseLevel.html#Lift"><span class="id" type="definition">Lift</span></a></span> <span class="inlinecode">:</span> <span class="inlinecode"><span class="id" type="var">U₀</span></span> <span class="inlinecode">→</span> <span class="inlinecode"><span class="id" type="var">U₁</span></span> as the identity function with a fancy type; the type says that <span class="inlinecode"><span class="id" type="var">U₀</span></span> <span class="inlinecode">⊊</span> <span class="inlinecode"><span class="id" type="var">U₁</span></span>. 
+</div>
+<div class="code">
+&nbsp;&nbsp;<span class="id" type="keyword">Definition</span> <a name="Lift"><span class="id" type="definition">Lift</span></a> : <a class="idref" href="HoTT.Basics.UniverseLevel.html#local.type_cast_up_type"><span class="id" type="variable">type_cast_up_type</span></a><br/>
+&nbsp;&nbsp;&nbsp;&nbsp;:= <span class="id" type="keyword">fun</span> <span class="id" type="var">T</span> ⇒ <a class="idref" href="HoTT.Basics.UniverseLevel.html#T"><span class="id" type="variable">T</span></a>.<br/>
+<span class="id" type="keyword">End</span> <a class="idref" href="HoTT.Basics.UniverseLevel.html#local"><span class="id" type="section">local</span></a>.<br/>
+
+<br/>
+<span class="id" type="keyword">Definition</span> <a name="lift"><span class="id" type="definition">lift</span></a> {<span class="id" type="var">T</span>} : <a class="idref" href="HoTT.Basics.UniverseLevel.html#T"><span class="id" type="variable">T</span></a> <a class="idref" href="Coq.Init.Logic.html#:type_scope:x_'->'_x"><span class="id" type="notation">→</span></a> <a class="idref" href="HoTT.Basics.UniverseLevel.html#Lift"><span class="id" type="definition">Lift</span></a> <a class="idref" href="HoTT.Basics.UniverseLevel.html#T"><span class="id" type="variable">T</span></a> := <span class="id" type="keyword">fun</span> <span class="id" type="var">x</span> ⇒ <a class="idref" href="HoTT.Basics.UniverseLevel.html#x"><span class="id" type="variable">x</span></a>.<br/>
+<span class="id" type="keyword">Global Instance</span> <a name="isequiv_lift"><span class="id" type="instance">isequiv_lift</span></a> <span class="id" type="var">T</span> : <a class="idref" href="HoTT.Basics.Overture.html#IsEquiv"><span class="id" type="class">IsEquiv</span></a> (@<a class="idref" href="HoTT.Basics.UniverseLevel.html#lift"><span class="id" type="definition">lift</span></a> <a class="idref" href="HoTT.Basics.UniverseLevel.html#T"><span class="id" type="variable">T</span></a>)<br/>
+&nbsp;&nbsp;:= @<a class="idref" href="HoTT.Basics.Overture.html#BuildIsEquiv"><span class="id" type="constructor">BuildIsEquiv</span></a><br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="id" type="var">_</span> <span class="id" type="var">_</span><br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;(<span class="id" type="keyword">fun</span> <span class="id" type="var">x</span> ⇒ <a class="idref" href="HoTT.Basics.UniverseLevel.html#x"><span class="id" type="variable">x</span></a>)<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;(<span class="id" type="keyword">fun</span> <span class="id" type="var">x</span> ⇒ <a class="idref" href="HoTT.Basics.UniverseLevel.html#x"><span class="id" type="variable">x</span></a>)<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;(<span class="id" type="keyword">fun</span> <span class="id" type="var">_</span> ⇒ <a class="idref" href="HoTT.Basics.Overture.html#idpath"><span class="id" type="constructor">idpath</span></a>)<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;(<span class="id" type="keyword">fun</span> <span class="id" type="var">_</span> ⇒ <a class="idref" href="HoTT.Basics.Overture.html#idpath"><span class="id" type="constructor">idpath</span></a>)<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;(<span class="id" type="keyword">fun</span> <span class="id" type="var">_</span> ⇒ <a class="idref" href="HoTT.Basics.Overture.html#idpath"><span class="id" type="constructor">idpath</span></a>).<br/>
+<span class="id" type="keyword">Definition</span> <a name="lower"><span class="id" type="definition">lower</span></a> {<span class="id" type="var">A</span>} := (@<a class="idref" href="HoTT.Basics.Overture.html#equiv_inv"><span class="id" type="method">equiv_inv</span></a> <span class="id" type="var">_</span> <span class="id" type="var">_</span> (@<a class="idref" href="HoTT.Basics.UniverseLevel.html#lift"><span class="id" type="definition">lift</span></a> <a class="idref" href="HoTT.Basics.UniverseLevel.html#A"><span class="id" type="variable">A</span></a>) <span class="id" type="var">_</span>).<br/>
+
+<br/>
+</div>
+
+<div class="doc">
+We make <span class="inlinecode"><a class="idref" href="HoTT.Basics.UniverseLevel.html#lift"><span class="id" type="definition">lift</span></a></span> and <span class="inlinecode"><a class="idref" href="HoTT.Basics.UniverseLevel.html#lower"><span class="id" type="definition">lower</span></a></span> opaque so that typeclass resolution doesn't pick up <span class="inlinecode"><a class="idref" href="HoTT.Basics.UniverseLevel.html#isequiv_lift"><span class="id" type="instance">isequiv_lift</span></a></span> as an instance of <span class="inlinecode"><a class="idref" href="HoTT.Basics.Overture.html#IsEquiv"><span class="id" type="record">IsEquiv</span></a></span> <span class="inlinecode"><a class="idref" href="HoTT.Basics.Overture.html#idmap"><span class="id" type="abbreviation">idmap</span></a></span> and wreck havok. 
+</div>
+<div class="code">
+<span class="id" type="keyword">Type</span><span class="id" type="var">classes</span> <span class="id" type="keyword">Opaque</span> <span class="id" type="var">lift</span> <span class="id" type="var">lower</span>.<br/>
+
+<br/>
+</div>
+</div>
+
+<div id="footer">
+<hr/><a href="index.html">Index</a><hr/>This page has been generated by <a href="http://coq.inria.fr/">coqdoc</a>
+</div>
+
+</div>
+
+</body>
+</html>
