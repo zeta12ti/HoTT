@@ -36,8 +36,8 @@ Time: 0s">
 </div>
 <div class="code" title="File: LawsTactic.v
 Line: 1
-Time: 0.009s">
-<div class="time" style="width: 34.615384615385%"></div>
+Time: 0.007s">
+<div class="time" style="width: 31.818181818182%"></div>
 <pre>Require Import Category.Core Functor.Core NaturalTransformation.Core.</pre>
 </div>
 <div class="code" title="File: LawsTactic.v
@@ -49,22 +49,22 @@ Require Import Functor.Composition.Core.</pre>
 </div>
 <div class="code" title="File: LawsTactic.v
 Line: 2
-Time: 0.026s">
+Time: 0.022s">
 <div class="time" style="width: 100%"></div>
 <pre>
 Require Import Functor.Composition.Laws.</pre>
 </div>
 <div class="code" title="File: LawsTactic.v
 Line: 3
-Time: 0.016s">
-<div class="time" style="width: 61.538461538462%"></div>
+Time: 0.014s">
+<div class="time" style="width: 63.636363636364%"></div>
 <pre>
 Require Import Adjoint.UnitCounit Adjoint.Paths.</pre>
 </div>
 <div class="code" title="File: LawsTactic.v
 Line: 4
-Time: 0.004s">
-<div class="time" style="width: 15.384615384615%"></div>
+Time: 0.003s">
+<div class="time" style="width: 13.636363636364%"></div>
 <pre>
 Require Import PathGroupoids HoTT.Tactics types.Prod types.Forall.</pre>
 </div>
@@ -99,35 +99,35 @@ Set Asymmetric Patterns.</pre>
 </div>
 <div class="code" title="File: LawsTactic.v
 Line: 10
-Time: 0.002s">
-<div class="time" style="width: 7.6923076923077%"></div>
+Time: 0.001s">
+<div class="time" style="width: 4.5454545454545%"></div>
 <pre>
 
 Ltac law_t :=
   rewrite !transport_path_prod'; simpl;
   path_adjunction; simpl;
   repeat match goal with
-           | [ |- appcontext[unit (transport ?P ?p ?z)] ]
+           | [ |- context[unit (transport ?P ?p ?z)] ]
              =&gt; simpl rewrite (@ap_transport _ P _ _ _ p (fun _ =&gt; @unit _ _ _ _) z)
-           | [ |- appcontext[counit (transport ?P ?p ?z)] ]
+           | [ |- context[counit (transport ?P ?p ?z)] ]
              =&gt; simpl rewrite (@ap_transport _ P _ _ _ p (fun _ =&gt; @counit _ _ _ _) z)
-           | [ |- appcontext[components_of (transport ?P ?p ?z)] ]
+           | [ |- context[components_of (transport ?P ?p ?z)] ]
              =&gt; simpl rewrite (@ap_transport _ P _ _ _ p (fun _ =&gt; @components_of _ _ _ _) z)
          end;
   rewrite !transport_forall_constant;
   repeat
     match goal with
-      | [ |- appcontext[transport (fun y =&gt; ?f (@object_of ?C ?D y ?x))] ]
+      | [ |- context[transport (fun y =&gt; ?f (@object_of ?C ?D y ?x))] ]
         =&gt; rewrite (fun a b =&gt; @transport_compose _ _ a b (fun y' =&gt; f (y' x)) (@object_of C D))
-      | [ |- appcontext[transport (fun y =&gt; ?f (?g (@object_of ?C ?D y ?x)))] ]
+      | [ |- context[transport (fun y =&gt; ?f (?g (@object_of ?C ?D y ?x)))] ]
         =&gt; rewrite (fun a b =&gt; @transport_compose _ _ a b (fun y' =&gt; f (g (y' x))) (@object_of C D))
-      | [ |- appcontext[transport (fun y =&gt; ?f (?g (?h (?i (@object_of ?C ?D y ?x)))))] ]
+      | [ |- context[transport (fun y =&gt; ?f (?g (?h (?i (@object_of ?C ?D y ?x)))))] ]
         =&gt; rewrite (fun a b =&gt; @transport_compose _ _ a b (fun y' =&gt; f (g (h (i (y' x))))) (@object_of C D))
-      | [ |- appcontext[transport (fun y =&gt; ?f (@object_of ?C ?D y ?x) ?z)] ]
+      | [ |- context[transport (fun y =&gt; ?f (@object_of ?C ?D y ?x) ?z)] ]
         =&gt; rewrite (fun a b =&gt; @transport_compose _ _ a b (fun y' =&gt; f (y' x) z) (@object_of C D))
-      | [ |- appcontext[transport (fun y =&gt; ?f (?g (@object_of ?C ?D y ?x)) ?z)] ]
+      | [ |- context[transport (fun y =&gt; ?f (?g (@object_of ?C ?D y ?x)) ?z)] ]
         =&gt; rewrite (fun a b =&gt; @transport_compose _ _ a b (fun y' =&gt; f (g (y' x)) z) (@object_of C D))
-      | [ |- appcontext[transport (fun y =&gt; ?f (?g (?h (?i (@object_of ?C ?D y ?x)))) ?z)] ]
+      | [ |- context[transport (fun y =&gt; ?f (?g (?h (?i (@object_of ?C ?D y ?x)))) ?z)] ]
         =&gt; rewrite (fun a b =&gt; @transport_compose _ _ a b (fun y' =&gt; f (g (h (i (y' x)))) z) (@object_of C D))
     end;
   unfold symmetry, symmetric_paths;
