@@ -35,12 +35,6 @@
 <span class="id" type="keyword">Definition</span> <a name="relation"><span class="id" type="definition">relation</span></a> (<span class="id" type="var">A</span> : <span class="id" type="keyword">Type</span>) := <a class="idref" href="HoTT.Basics.Overture.html#A"><span class="id" type="variable">A</span></a> <a class="idref" href="Coq.Init.Logic.html#:type_scope:x_'->'_x"><span class="id" type="notation">→</span></a> <a class="idref" href="HoTT.Basics.Overture.html#A"><span class="id" type="variable">A</span></a> <a class="idref" href="Coq.Init.Logic.html#:type_scope:x_'->'_x"><span class="id" type="notation">→</span></a> <span class="id" type="keyword">Type</span>.<br/>
 
 <br/>
-</div>
-
-<div class="doc">
-TODO: Should we make <span class="inlinecode"><span class="id" type="tactic">reflexivity</span></span>, <span class="inlinecode"><span class="id" type="tactic">symmetry</span></span>, and <span class="inlinecode"><span class="id" type="tactic">transitivity</span></span> unfold under <span class="inlinecode"><span class="id" type="tactic">simpl</span></span>, to, e.g., <span class="inlinecode"><a class="idref" href="HoTT.Basics.Overture.html#idpath"><span class="id" type="constructor">idpath</span></a></span>, <span class="inlinecode"><a class="idref" href="HoTT.categories.ProductLaws.html#Law1.inverse"><span class="id" type="definition">inverse</span></a></span>, and <span class="inlinecode"><a class="idref" href="HoTT.Basics.Overture.html#concat"><span class="id" type="abbreviation">concat</span></a></span>? 
-</div>
-<div class="code">
 <span class="id" type="keyword">Class</span> <a name="Reflexive"><span class="id" type="record">Reflexive</span></a> {<span class="id" type="var">A</span>} (<span class="id" type="var">R</span> : <a class="idref" href="HoTT.Basics.Overture.html#relation"><span class="id" type="definition">relation</span></a> <a class="idref" href="HoTT.Basics.Overture.html#A"><span class="id" type="variable">A</span></a>) :=<br/>
 &nbsp;&nbsp;<a name="reflexivity"><span class="id" type="projection">reflexivity</span></a> : <span class="id" type="keyword">∀</span> <span class="id" type="var">x</span> : <a class="idref" href="HoTT.Basics.Overture.html#A"><span class="id" type="variable">A</span></a>, <a class="idref" href="HoTT.Basics.Overture.html#R"><span class="id" type="variable">R</span></a> <a class="idref" href="HoTT.Basics.Overture.html#x"><span class="id" type="variable">x</span></a> <a class="idref" href="HoTT.Basics.Overture.html#x"><span class="id" type="variable">x</span></a>.<br/>
 
@@ -64,11 +58,40 @@ A <span class="inlinecode"><a class="idref" href="HoTT.Basics.Overture.html#PreO
 &nbsp;&nbsp;&nbsp;&nbsp;<a name="PreOrder_Transitive"><span class="id" type="projection">PreOrder_Transitive</span></a> :&gt; <a class="idref" href="HoTT.Basics.Overture.html#Transitive"><span class="id" type="class">Transitive</span></a> <a class="idref" href="HoTT.Basics.Overture.html#R"><span class="id" type="variable">R</span></a> | 2 }.<br/>
 
 <br/>
+<span class="id" type="var">Arguments</span> <a class="idref" href="HoTT.Basics.Overture.html#reflexivity"><span class="id" type="definition">reflexivity</span></a> {<span class="id" type="var">A</span> <span class="id" type="var">R</span> <span class="id" type="var">_</span>} / <span class="id" type="var">_</span>.<br/>
+<span class="id" type="var">Arguments</span> <a class="idref" href="HoTT.Basics.Overture.html#symmetry"><span class="id" type="definition">symmetry</span></a> {<span class="id" type="var">A</span> <span class="id" type="var">R</span> <span class="id" type="var">_</span>} / <span class="id" type="var">_</span> <span class="id" type="var">_</span> <span class="id" type="var">_</span>.<br/>
+<span class="id" type="var">Arguments</span> <a class="idref" href="HoTT.Basics.Overture.html#transitivity"><span class="id" type="definition">transitivity</span></a> {<span class="id" type="var">A</span> <span class="id" type="var">R</span> <span class="id" type="var">_</span>} / {<span class="id" type="var">_</span> <span class="id" type="var">_</span> <span class="id" type="var">_</span>} <span class="id" type="var">_</span> <span class="id" type="var">_</span>.<br/>
+
+<br/>
+</div>
+
+<div class="doc">
+Above, we have made <span class="inlinecode"><span class="id" type="tactic">reflexivity</span></span>, <span class="inlinecode"><span class="id" type="tactic">symmetry</span></span>, and <span class="inlinecode"><span class="id" type="tactic">transitivity</span></span> reduce under <span class="inlinecode"><span class="id" type="var">cbn</span></span>/<span class="inlinecode"><span class="id" type="tactic">simpl</span></span> to their underlying instances.  This allows the tactics to build proof terms referencing, e.g., <span class="inlinecode"><a class="idref" href="HoTT.Basics.Overture.html#concat"><span class="id" type="definition">concat</span></a></span>.  We use <span class="inlinecode"><span class="id" type="tactic">change</span></span> after the fact to make sure that we didn't <span class="inlinecode"><span class="id" type="var">cbn</span></span> away the original form of the relation.
+
+<div class="paragraph"> </div>
+
+    If we want to remove the use of <span class="inlinecode"><span class="id" type="var">cbn</span></span>, we can play tricks with <span class="inlinecode"><span class="id" type="keyword">Module</span></span> <span class="inlinecode"><span class="id" type="keyword">Type</span></span>s and <span class="inlinecode"><span class="id" type="keyword">Module</span></span>s to declare <span class="inlinecode"><a class="idref" href="HoTT.categories.ProductLaws.html#Law1.inverse"><span class="id" type="definition">inverse</span></a></span> directly as an instance of <span class="inlinecode"><a class="idref" href="HoTT.Basics.Overture.html#Symmetric"><span class="id" type="record">Symmetric</span></a></span> without changing its type.  Then we can simply <span class="inlinecode"><span class="id" type="tactic">unfold</span></span> <span class="inlinecode"><span class="id" type="tactic">symmetry</span></span>.  See the comments around the definition of <span class="inlinecode"><a class="idref" href="HoTT.categories.ProductLaws.html#Law1.inverse"><span class="id" type="definition">inverse</span></a></span>. 
+<div class="paragraph"> </div>
+
+ Even if we weren't using <span class="inlinecode"><span class="id" type="var">cbn</span></span>, we would have to redefine symmetry, since the built-in Coq version is sometimes too smart for its own good, and will occasionally fail when it should not. 
+</div>
+<div class="code">
+<span class="id" type="keyword">Ltac</span> <span class="id" type="tactic">symmetry</span> :=<br/>
+&nbsp;&nbsp;<span class="id" type="keyword">let</span> <span class="id" type="var">R</span> := <span class="id" type="keyword">match</span> <span class="id" type="keyword">goal</span> <span class="id" type="keyword">with</span> |- ?<span class="id" type="var">R</span> ?<span class="id" type="var">x</span> ?<span class="id" type="var">y</span> ⇒ <span class="id" type="keyword">constr</span>:(<span class="id" type="var">R</span>) <span class="id" type="keyword">end</span> <span class="id" type="keyword">in</span><br/>
+&nbsp;&nbsp;<span class="id" type="keyword">let</span> <span class="id" type="var">x</span> := <span class="id" type="keyword">match</span> <span class="id" type="keyword">goal</span> <span class="id" type="keyword">with</span> |- ?<span class="id" type="var">R</span> ?<span class="id" type="var">x</span> ?<span class="id" type="var">y</span> ⇒ <span class="id" type="keyword">constr</span>:(<span class="id" type="var">x</span>) <span class="id" type="keyword">end</span> <span class="id" type="keyword">in</span><br/>
+&nbsp;&nbsp;<span class="id" type="keyword">let</span> <span class="id" type="var">y</span> := <span class="id" type="keyword">match</span> <span class="id" type="keyword">goal</span> <span class="id" type="keyword">with</span> |- ?<span class="id" type="var">R</span> ?<span class="id" type="var">x</span> ?<span class="id" type="var">y</span> ⇒ <span class="id" type="keyword">constr</span>:(<span class="id" type="var">y</span>) <span class="id" type="keyword">end</span> <span class="id" type="keyword">in</span><br/>
+&nbsp;&nbsp;<span class="id" type="keyword">let</span> <span class="id" type="var">pre_proof_term_head</span> := <span class="id" type="keyword">constr</span>:(@<a class="idref" href="HoTT.Basics.Overture.html#symmetry"><span class="id" type="definition">symmetry</span></a> <span class="id" type="var">_</span> <span class="id" type="var">R</span> <span class="id" type="var">_</span>) <span class="id" type="keyword">in</span><br/>
+&nbsp;&nbsp;<span class="id" type="keyword">let</span> <span class="id" type="var">proof_term_head</span> := (<span class="id" type="tactic">eval</span> <span class="id" type="var">cbn</span> <span class="id" type="keyword">in</span> <span class="id" type="var">pre_proof_term_head</span>) <span class="id" type="keyword">in</span><br/>
+&nbsp;&nbsp;<span class="id" type="tactic">refine</span> (<span class="id" type="var">proof_term_head</span> <span class="id" type="var">y</span> <span class="id" type="var">x</span> <span class="id" type="var">_</span>); <span class="id" type="tactic">change</span> (<span class="id" type="var">R</span> <span class="id" type="var">y</span> <span class="id" type="var">x</span>).<br/>
+
+<br/>
 <span class="id" type="keyword">Tactic Notation</span> "etransitivity" <span class="id" type="var">open_constr</span>(<span class="id" type="var">y</span>) :=<br/>
 &nbsp;&nbsp;<span class="id" type="keyword">let</span> <span class="id" type="var">R</span> := <span class="id" type="keyword">match</span> <span class="id" type="keyword">goal</span> <span class="id" type="keyword">with</span> |- ?<span class="id" type="var">R</span> ?<span class="id" type="var">x</span> ?<span class="id" type="var">z</span> ⇒ <span class="id" type="keyword">constr</span>:(<span class="id" type="var">R</span>) <span class="id" type="keyword">end</span> <span class="id" type="keyword">in</span><br/>
 &nbsp;&nbsp;<span class="id" type="keyword">let</span> <span class="id" type="var">x</span> := <span class="id" type="keyword">match</span> <span class="id" type="keyword">goal</span> <span class="id" type="keyword">with</span> |- ?<span class="id" type="var">R</span> ?<span class="id" type="var">x</span> ?<span class="id" type="var">z</span> ⇒ <span class="id" type="keyword">constr</span>:(<span class="id" type="var">x</span>) <span class="id" type="keyword">end</span> <span class="id" type="keyword">in</span><br/>
 &nbsp;&nbsp;<span class="id" type="keyword">let</span> <span class="id" type="var">z</span> := <span class="id" type="keyword">match</span> <span class="id" type="keyword">goal</span> <span class="id" type="keyword">with</span> |- ?<span class="id" type="var">R</span> ?<span class="id" type="var">x</span> ?<span class="id" type="var">z</span> ⇒ <span class="id" type="keyword">constr</span>:(<span class="id" type="var">z</span>) <span class="id" type="keyword">end</span> <span class="id" type="keyword">in</span><br/>
-&nbsp;&nbsp;<span class="id" type="tactic">refine</span> (@<a class="idref" href="HoTT.Basics.Overture.html#transitivity"><span class="id" type="definition">transitivity</span></a> <span class="id" type="var">_</span> <span class="id" type="var">R</span> <span class="id" type="var">_</span> <span class="id" type="var">x</span> <span class="id" type="var">y</span> <span class="id" type="var">z</span> <span class="id" type="var">_</span> <span class="id" type="var">_</span>).<br/>
+&nbsp;&nbsp;<span class="id" type="keyword">let</span> <span class="id" type="var">pre_proof_term_head</span> := <span class="id" type="keyword">constr</span>:(@<a class="idref" href="HoTT.Basics.Overture.html#transitivity"><span class="id" type="definition">transitivity</span></a> <span class="id" type="var">_</span> <span class="id" type="var">R</span> <span class="id" type="var">_</span>) <span class="id" type="keyword">in</span><br/>
+&nbsp;&nbsp;<span class="id" type="keyword">let</span> <span class="id" type="var">proof_term_head</span> := (<span class="id" type="tactic">eval</span> <span class="id" type="var">cbn</span> <span class="id" type="keyword">in</span> <span class="id" type="var">pre_proof_term_head</span>) <span class="id" type="keyword">in</span><br/>
+&nbsp;&nbsp;<span class="id" type="tactic">refine</span> (<span class="id" type="var">proof_term_head</span> <span class="id" type="var">x</span> <span class="id" type="var">y</span> <span class="id" type="var">z</span> <span class="id" type="var">_</span> <span class="id" type="var">_</span>); [ <span class="id" type="tactic">change</span> (<span class="id" type="var">R</span> <span class="id" type="var">x</span> <span class="id" type="var">y</span>) | <span class="id" type="tactic">change</span> (<span class="id" type="var">R</span> <span class="id" type="var">y</span> <span class="id" type="var">z</span>) ].<br/>
 
 <br/>
 <span class="id" type="keyword">Tactic Notation</span> "etransitivity" := <span class="id" type="var">etransitivity</span> <span class="id" type="var">_</span>.<br/>
@@ -77,19 +100,10 @@ A <span class="inlinecode"><a class="idref" href="HoTT.Basics.Overture.html#PreO
 </div>
 
 <div class="doc">
-We redefine <span class="inlinecode"><span class="id" type="tactic">transitivity</span></span> to work without needing to include <span class="inlinecode"><span class="id" type="var">Setoid</span></span> or be using Leibniz equality, and to give proofs that unfold to <span class="inlinecode"><a class="idref" href="HoTT.Basics.Overture.html#concat"><span class="id" type="abbreviation">concat</span></a></span>. 
+We redefine <span class="inlinecode"><span class="id" type="tactic">transitivity</span></span> to work without needing to include <span class="inlinecode"><span class="id" type="var">Setoid</span></span> or be using Leibniz equality, and to give proofs that unfold to <span class="inlinecode"><a class="idref" href="HoTT.Basics.Overture.html#concat"><span class="id" type="definition">concat</span></a></span>. 
 </div>
 <div class="code">
 <span class="id" type="keyword">Ltac</span> <span class="id" type="tactic">transitivity</span> <span class="id" type="var">x</span> := <span class="id" type="var">etransitivity</span> <span class="id" type="var">x</span>.<br/>
-
-<br/>
-</div>
-
-<div class="doc">
-We redefine <span class="inlinecode"><span class="id" type="tactic">symmetry</span></span>, which is too smart for its own good. 
-</div>
-<div class="code">
-<span class="id" type="keyword">Ltac</span> <span class="id" type="tactic">symmetry</span> := <span class="id" type="tactic">refine</span> (@<a class="idref" href="HoTT.Basics.Overture.html#symmetry"><span class="id" type="definition">symmetry</span></a> <span class="id" type="var">_</span> <span class="id" type="var">_</span> <span class="id" type="var">_</span> <span class="id" type="var">_</span> <span class="id" type="var">_</span> <span class="id" type="var">_</span>).<br/>
 
 <br/>
 </div>
@@ -253,6 +267,7 @@ Ensure <span class="inlinecode"><span class="id" type="var">internal_paths_rew</
 
 <br/>
 <span class="id" type="keyword">Instance</span> <a name="reflexive_paths"><span class="id" type="instance">reflexive_paths</span></a> {<span class="id" type="var">A</span>} : <a class="idref" href="HoTT.Basics.Overture.html#Reflexive"><span class="id" type="class">Reflexive</span></a> (@<a class="idref" href="HoTT.Basics.Overture.html#paths"><span class="id" type="inductive">paths</span></a> <a class="idref" href="HoTT.Basics.Overture.html#A"><span class="id" type="variable">A</span></a>) | 0 := @<a class="idref" href="HoTT.Basics.Overture.html#idpath"><span class="id" type="constructor">idpath</span></a> <span class="id" type="var">A</span>.<br/>
+<span class="id" type="var">Arguments</span> <a class="idref" href="HoTT.Basics.Overture.html#reflexive_paths"><span class="id" type="instance">reflexive_paths</span></a> / .<br/>
 
 <br/>
 </div>
@@ -286,30 +301,10 @@ We declare a scope in which we shall place path notations. This way they can be 
 </div>
 
 <div class="doc">
-We bind <span class="inlinecode"><span class="id" type="var">path_scope</span></span> to <span class="inlinecode"><a class="idref" href="HoTT.Basics.Overture.html#paths"><span class="id" type="inductive">paths</span></a></span> so that when we are constructing arguments to things like <span class="inlinecode"><a class="idref" href="HoTT.Basics.Overture.html#concat"><span class="id" type="abbreviation">concat</span></a></span>, we automatically are in <span class="inlinecode"><span class="id" type="var">path_scope</span></span>. 
+We bind <span class="inlinecode"><span class="id" type="var">path_scope</span></span> to <span class="inlinecode"><a class="idref" href="HoTT.Basics.Overture.html#paths"><span class="id" type="inductive">paths</span></a></span> so that when we are constructing arguments to things like <span class="inlinecode"><a class="idref" href="HoTT.Basics.Overture.html#concat"><span class="id" type="definition">concat</span></a></span>, we automatically are in <span class="inlinecode"><span class="id" type="var">path_scope</span></span>. 
 </div>
 <div class="code">
 <span class="id" type="keyword">Bind</span> <span class="id" type="keyword">Scope</span> <span class="id" type="var">path_scope</span> <span class="id" type="keyword">with</span> <span class="id" type="var">paths</span>.<br/>
-
-<br/>
-</div>
-
-<div class="doc">
-We define equality concatenation by destructing on both its arguments, so that it only computes when both arguments are <span class="inlinecode"><a class="idref" href="HoTT.Basics.Overture.html#idpath"><span class="id" type="constructor">idpath</span></a></span>.  This makes proofs more robust and symmetrical.  Compare with the definition of <span class="inlinecode"><a class="idref" href="Coq.Init.Logic_Type.html#identity_trans"><span class="id" type="lemma">identity_trans</span></a></span>.  
-</div>
-<div class="code">
-<span class="id" type="var">Arguments</span> <a class="idref" href="HoTT.Basics.Overture.html#transitivity"><span class="id" type="definition">transitivity</span></a> {<span class="id" type="var">A</span> <span class="id" type="var">R</span> <span class="id" type="var">_</span> <span class="id" type="var">x</span> <span class="id" type="var">y</span> <span class="id" type="var">z</span>} <span class="id" type="var">_</span> <span class="id" type="var">_</span>: <span class="id" type="tactic">simpl</span> <span class="id" type="var">nomatch</span>.<br/>
-
-<br/>
-<span class="id" type="keyword">Instance</span> <a name="transitive_paths"><span class="id" type="instance">transitive_paths</span></a> {<span class="id" type="var">A</span>} : <a class="idref" href="HoTT.Basics.Overture.html#Transitive"><span class="id" type="class">Transitive</span></a> (@<a class="idref" href="HoTT.Basics.Overture.html#paths"><span class="id" type="inductive">paths</span></a> <a class="idref" href="HoTT.Basics.Overture.html#A"><span class="id" type="variable">A</span></a>) | 0<br/>
-&nbsp;&nbsp;:= <span class="id" type="keyword">fun</span> <span class="id" type="var">x</span> <span class="id" type="var">y</span> <span class="id" type="var">z</span> (<span class="id" type="var">p</span> : <a class="idref" href="HoTT.Basics.Overture.html#x"><span class="id" type="variable">x</span></a> <a class="idref" href="HoTT.Basics.Overture.html#:type_scope:x_'='_x"><span class="id" type="notation">=</span></a> <a class="idref" href="HoTT.Basics.Overture.html#y"><span class="id" type="variable">y</span></a>) (<span class="id" type="var">q</span> : <a class="idref" href="HoTT.Basics.Overture.html#y"><span class="id" type="variable">y</span></a> <a class="idref" href="HoTT.Basics.Overture.html#:type_scope:x_'='_x"><span class="id" type="notation">=</span></a> <a class="idref" href="HoTT.Basics.Overture.html#z"><span class="id" type="variable">z</span></a>) ⇒ <span class="id" type="keyword">match</span> <a class="idref" href="HoTT.Basics.Overture.html#p"><span class="id" type="variable">p</span></a>, <a class="idref" href="HoTT.Basics.Overture.html#q"><span class="id" type="variable">q</span></a> <span class="id" type="keyword">with</span> <a class="idref" href="HoTT.Basics.Overture.html#idpath"><span class="id" type="constructor">idpath</span></a>, <a class="idref" href="HoTT.Basics.Overture.html#idpath"><span class="id" type="constructor">idpath</span></a> ⇒ <a class="idref" href="HoTT.Basics.Overture.html#idpath"><span class="id" type="constructor">idpath</span></a> <span class="id" type="keyword">end</span>.<br/>
-
-<br/>
-<span class="id" type="var">Arguments</span> <a class="idref" href="HoTT.Basics.Overture.html#transitive_paths"><span class="id" type="instance">transitive_paths</span></a> {<span class="id" type="var">A</span> <span class="id" type="var">x</span> <span class="id" type="var">y</span> <span class="id" type="var">z</span>} <span class="id" type="var">p</span> <span class="id" type="var">q</span> : <span class="id" type="tactic">simpl</span> <span class="id" type="var">nomatch</span>.<br/>
-
-<br/>
-<span class="id" type="keyword">Notation</span> <a name="concat"><span class="id" type="abbreviation">concat</span></a> := (<a class="idref" href="HoTT.Basics.Overture.html#transitivity"><span class="id" type="definition">transitivity</span></a> (<span class="id" type="var">R</span> := @<a class="idref" href="HoTT.Basics.Overture.html#paths"><span class="id" type="inductive">paths</span></a> <span class="id" type="var">_</span>)) (<span class="id" type="var">only</span> <span class="id" type="var">parsing</span>).<br/>
-<span class="id" type="keyword">Infix</span> <a name="::x_'@'_x"><span class="id" type="notation">"</span></a>@" := (@<a class="idref" href="HoTT.Basics.Overture.html#transitivity"><span class="id" type="definition">transitivity</span></a> <span class="id" type="var">_</span> <span class="id" type="var">_</span> <span class="id" type="var">_</span> <span class="id" type="var">_</span> <span class="id" type="var">_</span> <span class="id" type="var">_</span>) (<span class="id" type="tactic">at</span> <span class="id" type="keyword">level</span> 20).<br/>
 
 <br/>
 </div>
@@ -332,12 +327,61 @@ Declaring this as <span class="inlinecode"><span class="id" type="tactic">simpl<
 
 <br/>
 <span class="id" type="keyword">Instance</span> <a name="symmetric_paths"><span class="id" type="instance">symmetric_paths</span></a> {<span class="id" type="var">A</span>} : <a class="idref" href="HoTT.Basics.Overture.html#Symmetric"><span class="id" type="class">Symmetric</span></a> (@<a class="idref" href="HoTT.Basics.Overture.html#paths"><span class="id" type="inductive">paths</span></a> <a class="idref" href="HoTT.Basics.Overture.html#A"><span class="id" type="variable">A</span></a>) | 0 := @<a class="idref" href="HoTT.Basics.Overture.html#inverse"><span class="id" type="definition">inverse</span></a> <span class="id" type="var">A</span>.<br/>
+<span class="id" type="var">Arguments</span> <a class="idref" href="HoTT.Basics.Overture.html#symmetric_paths"><span class="id" type="instance">symmetric_paths</span></a> / .<br/>
 
 <br/>
 </div>
 
 <div class="doc">
-Note that you can use the built-in Coq tactics <span class="inlinecode"><span class="id" type="tactic">reflexivity</span></span> and <span class="inlinecode"><span class="id" type="tactic">transitivity</span></span> when working with paths, but not <span class="inlinecode"><span class="id" type="tactic">symmetry</span></span>, because it is too smart for its own good.  Instead, you can write <span class="inlinecode"><span class="id" type="tactic">apply</span></span> <span class="inlinecode"><span class="id" type="tactic">symmetry</span></span> or <span class="inlinecode"><span class="id" type="tactic">eapply</span></span> <span class="inlinecode"><span class="id" type="tactic">symmetry</span></span>. 
+If we wanted to not have the constant <span class="inlinecode"><a class="idref" href="HoTT.Basics.Overture.html#symmetric_paths"><span class="id" type="instance">symmetric_paths</span></a></span> floating around, and wanted to resolve <span class="inlinecode"><a class="idref" href="HoTT.categories.ProductLaws.html#Law1.inverse"><span class="id" type="definition">inverse</span></a></span> directly, instead, we could play this trick, discovered by Georges Gonthier to fool Coq's restriction on <span class="inlinecode"><span class="id" type="library">Identity</span></span> <span class="inlinecode"><span class="id" type="keyword">Coercion</span></span>s:
+
+<div class="paragraph"> </div>
+
+<pre>
+Module Export inverse.
+  Definition inverse {A : Type} {x y : A} (p : x = y) : y = x
+    := match p with idpath =&gt; idpath end.
+End inverse.
+
+Module Type inverseT.
+  Parameter inverse : forall {A}, Symmetric (@paths A).
+End inverseT.
+
+Module inverseSymmetric (inverse : inverseT).
+  Global Existing Instance inverse.inverse.
+End inverseSymmetric.
+
+Module Export symmetric_paths := inverseSymmetric inverse.
+</pre>
+ 
+<div class="paragraph"> </div>
+
+ We define equality concatenation by destructing on both its arguments, so that it only computes when both arguments are <span class="inlinecode"><a class="idref" href="HoTT.Basics.Overture.html#idpath"><span class="id" type="constructor">idpath</span></a></span>.  This makes proofs more robust and symmetrical.  Compare with the definition of <span class="inlinecode"><a class="idref" href="Coq.Init.Logic_Type.html#identity_trans"><span class="id" type="lemma">identity_trans</span></a></span>.  
+</div>
+<div class="code">
+
+<br/>
+<span class="id" type="keyword">Definition</span> <a name="concat"><span class="id" type="definition">concat</span></a> {<span class="id" type="var">A</span> : <span class="id" type="keyword">Type</span>} {<span class="id" type="var">x</span> <span class="id" type="var">y</span> <span class="id" type="var">z</span> : <a class="idref" href="HoTT.Basics.Overture.html#A"><span class="id" type="variable">A</span></a>} (<span class="id" type="var">p</span> : <a class="idref" href="HoTT.Basics.Overture.html#x"><span class="id" type="variable">x</span></a> <a class="idref" href="HoTT.Basics.Overture.html#:type_scope:x_'='_x"><span class="id" type="notation">=</span></a> <a class="idref" href="HoTT.Basics.Overture.html#y"><span class="id" type="variable">y</span></a>) (<span class="id" type="var">q</span> : <a class="idref" href="HoTT.Basics.Overture.html#y"><span class="id" type="variable">y</span></a> <a class="idref" href="HoTT.Basics.Overture.html#:type_scope:x_'='_x"><span class="id" type="notation">=</span></a> <a class="idref" href="HoTT.Basics.Overture.html#z"><span class="id" type="variable">z</span></a>) : <a class="idref" href="HoTT.Basics.Overture.html#x"><span class="id" type="variable">x</span></a> <a class="idref" href="HoTT.Basics.Overture.html#:type_scope:x_'='_x"><span class="id" type="notation">=</span></a> <a class="idref" href="HoTT.Basics.Overture.html#z"><span class="id" type="variable">z</span></a> :=<br/>
+&nbsp;&nbsp;<span class="id" type="keyword">match</span> <a class="idref" href="HoTT.Basics.Overture.html#p"><span class="id" type="variable">p</span></a>, <a class="idref" href="HoTT.Basics.Overture.html#q"><span class="id" type="variable">q</span></a> <span class="id" type="keyword">with</span> <a class="idref" href="HoTT.Basics.Overture.html#idpath"><span class="id" type="constructor">idpath</span></a>, <a class="idref" href="HoTT.Basics.Overture.html#idpath"><span class="id" type="constructor">idpath</span></a> ⇒ <a class="idref" href="HoTT.Basics.Overture.html#idpath"><span class="id" type="constructor">idpath</span></a> <span class="id" type="keyword">end</span>.<br/>
+
+<br/>
+</div>
+
+<div class="doc">
+See above for the meaning of <span class="inlinecode"><span class="id" type="tactic">simpl</span></span> <span class="inlinecode"><span class="id" type="var">nomatch</span></span>. 
+</div>
+<div class="code">
+<span class="id" type="var">Arguments</span> <a class="idref" href="HoTT.Basics.Overture.html#concat"><span class="id" type="definition">concat</span></a> {<span class="id" type="var">A</span> <span class="id" type="var">x</span> <span class="id" type="var">y</span> <span class="id" type="var">z</span>} <span class="id" type="var">p</span> <span class="id" type="var">q</span> : <span class="id" type="tactic">simpl</span> <span class="id" type="var">nomatch</span>.<br/>
+
+<br/>
+<span class="id" type="keyword">Instance</span> <a name="transitive_paths"><span class="id" type="instance">transitive_paths</span></a> {<span class="id" type="var">A</span>} : <a class="idref" href="HoTT.Basics.Overture.html#Transitive"><span class="id" type="class">Transitive</span></a> (@<a class="idref" href="HoTT.Basics.Overture.html#paths"><span class="id" type="inductive">paths</span></a> <a class="idref" href="HoTT.Basics.Overture.html#A"><span class="id" type="variable">A</span></a>) | 0 := @<a class="idref" href="HoTT.Basics.Overture.html#concat"><span class="id" type="definition">concat</span></a> <span class="id" type="var">A</span>.<br/>
+<span class="id" type="var">Arguments</span> <a class="idref" href="HoTT.Basics.Overture.html#transitive_paths"><span class="id" type="instance">transitive_paths</span></a> / .<br/>
+
+<br/>
+</div>
+
+<div class="doc">
+Note that you can use the Coq tactics <span class="inlinecode"><span class="id" type="tactic">reflexivity</span></span>, <span class="inlinecode"><span class="id" type="tactic">transitivity</span></span>, <span class="inlinecode"><span class="id" type="var">etransitivity</span></span>, and <span class="inlinecode"><span class="id" type="tactic">symmetry</span></span> when working with paths; we've redefined them above to use typeclasses and to unfold the instances so you get proof terms with <span class="inlinecode"><a class="idref" href="HoTT.Basics.Overture.html#concat"><span class="id" type="definition">concat</span></a></span> and <span class="inlinecode"><a class="idref" href="HoTT.categories.ProductLaws.html#Law1.inverse"><span class="id" type="definition">inverse</span></a></span>. 
 <div class="paragraph"> </div>
 
  The identity path. 
@@ -352,7 +396,7 @@ Note that you can use the built-in Coq tactics <span class="inlinecode"><span cl
 The composition of two paths. 
 </div>
 <div class="code">
-<span class="id" type="keyword">Notation</span> <a name=":path_scope:x_'@'_x"><span class="id" type="notation">"</span></a>p @ q" := (<a class="idref" href="HoTT.Basics.Overture.html#concat"><span class="id" type="abbreviation">concat</span></a> <span class="id" type="var">p</span> <span class="id" type="var">q</span>) (<span class="id" type="tactic">at</span> <span class="id" type="keyword">level</span> 20) : <span class="id" type="var">path_scope</span>.<br/>
+<span class="id" type="keyword">Notation</span> <a name=":path_scope:x_'@'_x"><span class="id" type="notation">"</span></a>p @ q" := (<a class="idref" href="HoTT.Basics.Overture.html#concat"><span class="id" type="definition">concat</span></a> <span class="id" type="var">p</span> <span class="id" type="var">q</span>) (<span class="id" type="tactic">at</span> <span class="id" type="keyword">level</span> 20) : <span class="id" type="var">path_scope</span>.<br/>
 
 <br/>
 </div>
@@ -370,7 +414,7 @@ The inverse of a path.
 An alternative notation which puts each path on its own line.  Useful as a temporary device during proofs of equalities between very long composites; to turn it on inside a section, say <span class="inlinecode"><span class="id" type="keyword">Open</span></span> <span class="inlinecode"><span class="id" type="keyword">Scope</span></span> <span class="inlinecode"><span class="id" type="var">long_path_scope</span></span>. 
 </div>
 <div class="code">
-<span class="id" type="keyword">Notation</span> <a name=":long_path_scope:x_'@'''_x"><span class="id" type="notation">"</span></a>p @' q" := (<a class="idref" href="HoTT.Basics.Overture.html#concat"><span class="id" type="abbreviation">concat</span></a> <span class="id" type="var">p</span> <span class="id" type="var">q</span>) (<span class="id" type="tactic">at</span> <span class="id" type="keyword">level</span> 21, <span class="id" type="tactic">left</span> <span class="id" type="keyword">associativity</span>,<br/>
+<span class="id" type="keyword">Notation</span> <a name=":long_path_scope:x_'@'''_x"><span class="id" type="notation">"</span></a>p @' q" := (<a class="idref" href="HoTT.Basics.Overture.html#concat"><span class="id" type="definition">concat</span></a> <span class="id" type="var">p</span> <span class="id" type="var">q</span>) (<span class="id" type="tactic">at</span> <span class="id" type="keyword">level</span> 21, <span class="id" type="tactic">left</span> <span class="id" type="keyword">associativity</span>,<br/>
 &nbsp;&nbsp;<span class="id" type="var">format</span> "'[v' p '/' '@''  q ']'") : <span class="id" type="var">long_path_scope</span>.<br/>
 
 <br/>
@@ -855,7 +899,7 @@ Picking up the <span class="inlinecode"><span class="id" type="keyword">∀</spa
 
 <br/>
 <span class="id" type="keyword">Ltac</span> <span class="id" type="var">path_via</span> <span class="id" type="var">mid</span> :=<br/>
-&nbsp;&nbsp;<span class="id" type="tactic">apply</span> @<a class="idref" href="HoTT.Basics.Overture.html#concat"><span class="id" type="abbreviation">concat</span></a> <span class="id" type="keyword">with</span> (<span class="id" type="var">y</span> := <span class="id" type="var">mid</span>); <span class="id" type="tactic">auto</span> <span class="id" type="keyword">with</span> <span class="id" type="var">path_hints</span>.<br/>
+&nbsp;&nbsp;<span class="id" type="tactic">apply</span> @<a class="idref" href="HoTT.Basics.Overture.html#concat"><span class="id" type="definition">concat</span></a> <span class="id" type="keyword">with</span> (<span class="id" type="var">y</span> := <span class="id" type="var">mid</span>); <span class="id" type="tactic">auto</span> <span class="id" type="keyword">with</span> <span class="id" type="var">path_hints</span>.<br/>
 
 <br/>
 </div>
