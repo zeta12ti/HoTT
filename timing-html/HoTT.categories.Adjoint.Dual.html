@@ -36,28 +36,28 @@ Time: 0s">
 </div>
 <div class="code" title="File: Dual.v
 Line: 1
-Time: 0.008s">
-<div class="time" style="width: 1.8018018018018%"></div>
+Time: 0.012s">
+<div class="time" style="width: 25%"></div>
 <pre>Require Import Category.Core Functor.Core NaturalTransformation.Core.</pre>
 </div>
 <div class="code" title="File: Dual.v
 Line: 1
-Time: 0.033s">
-<div class="time" style="width: 7.4324324324324%"></div>
+Time: 0.048s">
+<div class="time" style="width: 100%"></div>
 <pre>
 Require Import Category.Dual Functor.Dual NaturalTransformation.Dual.</pre>
 </div>
 <div class="code" title="File: Dual.v
 Line: 2
-Time: 0.003s">
-<div class="time" style="width: 0.67567567567568%"></div>
+Time: 0.005s">
+<div class="time" style="width: 10.416666666667%"></div>
 <pre>
 Require Import Adjoint.UnitCounit Adjoint.Core.</pre>
 </div>
 <div class="code" title="File: Dual.v
 Line: 3
-Time: 0s">
-<div class="time" style="width: 0%"></div>
+Time: 0.002s">
+<div class="time" style="width: 4.1666666666667%"></div>
 <pre>
 Require Import Functor.Identity Functor.Composition.Core.</pre>
 </div>
@@ -122,8 +122,8 @@ Time: 0s">
 </div>
 <div class="code" title="File: Dual.v
 Line: 15
-Time: 0.096s">
-<div class="time" style="width: 21.621621621622%"></div>
+Time: 0.039s">
+<div class="time" style="width: 81.25%"></div>
 <pre>
 
   Definition opposite
@@ -140,67 +140,13 @@ Time: 0.096s">
 </div>
 <div class="code" title="File: Dual.v
 Line: 27
-Time: 0.444s">
-<div class="time" style="width: 100%"></div>
-<pre>
-
-  Definition opposite'
-             (F : Functor C D)
-             (G : Functor D C)
-             (A : F^op -| G^op)
-  : G -| F
-    := @Build_AdjunctionUnitCounit
-         _ _ G F
-         (@opposite' _ _ 1 (F o G) (counit A))
-         (@opposite' _ _ (G o F) 1 (unit A))
-         (unit_counit_equation_2 A)
-         (unit_counit_equation_1 A).</pre>
-</div>
-<div class="code" title="File: Dual.v
-Line: 39
-Time: 0.134s">
-<div class="time" style="width: 30.18018018018%"></div>
-<pre>
-
-  Definition opposite'R
-             (F : Functor C^op D^op)
-             (G : Functor D C)
-             (A : F -| G^op)
-  : G -| F^op
-    := @Build_AdjunctionUnitCounit
-         _ _ G (F^op)
-         ((counit A)^op)
-         ((unit A)^op)
-         (unit_counit_equation_2 A)
-         (unit_counit_equation_1 A).</pre>
-</div>
-<div class="code" title="File: Dual.v
-Line: 51
-Time: 0.247s">
-<div class="time" style="width: 55.630630630631%"></div>
-<pre>
-
-  Definition opposite'L
-             (F : Functor C D)
-             (G : Functor D^op C^op)
-             (A : F^op -| G)
-  : G^op -| F
-    := @Build_AdjunctionUnitCounit
-         _ _ (G^op) F
-         ((counit A)^op)
-         ((unit A)^op)
-         (unit_counit_equation_2 A)
-         (unit_counit_equation_1 A).</pre>
-</div>
-<div class="code" title="File: Dual.v
-Line: 63
-Time: 0.002s">
-<div class="time" style="width: 0.45045045045045%"></div>
+Time: 0s">
+<div class="time" style="width: 0%"></div>
 <pre>
 End opposite.</pre>
 </div>
 <div class="code" title="File: Dual.v
-Line: 64
+Line: 28
 Time: 0s">
 <div class="time" style="width: 0%"></div>
 <pre>
@@ -208,28 +154,7 @@ Time: 0s">
 Local Notation "A ^op" := (opposite A) (at level 3, format "A '^op'") : adjunction_scope.</pre>
 </div>
 <div class="code" title="File: Dual.v
-Line: 66
-Time: 0s">
-<div class="time" style="width: 0%"></div>
-<pre>
-Local Notation "A ^op'" := (opposite' A) (at level 3, format "A '^op''") : adjunction_scope.</pre>
-</div>
-<div class="code" title="File: Dual.v
-Line: 67
-Time: 0s">
-<div class="time" style="width: 0%"></div>
-<pre>
-Local Notation "A ^op'L" := (opposite'L A) (at level 3, format "A '^op'L'") : adjunction_scope.</pre>
-</div>
-<div class="code" title="File: Dual.v
-Line: 68
-Time: 0s">
-<div class="time" style="width: 0%"></div>
-<pre>
-Local Notation "A ^op'R" := (opposite'R A) (at level 3, format "A '^op'R'") : adjunction_scope.</pre>
-</div>
-<div class="code" title="File: Dual.v
-Line: 69
+Line: 30
 Time: 0s">
 <div class="time" style="width: 0%"></div>
 <pre>
@@ -237,135 +162,50 @@ Time: 0s">
 Section opposite_involutive.</pre>
 </div>
 <div class="code" title="File: Dual.v
-Line: 71
-Time: 0s">
-<div class="time" style="width: 0%"></div>
+Line: 32
+Time: 0.004s">
+<div class="time" style="width: 8.3333333333333%"></div>
 <pre>
-  Variable C : PreCategory.</pre>
+  Lemma opposite_involutive C D (F : Functor C D) (G : Functor D C) (A : F -| G)
+  : ((A^op)^op)%adjunction = A.</pre>
 </div>
 <div class="code" title="File: Dual.v
-Line: 72
-Time: 0s">
-<div class="time" style="width: 0%"></div>
-<pre>
-  Variable D : PreCategory.</pre>
-</div>
-<div class="code" title="File: Dual.v
-Line: 73
-Time: 0s">
-<div class="time" style="width: 0%"></div>
-<pre>
-  Variable F : Functor C D.</pre>
-</div>
-<div class="code" title="File: Dual.v
-Line: 74
-Time: 0s">
-<div class="time" style="width: 0%"></div>
-<pre>
-  Variable G : Functor D C.</pre>
-</div>
-<div class="code" title="File: Dual.v
-Line: 75
-Time: 0s">
-<div class="time" style="width: 0%"></div>
-<pre>
-  Variable A : F -| G.</pre>
-</div>
-<div class="code" title="File: Dual.v
-Line: 76
-Time: 0s">
-<div class="time" style="width: 0%"></div>
-<pre>
-
-  Local Notation op_op_id_F := (Functor.Dual.opposite_involutive F).</pre>
-</div>
-<div class="code" title="File: Dual.v
-Line: 78
-Time: 0s">
-<div class="time" style="width: 0%"></div>
-<pre>
-  Local Notation op_op_id_G := (Functor.Dual.opposite_involutive G).</pre>
-</div>
-<div class="code" title="File: Dual.v
-Line: 79
-Time: 0s">
-<div class="time" style="width: 0%"></div>
-<pre>
-  Local Notation op_op_id_C := (Category.Dual.opposite_involutive C).</pre>
-</div>
-<div class="code" title="File: Dual.v
-Line: 80
-Time: 0s">
-<div class="time" style="width: 0%"></div>
-<pre>
-  Local Notation op_op_id_D := (Category.Dual.opposite_involutive D).</pre>
-</div>
-<div class="code" title="File: Dual.v
-Line: 81
-Time: 0.006s">
-<div class="time" style="width: 1.3513513513514%"></div>
-<pre>
-
-  Lemma opposite_involutive
-  : match
-      op_op_id_F as Fop in (_ = F), op_op_id_G as Gop in (_ = G)
-      return
-      F -| G
-    with
-      | idpath, idpath
-        =&gt; match
-          op_op_id_C as Cop in (_ = C), op_op_id_D as Dop in (_ = D)
-          return
-          (match Cop in (_ = C), Dop in (_ = D) return Functor C D with
-             | idpath, idpath =&gt; (F^op)^op
-           end
-             -|
-             match Dop in (_ = D), Cop in (_ = C) return Functor D C with
-               | idpath, idpath =&gt; (G^op)^op
-             end)
-        with
-          | idpath, idpath
-            =&gt; ((A^op)^op)%adjunction
-        end
-    end = A.</pre>
-</div>
-<div class="code" title="File: Dual.v
-Line: 104
+Line: 34
 Time: 0s">
 <div class="time" style="width: 0%"></div>
 <pre>
   Proof.</pre>
 </div>
 <div class="code" title="File: Dual.v
-Line: 105
-Time: 0.323s">
-<div class="time" style="width: 72.747747747748%"></div>
+Line: 35
+Time: 0.02s">
+<div class="time" style="width: 41.666666666667%"></div>
 <pre>
-    destruct A as [[] [] ? ?], F, G, C, D.</pre>
+    destruct A as [[] [] ? ?].</pre>
 </div>
 <div class="code" title="File: Dual.v
-Line: 106
-Time: 0.024s">
-<div class="time" style="width: 5.4054054054054%"></div>
+Line: 36
+Time: 0.012s">
+<div class="time" style="width: 25%"></div>
 <pre>
     reflexivity.</pre>
 </div>
 <div class="code" title="File: Dual.v
-Line: 107
-Time: 0.208s">
-<div class="time" style="width: 46.846846846847%"></div>
+Line: 37
+Time: 0.028s">
+<div class="time" style="width: 58.333333333333%"></div>
 <pre>
   Defined.</pre>
 </div>
 <div class="code" title="File: Dual.v
-Line: 108
-Time: 0.03s">
-<div class="time" style="width: 6.7567567567568%"></div>
+Line: 38
+Time: 0.004s">
+<div class="time" style="width: 8.3333333333333%"></div>
 <pre>
 End opposite_involutive.</pre>
 </div>
 <div class="code" title="File: Dual.v
-Line: 109
+Line: 39
 Time: 0s">
 <div class="time" style="width: 0%"></div>
 <pre>
@@ -373,42 +213,21 @@ Time: 0s">
 Module Export AdjointDualNotations.</pre>
 </div>
 <div class="code" title="File: Dual.v
-Line: 111
+Line: 41
 Time: 0s">
 <div class="time" style="width: 0%"></div>
 <pre>
   Notation "A ^op" := (opposite A) (at level 3, format "A '^op'") : adjunction_scope.</pre>
 </div>
 <div class="code" title="File: Dual.v
-Line: 112
-Time: 0s">
-<div class="time" style="width: 0%"></div>
-<pre>
-  Notation "A ^op'" := (opposite' A) (at level 3, format "A '^op''") : adjunction_scope.</pre>
-</div>
-<div class="code" title="File: Dual.v
-Line: 113
-Time: 0s">
-<div class="time" style="width: 0%"></div>
-<pre>
-  Notation "A ^op'L" := (opposite'L A) (at level 3, format "A '^op'L'") : adjunction_scope.</pre>
-</div>
-<div class="code" title="File: Dual.v
-Line: 114
-Time: 0s">
-<div class="time" style="width: 0%"></div>
-<pre>
-  Notation "A ^op'R" := (opposite'R A) (at level 3, format "A '^op'R'") : adjunction_scope.</pre>
-</div>
-<div class="code" title="File: Dual.v
-Line: 115
+Line: 42
 Time: 0s">
 <div class="time" style="width: 0%"></div>
 <pre>
 End AdjointDualNotations.</pre>
 </div>
 <div class="code" title="File: Dual.v
-Line: 117
+Line: 44
 Time: 0s">
 <div class="time" style="width: 0%"></div>
 <pre>
