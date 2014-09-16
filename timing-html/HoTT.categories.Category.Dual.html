@@ -36,7 +36,7 @@ Time: 0s">
 </div>
 <div class="code" title="File: Dual.v
 Line: 1
-Time: 0.044s">
+Time: 0.06s">
 <div class="time" style="width: 100%"></div>
 <pre>Require Import Category.Core Category.Objects.</pre>
 </div>
@@ -101,37 +101,23 @@ Time: 0s">
 </div>
 <div class="code" title="File: Dual.v
 Line: 12
-Time: 0s">
-<div class="time" style="width: 0%"></div>
-<pre>Section opposite.</pre>
+Time: 0.012s">
+<div class="time" style="width: 20%"></div>
+<pre>Definition opposite (C : PreCategory) : PreCategory
+  := @Build_PreCategory'
+       C
+       (fun s d =&gt; morphism C d s)
+       (identity (C := C))
+       (fun _ _ _ m1 m2 =&gt; m2 o m1)
+       (fun _ _ _ _ _ _ _ =&gt; @associativity_sym _ _ _ _ _ _ _ _)
+       (fun _ _ _ _ _ _ _ =&gt; @associativity _ _ _ _ _ _ _ _)
+       (fun _ _ =&gt; @right_identity _ _ _)
+       (fun _ _ =&gt; @left_identity _ _ _)
+       (@identity_identity C)
+       _.</pre>
 </div>
 <div class="code" title="File: Dual.v
-Line: 12
-Time: 0.01s">
-<div class="time" style="width: 22.727272727273%"></div>
-<pre>
-  Definition opposite (C : PreCategory) : PreCategory
-    := @Build_PreCategory'
-         C
-         (fun s d =&gt; morphism C d s)
-         (identity (C := C))
-         (fun _ _ _ m1 m2 =&gt; m2 o m1)
-         (fun _ _ _ _ _ _ _ =&gt; @associativity_sym _ _ _ _ _ _ _ _)
-         (fun _ _ _ _ _ _ _ =&gt; @associativity _ _ _ _ _ _ _ _)
-         (fun _ _ =&gt; @right_identity _ _ _)
-         (fun _ _ =&gt; @left_identity _ _ _)
-         (@identity_identity C)
-         _.</pre>
-</div>
-<div class="code" title="File: Dual.v
-Line: 24
-Time: 0s">
-<div class="time" style="width: 0%"></div>
-<pre>
-End opposite.</pre>
-</div>
-<div class="code" title="File: Dual.v
-Line: 25
+Line: 23
 Time: 0s">
 <div class="time" style="width: 0%"></div>
 <pre>
@@ -139,21 +125,21 @@ Time: 0s">
 Local Notation "C ^op" := (opposite C) (at level 3, format "C '^op'") : category_scope.</pre>
 </div>
 <div class="code" title="File: Dual.v
-Line: 27
+Line: 25
 Time: 0s">
 <div class="time" style="width: 0%"></div>
 <pre>
 
-(** ** [ᵒᵖ] is propositionally involutive *)</pre>
+(** ** [ᵒᵖ] is judgmentally involutive *)</pre>
 </div>
 <div class="code" title="File: Dual.v
-Line: 29
-Time: 0.001s">
-<div class="time" style="width: 2.2727272727273%"></div>
+Line: 27
+Time: 0.002s">
+<div class="time" style="width: 3.3333333333333%"></div>
 <pre>Definition opposite_involutive C : (C^op)^op = C := idpath.</pre>
 </div>
 <div class="code" title="File: Dual.v
-Line: 29
+Line: 27
 Time: 0s">
 <div class="time" style="width: 0%"></div>
 <pre>
@@ -161,22 +147,22 @@ Time: 0s">
 (** ** Initial objects are opposite terminal objects, and vice versa *)</pre>
 </div>
 <div class="code" title="File: Dual.v
-Line: 31
+Line: 29
 Time: 0s">
 <div class="time" style="width: 0%"></div>
 <pre>Section DualObjects.</pre>
 </div>
 <div class="code" title="File: Dual.v
-Line: 31
+Line: 29
 Time: 0s">
 <div class="time" style="width: 0%"></div>
 <pre>
   Variable C : PreCategory.</pre>
 </div>
 <div class="code" title="File: Dual.v
-Line: 32
-Time: 0.001s">
-<div class="time" style="width: 2.2727272727273%"></div>
+Line: 30
+Time: 0.002s">
+<div class="time" style="width: 3.3333333333333%"></div>
 <pre>
 
   Definition terminal_opposite_initial (x : C)
@@ -185,9 +171,9 @@ Time: 0.001s">
     := fun x' =&gt; H x'.</pre>
 </div>
 <div class="code" title="File: Dual.v
-Line: 37
+Line: 35
 Time: 0.001s">
-<div class="time" style="width: 2.2727272727273%"></div>
+<div class="time" style="width: 1.6666666666667%"></div>
 <pre>
 
   Definition initial_opposite_terminal (x : C)
@@ -196,14 +182,14 @@ Time: 0.001s">
     := fun x' =&gt; H x'.</pre>
 </div>
 <div class="code" title="File: Dual.v
-Line: 42
-Time: 0s">
-<div class="time" style="width: 0%"></div>
+Line: 40
+Time: 0.001s">
+<div class="time" style="width: 1.6666666666667%"></div>
 <pre>
 End DualObjects.</pre>
 </div>
 <div class="code" title="File: Dual.v
-Line: 43
+Line: 41
 Time: 0s">
 <div class="time" style="width: 0%"></div>
 <pre>
@@ -211,21 +197,21 @@ Time: 0s">
 Module Export CategoryDualNotations.</pre>
 </div>
 <div class="code" title="File: Dual.v
-Line: 45
+Line: 43
 Time: 0s">
 <div class="time" style="width: 0%"></div>
 <pre>
   Notation "C ^op" := (opposite C) (at level 3, format "C '^op'") : category_scope.</pre>
 </div>
 <div class="code" title="File: Dual.v
-Line: 46
+Line: 44
 Time: 0s">
 <div class="time" style="width: 0%"></div>
 <pre>
 End CategoryDualNotations.</pre>
 </div>
 <div class="code" title="File: Dual.v
-Line: 48
+Line: 46
 Time: 0s">
 <div class="time" style="width: 0%"></div>
 <pre>
