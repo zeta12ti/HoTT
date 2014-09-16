@@ -732,9 +732,22 @@ We will use <span class="inlinecode"><span class="id" type="keyword">Notation</s
 <span class="id" type="var">Arguments</span> <a class="idref" href="HoTT.Basics.Overture.html#trunc_S"><span class="id" type="constructor">trunc_S</span></a> <span class="id" type="var">_</span>%<span class="id" type="var">trunc_scope</span>.<br/>
 
 <br/>
+</div>
+
+<div class="doc">
+Include the basic numerals, so we don't need to go through the coercion from <span class="inlinecode"><a class="idref" href="Coq.Init.Datatypes.html#nat"><span class="id" type="inductive">nat</span></a></span>, and so that we get the right binding with <span class="inlinecode"><span class="id" type="var">trunc_scope</span></span>.  Note that putting the negative numbers at level 0 allows us to override the <span class="inlinecode">-</span> <span class="inlinecode"><span class="id" type="var">_</span></span> notation for negative numbers. 
+</div>
+<div class="code">
+<span class="id" type="keyword">Notation</span> <a name=":trunc_scope:'-2'"><span class="id" type="notation">"</span></a>-2" := <a class="idref" href="HoTT.Basics.Overture.html#minus_two"><span class="id" type="constructor">minus_two</span></a> (<span class="id" type="tactic">at</span> <span class="id" type="keyword">level</span> 0) : <span class="id" type="var">trunc_scope</span>.<br/>
+<span class="id" type="keyword">Notation</span> <a name=":trunc_scope:'-1'"><span class="id" type="notation">"</span></a>-1" := (<a class="idref" href="HoTT.Basics.Overture.html#trunc_S"><span class="id" type="constructor">trunc_S</span></a> <a class="idref" href="HoTT.Basics.Overture.html#:trunc_scope:'-2'"><span class="id" type="notation">-2</span></a>) (<span class="id" type="tactic">at</span> <span class="id" type="keyword">level</span> 0) : <span class="id" type="var">trunc_scope</span>.<br/>
+<span class="id" type="keyword">Notation</span> <a name=":trunc_scope:'0'"><span class="id" type="notation">"</span></a>0" := (<a class="idref" href="HoTT.Basics.Overture.html#trunc_S"><span class="id" type="constructor">trunc_S</span></a> <a class="idref" href="HoTT.Basics.Overture.html#:trunc_scope:'-1'"><span class="id" type="notation">-1</span></a>) : <span class="id" type="var">trunc_scope</span>.<br/>
+<span class="id" type="keyword">Notation</span> <a name=":trunc_scope:'1'"><span class="id" type="notation">"</span></a>1" := (<a class="idref" href="HoTT.Basics.Overture.html#trunc_S"><span class="id" type="constructor">trunc_S</span></a> 0) : <span class="id" type="var">trunc_scope</span>.<br/>
+<span class="id" type="keyword">Notation</span> <a name=":trunc_scope:'2'"><span class="id" type="notation">"</span></a>2" := (<a class="idref" href="HoTT.Basics.Overture.html#trunc_S"><span class="id" type="constructor">trunc_S</span></a> 1) : <span class="id" type="var">trunc_scope</span>.<br/>
+
+<br/>
 <span class="id" type="keyword">Fixpoint</span> <a name="nat_to_trunc_index"><span class="id" type="definition">nat_to_trunc_index</span></a> (<span class="id" type="var">n</span> : <a class="idref" href="Coq.Init.Datatypes.html#nat"><span class="id" type="inductive">nat</span></a>) : <a class="idref" href="HoTT.Basics.Overture.html#trunc_index"><span class="id" type="inductive">trunc_index</span></a><br/>
 &nbsp;&nbsp;:= <span class="id" type="keyword">match</span> <a class="idref" href="HoTT.Basics.Overture.html#n"><span class="id" type="variable">n</span></a> <span class="id" type="keyword">with</span><br/>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;| 0 ⇒ <a class="idref" href="HoTT.Basics.Overture.html#trunc_S"><span class="id" type="constructor">trunc_S</span></a> (<a class="idref" href="HoTT.Basics.Overture.html#trunc_S"><span class="id" type="constructor">trunc_S</span></a> <a class="idref" href="HoTT.Basics.Overture.html#minus_two"><span class="id" type="constructor">minus_two</span></a>)<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;| 0 ⇒ 0<br/>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;| <a class="idref" href="Coq.Init.Datatypes.html#S"><span class="id" type="constructor">S</span></a> <span class="id" type="var">n'</span> ⇒ <a class="idref" href="HoTT.Basics.Overture.html#trunc_S"><span class="id" type="constructor">trunc_S</span></a> (<a class="idref" href="HoTT.Basics.Overture.html#nat_to_trunc_index"><span class="id" type="definition">nat_to_trunc_index</span></a> <span class="id" type="var">n'</span>)<br/>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="id" type="keyword">end</span>.<br/>
 
@@ -744,21 +757,9 @@ We will use <span class="inlinecode"><span class="id" type="keyword">Notation</s
 <br/>
 <span class="id" type="keyword">Fixpoint</span> <a name="IsTrunc_internal"><span class="id" type="definition">IsTrunc_internal</span></a> (<span class="id" type="var">n</span> : <a class="idref" href="HoTT.Basics.Overture.html#trunc_index"><span class="id" type="inductive">trunc_index</span></a>) (<span class="id" type="var">A</span> : <span class="id" type="keyword">Type</span>) : <span class="id" type="keyword">Type</span> :=<br/>
 &nbsp;&nbsp;<span class="id" type="keyword">match</span> <a class="idref" href="HoTT.Basics.Overture.html#n"><span class="id" type="variable">n</span></a> <span class="id" type="keyword">with</span><br/>
-&nbsp;&nbsp;&nbsp;&nbsp;| <a class="idref" href="HoTT.Basics.Overture.html#minus_two"><span class="id" type="constructor">minus_two</span></a> ⇒ <a class="idref" href="HoTT.Basics.Overture.html#Contr_internal"><span class="id" type="class">Contr_internal</span></a> <a class="idref" href="HoTT.Basics.Overture.html#A"><span class="id" type="variable">A</span></a><br/>
+&nbsp;&nbsp;&nbsp;&nbsp;| <a class="idref" href="HoTT.Basics.Overture.html#:trunc_scope:'-2'"><span class="id" type="notation">-2</span></a>%<span class="id" type="var">trunc</span> ⇒ <a class="idref" href="HoTT.Basics.Overture.html#Contr_internal"><span class="id" type="class">Contr_internal</span></a> <a class="idref" href="HoTT.Basics.Overture.html#A"><span class="id" type="variable">A</span></a><br/>
 &nbsp;&nbsp;&nbsp;&nbsp;| <a class="idref" href="HoTT.Basics.Overture.html#trunc_S"><span class="id" type="constructor">trunc_S</span></a> <span class="id" type="var">n'</span> ⇒ <span class="id" type="keyword">∀</span> (<span class="id" type="var">x</span> <span class="id" type="var">y</span> : <a class="idref" href="HoTT.Basics.Overture.html#A"><span class="id" type="variable">A</span></a>), <a class="idref" href="HoTT.Basics.Overture.html#IsTrunc_internal"><span class="id" type="definition">IsTrunc_internal</span></a> <span class="id" type="var">n'</span> (<a class="idref" href="HoTT.Basics.Overture.html#x"><span class="id" type="variable">x</span></a> <a class="idref" href="HoTT.Basics.Overture.html#:type_scope:x_'='_x"><span class="id" type="notation">=</span></a> <a class="idref" href="HoTT.Basics.Overture.html#y"><span class="id" type="variable">y</span></a>)<br/>
 &nbsp;&nbsp;<span class="id" type="keyword">end</span>.<br/>
-
-<br/>
-<span class="id" type="keyword">Notation</span> <a name="minus_one"><span class="id" type="abbreviation">minus_one</span></a>:=(<a class="idref" href="HoTT.Basics.Overture.html#trunc_S"><span class="id" type="constructor">trunc_S</span></a> <a class="idref" href="HoTT.Basics.Overture.html#minus_two"><span class="id" type="constructor">minus_two</span></a>).<br/>
-</div>
-
-<div class="doc">
-Include the basic numerals, so we don't need to go through the coercion from <span class="inlinecode"><a class="idref" href="Coq.Init.Datatypes.html#nat"><span class="id" type="inductive">nat</span></a></span>, and so that we get the right binding with <span class="inlinecode"><span class="id" type="var">trunc_scope</span></span>. 
-</div>
-<div class="code">
-<span class="id" type="keyword">Notation</span> <a name=":trunc_scope:'0'"><span class="id" type="notation">"</span></a>0" := (<a class="idref" href="HoTT.Basics.Overture.html#trunc_S"><span class="id" type="constructor">trunc_S</span></a> <a class="idref" href="HoTT.Basics.Overture.html#minus_one"><span class="id" type="abbreviation">minus_one</span></a>) : <span class="id" type="var">trunc_scope</span>.<br/>
-<span class="id" type="keyword">Notation</span> <a name=":trunc_scope:'1'"><span class="id" type="notation">"</span></a>1" := (<a class="idref" href="HoTT.Basics.Overture.html#trunc_S"><span class="id" type="constructor">trunc_S</span></a> 0) : <span class="id" type="var">trunc_scope</span>.<br/>
-<span class="id" type="keyword">Notation</span> <a name=":trunc_scope:'2'"><span class="id" type="notation">"</span></a>2" := (<a class="idref" href="HoTT.Basics.Overture.html#trunc_S"><span class="id" type="constructor">trunc_S</span></a> 1) : <span class="id" type="var">trunc_scope</span>.<br/>
 
 <br/>
 <span class="id" type="var">Arguments</span> <a class="idref" href="HoTT.Basics.Overture.html#IsTrunc_internal"><span class="id" type="definition">IsTrunc_internal</span></a> <span class="id" type="var">n</span> <span class="id" type="var">A</span> : <span class="id" type="tactic">simpl</span> <span class="id" type="var">nomatch</span>.<br/>
@@ -807,8 +808,8 @@ Picking up the <span class="inlinecode"><span class="id" type="keyword">∀</spa
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="id" type="keyword">end</span>.<br/>
 
 <br/>
-<span class="id" type="keyword">Notation</span> <a name="Contr"><span class="id" type="abbreviation">Contr</span></a> := (<a class="idref" href="HoTT.Basics.Overture.html#IsTrunc"><span class="id" type="class">IsTrunc</span></a> <a class="idref" href="HoTT.Basics.Overture.html#minus_two"><span class="id" type="constructor">minus_two</span></a>).<br/>
-<span class="id" type="keyword">Notation</span> <a name="IsHProp"><span class="id" type="abbreviation">IsHProp</span></a> := (<a class="idref" href="HoTT.Basics.Overture.html#IsTrunc"><span class="id" type="class">IsTrunc</span></a> <a class="idref" href="HoTT.Basics.Overture.html#minus_one"><span class="id" type="abbreviation">minus_one</span></a>).<br/>
+<span class="id" type="keyword">Notation</span> <a name="Contr"><span class="id" type="abbreviation">Contr</span></a> := (<a class="idref" href="HoTT.Basics.Overture.html#IsTrunc"><span class="id" type="class">IsTrunc</span></a> <a class="idref" href="HoTT.Basics.Overture.html#:trunc_scope:'-2'"><span class="id" type="notation">-2</span></a>).<br/>
+<span class="id" type="keyword">Notation</span> <a name="IsHProp"><span class="id" type="abbreviation">IsHProp</span></a> := (<a class="idref" href="HoTT.Basics.Overture.html#IsTrunc"><span class="id" type="class">IsTrunc</span></a> <a class="idref" href="HoTT.Basics.Overture.html#:trunc_scope:'-1'"><span class="id" type="notation">-1</span></a>).<br/>
 <span class="id" type="keyword">Notation</span> <a name="IsHSet"><span class="id" type="abbreviation">IsHSet</span></a> := (<a class="idref" href="HoTT.Basics.Overture.html#IsTrunc"><span class="id" type="class">IsTrunc</span></a> 0).<br/>
 
 <br/>
