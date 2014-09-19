@@ -40,9 +40,9 @@ Time: 0s">
 </div>
 <div class="code" title="File: Truncations.v
 Line: 4
-Time: 0.057s">
+Time: 0.046s">
 <div class="time" style="width: 100%"></div>
-<pre>Require Import Basics types.Sigma HProp ReflectiveSubuniverse Modality.</pre>
+<pre>Require Import Basics types.Sigma ReflectiveSubuniverse Modality.</pre>
 </div>
 <div class="code" title="File: Truncations.v
 Line: 4
@@ -77,9 +77,9 @@ Time: 0s">
 
 If Coq supported higher inductive types natively, we would construct this as somthing like:
 
-   Inductive Truncation n (A : Type) : Type :=
-   | truncation_incl : A -&gt; Truncation n A
-   | istrunc_truncation : forall (f : Sphere (trunc_S n) -&gt; Truncation n A)
+   Inductive Trunc n (A : Type) : Type :=
+   | tr : A -&gt; Trunc n A
+   | istrunc_truncation : forall (f : Sphere (trunc_S n) -&gt; Trunc n A)
        (x : Sphere (trunc_S n)), f x = f North.
 
 However, while we are faking our higher-inductives anyway, we can take some shortcuts, rather than translating the definition above.  Firstly, we directly posit a “constructor” giving truncatedness, rather than rephrasing it in terms of maps of spheres.  Secondly, we omit the “computation rule” for this constructor, since it is implied by truncatedness of the result type (and, for essentially that reason, is never wanted in practice anyway).
@@ -91,7 +91,7 @@ However, while we are faking our higher-inductives anyway, we can take some shor
 Line: 22
 Time: 0s">
 <div class="time" style="width: 0%"></div>
-<pre>Module Export Truncation.</pre>
+<pre>Module Export Trunc.</pre>
 </div>
 <div class="code" title="File: Truncations.v
 Line: 22
@@ -106,22 +106,22 @@ Time: 0s">
 <div class="time" style="width: 0%"></div>
 <pre>
 
-Private Inductive Truncation (n : trunc_index) (A :Type) : Type :=
-  truncation_incl : A -&gt; Truncation n A.</pre>
+Private Inductive Trunc (n : trunc_index) (A :Type) : Type :=
+  tr : A -&gt; Trunc n A.</pre>
 </div>
 <div class="code" title="File: Truncations.v
 Line: 26
 Time: 0s">
 <div class="time" style="width: 0%"></div>
 <pre>
-Bind Scope trunc_scope with Truncation.</pre>
+Bind Scope trunc_scope with Trunc.</pre>
 </div>
 <div class="code" title="File: Truncations.v
 Line: 27
 Time: 0s">
 <div class="time" style="width: 0%"></div>
 <pre>
-Arguments truncation_incl {n A} a.</pre>
+Arguments tr {n A} a.</pre>
 </div>
 <div class="code" title="File: Truncations.v
 Line: 28
@@ -134,7 +134,7 @@ Time: 0s">
 Line: 29
 Time: 0s">
 <div class="time" style="width: 0%"></div>
-<pre>Instance istrunc_truncation : forall n A, IsTrunc n (Truncation n A) | 1.</pre>
+<pre>Instance istrunc_truncation : forall n A, IsTrunc n (Trunc n A) | 1.</pre>
 </div>
 <div class="code" title="File: Truncations.v
 Line: 29
@@ -145,14 +145,14 @@ Admitted.</pre>
 </div>
 <div class="code" title="File: Truncations.v
 Line: 30
-Time: 0.002s">
-<div class="time" style="width: 3.5087719298246%"></div>
+Time: 0.001s">
+<div class="time" style="width: 2.1739130434783%"></div>
 <pre>
 
-Definition Truncation_rect {n A}
-  (P : Truncation n A -&gt; Type) `{forall aa, IsTrunc n (P aa)}
-  : (forall a, P (truncation_incl a)) -&gt; (forall aa, P aa)
-:= (fun f aa =&gt; match aa with truncation_incl a =&gt; f a end).</pre>
+Definition Trunc_rect {n A}
+  (P : Trunc n A -&gt; Type) `{forall aa, IsTrunc n (P aa)}
+  : (forall a, P (tr a)) -&gt; (forall aa, P aa)
+:= (fun f aa =&gt; match aa with tr a =&gt; f a end).</pre>
 </div>
 <div class="code" title="File: Truncations.v
 Line: 35
@@ -160,7 +160,7 @@ Time: 0s">
 <div class="time" style="width: 0%"></div>
 <pre>
 
-End Truncation.</pre>
+End Trunc.</pre>
 </div>
 <div class="code" title="File: Truncations.v
 Line: 37
@@ -175,10 +175,10 @@ Time: 0s">
 <div class="code" title="File: Truncations.v
 Line: 40
 Time: 0.002s">
-<div class="time" style="width: 3.5087719298246%"></div>
-<pre>Definition Truncation_rect_nondep {n A X} `{IsTrunc n X}
-  : (A -&gt; X) -&gt; (Truncation n A -&gt; X)
-:= Truncation_rect (fun _ =&gt; X).</pre>
+<div class="time" style="width: 4.3478260869565%"></div>
+<pre>Definition Trunc_rect_nondep {n A X} `{IsTrunc n X}
+  : (A -&gt; X) -&gt; (Trunc n A -&gt; X)
+:= Trunc_rect (fun _ =&gt; X).</pre>
 </div>
 <div class="code" title="File: Truncations.v
 Line: 42
@@ -186,7 +186,7 @@ Time: 0s">
 <div class="time" style="width: 0%"></div>
 <pre>
 
-(** Truncation is a modality *)
+(** Trunc is a modality *)
 
 </pre>
 </div>
@@ -220,18 +220,18 @@ Time: 0s">
 </div>
 <div class="code" title="File: Truncations.v
 Line: 49
-Time: 0.031s">
-<div class="time" style="width: 54.385964912281%"></div>
+Time: 0.025s">
+<div class="time" style="width: 54.347826086957%"></div>
 <pre>
     refine (Build_Modality
               (Build_UnitSubuniverse
                 (fun A =&gt; IsTrunc n A)
-                (Truncation n)
+                (Trunc n)
                 _
-                (@truncation_incl n)
+                (@tr n)
                 _)
               _
-              (@Truncation_rect n)
+              (@Trunc_rect n)
               (fun A B B_inO f a =&gt; 1)
               _); cbn; try exact _.</pre>
 </div>
@@ -244,30 +244,59 @@ Time: 0s">
 </div>
 <div class="code" title="File: Truncations.v
 Line: 61
-Time: 0.001s">
-<div class="time" style="width: 1.7543859649123%"></div>
+Time: 0s">
+<div class="time" style="width: 0%"></div>
 <pre>
     apply trunc_equiv with f; exact _.</pre>
 </div>
 <div class="code" title="File: Truncations.v
 Line: 62
-Time: 0.011s">
-<div class="time" style="width: 19.298245614035%"></div>
+Time: 0.009s">
+<div class="time" style="width: 19.565217391304%"></div>
 <pre>
   Defined.</pre>
 </div>
 <div class="code" title="File: Truncations.v
 Line: 63
-Time: 0.007s">
-<div class="time" style="width: 12.280701754386%"></div>
+Time: 0.006s">
+<div class="time" style="width: 13.04347826087%"></div>
 <pre>
 
   Definition trunc_iff_isequiv_truncation (A : Type)
-  : IsTrunc n A &lt;-&gt; IsEquiv (@truncation_incl n A)
+  : IsTrunc n A &lt;-&gt; IsEquiv (@tr n A)
   := inO_iff_isequiv_O_unit A.</pre>
 </div>
 <div class="code" title="File: Truncations.v
 Line: 67
+Time: 0.001s">
+<div class="time" style="width: 2.1739130434783%"></div>
+<pre>
+
+  Global Instance isequiv_tr A `{IsTrunc n A} : IsEquiv (@tr n A)
+  := fst (trunc_iff_isequiv_truncation A) _.</pre>
+</div>
+<div class="code" title="File: Truncations.v
+Line: 70
+Time: 0.002s">
+<div class="time" style="width: 4.3478260869565%"></div>
+<pre>
+
+  Definition equiv_tr (A : Type) `{IsTrunc n A}
+  : A &lt;~&gt; Trunc n A
+  := BuildEquiv _ _ (@tr n A) _.</pre>
+</div>
+<div class="code" title="File: Truncations.v
+Line: 74
+Time: 0.001s">
+<div class="time" style="width: 2.1739130434783%"></div>
+<pre>
+
+  Definition untrunc_istrunc {A : Type} `{IsTrunc n A}
+  : Trunc n A -&gt; A
+  := (@tr n A)^-1.</pre>
+</div>
+<div class="code" title="File: Truncations.v
+Line: 78
 Time: 0s">
 <div class="time" style="width: 0%"></div>
 <pre>
@@ -277,63 +306,63 @@ Time: 0s">
  </pre>
 </div>
 <div class="code" title="File: Truncations.v
-Line: 71
-Time: 0.005s">
-<div class="time" style="width: 8.7719298245614%"></div>
-<pre>Definition Truncation_functor {X Y} (f : X -&gt; Y)
-  : Truncation n X -&gt; Truncation n Y
-  := O_functor f.</pre>
+Line: 82
+Time: 0.001s">
+<div class="time" style="width: 2.1739130434783%"></div>
+<pre>Definition Trunc_functor {X Y} (f : X -&gt; Y)
+  : Trunc n X -&gt; Trunc n Y
+  := Trunc_rect_nondep (tr o f).</pre>
 </div>
 <div class="code" title="File: Truncations.v
-Line: 73
-Time: 0.01s">
-<div class="time" style="width: 17.543859649123%"></div>
+Line: 84
+Time: 0.008s">
+<div class="time" style="width: 17.391304347826%"></div>
 <pre>
 
-  Definition Truncation_functor_compose {X Y Z} (f : X -&gt; Y) (g : Y -&gt; Z)
-  : Truncation_functor (g o f) == Truncation_functor g o Truncation_functor f
+  Definition Trunc_functor_compose {X Y Z} (f : X -&gt; Y) (g : Y -&gt; Z)
+  : Trunc_functor (g o f) == Trunc_functor g o Trunc_functor f
   := O_functor_compose f g.</pre>
 </div>
 <div class="code" title="File: Truncations.v
-Line: 77
-Time: 0.006s">
-<div class="time" style="width: 10.526315789474%"></div>
+Line: 88
+Time: 0.005s">
+<div class="time" style="width: 10.869565217391%"></div>
 <pre>
 
-  Definition Truncation_functor_idmap (X : Type)
-  : @Truncation_functor X X idmap == idmap
+  Definition Trunc_functor_idmap (X : Type)
+  : @Trunc_functor X X idmap == idmap
   := O_functor_idmap X.</pre>
 </div>
 <div class="code" title="File: Truncations.v
-Line: 81
-Time: 0.006s">
-<div class="time" style="width: 10.526315789474%"></div>
+Line: 92
+Time: 0.005s">
+<div class="time" style="width: 10.869565217391%"></div>
 <pre>
 
-  Definition isequiv_Truncation_functor {X Y} (f : X -&gt; Y) `{IsEquiv _ _ f}
-  : IsEquiv (Truncation_functor f)
+  Definition isequiv_Trunc_functor {X Y} (f : X -&gt; Y) `{IsEquiv _ _ f}
+  : IsEquiv (Trunc_functor f)
   := isequiv_O_functor f.</pre>
 </div>
 <div class="code" title="File: Truncations.v
-Line: 85
-Time: 0.007s">
-<div class="time" style="width: 12.280701754386%"></div>
+Line: 96
+Time: 0.005s">
+<div class="time" style="width: 10.869565217391%"></div>
 <pre>
 
-  Definition equiv_Truncation_prod_cmp `{Funext} {X Y}
-  : Truncation n (X * Y) &lt;~&gt; Truncation n X * Truncation n Y
+  Definition equiv_Trunc_prod_cmp `{Funext} {X Y}
+  : Trunc n (X * Y) &lt;~&gt; Trunc n X * Trunc n Y
   := equiv_O_prod_cmp X Y.</pre>
 </div>
 <div class="code" title="File: Truncations.v
-Line: 89
-Time: 0.006s">
-<div class="time" style="width: 10.526315789474%"></div>
+Line: 100
+Time: 0.005s">
+<div class="time" style="width: 10.869565217391%"></div>
 <pre>
 
 End TruncationModality.</pre>
 </div>
 <div class="code" title="File: Truncations.v
-Line: 91
+Line: 102
 Time: 0s">
 <div class="time" style="width: 0%"></div>
 <pre>
@@ -341,13 +370,13 @@ Time: 0s">
 (** This coercion allows us to use truncation indices where a modality is expected and refer to the corresponding truncation modality.  For instance, the general theory of O-connected maps specializes to the theory of n-connected maps. *)</pre>
 </div>
 <div class="code" title="File: Truncations.v
-Line: 93
+Line: 104
 Time: 0s">
 <div class="time" style="width: 0%"></div>
 <pre>Coercion truncation_modality : trunc_index &gt;-&gt; Modality.</pre>
 </div>
 <div class="code" title="File: Truncations.v
-Line: 93
+Line: 104
 Time: 0s">
 <div class="time" style="width: 0%"></div>
 <pre>
@@ -355,13 +384,68 @@ Time: 0s">
 (** It's sometimes convenient to use "infinity" to refer to the identity modality in a similar way.  This clashes with some uses in higher topos theory, where "oo-truncated" means instead "hypercomplete", but this has not yet been a big problem. *)</pre>
 </div>
 <div class="code" title="File: Truncations.v
-Line: 95
+Line: 106
 Time: 0s">
 <div class="time" style="width: 0%"></div>
 <pre>Notation oo := identity_modality.</pre>
 </div>
 <div class="code" title="File: Truncations.v
-Line: 96
+Line: 106
+Time: 0s">
+<div class="time" style="width: 0%"></div>
+<pre>
+
+(** ** A few special things about the (-1)-truncation. *)
+
+</pre>
+</div>
+<div class="code" title="File: Truncations.v
+Line: 109
+Time: 0s">
+<div class="time" style="width: 0%"></div>
+<pre>Notation merely := (Trunc -1).</pre>
+</div>
+<div class="code" title="File: Truncations.v
+Line: 109
+Time: 0s">
+<div class="time" style="width: 0%"></div>
+<pre>
+
+Definition hexists {X} (P : X -&gt; Type) : Type := merely (sigT P).</pre>
+</div>
+<div class="code" title="File: Truncations.v
+Line: 111
+Time: 0s">
+<div class="time" style="width: 0%"></div>
+<pre>
+
+Definition hor (P Q : Type) : Type := merely (P + Q).</pre>
+</div>
+<div class="code" title="File: Truncations.v
+Line: 113
+Time: 0s">
+<div class="time" style="width: 0%"></div>
+<pre>
+
+(** ** Tactic to remove truncations in hypotheses if possible. *)</pre>
+</div>
+<div class="code" title="File: Truncations.v
+Line: 115
+Time: 0s">
+<div class="time" style="width: 0%"></div>
+<pre>Ltac strip_truncations :=
+  (** search for truncated hypotheses *)
+  progress repeat match goal with
+                    | [ T : _ |- _ ]
+                      =&gt; revert T;
+                        refine (@Trunc_rect _ _ _ _ _);
+                        (** ensure that we didn't generate more than one subgoal, i.e. that the goal was appropriately truncated *)
+                        [];
+                        intro T
+                  end.</pre>
+</div>
+<div class="code" title="File: Truncations.v
+Line: 125
 Time: 0s">
 <div class="time" style="width: 0%"></div>
 <pre>
