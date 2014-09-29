@@ -1,0 +1,524 @@
+<html>
+<head>
+<title>Core.v</title>
+<style>
+.time {
+  background-color: #ffaaaa;
+  height: 100%;
+  z-index: -1;
+  position: absolute;
+}
+.code {
+  z-index: 0;
+  position: relative;
+  border-style: solid;
+  border-color: transparent;
+  border-width: 1px;
+}
+.code:hover {
+  border-style: solid;
+  border-color: black;
+  border-width: 1px;
+}
+pre {
+  margin: 1px;
+}
+</style>
+</head>
+<body>
+<h1>Timings for Core.v</h1>
+
+<div class="code" title="File: Core.v
+Line: 1
+Time: 0s">
+<div class="time" style="width: 0%"></div>
+<pre>(** * Functors involving product categories *)</pre>
+</div>
+<div class="code" title="File: Core.v
+Line: 1
+Time: 0.026s">
+<div class="time" style="width: 24.074074074074%"></div>
+<pre>Require Import Category.Core Functor.Core Category.Prod Functor.Composition.Core.</pre>
+</div>
+<div class="code" title="File: Core.v
+Line: 1
+Time: 0.015s">
+<div class="time" style="width: 13.888888888889%"></div>
+<pre>
+Require Import Functor.Paths.</pre>
+</div>
+<div class="code" title="File: Core.v
+Line: 2
+Time: 0s">
+<div class="time" style="width: 0%"></div>
+<pre>
+Require Import types.Prod.</pre>
+</div>
+<div class="code" title="File: Core.v
+Line: 3
+Time: 0s">
+<div class="time" style="width: 0%"></div>
+<pre>
+
+Set Universe Polymorphism.</pre>
+</div>
+<div class="code" title="File: Core.v
+Line: 5
+Time: 0s">
+<div class="time" style="width: 0%"></div>
+<pre>
+Set Implicit Arguments.</pre>
+</div>
+<div class="code" title="File: Core.v
+Line: 6
+Time: 0s">
+<div class="time" style="width: 0%"></div>
+<pre>
+Generalizable All Variables.</pre>
+</div>
+<div class="code" title="File: Core.v
+Line: 7
+Time: 0s">
+<div class="time" style="width: 0%"></div>
+<pre>
+Set Asymmetric Patterns.</pre>
+</div>
+<div class="code" title="File: Core.v
+Line: 8
+Time: 0s">
+<div class="time" style="width: 0%"></div>
+<pre>
+
+Local Notation fst_type := fst.</pre>
+</div>
+<div class="code" title="File: Core.v
+Line: 10
+Time: 0s">
+<div class="time" style="width: 0%"></div>
+<pre>
+Local Notation snd_type := snd.</pre>
+</div>
+<div class="code" title="File: Core.v
+Line: 11
+Time: 0s">
+<div class="time" style="width: 0%"></div>
+<pre>
+Local Notation pair_type := pair.</pre>
+</div>
+<div class="code" title="File: Core.v
+Line: 12
+Time: 0s">
+<div class="time" style="width: 0%"></div>
+<pre>
+
+Local Open Scope morphism_scope.</pre>
+</div>
+<div class="code" title="File: Core.v
+Line: 14
+Time: 0s">
+<div class="time" style="width: 0%"></div>
+<pre>
+Local Open Scope functor_scope.</pre>
+</div>
+<div class="code" title="File: Core.v
+Line: 15
+Time: 0s">
+<div class="time" style="width: 0%"></div>
+<pre>
+
+(** ** First and second projections from a product precategory *)</pre>
+</div>
+<div class="code" title="File: Core.v
+Line: 17
+Time: 0s">
+<div class="time" style="width: 0%"></div>
+<pre>Section proj.</pre>
+</div>
+<div class="code" title="File: Core.v
+Line: 17
+Time: 0s">
+<div class="time" style="width: 0%"></div>
+<pre>
+  Context {C : PreCategory}.</pre>
+</div>
+<div class="code" title="File: Core.v
+Line: 18
+Time: 0s">
+<div class="time" style="width: 0%"></div>
+<pre>
+  Context {D : PreCategory}.</pre>
+</div>
+<div class="code" title="File: Core.v
+Line: 19
+Time: 0.009s">
+<div class="time" style="width: 8.3333333333333%"></div>
+<pre>
+
+  Definition fst : Functor (C * D) C
+    := Build_Functor (C * D) C
+                     (@fst _ _)
+                     (fun _ _ =&gt; @fst _ _)
+                     (fun _ _ _ _ _ =&gt; idpath)
+                     (fun _ =&gt; idpath).</pre>
+</div>
+<div class="code" title="File: Core.v
+Line: 26
+Time: 0.009s">
+<div class="time" style="width: 8.3333333333333%"></div>
+<pre>
+
+  Definition snd : Functor (C * D) D
+    := Build_Functor (C * D) D
+                     (@snd _ _)
+                     (fun _ _ =&gt; @snd _ _)
+                     (fun _ _ _ _ _ =&gt; idpath)
+                     (fun _ =&gt; idpath).</pre>
+</div>
+<div class="code" title="File: Core.v
+Line: 33
+Time: 0.001s">
+<div class="time" style="width: 0.92592592592593%"></div>
+<pre>
+End proj.</pre>
+</div>
+<div class="code" title="File: Core.v
+Line: 34
+Time: 0s">
+<div class="time" style="width: 0%"></div>
+<pre>
+
+(** ** Product of two functors from the same domain *)</pre>
+</div>
+<div class="code" title="File: Core.v
+Line: 36
+Time: 0s">
+<div class="time" style="width: 0%"></div>
+<pre>Section prod.</pre>
+</div>
+<div class="code" title="File: Core.v
+Line: 36
+Time: 0s">
+<div class="time" style="width: 0%"></div>
+<pre>
+  Variable C : PreCategory.</pre>
+</div>
+<div class="code" title="File: Core.v
+Line: 37
+Time: 0s">
+<div class="time" style="width: 0%"></div>
+<pre>
+  Variable D : PreCategory.</pre>
+</div>
+<div class="code" title="File: Core.v
+Line: 38
+Time: 0s">
+<div class="time" style="width: 0%"></div>
+<pre>
+  Variable D' : PreCategory.</pre>
+</div>
+<div class="code" title="File: Core.v
+Line: 39
+Time: 0.016s">
+<div class="time" style="width: 14.814814814815%"></div>
+<pre>
+
+  Definition prod (F : Functor C D) (F' : Functor C D')
+  : Functor C (D * D')
+    := Build_Functor
+         C (D * D')
+         (fun c =&gt; (F c, F' c))
+         (fun s d m =&gt; (F _1 m, F' _1 m))
+         (fun _ _ _ _ _ =&gt; path_prod' (composition_of F _ _ _ _ _)
+                                      (composition_of F' _ _ _ _ _))
+         (fun _ =&gt; path_prod' (identity_of F _) (identity_of F' _)).</pre>
+</div>
+<div class="code" title="File: Core.v
+Line: 49
+Time: 0.001s">
+<div class="time" style="width: 0.92592592592593%"></div>
+<pre>
+End prod.</pre>
+</div>
+<div class="code" title="File: Core.v
+Line: 50
+Time: 0s">
+<div class="time" style="width: 0%"></div>
+<pre>
+
+Local Infix "*" := prod : functor_scope.</pre>
+</div>
+<div class="code" title="File: Core.v
+Line: 52
+Time: 0s">
+<div class="time" style="width: 0%"></div>
+<pre>
+
+(** ** Pairing of two functors *)</pre>
+</div>
+<div class="code" title="File: Core.v
+Line: 54
+Time: 0s">
+<div class="time" style="width: 0%"></div>
+<pre>Section pair.</pre>
+</div>
+<div class="code" title="File: Core.v
+Line: 54
+Time: 0s">
+<div class="time" style="width: 0%"></div>
+<pre>
+  Variable C : PreCategory.</pre>
+</div>
+<div class="code" title="File: Core.v
+Line: 55
+Time: 0s">
+<div class="time" style="width: 0%"></div>
+<pre>
+  Variable D : PreCategory.</pre>
+</div>
+<div class="code" title="File: Core.v
+Line: 56
+Time: 0s">
+<div class="time" style="width: 0%"></div>
+<pre>
+  Variable C' : PreCategory.</pre>
+</div>
+<div class="code" title="File: Core.v
+Line: 57
+Time: 0s">
+<div class="time" style="width: 0%"></div>
+<pre>
+  Variable D' : PreCategory.</pre>
+</div>
+<div class="code" title="File: Core.v
+Line: 58
+Time: 0s">
+<div class="time" style="width: 0%"></div>
+<pre>
+  Variable F : Functor C D.</pre>
+</div>
+<div class="code" title="File: Core.v
+Line: 59
+Time: 0s">
+<div class="time" style="width: 0%"></div>
+<pre>
+  Variable F' : Functor C' D'.</pre>
+</div>
+<div class="code" title="File: Core.v
+Line: 60
+Time: 0s">
+<div class="time" style="width: 0%"></div>
+<pre>
+
+  Local Open Scope functor_scope.</pre>
+</div>
+<div class="code" title="File: Core.v
+Line: 62
+Time: 0.006s">
+<div class="time" style="width: 5.5555555555556%"></div>
+<pre>
+
+  Definition pair : Functor (C * C') (D * D')
+    := (F o fst) * (F' o snd).</pre>
+</div>
+<div class="code" title="File: Core.v
+Line: 65
+Time: 0s">
+<div class="time" style="width: 0%"></div>
+<pre>
+End pair.</pre>
+</div>
+<div class="code" title="File: Core.v
+Line: 66
+Time: 0s">
+<div class="time" style="width: 0%"></div>
+<pre>
+
+Local Notation "( x , y , .. , z )" := (pair .. (pair x y) .. z) : functor_scope.</pre>
+</div>
+<div class="code" title="File: Core.v
+Line: 68
+Time: 0s">
+<div class="time" style="width: 0%"></div>
+<pre>
+
+(** ** Partially applied functors out of a product precategory *)</pre>
+</div>
+<div class="code" title="File: Core.v
+Line: 70
+Time: 0s">
+<div class="time" style="width: 0%"></div>
+<pre>Section induced.</pre>
+</div>
+<div class="code" title="File: Core.v
+Line: 70
+Time: 0s">
+<div class="time" style="width: 0%"></div>
+<pre>
+  Variable C : PreCategory.</pre>
+</div>
+<div class="code" title="File: Core.v
+Line: 71
+Time: 0s">
+<div class="time" style="width: 0%"></div>
+<pre>
+  Variable D : PreCategory.</pre>
+</div>
+<div class="code" title="File: Core.v
+Line: 72
+Time: 0s">
+<div class="time" style="width: 0%"></div>
+<pre>
+  Variable E : PreCategory.</pre>
+</div>
+<div class="code" title="File: Core.v
+Line: 73
+Time: 0.001s">
+<div class="time" style="width: 0.92592592592593%"></div>
+<pre>
+
+  Variable F : Functor (C * D) E.</pre>
+</div>
+<div class="code" title="File: Core.v
+Line: 75
+Time: 0s">
+<div class="time" style="width: 0%"></div>
+<pre>
+
+  Local Open Scope core_scope.</pre>
+</div>
+<div class="code" title="File: Core.v
+Line: 77
+Time: 0s">
+<div class="time" style="width: 0%"></div>
+<pre>
+
+  Local Ltac t :=
+    simpl; intros;
+    repeat (rewrite &lt;- ?composition_of, &lt;- ?identity_of, ?left_identity, ?right_identity; simpl);
+    trivial.</pre>
+</div>
+<div class="code" title="File: Core.v
+Line: 82
+Time: 0s">
+<div class="time" style="width: 0%"></div>
+<pre>
+
+  (** Note: This is just the currying exponential law. *)
+  (** TODO: Come up with a better name for this? *)
+ </pre>
+</div>
+<div class="code" title="File: Core.v
+Line: 86
+Time: 0s">
+<div class="time" style="width: 0%"></div>
+<pre>Definition induced_fst (d : D) : Functor C E.</pre>
+</div>
+<div class="code" title="File: Core.v
+Line: 86
+Time: 0s">
+<div class="time" style="width: 0%"></div>
+<pre>
+  Proof.</pre>
+</div>
+<div class="code" title="File: Core.v
+Line: 87
+Time: 0.108s">
+<div class="time" style="width: 100%"></div>
+<pre>
+    refine (Build_Functor
+              C E
+              (fun c =&gt; F (c, d))
+              (fun _ _ m =&gt; @morphism_of _ _ F (_, _) (_, _) (m, identity d))
+              _
+              _);
+    abstract t.</pre>
+</div>
+<div class="code" title="File: Core.v
+Line: 94
+Time: 0.041s">
+<div class="time" style="width: 37.962962962963%"></div>
+<pre>
+  Defined.</pre>
+</div>
+<div class="code" title="File: Core.v
+Line: 95
+Time: 0s">
+<div class="time" style="width: 0%"></div>
+<pre>
+
+  Definition induced_snd (c : C) : Functor D E.</pre>
+</div>
+<div class="code" title="File: Core.v
+Line: 97
+Time: 0s">
+<div class="time" style="width: 0%"></div>
+<pre>
+  Proof.</pre>
+</div>
+<div class="code" title="File: Core.v
+Line: 98
+Time: 0.104s">
+<div class="time" style="width: 96.296296296296%"></div>
+<pre>
+    refine (Build_Functor
+              D E
+              (fun d =&gt; F (c, d))
+              (fun _ _ m =&gt; @morphism_of _ _ F (_, _) (_, _) (identity c, m))
+              _
+              _);
+    abstract t.</pre>
+</div>
+<div class="code" title="File: Core.v
+Line: 105
+Time: 0.038s">
+<div class="time" style="width: 35.185185185185%"></div>
+<pre>
+  Defined.</pre>
+</div>
+<div class="code" title="File: Core.v
+Line: 106
+Time: 0.02s">
+<div class="time" style="width: 18.518518518519%"></div>
+<pre>
+End induced.</pre>
+</div>
+<div class="code" title="File: Core.v
+Line: 107
+Time: 0s">
+<div class="time" style="width: 0%"></div>
+<pre>
+
+Module Export FunctorProdCoreNotations.</pre>
+</div>
+<div class="code" title="File: Core.v
+Line: 109
+Time: 0s">
+<div class="time" style="width: 0%"></div>
+<pre>
+  Infix "*" := prod : functor_scope.</pre>
+</div>
+<div class="code" title="File: Core.v
+Line: 110
+Time: 0s">
+<div class="time" style="width: 0%"></div>
+<pre>
+  Notation "( x , y , .. , z )" := (pair .. (pair x y) .. z) : functor_scope.</pre>
+</div>
+<div class="code" title="File: Core.v
+Line: 111
+Time: 0s">
+<div class="time" style="width: 0%"></div>
+<pre>
+End FunctorProdCoreNotations.</pre>
+</div>
+<div class="code" title="File: Core.v
+Line: 113
+Time: 0s">
+<div class="time" style="width: 0%"></div>
+<pre>
+
+</pre>
+</div>
+</body>
+</html>
+
