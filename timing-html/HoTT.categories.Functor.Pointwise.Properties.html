@@ -36,14 +36,14 @@ Time: 0s">
 </div>
 <div class="code" title="File: Properties.v
 Line: 1
-Time: 0.048s">
-<div class="time" style="width: 10.57268722467%"></div>
+Time: 0.059s">
+<div class="time" style="width: 10%"></div>
 <pre>Require Import Category.Core Functor.Core Functor.Pointwise.Core NaturalTransformation.Core NaturalTransformation.Paths Functor.Composition.Core Functor.Identity Functor.Paths.</pre>
 </div>
 <div class="code" title="File: Properties.v
 Line: 1
-Time: 0.003s">
-<div class="time" style="width: 0.66079295154185%"></div>
+Time: 0.004s">
+<div class="time" style="width: 0.67796610169492%"></div>
 <pre>
 Require Import PathGroupoids types.Forall HoTT.Tactics.</pre>
 </div>
@@ -108,16 +108,6 @@ Time: 0s">
 </div>
 <div class="code" title="File: Properties.v
 Line: 13
-Time: 0.004s">
-<div class="time" style="width: 0.88105726872247%"></div>
-<pre>
-
-  Let transport_idmap_ap A (P : A -&gt; Type) x y (p : x = y) (u : P x)
-  : transport idmap (ap P p) u = transport P p u
-  := inverse (transport_compose idmap _ _ _).</pre>
-</div>
-<div class="code" title="File: Properties.v
-Line: 17
 Time: 0s">
 <div class="time" style="width: 0%"></div>
 <pre>
@@ -127,9 +117,9 @@ Time: 0s">
  </pre>
 </div>
 <div class="code" title="File: Properties.v
-Line: 21
+Line: 17
 Time: 0.001s">
-<div class="time" style="width: 0.22026431718062%"></div>
+<div class="time" style="width: 0.16949152542373%"></div>
 <pre>Local Ltac functor_pointwise_t helper_lem_match helper_lem :=
     repeat (apply path_forall; intro);
     rewrite !transport_forall_constant, !path_forall_2_beta;
@@ -139,10 +129,7 @@ Time: 0.001s">
                =&gt; simpl rewrite (@ap_transport _ P _ _ _ p (fun _ =&gt; components_of) z)
            end;
     rewrite !transport_forall_constant;
-    repeat match goal with
-             | [ |- context[transport ?P ?p ?u] ]
-               =&gt; progress (rewrite &lt;- (transport_idmap_ap P p u); simpl)
-           end;
+    transport_to_ap;
     repeat match goal with
              | [ x : _ |- context[ap (fun x3 : ?T =&gt; ?f (object_of x3 ?z))] ]
                =&gt; rewrite (@ap_compose' _ _ _ (fun x3' : T =&gt; object_of x3') (fun Ox3 =&gt; f (Ox3 x)))
@@ -158,7 +145,7 @@ Time: 0.001s">
            end.</pre>
 </div>
 <div class="code" title="File: Properties.v
-Line: 46
+Line: 39
 Time: 0s">
 <div class="time" style="width: 0%"></div>
 <pre>
@@ -167,59 +154,59 @@ Time: 0s">
  </pre>
 </div>
 <div class="code" title="File: Properties.v
-Line: 49
+Line: 42
 Time: 0s">
 <div class="time" style="width: 0%"></div>
 <pre>Section identity_of.</pre>
 </div>
 <div class="code" title="File: Properties.v
-Line: 49
+Line: 42
 Time: 0s">
 <div class="time" style="width: 0%"></div>
 <pre>
     Variable C : PreCategory.</pre>
 </div>
 <div class="code" title="File: Properties.v
-Line: 50
+Line: 43
 Time: 0s">
 <div class="time" style="width: 0%"></div>
 <pre>
     Variable D : PreCategory.</pre>
 </div>
 <div class="code" title="File: Properties.v
-Line: 51
+Line: 44
 Time: 0.001s">
-<div class="time" style="width: 0.22026431718062%"></div>
+<div class="time" style="width: 0.16949152542373%"></div>
 <pre>
 
     Lemma identity_of_helper_helper (x : Functor C D)
     : 1 o x o 1 = x.</pre>
 </div>
 <div class="code" title="File: Properties.v
-Line: 54
+Line: 47
 Time: 0s">
 <div class="time" style="width: 0%"></div>
 <pre>
     Proof.</pre>
 </div>
 <div class="code" title="File: Properties.v
-Line: 55
-Time: 0.004s">
-<div class="time" style="width: 0.88105726872247%"></div>
+Line: 48
+Time: 0.005s">
+<div class="time" style="width: 0.84745762711864%"></div>
 <pre>
       path_functor.</pre>
 </div>
 <div class="code" title="File: Properties.v
-Line: 56
-Time: 0.003s">
-<div class="time" style="width: 0.66079295154185%"></div>
+Line: 49
+Time: 0.004s">
+<div class="time" style="width: 0.67796610169492%"></div>
 <pre>
     Defined.</pre>
 </div>
 <div class="code" title="File: Properties.v
-Line: 57
-Time: 0.012s">
-<div class="time" style="width: 2.6431718061674%"></div>
+Line: 50
+Time: 0.013s">
+<div class="time" style="width: 2.2033898305085%"></div>
 <pre>
 
     Definition identity_of_helper_helper_object_of x
@@ -227,13 +214,50 @@ Time: 0.012s">
       := path_functor'_sig_fst _ _ _.</pre>
 </div>
 <div class="code" title="File: Properties.v
-Line: 61
+Line: 54
 Time: 0.002s">
-<div class="time" style="width: 0.44052863436123%"></div>
+<div class="time" style="width: 0.33898305084746%"></div>
 <pre>
 
     Lemma identity_of_helper
     : (fun x : Functor C D =&gt; 1 o x o 1) = idmap.</pre>
+</div>
+<div class="code" title="File: Properties.v
+Line: 57
+Time: 0s">
+<div class="time" style="width: 0%"></div>
+<pre>
+    Proof.</pre>
+</div>
+<div class="code" title="File: Properties.v
+Line: 58
+Time: 0.001s">
+<div class="time" style="width: 0.16949152542373%"></div>
+<pre>
+      apply path_forall; intro x.</pre>
+</div>
+<div class="code" title="File: Properties.v
+Line: 59
+Time: 0.001s">
+<div class="time" style="width: 0.16949152542373%"></div>
+<pre>
+      apply identity_of_helper_helper.</pre>
+</div>
+<div class="code" title="File: Properties.v
+Line: 60
+Time: 0.001s">
+<div class="time" style="width: 0.16949152542373%"></div>
+<pre>
+    Defined.</pre>
+</div>
+<div class="code" title="File: Properties.v
+Line: 61
+Time: 0.004s">
+<div class="time" style="width: 0.67796610169492%"></div>
+<pre>
+
+    Lemma identity_of
+    : pointwise (identity C) (identity D) = identity _.</pre>
 </div>
 <div class="code" title="File: Properties.v
 Line: 64
@@ -244,87 +268,50 @@ Time: 0s">
 </div>
 <div class="code" title="File: Properties.v
 Line: 65
-Time: 0.001s">
-<div class="time" style="width: 0.22026431718062%"></div>
-<pre>
-      apply path_forall; intro x.</pre>
-</div>
-<div class="code" title="File: Properties.v
-Line: 66
-Time: 0s">
-<div class="time" style="width: 0%"></div>
-<pre>
-      apply identity_of_helper_helper.</pre>
-</div>
-<div class="code" title="File: Properties.v
-Line: 67
-Time: 0.001s">
-<div class="time" style="width: 0.22026431718062%"></div>
-<pre>
-    Defined.</pre>
-</div>
-<div class="code" title="File: Properties.v
-Line: 68
-Time: 0.004s">
-<div class="time" style="width: 0.88105726872247%"></div>
-<pre>
-
-    Lemma identity_of
-    : pointwise (identity C) (identity D) = identity _.</pre>
-</div>
-<div class="code" title="File: Properties.v
-Line: 71
-Time: 0s">
-<div class="time" style="width: 0%"></div>
-<pre>
-    Proof.</pre>
-</div>
-<div class="code" title="File: Properties.v
-Line: 72
 Time: 0.007s">
-<div class="time" style="width: 1.5418502202643%"></div>
+<div class="time" style="width: 1.1864406779661%"></div>
 <pre>
       path_functor.</pre>
 </div>
 <div class="code" title="File: Properties.v
-Line: 73
+Line: 66
 Time: 0.002s">
-<div class="time" style="width: 0.44052863436123%"></div>
+<div class="time" style="width: 0.33898305084746%"></div>
 <pre>
       exists identity_of_helper.</pre>
 </div>
 <div class="code" title="File: Properties.v
-Line: 74
+Line: 67
 Time: 0s">
 <div class="time" style="width: 0%"></div>
 <pre>
       unfold identity_of_helper.</pre>
 </div>
 <div class="code" title="File: Properties.v
-Line: 75
-Time: 0.42s">
-<div class="time" style="width: 92.511013215859%"></div>
+Line: 68
+Time: 0.462s">
+<div class="time" style="width: 78.305084745763%"></div>
 <pre>
       abstract functor_pointwise_t
                identity_of_helper_helper
                identity_of_helper_helper_object_of.</pre>
 </div>
 <div class="code" title="File: Properties.v
-Line: 78
-Time: 0.076s">
-<div class="time" style="width: 16.740088105727%"></div>
+Line: 71
+Time: 0.105s">
+<div class="time" style="width: 17.796610169492%"></div>
 <pre>
     Defined.</pre>
 </div>
 <div class="code" title="File: Properties.v
-Line: 79
-Time: 0.005s">
-<div class="time" style="width: 1.1013215859031%"></div>
+Line: 72
+Time: 0.006s">
+<div class="time" style="width: 1.0169491525424%"></div>
 <pre>
   End identity_of.</pre>
 </div>
 <div class="code" title="File: Properties.v
-Line: 80
+Line: 73
 Time: 0s">
 <div class="time" style="width: 0%"></div>
 <pre>
@@ -333,55 +320,55 @@ Time: 0s">
  </pre>
 </div>
 <div class="code" title="File: Properties.v
-Line: 83
+Line: 76
 Time: 0s">
 <div class="time" style="width: 0%"></div>
 <pre>Section composition_of.</pre>
 </div>
 <div class="code" title="File: Properties.v
-Line: 83
+Line: 76
 Time: 0s">
 <div class="time" style="width: 0%"></div>
 <pre>
     Variable C : PreCategory.</pre>
 </div>
 <div class="code" title="File: Properties.v
-Line: 84
+Line: 77
 Time: 0s">
 <div class="time" style="width: 0%"></div>
 <pre>
     Variable D : PreCategory.</pre>
 </div>
 <div class="code" title="File: Properties.v
-Line: 85
+Line: 78
 Time: 0s">
 <div class="time" style="width: 0%"></div>
 <pre>
     Variable C' : PreCategory.</pre>
 </div>
 <div class="code" title="File: Properties.v
-Line: 86
+Line: 79
 Time: 0s">
 <div class="time" style="width: 0%"></div>
 <pre>
     Variable D' : PreCategory.</pre>
 </div>
 <div class="code" title="File: Properties.v
-Line: 87
+Line: 80
 Time: 0s">
 <div class="time" style="width: 0%"></div>
 <pre>
     Variable C'' : PreCategory.</pre>
 </div>
 <div class="code" title="File: Properties.v
-Line: 88
+Line: 81
 Time: 0s">
 <div class="time" style="width: 0%"></div>
 <pre>
     Variable D'' : PreCategory.</pre>
 </div>
 <div class="code" title="File: Properties.v
-Line: 89
+Line: 82
 Time: 0s">
 <div class="time" style="width: 0%"></div>
 <pre>
@@ -389,60 +376,60 @@ Time: 0s">
     Variable F' : Functor C' C''.</pre>
 </div>
 <div class="code" title="File: Properties.v
-Line: 91
+Line: 84
 Time: 0s">
 <div class="time" style="width: 0%"></div>
 <pre>
     Variable G : Functor D D'.</pre>
 </div>
 <div class="code" title="File: Properties.v
-Line: 92
+Line: 85
 Time: 0s">
 <div class="time" style="width: 0%"></div>
 <pre>
     Variable F : Functor C C'.</pre>
 </div>
 <div class="code" title="File: Properties.v
-Line: 93
+Line: 86
 Time: 0s">
 <div class="time" style="width: 0%"></div>
 <pre>
     Variable G' : Functor D' D''.</pre>
 </div>
 <div class="code" title="File: Properties.v
-Line: 94
+Line: 87
 Time: 0.002s">
-<div class="time" style="width: 0.44052863436123%"></div>
+<div class="time" style="width: 0.33898305084746%"></div>
 <pre>
 
     Lemma composition_of_helper_helper (x : Functor C'' D)
     : G' o G o x o (F' o F) = G' o (G o x o F') o F.</pre>
 </div>
 <div class="code" title="File: Properties.v
-Line: 97
+Line: 90
 Time: 0s">
 <div class="time" style="width: 0%"></div>
 <pre>
     Proof.</pre>
 </div>
 <div class="code" title="File: Properties.v
-Line: 98
-Time: 0.004s">
-<div class="time" style="width: 0.88105726872247%"></div>
+Line: 91
+Time: 0.005s">
+<div class="time" style="width: 0.84745762711864%"></div>
 <pre>
       path_functor.</pre>
 </div>
 <div class="code" title="File: Properties.v
-Line: 99
-Time: 0.004s">
-<div class="time" style="width: 0.88105726872247%"></div>
+Line: 92
+Time: 0.005s">
+<div class="time" style="width: 0.84745762711864%"></div>
 <pre>
     Defined.</pre>
 </div>
 <div class="code" title="File: Properties.v
-Line: 100
-Time: 0.009s">
-<div class="time" style="width: 1.9823788546256%"></div>
+Line: 93
+Time: 0.012s">
+<div class="time" style="width: 2.0338983050847%"></div>
 <pre>
 
     Definition composition_of_helper_helper_object_of x
@@ -450,13 +437,50 @@ Time: 0.009s">
       := path_functor'_sig_fst _ _ _.</pre>
 </div>
 <div class="code" title="File: Properties.v
-Line: 104
-Time: 0.002s">
-<div class="time" style="width: 0.44052863436123%"></div>
+Line: 97
+Time: 0.003s">
+<div class="time" style="width: 0.50847457627119%"></div>
 <pre>
 
     Lemma composition_of_helper
     : (fun x =&gt; G' o G o x o (F' o F)) = (fun x =&gt; G' o (G o x o F') o F).</pre>
+</div>
+<div class="code" title="File: Properties.v
+Line: 100
+Time: 0s">
+<div class="time" style="width: 0%"></div>
+<pre>
+    Proof.</pre>
+</div>
+<div class="code" title="File: Properties.v
+Line: 101
+Time: 0.001s">
+<div class="time" style="width: 0.16949152542373%"></div>
+<pre>
+      apply path_forall; intro x.</pre>
+</div>
+<div class="code" title="File: Properties.v
+Line: 102
+Time: 0.001s">
+<div class="time" style="width: 0.16949152542373%"></div>
+<pre>
+      apply composition_of_helper_helper.</pre>
+</div>
+<div class="code" title="File: Properties.v
+Line: 103
+Time: 0.001s">
+<div class="time" style="width: 0.16949152542373%"></div>
+<pre>
+    Defined.</pre>
+</div>
+<div class="code" title="File: Properties.v
+Line: 104
+Time: 0.008s">
+<div class="time" style="width: 1.3559322033898%"></div>
+<pre>
+
+    Lemma composition_of
+    : pointwise (F' o F) (G' o G) = pointwise F G' o pointwise F' G.</pre>
 </div>
 <div class="code" title="File: Properties.v
 Line: 107
@@ -467,65 +491,28 @@ Time: 0s">
 </div>
 <div class="code" title="File: Properties.v
 Line: 108
-Time: 0s">
-<div class="time" style="width: 0%"></div>
-<pre>
-      apply path_forall; intro x.</pre>
-</div>
-<div class="code" title="File: Properties.v
-Line: 109
-Time: 0s">
-<div class="time" style="width: 0%"></div>
-<pre>
-      apply composition_of_helper_helper.</pre>
-</div>
-<div class="code" title="File: Properties.v
-Line: 110
-Time: 0.001s">
-<div class="time" style="width: 0.22026431718062%"></div>
-<pre>
-    Defined.</pre>
-</div>
-<div class="code" title="File: Properties.v
-Line: 111
-Time: 0.006s">
-<div class="time" style="width: 1.3215859030837%"></div>
-<pre>
-
-    Lemma composition_of
-    : pointwise (F' o F) (G' o G) = pointwise F G' o pointwise F' G.</pre>
-</div>
-<div class="code" title="File: Properties.v
-Line: 114
-Time: 0s">
-<div class="time" style="width: 0%"></div>
-<pre>
-    Proof.</pre>
-</div>
-<div class="code" title="File: Properties.v
-Line: 115
-Time: 0.007s">
-<div class="time" style="width: 1.5418502202643%"></div>
+Time: 0.009s">
+<div class="time" style="width: 1.5254237288136%"></div>
 <pre>
       path_functor.</pre>
 </div>
 <div class="code" title="File: Properties.v
-Line: 116
-Time: 0.002s">
-<div class="time" style="width: 0.44052863436123%"></div>
+Line: 109
+Time: 0.003s">
+<div class="time" style="width: 0.50847457627119%"></div>
 <pre>
       exists composition_of_helper.</pre>
 </div>
 <div class="code" title="File: Properties.v
-Line: 117
+Line: 110
 Time: 0s">
 <div class="time" style="width: 0%"></div>
 <pre>
       unfold composition_of_helper.</pre>
 </div>
 <div class="code" title="File: Properties.v
-Line: 118
-Time: 0.454s">
+Line: 111
+Time: 0.59s">
 <div class="time" style="width: 100%"></div>
 <pre>
       abstract functor_pointwise_t
@@ -533,28 +520,28 @@ Time: 0.454s">
                composition_of_helper_helper_object_of.</pre>
 </div>
 <div class="code" title="File: Properties.v
-Line: 121
-Time: 0.157s">
-<div class="time" style="width: 34.581497797357%"></div>
+Line: 114
+Time: 0.206s">
+<div class="time" style="width: 34.915254237288%"></div>
 <pre>
     Defined.</pre>
 </div>
 <div class="code" title="File: Properties.v
-Line: 122
-Time: 0.019s">
-<div class="time" style="width: 4.1850220264317%"></div>
+Line: 115
+Time: 0.028s">
+<div class="time" style="width: 4.7457627118644%"></div>
 <pre>
   End composition_of.</pre>
 </div>
 <div class="code" title="File: Properties.v
-Line: 123
-Time: 0.047s">
-<div class="time" style="width: 10.352422907489%"></div>
+Line: 116
+Time: 0.046s">
+<div class="time" style="width: 7.7966101694915%"></div>
 <pre>
 End parts.</pre>
 </div>
 <div class="code" title="File: Properties.v
-Line: 125
+Line: 118
 Time: 0s">
 <div class="time" style="width: 0%"></div>
 <pre>
