@@ -36,44 +36,44 @@ Time: 0s">
 </div>
 <div class="code" title="File: Law.v
 Line: 1
-Time: 0.01s">
-<div class="time" style="width: 0.15320974413973%"></div>
+Time: 0.009s">
+<div class="time" style="width: 0.16685205784205%"></div>
 <pre>Require Import Category.Core Functor.Core NaturalTransformation.Core.</pre>
 </div>
 <div class="code" title="File: Law.v
 Line: 1
 Time: 0.03s">
-<div class="time" style="width: 0.45962923241918%"></div>
+<div class="time" style="width: 0.55617352614016%"></div>
 <pre>
 Require Import Functor.Prod.Core.</pre>
 </div>
 <div class="code" title="File: Law.v
 Line: 2
-Time: 0.003s">
-<div class="time" style="width: 0.045962923241918%"></div>
+Time: 0.002s">
+<div class="time" style="width: 0.03707823507601%"></div>
 <pre>
 Require Import Functor.Paths NaturalTransformation.Paths.</pre>
 </div>
 <div class="code" title="File: Law.v
 Line: 3
 Time: 0.001s">
-<div class="time" style="width: 0.015320974413973%"></div>
+<div class="time" style="width: 0.018539117538005%"></div>
 <pre>
 Require Import Functor.Identity Functor.Composition.Core.</pre>
 </div>
 <div class="code" title="File: Law.v
 Line: 4
-Time: 0.005s">
-<div class="time" style="width: 0.076604872069864%"></div>
+Time: 0.006s">
+<div class="time" style="width: 0.11123470522803%"></div>
 <pre>
 Require Import ExponentialLaws.Law4.Functors.</pre>
 </div>
 <div class="code" title="File: Law.v
 Line: 5
-Time: 0.004s">
-<div class="time" style="width: 0.061283897655891%"></div>
+Time: 0.006s">
+<div class="time" style="width: 0.11123470522803%"></div>
 <pre>
-Require Import types.Prod HoTT.Tactics types.Forall PathGroupoids.</pre>
+Require Import types.Prod HoTT.Tactics types.Forall Basics.PathGroupoids ExponentialLaws.Tactics.</pre>
 </div>
 <div class="code" title="File: Law.v
 Line: 6
@@ -157,7 +157,7 @@ Time: 0s">
 <div class="code" title="File: Law.v
 Line: 19
 Time: 0.018s">
-<div class="time" style="width: 0.27577753945151%"></div>
+<div class="time" style="width: 0.33370411568409%"></div>
 <pre>
 
   Lemma helper1 c
@@ -172,169 +172,114 @@ Time: 0s">
 </div>
 <div class="code" title="File: Law.v
 Line: 23
-Time: 0.014s">
-<div class="time" style="width: 0.21449364179562%"></div>
+Time: 0.013s">
+<div class="time" style="width: 0.24100852799407%"></div>
 <pre>
     path_functor.</pre>
 </div>
 <div class="code" title="File: Law.v
 Line: 24
-Time: 0.11s">
-<div class="time" style="width: 1.685307185537%"></div>
+Time: 0.204s">
+<div class="time" style="width: 3.7819799777531%"></div>
 <pre>
     abstract (
-        simpl;
-        repeat (apply path_forall || intro);
+        exp_laws_t;
         rewrite &lt;- composition_of;
-        simpl;
-        autorewrite with morphism;
-        reflexivity
+        exp_laws_t
       ).</pre>
 </div>
 <div class="code" title="File: Law.v
-Line: 32
-Time: 0.078s">
-<div class="time" style="width: 1.1950360042899%"></div>
+Line: 29
+Time: 0.087s">
+<div class="time" style="width: 1.6129032258065%"></div>
 <pre>
   Defined.</pre>
 </div>
 <div class="code" title="File: Law.v
-Line: 33
-Time: 0.021s">
-<div class="time" style="width: 0.32174046269343%"></div>
+Line: 30
+Time: 0.02s">
+<div class="time" style="width: 0.3707823507601%"></div>
 <pre>
 
   Lemma helper2_helper c x
   : inverse C1 C2 D (functor C1 C2 D c) x = c x.</pre>
 </div>
 <div class="code" title="File: Law.v
-Line: 36
+Line: 33
 Time: 0s">
 <div class="time" style="width: 0%"></div>
 <pre>
   Proof.</pre>
 </div>
 <div class="code" title="File: Law.v
-Line: 37
-Time: 0.009s">
-<div class="time" style="width: 0.13788876972575%"></div>
+Line: 34
+Time: 0.008s">
+<div class="time" style="width: 0.14831294030404%"></div>
 <pre>
     path_functor.</pre>
 </div>
 <div class="code" title="File: Law.v
-Line: 38
-Time: 0.117s">
-<div class="time" style="width: 1.7925540064348%"></div>
+Line: 35
+Time: 0.074s">
+<div class="time" style="width: 1.3718946978124%"></div>
 <pre>
-    abstract (
-        repeat (apply path_forall || intro);
-        rewrite !transport_forall_constant;
-        simpl;
-        rewrite (identity_of c); simpl;
-          by autorewrite with morphism
-      ).</pre>
+    abstract exp_laws_t.</pre>
 </div>
 <div class="code" title="File: Law.v
-Line: 45
-Time: 0.063s">
-<div class="time" style="width: 0.96522138808028%"></div>
+Line: 36
+Time: 0.023s">
+<div class="time" style="width: 0.42639970337412%"></div>
 <pre>
   Defined.</pre>
 </div>
 <div class="code" title="File: Law.v
-Line: 46
-Time: 0.001s">
-<div class="time" style="width: 0.015320974413973%"></div>
-<pre>
-
-  Local Ltac exp_t :=
-    repeat match goal with
-             | _ =&gt; progress simpl in *
-             | _ =&gt; reflexivity
-             | _ =&gt; rewrite !identity_of
-             | _ =&gt; progress autorewrite with morphism
-             | [ |- context[Datatypes.fst (transport ?P ?p ?z)] ]
-               =&gt; simpl rewrite (@ap_transport _ P _ _ _ p (fun _ =&gt; @Datatypes.fst _ _) z)
-             | [ |- context[Datatypes.snd (transport ?P ?p ?z)] ]
-               =&gt; simpl rewrite (@ap_transport _ P _ _ _ p (fun _ =&gt; @Datatypes.snd _ _) z)
-             | [ |- context[components_of (transport ?P ?p ?z)] ]
-               =&gt; simpl rewrite (@ap_transport _ P _ _ _ p (fun _ =&gt; components_of) z)
-             | _ =&gt; rewrite !transport_path_prod
-             | _ =&gt; rewrite !transport_const
-             | _ =&gt; rewrite !transport_forall_constant
-             | [ |- context[transport (fun y =&gt; ?f (@object_of ?C ?D y ?x))] ]
-               =&gt; rewrite (fun a b =&gt; @transport_compose _ _ a b (fun y' =&gt; f (y' x)) (@object_of C D))
-             | [ |- context[transport (fun y =&gt; ?f (@object_of ?C ?D y ?x) ?z)] ]
-               =&gt; rewrite (fun a b =&gt; @transport_compose _ _ a b (fun y' =&gt; f (y' x) z) (@object_of C D))
-             | [ |- context[transport (fun y =&gt; ?f (?g (@object_of ?C ?D y ?x)))] ]
-               =&gt; rewrite (fun a b =&gt; @transport_compose _ _ a b (fun y' =&gt; f (g (y' x))) (@object_of C D))
-             | [ |- context[transport (fun y =&gt; ?f (?g (@object_of ?C ?D y ?x)) ?z)] ]
-               =&gt; rewrite (fun a b =&gt; @transport_compose _ _ a b (fun y' =&gt; f (g (y' x)) z) (@object_of C D))
-             | [ |- context[transport (fun y =&gt; ?f (?g (@object_of ?C ?D y ?x) ?k))] ]
-               =&gt; rewrite (fun a b =&gt; @transport_compose _ _ a b (fun y' =&gt; f (g (y' x) k)) (@object_of C D))
-             | [ |- context[transport (fun y =&gt; ?f (?g (@object_of ?C ?D y ?x) ?k) ?z)] ]
-               =&gt; rewrite (fun a b =&gt; @transport_compose _ _ a b (fun y' =&gt; f (g (y' x) k) z) (@object_of C D))
-             | [ |- context[ap (@object_of ?C ?D) (@path_functor'_sig ?H ?C ?D ?F ?G (?HO; ?HM))] ]
-               =&gt; simpl rewrite (@path_functor'_sig_fst H C D F G HO HM)
-             | _ =&gt; transport_path_forall_hammer
-           end.</pre>
-</div>
-<div class="code" title="File: Law.v
-Line: 78
+Line: 37
 Time: 0.01s">
-<div class="time" style="width: 0.15320974413973%"></div>
+<div class="time" style="width: 0.18539117538005%"></div>
 <pre>
 
   Lemma helper2 c
   : inverse C1 C2 D (functor C1 C2 D c) = c.</pre>
 </div>
 <div class="code" title="File: Law.v
-Line: 81
+Line: 40
 Time: 0s">
 <div class="time" style="width: 0%"></div>
 <pre>
   Proof.</pre>
 </div>
 <div class="code" title="File: Law.v
-Line: 82
-Time: 0.005s">
-<div class="time" style="width: 0.076604872069864%"></div>
+Line: 41
+Time: 0.004s">
+<div class="time" style="width: 0.074156470152021%"></div>
 <pre>
     path_functor.</pre>
 </div>
 <div class="code" title="File: Law.v
-Line: 83
+Line: 42
 Time: 0.007s">
-<div class="time" style="width: 0.10724682089781%"></div>
+<div class="time" style="width: 0.12977382276604%"></div>
 <pre>
     exists (path_forall _ _ (helper2_helper c)).</pre>
 </div>
 <div class="code" title="File: Law.v
-Line: 84
-Time: 1.602s">
-<div class="time" style="width: 24.544201011184%"></div>
+Line: 43
+Time: 1.267s">
+<div class="time" style="width: 23.489061920653%"></div>
 <pre>
-    abstract (
-        repeat (apply path_forall || intro || path_natural_transformation);
-        rewrite !transport_forall_constant;
-        simpl;
-        transport_path_forall_hammer;
-        unfold helper2_helper;
-        simpl;
-        exp_t
-      ).</pre>
+    abstract (unfold helper2_helper; exp_laws_t).</pre>
 </div>
 <div class="code" title="File: Law.v
-Line: 93
-Time: 0.82s">
-<div class="time" style="width: 12.563199019458%"></div>
+Line: 44
+Time: 0.56s">
+<div class="time" style="width: 10.381905821283%"></div>
 <pre>
   Defined.</pre>
 </div>
 <div class="code" title="File: Law.v
-Line: 94
-Time: 0.023s">
-<div class="time" style="width: 0.35238241152137%"></div>
+Line: 45
+Time: 0.021s">
+<div class="time" style="width: 0.38932146829811%"></div>
 <pre>
 
   Lemma law
@@ -342,68 +287,40 @@ Time: 0.023s">
     /\ inverse C1 C2 D o functor C1 C2 D = 1.</pre>
 </div>
 <div class="code" title="File: Law.v
-Line: 98
+Line: 49
 Time: 0s">
 <div class="time" style="width: 0%"></div>
 <pre>
   Proof.</pre>
 </div>
 <div class="code" title="File: Law.v
-Line: 99
-Time: 0.202s">
-<div class="time" style="width: 3.0948368316225%"></div>
+Line: 50
+Time: 3.783s">
+<div class="time" style="width: 70.133481646274%"></div>
 <pre>
     split;
     path_functor;
     [ (exists (path_forall _ _ helper1))
     | (exists (path_forall _ _ helper2)) ];
-    repeat (apply path_forall || intro || path_natural_transformation);
-    rewrite !transport_forall_constant;
     unfold helper1, helper2, helper2_helper;
-    destruct_head Datatypes.prod.</pre>
+    exp_laws_t.</pre>
 </div>
 <div class="code" title="File: Law.v
-Line: 107
-Time: 0s">
-<div class="time" style="width: 0%"></div>
-<pre>
-    -</pre>
-</div>
-<div class="code" title="File: Law.v
-Line: 108
-Time: 0.923s">
-<div class="time" style="width: 14.141259384097%"></div>
-<pre> exp_t.</pre>
-</div>
-<div class="code" title="File: Law.v
-Line: 108
-Time: 0s">
-<div class="time" style="width: 0%"></div>
-<pre>
-    -</pre>
-</div>
-<div class="code" title="File: Law.v
-Line: 109
-Time: 2.713s">
-<div class="time" style="width: 41.565803585108%"></div>
-<pre> exp_t.</pre>
-</div>
-<div class="code" title="File: Law.v
-Line: 109
-Time: 6.527s">
+Line: 56
+Time: 5.394s">
 <div class="time" style="width: 100%"></div>
 <pre>
   Qed.</pre>
 </div>
 <div class="code" title="File: Law.v
-Line: 110
-Time: 0.317s">
-<div class="time" style="width: 4.8567488892294%"></div>
+Line: 57
+Time: 0.297s">
+<div class="time" style="width: 5.5061179087875%"></div>
 <pre>
 End Law4.</pre>
 </div>
 <div class="code" title="File: Law.v
-Line: 112
+Line: 59
 Time: 0s">
 <div class="time" style="width: 0%"></div>
 <pre>

@@ -1,0 +1,201 @@
+<html>
+<head>
+<title>Tactics.v</title>
+<style>
+.time {
+  background-color: #ffaaaa;
+  height: 100%;
+  z-index: -1;
+  position: absolute;
+}
+.code {
+  z-index: 0;
+  position: relative;
+  border-style: solid;
+  border-color: transparent;
+  border-width: 1px;
+}
+.code:hover {
+  border-style: solid;
+  border-color: black;
+  border-width: 1px;
+}
+pre {
+  margin: 1px;
+}
+</style>
+</head>
+<body>
+<h1>Timings for Tactics.v</h1>
+
+<div class="code" title="File: Tactics.v
+Line: 1
+Time: 0s">
+<div class="time" style="width: 0%"></div>
+<pre>(** * Miscellaneous helper tactics for proving exponential laws *)</pre>
+</div>
+<div class="code" title="File: Tactics.v
+Line: 1
+Time: 0.009s">
+<div class="time" style="width: 33.333333333333%"></div>
+<pre>Require Import Category.Core Functor.Core NaturalTransformation.Core.</pre>
+</div>
+<div class="code" title="File: Tactics.v
+Line: 1
+Time: 0.027s">
+<div class="time" style="width: 100%"></div>
+<pre>
+Require Import Functor.Paths NaturalTransformation.Paths.</pre>
+</div>
+<div class="code" title="File: Tactics.v
+Line: 2
+Time: 0.003s">
+<div class="time" style="width: 11.111111111111%"></div>
+<pre>
+Require Import HoTT.Tactics Basics.PathGroupoids types.Forall types.Prod.</pre>
+</div>
+<div class="code" title="File: Tactics.v
+Line: 3
+Time: 0s">
+<div class="time" style="width: 0%"></div>
+<pre>
+
+(** These are probably more general than just exponential laws, but I haven't tried them more widely, yet. *)
+
+(** Miscellaneous tactics to try *)</pre>
+</div>
+<div class="code" title="File: Tactics.v
+Line: 7
+Time: 0s">
+<div class="time" style="width: 0%"></div>
+<pre>Ltac exp_laws_misc_t' :=
+  idtac;
+  match goal with
+    | _ =&gt; reflexivity
+    | _ =&gt; progress intros
+    | _ =&gt; progress simpl in *
+    | _ =&gt; apply (@path_forall _); intro
+    | _ =&gt; rewrite !identity_of
+    | _ =&gt; progress autorewrite with morphism
+  end.</pre>
+</div>
+<div class="code" title="File: Tactics.v
+Line: 16
+Time: 0s">
+<div class="time" style="width: 0%"></div>
+<pre>
+
+(** Safe transformations to simplify complex types in the hypotheses or goal *)</pre>
+</div>
+<div class="code" title="File: Tactics.v
+Line: 18
+Time: 0s">
+<div class="time" style="width: 0%"></div>
+<pre>Ltac exp_laws_simplify_types' :=
+  idtac;
+  match goal with
+    | [ H : (_ + _)%type |- _ ] =&gt; destruct H
+    | [ H : Unit |- _ ] =&gt; destruct H
+    | [ H : Empty |- _ ] =&gt; destruct H
+    | [ H : (_ * _)%type |- _ ] =&gt; destruct H
+    | [ |- _ = _ :&gt; Functor _ _ ] =&gt; progress path_functor
+    | [ |- _ = _ :&gt; NaturalTransformation _ _ ] =&gt; progress path_natural_transformation
+    | [ |- _ = _ :&gt; prod _ _ ] =&gt; apply path_prod
+  end.</pre>
+</div>
+<div class="code" title="File: Tactics.v
+Line: 28
+Time: 0s">
+<div class="time" style="width: 0%"></div>
+<pre>
+
+(** Do some simplifications of contractible types *)</pre>
+</div>
+<div class="code" title="File: Tactics.v
+Line: 30
+Time: 0s">
+<div class="time" style="width: 0%"></div>
+<pre>Ltac exp_laws_handle_contr' :=
+  idtac;
+  match goal with
+    | [ H : Contr ?T, x : ?T |- _ ] =&gt; progress destruct (contr x)
+    | [ H : forall a, Contr (?T a), x : ?T _ |- _ ] =&gt; progress destruct (contr x)
+    | [ H : forall a b, Contr (?T a b), x : ?T _ _ |- _ ] =&gt; progress destruct (contr x)
+    | [ |- context[contr (center ?x)] ]
+      =&gt; progress let H := fresh in
+                  assert (H : idpath = contr (center x)) by exact (center _);
+                    destruct H
+  end.</pre>
+</div>
+<div class="code" title="File: Tactics.v
+Line: 40
+Time: 0s">
+<div class="time" style="width: 0%"></div>
+<pre>
+
+(** Try to simplify [transport] with some heuristics *)</pre>
+</div>
+<div class="code" title="File: Tactics.v
+Line: 42
+Time: 0.001s">
+<div class="time" style="width: 3.7037037037037%"></div>
+<pre>Ltac exp_laws_handle_transport' :=
+  idtac;
+  match goal with
+    | _ =&gt; progress rewrite ?transport_forall_constant, ?path_forall_2_beta, ?transport_const, ?path_functor'_sig_fst, ?transport_path_prod
+    | [ |- context[transport (fun y =&gt; ?f (@object_of ?C ?D y ?x))] ]
+      =&gt; rewrite (fun a b =&gt; @transport_compose _ _ a b (fun y' =&gt; f (y' x)) (@object_of C D))
+    | [ |- context[transport (fun y =&gt; ?f (@object_of ?C ?D y ?x) ?z)] ]
+      =&gt; rewrite (fun a b =&gt; @transport_compose _ _ a b (fun y' =&gt; f (y' x) z) (@object_of C D))
+    | [ |- context[transport (fun y =&gt; ?f (@object_of ?C ?D y ?x) ?z)] ]
+      =&gt; rewrite (fun a b =&gt; @transport_compose _ _ a b (fun y' =&gt; f (y' x) z) (@object_of C D))
+    | [ |- context[transport (fun y =&gt; ?f (?g (@object_of ?C ?D y ?x)))] ]
+      =&gt; rewrite (fun a b =&gt; @transport_compose _ _ a b (fun y' =&gt; f (g (y' x))) (@object_of C D))
+    | [ |- context[transport (fun y =&gt; ?f (?g (@object_of ?C ?D y ?x)) ?z)] ]
+      =&gt; rewrite (fun a b =&gt; @transport_compose _ _ a b (fun y' =&gt; f (g (y' x)) z) (@object_of C D))
+    | _ =&gt; progress transport_path_forall_hammer
+    | [ |- context[components_of (transport ?P ?p ?z)] ]
+      =&gt; simpl rewrite (@ap_transport _ P _ _ _ p (fun _ =&gt; components_of) z)
+    | [ |- context[object_of (transport ?P ?p ?z)] ]
+      =&gt; simpl rewrite (@ap_transport _ P _ _ _ p (fun _ =&gt; object_of) z)
+    | [ |- context[morphism_of (transport ?P ?p ?z)] ]
+      =&gt; simpl rewrite (@ap_transport _ P _ _ _ p (fun _ =&gt; morphism_of) z)
+    | [ |- context[fst (transport ?P ?p ?z)] ]
+      =&gt; simpl rewrite (@ap_transport _ P _ _ _ p (fun _ =&gt; fst) z)
+    | [ |- context[snd (transport ?P ?p ?z)] ]
+      =&gt; simpl rewrite (@ap_transport _ P _ _ _ p (fun _ =&gt; snd) z)
+    | [ |- context[pr1 (transport ?P ?p ?z)] ]
+      =&gt; simpl rewrite (@ap_transport _ P _ _ _ p (fun _ =&gt; pr1) z)
+  end.</pre>
+</div>
+<div class="code" title="File: Tactics.v
+Line: 69
+Time: 0s">
+<div class="time" style="width: 0%"></div>
+<pre>
+
+Ltac exp_laws_t' :=
+  first [ exp_laws_misc_t'
+        | exp_laws_simplify_types'
+        | exp_laws_handle_contr'
+        | exp_laws_handle_transport' ].</pre>
+</div>
+<div class="code" title="File: Tactics.v
+Line: 75
+Time: 0s">
+<div class="time" style="width: 0%"></div>
+<pre>
+
+Ltac exp_laws_t := repeat exp_laws_t'.</pre>
+</div>
+<div class="code" title="File: Tactics.v
+Line: 78
+Time: 0s">
+<div class="time" style="width: 0%"></div>
+<pre>
+
+</pre>
+</div>
+</body>
+</html>
+
