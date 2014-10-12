@@ -147,6 +147,51 @@ Equivalence preserves truncation (this is, of course, trivial with univalence).
 
 <br/>
 <span class="id" type="keyword">Notation</span> <a name="IsEmbedding"><span class="id" type="abbreviation">IsEmbedding</span></a> := (<a class="idref" href="HoTT.Basics.Trunc.html#IsTruncMap"><span class="id" type="class">IsTruncMap</span></a> <a class="idref" href="HoTT.Basics.Overture.html#:trunc_scope:'-1'"><span class="id" type="notation">-1</span></a>).<br/>
+
+<br/>
+</div>
+
+<div class="doc">
+<a name="lab36"></a><h2 class="section">Universes of truncated types</h2>
+
+<div class="paragraph"> </div>
+
+ It is convenient for some purposes to consider the universe of all n-truncated types (within a given universe of types).  In particular, this allows us to state the important fact that each such universe is itself (n+1)-truncated. 
+</div>
+<div class="code">
+
+<br/>
+<span class="id" type="keyword">Record</span> <a name="TruncType"><span class="id" type="record">TruncType</span></a> (<span class="id" type="var">n</span> : <a class="idref" href="HoTT.Basics.Overture.html#trunc_index"><span class="id" type="inductive">trunc_index</span></a>) := <a name="BuildTruncType"><span class="id" type="constructor">BuildTruncType</span></a> {<br/>
+&nbsp;&nbsp;<a name="trunctype_type"><span class="id" type="projection">trunctype_type</span></a> : <span class="id" type="keyword">Type</span> ;<br/>
+&nbsp;&nbsp;<a name="istrunc_trunctype_type"><span class="id" type="projection">istrunc_trunctype_type</span></a> : <a class="idref" href="HoTT.Basics.Overture.html#IsTrunc"><span class="id" type="class">IsTrunc</span></a> <a class="idref" href="HoTT.Basics.Trunc.html#n"><span class="id" type="variable">n</span></a> <a class="idref" href="HoTT.Basics.Trunc.html#trunctype_type"><span class="id" type="method">trunctype_type</span></a><br/>
+}.<br/>
+
+<br/>
+<span class="id" type="var">Arguments</span> <a class="idref" href="HoTT.Basics.Trunc.html#BuildTruncType"><span class="id" type="constructor">BuildTruncType</span></a> <span class="id" type="var">_</span> <span class="id" type="var">_</span> {<span class="id" type="var">_</span>}.<br/>
+<span class="id" type="var">Arguments</span> <a class="idref" href="HoTT.Basics.Trunc.html#trunctype_type"><span class="id" type="projection">trunctype_type</span></a> {<span class="id" type="var">_</span>} <span class="id" type="var">_</span>.<br/>
+<span class="id" type="var">Arguments</span> <a class="idref" href="HoTT.Basics.Trunc.html#istrunc_trunctype_type"><span class="id" type="projection">istrunc_trunctype_type</span></a> [<span class="id" type="var">_</span>] <span class="id" type="var">_</span>.<br/>
+
+<br/>
+<span class="id" type="keyword">Coercion</span> <a class="idref" href="HoTT.Basics.Trunc.html#trunctype_type"><span class="id" type="projection">trunctype_type</span></a> : <span class="id" type="var">TruncType</span> &gt;-&gt; <span class="id" type="var">Sortclass</span>.<br/>
+<span class="id" type="keyword">Global</span>&nbsp;<span class="id" type="var">Existing</span> <span class="id" type="keyword">Instance</span> <span class="id" type="var">istrunc_trunctype_type</span>.<br/>
+
+<br/>
+<span class="id" type="keyword">Notation</span> <a name=":type_scope:x_'-Type'"><span class="id" type="notation">"</span></a>n -Type" := (<a class="idref" href="HoTT.Basics.Trunc.html#TruncType"><span class="id" type="record">TruncType</span></a> <span class="id" type="var">n</span>) (<span class="id" type="tactic">at</span> <span class="id" type="keyword">level</span> 1) : <span class="id" type="var">type_scope</span>.<br/>
+<span class="id" type="keyword">Notation</span> <a name="hProp"><span class="id" type="abbreviation">hProp</span></a> := <a class="idref" href="HoTT.Basics.Trunc.html#:type_scope:x_'-Type'"><span class="id" type="notation">(</span></a><a class="idref" href="HoTT.Basics.Overture.html#:trunc_scope:'-1'"><span class="id" type="notation">-1</span></a><a class="idref" href="HoTT.Basics.Trunc.html#:type_scope:x_'-Type'"><span class="id" type="notation">)-</span></a><span class="id" type="keyword">Type</span>.<br/>
+<span class="id" type="keyword">Notation</span> <a name="hSet"><span class="id" type="abbreviation">hSet</span></a> := 0<a class="idref" href="HoTT.Basics.Trunc.html#:type_scope:x_'-Type'"><span class="id" type="notation">-</span></a><span class="id" type="keyword">Type</span>.<br/>
+
+<br/>
+<span class="id" type="keyword">Notation</span> <a name="BuildhProp"><span class="id" type="abbreviation">BuildhProp</span></a> := (<a class="idref" href="HoTT.Basics.Trunc.html#BuildTruncType"><span class="id" type="constructor">BuildTruncType</span></a> <a class="idref" href="HoTT.Basics.Overture.html#:trunc_scope:'-1'"><span class="id" type="notation">-1</span></a>).<br/>
+<span class="id" type="keyword">Notation</span> <a name="BuildhSet"><span class="id" type="abbreviation">BuildhSet</span></a> := (<a class="idref" href="HoTT.Basics.Trunc.html#BuildTruncType"><span class="id" type="constructor">BuildTruncType</span></a> 0).<br/>
+
+<br/>
+</div>
+
+<div class="doc">
+This is (as of October 2014) the only <span class="inlinecode"><span class="id" type="var">Canonical</span></span> <span class="inlinecode"><span class="id" type="keyword">Structure</span></span> in the library.  It would be nice to do without it, in the interests of minimizing the number of fancy Coq features that the reader needs to know about. 
+</div>
+<div class="code">
+<span class="id" type="keyword">Canonical</span> <span class="id" type="keyword">Structure</span> <span class="id" type="var">default_TruncType</span> := <span class="id" type="keyword">fun</span> <span class="id" type="var">n</span> <span class="id" type="var">T</span> <span class="id" type="var">P</span> ⇒ (@<a class="idref" href="HoTT.Basics.Trunc.html#BuildTruncType"><span class="id" type="constructor">BuildTruncType</span></a> <a class="idref" href="HoTT.Basics.Trunc.html#n"><span class="id" type="variable">n</span></a> <a class="idref" href="HoTT.Basics.Trunc.html#T"><span class="id" type="variable">T</span></a> <a class="idref" href="HoTT.Basics.Trunc.html#P"><span class="id" type="variable">P</span></a>).<br/>
 </div>
 </div>
 
