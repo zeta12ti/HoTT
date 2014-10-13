@@ -32,238 +32,122 @@ pre {
 Line: 1
 Time: 0s">
 <div class="time" style="width: 0%"></div>
-<pre>(** * HPropositions *)
+<pre>(* -*- mode: coq; mode: visual-line -*-  *)
+(** * HPropositions *)
 
 </pre>
 </div>
 <div class="code" title="File: HProp.v
-Line: 2
-Time: 0.016s">
-<div class="time" style="width: 22.535211267606%"></div>
-<pre>Require Import HoTT.Basics.</pre>
-</div>
-<div class="code" title="File: HProp.v
-Line: 2
-Time: 0.014s">
-<div class="time" style="width: 19.718309859155%"></div>
-<pre>
-Require Import types.Forall types.Sigma types.Prod types.Record types.Paths types.Unit types.Empty.</pre>
+Line: 3
+Time: 0.037s">
+<div class="time" style="width: 90.243902439024%"></div>
+<pre>Require Import HoTT.Basics HoTT.Types.</pre>
 </div>
 <div class="code" title="File: HProp.v
 Line: 3
 Time: 0s">
 <div class="time" style="width: 0%"></div>
 <pre>
-
 Local Open Scope equiv_scope.</pre>
 </div>
 <div class="code" title="File: HProp.v
-Line: 5
+Line: 4
 Time: 0s">
 <div class="time" style="width: 0%"></div>
 <pre>
 Local Open Scope path_scope.</pre>
 </div>
 <div class="code" title="File: HProp.v
-Line: 6
+Line: 5
 Time: 0s">
 <div class="time" style="width: 0%"></div>
 <pre>
 
-(** ** Facts about [IsHProp] *)
-
-(** Maybe this should go to a separate file? *)
-
-</pre>
+Generalizable Variables A B.</pre>
 </div>
 <div class="code" title="File: HProp.v
-Line: 11
-Time: 0s">
-<div class="time" style="width: 0%"></div>
-<pre>Generalizable Variables A B.</pre>
-</div>
-<div class="code" title="File: HProp.v
-Line: 11
+Line: 7
 Time: 0s">
 <div class="time" style="width: 0%"></div>
 <pre>
 
-(** An inhabited proposition is contractible.
-   This is not an [Instance] because it causes infinite loops.
-   *)</pre>
-</div>
-<div class="code" title="File: HProp.v
-Line: 15
-Time: 0s">
-<div class="time" style="width: 0%"></div>
-<pre>Lemma contr_inhabited_hprop (A : Type) `{H : IsHProp A} (x : A)
-  : Contr A.</pre>
-</div>
-<div class="code" title="File: HProp.v
-Line: 16
-Time: 0s">
-<div class="time" style="width: 0%"></div>
-<pre>
-Proof.</pre>
-</div>
-<div class="code" title="File: HProp.v
-Line: 17
-Time: 0s">
-<div class="time" style="width: 0%"></div>
-<pre>
-  exists x.</pre>
-</div>
-<div class="code" title="File: HProp.v
-Line: 18
-Time: 0s">
-<div class="time" style="width: 0%"></div>
-<pre>
-  intro y.</pre>
-</div>
-<div class="code" title="File: HProp.v
-Line: 19
-Time: 0s">
-<div class="time" style="width: 0%"></div>
-<pre>
-  apply center, H.</pre>
-</div>
-<div class="code" title="File: HProp.v
-Line: 20
-Time: 0s">
-<div class="time" style="width: 0%"></div>
-<pre>
-Defined.</pre>
-</div>
-<div class="code" title="File: HProp.v
-Line: 21
-Time: 0s">
-<div class="time" style="width: 0%"></div>
-<pre>
-
-(** If inhabitation implies contractibility, then we have an h-proposition.  We probably won't often have a hypothesis of the form [A -&gt; Contr A], so we make sure we give priority to other instances. *)</pre>
-</div>
-<div class="code" title="File: HProp.v
-Line: 23
-Time: 0s">
-<div class="time" style="width: 0%"></div>
-<pre>Global Instance hprop_inhabited_contr (A : Type) : (A -&gt; Contr A) -&gt; IsHProp A | 10000.</pre>
-</div>
-<div class="code" title="File: HProp.v
-Line: 23
-Time: 0s">
-<div class="time" style="width: 0%"></div>
-<pre>
-Proof.</pre>
-</div>
-<div class="code" title="File: HProp.v
-Line: 24
-Time: 0s">
-<div class="time" style="width: 0%"></div>
-<pre>
-  intros H x y.</pre>
-</div>
-<div class="code" title="File: HProp.v
-Line: 25
-Time: 0s">
-<div class="time" style="width: 0%"></div>
-<pre>
-  pose (C := H x).</pre>
-</div>
-<div class="code" title="File: HProp.v
-Line: 26
-Time: 0s">
-<div class="time" style="width: 0%"></div>
-<pre>
-  apply contr_paths_contr.</pre>
-</div>
-<div class="code" title="File: HProp.v
-Line: 27
-Time: 0s">
-<div class="time" style="width: 0%"></div>
-<pre>
-Defined.</pre>
-</div>
-<div class="code" title="File: HProp.v
-Line: 28
-Time: 0s">
-<div class="time" style="width: 0%"></div>
-<pre>
+(** ** Truncatedness is an hprop *)
 
 (** If a type is contractible, then so is its type of contractions.
     Using [issig_contr] and the [equiv_intro] tactic, we can transfer this to the equivalent problem of contractibility of a certain Sigma-type, in which case we can apply the general path-construction functions. *)</pre>
 </div>
 <div class="code" title="File: HProp.v
-Line: 31
+Line: 12
 Time: 0s">
 <div class="time" style="width: 0%"></div>
 <pre>Global Instance contr_contr `{Funext} (A : Type)
   : Contr A -&gt; Contr (Contr A) | 100.</pre>
 </div>
 <div class="code" title="File: HProp.v
-Line: 32
+Line: 13
 Time: 0s">
 <div class="time" style="width: 0%"></div>
 <pre>
 Proof.</pre>
 </div>
 <div class="code" title="File: HProp.v
-Line: 33
+Line: 14
 Time: 0s">
 <div class="time" style="width: 0%"></div>
 <pre>
   intros c; exists c; generalize c.</pre>
 </div>
 <div class="code" title="File: HProp.v
-Line: 34
-Time: 0.002s">
-<div class="time" style="width: 2.8169014084507%"></div>
+Line: 15
+Time: 0.003s">
+<div class="time" style="width: 7.3170731707317%"></div>
 <pre>
   equiv_intro (issig_contr A) c'.</pre>
 </div>
 <div class="code" title="File: HProp.v
-Line: 35
-Time: 0.002s">
-<div class="time" style="width: 2.8169014084507%"></div>
+Line: 16
+Time: 0.003s">
+<div class="time" style="width: 7.3170731707317%"></div>
 <pre>
   equiv_intro (issig_contr A) d'.</pre>
 </div>
 <div class="code" title="File: HProp.v
-Line: 36
+Line: 17
 Time: 0s">
 <div class="time" style="width: 0%"></div>
 <pre>
   refine (ap _ _).</pre>
 </div>
 <div class="code" title="File: HProp.v
-Line: 37
+Line: 18
 Time: 0.003s">
-<div class="time" style="width: 4.2253521126761%"></div>
+<div class="time" style="width: 7.3170731707317%"></div>
 <pre>
   refine (path_sigma _ _ _ ((contr (c'.1))^ @ contr (d'.1)) _).</pre>
 </div>
 <div class="code" title="File: HProp.v
-Line: 38
+Line: 19
 Time: 0.001s">
-<div class="time" style="width: 1.4084507042254%"></div>
+<div class="time" style="width: 2.4390243902439%"></div>
 <pre>
   refine (path_forall _ _ _); intros x.</pre>
 </div>
 <div class="code" title="File: HProp.v
-Line: 39
+Line: 20
 Time: 0s">
 <div class="time" style="width: 0%"></div>
 <pre>
   apply path2_contr.</pre>
 </div>
 <div class="code" title="File: HProp.v
-Line: 40
+Line: 21
 Time: 0.006s">
-<div class="time" style="width: 8.4507042253521%"></div>
+<div class="time" style="width: 14.634146341463%"></div>
 <pre>
 Qed.</pre>
 </div>
 <div class="code" title="File: HProp.v
-Line: 41
+Line: 22
 Time: 0s">
 <div class="time" style="width: 0%"></div>
 <pre>
@@ -271,302 +155,194 @@ Time: 0s">
 (** This provides the base case in a proof that truncatedness is a proposition. *)</pre>
 </div>
 <div class="code" title="File: HProp.v
-Line: 43
+Line: 24
 Time: 0s">
 <div class="time" style="width: 0%"></div>
 <pre>Global Instance hprop_trunc `{Funext} (n : trunc_index) (A : Type)
   : IsHProp (IsTrunc n A) | 0.</pre>
 </div>
 <div class="code" title="File: HProp.v
-Line: 44
+Line: 25
 Time: 0s">
 <div class="time" style="width: 0%"></div>
 <pre>
 Proof.</pre>
 </div>
 <div class="code" title="File: HProp.v
-Line: 45
+Line: 26
 Time: 0s">
 <div class="time" style="width: 0%"></div>
 <pre>
   apply hprop_inhabited_contr.</pre>
 </div>
 <div class="code" title="File: HProp.v
-Line: 46
+Line: 27
 Time: 0s">
 <div class="time" style="width: 0%"></div>
 <pre>
   revert A.</pre>
 </div>
 <div class="code" title="File: HProp.v
-Line: 47
+Line: 28
 Time: 0.001s">
-<div class="time" style="width: 1.4084507042254%"></div>
+<div class="time" style="width: 2.4390243902439%"></div>
 <pre>
   induction n as [| n I]; unfold IsTrunc; simpl.</pre>
 </div>
 <div class="code" title="File: HProp.v
-Line: 48
+Line: 29
 Time: 0s">
 <div class="time" style="width: 0%"></div>
 <pre>
   -</pre>
 </div>
 <div class="code" title="File: HProp.v
-Line: 49
+Line: 30
 Time: 0s">
 <div class="time" style="width: 0%"></div>
 <pre> intros A ?.</pre>
 </div>
 <div class="code" title="File: HProp.v
-Line: 49
-Time: 0.001s">
-<div class="time" style="width: 1.4084507042254%"></div>
+Line: 30
+Time: 0.002s">
+<div class="time" style="width: 4.8780487804878%"></div>
 <pre>
     exact _.</pre>
 </div>
 <div class="code" title="File: HProp.v
-Line: 50
+Line: 31
 Time: 0s">
 <div class="time" style="width: 0%"></div>
 <pre>
   -</pre>
 </div>
 <div class="code" title="File: HProp.v
-Line: 51
+Line: 32
 Time: 0s">
 <div class="time" style="width: 0%"></div>
 <pre> intros A AH1.</pre>
 </div>
 <div class="code" title="File: HProp.v
-Line: 51
+Line: 32
 Time: 0s">
 <div class="time" style="width: 0%"></div>
 <pre>
     exists AH1.</pre>
 </div>
 <div class="code" title="File: HProp.v
-Line: 52
+Line: 33
 Time: 0s">
 <div class="time" style="width: 0%"></div>
 <pre>
     intro AH2.</pre>
 </div>
 <div class="code" title="File: HProp.v
-Line: 53
+Line: 34
 Time: 0s">
 <div class="time" style="width: 0%"></div>
 <pre>
     apply path_forall; intro x.</pre>
 </div>
 <div class="code" title="File: HProp.v
-Line: 54
+Line: 35
 Time: 0s">
 <div class="time" style="width: 0%"></div>
 <pre>
     apply path_forall; intro y.</pre>
 </div>
 <div class="code" title="File: HProp.v
-Line: 55
+Line: 36
 Time: 0s">
 <div class="time" style="width: 0%"></div>
 <pre>
     apply @path_contr.</pre>
 </div>
 <div class="code" title="File: HProp.v
-Line: 56
+Line: 37
 Time: 0s">
 <div class="time" style="width: 0%"></div>
 <pre>
     apply I, AH1.</pre>
 </div>
 <div class="code" title="File: HProp.v
-Line: 57
+Line: 38
 Time: 0.002s">
-<div class="time" style="width: 2.8169014084507%"></div>
+<div class="time" style="width: 4.8780487804878%"></div>
 <pre>
 Qed.</pre>
 </div>
 <div class="code" title="File: HProp.v
-Line: 58
+Line: 39
 Time: 0s">
 <div class="time" style="width: 0%"></div>
 <pre>
+(** By [trunc_hprop], it follows that [IsTrunc n A] is also [m]-truncated for any [m &gt;= -1]. *)
 
 (** Similarly, a map being truncated is also a proposition. *)</pre>
 </div>
 <div class="code" title="File: HProp.v
-Line: 60
+Line: 42
 Time: 0s">
 <div class="time" style="width: 0%"></div>
 <pre>Global Instance isprop_istruncmap `{Funext} (n : trunc_index) {X Y : Type} (f : X -&gt; Y)
 : IsHProp (IsTruncMap n f).</pre>
 </div>
 <div class="code" title="File: HProp.v
-Line: 61
+Line: 43
 Time: 0s">
 <div class="time" style="width: 0%"></div>
 <pre>
 Proof.</pre>
 </div>
 <div class="code" title="File: HProp.v
-Line: 62
+Line: 44
 Time: 0s">
 <div class="time" style="width: 0%"></div>
 <pre>
   unfold IsTruncMap.</pre>
 </div>
 <div class="code" title="File: HProp.v
-Line: 63
-Time: 0.001s">
-<div class="time" style="width: 1.4084507042254%"></div>
+Line: 45
+Time: 0.006s">
+<div class="time" style="width: 14.634146341463%"></div>
 <pre>
   exact _.</pre>
 </div>
 <div class="code" title="File: HProp.v
-Line: 64
+Line: 46
 Time: 0s">
 <div class="time" style="width: 0%"></div>
 <pre>
 Defined.</pre>
 </div>
 <div class="code" title="File: HProp.v
-Line: 65
+Line: 47
 Time: 0s">
 <div class="time" style="width: 0%"></div>
 <pre>
 
-(** We can induct on the truncation index to get that [IsTrunc] is (n+1)-truncated for all [n]. *)</pre>
-</div>
-<div class="code" title="File: HProp.v
-Line: 67
-Time: 0s">
-<div class="time" style="width: 0%"></div>
-<pre>Lemma istrunc_s__ishprop `{IsHProp A} {n} : IsTrunc n.+1 A.</pre>
-</div>
-<div class="code" title="File: HProp.v
-Line: 67
-Time: 0s">
-<div class="time" style="width: 0%"></div>
-<pre>
-Proof.</pre>
-</div>
-<div class="code" title="File: HProp.v
-Line: 68
-Time: 0.001s">
-<div class="time" style="width: 1.4084507042254%"></div>
-<pre>
-  induction n; typeclasses eauto.</pre>
-</div>
-<div class="code" title="File: HProp.v
-Line: 69
-Time: 0s">
-<div class="time" style="width: 0%"></div>
-<pre>
-Defined.</pre>
-</div>
-<div class="code" title="File: HProp.v
-Line: 70
-Time: 0.001s">
-<div class="time" style="width: 1.4084507042254%"></div>
-<pre>
-
-Global Instance trunc_trunc `{Funext} A m n : IsTrunc n.+1 (IsTrunc m A) | 0
-  := istrunc_s__ishprop.</pre>
-</div>
-<div class="code" title="File: HProp.v
-Line: 73
-Time: 0s">
-<div class="time" style="width: 0%"></div>
-<pre>
-
-(** Chracterization of [IsHProp] in terms of all points being connected by paths. *)
+(** ** Alternate characterization of hprops. *)
 
 </pre>
 </div>
 <div class="code" title="File: HProp.v
-Line: 76
+Line: 50
 Time: 0s">
 <div class="time" style="width: 0%"></div>
-<pre>Theorem path_ishprop `{H : IsHProp A} : forall x y : A, x = y.</pre>
-</div>
-<div class="code" title="File: HProp.v
-Line: 76
-Time: 0s">
-<div class="time" style="width: 0%"></div>
-<pre>
-Proof.</pre>
-</div>
-<div class="code" title="File: HProp.v
-Line: 77
-Time: 0s">
-<div class="time" style="width: 0%"></div>
-<pre>
-  apply H.</pre>
-</div>
-<div class="code" title="File: HProp.v
-Line: 78
-Time: 0s">
-<div class="time" style="width: 0%"></div>
-<pre>
-Defined.</pre>
-</div>
-<div class="code" title="File: HProp.v
-Line: 79
-Time: 0s">
-<div class="time" style="width: 0%"></div>
-<pre>
-
-Theorem hprop_allpath (A : Type) : (forall (x y : A), x = y) -&gt; IsHProp A.</pre>
-</div>
-<div class="code" title="File: HProp.v
-Line: 81
-Time: 0s">
-<div class="time" style="width: 0%"></div>
-<pre>
-  intros H x y.</pre>
-</div>
-<div class="code" title="File: HProp.v
-Line: 82
-Time: 0s">
-<div class="time" style="width: 0%"></div>
-<pre>
-  pose (C := BuildContr A x (H x)).</pre>
-</div>
-<div class="code" title="File: HProp.v
-Line: 83
-Time: 0.001s">
-<div class="time" style="width: 1.4084507042254%"></div>
-<pre>
-  apply contr_paths_contr.</pre>
-</div>
-<div class="code" title="File: HProp.v
-Line: 84
-Time: 0s">
-<div class="time" style="width: 0%"></div>
-<pre>
-Defined.</pre>
-</div>
-<div class="code" title="File: HProp.v
-Line: 85
-Time: 0s">
-<div class="time" style="width: 0%"></div>
-<pre>
-
-Theorem equiv_hprop_allpath `{Funext} (A : Type)
+<pre>Theorem equiv_hprop_allpath `{Funext} (A : Type)
   : IsHProp A &lt;~&gt; (forall (x y : A), x = y).</pre>
 </div>
 <div class="code" title="File: HProp.v
-Line: 88
+Line: 51
 Time: 0s">
 <div class="time" style="width: 0%"></div>
 <pre>
 Proof.</pre>
 </div>
 <div class="code" title="File: HProp.v
-Line: 89
-Time: 0.012s">
-<div class="time" style="width: 16.901408450704%"></div>
+Line: 52
+Time: 0.027s">
+<div class="time" style="width: 65.853658536585%"></div>
 <pre>
   apply (equiv_adjointify (@path_ishprop A) (@hprop_allpath A));
   (* The proofs of the two homotopies making up this equivalence are almost identical.  First we start with a thing [f]. *)
@@ -581,50 +357,351 @@ Time: 0.012s">
     apply path_contr.</pre>
 </div>
 <div class="code" title="File: HProp.v
-Line: 100
+Line: 63
 Time: 0.003s">
-<div class="time" style="width: 4.2253521126761%"></div>
+<div class="time" style="width: 7.3170731707317%"></div>
 <pre>
 Defined.</pre>
 </div>
 <div class="code" title="File: HProp.v
-Line: 101
+Line: 64
 Time: 0s">
 <div class="time" style="width: 0%"></div>
 <pre>
 
-(** Two propositions are equivalent as soon as there are maps in both
-   directions. *)
-
-</pre>
+Theorem equiv_hprop_inhabited_contr `{Funext} {A}
+  : IsHProp A &lt;~&gt; (A -&gt; Contr A).</pre>
 </div>
 <div class="code" title="File: HProp.v
-Line: 105
-Time: 0s">
-<div class="time" style="width: 0%"></div>
-<pre>Definition isequiv_iff_hprop `{IsHProp A} `{IsHProp B}
-  (f : A -&gt; B) (g : B -&gt; A)
-: IsEquiv f.</pre>
-</div>
-<div class="code" title="File: HProp.v
-Line: 107
+Line: 67
 Time: 0s">
 <div class="time" style="width: 0%"></div>
 <pre>
 Proof.</pre>
 </div>
 <div class="code" title="File: HProp.v
-Line: 108
-Time: 0.001s">
-<div class="time" style="width: 1.4084507042254%"></div>
+Line: 68
+Time: 0s">
+<div class="time" style="width: 0%"></div>
 <pre>
-  apply (isequiv_adjointify f g);
-    intros ?; apply path_ishprop.</pre>
+  apply (equiv_adjointify (@contr_inhabited_hprop A) (@hprop_inhabited_contr A)).</pre>
+</div>
+<div class="code" title="File: HProp.v
+Line: 69
+Time: 0s">
+<div class="time" style="width: 0%"></div>
+<pre>
+  -</pre>
+</div>
+<div class="code" title="File: HProp.v
+Line: 70
+Time: 0s">
+<div class="time" style="width: 0%"></div>
+<pre> intro ic.</pre>
+</div>
+<div class="code" title="File: HProp.v
+Line: 70
+Time: 0.004s">
+<div class="time" style="width: 9.7560975609756%"></div>
+<pre> by_extensionality x.</pre>
+</div>
+<div class="code" title="File: HProp.v
+Line: 70
+Time: 0s">
+<div class="time" style="width: 0%"></div>
+<pre>
+    apply @path_contr.</pre>
+</div>
+<div class="code" title="File: HProp.v
+Line: 71
+Time: 0s">
+<div class="time" style="width: 0%"></div>
+<pre> apply contr_contr.</pre>
+</div>
+<div class="code" title="File: HProp.v
+Line: 71
+Time: 0s">
+<div class="time" style="width: 0%"></div>
+<pre> exact (ic x).</pre>
+</div>
+<div class="code" title="File: HProp.v
+Line: 71
+Time: 0s">
+<div class="time" style="width: 0%"></div>
+<pre>
+  -</pre>
+</div>
+<div class="code" title="File: HProp.v
+Line: 72
+Time: 0s">
+<div class="time" style="width: 0%"></div>
+<pre> intro hp.</pre>
+</div>
+<div class="code" title="File: HProp.v
+Line: 72
+Time: 0.005s">
+<div class="time" style="width: 12.19512195122%"></div>
+<pre> by_extensionality x.</pre>
+</div>
+<div class="code" title="File: HProp.v
+Line: 72
+Time: 0.005s">
+<div class="time" style="width: 12.19512195122%"></div>
+<pre> by_extensionality y.</pre>
+</div>
+<div class="code" title="File: HProp.v
+Line: 72
+Time: 0s">
+<div class="time" style="width: 0%"></div>
+<pre>
+    apply @path_contr.</pre>
+</div>
+<div class="code" title="File: HProp.v
+Line: 73
+Time: 0s">
+<div class="time" style="width: 0%"></div>
+<pre> apply contr_contr.</pre>
+</div>
+<div class="code" title="File: HProp.v
+Line: 73
+Time: 0s">
+<div class="time" style="width: 0%"></div>
+<pre> exact (hp x y).</pre>
+</div>
+<div class="code" title="File: HProp.v
+Line: 73
+Time: 0.003s">
+<div class="time" style="width: 7.3170731707317%"></div>
+<pre>
+Defined.</pre>
+</div>
+<div class="code" title="File: HProp.v
+Line: 74
+Time: 0s">
+<div class="time" style="width: 0%"></div>
+<pre>
+
+(** ** Alternate characterizations of contractibility. *)
+
+</pre>
+</div>
+<div class="code" title="File: HProp.v
+Line: 77
+Time: 0s">
+<div class="time" style="width: 0%"></div>
+<pre>Theorem equiv_contr_inhabited_hprop `{Funext} {A}
+  : Contr A &lt;~&gt; A * IsHProp A.</pre>
+</div>
+<div class="code" title="File: HProp.v
+Line: 78
+Time: 0s">
+<div class="time" style="width: 0%"></div>
+<pre>
+Proof.</pre>
+</div>
+<div class="code" title="File: HProp.v
+Line: 79
+Time: 0s">
+<div class="time" style="width: 0%"></div>
+<pre>
+  assert (f : Contr A -&gt; A * IsHProp A).</pre>
+</div>
+<div class="code" title="File: HProp.v
+Line: 80
+Time: 0s">
+<div class="time" style="width: 0%"></div>
+<pre>
+    intro P.</pre>
+</div>
+<div class="code" title="File: HProp.v
+Line: 81
+Time: 0s">
+<div class="time" style="width: 0%"></div>
+<pre> split.</pre>
+</div>
+<div class="code" title="File: HProp.v
+Line: 81
+Time: 0s">
+<div class="time" style="width: 0%"></div>
+<pre> exact (@center _ P).</pre>
+</div>
+<div class="code" title="File: HProp.v
+Line: 81
+Time: 0s">
+<div class="time" style="width: 0%"></div>
+<pre> apply @trunc_succ.</pre>
+</div>
+<div class="code" title="File: HProp.v
+Line: 81
+Time: 0s">
+<div class="time" style="width: 0%"></div>
+<pre> exact P.</pre>
+</div>
+<div class="code" title="File: HProp.v
+Line: 81
+Time: 0s">
+<div class="time" style="width: 0%"></div>
+<pre>
+  assert (g : A * IsHProp A -&gt; Contr A).</pre>
+</div>
+<div class="code" title="File: HProp.v
+Line: 82
+Time: 0s">
+<div class="time" style="width: 0%"></div>
+<pre>
+    intros [a P].</pre>
+</div>
+<div class="code" title="File: HProp.v
+Line: 83
+Time: 0s">
+<div class="time" style="width: 0%"></div>
+<pre> apply (@contr_inhabited_hprop _ P a).</pre>
+</div>
+<div class="code" title="File: HProp.v
+Line: 83
+Time: 0.041s">
+<div class="time" style="width: 100%"></div>
+<pre>
+  refine (@equiv_iff_hprop _ _ _ _ f g).</pre>
+</div>
+<div class="code" title="File: HProp.v
+Line: 84
+Time: 0s">
+<div class="time" style="width: 0%"></div>
+<pre>
+  apply hprop_inhabited_contr; intro p.</pre>
+</div>
+<div class="code" title="File: HProp.v
+Line: 85
+Time: 0s">
+<div class="time" style="width: 0%"></div>
+<pre>
+  apply @contr_prod.</pre>
+</div>
+<div class="code" title="File: HProp.v
+Line: 86
+Time: 0s">
+<div class="time" style="width: 0%"></div>
+<pre>
+  exact (g p).</pre>
+</div>
+<div class="code" title="File: HProp.v
+Line: 87
+Time: 0s">
+<div class="time" style="width: 0%"></div>
+<pre> apply (@contr_inhabited_hprop _ _ (snd p)).</pre>
+</div>
+<div class="code" title="File: HProp.v
+Line: 87
+Time: 0.001s">
+<div class="time" style="width: 2.4390243902439%"></div>
+<pre>
+Defined.</pre>
+</div>
+<div class="code" title="File: HProp.v
+Line: 88
+Time: 0s">
+<div class="time" style="width: 0%"></div>
+<pre>
+
+Theorem equiv_contr_inhabited_allpath `{Funext} {A}
+  : Contr A &lt;~&gt; A * forall (x y : A), x = y.</pre>
+</div>
+<div class="code" title="File: HProp.v
+Line: 91
+Time: 0s">
+<div class="time" style="width: 0%"></div>
+<pre>
+Proof.</pre>
+</div>
+<div class="code" title="File: HProp.v
+Line: 92
+Time: 0.001s">
+<div class="time" style="width: 2.4390243902439%"></div>
+<pre>
+  transitivity ( A * IsHProp A).</pre>
+</div>
+<div class="code" title="File: HProp.v
+Line: 93
+Time: 0s">
+<div class="time" style="width: 0%"></div>
+<pre>
+  apply equiv_contr_inhabited_hprop.</pre>
+</div>
+<div class="code" title="File: HProp.v
+Line: 94
+Time: 0s">
+<div class="time" style="width: 0%"></div>
+<pre>
+  apply equiv_functor_prod'.</pre>
+</div>
+<div class="code" title="File: HProp.v
+Line: 95
+Time: 0s">
+<div class="time" style="width: 0%"></div>
+<pre> apply equiv_idmap.</pre>
+</div>
+<div class="code" title="File: HProp.v
+Line: 95
+Time: 0s">
+<div class="time" style="width: 0%"></div>
+<pre> apply equiv_hprop_allpath.</pre>
+</div>
+<div class="code" title="File: HProp.v
+Line: 95
+Time: 0s">
+<div class="time" style="width: 0%"></div>
+<pre>
+Defined.</pre>
+</div>
+<div class="code" title="File: HProp.v
+Line: 96
+Time: 0s">
+<div class="time" style="width: 0%"></div>
+<pre>
+
+(** ** Logical equivalence of hprops *)
+
+(** Logical equivalence of hprops is not just logically equivalent to equivalence, it is equivalent to it. *)</pre>
+</div>
+<div class="code" title="File: HProp.v
+Line: 100
+Time: 0.001s">
+<div class="time" style="width: 2.4390243902439%"></div>
+<pre>Global Instance isequiv_equiv_iff_hprop_uncurried
+       `{Funext} {A B} `{IsHProp A} `{IsHProp B}
+: IsEquiv (@equiv_iff_hprop_uncurried A _ B _) | 0.</pre>
+</div>
+<div class="code" title="File: HProp.v
+Line: 102
+Time: 0s">
+<div class="time" style="width: 0%"></div>
+<pre>
+Proof.</pre>
+</div>
+<div class="code" title="File: HProp.v
+Line: 103
+Time: 0s">
+<div class="time" style="width: 0%"></div>
+<pre>
+  pose (@istrunc_equiv).</pre>
+</div>
+<div class="code" title="File: HProp.v
+Line: 104
+Time: 0.031s">
+<div class="time" style="width: 75.609756097561%"></div>
+<pre>
+  refine (isequiv_adjointify
+            equiv_iff_hprop_uncurried
+            (fun e =&gt; (@equiv_fun _ _ e, @equiv_inv _ _ e _))
+            _ _);
+    intro;
+      by apply path_ishprop.</pre>
 </div>
 <div class="code" title="File: HProp.v
 Line: 110
-Time: 0s">
-<div class="time" style="width: 0%"></div>
+Time: 0.003s">
+<div class="time" style="width: 7.3170731707317%"></div>
 <pre>
 Defined.</pre>
 </div>
@@ -634,546 +711,102 @@ Time: 0s">
 <div class="time" style="width: 0%"></div>
 <pre>
 
-Definition equiv_iff_hprop_uncurried `{IsHProp A} `{IsHProp B}
-  : (A &lt;-&gt; B) -&gt; (A &lt;~&gt; B).</pre>
+(** ** Inhabited and uninhabited hprops *)
+
+(** If an hprop is inhabited, then it is equivalent to [Unit]. *)</pre>
 </div>
 <div class="code" title="File: HProp.v
-Line: 114
+Line: 115
 Time: 0s">
 <div class="time" style="width: 0%"></div>
-<pre>
-Proof.</pre>
+<pre>Lemma if_hprop_then_equiv_Unit (hprop : Type) `{IsHProp hprop} :  hprop -&gt; hprop &lt;~&gt; Unit.</pre>
 </div>
 <div class="code" title="File: HProp.v
 Line: 115
 Time: 0s">
 <div class="time" style="width: 0%"></div>
 <pre>
-  intros [f g].</pre>
+Proof.</pre>
 </div>
 <div class="code" title="File: HProp.v
 Line: 116
-Time: 0.001s">
-<div class="time" style="width: 1.4084507042254%"></div>
-<pre>
-  apply (equiv_adjointify f g);
-    intros ?; apply path_ishprop.</pre>
-</div>
-<div class="code" title="File: HProp.v
-Line: 118
-Time: 0s">
-<div class="time" style="width: 0%"></div>
-<pre>
-Defined.</pre>
-</div>
-<div class="code" title="File: HProp.v
-Line: 119
-Time: 0.001s">
-<div class="time" style="width: 1.4084507042254%"></div>
-<pre>
-
-Definition equiv_iff_hprop `{IsHProp A} `{IsHProp B}
-  : (A -&gt; B) -&gt; (B -&gt; A) -&gt; (A &lt;~&gt; B)
-  := fun f g =&gt; equiv_iff_hprop_uncurried (f, g).</pre>
-</div>
-<div class="code" title="File: HProp.v
-Line: 123
-Time: 0s">
-<div class="time" style="width: 0%"></div>
-<pre>
-
-(** Being a contractible space is a proposition. *)
-
-</pre>
-</div>
-<div class="code" title="File: HProp.v
-Line: 126
-Time: 0s">
-<div class="time" style="width: 0%"></div>
-<pre>Global Instance hprop_contr `{Funext} (A : Type) : IsHProp (Contr A) | 0.</pre>
-</div>
-<div class="code" title="File: HProp.v
-Line: 126
-Time: 0s">
-<div class="time" style="width: 0%"></div>
-<pre>
-Proof.</pre>
-</div>
-<div class="code" title="File: HProp.v
-Line: 127
-Time: 0s">
-<div class="time" style="width: 0%"></div>
-<pre>
-  apply hprop_inhabited_contr.</pre>
-</div>
-<div class="code" title="File: HProp.v
-Line: 128
-Time: 0s">
-<div class="time" style="width: 0%"></div>
-<pre>
-  intro cA.</pre>
-</div>
-<div class="code" title="File: HProp.v
-Line: 129
-Time: 0s">
-<div class="time" style="width: 0%"></div>
-<pre>
-  exact _.</pre>
-</div>
-<div class="code" title="File: HProp.v
-Line: 130
-Time: 0s">
-<div class="time" style="width: 0%"></div>
-<pre>
-Defined.</pre>
-</div>
-<div class="code" title="File: HProp.v
-Line: 131
-Time: 0s">
-<div class="time" style="width: 0%"></div>
-<pre>
-
-(** Here is an alternate characterization of propositions. *)
-
-</pre>
-</div>
-<div class="code" title="File: HProp.v
-Line: 134
-Time: 0s">
-<div class="time" style="width: 0%"></div>
-<pre>Global Instance HProp_HProp `{Funext} A : IsHProp (IsHProp A) | 0
-  := hprop_trunc -1 A.</pre>
-</div>
-<div class="code" title="File: HProp.v
-Line: 135
-Time: 0s">
-<div class="time" style="width: 0%"></div>
-<pre>
-
-Theorem equiv_hprop_inhabited_contr `{Funext} {A}
-  : IsHProp A &lt;~&gt; (A -&gt; Contr A).</pre>
-</div>
-<div class="code" title="File: HProp.v
-Line: 138
-Time: 0s">
-<div class="time" style="width: 0%"></div>
-<pre>
-Proof.</pre>
-</div>
-<div class="code" title="File: HProp.v
-Line: 139
-Time: 0s">
-<div class="time" style="width: 0%"></div>
-<pre>
-  apply (equiv_adjointify (@contr_inhabited_hprop A) (@hprop_inhabited_contr A)).</pre>
-</div>
-<div class="code" title="File: HProp.v
-Line: 140
-Time: 0s">
-<div class="time" style="width: 0%"></div>
-<pre>
-  -</pre>
-</div>
-<div class="code" title="File: HProp.v
-Line: 141
-Time: 0s">
-<div class="time" style="width: 0%"></div>
-<pre> intro ic.</pre>
-</div>
-<div class="code" title="File: HProp.v
-Line: 141
-Time: 0.004s">
-<div class="time" style="width: 5.6338028169014%"></div>
-<pre> by_extensionality x.</pre>
-</div>
-<div class="code" title="File: HProp.v
-Line: 141
-Time: 0s">
-<div class="time" style="width: 0%"></div>
-<pre>
-    apply @path_contr.</pre>
-</div>
-<div class="code" title="File: HProp.v
-Line: 142
-Time: 0s">
-<div class="time" style="width: 0%"></div>
-<pre> apply contr_contr.</pre>
-</div>
-<div class="code" title="File: HProp.v
-Line: 142
-Time: 0s">
-<div class="time" style="width: 0%"></div>
-<pre> exact (ic x).</pre>
-</div>
-<div class="code" title="File: HProp.v
-Line: 142
-Time: 0s">
-<div class="time" style="width: 0%"></div>
-<pre>
-  -</pre>
-</div>
-<div class="code" title="File: HProp.v
-Line: 143
-Time: 0s">
-<div class="time" style="width: 0%"></div>
-<pre> intro hp.</pre>
-</div>
-<div class="code" title="File: HProp.v
-Line: 143
-Time: 0.005s">
-<div class="time" style="width: 7.0422535211268%"></div>
-<pre> by_extensionality x.</pre>
-</div>
-<div class="code" title="File: HProp.v
-Line: 143
-Time: 0.005s">
-<div class="time" style="width: 7.0422535211268%"></div>
-<pre> by_extensionality y.</pre>
-</div>
-<div class="code" title="File: HProp.v
-Line: 143
-Time: 0s">
-<div class="time" style="width: 0%"></div>
-<pre>
-    apply @path_contr.</pre>
-</div>
-<div class="code" title="File: HProp.v
-Line: 144
-Time: 0s">
-<div class="time" style="width: 0%"></div>
-<pre> apply contr_contr.</pre>
-</div>
-<div class="code" title="File: HProp.v
-Line: 144
-Time: 0s">
-<div class="time" style="width: 0%"></div>
-<pre> exact (hp x y).</pre>
-</div>
-<div class="code" title="File: HProp.v
-Line: 144
-Time: 0.003s">
-<div class="time" style="width: 4.2253521126761%"></div>
-<pre>
-Defined.</pre>
-</div>
-<div class="code" title="File: HProp.v
-Line: 145
-Time: 0s">
-<div class="time" style="width: 0%"></div>
-<pre>
-
-(** Here are some alternate characterizations of contractibility. *)</pre>
-</div>
-<div class="code" title="File: HProp.v
-Line: 147
-Time: 0s">
-<div class="time" style="width: 0%"></div>
-<pre>Theorem equiv_contr_inhabited_hprop `{Funext} {A}
-  : Contr A &lt;~&gt; A * IsHProp A.</pre>
-</div>
-<div class="code" title="File: HProp.v
-Line: 148
-Time: 0s">
-<div class="time" style="width: 0%"></div>
-<pre>
-Proof.</pre>
-</div>
-<div class="code" title="File: HProp.v
-Line: 149
-Time: 0s">
-<div class="time" style="width: 0%"></div>
-<pre>
-  assert (f : Contr A -&gt; A * IsHProp A).</pre>
-</div>
-<div class="code" title="File: HProp.v
-Line: 150
-Time: 0s">
-<div class="time" style="width: 0%"></div>
-<pre>
-    intro P.</pre>
-</div>
-<div class="code" title="File: HProp.v
-Line: 151
-Time: 0s">
-<div class="time" style="width: 0%"></div>
-<pre> split.</pre>
-</div>
-<div class="code" title="File: HProp.v
-Line: 151
-Time: 0s">
-<div class="time" style="width: 0%"></div>
-<pre> exact (@center _ P).</pre>
-</div>
-<div class="code" title="File: HProp.v
-Line: 151
-Time: 0s">
-<div class="time" style="width: 0%"></div>
-<pre> apply @trunc_succ.</pre>
-</div>
-<div class="code" title="File: HProp.v
-Line: 151
-Time: 0s">
-<div class="time" style="width: 0%"></div>
-<pre> exact P.</pre>
-</div>
-<div class="code" title="File: HProp.v
-Line: 151
-Time: 0s">
-<div class="time" style="width: 0%"></div>
-<pre>
-  assert (g : A * IsHProp A -&gt; Contr A).</pre>
-</div>
-<div class="code" title="File: HProp.v
-Line: 152
-Time: 0s">
-<div class="time" style="width: 0%"></div>
-<pre>
-    intros [a P].</pre>
-</div>
-<div class="code" title="File: HProp.v
-Line: 153
-Time: 0s">
-<div class="time" style="width: 0%"></div>
-<pre> apply (@contr_inhabited_hprop _ P a).</pre>
-</div>
-<div class="code" title="File: HProp.v
-Line: 153
-Time: 0.019s">
-<div class="time" style="width: 26.760563380282%"></div>
-<pre>
-  refine (@equiv_iff_hprop _ _ _ _ f g).</pre>
-</div>
-<div class="code" title="File: HProp.v
-Line: 154
-Time: 0s">
-<div class="time" style="width: 0%"></div>
-<pre>
-  apply hprop_inhabited_contr; intro p.</pre>
-</div>
-<div class="code" title="File: HProp.v
-Line: 155
-Time: 0s">
-<div class="time" style="width: 0%"></div>
-<pre>
-  apply @contr_prod.</pre>
-</div>
-<div class="code" title="File: HProp.v
-Line: 156
-Time: 0s">
-<div class="time" style="width: 0%"></div>
-<pre>
-  exact (g p).</pre>
-</div>
-<div class="code" title="File: HProp.v
-Line: 157
-Time: 0s">
-<div class="time" style="width: 0%"></div>
-<pre> apply (@contr_inhabited_hprop _ _ (snd p)).</pre>
-</div>
-<div class="code" title="File: HProp.v
-Line: 157
-Time: 0.001s">
-<div class="time" style="width: 1.4084507042254%"></div>
-<pre>
-Defined.</pre>
-</div>
-<div class="code" title="File: HProp.v
-Line: 158
-Time: 0s">
-<div class="time" style="width: 0%"></div>
-<pre>
-
-Theorem equiv_contr_inhabited_allpath `{Funext} {A}
-  : Contr A &lt;~&gt; A * forall (x y : A), x = y.</pre>
-</div>
-<div class="code" title="File: HProp.v
-Line: 161
-Time: 0s">
-<div class="time" style="width: 0%"></div>
-<pre>
-Proof.</pre>
-</div>
-<div class="code" title="File: HProp.v
-Line: 162
-Time: 0.001s">
-<div class="time" style="width: 1.4084507042254%"></div>
-<pre>
-  transitivity ( A * IsHProp A).</pre>
-</div>
-<div class="code" title="File: HProp.v
-Line: 163
-Time: 0s">
-<div class="time" style="width: 0%"></div>
-<pre>
-  apply equiv_contr_inhabited_hprop.</pre>
-</div>
-<div class="code" title="File: HProp.v
-Line: 164
-Time: 0s">
-<div class="time" style="width: 0%"></div>
-<pre>
-  apply equiv_functor_prod'.</pre>
-</div>
-<div class="code" title="File: HProp.v
-Line: 165
-Time: 0s">
-<div class="time" style="width: 0%"></div>
-<pre> apply equiv_idmap.</pre>
-</div>
-<div class="code" title="File: HProp.v
-Line: 165
-Time: 0s">
-<div class="time" style="width: 0%"></div>
-<pre> apply equiv_hprop_allpath.</pre>
-</div>
-<div class="code" title="File: HProp.v
-Line: 165
-Time: 0s">
-<div class="time" style="width: 0%"></div>
-<pre>
-Defined.</pre>
-</div>
-<div class="code" title="File: HProp.v
-Line: 166
-Time: 0s">
-<div class="time" style="width: 0%"></div>
-<pre>
-
-(** If the second component of a sigma type is an hProp, then to prove equality, we only need equality of the first component. *)</pre>
-</div>
-<div class="code" title="File: HProp.v
-Line: 168
-Time: 0.007s">
-<div class="time" style="width: 9.8591549295775%"></div>
-<pre>Definition path_sigma_hprop {A : Type} {P : A -&gt; Type}
-           `{forall x, IsHProp (P x)}
-           (u v : sigT P)
-: u.1 = v.1 -&gt; u = v
-  := path_sigma_uncurried P u v o pr1^-1.</pre>
-</div>
-<div class="code" title="File: HProp.v
-Line: 172
-Time: 0.027s">
-<div class="time" style="width: 38.028169014085%"></div>
-<pre>
-
-Global Instance isequiv_path_sigma_hprop {A P} `{forall x : A, IsHProp (P x)} {u v : sigT P}
-: IsEquiv (@path_sigma_hprop A P _ u v) | 100
-  := isequiv_compose.</pre>
-</div>
-<div class="code" title="File: HProp.v
-Line: 176
-Time: 0s">
-<div class="time" style="width: 0%"></div>
-<pre>
-
-Hint Immediate isequiv_path_sigma_hprop : typeclass_instances.</pre>
-</div>
-<div class="code" title="File: HProp.v
-Line: 178
-Time: 0s">
-<div class="time" style="width: 0%"></div>
-<pre>
-
-(** The sigma of an hprop over a type can be viewed as a subtype. In particular, paths in the subtype are equivalent to paths in the original type. *)</pre>
-</div>
-<div class="code" title="File: HProp.v
-Line: 180
-Time: 0.071s">
-<div class="time" style="width: 100%"></div>
-<pre>Definition equiv_path_sigma_hprop {A : Type} {P : A -&gt; Type}
-           {HP : forall a, IsHProp (P a)} (u v : sigT P)
-: (u.1 = v.1) &lt;~&gt; (u = v)
-  := BuildEquiv _ _ (path_sigma_hprop _ _) _.</pre>
-</div>
-<div class="code" title="File: HProp.v
-Line: 183
-Time: 0s">
-<div class="time" style="width: 0%"></div>
-<pre>
-
-Lemma if_hprop_then_equiv_Unit (hprop : Type) `{IsHProp hprop} :  hprop -&gt; hprop &lt;~&gt; Unit.</pre>
-</div>
-<div class="code" title="File: HProp.v
-Line: 185
-Time: 0s">
-<div class="time" style="width: 0%"></div>
-<pre>
-Proof.</pre>
-</div>
-<div class="code" title="File: HProp.v
-Line: 186
 Time: 0s">
 <div class="time" style="width: 0%"></div>
 <pre>
   intro p.</pre>
 </div>
 <div class="code" title="File: HProp.v
-Line: 187
-Time: 0.001s">
-<div class="time" style="width: 1.4084507042254%"></div>
+Line: 117
+Time: 0.002s">
+<div class="time" style="width: 4.8780487804878%"></div>
 <pre> 
   apply equiv_iff_hprop.</pre>
 </div>
 <div class="code" title="File: HProp.v
-Line: 188
+Line: 118
 Time: 0s">
 <div class="time" style="width: 0%"></div>
 <pre>
   exact (fun _ =&gt; tt).</pre>
 </div>
 <div class="code" title="File: HProp.v
-Line: 189
+Line: 119
 Time: 0s">
 <div class="time" style="width: 0%"></div>
 <pre>
   exact (fun _ =&gt; p).</pre>
 </div>
 <div class="code" title="File: HProp.v
-Line: 190
+Line: 120
 Time: 0s">
 <div class="time" style="width: 0%"></div>
 <pre>
 Defined.</pre>
 </div>
 <div class="code" title="File: HProp.v
-Line: 191
+Line: 121
 Time: 0s">
 <div class="time" style="width: 0%"></div>
 <pre>
 
-Lemma if_not_hprop_then_equiv_Empty (hprop : Type) `{IsHProp hprop} : ~hprop -&gt; hprop &lt;~&gt; Empty.</pre>
+(** If an hprop is not inhabited, then it is equivalent to [Empty]. *)</pre>
 </div>
 <div class="code" title="File: HProp.v
-Line: 193
+Line: 123
+Time: 0s">
+<div class="time" style="width: 0%"></div>
+<pre>Lemma if_not_hprop_then_equiv_Empty (hprop : Type) `{IsHProp hprop} : ~hprop -&gt; hprop &lt;~&gt; Empty.</pre>
+</div>
+<div class="code" title="File: HProp.v
+Line: 123
 Time: 0s">
 <div class="time" style="width: 0%"></div>
 <pre>
 Proof.</pre>
 </div>
 <div class="code" title="File: HProp.v
-Line: 194
+Line: 124
 Time: 0s">
 <div class="time" style="width: 0%"></div>
 <pre>
   intro np.</pre>
 </div>
 <div class="code" title="File: HProp.v
-Line: 195
+Line: 125
 Time: 0s">
 <div class="time" style="width: 0%"></div>
 <pre> 
   exact (BuildEquiv _ _ np _).</pre>
 </div>
 <div class="code" title="File: HProp.v
-Line: 196
+Line: 126
 Time: 0s">
 <div class="time" style="width: 0%"></div>
 <pre>
 Defined.</pre>
 </div>
 <div class="code" title="File: HProp.v
-Line: 198
+Line: 128
 Time: 0s">
 <div class="time" style="width: 0%"></div>
 <pre>

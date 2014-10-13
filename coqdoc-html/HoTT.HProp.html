@@ -22,30 +22,15 @@
 </div>
 
 <div class="doc">
-<a name="lab109"></a><h1 class="section">HPropositions</h1>
+<a name="lab131"></a><h1 class="section">HPropositions</h1>
 
 </div>
 <div class="code">
 
 <br/>
-<span class="id" type="keyword">Require</span> <span class="id" type="keyword">Import</span> <a class="idref" href="HoTT.Basics.html#"><span class="id" type="library">HoTT.Basics</span></a>.<br/>
-<span class="id" type="keyword">Require</span> <span class="id" type="keyword">Import</span> <a class="idref" href="HoTT.types.Forall.html#"><span class="id" type="library">types.Forall</span></a> <a class="idref" href="HoTT.types.Sigma.html#"><span class="id" type="library">types.Sigma</span></a> <a class="idref" href="HoTT.types.Prod.html#"><span class="id" type="library">types.Prod</span></a> <a class="idref" href="HoTT.types.Record.html#"><span class="id" type="library">types.Record</span></a> <a class="idref" href="HoTT.types.Paths.html#"><span class="id" type="library">types.Paths</span></a> <a class="idref" href="HoTT.types.Unit.html#"><span class="id" type="library">types.Unit</span></a> <a class="idref" href="HoTT.types.Empty.html#"><span class="id" type="library">types.Empty</span></a>.<br/>
-
-<br/>
+<span class="id" type="keyword">Require</span> <span class="id" type="keyword">Import</span> <a class="idref" href="HoTT.Basics.html#"><span class="id" type="library">HoTT.Basics</span></a> <a class="idref" href="HoTT.Types.html#"><span class="id" type="library">HoTT.Types</span></a>.<br/>
 <span class="id" type="keyword">Local</span>&nbsp;<span class="id" type="keyword">Open</span> <span class="id" type="keyword">Scope</span> <span class="id" type="var">equiv_scope</span>.<br/>
 <span class="id" type="keyword">Local</span>&nbsp;<span class="id" type="keyword">Open</span> <span class="id" type="keyword">Scope</span> <span class="id" type="var">path_scope</span>.<br/>
-
-<br/>
-</div>
-
-<div class="doc">
-<a name="lab110"></a><h2 class="section">Facts about <span class="inlinecode"><a class="idref" href="HoTT.Basics.Overture.html#IsHProp"><span class="id" type="abbreviation">IsHProp</span></a></span></h2>
-
-<div class="paragraph"> </div>
-
- Maybe this should go to a separate file? 
-</div>
-<div class="code">
 
 <br/>
 <span class="id" type="keyword">Generalizable</span> <span class="id" type="keyword">Variables</span> <span class="id" type="var">A</span> <span class="id" type="var">B</span>.<br/>
@@ -54,38 +39,11 @@
 </div>
 
 <div class="doc">
-An inhabited proposition is contractible.
-   This is not an <span class="inlinecode"><span class="id" type="keyword">Instance</span></span> because it causes infinite loops.
-   
-</div>
-<div class="code">
-<span class="id" type="keyword">Lemma</span> <a name="contr_inhabited_hprop"><span class="id" type="lemma">contr_inhabited_hprop</span></a> (<span class="id" type="var">A</span> : <span class="id" type="keyword">Type</span>) `{<span class="id" type="var">H</span> : <a class="idref" href="HoTT.Basics.Overture.html#IsHProp"><span class="id" type="abbreviation">IsHProp</span></a> <a class="idref" href="HoTT.HProp.html#A"><span class="id" type="variable">A</span></a>} (<span class="id" type="var">x</span> : <a class="idref" href="HoTT.HProp.html#A"><span class="id" type="variable">A</span></a>)<br/>
-&nbsp;&nbsp;: <a class="idref" href="HoTT.Basics.Overture.html#Contr"><span class="id" type="abbreviation">Contr</span></a> <a class="idref" href="HoTT.HProp.html#A"><span class="id" type="variable">A</span></a>.<br/>
-<span class="id" type="keyword">Proof</span>.<br/>
-&nbsp;&nbsp;<span class="id" type="tactic">∃</span> <span class="id" type="var">x</span>.<br/>
-&nbsp;&nbsp;<span class="id" type="tactic">intro</span> <span class="id" type="var">y</span>.<br/>
-&nbsp;&nbsp;<span class="id" type="tactic">apply</span> <a class="idref" href="HoTT.Basics.Overture.html#center"><span class="id" type="method">center</span></a>, <span class="id" type="var">H</span>.<br/>
-<span class="id" type="keyword">Defined</span>.<br/>
+<a name="lab132"></a><h2 class="section">Truncatedness is an hprop</h2>
 
-<br/>
-</div>
+<div class="paragraph"> </div>
 
-<div class="doc">
-If inhabitation implies contractibility, then we have an h-proposition.  We probably won't often have a hypothesis of the form <span class="inlinecode"><a class="idref" href="HoTTBookExercises.html#Book_4_5.parts.A"><span class="id" type="variable">A</span></a></span> <span class="inlinecode">→</span> <span class="inlinecode"><a class="idref" href="HoTT.Basics.Overture.html#Contr"><span class="id" type="abbreviation">Contr</span></a></span> <span class="inlinecode"><a class="idref" href="HoTTBookExercises.html#Book_4_5.parts.A"><span class="id" type="variable">A</span></a></span>, so we make sure we give priority to other instances. 
-</div>
-<div class="code">
-<span class="id" type="keyword">Global Instance</span> <a name="hprop_inhabited_contr"><span class="id" type="instance">hprop_inhabited_contr</span></a> (<span class="id" type="var">A</span> : <span class="id" type="keyword">Type</span>) : <a class="idref" href="Coq.Init.Logic.html#:type_scope:x_'->'_x"><span class="id" type="notation">(</span></a><a class="idref" href="HoTT.HProp.html#A"><span class="id" type="variable">A</span></a> <a class="idref" href="Coq.Init.Logic.html#:type_scope:x_'->'_x"><span class="id" type="notation">→</span></a> <a class="idref" href="HoTT.Basics.Overture.html#Contr"><span class="id" type="abbreviation">Contr</span></a> <a class="idref" href="HoTT.HProp.html#A"><span class="id" type="variable">A</span></a><a class="idref" href="Coq.Init.Logic.html#:type_scope:x_'->'_x"><span class="id" type="notation">)</span></a> <a class="idref" href="Coq.Init.Logic.html#:type_scope:x_'->'_x"><span class="id" type="notation">→</span></a> <a class="idref" href="HoTT.Basics.Overture.html#IsHProp"><span class="id" type="abbreviation">IsHProp</span></a> <a class="idref" href="HoTT.HProp.html#A"><span class="id" type="variable">A</span></a> | 10000.<br/>
-<span class="id" type="keyword">Proof</span>.<br/>
-&nbsp;&nbsp;<span class="id" type="tactic">intros</span> <span class="id" type="var">H</span> <span class="id" type="var">x</span> <span class="id" type="var">y</span>.<br/>
-&nbsp;&nbsp;<span class="id" type="tactic">pose</span> (<span class="id" type="var">C</span> := <span class="id" type="var">H</span> <span class="id" type="var">x</span>).<br/>
-&nbsp;&nbsp;<span class="id" type="tactic">apply</span> <a class="idref" href="HoTT.Basics.Contractible.html#contr_paths_contr"><span class="id" type="instance">contr_paths_contr</span></a>.<br/>
-<span class="id" type="keyword">Defined</span>.<br/>
-
-<br/>
-</div>
-
-<div class="doc">
-If a type is contractible, then so is its type of contractions.
+ If a type is contractible, then so is its type of contractions.
     Using <span class="inlinecode"><a class="idref" href="HoTT.types.Record.html#issig_contr"><span class="id" type="definition">issig_contr</span></a></span> and the <span class="inlinecode"><span class="id" type="var">equiv_intro</span></span> tactic, we can transfer this to the equivalent problem of contractibility of a certain Sigma-type, in which case we can apply the general path-construction functions. 
 </div>
 <div class="code">
@@ -111,7 +69,7 @@ This provides the base case in a proof that truncatedness is a proposition.
 <span class="id" type="keyword">Global Instance</span> <a name="hprop_trunc"><span class="id" type="instance">hprop_trunc</span></a> `{<a class="idref" href="HoTT.Basics.Overture.html#Funext"><span class="id" type="class">Funext</span></a>} (<span class="id" type="var">n</span> : <a class="idref" href="HoTT.Basics.Overture.html#trunc_index"><span class="id" type="inductive">trunc_index</span></a>) (<span class="id" type="var">A</span> : <span class="id" type="keyword">Type</span>)<br/>
 &nbsp;&nbsp;: <a class="idref" href="HoTT.Basics.Overture.html#IsHProp"><span class="id" type="abbreviation">IsHProp</span></a> (<a class="idref" href="HoTT.Basics.Overture.html#IsTrunc"><span class="id" type="class">IsTrunc</span></a> <a class="idref" href="HoTT.HProp.html#n"><span class="id" type="variable">n</span></a> <a class="idref" href="HoTT.HProp.html#A"><span class="id" type="variable">A</span></a>) | 0.<br/>
 <span class="id" type="keyword">Proof</span>.<br/>
-&nbsp;&nbsp;<span class="id" type="tactic">apply</span> <a class="idref" href="HoTT.HProp.html#hprop_inhabited_contr"><span class="id" type="instance">hprop_inhabited_contr</span></a>.<br/>
+&nbsp;&nbsp;<span class="id" type="tactic">apply</span> <a class="idref" href="HoTT.Basics.Trunc.html#hprop_inhabited_contr"><span class="id" type="instance">hprop_inhabited_contr</span></a>.<br/>
 &nbsp;&nbsp;<span class="id" type="var">revert</span> <span class="id" type="var">A</span>.<br/>
 &nbsp;&nbsp;<span class="id" type="tactic">induction</span> <span class="id" type="var">n</span> <span class="id" type="keyword">as</span> [| <span class="id" type="var">n</span> <span class="id" type="var">I</span>]; <span class="id" type="tactic">unfold</span> <a class="idref" href="HoTT.Basics.Overture.html#IsTrunc"><span class="id" type="class">IsTrunc</span></a>; <span class="id" type="tactic">simpl</span>.<br/>
 &nbsp;&nbsp;- <span class="id" type="tactic">intros</span> <span class="id" type="var">A</span> ?.<br/>
@@ -124,12 +82,13 @@ This provides the base case in a proof that truncatedness is a proposition.
 &nbsp;&nbsp;&nbsp;&nbsp;<span class="id" type="tactic">apply</span> @<a class="idref" href="HoTT.Basics.Contractible.html#path_contr"><span class="id" type="definition">path_contr</span></a>.<br/>
 &nbsp;&nbsp;&nbsp;&nbsp;<span class="id" type="tactic">apply</span> <span class="id" type="var">I</span>, <span class="id" type="var">AH1</span>.<br/>
 <span class="id" type="keyword">Qed</span>.<br/>
-
-<br/>
 </div>
 
 <div class="doc">
-Similarly, a map being truncated is also a proposition. 
+By <span class="inlinecode"><a class="idref" href="HoTT.Basics.Trunc.html#trunc_hprop"><span class="id" type="definition">trunc_hprop</span></a></span>, it follows that <span class="inlinecode"><a class="idref" href="HoTT.Basics.Overture.html#IsTrunc"><span class="id" type="record">IsTrunc</span></a></span> <span class="inlinecode"><a class="idref" href="Coq.Init.Peano.html#n"><span class="id" type="variable">n</span></a></span> <span class="inlinecode"><a class="idref" href="HoTTBookExercises.html#Book_4_5.parts.A"><span class="id" type="variable">A</span></a></span> is also <span class="inlinecode"><a class="idref" href="HoTT.categories.Functor.Attributes.html#fully_faithful_helpers.m"><span class="id" type="variable">m</span></a></span>-truncated for any <span class="inlinecode"><a class="idref" href="HoTT.categories.Functor.Attributes.html#fully_faithful_helpers.m"><span class="id" type="variable">m</span></a></span> <span class="inlinecode">≥</span> <span class="inlinecode">-1</span>. 
+<div class="paragraph"> </div>
+
+ Similarly, a map being truncated is also a proposition. 
 </div>
 <div class="code">
 <span class="id" type="keyword">Global Instance</span> <a name="isprop_istruncmap"><span class="id" type="instance">isprop_istruncmap</span></a> `{<a class="idref" href="HoTT.Basics.Overture.html#Funext"><span class="id" type="class">Funext</span></a>} (<span class="id" type="var">n</span> : <a class="idref" href="HoTT.Basics.Overture.html#trunc_index"><span class="id" type="inductive">trunc_index</span></a>) {<span class="id" type="var">X</span> <span class="id" type="var">Y</span> : <span class="id" type="keyword">Type</span>} (<span class="id" type="var">f</span> : <a class="idref" href="HoTT.HProp.html#X"><span class="id" type="variable">X</span></a> <a class="idref" href="Coq.Init.Logic.html#:type_scope:x_'->'_x"><span class="id" type="notation">→</span></a> <a class="idref" href="HoTT.HProp.html#Y"><span class="id" type="variable">Y</span></a>)<br/>
@@ -143,44 +102,16 @@ Similarly, a map being truncated is also a proposition.
 </div>
 
 <div class="doc">
-We can induct on the truncation index to get that <span class="inlinecode"><a class="idref" href="HoTT.Basics.Overture.html#IsTrunc"><span class="id" type="record">IsTrunc</span></a></span> is (n+1)-truncated for all <span class="inlinecode"><a class="idref" href="Coq.Init.Peano.html#n"><span class="id" type="variable">n</span></a></span>. 
+<a name="lab133"></a><h2 class="section">Alternate characterization of hprops.</h2>
+
 </div>
 <div class="code">
-<span class="id" type="keyword">Lemma</span> <a name="istrunc_s__ishprop"><span class="id" type="lemma">istrunc_s__ishprop</span></a> `{<a class="idref" href="HoTT.Basics.Overture.html#IsHProp"><span class="id" type="abbreviation">IsHProp</span></a> <span class="id" type="var">A</span>} {<span class="id" type="var">n</span>} : <a class="idref" href="HoTT.Basics.Overture.html#IsTrunc"><span class="id" type="class">IsTrunc</span></a> <a class="idref" href="HoTT.HProp.html#n"><span class="id" type="variable">n</span></a><a class="idref" href="HoTT.Basics.Overture.html#:trunc_scope:x_'.+1'"><span class="id" type="notation">.+1</span></a> <a class="idref" href="HoTT.HProp.html#A"><span class="id" type="variable">A</span></a>.<br/>
-<span class="id" type="keyword">Proof</span>.<br/>
-&nbsp;&nbsp;<span class="id" type="tactic">induction</span> <span class="id" type="var">n</span>; <span class="id" type="var">typeclasses</span> <span class="id" type="tactic">eauto</span>.<br/>
-<span class="id" type="keyword">Defined</span>.<br/>
-
-<br/>
-<span class="id" type="keyword">Global Instance</span> <a name="trunc_trunc"><span class="id" type="instance">trunc_trunc</span></a> `{<a class="idref" href="HoTT.Basics.Overture.html#Funext"><span class="id" type="class">Funext</span></a>} <span class="id" type="var">A</span> <span class="id" type="var">m</span> <span class="id" type="var">n</span> : <a class="idref" href="HoTT.Basics.Overture.html#IsTrunc"><span class="id" type="class">IsTrunc</span></a> <a class="idref" href="HoTT.HProp.html#n"><span class="id" type="variable">n</span></a><a class="idref" href="HoTT.Basics.Overture.html#:trunc_scope:x_'.+1'"><span class="id" type="notation">.+1</span></a> (<a class="idref" href="HoTT.Basics.Overture.html#IsTrunc"><span class="id" type="class">IsTrunc</span></a> <a class="idref" href="HoTT.HProp.html#m"><span class="id" type="variable">m</span></a> <a class="idref" href="HoTT.HProp.html#A"><span class="id" type="variable">A</span></a>) | 0<br/>
-&nbsp;&nbsp;:= <a class="idref" href="HoTT.HProp.html#istrunc_s__ishprop"><span class="id" type="lemma">istrunc_s__ishprop</span></a>.<br/>
-
-<br/>
-</div>
-
-<div class="doc">
-Chracterization of <span class="inlinecode"><a class="idref" href="HoTT.Basics.Overture.html#IsHProp"><span class="id" type="abbreviation">IsHProp</span></a></span> in terms of all points being connected by paths. 
-</div>
-<div class="code">
-
-<br/>
-<span class="id" type="keyword">Theorem</span> <a name="path_ishprop"><span class="id" type="lemma">path_ishprop</span></a> `{<span class="id" type="var">H</span> : <a class="idref" href="HoTT.Basics.Overture.html#IsHProp"><span class="id" type="abbreviation">IsHProp</span></a> <span class="id" type="var">A</span>} : <span class="id" type="keyword">∀</span> <span class="id" type="var">x</span> <span class="id" type="var">y</span> : <a class="idref" href="HoTT.HProp.html#A"><span class="id" type="variable">A</span></a>, <a class="idref" href="HoTT.HProp.html#x"><span class="id" type="variable">x</span></a> <a class="idref" href="HoTT.Basics.Overture.html#:type_scope:x_'='_x"><span class="id" type="notation">=</span></a> <a class="idref" href="HoTT.HProp.html#y"><span class="id" type="variable">y</span></a>.<br/>
-<span class="id" type="keyword">Proof</span>.<br/>
-&nbsp;&nbsp;<span class="id" type="tactic">apply</span> <span class="id" type="var">H</span>.<br/>
-<span class="id" type="keyword">Defined</span>.<br/>
-
-<br/>
-<span class="id" type="keyword">Theorem</span> <a name="hprop_allpath"><span class="id" type="lemma">hprop_allpath</span></a> (<span class="id" type="var">A</span> : <span class="id" type="keyword">Type</span>) : <a class="idref" href="Coq.Init.Logic.html#:type_scope:x_'->'_x"><span class="id" type="notation">(</span></a><span class="id" type="keyword">∀</span> (<span class="id" type="var">x</span> <span class="id" type="var">y</span> : <a class="idref" href="HoTT.HProp.html#A"><span class="id" type="variable">A</span></a>), <a class="idref" href="HoTT.HProp.html#x"><span class="id" type="variable">x</span></a> <a class="idref" href="HoTT.Basics.Overture.html#:type_scope:x_'='_x"><span class="id" type="notation">=</span></a> <a class="idref" href="HoTT.HProp.html#y"><span class="id" type="variable">y</span></a><a class="idref" href="Coq.Init.Logic.html#:type_scope:x_'->'_x"><span class="id" type="notation">)</span></a> <a class="idref" href="Coq.Init.Logic.html#:type_scope:x_'->'_x"><span class="id" type="notation">→</span></a> <a class="idref" href="HoTT.Basics.Overture.html#IsHProp"><span class="id" type="abbreviation">IsHProp</span></a> <a class="idref" href="HoTT.HProp.html#A"><span class="id" type="variable">A</span></a>.<br/>
-&nbsp;&nbsp;<span class="id" type="tactic">intros</span> <span class="id" type="var">H</span> <span class="id" type="var">x</span> <span class="id" type="var">y</span>.<br/>
-&nbsp;&nbsp;<span class="id" type="tactic">pose</span> (<span class="id" type="var">C</span> := <a class="idref" href="HoTT.Basics.Overture.html#BuildContr"><span class="id" type="constructor">BuildContr</span></a> <span class="id" type="var">A</span> <span class="id" type="var">x</span> (<span class="id" type="var">H</span> <span class="id" type="var">x</span>)).<br/>
-&nbsp;&nbsp;<span class="id" type="tactic">apply</span> <a class="idref" href="HoTT.Basics.Contractible.html#contr_paths_contr"><span class="id" type="instance">contr_paths_contr</span></a>.<br/>
-<span class="id" type="keyword">Defined</span>.<br/>
 
 <br/>
 <span class="id" type="keyword">Theorem</span> <a name="equiv_hprop_allpath"><span class="id" type="lemma">equiv_hprop_allpath</span></a> `{<a class="idref" href="HoTT.Basics.Overture.html#Funext"><span class="id" type="class">Funext</span></a>} (<span class="id" type="var">A</span> : <span class="id" type="keyword">Type</span>)<br/>
 &nbsp;&nbsp;: <a class="idref" href="HoTT.Basics.Overture.html#IsHProp"><span class="id" type="abbreviation">IsHProp</span></a> <a class="idref" href="HoTT.HProp.html#A"><span class="id" type="variable">A</span></a> <a class="idref" href="HoTT.Basics.Overture.html#:equiv_scope:x_'<~>'_x"><span class="id" type="notation">&lt;~&gt;</span></a> <a class="idref" href="HoTT.Basics.Overture.html#:equiv_scope:x_'<~>'_x"><span class="id" type="notation">(</span></a><span class="id" type="keyword">∀</span> (<span class="id" type="var">x</span> <span class="id" type="var">y</span> : <a class="idref" href="HoTT.HProp.html#A"><span class="id" type="variable">A</span></a>), <a class="idref" href="HoTT.HProp.html#x"><span class="id" type="variable">x</span></a> <a class="idref" href="HoTT.Basics.Overture.html#:type_scope:x_'='_x"><span class="id" type="notation">=</span></a> <a class="idref" href="HoTT.HProp.html#y"><span class="id" type="variable">y</span></a><a class="idref" href="HoTT.Basics.Overture.html#:equiv_scope:x_'<~>'_x"><span class="id" type="notation">)</span></a>.<br/>
 <span class="id" type="keyword">Proof</span>.<br/>
-&nbsp;&nbsp;<span class="id" type="tactic">apply</span> (<a class="idref" href="HoTT.Basics.Equivalences.html#equiv_adjointify"><span class="id" type="definition">equiv_adjointify</span></a> (@<a class="idref" href="HoTT.HProp.html#path_ishprop"><span class="id" type="lemma">path_ishprop</span></a> <span class="id" type="var">A</span>) (@<a class="idref" href="HoTT.HProp.html#hprop_allpath"><span class="id" type="lemma">hprop_allpath</span></a> <span class="id" type="var">A</span>));<br/>
+&nbsp;&nbsp;<span class="id" type="tactic">apply</span> (<a class="idref" href="HoTT.Basics.Equivalences.html#equiv_adjointify"><span class="id" type="definition">equiv_adjointify</span></a> (@<a class="idref" href="HoTT.Basics.Trunc.html#path_ishprop"><span class="id" type="lemma">path_ishprop</span></a> <span class="id" type="var">A</span>) (@<a class="idref" href="HoTT.Basics.Trunc.html#hprop_allpath"><span class="id" type="lemma">hprop_allpath</span></a> <span class="id" type="var">A</span>));<br/>
 &nbsp;&nbsp;<br/>
 &nbsp;&nbsp;&nbsp;&nbsp;<span class="id" type="tactic">intro</span> <span class="id" type="var">f</span>;<br/>
 &nbsp;&nbsp;<br/>
@@ -188,76 +119,16 @@ Chracterization of <span class="inlinecode"><a class="idref" href="HoTT.Basics.O
 &nbsp;&nbsp;&nbsp;&nbsp;<span class="id" type="tactic">apply</span> <a class="idref" href="HoTT.Basics.Overture.html#path_forall"><span class="id" type="definition">path_forall</span></a>; <span class="id" type="tactic">intro</span> <span class="id" type="var">y</span>;<br/>
 &nbsp;&nbsp;<br/>
 &nbsp;&nbsp;&nbsp;&nbsp;<span class="id" type="tactic">try</span> <span class="id" type="tactic">pose</span> (<span class="id" type="var">C</span> := <a class="idref" href="HoTT.Basics.Overture.html#BuildContr"><span class="id" type="constructor">BuildContr</span></a> <span class="id" type="var">A</span> <span class="id" type="var">x</span> (<span class="id" type="var">f</span> <span class="id" type="var">x</span>));<br/>
-&nbsp;&nbsp;&nbsp;&nbsp;<span class="id" type="tactic">try</span> <span class="id" type="tactic">pose</span> (<span class="id" type="var">D</span> := <a class="idref" href="HoTT.HProp.html#contr_inhabited_hprop"><span class="id" type="lemma">contr_inhabited_hprop</span></a> <span class="id" type="var">A</span> <span class="id" type="var">x</span>);<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="id" type="tactic">try</span> <span class="id" type="tactic">pose</span> (<span class="id" type="var">D</span> := <a class="idref" href="HoTT.Basics.Trunc.html#contr_inhabited_hprop"><span class="id" type="lemma">contr_inhabited_hprop</span></a> <span class="id" type="var">A</span> <span class="id" type="var">x</span>);<br/>
 &nbsp;&nbsp;<br/>
 &nbsp;&nbsp;&nbsp;&nbsp;<span class="id" type="tactic">apply</span> <a class="idref" href="HoTT.Basics.Contractible.html#path_contr"><span class="id" type="definition">path_contr</span></a>.<br/>
 <span class="id" type="keyword">Defined</span>.<br/>
 
 <br/>
-</div>
-
-<div class="doc">
-Two propositions are equivalent as soon as there are maps in both
-   directions. 
-</div>
-<div class="code">
-
-<br/>
-<span class="id" type="keyword">Definition</span> <a name="isequiv_iff_hprop"><span class="id" type="definition">isequiv_iff_hprop</span></a> `{<a class="idref" href="HoTT.Basics.Overture.html#IsHProp"><span class="id" type="abbreviation">IsHProp</span></a> <span class="id" type="var">A</span>} `{<a class="idref" href="HoTT.Basics.Overture.html#IsHProp"><span class="id" type="abbreviation">IsHProp</span></a> <span class="id" type="var">B</span>}<br/>
-&nbsp;&nbsp;(<span class="id" type="var">f</span> : <a class="idref" href="HoTT.HProp.html#A"><span class="id" type="variable">A</span></a> <a class="idref" href="Coq.Init.Logic.html#:type_scope:x_'->'_x"><span class="id" type="notation">→</span></a> <a class="idref" href="HoTT.HProp.html#B"><span class="id" type="variable">B</span></a>) (<span class="id" type="var">g</span> : <a class="idref" href="HoTT.HProp.html#B"><span class="id" type="variable">B</span></a> <a class="idref" href="Coq.Init.Logic.html#:type_scope:x_'->'_x"><span class="id" type="notation">→</span></a> <a class="idref" href="HoTT.HProp.html#A"><span class="id" type="variable">A</span></a>)<br/>
-: <a class="idref" href="HoTT.Basics.Overture.html#IsEquiv"><span class="id" type="class">IsEquiv</span></a> <a class="idref" href="HoTT.HProp.html#f"><span class="id" type="variable">f</span></a>.<br/>
-<span class="id" type="keyword">Proof</span>.<br/>
-&nbsp;&nbsp;<span class="id" type="tactic">apply</span> (<a class="idref" href="HoTT.Basics.Equivalences.html#isequiv_adjointify"><span class="id" type="definition">isequiv_adjointify</span></a> <span class="id" type="var">f</span> <span class="id" type="var">g</span>);<br/>
-&nbsp;&nbsp;&nbsp;&nbsp;<span class="id" type="tactic">intros</span> ?; <span class="id" type="tactic">apply</span> <a class="idref" href="HoTT.HProp.html#path_ishprop"><span class="id" type="lemma">path_ishprop</span></a>.<br/>
-<span class="id" type="keyword">Defined</span>.<br/>
-
-<br/>
-<span class="id" type="keyword">Definition</span> <a name="equiv_iff_hprop_uncurried"><span class="id" type="definition">equiv_iff_hprop_uncurried</span></a> `{<a class="idref" href="HoTT.Basics.Overture.html#IsHProp"><span class="id" type="abbreviation">IsHProp</span></a> <span class="id" type="var">A</span>} `{<a class="idref" href="HoTT.Basics.Overture.html#IsHProp"><span class="id" type="abbreviation">IsHProp</span></a> <span class="id" type="var">B</span>}<br/>
-&nbsp;&nbsp;: <a class="idref" href="Coq.Init.Logic.html#:type_scope:x_'->'_x"><span class="id" type="notation">(</span></a><a class="idref" href="HoTT.HProp.html#A"><span class="id" type="variable">A</span></a> <a class="idref" href="Coq.Init.Datatypes.html#:type_scope:x_'<->'_x"><span class="id" type="notation">↔</span></a> <a class="idref" href="HoTT.HProp.html#B"><span class="id" type="variable">B</span></a><a class="idref" href="Coq.Init.Logic.html#:type_scope:x_'->'_x"><span class="id" type="notation">)</span></a> <a class="idref" href="Coq.Init.Logic.html#:type_scope:x_'->'_x"><span class="id" type="notation">→</span></a> <a class="idref" href="Coq.Init.Logic.html#:type_scope:x_'->'_x"><span class="id" type="notation">(</span></a><a class="idref" href="HoTT.HProp.html#A"><span class="id" type="variable">A</span></a> <a class="idref" href="HoTT.Basics.Overture.html#:equiv_scope:x_'<~>'_x"><span class="id" type="notation">&lt;~&gt;</span></a> <a class="idref" href="HoTT.HProp.html#B"><span class="id" type="variable">B</span></a><a class="idref" href="Coq.Init.Logic.html#:type_scope:x_'->'_x"><span class="id" type="notation">)</span></a>.<br/>
-<span class="id" type="keyword">Proof</span>.<br/>
-&nbsp;&nbsp;<span class="id" type="tactic">intros</span> [<span class="id" type="var">f</span> <span class="id" type="var">g</span>].<br/>
-&nbsp;&nbsp;<span class="id" type="tactic">apply</span> (<a class="idref" href="HoTT.Basics.Equivalences.html#equiv_adjointify"><span class="id" type="definition">equiv_adjointify</span></a> <span class="id" type="var">f</span> <span class="id" type="var">g</span>);<br/>
-&nbsp;&nbsp;&nbsp;&nbsp;<span class="id" type="tactic">intros</span> ?; <span class="id" type="tactic">apply</span> <a class="idref" href="HoTT.HProp.html#path_ishprop"><span class="id" type="lemma">path_ishprop</span></a>.<br/>
-<span class="id" type="keyword">Defined</span>.<br/>
-
-<br/>
-<span class="id" type="keyword">Definition</span> <a name="equiv_iff_hprop"><span class="id" type="definition">equiv_iff_hprop</span></a> `{<a class="idref" href="HoTT.Basics.Overture.html#IsHProp"><span class="id" type="abbreviation">IsHProp</span></a> <span class="id" type="var">A</span>} `{<a class="idref" href="HoTT.Basics.Overture.html#IsHProp"><span class="id" type="abbreviation">IsHProp</span></a> <span class="id" type="var">B</span>}<br/>
-&nbsp;&nbsp;: <a class="idref" href="Coq.Init.Logic.html#:type_scope:x_'->'_x"><span class="id" type="notation">(</span></a><a class="idref" href="HoTT.HProp.html#A"><span class="id" type="variable">A</span></a> <a class="idref" href="Coq.Init.Logic.html#:type_scope:x_'->'_x"><span class="id" type="notation">→</span></a> <a class="idref" href="HoTT.HProp.html#B"><span class="id" type="variable">B</span></a><a class="idref" href="Coq.Init.Logic.html#:type_scope:x_'->'_x"><span class="id" type="notation">)</span></a> <a class="idref" href="Coq.Init.Logic.html#:type_scope:x_'->'_x"><span class="id" type="notation">→</span></a> <a class="idref" href="Coq.Init.Logic.html#:type_scope:x_'->'_x"><span class="id" type="notation">(</span></a><a class="idref" href="HoTT.HProp.html#B"><span class="id" type="variable">B</span></a> <a class="idref" href="Coq.Init.Logic.html#:type_scope:x_'->'_x"><span class="id" type="notation">→</span></a> <a class="idref" href="HoTT.HProp.html#A"><span class="id" type="variable">A</span></a><a class="idref" href="Coq.Init.Logic.html#:type_scope:x_'->'_x"><span class="id" type="notation">)</span></a> <a class="idref" href="Coq.Init.Logic.html#:type_scope:x_'->'_x"><span class="id" type="notation">→</span></a> <a class="idref" href="Coq.Init.Logic.html#:type_scope:x_'->'_x"><span class="id" type="notation">(</span></a><a class="idref" href="HoTT.HProp.html#A"><span class="id" type="variable">A</span></a> <a class="idref" href="HoTT.Basics.Overture.html#:equiv_scope:x_'<~>'_x"><span class="id" type="notation">&lt;~&gt;</span></a> <a class="idref" href="HoTT.HProp.html#B"><span class="id" type="variable">B</span></a><a class="idref" href="Coq.Init.Logic.html#:type_scope:x_'->'_x"><span class="id" type="notation">)</span></a><br/>
-&nbsp;&nbsp;:= <span class="id" type="keyword">fun</span> <span class="id" type="var">f</span> <span class="id" type="var">g</span> ⇒ <a class="idref" href="HoTT.HProp.html#equiv_iff_hprop_uncurried"><span class="id" type="definition">equiv_iff_hprop_uncurried</span></a> <a class="idref" href="Coq.Init.Datatypes.html#:core_scope:'('_x_','_x_','_'..'_','_x_')'"><span class="id" type="notation">(</span></a><a class="idref" href="HoTT.HProp.html#f"><span class="id" type="variable">f</span></a><a class="idref" href="Coq.Init.Datatypes.html#:core_scope:'('_x_','_x_','_'..'_','_x_')'"><span class="id" type="notation">,</span></a> <a class="idref" href="HoTT.HProp.html#g"><span class="id" type="variable">g</span></a><a class="idref" href="Coq.Init.Datatypes.html#:core_scope:'('_x_','_x_','_'..'_','_x_')'"><span class="id" type="notation">)</span></a>.<br/>
-
-<br/>
-</div>
-
-<div class="doc">
-Being a contractible space is a proposition. 
-</div>
-<div class="code">
-
-<br/>
-<span class="id" type="keyword">Global Instance</span> <a name="hprop_contr"><span class="id" type="instance">hprop_contr</span></a> `{<a class="idref" href="HoTT.Basics.Overture.html#Funext"><span class="id" type="class">Funext</span></a>} (<span class="id" type="var">A</span> : <span class="id" type="keyword">Type</span>) : <a class="idref" href="HoTT.Basics.Overture.html#IsHProp"><span class="id" type="abbreviation">IsHProp</span></a> (<a class="idref" href="HoTT.Basics.Overture.html#Contr"><span class="id" type="abbreviation">Contr</span></a> <a class="idref" href="HoTT.HProp.html#A"><span class="id" type="variable">A</span></a>) | 0.<br/>
-<span class="id" type="keyword">Proof</span>.<br/>
-&nbsp;&nbsp;<span class="id" type="tactic">apply</span> <a class="idref" href="HoTT.HProp.html#hprop_inhabited_contr"><span class="id" type="instance">hprop_inhabited_contr</span></a>.<br/>
-&nbsp;&nbsp;<span class="id" type="tactic">intro</span> <span class="id" type="var">cA</span>.<br/>
-&nbsp;&nbsp;<span class="id" type="tactic">exact</span> <span class="id" type="var">_</span>.<br/>
-<span class="id" type="keyword">Defined</span>.<br/>
-
-<br/>
-</div>
-
-<div class="doc">
-Here is an alternate characterization of propositions. 
-</div>
-<div class="code">
-
-<br/>
-<span class="id" type="keyword">Global Instance</span> <a name="HProp_HProp"><span class="id" type="instance">HProp_HProp</span></a> `{<a class="idref" href="HoTT.Basics.Overture.html#Funext"><span class="id" type="class">Funext</span></a>} <span class="id" type="var">A</span> : <a class="idref" href="HoTT.Basics.Overture.html#IsHProp"><span class="id" type="abbreviation">IsHProp</span></a> (<a class="idref" href="HoTT.Basics.Overture.html#IsHProp"><span class="id" type="abbreviation">IsHProp</span></a> <a class="idref" href="HoTT.HProp.html#A"><span class="id" type="variable">A</span></a>) | 0<br/>
-&nbsp;&nbsp;:= <a class="idref" href="HoTT.HProp.html#hprop_trunc"><span class="id" type="instance">hprop_trunc</span></a> <a class="idref" href="HoTT.Basics.Overture.html#:trunc_scope:'-1'"><span class="id" type="notation">-1</span></a> <span class="id" type="var">A</span>.<br/>
-
-<br/>
 <span class="id" type="keyword">Theorem</span> <a name="equiv_hprop_inhabited_contr"><span class="id" type="lemma">equiv_hprop_inhabited_contr</span></a> `{<a class="idref" href="HoTT.Basics.Overture.html#Funext"><span class="id" type="class">Funext</span></a>} {<span class="id" type="var">A</span>}<br/>
 &nbsp;&nbsp;: <a class="idref" href="HoTT.Basics.Overture.html#IsHProp"><span class="id" type="abbreviation">IsHProp</span></a> <a class="idref" href="HoTT.HProp.html#A"><span class="id" type="variable">A</span></a> <a class="idref" href="HoTT.Basics.Overture.html#:equiv_scope:x_'<~>'_x"><span class="id" type="notation">&lt;~&gt;</span></a> <a class="idref" href="HoTT.Basics.Overture.html#:equiv_scope:x_'<~>'_x"><span class="id" type="notation">(</span></a><a class="idref" href="HoTT.HProp.html#A"><span class="id" type="variable">A</span></a> <a class="idref" href="Coq.Init.Logic.html#:type_scope:x_'->'_x"><span class="id" type="notation">→</span></a> <a class="idref" href="HoTT.Basics.Overture.html#Contr"><span class="id" type="abbreviation">Contr</span></a> <a class="idref" href="HoTT.HProp.html#A"><span class="id" type="variable">A</span></a><a class="idref" href="HoTT.Basics.Overture.html#:equiv_scope:x_'<~>'_x"><span class="id" type="notation">)</span></a>.<br/>
 <span class="id" type="keyword">Proof</span>.<br/>
-&nbsp;&nbsp;<span class="id" type="tactic">apply</span> (<a class="idref" href="HoTT.Basics.Equivalences.html#equiv_adjointify"><span class="id" type="definition">equiv_adjointify</span></a> (@<a class="idref" href="HoTT.HProp.html#contr_inhabited_hprop"><span class="id" type="lemma">contr_inhabited_hprop</span></a> <span class="id" type="var">A</span>) (@<a class="idref" href="HoTT.HProp.html#hprop_inhabited_contr"><span class="id" type="instance">hprop_inhabited_contr</span></a> <span class="id" type="var">A</span>)).<br/>
+&nbsp;&nbsp;<span class="id" type="tactic">apply</span> (<a class="idref" href="HoTT.Basics.Equivalences.html#equiv_adjointify"><span class="id" type="definition">equiv_adjointify</span></a> (@<a class="idref" href="HoTT.Basics.Trunc.html#contr_inhabited_hprop"><span class="id" type="lemma">contr_inhabited_hprop</span></a> <span class="id" type="var">A</span>) (@<a class="idref" href="HoTT.Basics.Trunc.html#hprop_inhabited_contr"><span class="id" type="instance">hprop_inhabited_contr</span></a> <span class="id" type="var">A</span>)).<br/>
 &nbsp;&nbsp;- <span class="id" type="tactic">intro</span> <span class="id" type="var">ic</span>. <span class="id" type="var">by_extensionality</span> <span class="id" type="var">x</span>.<br/>
 &nbsp;&nbsp;&nbsp;&nbsp;<span class="id" type="tactic">apply</span> @<a class="idref" href="HoTT.Basics.Contractible.html#path_contr"><span class="id" type="definition">path_contr</span></a>. <span class="id" type="tactic">apply</span> <a class="idref" href="HoTT.HProp.html#contr_contr"><span class="id" type="instance">contr_contr</span></a>. <span class="id" type="tactic">exact</span> (<span class="id" type="var">ic</span> <span class="id" type="var">x</span>).<br/>
 &nbsp;&nbsp;- <span class="id" type="tactic">intro</span> <span class="id" type="var">hp</span>. <span class="id" type="var">by_extensionality</span> <span class="id" type="var">x</span>. <span class="id" type="var">by_extensionality</span> <span class="id" type="var">y</span>.<br/>
@@ -268,20 +139,23 @@ Here is an alternate characterization of propositions.
 </div>
 
 <div class="doc">
-Here are some alternate characterizations of contractibility. 
+<a name="lab134"></a><h2 class="section">Alternate characterizations of contractibility.</h2>
+
 </div>
 <div class="code">
+
+<br/>
 <span class="id" type="keyword">Theorem</span> <a name="equiv_contr_inhabited_hprop"><span class="id" type="lemma">equiv_contr_inhabited_hprop</span></a> `{<a class="idref" href="HoTT.Basics.Overture.html#Funext"><span class="id" type="class">Funext</span></a>} {<span class="id" type="var">A</span>}<br/>
 &nbsp;&nbsp;: <a class="idref" href="HoTT.Basics.Overture.html#Contr"><span class="id" type="abbreviation">Contr</span></a> <a class="idref" href="HoTT.HProp.html#A"><span class="id" type="variable">A</span></a> <a class="idref" href="HoTT.Basics.Overture.html#:equiv_scope:x_'<~>'_x"><span class="id" type="notation">&lt;~&gt;</span></a> <a class="idref" href="HoTT.HProp.html#A"><span class="id" type="variable">A</span></a> <a class="idref" href="Coq.Init.Datatypes.html#:type_scope:x_'*'_x"><span class="id" type="notation">×</span></a> <a class="idref" href="HoTT.Basics.Overture.html#IsHProp"><span class="id" type="abbreviation">IsHProp</span></a> <a class="idref" href="HoTT.HProp.html#A"><span class="id" type="variable">A</span></a>.<br/>
 <span class="id" type="keyword">Proof</span>.<br/>
 &nbsp;&nbsp;<span class="id" type="tactic">assert</span> (<span class="id" type="var">f</span> : <a class="idref" href="HoTT.Basics.Overture.html#Contr"><span class="id" type="abbreviation">Contr</span></a> <span class="id" type="var">A</span> <a class="idref" href="Coq.Init.Logic.html#:type_scope:x_'->'_x"><span class="id" type="notation">→</span></a> <span class="id" type="var">A</span> <a class="idref" href="Coq.Init.Datatypes.html#:type_scope:x_'*'_x"><span class="id" type="notation">×</span></a> <a class="idref" href="HoTT.Basics.Overture.html#IsHProp"><span class="id" type="abbreviation">IsHProp</span></a> <span class="id" type="var">A</span>).<br/>
 &nbsp;&nbsp;&nbsp;&nbsp;<span class="id" type="tactic">intro</span> <span class="id" type="var">P</span>. <span class="id" type="tactic">split</span>. <span class="id" type="tactic">exact</span> (@<a class="idref" href="HoTT.Basics.Overture.html#center"><span class="id" type="method">center</span></a> <span class="id" type="var">_</span> <span class="id" type="var">P</span>). <span class="id" type="tactic">apply</span> @<a class="idref" href="HoTT.Basics.Trunc.html#trunc_succ"><span class="id" type="instance">trunc_succ</span></a>. <span class="id" type="tactic">exact</span> <span class="id" type="var">P</span>.<br/>
 &nbsp;&nbsp;<span class="id" type="tactic">assert</span> (<span class="id" type="var">g</span> : <span class="id" type="var">A</span> <a class="idref" href="Coq.Init.Datatypes.html#:type_scope:x_'*'_x"><span class="id" type="notation">×</span></a> <a class="idref" href="HoTT.Basics.Overture.html#IsHProp"><span class="id" type="abbreviation">IsHProp</span></a> <span class="id" type="var">A</span> <a class="idref" href="Coq.Init.Logic.html#:type_scope:x_'->'_x"><span class="id" type="notation">→</span></a> <a class="idref" href="HoTT.Basics.Overture.html#Contr"><span class="id" type="abbreviation">Contr</span></a> <span class="id" type="var">A</span>).<br/>
-&nbsp;&nbsp;&nbsp;&nbsp;<span class="id" type="tactic">intros</span> [<span class="id" type="var">a</span> <span class="id" type="var">P</span>]. <span class="id" type="tactic">apply</span> (@<a class="idref" href="HoTT.HProp.html#contr_inhabited_hprop"><span class="id" type="lemma">contr_inhabited_hprop</span></a> <span class="id" type="var">_</span> <span class="id" type="var">P</span> <span class="id" type="var">a</span>).<br/>
-&nbsp;&nbsp;<span class="id" type="tactic">refine</span> (@<a class="idref" href="HoTT.HProp.html#equiv_iff_hprop"><span class="id" type="definition">equiv_iff_hprop</span></a> <span class="id" type="var">_</span> <span class="id" type="var">_</span> <span class="id" type="var">_</span> <span class="id" type="var">_</span> <span class="id" type="var">f</span> <span class="id" type="var">g</span>).<br/>
-&nbsp;&nbsp;<span class="id" type="tactic">apply</span> <a class="idref" href="HoTT.HProp.html#hprop_inhabited_contr"><span class="id" type="instance">hprop_inhabited_contr</span></a>; <span class="id" type="tactic">intro</span> <span class="id" type="var">p</span>.<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="id" type="tactic">intros</span> [<span class="id" type="var">a</span> <span class="id" type="var">P</span>]. <span class="id" type="tactic">apply</span> (@<a class="idref" href="HoTT.Basics.Trunc.html#contr_inhabited_hprop"><span class="id" type="lemma">contr_inhabited_hprop</span></a> <span class="id" type="var">_</span> <span class="id" type="var">P</span> <span class="id" type="var">a</span>).<br/>
+&nbsp;&nbsp;<span class="id" type="tactic">refine</span> (@<a class="idref" href="HoTT.Basics.Trunc.html#equiv_iff_hprop"><span class="id" type="definition">equiv_iff_hprop</span></a> <span class="id" type="var">_</span> <span class="id" type="var">_</span> <span class="id" type="var">_</span> <span class="id" type="var">_</span> <span class="id" type="var">f</span> <span class="id" type="var">g</span>).<br/>
+&nbsp;&nbsp;<span class="id" type="tactic">apply</span> <a class="idref" href="HoTT.Basics.Trunc.html#hprop_inhabited_contr"><span class="id" type="instance">hprop_inhabited_contr</span></a>; <span class="id" type="tactic">intro</span> <span class="id" type="var">p</span>.<br/>
 &nbsp;&nbsp;<span class="id" type="tactic">apply</span> @<a class="idref" href="HoTT.types.Prod.html#contr_prod"><span class="id" type="instance">contr_prod</span></a>.<br/>
-&nbsp;&nbsp;<span class="id" type="tactic">exact</span> (<span class="id" type="var">g</span> <span class="id" type="var">p</span>). <span class="id" type="tactic">apply</span> (@<a class="idref" href="HoTT.HProp.html#contr_inhabited_hprop"><span class="id" type="lemma">contr_inhabited_hprop</span></a> <span class="id" type="var">_</span> <span class="id" type="var">_</span> (<a class="idref" href="Coq.Init.Datatypes.html#snd"><span class="id" type="projection">snd</span></a> <span class="id" type="var">p</span>)).<br/>
+&nbsp;&nbsp;<span class="id" type="tactic">exact</span> (<span class="id" type="var">g</span> <span class="id" type="var">p</span>). <span class="id" type="tactic">apply</span> (@<a class="idref" href="HoTT.Basics.Trunc.html#contr_inhabited_hprop"><span class="id" type="lemma">contr_inhabited_hprop</span></a> <span class="id" type="var">_</span> <span class="id" type="var">_</span> (<a class="idref" href="Coq.Init.Datatypes.html#snd"><span class="id" type="projection">snd</span></a> <span class="id" type="var">p</span>)).<br/>
 <span class="id" type="keyword">Defined</span>.<br/>
 
 <br/>
@@ -297,45 +171,52 @@ Here are some alternate characterizations of contractibility.
 </div>
 
 <div class="doc">
-If the second component of a sigma type is an hProp, then to prove equality, we only need equality of the first component. 
+<a name="lab135"></a><h2 class="section">Logical equivalence of hprops</h2>
+
+<div class="paragraph"> </div>
+
+ Logical equivalence of hprops is not just logically equivalent to equivalence, it is equivalent to it. 
 </div>
 <div class="code">
-<span class="id" type="keyword">Definition</span> <a name="path_sigma_hprop"><span class="id" type="definition">path_sigma_hprop</span></a> {<span class="id" type="var">A</span> : <span class="id" type="keyword">Type</span>} {<span class="id" type="var">P</span> : <a class="idref" href="HoTT.HProp.html#A"><span class="id" type="variable">A</span></a> <a class="idref" href="Coq.Init.Logic.html#:type_scope:x_'->'_x"><span class="id" type="notation">→</span></a> <span class="id" type="keyword">Type</span>}<br/>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;`{<span class="id" type="keyword">∀</span> <span class="id" type="var">x</span>, <a class="idref" href="HoTT.Basics.Overture.html#IsHProp"><span class="id" type="abbreviation">IsHProp</span></a> (<a class="idref" href="HoTT.HProp.html#P"><span class="id" type="variable">P</span></a> <a class="idref" href="HoTT.HProp.html#x"><span class="id" type="variable">x</span></a>)}<br/>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;(<span class="id" type="var">u</span> <span class="id" type="var">v</span> : <a class="idref" href="Coq.Init.Specif.html#sigT"><span class="id" type="abbreviation">sigT</span></a> <a class="idref" href="HoTT.HProp.html#P"><span class="id" type="variable">P</span></a>)<br/>
-: <a class="idref" href="HoTT.HProp.html#u"><span class="id" type="variable">u</span></a><a class="idref" href="HoTT.Basics.Overture.html#:fibration_scope:x_'.1'"><span class="id" type="notation">.1</span></a> <a class="idref" href="HoTT.Basics.Overture.html#:type_scope:x_'='_x"><span class="id" type="notation">=</span></a> <a class="idref" href="HoTT.HProp.html#v"><span class="id" type="variable">v</span></a><a class="idref" href="HoTT.Basics.Overture.html#:fibration_scope:x_'.1'"><span class="id" type="notation">.1</span></a> <a class="idref" href="Coq.Init.Logic.html#:type_scope:x_'->'_x"><span class="id" type="notation">→</span></a> <a class="idref" href="HoTT.HProp.html#u"><span class="id" type="variable">u</span></a> <a class="idref" href="HoTT.Basics.Overture.html#:type_scope:x_'='_x"><span class="id" type="notation">=</span></a> <a class="idref" href="HoTT.HProp.html#v"><span class="id" type="variable">v</span></a><br/>
-&nbsp;&nbsp;:= <a class="idref" href="HoTT.types.Sigma.html#path_sigma_uncurried"><span class="id" type="definition">path_sigma_uncurried</span></a> <a class="idref" href="HoTT.HProp.html#P"><span class="id" type="variable">P</span></a> <a class="idref" href="HoTT.HProp.html#u"><span class="id" type="variable">u</span></a> <a class="idref" href="HoTT.HProp.html#v"><span class="id" type="variable">v</span></a> <a class="idref" href="HoTT.Basics.Overture.html#:function_scope:x_'o'_x"><span class="id" type="notation">o</span></a> <a class="idref" href="HoTT.Basics.Overture.html#pr1"><span class="id" type="abbreviation">pr1</span></a><a class="idref" href="HoTT.Basics.Overture.html#:equiv_scope:x_'^-1'"><span class="id" type="notation">^-1</span></a>.<br/>
-
-<br/>
-<span class="id" type="keyword">Global Instance</span> <a name="isequiv_path_sigma_hprop"><span class="id" type="instance">isequiv_path_sigma_hprop</span></a> {<span class="id" type="var">A</span> <span class="id" type="var">P</span>} `{<span class="id" type="keyword">∀</span> <span class="id" type="var">x</span> : <a class="idref" href="HoTT.HProp.html#A"><span class="id" type="variable">A</span></a>, <a class="idref" href="HoTT.Basics.Overture.html#IsHProp"><span class="id" type="abbreviation">IsHProp</span></a> (<a class="idref" href="HoTT.HProp.html#P"><span class="id" type="variable">P</span></a> <a class="idref" href="HoTT.HProp.html#x"><span class="id" type="variable">x</span></a>)} {<span class="id" type="var">u</span> <span class="id" type="var">v</span> : <a class="idref" href="Coq.Init.Specif.html#sigT"><span class="id" type="abbreviation">sigT</span></a> <a class="idref" href="HoTT.HProp.html#P"><span class="id" type="variable">P</span></a>}<br/>
-: <a class="idref" href="HoTT.Basics.Overture.html#IsEquiv"><span class="id" type="class">IsEquiv</span></a> (@<a class="idref" href="HoTT.HProp.html#path_sigma_hprop"><span class="id" type="definition">path_sigma_hprop</span></a> <a class="idref" href="HoTT.HProp.html#A"><span class="id" type="variable">A</span></a> <a class="idref" href="HoTT.HProp.html#P"><span class="id" type="variable">P</span></a> <span class="id" type="var">_</span> <a class="idref" href="HoTT.HProp.html#u"><span class="id" type="variable">u</span></a> <a class="idref" href="HoTT.HProp.html#v"><span class="id" type="variable">v</span></a>) | 100<br/>
-&nbsp;&nbsp;:= <a class="idref" href="HoTT.Basics.Equivalences.html#isequiv_compose"><span class="id" type="instance">isequiv_compose</span></a>.<br/>
-
-<br/>
-<span class="id" type="keyword">Hint Immediate</span> <span class="id" type="var">isequiv_path_sigma_hprop</span> : <span class="id" type="var">typeclass_instances</span>.<br/>
+<span class="id" type="keyword">Global Instance</span> <a name="isequiv_equiv_iff_hprop_uncurried"><span class="id" type="instance">isequiv_equiv_iff_hprop_uncurried</span></a><br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;`{<a class="idref" href="HoTT.Basics.Overture.html#Funext"><span class="id" type="class">Funext</span></a>} {<span class="id" type="var">A</span> <span class="id" type="var">B</span>} `{<a class="idref" href="HoTT.Basics.Overture.html#IsHProp"><span class="id" type="abbreviation">IsHProp</span></a> <a class="idref" href="HoTT.HProp.html#A"><span class="id" type="variable">A</span></a>} `{<a class="idref" href="HoTT.Basics.Overture.html#IsHProp"><span class="id" type="abbreviation">IsHProp</span></a> <a class="idref" href="HoTT.HProp.html#B"><span class="id" type="variable">B</span></a>}<br/>
+: <a class="idref" href="HoTT.Basics.Overture.html#IsEquiv"><span class="id" type="class">IsEquiv</span></a> (@<a class="idref" href="HoTT.Basics.Trunc.html#equiv_iff_hprop_uncurried"><span class="id" type="definition">equiv_iff_hprop_uncurried</span></a> <a class="idref" href="HoTT.HProp.html#A"><span class="id" type="variable">A</span></a> <span class="id" type="var">_</span> <a class="idref" href="HoTT.HProp.html#B"><span class="id" type="variable">B</span></a> <span class="id" type="var">_</span>) | 0.<br/>
+<span class="id" type="keyword">Proof</span>.<br/>
+&nbsp;&nbsp;<span class="id" type="tactic">pose</span> (@<a class="idref" href="HoTT.types.Equiv.html#istrunc_equiv"><span class="id" type="instance">istrunc_equiv</span></a>).<br/>
+&nbsp;&nbsp;<span class="id" type="tactic">refine</span> (<a class="idref" href="HoTT.Basics.Equivalences.html#isequiv_adjointify"><span class="id" type="definition">isequiv_adjointify</span></a><br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a class="idref" href="HoTT.Basics.Trunc.html#equiv_iff_hprop_uncurried"><span class="id" type="definition">equiv_iff_hprop_uncurried</span></a><br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;(<span class="id" type="keyword">fun</span> <span class="id" type="var">e</span> ⇒ <a class="idref" href="Coq.Init.Datatypes.html#:core_scope:'('_x_','_x_','_'..'_','_x_')'"><span class="id" type="notation">(</span></a>@<a class="idref" href="HoTT.Basics.Overture.html#equiv_fun"><span class="id" type="projection">equiv_fun</span></a> <span class="id" type="var">_</span> <span class="id" type="var">_</span> <a class="idref" href="HoTT.HProp.html#e"><span class="id" type="variable">e</span></a><a class="idref" href="Coq.Init.Datatypes.html#:core_scope:'('_x_','_x_','_'..'_','_x_')'"><span class="id" type="notation">,</span></a> @<a class="idref" href="HoTT.Basics.Overture.html#equiv_inv"><span class="id" type="method">equiv_inv</span></a> <span class="id" type="var">_</span> <span class="id" type="var">_</span> <a class="idref" href="HoTT.HProp.html#e"><span class="id" type="variable">e</span></a> <span class="id" type="var">_</span><a class="idref" href="Coq.Init.Datatypes.html#:core_scope:'('_x_','_x_','_'..'_','_x_')'"><span class="id" type="notation">)</span></a>)<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="id" type="var">_</span> <span class="id" type="var">_</span>);<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="id" type="tactic">intro</span>;<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="id" type="tactic">by</span> <span class="id" type="tactic">apply</span> <a class="idref" href="HoTT.Basics.Trunc.html#path_ishprop"><span class="id" type="lemma">path_ishprop</span></a>.<br/>
+<span class="id" type="keyword">Defined</span>.<br/>
 
 <br/>
 </div>
 
 <div class="doc">
-The sigma of an hprop over a type can be viewed as a subtype. In particular, paths in the subtype are equivalent to paths in the original type. 
+<a name="lab136"></a><h2 class="section">Inhabited and uninhabited hprops</h2>
+
+<div class="paragraph"> </div>
+
+ If an hprop is inhabited, then it is equivalent to <span class="inlinecode"><a class="idref" href="HoTT.Basics.Overture.html#Unit"><span class="id" type="inductive">Unit</span></a></span>. 
 </div>
 <div class="code">
-<span class="id" type="keyword">Definition</span> <a name="equiv_path_sigma_hprop"><span class="id" type="definition">equiv_path_sigma_hprop</span></a> {<span class="id" type="var">A</span> : <span class="id" type="keyword">Type</span>} {<span class="id" type="var">P</span> : <a class="idref" href="HoTT.HProp.html#A"><span class="id" type="variable">A</span></a> <a class="idref" href="Coq.Init.Logic.html#:type_scope:x_'->'_x"><span class="id" type="notation">→</span></a> <span class="id" type="keyword">Type</span>}<br/>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;{<span class="id" type="var">HP</span> : <span class="id" type="keyword">∀</span> <span class="id" type="var">a</span>, <a class="idref" href="HoTT.Basics.Overture.html#IsHProp"><span class="id" type="abbreviation">IsHProp</span></a> (<a class="idref" href="HoTT.HProp.html#P"><span class="id" type="variable">P</span></a> <a class="idref" href="HoTT.HProp.html#a"><span class="id" type="variable">a</span></a>)} (<span class="id" type="var">u</span> <span class="id" type="var">v</span> : <a class="idref" href="Coq.Init.Specif.html#sigT"><span class="id" type="abbreviation">sigT</span></a> <a class="idref" href="HoTT.HProp.html#P"><span class="id" type="variable">P</span></a>)<br/>
-: <a class="idref" href="HoTT.Basics.Overture.html#:equiv_scope:x_'<~>'_x"><span class="id" type="notation">(</span></a><a class="idref" href="HoTT.HProp.html#u"><span class="id" type="variable">u</span></a><a class="idref" href="HoTT.Basics.Overture.html#:fibration_scope:x_'.1'"><span class="id" type="notation">.1</span></a> <a class="idref" href="HoTT.Basics.Overture.html#:type_scope:x_'='_x"><span class="id" type="notation">=</span></a> <a class="idref" href="HoTT.HProp.html#v"><span class="id" type="variable">v</span></a><a class="idref" href="HoTT.Basics.Overture.html#:fibration_scope:x_'.1'"><span class="id" type="notation">.1</span></a><a class="idref" href="HoTT.Basics.Overture.html#:equiv_scope:x_'<~>'_x"><span class="id" type="notation">)</span></a> <a class="idref" href="HoTT.Basics.Overture.html#:equiv_scope:x_'<~>'_x"><span class="id" type="notation">&lt;~&gt;</span></a> <a class="idref" href="HoTT.Basics.Overture.html#:equiv_scope:x_'<~>'_x"><span class="id" type="notation">(</span></a><a class="idref" href="HoTT.HProp.html#u"><span class="id" type="variable">u</span></a> <a class="idref" href="HoTT.Basics.Overture.html#:type_scope:x_'='_x"><span class="id" type="notation">=</span></a> <a class="idref" href="HoTT.HProp.html#v"><span class="id" type="variable">v</span></a><a class="idref" href="HoTT.Basics.Overture.html#:equiv_scope:x_'<~>'_x"><span class="id" type="notation">)</span></a><br/>
-&nbsp;&nbsp;:= <a class="idref" href="HoTT.Basics.Overture.html#BuildEquiv"><span class="id" type="constructor">BuildEquiv</span></a> <span class="id" type="var">_</span> <span class="id" type="var">_</span> (<a class="idref" href="HoTT.HProp.html#path_sigma_hprop"><span class="id" type="definition">path_sigma_hprop</span></a> <span class="id" type="var">_</span> <span class="id" type="var">_</span>) <span class="id" type="var">_</span>.<br/>
-
-<br/>
 <span class="id" type="keyword">Lemma</span> <a name="if_hprop_then_equiv_Unit"><span class="id" type="lemma">if_hprop_then_equiv_Unit</span></a> (<span class="id" type="var">hprop</span> : <span class="id" type="keyword">Type</span>) `{<a class="idref" href="HoTT.Basics.Overture.html#IsHProp"><span class="id" type="abbreviation">IsHProp</span></a> <a class="idref" href="HoTT.HProp.html#hprop"><span class="id" type="variable">hprop</span></a>} :  <a class="idref" href="HoTT.HProp.html#hprop"><span class="id" type="variable">hprop</span></a> <a class="idref" href="Coq.Init.Logic.html#:type_scope:x_'->'_x"><span class="id" type="notation">→</span></a> <a class="idref" href="HoTT.HProp.html#hprop"><span class="id" type="variable">hprop</span></a> <a class="idref" href="HoTT.Basics.Overture.html#:equiv_scope:x_'<~>'_x"><span class="id" type="notation">&lt;~&gt;</span></a> <a class="idref" href="HoTT.Basics.Overture.html#Unit"><span class="id" type="inductive">Unit</span></a>.<br/>
 <span class="id" type="keyword">Proof</span>.<br/>
 &nbsp;&nbsp;<span class="id" type="tactic">intro</span> <span class="id" type="var">p</span>.<br/>
-&nbsp;&nbsp;<span class="id" type="tactic">apply</span> <a class="idref" href="HoTT.HProp.html#equiv_iff_hprop"><span class="id" type="definition">equiv_iff_hprop</span></a>.<br/>
+&nbsp;&nbsp;<span class="id" type="tactic">apply</span> <a class="idref" href="HoTT.Basics.Trunc.html#equiv_iff_hprop"><span class="id" type="definition">equiv_iff_hprop</span></a>.<br/>
 &nbsp;&nbsp;<span class="id" type="tactic">exact</span> (<span class="id" type="keyword">fun</span> <span class="id" type="var">_</span> ⇒ <a class="idref" href="HoTT.Basics.Overture.html#tt"><span class="id" type="constructor">tt</span></a>).<br/>
 &nbsp;&nbsp;<span class="id" type="tactic">exact</span> (<span class="id" type="keyword">fun</span> <span class="id" type="var">_</span> ⇒ <span class="id" type="var">p</span>).<br/>
 <span class="id" type="keyword">Defined</span>.<br/>
 
 <br/>
+</div>
+
+<div class="doc">
+If an hprop is not inhabited, then it is equivalent to <span class="inlinecode"><a class="idref" href="HoTT.Basics.Overture.html#Empty"><span class="id" type="inductive">Empty</span></a></span>. 
+</div>
+<div class="code">
 <span class="id" type="keyword">Lemma</span> <a name="if_not_hprop_then_equiv_Empty"><span class="id" type="lemma">if_not_hprop_then_equiv_Empty</span></a> (<span class="id" type="var">hprop</span> : <span class="id" type="keyword">Type</span>) `{<a class="idref" href="HoTT.Basics.Overture.html#IsHProp"><span class="id" type="abbreviation">IsHProp</span></a> <a class="idref" href="HoTT.HProp.html#hprop"><span class="id" type="variable">hprop</span></a>} : <a class="idref" href="HoTT.Basics.Overture.html#:type_scope:'~'_x"><span class="id" type="notation">¬</span></a><a class="idref" href="HoTT.HProp.html#hprop"><span class="id" type="variable">hprop</span></a> <a class="idref" href="Coq.Init.Logic.html#:type_scope:x_'->'_x"><span class="id" type="notation">→</span></a> <a class="idref" href="HoTT.HProp.html#hprop"><span class="id" type="variable">hprop</span></a> <a class="idref" href="HoTT.Basics.Overture.html#:equiv_scope:x_'<~>'_x"><span class="id" type="notation">&lt;~&gt;</span></a> <a class="idref" href="HoTT.Basics.Overture.html#Empty"><span class="id" type="inductive">Empty</span></a>.<br/>
 <span class="id" type="keyword">Proof</span>.<br/>
 &nbsp;&nbsp;<span class="id" type="tactic">intro</span> <span class="id" type="var">np</span>.<br/>

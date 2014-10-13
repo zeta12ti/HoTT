@@ -39,14 +39,14 @@ Time: 0s">
 </div>
 <div class="code" title="File: Record.v
 Line: 3
-Time: 0.015s">
+Time: 0.017s">
 <div class="time" style="width: 100%"></div>
 <pre>Require Import HoTT.Basics.</pre>
 </div>
 <div class="code" title="File: Record.v
 Line: 3
 Time: 0.008s">
-<div class="time" style="width: 53.333333333333%"></div>
+<div class="time" style="width: 47.058823529412%"></div>
 <pre>
 Require Import types.Sigma types.Forall.</pre>
 </div>
@@ -82,7 +82,7 @@ Time: 0s">
 Line: 13
 Time: 0s">
 <div class="time" style="width: 0%"></div>
-<pre>Ltac issig1 build pr1 pr2 :=
+<pre>Ltac issig2 build pr1 pr2 :=
   (** Just in case the user supplied a goal which only *reduces* to one of the desired form. *)
   hnf;
   (** Extract the fibration of which our Sigma-type is the total space, as well as the record type. We pull the terms out of a [match], rather than leaving everything inside the [match] because this gives us better error messages. *)
@@ -111,7 +111,7 @@ Line: 29
 Time: 0s">
 <div class="time" style="width: 0%"></div>
 <pre>Tactic Notation "issig" constr(build) constr(pr1) constr(pr2) :=
-  issig1 build pr1 pr2.</pre>
+  issig2 build pr1 pr2.</pre>
 </div>
 <div class="code" title="File: Record.v
 Line: 30
@@ -140,14 +140,14 @@ Proof.</pre>
 <div class="code" title="File: Record.v
 Line: 35
 Time: 0.003s">
-<div class="time" style="width: 20%"></div>
+<div class="time" style="width: 17.647058823529%"></div>
 <pre>
   issig (BuildContr A) (@center A) (@contr A).</pre>
 </div>
 <div class="code" title="File: Record.v
 Line: 36
-Time: 0.003s">
-<div class="time" style="width: 20%"></div>
+Time: 0.002s">
+<div class="time" style="width: 11.764705882353%"></div>
 <pre>
 Defined.</pre>
 </div>
@@ -170,14 +170,14 @@ Proof.</pre>
 <div class="code" title="File: Record.v
 Line: 41
 Time: 0.003s">
-<div class="time" style="width: 20%"></div>
+<div class="time" style="width: 17.647058823529%"></div>
 <pre>
   issig (BuildEquiv A B) (@equiv_fun A B) (@equiv_isequiv A B).</pre>
 </div>
 <div class="code" title="File: Record.v
 Line: 42
 Time: 0.002s">
-<div class="time" style="width: 13.333333333333%"></div>
+<div class="time" style="width: 11.764705882353%"></div>
 <pre>
 Defined.</pre>
 </div>
@@ -199,7 +199,7 @@ Time: 0s">
 Line: 50
 Time: 0s">
 <div class="time" style="width: 0%"></div>
-<pre>Ltac issig2 build pr1 pr2 pr3 :=
+<pre>Ltac issig3 build pr1 pr2 pr3 :=
   hnf;
   let A := match goal with |- ?A &lt;~&gt; ?B =&gt; constr:(A) end in
   let B := match goal with |- ?A &lt;~&gt; ?B =&gt; constr:(B) end in
@@ -219,7 +219,7 @@ Time: 0s">
 <pre>
 
 Tactic Notation "issig" constr(build) constr(pr1) constr(pr2) constr(pr3) :=
-  issig2 build pr1 pr2 pr3.</pre>
+  issig3 build pr1 pr2 pr3.</pre>
 </div>
 <div class="code" title="File: Record.v
 Line: 64
@@ -233,7 +233,7 @@ Time: 0s">
 Line: 66
 Time: 0s">
 <div class="time" style="width: 0%"></div>
-<pre>Ltac issig3 build pr1 pr2 pr3 pr4 :=
+<pre>Ltac issig4 build pr1 pr2 pr3 pr4 :=
   hnf;
   let A := match goal with |- ?A &lt;~&gt; ?B =&gt; constr:(A) end in
   let B := match goal with |- ?A &lt;~&gt; ?B =&gt; constr:(B) end in
@@ -253,7 +253,7 @@ Time: 0s">
 <pre>
 
 Tactic Notation "issig" constr(build) constr(pr1) constr(pr2) constr(pr3) constr(pr4) :=
-  issig3 build pr1 pr2 pr3 pr4.</pre>
+  issig4 build pr1 pr2 pr3 pr4.</pre>
 </div>
 <div class="code" title="File: Record.v
 Line: 80
@@ -262,47 +262,7 @@ Time: 0s">
 <pre>
 
 
-(** The record [IsEquiv] has four components, so [issig3] can prove that it is equivalent to an iterated Sigma-type. *)
-
-</pre>
-</div>
-<div class="code" title="File: Record.v
-Line: 84
-Time: 0.002s">
-<div class="time" style="width: 13.333333333333%"></div>
-<pre>Definition issig_isequiv {A B : Type} (f : A -&gt; B) :
-  { g:B-&gt;A &amp; { r:Sect g f &amp; { s:Sect f g &amp; forall x : A, r (f x) = ap f (s x) }}}
-  &lt;~&gt; IsEquiv f.</pre>
-</div>
-<div class="code" title="File: Record.v
-Line: 86
-Time: 0s">
-<div class="time" style="width: 0%"></div>
-<pre>
-Proof.</pre>
-</div>
-<div class="code" title="File: Record.v
-Line: 87
-Time: 0.009s">
-<div class="time" style="width: 60%"></div>
-<pre>
-  issig (BuildIsEquiv A B f) (@equiv_inv A B f) (@eisretr A B f)
-        (@eissect A B f) (@eisadj A B f).</pre>
-</div>
-<div class="code" title="File: Record.v
-Line: 89
-Time: 0.013s">
-<div class="time" style="width: 86.666666666667%"></div>
-<pre>
-Defined.</pre>
-</div>
-<div class="code" title="File: Record.v
-Line: 90
-Time: 0s">
-<div class="time" style="width: 0%"></div>
-<pre>
-
-Ltac issig4 build pr1 pr2 pr3 pr4 pr5 :=
+Ltac issig5 build pr1 pr2 pr3 pr4 pr5 :=
   hnf;
   let A := match goal with |- ?A &lt;~&gt; ?B =&gt; constr:(A) end in
   let B := match goal with |- ?A &lt;~&gt; ?B =&gt; constr:(B) end in
@@ -316,21 +276,21 @@ Ltac issig4 build pr1 pr2 pr3 pr4 pr5 :=
                        (fun _ =&gt; 1))).</pre>
 </div>
 <div class="code" title="File: Record.v
-Line: 103
+Line: 94
 Time: 0s">
 <div class="time" style="width: 0%"></div>
 <pre>
 
 Tactic Notation "issig" constr(build) constr(pr1) constr(pr2) constr(pr3) constr(pr4) constr(pr5) :=
-  issig4 build pr1 pr2 pr3 pr4 pr5.</pre>
+  issig5 build pr1 pr2 pr3 pr4 pr5.</pre>
 </div>
 <div class="code" title="File: Record.v
-Line: 106
-Time: 0s">
-<div class="time" style="width: 0%"></div>
+Line: 97
+Time: 0.001s">
+<div class="time" style="width: 5.8823529411765%"></div>
 <pre>
 
-Ltac issig5 build pr1 pr2 pr3 pr4 pr5 pr6 :=
+Ltac issig6 build pr1 pr2 pr3 pr4 pr5 pr6 :=
   hnf;
   let A := match goal with |- ?A &lt;~&gt; ?B =&gt; constr:(A) end in
   let B := match goal with |- ?A &lt;~&gt; ?B =&gt; constr:(B) end in
@@ -344,13 +304,53 @@ Ltac issig5 build pr1 pr2 pr3 pr4 pr5 pr6 :=
                        (fun _ =&gt; 1))).</pre>
 </div>
 <div class="code" title="File: Record.v
-Line: 119
+Line: 110
 Time: 0s">
 <div class="time" style="width: 0%"></div>
 <pre>
 
 Tactic Notation "issig" constr(build) constr(pr1) constr(pr2) constr(pr3) constr(pr4) constr(pr5) constr(pr6) :=
-  issig5 build pr1 pr2 pr3 pr4 pr5 pr6.</pre>
+  issig6 build pr1 pr2 pr3 pr4 pr5 pr6.</pre>
+</div>
+<div class="code" title="File: Record.v
+Line: 113
+Time: 0s">
+<div class="time" style="width: 0%"></div>
+<pre>
+
+(** The record [IsEquiv] has four components, so [issig4] can prove that it is equivalent to an iterated Sigma-type. *)
+
+</pre>
+</div>
+<div class="code" title="File: Record.v
+Line: 116
+Time: 0.002s">
+<div class="time" style="width: 11.764705882353%"></div>
+<pre>Definition issig_isequiv {A B : Type} (f : A -&gt; B) :
+  { g:B-&gt;A &amp; { r:Sect g f &amp; { s:Sect f g &amp; forall x : A, r (f x) = ap f (s x) }}}
+  &lt;~&gt; IsEquiv f.</pre>
+</div>
+<div class="code" title="File: Record.v
+Line: 118
+Time: 0s">
+<div class="time" style="width: 0%"></div>
+<pre>
+Proof.</pre>
+</div>
+<div class="code" title="File: Record.v
+Line: 119
+Time: 0.01s">
+<div class="time" style="width: 58.823529411765%"></div>
+<pre>
+  issig (BuildIsEquiv A B f) (@equiv_inv A B f) (@eisretr A B f)
+        (@eissect A B f) (@eisadj A B f).</pre>
+</div>
+<div class="code" title="File: Record.v
+Line: 121
+Time: 0.015s">
+<div class="time" style="width: 88.235294117647%"></div>
+<pre>
+Defined.</pre>
 </div>
 <div class="code" title="File: Record.v
 Line: 123
