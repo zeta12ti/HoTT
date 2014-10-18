@@ -40,14 +40,14 @@ Time: 0s">
 </div>
 <div class="code" title="File: Interval.v
 Line: 4
-Time: 0.023s">
+Time: 0.018s">
 <div class="time" style="width: 100%"></div>
 <pre>Require Import HoTT.Basics.</pre>
 </div>
 <div class="code" title="File: Interval.v
 Line: 4
-Time: 0.012s">
-<div class="time" style="width: 52.173913043478%"></div>
+Time: 0.009s">
+<div class="time" style="width: 50%"></div>
 <pre>
 Require Import Types.Sigma Types.Forall Types.Paths.</pre>
 </div>
@@ -94,10 +94,10 @@ Axiom seg : zero = one.</pre>
 <div class="code" title="File: Interval.v
 Line: 15
 Time: 0.002s">
-<div class="time" style="width: 8.695652173913%"></div>
+<div class="time" style="width: 11.111111111111%"></div>
 <pre>
 
-Definition interval_rect (P : interval -&gt; Type)
+Definition interval_ind (P : interval -&gt; Type)
   (a : P zero) (b : P one) (p : seg # a = b)
   : forall x:interval, P x
   := fun x =&gt; (match x return _ -&gt; P x with
@@ -108,12 +108,12 @@ Definition interval_rect (P : interval -&gt; Type)
 <div class="code" title="File: Interval.v
 Line: 23
 Time: 0.002s">
-<div class="time" style="width: 8.695652173913%"></div>
+<div class="time" style="width: 11.111111111111%"></div>
 <pre>
 
-Axiom interval_rect_beta_seg : forall (P : interval -&gt; Type)
+Axiom interval_ind_beta_seg : forall (P : interval -&gt; Type)
   (a : P zero) (b : P one) (p : seg # a = b),
-  apD (interval_rect P a b p) seg = p.</pre>
+  apD (interval_ind P a b p) seg = p.</pre>
 </div>
 <div class="code" title="File: Interval.v
 Line: 27
@@ -132,7 +132,7 @@ Time: 0s">
 (*   Should fail:
 Lemma test (P : interval -&gt; Type) (a : P zero) (b : P one)
       (p p' : seg # a = b) :
-    interval_rect P a b p = interval_rect P a b p'.
+    interval_ind P a b p = interval_ind P a b p'.
 reflexivity.
 *)
 
@@ -141,20 +141,20 @@ reflexivity.
 </div>
 <div class="code" title="File: Interval.v
 Line: 38
-Time: 0.002s">
-<div class="time" style="width: 8.695652173913%"></div>
-<pre>Definition interval_rectnd (P : Type) (a b : P) (p : a = b)
+Time: 0.001s">
+<div class="time" style="width: 5.5555555555556%"></div>
+<pre>Definition interval_rec (P : Type) (a b : P) (p : a = b)
   : interval -&gt; P
-  := interval_rect (fun _ =&gt; P) a b (transport_const _ _ @ p).</pre>
+  := interval_ind (fun _ =&gt; P) a b (transport_const _ _ @ p).</pre>
 </div>
 <div class="code" title="File: Interval.v
 Line: 40
-Time: 0.001s">
-<div class="time" style="width: 4.3478260869565%"></div>
+Time: 0s">
+<div class="time" style="width: 0%"></div>
 <pre>
 
-Definition interval_rectnd_beta_seg (P : Type) (a b : P) (p : a = b)
-  : ap (interval_rectnd P a b p) seg = p.</pre>
+Definition interval_rec_beta_seg (P : Type) (a b : P) (p : a = b)
+  : ap (interval_rec P a b p) seg = p.</pre>
 </div>
 <div class="code" title="File: Interval.v
 Line: 43
@@ -165,29 +165,29 @@ Proof.</pre>
 </div>
 <div class="code" title="File: Interval.v
 Line: 44
-Time: 0.003s">
-<div class="time" style="width: 13.04347826087%"></div>
+Time: 0.002s">
+<div class="time" style="width: 11.111111111111%"></div>
 <pre>
   refine (cancelL (transport_const seg a) _ _ _).</pre>
 </div>
 <div class="code" title="File: Interval.v
 Line: 45
-Time: 0.013s">
-<div class="time" style="width: 56.521739130435%"></div>
+Time: 0.01s">
+<div class="time" style="width: 55.555555555556%"></div>
 <pre>
-  refine ((apD_const (interval_rect (fun _ =&gt; P) a b _) seg)^ @ _).</pre>
+  refine ((apD_const (interval_ind (fun _ =&gt; P) a b _) seg)^ @ _).</pre>
 </div>
 <div class="code" title="File: Interval.v
 Line: 46
-Time: 0.002s">
-<div class="time" style="width: 8.695652173913%"></div>
+Time: 0.001s">
+<div class="time" style="width: 5.5555555555556%"></div>
 <pre>
-  refine (interval_rect_beta_seg (fun _ =&gt; P) _ _ _).</pre>
+  refine (interval_ind_beta_seg (fun _ =&gt; P) _ _ _).</pre>
 </div>
 <div class="code" title="File: Interval.v
 Line: 47
-Time: 0.012s">
-<div class="time" style="width: 52.173913043478%"></div>
+Time: 0.01s">
+<div class="time" style="width: 55.555555555556%"></div>
 <pre>
 Defined.</pre>
 </div>
@@ -223,22 +223,22 @@ Time: 0s">
 </div>
 <div class="code" title="File: Interval.v
 Line: 53
-Time: 0.001s">
-<div class="time" style="width: 4.3478260869565%"></div>
+Time: 0s">
+<div class="time" style="width: 0%"></div>
 <pre>
-  refine (interval_rect _ 1 seg _).</pre>
+  refine (interval_ind _ 1 seg _).</pre>
 </div>
 <div class="code" title="File: Interval.v
 Line: 54
 Time: 0.001s">
-<div class="time" style="width: 4.3478260869565%"></div>
+<div class="time" style="width: 5.5555555555556%"></div>
 <pre>
   refine (transport_paths_r _ _ @ concat_1p _).</pre>
 </div>
 <div class="code" title="File: Interval.v
 Line: 55
 Time: 0.001s">
-<div class="time" style="width: 4.3478260869565%"></div>
+<div class="time" style="width: 5.5555555555556%"></div>
 <pre>
 Defined.</pre>
 </div>

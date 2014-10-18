@@ -54,7 +54,7 @@ Time: 0s">
 </div>
 <div class="code" title="File: Datatypes.v
 Line: 12
-Time: 0.004s">
+Time: 0.003s">
 <div class="time" style="width: 100%"></div>
 <pre>
 
@@ -63,7 +63,7 @@ Require Import Logic.</pre>
 <div class="code" title="File: Datatypes.v
 Line: 14
 Time: 0.001s">
-<div class="time" style="width: 25%"></div>
+<div class="time" style="width: 33.333333333333%"></div>
 <pre>
 Declare ML Module "nat_syntax_plugin".</pre>
 </div>
@@ -101,21 +101,36 @@ Line: 20
 Time: 0s">
 <div class="time" style="width: 0%"></div>
 <pre>
+Local Unset Elimination Schemes.</pre>
+</div>
+<div class="code" title="File: Datatypes.v
+Line: 21
+Time: 0s">
+<div class="time" style="width: 0%"></div>
+<pre>
 
 (** [option A] is the extension of [A] with an extra element [None] *)
 
 </pre>
 </div>
 <div class="code" title="File: Datatypes.v
-Line: 23
-Time: 0.002s">
-<div class="time" style="width: 50%"></div>
+Line: 24
+Time: 0s">
+<div class="time" style="width: 0%"></div>
 <pre>Inductive option (A : Type) : Type :=
   | Some : A -&gt; option A
   | None : option A.</pre>
 </div>
 <div class="code" title="File: Datatypes.v
-Line: 25
+Line: 26
+Time: 0s">
+<div class="time" style="width: 0%"></div>
+<pre>
+
+Scheme option_rect := Induction for option Sort Type.</pre>
+</div>
+<div class="code" title="File: Datatypes.v
+Line: 28
 Time: 0s">
 <div class="time" style="width: 0%"></div>
 <pre>
@@ -123,7 +138,7 @@ Time: 0s">
 Arguments None [A].</pre>
 </div>
 <div class="code" title="File: Datatypes.v
-Line: 27
+Line: 30
 Time: 0s">
 <div class="time" style="width: 0%"></div>
 <pre>
@@ -133,35 +148,20 @@ Time: 0s">
 </pre>
 </div>
 <div class="code" title="File: Datatypes.v
-Line: 30
-Time: 0.002s">
-<div class="time" style="width: 50%"></div>
+Line: 33
+Time: 0s">
+<div class="time" style="width: 0%"></div>
 <pre>Inductive sum (A B : Type) : Type :=
   | inl : A -&gt; sum A B
   | inr : B -&gt; sum A B.</pre>
 </div>
 <div class="code" title="File: Datatypes.v
-Line: 32
+Line: 35
 Time: 0s">
 <div class="time" style="width: 0%"></div>
 <pre>
 
-Notation "x + y" := (sum x y) : type_scope.</pre>
-</div>
-<div class="code" title="File: Datatypes.v
-Line: 34
-Time: 0s">
-<div class="time" style="width: 0%"></div>
-<pre>
-
-Arguments inl {A B} _ , [A] B _.</pre>
-</div>
-<div class="code" title="File: Datatypes.v
-Line: 36
-Time: 0s">
-<div class="time" style="width: 0%"></div>
-<pre>
-Arguments inr {A B} _ , A [B] _.</pre>
+Scheme sum_rect := Induction for sum Sort Type.</pre>
 </div>
 <div class="code" title="File: Datatypes.v
 Line: 37
@@ -169,17 +169,40 @@ Time: 0s">
 <div class="time" style="width: 0%"></div>
 <pre>
 
-Notation "A \/ B" := (A + B)%type (only parsing) : type_scope.</pre>
+Notation "x + y" := (sum x y) : type_scope.</pre>
 </div>
 <div class="code" title="File: Datatypes.v
 Line: 39
 Time: 0s">
 <div class="time" style="width: 0%"></div>
 <pre>
+
+Arguments inl {A B} _ , [A] B _.</pre>
+</div>
+<div class="code" title="File: Datatypes.v
+Line: 41
+Time: 0s">
+<div class="time" style="width: 0%"></div>
+<pre>
+Arguments inr {A B} _ , A [B] _.</pre>
+</div>
+<div class="code" title="File: Datatypes.v
+Line: 42
+Time: 0s">
+<div class="time" style="width: 0%"></div>
+<pre>
+
+Notation "A \/ B" := (A + B)%type (only parsing) : type_scope.</pre>
+</div>
+<div class="code" title="File: Datatypes.v
+Line: 44
+Time: 0s">
+<div class="time" style="width: 0%"></div>
+<pre>
 Notation or := sum (only parsing).</pre>
 </div>
 <div class="code" title="File: Datatypes.v
-Line: 40
+Line: 45
 Time: 0s">
 <div class="time" style="width: 0%"></div>
 <pre>
@@ -190,13 +213,21 @@ Time: 0s">
 </pre>
 </div>
 <div class="code" title="File: Datatypes.v
-Line: 44
-Time: 0.002s">
-<div class="time" style="width: 50%"></div>
+Line: 49
+Time: 0s">
+<div class="time" style="width: 0%"></div>
 <pre>Record prod (A B : Type) := pair { fst : A ; snd : B }.</pre>
 </div>
 <div class="code" title="File: Datatypes.v
-Line: 44
+Line: 49
+Time: 0s">
+<div class="time" style="width: 0%"></div>
+<pre>
+
+Scheme prod_rect := Induction for prod Sort Type.</pre>
+</div>
+<div class="code" title="File: Datatypes.v
+Line: 51
 Time: 0s">
 <div class="time" style="width: 0%"></div>
 <pre>
@@ -204,21 +235,21 @@ Time: 0s">
 Arguments pair {A B} _ _.</pre>
 </div>
 <div class="code" title="File: Datatypes.v
-Line: 46
+Line: 53
 Time: 0s">
 <div class="time" style="width: 0%"></div>
 <pre>
 Arguments fst {A B} _ / .</pre>
 </div>
 <div class="code" title="File: Datatypes.v
-Line: 47
+Line: 54
 Time: 0s">
 <div class="time" style="width: 0%"></div>
 <pre>
 Arguments snd {A B} _ / .</pre>
 </div>
 <div class="code" title="File: Datatypes.v
-Line: 48
+Line: 55
 Time: 0s">
 <div class="time" style="width: 0%"></div>
 <pre>
@@ -226,7 +257,7 @@ Time: 0s">
 Add Printing Let prod.</pre>
 </div>
 <div class="code" title="File: Datatypes.v
-Line: 50
+Line: 57
 Time: 0s">
 <div class="time" style="width: 0%"></div>
 <pre>
@@ -234,35 +265,35 @@ Time: 0s">
 Notation "x * y" := (prod x y) : type_scope.</pre>
 </div>
 <div class="code" title="File: Datatypes.v
-Line: 52
+Line: 59
 Time: 0s">
 <div class="time" style="width: 0%"></div>
 <pre>
 Notation "( x , y , .. , z )" := (pair .. (pair x y) .. z) : core_scope.</pre>
 </div>
 <div class="code" title="File: Datatypes.v
-Line: 53
+Line: 60
 Time: 0s">
 <div class="time" style="width: 0%"></div>
 <pre>
 Notation "A /\ B" := (prod A B) (only parsing) : type_scope.</pre>
 </div>
 <div class="code" title="File: Datatypes.v
-Line: 54
+Line: 61
 Time: 0s">
 <div class="time" style="width: 0%"></div>
 <pre>
 Notation and := prod (only parsing).</pre>
 </div>
 <div class="code" title="File: Datatypes.v
-Line: 55
+Line: 62
 Time: 0s">
 <div class="time" style="width: 0%"></div>
 <pre>
 Notation conj := pair (only parsing).</pre>
 </div>
 <div class="code" title="File: Datatypes.v
-Line: 56
+Line: 63
 Time: 0s">
 <div class="time" style="width: 0%"></div>
 <pre>
@@ -270,16 +301,16 @@ Time: 0s">
 Hint Resolve pair inl inr : core.</pre>
 </div>
 <div class="code" title="File: Datatypes.v
-Line: 58
-Time: 0.001s">
-<div class="time" style="width: 25%"></div>
+Line: 65
+Time: 0s">
+<div class="time" style="width: 0%"></div>
 <pre>
 
 Definition prod_curry (A B C : Type) (f : A -&gt; B -&gt; C)
   (p : prod A B) : C := f (fst p) (snd p).</pre>
 </div>
 <div class="code" title="File: Datatypes.v
-Line: 61
+Line: 68
 Time: 0s">
 <div class="time" style="width: 0%"></div>
 <pre>
@@ -289,13 +320,13 @@ Time: 0s">
 </pre>
 </div>
 <div class="code" title="File: Datatypes.v
-Line: 64
+Line: 71
 Time: 0s">
 <div class="time" style="width: 0%"></div>
 <pre>Definition iff (A B : Type) := prod (A -&gt; B) (B -&gt; A).</pre>
 </div>
 <div class="code" title="File: Datatypes.v
-Line: 64
+Line: 71
 Time: 0s">
 <div class="time" style="width: 0%"></div>
 <pre>
@@ -303,7 +334,7 @@ Time: 0s">
 Notation "A &lt;-&gt; B" := (iff A B) : type_scope.</pre>
 </div>
 <div class="code" title="File: Datatypes.v
-Line: 66
+Line: 73
 Time: 0s">
 <div class="time" style="width: 0%"></div>
 <pre>
@@ -313,15 +344,37 @@ Time: 0s">
 </pre>
 </div>
 <div class="code" title="File: Datatypes.v
-Line: 69
-Time: 0.001s">
-<div class="time" style="width: 25%"></div>
+Line: 76
+Time: 0s">
+<div class="time" style="width: 0%"></div>
 <pre>Inductive nat : Type :=
   | O : nat
   | S : nat -&gt; nat.</pre>
 </div>
 <div class="code" title="File: Datatypes.v
-Line: 71
+Line: 78
+Time: 0s">
+<div class="time" style="width: 0%"></div>
+<pre>
+
+Scheme nat_rect := Induction for nat Sort Type.</pre>
+</div>
+<div class="code" title="File: Datatypes.v
+Line: 80
+Time: 0s">
+<div class="time" style="width: 0%"></div>
+<pre>
+
+(* It would be nice not to need this, but the tactic [induction] requires it when the target is in [Set], and the above definition of [nat] puts it in [Set]. *)</pre>
+</div>
+<div class="code" title="File: Datatypes.v
+Line: 82
+Time: 0s">
+<div class="time" style="width: 0%"></div>
+<pre>Scheme nat_rec := Induction for nat Sort Set.</pre>
+</div>
+<div class="code" title="File: Datatypes.v
+Line: 82
 Time: 0s">
 <div class="time" style="width: 0%"></div>
 <pre>
@@ -329,28 +382,28 @@ Time: 0s">
 Delimit Scope nat_scope with nat.</pre>
 </div>
 <div class="code" title="File: Datatypes.v
-Line: 73
+Line: 84
 Time: 0s">
 <div class="time" style="width: 0%"></div>
 <pre>
 Bind Scope nat_scope with nat.</pre>
 </div>
 <div class="code" title="File: Datatypes.v
-Line: 74
+Line: 85
 Time: 0s">
 <div class="time" style="width: 0%"></div>
 <pre>
 Arguments S _%nat.</pre>
 </div>
 <div class="code" title="File: Datatypes.v
-Line: 75
+Line: 86
 Time: 0s">
 <div class="time" style="width: 0%"></div>
 <pre>
 Arguments S _.</pre>
 </div>
 <div class="code" title="File: Datatypes.v
-Line: 76
+Line: 87
 Time: 0s">
 <div class="time" style="width: 0%"></div>
 <pre>
@@ -358,7 +411,7 @@ Time: 0s">
 Open Scope nat_scope.</pre>
 </div>
 <div class="code" title="File: Datatypes.v
-Line: 78
+Line: 89
 Time: 0s">
 <div class="time" style="width: 0%"></div>
 <pre> (* Originally in Peano.v *)
@@ -371,14 +424,22 @@ Time: 0s">
 </pre>
 </div>
 <div class="code" title="File: Datatypes.v
-Line: 84
-Time: 0.001s">
-<div class="time" style="width: 25%"></div>
+Line: 95
+Time: 0s">
+<div class="time" style="width: 0%"></div>
 <pre>Inductive identity (A : Type) (a : A) : A -&gt; Type :=
   identity_refl : identity a a.</pre>
 </div>
 <div class="code" title="File: Datatypes.v
-Line: 85
+Line: 96
+Time: 0s">
+<div class="time" style="width: 0%"></div>
+<pre>
+
+Scheme identity_rect := Induction for identity Sort Type.</pre>
+</div>
+<div class="code" title="File: Datatypes.v
+Line: 98
 Time: 0s">
 <div class="time" style="width: 0%"></div>
 <pre>
@@ -386,7 +447,7 @@ Time: 0s">
 Hint Resolve identity_refl: core.</pre>
 </div>
 <div class="code" title="File: Datatypes.v
-Line: 87
+Line: 100
 Time: 0s">
 <div class="time" style="width: 0%"></div>
 <pre>
@@ -394,36 +455,22 @@ Time: 0s">
 Arguments identity {A} _ _.</pre>
 </div>
 <div class="code" title="File: Datatypes.v
-Line: 89
+Line: 102
 Time: 0s">
 <div class="time" style="width: 0%"></div>
 <pre>
 Arguments identity_refl {A a} , [A] a.</pre>
 </div>
 <div class="code" title="File: Datatypes.v
-Line: 90
+Line: 103
 Time: 0s">
 <div class="time" style="width: 0%"></div>
 <pre>
 
-Arguments identity_ind [A] a P f y i.</pre>
-</div>
-<div class="code" title="File: Datatypes.v
-Line: 92
-Time: 0s">
-<div class="time" style="width: 0%"></div>
-<pre>
-Arguments identity_rec [A] a P f y i.</pre>
-</div>
-<div class="code" title="File: Datatypes.v
-Line: 93
-Time: 0s">
-<div class="time" style="width: 0%"></div>
-<pre>
 Arguments identity_rect [A] a P f y i.</pre>
 </div>
 <div class="code" title="File: Datatypes.v
-Line: 94
+Line: 105
 Time: 0s">
 <div class="time" style="width: 0%"></div>
 <pre>
@@ -439,13 +486,13 @@ Definition id : ID := fun A x =&gt; x.
 </pre>
 </div>
 <div class="code" title="File: Datatypes.v
-Line: 103
+Line: 114
 Time: 0s">
 <div class="time" style="width: 0%"></div>
 <pre>Delimit Scope identity_scope with identity.</pre>
 </div>
 <div class="code" title="File: Datatypes.v
-Line: 103
+Line: 114
 Time: 0s">
 <div class="time" style="width: 0%"></div>
 <pre>
@@ -453,7 +500,7 @@ Time: 0s">
 Notation "x = y :&gt; A" := (@identity A x y)%identity : identity_scope.</pre>
 </div>
 <div class="code" title="File: Datatypes.v
-Line: 105
+Line: 116
 Time: 0s">
 <div class="time" style="width: 0%"></div>
 <pre>
@@ -461,21 +508,21 @@ Time: 0s">
 Notation "x = y" := (x = y :&gt;_)%identity : identity_scope.</pre>
 </div>
 <div class="code" title="File: Datatypes.v
-Line: 107
+Line: 118
 Time: 0s">
 <div class="time" style="width: 0%"></div>
 <pre>
 Notation "x &lt;&gt; y  :&gt; T" := (~ x = y :&gt;T)%identity : identity_scope.</pre>
 </div>
 <div class="code" title="File: Datatypes.v
-Line: 108
+Line: 119
 Time: 0s">
 <div class="time" style="width: 0%"></div>
 <pre>
 Notation "x &lt;&gt; y" := (x &lt;&gt; y :&gt;_)%identity : identity_scope.</pre>
 </div>
 <div class="code" title="File: Datatypes.v
-Line: 109
+Line: 120
 Time: 0s">
 <div class="time" style="width: 0%"></div>
 <pre>
@@ -483,7 +530,7 @@ Time: 0s">
 Local Open Scope identity_scope.</pre>
 </div>
 <div class="code" title="File: Datatypes.v
-Line: 111
+Line: 122
 Time: 0s">
 <div class="time" style="width: 0%"></div>
 <pre>
@@ -497,15 +544,23 @@ Time: 0s">
 </pre>
 </div>
 <div class="code" title="File: Datatypes.v
-Line: 118
-Time: 0.002s">
-<div class="time" style="width: 50%"></div>
+Line: 129
+Time: 0s">
+<div class="time" style="width: 0%"></div>
 <pre>Inductive list (A : Type) : Type :=
  | nil : list A
  | cons : A -&gt; list A -&gt; list A.</pre>
 </div>
 <div class="code" title="File: Datatypes.v
-Line: 120
+Line: 131
+Time: 0s">
+<div class="time" style="width: 0%"></div>
+<pre>
+
+Scheme list_rect := Induction for list Sort Type.</pre>
+</div>
+<div class="code" title="File: Datatypes.v
+Line: 133
 Time: 0s">
 <div class="time" style="width: 0%"></div>
 <pre>
@@ -513,28 +568,28 @@ Time: 0s">
 Arguments nil [A].</pre>
 </div>
 <div class="code" title="File: Datatypes.v
-Line: 122
+Line: 135
 Time: 0s">
 <div class="time" style="width: 0%"></div>
 <pre>
 Infix "::" := cons (at level 60, right associativity) : list_scope.</pre>
 </div>
 <div class="code" title="File: Datatypes.v
-Line: 123
+Line: 136
 Time: 0s">
 <div class="time" style="width: 0%"></div>
 <pre>
 Delimit Scope list_scope with list.</pre>
 </div>
 <div class="code" title="File: Datatypes.v
-Line: 124
+Line: 137
 Time: 0s">
 <div class="time" style="width: 0%"></div>
 <pre>
 Bind Scope list_scope with list.</pre>
 </div>
 <div class="code" title="File: Datatypes.v
-Line: 125
+Line: 138
 Time: 0s">
 <div class="time" style="width: 0%"></div>
 <pre>
@@ -542,7 +597,7 @@ Time: 0s">
 Local Open Scope list_scope.</pre>
 </div>
 <div class="code" title="File: Datatypes.v
-Line: 127
+Line: 140
 Time: 0s">
 <div class="time" style="width: 0%"></div>
 <pre>
@@ -551,9 +606,9 @@ Time: 0s">
 </pre>
 </div>
 <div class="code" title="File: Datatypes.v
-Line: 129
-Time: 0.002s">
-<div class="time" style="width: 50%"></div>
+Line: 142
+Time: 0.001s">
+<div class="time" style="width: 33.333333333333%"></div>
 <pre>Definition app (A : Type) : list A -&gt; list A -&gt; list A :=
   fix app l m :=
   match l with
@@ -562,7 +617,7 @@ Time: 0.002s">
   end.</pre>
 </div>
 <div class="code" title="File: Datatypes.v
-Line: 134
+Line: 147
 Time: 0s">
 <div class="time" style="width: 0%"></div>
 <pre>
@@ -570,7 +625,7 @@ Time: 0s">
 Infix "++" := app (right associativity, at level 60) : list_scope.</pre>
 </div>
 <div class="code" title="File: Datatypes.v
-Line: 137
+Line: 150
 Time: 0s">
 <div class="time" style="width: 0%"></div>
 <pre>
