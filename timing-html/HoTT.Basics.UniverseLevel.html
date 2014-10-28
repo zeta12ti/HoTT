@@ -44,99 +44,101 @@ Time: 0s">
 
 (** We provide casting definitions for raising universe levels. *)
 
-</pre>
-</div>
-<div class="code" title="File: UniverseLevel.v
-Line: 6
-Time: 0s">
-<div class="time" style="width: 0%"></div>
-<pre>Section local.</pre>
-</div>
-<div class="code" title="File: UniverseLevel.v
-Line: 6
-Time: 0s">
-<div class="time" style="width: 0%"></div>
-<pre>
-  Let type_cast_up_type : Type.</pre>
+(** Because we have cumulativity (that [T : U@{i}] gives us [T : U@{j}] when [i &lt; j]), we may define [Lift : U@{i} → U@{j}] to be the identity function with a fancy type; the type says that [i &lt; j]. *)</pre>
 </div>
 <div class="code" title="File: UniverseLevel.v
 Line: 7
 Time: 0s">
 <div class="time" style="width: 0%"></div>
-<pre>
-  Proof.</pre>
+<pre>Definition Lift (A : Type@{i}) : Type@{j}
+  := Eval hnf in let enforce_lt := Type@{i} : Type@{j} in A.</pre>
 </div>
 <div class="code" title="File: UniverseLevel.v
 Line: 8
 Time: 0s">
 <div class="time" style="width: 0%"></div>
 <pre>
-    let U0 := constr:(Type) in
-    let U1 := constr:(Type) in
-    let unif := constr:(U0 : U1) in
-    exact (U0 -&gt; U1).</pre>
+
+Definition lift {A} : A -&gt; Lift A := fun x =&gt; x.</pre>
+</div>
+<div class="code" title="File: UniverseLevel.v
+Line: 10
+Time: 0s">
+<div class="time" style="width: 0%"></div>
+<pre>
+
+Definition lower {A} : Lift A -&gt; A := fun x =&gt; x.</pre>
 </div>
 <div class="code" title="File: UniverseLevel.v
 Line: 12
-Time: 0s">
-<div class="time" style="width: 0%"></div>
-<pre>
-  Defined.</pre>
-</div>
-<div class="code" title="File: UniverseLevel.v
-Line: 13
-Time: 0s">
-<div class="time" style="width: 0%"></div>
+Time: 0.003s">
+<div class="time" style="width: 50%"></div>
 <pre>
 
-  (** Because we have cumulativity (that [T : Uᵢ] gives us [T : Uᵢ₊₁]), we may define [Lift : U₀ → U₁] as the identity function with a fancy type; the type says that [U₀ ⊊ U₁]. *)
- </pre>
-</div>
-<div class="code" title="File: UniverseLevel.v
-Line: 16
-Time: 0s">
-<div class="time" style="width: 0%"></div>
-<pre>Definition Lift : type_cast_up_type
-    := fun T =&gt; T.</pre>
-</div>
-<div class="code" title="File: UniverseLevel.v
-Line: 17
-Time: 0s">
-<div class="time" style="width: 0%"></div>
-<pre>
-End local.</pre>
-</div>
-<div class="code" title="File: UniverseLevel.v
-Line: 18
-Time: 0s">
-<div class="time" style="width: 0%"></div>
-<pre>
-
-Definition lift {T} : T -&gt; Lift T := fun x =&gt; x.</pre>
-</div>
-<div class="code" title="File: UniverseLevel.v
-Line: 20
-Time: 0.002s">
-<div class="time" style="width: 33.333333333333%"></div>
-<pre>
 Global Instance isequiv_lift T : IsEquiv (@lift T)
   := @BuildIsEquiv
        _ _
-       (fun x =&gt; x)
-       (fun x =&gt; x)
+       (@lift T)
+       (@lower T)
        (fun _ =&gt; idpath)
        (fun _ =&gt; idpath)
        (fun _ =&gt; idpath).</pre>
 </div>
 <div class="code" title="File: UniverseLevel.v
-Line: 28
-Time: 0.001s">
-<div class="time" style="width: 16.666666666667%"></div>
+Line: 21
+Time: 0s">
+<div class="time" style="width: 0%"></div>
 <pre>
-Definition lower {A} := (@equiv_inv _ _ (@lift A) _).</pre>
+
+(** This version doesn't force strict containment, i.e. it allows the two universes to possibly be the same.  No fancy type is necessary here other than the universe annotations, because of cumulativity. *)
+
+</pre>
 </div>
 <div class="code" title="File: UniverseLevel.v
-Line: 29
+Line: 24
+Time: 0s">
+<div class="time" style="width: 0%"></div>
+<pre>Definition Lift' (A : Type@{i}) : Type@{j} := A.</pre>
+</div>
+<div class="code" title="File: UniverseLevel.v
+Line: 24
+Time: 0s">
+<div class="time" style="width: 0%"></div>
+<pre>
+
+(** However, if we don't give the universes as explicit arguments here, then Coq collapses them. *)</pre>
+</div>
+<div class="code" title="File: UniverseLevel.v
+Line: 26
+Time: 0s">
+<div class="time" style="width: 0%"></div>
+<pre>Definition lift' {A : Type@{i}} : A -&gt; Lift'@{i j} A := fun x =&gt; x.</pre>
+</div>
+<div class="code" title="File: UniverseLevel.v
+Line: 26
+Time: 0s">
+<div class="time" style="width: 0%"></div>
+<pre>
+
+Definition lower' {A : Type@{i}} : Lift'@{i j} A -&gt; A := fun x =&gt; x.</pre>
+</div>
+<div class="code" title="File: UniverseLevel.v
+Line: 28
+Time: 0.003s">
+<div class="time" style="width: 50%"></div>
+<pre>
+
+Global Instance isequiv_lift' T : IsEquiv (@lift'@{i j} T)
+  := @BuildIsEquiv
+       _ _
+       (@lift' T)
+       (@lower' T)
+       (fun _ =&gt; idpath)
+       (fun _ =&gt; idpath)
+       (fun _ =&gt; idpath).</pre>
+</div>
+<div class="code" title="File: UniverseLevel.v
+Line: 37
 Time: 0s">
 <div class="time" style="width: 0%"></div>
 <pre>
@@ -144,17 +146,16 @@ Time: 0s">
 (** We make [lift] and [lower] opaque so that typeclass resolution doesn't pick up [isequiv_lift] as an instance of [IsEquiv idmap] and wreck havok. *)</pre>
 </div>
 <div class="code" title="File: UniverseLevel.v
-Line: 31
+Line: 39
 Time: 0s">
 <div class="time" style="width: 0%"></div>
-<pre>Typeclasses Opaque lift lower.</pre>
+<pre>Typeclasses Opaque lift lower lift' lower'.</pre>
 </div>
 <div class="code" title="File: UniverseLevel.v
-Line: 32
+Line: 40
 Time: 0s">
 <div class="time" style="width: 0%"></div>
 <pre>
-
 
 (*Fail Check Lift nat : Type0.
 Check 1 : Lift nat.*)
