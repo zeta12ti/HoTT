@@ -39,30 +39,42 @@ Time: 0s">
 </div>
 <div class="code" title="File: Connectedness.v
 Line: 3
-Time: 0.022s">
-<div class="time" style="width: 7.2131147540984%"></div>
+Time: 0.018s">
+<div class="time" style="width: 16.822429906542%"></div>
 <pre>Require Import HoTT.Basics.</pre>
 </div>
 <div class="code" title="File: Connectedness.v
 Line: 3
-Time: 0.026s">
-<div class="time" style="width: 8.5245901639344%"></div>
+Time: 0.021s">
+<div class="time" style="width: 19.626168224299%"></div>
 <pre>
 Require Import Types.Forall Types.Sigma Types.Paths Types.Unit Types.Arrow Types.Universe.</pre>
 </div>
 <div class="code" title="File: Connectedness.v
 Line: 4
-Time: 0.015s">
-<div class="time" style="width: 4.9180327868852%"></div>
+Time: 0.017s">
+<div class="time" style="width: 15.88785046729%"></div>
 <pre>
-Require Import TruncType UnivalenceImpliesFunext HProp EquivalenceVarieties.</pre>
+Require Import TruncType UnivalenceImpliesFunext HProp EquivalenceVarieties Factorization.</pre>
 </div>
 <div class="code" title="File: Connectedness.v
 Line: 5
-Time: 0.016s">
-<div class="time" style="width: 5.2459016393443%"></div>
+Time: 0.023s">
+<div class="time" style="width: 21.495327102804%"></div>
 <pre>
-Require Import hit.Truncations.</pre>
+Require Export Modality.</pre>
+</div>
+<div class="code" title="File: Connectedness.v
+Line: 6
+Time: 0s">
+<div class="time" style="width: 0%"></div>
+<pre>        (* [Export] since the actual definitions of connectednes appear there, in the generality of a modality. *)</pre>
+</div>
+<div class="code" title="File: Connectedness.v
+Line: 6
+Time: 0.002s">
+<div class="time" style="width: 1.8691588785047%"></div>
+<pre>Require Import hit.Truncations .</pre>
 </div>
 <div class="code" title="File: Connectedness.v
 Line: 6
@@ -83,6 +95,13 @@ Line: 8
 Time: 0s">
 <div class="time" style="width: 0%"></div>
 <pre>
+Local Open Scope trunc_scope.</pre>
+</div>
+<div class="code" title="File: Connectedness.v
+Line: 9
+Time: 0s">
+<div class="time" style="width: 0%"></div>
+<pre>
 
 (** ** Connectedness *)
 
@@ -95,1082 +114,34 @@ Currently, the translation is therefore as follows:
 Map    (n-1)-connected   n-connected       n-connective
 Type   n-connected       n-connected       (n+1)-connective
 
-A handy benchmark: under our indexing, the map [S1 -&gt; 1] is 0-connected but not 1-connected, while the map [1 -&gt; S1] is (–1)–connected but not 0-connected. *)
+A handy benchmark: under our indexing, the map [S1 -&gt; 1] is 0-connected but not 1-connected, while the map [1 -&gt; S1] is (–1)–connected but not 0-connected.
 
-(** Connectedness of a type (however indexed) can be defined in two equivalent ways: quantifying over all maps into suitably truncated types, or by considering just the universal case, the truncation of the type itself.
 
-The former requires only core Coq, but blows up the size (universe level) of [IsConnected], since it quantifies over types; moreover, it is not even quite correct since it should really be quantified over all universes.  Thus, we use the latter, although it requires HITs to define the truncation.
+One reason for our choice is that this way, the n-truncated and n-connected maps are the modal and modally-connected maps for the n-truncation modality.  Many of the basic lemmas about connected maps are in fact true for any modality, and can be found in [Modality.v].  Thus, here we consider mainly properties that involve the interaction of connectedness at different truncation levels. *)
 
-Question: is there a definition of connectedness that neither blows up the universe level, nor requires HIT’s? *)
 
 </pre>
 </div>
 <div class="code" title="File: Connectedness.v
-Line: 28
-Time: 0.002s">
-<div class="time" style="width: 0.65573770491803%"></div>
-<pre>Class IsConnected (n : trunc_index) (A : Type)
- := isconnected_contr_trunc : Contr (Trunc n A).</pre>
-</div>
-<div class="code" title="File: Connectedness.v
-Line: 29
-Time: 0s">
-<div class="time" style="width: 0%"></div>
-<pre>
-
-Global Existing Instance isconnected_contr_trunc.</pre>
-</div>
-<div class="code" title="File: Connectedness.v
-Line: 31
-Time: 0.001s">
-<div class="time" style="width: 0.32786885245902%"></div>
-<pre>
-
-Definition isconnected_elim {n} {A} `{IsConnected n A}
-           (C : Type) `{IsTrunc n C} (f : A -&gt; C)
-: { c:C &amp; forall a:A, f a = c }.</pre>
-</div>
-<div class="code" title="File: Connectedness.v
-Line: 35
-Time: 0s">
-<div class="time" style="width: 0%"></div>
-<pre>
-Proof.</pre>
-</div>
-<div class="code" title="File: Connectedness.v
-Line: 36
-Time: 0s">
-<div class="time" style="width: 0%"></div>
-<pre>
-  set (ff := Trunc_rec (n:=n) f).</pre>
-</div>
-<div class="code" title="File: Connectedness.v
-Line: 37
-Time: 0.002s">
-<div class="time" style="width: 0.65573770491803%"></div>
-<pre>
-  exists (ff (center _)).</pre>
-</div>
-<div class="code" title="File: Connectedness.v
-Line: 38
-Time: 0s">
-<div class="time" style="width: 0%"></div>
-<pre>
-  intros a.</pre>
-</div>
-<div class="code" title="File: Connectedness.v
-Line: 39
-Time: 0.003s">
-<div class="time" style="width: 0.98360655737705%"></div>
-<pre> symmetry; apply (ap ff (contr (tr _))).</pre>
-</div>
-<div class="code" title="File: Connectedness.v
-Line: 39
-Time: 0.001s">
-<div class="time" style="width: 0.32786885245902%"></div>
-<pre>
-Defined.</pre>
-</div>
-<div class="code" title="File: Connectedness.v
-Line: 40
-Time: 0.001s">
-<div class="time" style="width: 0.32786885245902%"></div>
-<pre>
-
-Definition isconnected_from_elim {n} {A}
-: (forall (C : Type) `{IsTrunc n C} (f : A -&gt; C), { c:C &amp; forall a:A, f a = c })
-  -&gt; IsConnected n A.</pre>
-</div>
-<div class="code" title="File: Connectedness.v
-Line: 44
-Time: 0s">
-<div class="time" style="width: 0%"></div>
-<pre>
-Proof.</pre>
-</div>
-<div class="code" title="File: Connectedness.v
-Line: 45
-Time: 0s">
-<div class="time" style="width: 0%"></div>
-<pre>
-  intros H.</pre>
-</div>
-<div class="code" title="File: Connectedness.v
-Line: 46
-Time: 0s">
-<div class="time" style="width: 0%"></div>
-<pre>
-  set (nh := H (Trunc n A) _ (@tr n A)).</pre>
-</div>
-<div class="code" title="File: Connectedness.v
-Line: 47
-Time: 0s">
-<div class="time" style="width: 0%"></div>
-<pre>
-  exists (nh .1).</pre>
-</div>
-<div class="code" title="File: Connectedness.v
-Line: 48
-Time: 0s">
-<div class="time" style="width: 0%"></div>
-<pre>
-  apply Trunc_ind.</pre>
-</div>
-<div class="code" title="File: Connectedness.v
-Line: 49
-Time: 0.001s">
-<div class="time" style="width: 0.32786885245902%"></div>
-<pre> apply trunc_succ.</pre>
-</div>
-<div class="code" title="File: Connectedness.v
-Line: 49
-Time: 0.001s">
-<div class="time" style="width: 0.32786885245902%"></div>
-<pre>
-  intros; symmetry; apply (nh .2).</pre>
-</div>
-<div class="code" title="File: Connectedness.v
-Line: 50
-Time: 0.001s">
-<div class="time" style="width: 0.32786885245902%"></div>
-<pre>
-Defined.</pre>
-</div>
-<div class="code" title="File: Connectedness.v
-Line: 51
-Time: 0s">
-<div class="time" style="width: 0%"></div>
-<pre>
-
-(** A type which is both connected and truncated is contractible. *)
-
-</pre>
-</div>
-<div class="code" title="File: Connectedness.v
-Line: 54
-Time: 0s">
-<div class="time" style="width: 0%"></div>
-<pre>Definition contr_trunc_conn {n} {A} `{IsTrunc n A} `{IsConnected n A} : Contr A.</pre>
-</div>
-<div class="code" title="File: Connectedness.v
-Line: 54
-Time: 0s">
-<div class="time" style="width: 0%"></div>
-<pre>
-Proof.</pre>
-</div>
-<div class="code" title="File: Connectedness.v
-Line: 55
-Time: 0.022s">
-<div class="time" style="width: 7.2131147540984%"></div>
-<pre>
-  apply (contr_equiv _ (@tr n A)^-1).</pre>
-</div>
-<div class="code" title="File: Connectedness.v
-Line: 56
-Time: 0s">
-<div class="time" style="width: 0%"></div>
-<pre>
-Defined.</pre>
-</div>
-<div class="code" title="File: Connectedness.v
-Line: 57
-Time: 0s">
-<div class="time" style="width: 0%"></div>
-<pre>
-
-Definition contr_inhab_prop {A} `{IsHProp A} (ma : merely A) : Contr A.</pre>
-</div>
-<div class="code" title="File: Connectedness.v
-Line: 59
-Time: 0s">
-<div class="time" style="width: 0%"></div>
-<pre>
-Proof.</pre>
-</div>
-<div class="code" title="File: Connectedness.v
-Line: 60
-Time: 0s">
-<div class="time" style="width: 0%"></div>
-<pre>
-  refine (@contr_trunc_conn -1 A _ _).</pre>
-</div>
-<div class="code" title="File: Connectedness.v
-Line: 61
-Time: 0.001s">
-<div class="time" style="width: 0.32786885245902%"></div>
-<pre>
-  refine (contr_inhabited_hprop _ ma).</pre>
-</div>
-<div class="code" title="File: Connectedness.v
-Line: 62
-Time: 0s">
-<div class="time" style="width: 0%"></div>
-<pre>
-Defined.</pre>
-</div>
-<div class="code" title="File: Connectedness.v
-Line: 63
-Time: 0s">
-<div class="time" style="width: 0%"></div>
-<pre>
-
-(** Connectedness of a map can again be defined in two equivalent ways: by connectedness of its fibers (as types), or by the lifting property/elimination principle against truncated types.  We use the former; the equivalence with the latter is given below in [conn_map_elim], [conn_map_comp], and [conn_map_from_extension_elim]. *)
-
-</pre>
-</div>
-<div class="code" title="File: Connectedness.v
-Line: 66
-Time: 0.002s">
-<div class="time" style="width: 0.65573770491803%"></div>
-<pre>Class IsConnMap (n : trunc_index) {A B : Type} (f : A -&gt; B)
-  := isconnected_hfiber_conn_map : forall b:B, IsConnected n (hfiber f b).</pre>
-</div>
-<div class="code" title="File: Connectedness.v
-Line: 67
-Time: 0s">
-<div class="time" style="width: 0%"></div>
-<pre>
-
-Global Existing Instance isconnected_hfiber_conn_map.</pre>
-</div>
-<div class="code" title="File: Connectedness.v
-Line: 69
-Time: 0s">
-<div class="time" style="width: 0%"></div>
-<pre>
-
-(** Surjections are the (-1)-connected maps, but they can be characterized more simply since an inhabited hprop is automatically contractible. *)</pre>
-</div>
-<div class="code" title="File: Connectedness.v
-Line: 71
-Time: 0s">
-<div class="time" style="width: 0%"></div>
-<pre>Notation IsSurjection := (IsConnMap -1).</pre>
-</div>
-<div class="code" title="File: Connectedness.v
-Line: 71
-Time: 0.001s">
-<div class="time" style="width: 0.32786885245902%"></div>
-<pre>
-
-Definition BuildIsSurjection {A B} (f : A -&gt; B) :
-  (forall b, merely (hfiber f b)) -&gt; IsSurjection f.</pre>
-</div>
-<div class="code" title="File: Connectedness.v
-Line: 74
-Time: 0s">
-<div class="time" style="width: 0%"></div>
-<pre>
-Proof.</pre>
-</div>
-<div class="code" title="File: Connectedness.v
-Line: 75
-Time: 0.001s">
-<div class="time" style="width: 0.32786885245902%"></div>
-<pre>
-  intros H b; refine (contr_inhabited_hprop _ _).</pre>
-</div>
-<div class="code" title="File: Connectedness.v
-Line: 76
-Time: 0s">
-<div class="time" style="width: 0%"></div>
-<pre>
-  apply H.</pre>
-</div>
-<div class="code" title="File: Connectedness.v
-Line: 77
-Time: 0.001s">
-<div class="time" style="width: 0.32786885245902%"></div>
-<pre>
-Defined.</pre>
-</div>
-<div class="code" title="File: Connectedness.v
-Line: 78
-Time: 0s">
-<div class="time" style="width: 0%"></div>
-<pre>
-  
-(** n-connected maps are orthogonal to n-truncated maps (i.e. familes of n-truncated types). *)</pre>
-</div>
-<div class="code" title="File: Connectedness.v
-Line: 80
-Time: 0.001s">
-<div class="time" style="width: 0.32786885245902%"></div>
-<pre>Definition conn_map_elim {n : trunc_index}
-  {A B : Type} (f : A -&gt; B) `{IsConnMap n _ _ f}
-  (P : B -&gt; Type) {HP : forall b:B, IsTrunc n (P b)}
-  (d : forall a:A, P (f a))
-: forall b:B, P b.</pre>
-</div>
-<div class="code" title="File: Connectedness.v
-Line: 84
-Time: 0s">
-<div class="time" style="width: 0%"></div>
-<pre>
-Proof.</pre>
-</div>
-<div class="code" title="File: Connectedness.v
-Line: 85
-Time: 0s">
-<div class="time" style="width: 0%"></div>
-<pre>
-  intros b.</pre>
-</div>
-<div class="code" title="File: Connectedness.v
-Line: 86
-Time: 0.002s">
-<div class="time" style="width: 0.65573770491803%"></div>
-<pre>
-  refine (pr1 (isconnected_elim _ _)).</pre>
-</div>
-<div class="code" title="File: Connectedness.v
-Line: 87
-Time: 0s">
-<div class="time" style="width: 0%"></div>
-<pre>
-  2:exact b.</pre>
-</div>
-<div class="code" title="File: Connectedness.v
-Line: 88
-Time: 0s">
-<div class="time" style="width: 0%"></div>
-<pre>
-  intros [a p].</pre>
-</div>
-<div class="code" title="File: Connectedness.v
-Line: 89
-Time: 0s">
-<div class="time" style="width: 0%"></div>
-<pre>
-  exact (transport P p (d a)).</pre>
-</div>
-<div class="code" title="File: Connectedness.v
-Line: 90
-Time: 0.001s">
-<div class="time" style="width: 0.32786885245902%"></div>
-<pre>
-Defined.</pre>
-</div>
-<div class="code" title="File: Connectedness.v
-Line: 91
-Time: 0.002s">
-<div class="time" style="width: 0.65573770491803%"></div>
-<pre>
-
-Definition conn_map_comp {n : trunc_index}
-  {A B : Type} (f : A -&gt; B) `{IsConnMap n _ _ f}
-  (P : B -&gt; Type) {HP : forall b:B, IsTrunc n (P b)}
-  (d : forall a:A, P (f a))
-: forall a:A, conn_map_elim f P d (f a) = d a.</pre>
-</div>
-<div class="code" title="File: Connectedness.v
-Line: 97
-Time: 0s">
-<div class="time" style="width: 0%"></div>
-<pre>
-Proof.</pre>
-</div>
-<div class="code" title="File: Connectedness.v
-Line: 98
-Time: 0s">
-<div class="time" style="width: 0%"></div>
-<pre>
-  intros a.</pre>
-</div>
-<div class="code" title="File: Connectedness.v
-Line: 99
-Time: 0s">
-<div class="time" style="width: 0%"></div>
-<pre> unfold conn_map_elim.</pre>
-</div>
-<div class="code" title="File: Connectedness.v
-Line: 99
-Time: 0.002s">
-<div class="time" style="width: 0.65573770491803%"></div>
-<pre>
-  set (fibermap := (fun a0p : hfiber f (f a)
-    =&gt; let (a0, p) := a0p in transport P p (d a0))).</pre>
-</div>
-<div class="code" title="File: Connectedness.v
-Line: 101
-Time: 0.005s">
-<div class="time" style="width: 1.6393442622951%"></div>
-<pre>
-  destruct (isconnected_elim (P (f a)) fibermap) as [x e].</pre>
-</div>
-<div class="code" title="File: Connectedness.v
-Line: 102
-Time: 0s">
-<div class="time" style="width: 0%"></div>
-<pre>
-  change (d a) with (fibermap (a;1)).</pre>
-</div>
-<div class="code" title="File: Connectedness.v
-Line: 103
-Time: 0s">
-<div class="time" style="width: 0%"></div>
-<pre>
-  apply inverse, e.</pre>
-</div>
-<div class="code" title="File: Connectedness.v
-Line: 104
-Time: 0.002s">
-<div class="time" style="width: 0.65573770491803%"></div>
-<pre>
-Defined.</pre>
-</div>
-<div class="code" title="File: Connectedness.v
-Line: 105
-Time: 0.001s">
-<div class="time" style="width: 0.32786885245902%"></div>
-<pre>
-
-Definition isequiv_conn_trunc {n} {A B} (f : A -&gt; B)
-           `{IsConnMap n _ _ f} `{IsTruncMap n _ _ f}
-: IsEquiv f.</pre>
-</div>
-<div class="code" title="File: Connectedness.v
-Line: 109
-Time: 0s">
-<div class="time" style="width: 0%"></div>
-<pre>
-Proof.</pre>
-</div>
-<div class="code" title="File: Connectedness.v
-Line: 110
-Time: 0s">
-<div class="time" style="width: 0%"></div>
-<pre>
-  apply isequiv_fcontr.</pre>
-</div>
-<div class="code" title="File: Connectedness.v
-Line: 111
-Time: 0s">
-<div class="time" style="width: 0%"></div>
-<pre> intros b.</pre>
-</div>
-<div class="code" title="File: Connectedness.v
-Line: 111
-Time: 0.002s">
-<div class="time" style="width: 0.65573770491803%"></div>
-<pre>
-  refine (@contr_trunc_conn n _ _ _).</pre>
-</div>
-<div class="code" title="File: Connectedness.v
-Line: 112
-Time: 0s">
-<div class="time" style="width: 0%"></div>
-<pre>
-Defined.</pre>
-</div>
-<div class="code" title="File: Connectedness.v
-Line: 113
-Time: 0.002s">
-<div class="time" style="width: 0.65573770491803%"></div>
-<pre>
-
-Definition isequiv_surj_emb {A B} (f : A -&gt; B)
-           `{IsSurjection f} `{IsEmbedding f}
-: IsEquiv f
-:= isequiv_conn_trunc f.</pre>
-</div>
-<div class="code" title="File: Connectedness.v
-Line: 118
-Time: 0s">
-<div class="time" style="width: 0%"></div>
-<pre>
-
-(** ** Extensions
-
-Elimination properties can be nicely phrased as the existence of extensions along maps of sections. This is just the traditional categorical language of fillers for commutative squares, restricted to the case where the bottom of the square is the identity; type-theoretically, this approach is slightly more convenient. *)
-
-</pre>
-</div>
-<div class="code" title="File: Connectedness.v
-Line: 123
+Line: 27
 Time: 0s">
 <div class="time" style="width: 0%"></div>
 <pre>Section Extensions.</pre>
 </div>
 <div class="code" title="File: Connectedness.v
-Line: 123
+Line: 27
+Time: 0s">
+<div class="time" style="width: 0%"></div>
+<pre>
+  Context `{Univalence}.</pre>
+</div>
+<div class="code" title="File: Connectedness.v
+Line: 28
 Time: 0s">
 <div class="time" style="width: 0%"></div>
 <pre>
 
-Context `{Univalence}.</pre>
-</div>
-<div class="code" title="File: Connectedness.v
-Line: 125
-Time: 0s">
-<div class="time" style="width: 0%"></div>
-<pre>
-
-(* TODO: consider naming for [ExtensionAlong] and subsequent lemmas.  As a name for the type itself, [Extension] or [ExtensionAlong] seems great; but resultant lemma names such as [path_extension] (following existing naming conventions) are rather misleading. *)
-
-(** This elimination rule (and others) can be seen as saying that, given a fibration over the codomain and a section of it over the domain, there is some *extension* of this to a section over the whole domain. *)</pre>
-</div>
-<div class="code" title="File: Connectedness.v
-Line: 129
-Time: 0.001s">
-<div class="time" style="width: 0.32786885245902%"></div>
-<pre>Definition ExtensionAlong {A B : Type} (f : A -&gt; B)
-  (P : B -&gt; Type) (d : forall x:A, P (f x))
-:= { s : forall y:B, P y &amp; forall x:A, s (f x) = d x }.</pre>
-</div>
-<div class="code" title="File: Connectedness.v
-Line: 131
-Time: 0.004s">
-<div class="time" style="width: 1.3114754098361%"></div>
-<pre>
-
-Definition path_extension {A B : Type} {f : A -&gt; B}
-  {P : B -&gt; Type} {d : forall x:A, P (f x)}
-  (ext ext' : ExtensionAlong f P d)
-: (ExtensionAlong f
-    (fun y =&gt; pr1 ext y = pr1 ext' y)
-    (fun x =&gt; pr2 ext x @ (pr2 ext' x)^))
--&gt; ext = ext'.</pre>
-</div>
-<div class="code" title="File: Connectedness.v
-Line: 139
-Time: 0s">
-<div class="time" style="width: 0%"></div>
-<pre>
-Proof.</pre>
-</div>
-<div class="code" title="File: Connectedness.v
-Line: 140
-Time: 0s">
-<div class="time" style="width: 0%"></div>
-<pre>
-(* Note: written with liberal use of [compose], to facilitate later proving that it’s an equivalance. *)
- </pre>
-</div>
-<div class="code" title="File: Connectedness.v
-Line: 142
-Time: 0.001s">
-<div class="time" style="width: 0.32786885245902%"></div>
-<pre>apply (compose (path_sigma_uncurried _ _ _)).</pre>
-</div>
-<div class="code" title="File: Connectedness.v
-Line: 142
-Time: 0.003s">
-<div class="time" style="width: 0.98360655737705%"></div>
-<pre>
-  apply (functor_sigma (path_forall (ext .1) (ext' .1))).</pre>
-</div>
-<div class="code" title="File: Connectedness.v
-Line: 143
-Time: 0s">
-<div class="time" style="width: 0%"></div>
-<pre> intros p.</pre>
-</div>
-<div class="code" title="File: Connectedness.v
-Line: 143
-Time: 0.002s">
-<div class="time" style="width: 0.65573770491803%"></div>
-<pre>
-  apply (compose (path_forall _ _)).</pre>
-</div>
-<div class="code" title="File: Connectedness.v
-Line: 144
-Time: 0s">
-<div class="time" style="width: 0%"></div>
-<pre> unfold pointwise_paths.</pre>
-</div>
-<div class="code" title="File: Connectedness.v
-Line: 144
-Time: 0.001s">
-<div class="time" style="width: 0.32786885245902%"></div>
-<pre>
-  apply (functor_forall idmap).</pre>
-</div>
-<div class="code" title="File: Connectedness.v
-Line: 145
-Time: 0s">
-<div class="time" style="width: 0%"></div>
-<pre> intros x.</pre>
-</div>
-<div class="code" title="File: Connectedness.v
-Line: 145
-Time: 0.002s">
-<div class="time" style="width: 0.65573770491803%"></div>
-<pre>
-  apply (compose (B := (p (f x))^ @ (ext .2 x) = (ext' .2 x))).</pre>
-</div>
-<div class="code" title="File: Connectedness.v
-Line: 146
-Time: 0s">
-<div class="time" style="width: 0%"></div>
-<pre>
-    apply concat.</pre>
-</div>
-<div class="code" title="File: Connectedness.v
-Line: 147
-Time: 0.011s">
-<div class="time" style="width: 3.6065573770492%"></div>
-<pre>
-    transitivity ((apD10 (path_forall _ _ p) (f x))^ @ ext .2 x).</pre>
-</div>
-<div class="code" title="File: Connectedness.v
-Line: 148
-Time: 0.004s">
-<div class="time" style="width: 1.3114754098361%"></div>
-<pre>
-    assert (transp_extension : forall p : ext .1 = ext' .1,
-      (transport (fun (s : forall y : B, P y) =&gt; forall x : A, s (f x) = d x)
-        p (ext .2) x
-      = ((apD10 p (f x))^ @ ext .2 x))).</pre>
-</div>
-<div class="code" title="File: Connectedness.v
-Line: 152
-Time: 0.016s">
-<div class="time" style="width: 5.2459016393443%"></div>
-<pre>
-      destruct ext as [g gd], ext' as [g' gd']; simpl.</pre>
-</div>
-<div class="code" title="File: Connectedness.v
-Line: 153
-Time: 0.005s">
-<div class="time" style="width: 1.6393442622951%"></div>
-<pre>
-      intros q; destruct q; simpl.</pre>
-</div>
-<div class="code" title="File: Connectedness.v
-Line: 154
-Time: 0.001s">
-<div class="time" style="width: 0.32786885245902%"></div>
-<pre>
-      apply inverse, concat_1p.</pre>
-</div>
-<div class="code" title="File: Connectedness.v
-Line: 155
-Time: 0s">
-<div class="time" style="width: 0%"></div>
-<pre>
-    apply transp_extension.</pre>
-</div>
-<div class="code" title="File: Connectedness.v
-Line: 156
-Time: 0.005s">
-<div class="time" style="width: 1.6393442622951%"></div>
-<pre>
-    apply whiskerR, ap, apD10_path_forall.</pre>
-</div>
-<div class="code" title="File: Connectedness.v
-Line: 157
-Time: 0.002s">
-<div class="time" style="width: 0.65573770491803%"></div>
-<pre>
-  apply (compose (moveR_Vp _ _ _)).</pre>
-</div>
-<div class="code" title="File: Connectedness.v
-Line: 158
-Time: 0.002s">
-<div class="time" style="width: 0.65573770491803%"></div>
-<pre>
-  apply (compose (moveL_pM _ _ _)).</pre>
-</div>
-<div class="code" title="File: Connectedness.v
-Line: 159
-Time: 0s">
-<div class="time" style="width: 0%"></div>
-<pre>
-  exact inverse.</pre>
-</div>
-<div class="code" title="File: Connectedness.v
-Line: 160
-Time: 0.04s">
-<div class="time" style="width: 13.114754098361%"></div>
-<pre>
-Defined.</pre>
-</div>
-<div class="code" title="File: Connectedness.v
-Line: 161
-Time: 0.003s">
-<div class="time" style="width: 0.98360655737705%"></div>
-<pre>
-
-Global Instance isequiv_path_extension {A B : Type} {f : A -&gt; B}
-  {P : B -&gt; Type} {d : forall x:A, P (f x)}
-  (ext ext' : ExtensionAlong f P d)
-: IsEquiv (path_extension ext ext') | 0.</pre>
-</div>
-<div class="code" title="File: Connectedness.v
-Line: 166
-Time: 0s">
-<div class="time" style="width: 0%"></div>
-<pre>
-Proof.</pre>
-</div>
-<div class="code" title="File: Connectedness.v
-Line: 167
-Time: 0.013s">
-<div class="time" style="width: 4.2622950819672%"></div>
-<pre>
-  apply @isequiv_compose.</pre>
-</div>
-<div class="code" title="File: Connectedness.v
-Line: 168
-Time: 0.004s">
-<div class="time" style="width: 1.3114754098361%"></div>
-<pre>
-    2: apply @isequiv_path_sigma.</pre>
-</div>
-<div class="code" title="File: Connectedness.v
-Line: 169
-Time: 0.01s">
-<div class="time" style="width: 3.2786885245902%"></div>
-<pre>
-  apply @isequiv_functor_sigma.</pre>
-</div>
-<div class="code" title="File: Connectedness.v
-Line: 170
-Time: 0.001s">
-<div class="time" style="width: 0.32786885245902%"></div>
-<pre>
-    apply @isequiv_path_forall.</pre>
-</div>
-<div class="code" title="File: Connectedness.v
-Line: 171
-Time: 0s">
-<div class="time" style="width: 0%"></div>
-<pre>
-  intros a.</pre>
-</div>
-<div class="code" title="File: Connectedness.v
-Line: 172
-Time: 0.009s">
-<div class="time" style="width: 2.9508196721311%"></div>
-<pre> apply @isequiv_compose.</pre>
-</div>
-<div class="code" title="File: Connectedness.v
-Line: 172
-Time: 0.001s">
-<div class="time" style="width: 0.32786885245902%"></div>
-<pre>
-    2: apply @isequiv_path_forall.</pre>
-</div>
-<div class="code" title="File: Connectedness.v
-Line: 173
-Time: 0.009s">
-<div class="time" style="width: 2.9508196721311%"></div>
-<pre>
-  apply (@isequiv_functor_forall _).</pre>
-</div>
-<div class="code" title="File: Connectedness.v
-Line: 174
-Time: 0s">
-<div class="time" style="width: 0%"></div>
-<pre>
-    apply isequiv_idmap.</pre>
-</div>
-<div class="code" title="File: Connectedness.v
-Line: 175
-Time: 0s">
-<div class="time" style="width: 0%"></div>
-<pre>
-  intros x.</pre>
-</div>
-<div class="code" title="File: Connectedness.v
-Line: 176
-Time: 0.007s">
-<div class="time" style="width: 2.2950819672131%"></div>
-<pre> apply @isequiv_compose.</pre>
-</div>
-<div class="code" title="File: Connectedness.v
-Line: 176
-Time: 0.003s">
-<div class="time" style="width: 0.98360655737705%"></div>
-<pre>
-  apply @isequiv_compose.</pre>
-</div>
-<div class="code" title="File: Connectedness.v
-Line: 177
-Time: 0.002s">
-<div class="time" style="width: 0.65573770491803%"></div>
-<pre>
-    apply @isequiv_compose.</pre>
-</div>
-<div class="code" title="File: Connectedness.v
-Line: 178
-Time: 0.001s">
-<div class="time" style="width: 0.32786885245902%"></div>
-<pre>
-      apply isequiv_path_inverse.</pre>
-</div>
-<div class="code" title="File: Connectedness.v
-Line: 179
-Time: 0.002s">
-<div class="time" style="width: 0.65573770491803%"></div>
-<pre>
-      apply isequiv_moveL_pM.</pre>
-</div>
-<div class="code" title="File: Connectedness.v
-Line: 180
-Time: 0.002s">
-<div class="time" style="width: 0.65573770491803%"></div>
-<pre>
-    apply isequiv_moveR_Vp.</pre>
-</div>
-<div class="code" title="File: Connectedness.v
-Line: 181
-Time: 0.004s">
-<div class="time" style="width: 1.3114754098361%"></div>
-<pre>
-  apply isequiv_concat_l.</pre>
-</div>
-<div class="code" title="File: Connectedness.v
-Line: 182
-Time: 0.141s">
-<div class="time" style="width: 46.229508196721%"></div>
-<pre>
-Qed.</pre>
-</div>
-<div class="code" title="File: Connectedness.v
-Line: 183
-Time: 0s">
-<div class="time" style="width: 0%"></div>
-<pre>
-(** Note: opaque, since this term is big enough that using its computational content will probably be pretty intractable. *)
-
-</pre>
-</div>
-<div class="code" title="File: Connectedness.v
-Line: 185
-Time: 0.001s">
-<div class="time" style="width: 0.32786885245902%"></div>
-<pre>Lemma extension_conn_map_elim {n : trunc_index}
-  {A B : Type} (f : A -&gt; B) `{IsConnMap n _ _ f}
-  (P : B -&gt; Type) `{forall b:B, IsTrunc n (P b)}
-  (d : forall a:A, P (f a))
-: ExtensionAlong f P d.</pre>
-</div>
-<div class="code" title="File: Connectedness.v
-Line: 189
-Time: 0s">
-<div class="time" style="width: 0%"></div>
-<pre>
-Proof.</pre>
-</div>
-<div class="code" title="File: Connectedness.v
-Line: 190
-Time: 0.001s">
-<div class="time" style="width: 0.32786885245902%"></div>
-<pre>
-  exists (conn_map_elim f P d).</pre>
-</div>
-<div class="code" title="File: Connectedness.v
-Line: 191
-Time: 0s">
-<div class="time" style="width: 0%"></div>
-<pre>
-  apply conn_map_comp.</pre>
-</div>
-<div class="code" title="File: Connectedness.v
-Line: 192
-Time: 0.001s">
-<div class="time" style="width: 0.32786885245902%"></div>
-<pre>
-Defined.</pre>
-</div>
-<div class="code" title="File: Connectedness.v
-Line: 193
-Time: 0.002s">
-<div class="time" style="width: 0.65573770491803%"></div>
-<pre>
-
-Lemma allpath_extension_conn_map {n : trunc_index}
-  {A B : Type} (f : A -&gt; B) `{IsConnMap n _ _ f}
-  (P : B -&gt; Type) `{forall b:B, IsTrunc n (P b)}
-  (d : forall a:A, P (f a))
-  (e e' : ExtensionAlong f P d)
-: e = e'.</pre>
-</div>
-<div class="code" title="File: Connectedness.v
-Line: 200
-Time: 0s">
-<div class="time" style="width: 0%"></div>
-<pre>
-Proof.</pre>
-</div>
-<div class="code" title="File: Connectedness.v
-Line: 201
-Time: 0.001s">
-<div class="time" style="width: 0.32786885245902%"></div>
-<pre>
-  apply path_extension.</pre>
-</div>
-<div class="code" title="File: Connectedness.v
-Line: 202
-Time: 0.001s">
-<div class="time" style="width: 0.32786885245902%"></div>
-<pre>
-  apply (extension_conn_map_elim (n := n)); try assumption.</pre>
-</div>
-<div class="code" title="File: Connectedness.v
-Line: 203
-Time: 0s">
-<div class="time" style="width: 0%"></div>
-<pre>
-  intros b.</pre>
-</div>
-<div class="code" title="File: Connectedness.v
-Line: 204
-Time: 0.002s">
-<div class="time" style="width: 0.65573770491803%"></div>
-<pre> apply trunc_succ.</pre>
-</div>
-<div class="code" title="File: Connectedness.v
-Line: 204
-Time: 0.001s">
-<div class="time" style="width: 0.32786885245902%"></div>
-<pre>
-Defined.</pre>
-</div>
-<div class="code" title="File: Connectedness.v
-Line: 205
-Time: 0s">
-<div class="time" style="width: 0%"></div>
-<pre>
-
-(** Conversely, if a map satisfies this elimination principle (expressed via extensions), then it is connected.
-
-Conceptually, this proof can be seen as an instance of the fact that a left adjoint (here, pullback) preserves a left class of maps if the right adjoint (here, dependent product) preserves the right class. *)</pre>
-</div>
-<div class="code" title="File: Connectedness.v
-Line: 209
-Time: 0.001s">
-<div class="time" style="width: 0.32786885245902%"></div>
-<pre>Lemma conn_map_from_extension_elim  {n : trunc_index}
-  {A B : Type} (f : A -&gt; B)
-: (forall (P : B -&gt; Type) `{forall b:B, IsTrunc n (P b)}
-          (d : forall a:A, P (f a)),
-    ExtensionAlong f P d)
-  -&gt; (IsConnMap n f).</pre>
-</div>
-<div class="code" title="File: Connectedness.v
-Line: 214
-Time: 0s">
-<div class="time" style="width: 0%"></div>
-<pre>
-Proof.</pre>
-</div>
-<div class="code" title="File: Connectedness.v
-Line: 215
-Time: 0s">
-<div class="time" style="width: 0%"></div>
-<pre>
-  intros Hf b.</pre>
-</div>
-<div class="code" title="File: Connectedness.v
-Line: 216
-Time: 0s">
-<div class="time" style="width: 0%"></div>
-<pre> apply isconnected_from_elim.</pre>
-</div>
-<div class="code" title="File: Connectedness.v
-Line: 216
-Time: 0s">
-<div class="time" style="width: 0%"></div>
-<pre> intros X ? d.</pre>
-</div>
-<div class="code" title="File: Connectedness.v
-Line: 216
-Time: 0s">
-<div class="time" style="width: 0%"></div>
-<pre>
-  set (P := fun (b':B) =&gt; (b' = b) -&gt; X).</pre>
-</div>
-<div class="code" title="File: Connectedness.v
-Line: 217
-Time: 0.004s">
-<div class="time" style="width: 1.3114754098361%"></div>
-<pre>
-  assert (forall b', IsTrunc n (P b')) by (intros; apply trunc_forall).</pre>
-</div>
-<div class="code" title="File: Connectedness.v
-Line: 218
-Time: 0.001s">
-<div class="time" style="width: 0.32786885245902%"></div>
-<pre>
-  set (dP := (fun (a:A) (p:f a = b) =&gt; (d (a;p)))
-          : forall a:A, P (f a)).</pre>
-</div>
-<div class="code" title="File: Connectedness.v
-Line: 220
-Time: 0s">
-<div class="time" style="width: 0%"></div>
-<pre>
-  set (e := Hf P _ dP).</pre>
-</div>
-<div class="code" title="File: Connectedness.v
-Line: 221
-Time: 0.001s">
-<div class="time" style="width: 0.32786885245902%"></div>
-<pre>
-  exists (e .1 b 1).</pre>
-</div>
-<div class="code" title="File: Connectedness.v
-Line: 222
-Time: 0.001s">
-<div class="time" style="width: 0.32786885245902%"></div>
-<pre>
-  intros [a p].</pre>
-</div>
-<div class="code" title="File: Connectedness.v
-Line: 223
-Time: 0.004s">
-<div class="time" style="width: 1.3114754098361%"></div>
-<pre> symmetry.</pre>
-</div>
-<div class="code" title="File: Connectedness.v
-Line: 223
-Time: 0.005s">
-<div class="time" style="width: 1.6393442622951%"></div>
-<pre> transitivity (e .1 (f a) p).</pre>
-</div>
-<div class="code" title="File: Connectedness.v
-Line: 223
-Time: 0.001s">
-<div class="time" style="width: 0.32786885245902%"></div>
-<pre>
-    2: exact (ap10 (e.2 a) p).</pre>
-</div>
-<div class="code" title="File: Connectedness.v
-Line: 224
-Time: 0.003s">
-<div class="time" style="width: 0.98360655737705%"></div>
-<pre>
-  refine (ap011D e.1 p^ _).</pre>
-</div>
-<div class="code" title="File: Connectedness.v
-Line: 225
-Time: 0.003s">
-<div class="time" style="width: 0.98360655737705%"></div>
-<pre>
-  refine (transport_paths_l _ _ @ _).</pre>
-</div>
-<div class="code" title="File: Connectedness.v
-Line: 226
-Time: 0.305s">
-<div class="time" style="width: 100%"></div>
-<pre> hott_simpl.</pre>
-</div>
-<div class="code" title="File: Connectedness.v
-Line: 226
-Time: 0.004s">
-<div class="time" style="width: 1.3114754098361%"></div>
-<pre>
-Defined.</pre>
-</div>
-<div class="code" title="File: Connectedness.v
-Line: 227
-Time: 0s">
-<div class="time" style="width: 0%"></div>
-<pre>
+(** ** Truncatedness of the type of extensions *)
 
 (** A key lemma on the interaction between connectedness and truncatedness: suppose one is trying to extend along an n-connected map, into a k-truncated family of types (k ≥ n).  Then the space of possible extensions is (k–n–2)-truncated.
 
@@ -1179,9 +150,9 @@ Time: 0s">
 This lemma is most useful via corollaries like the wedge-inclusion, the wiggly wedge, and their n-ary generalizations. *)</pre>
 </div>
 <div class="code" title="File: Connectedness.v
-Line: 233
-Time: 0.001s">
-<div class="time" style="width: 0.32786885245902%"></div>
+Line: 36
+Time: 0.002s">
+<div class="time" style="width: 1.8691588785047%"></div>
 <pre>Lemma istrunc_extension_along_conn {m n : trunc_index}
   {A B : Type} (f : A -&gt; B) `{IsConnMap n _ _ f}
   (P : B -&gt; Type) {HP : forall b:B, IsTrunc (m -2+ n) (P b)}
@@ -1189,27 +160,27 @@ Time: 0.001s">
 : IsTrunc m (ExtensionAlong f P d).</pre>
 </div>
 <div class="code" title="File: Connectedness.v
-Line: 237
+Line: 40
 Time: 0s">
 <div class="time" style="width: 0%"></div>
 <pre>
 Proof.</pre>
 </div>
 <div class="code" title="File: Connectedness.v
-Line: 238
+Line: 41
 Time: 0s">
 <div class="time" style="width: 0%"></div>
 <pre>
   revert P HP d.</pre>
 </div>
 <div class="code" title="File: Connectedness.v
-Line: 239
+Line: 42
 Time: 0.001s">
-<div class="time" style="width: 0.32786885245902%"></div>
+<div class="time" style="width: 0.93457943925234%"></div>
 <pre> induction m as [ | m' IH]; intros P HP d; simpl in *.</pre>
 </div>
 <div class="code" title="File: Connectedness.v
-Line: 239
+Line: 42
 Time: 0s">
 <div class="time" style="width: 0%"></div>
 <pre>
@@ -1217,26 +188,26 @@ Time: 0s">
  </pre>
 </div>
 <div class="code" title="File: Connectedness.v
-Line: 241
-Time: 0.001s">
-<div class="time" style="width: 0.32786885245902%"></div>
-<pre>exists (extension_conn_map_elim f P d).</pre>
+Line: 44
+Time: 0.02s">
+<div class="time" style="width: 18.691588785047%"></div>
+<pre>exists (extension_conn_map_elim n f P d).</pre>
 </div>
 <div class="code" title="File: Connectedness.v
-Line: 241
+Line: 44
 Time: 0s">
 <div class="time" style="width: 0%"></div>
 <pre>
   intros y.</pre>
 </div>
 <div class="code" title="File: Connectedness.v
-Line: 242
-Time: 0.001s">
-<div class="time" style="width: 0.32786885245902%"></div>
-<pre> apply (allpath_extension_conn_map (n := n)); assumption.</pre>
+Line: 45
+Time: 0.003s">
+<div class="time" style="width: 2.803738317757%"></div>
+<pre> apply (allpath_extension_conn_map n); assumption.</pre>
 </div>
 <div class="code" title="File: Connectedness.v
-Line: 242
+Line: 45
 Time: 0s">
 <div class="time" style="width: 0%"></div>
 <pre>
@@ -1244,19 +215,19 @@ Time: 0s">
  </pre>
 </div>
 <div class="code" title="File: Connectedness.v
-Line: 244
+Line: 47
 Time: 0s">
 <div class="time" style="width: 0%"></div>
 <pre>intros e e'.</pre>
 </div>
 <div class="code" title="File: Connectedness.v
-Line: 244
-Time: 0.013s">
-<div class="time" style="width: 4.2622950819672%"></div>
+Line: 47
+Time: 0.092s">
+<div class="time" style="width: 85.981308411215%"></div>
 <pre> refine (trunc_equiv _ (path_extension e e')).</pre>
 </div>
 <div class="code" title="File: Connectedness.v
-Line: 244
+Line: 47
 Time: 0s">
 <div class="time" style="width: 0%"></div>
 <pre>
@@ -1264,13 +235,13 @@ Time: 0s">
                        which by induction is m'-truncated. *)</pre>
 </div>
 <div class="code" title="File: Connectedness.v
-Line: 246
-Time: 0.003s">
-<div class="time" style="width: 0.98360655737705%"></div>
+Line: 49
+Time: 0.005s">
+<div class="time" style="width: 4.6728971962617%"></div>
 <pre>Defined.</pre>
 </div>
 <div class="code" title="File: Connectedness.v
-Line: 246
+Line: 49
 Time: 0s">
 <div class="time" style="width: 0%"></div>
 <pre>
@@ -1282,166 +253,165 @@ Time: 0s">
 </pre>
 </div>
 <div class="code" title="File: Connectedness.v
-Line: 251
-Time: 0s">
-<div class="time" style="width: 0%"></div>
+Line: 54
+Time: 0.001s">
+<div class="time" style="width: 0.93457943925234%"></div>
 <pre>Global Instance conn_pointed_type {n : trunc_index} {A : Type} (a0:A)
  `{IsConnMap n _ _ (unit_name a0)} : IsConnected n.+1 A | 1000.</pre>
 </div>
 <div class="code" title="File: Connectedness.v
-Line: 252
+Line: 55
 Time: 0s">
 <div class="time" style="width: 0%"></div>
 <pre>
 Proof.</pre>
 </div>
 <div class="code" title="File: Connectedness.v
-Line: 253
+Line: 56
 Time: 0s">
 <div class="time" style="width: 0%"></div>
 <pre>
   apply isconnected_from_elim.</pre>
 </div>
 <div class="code" title="File: Connectedness.v
-Line: 254
+Line: 57
 Time: 0s">
 <div class="time" style="width: 0%"></div>
 <pre>
   intros C HC f.</pre>
 </div>
 <div class="code" title="File: Connectedness.v
-Line: 255
+Line: 58
 Time: 0s">
 <div class="time" style="width: 0%"></div>
 <pre> exists (f a0).</pre>
 </div>
 <div class="code" title="File: Connectedness.v
-Line: 255
-Time: 0.006s">
-<div class="time" style="width: 1.9672131147541%"></div>
+Line: 58
+Time: 0.107s">
+<div class="time" style="width: 100%"></div>
 <pre>
-  refine (conn_map_elim (unit_name a0) _ (fun _ =&gt; 1)).</pre>
+  refine (conn_map_elim n (unit_name a0) _ (fun _ =&gt; idpath)).</pre>
 </div>
 <div class="code" title="File: Connectedness.v
-Line: 256
+Line: 59
 Time: 0.001s">
-<div class="time" style="width: 0.32786885245902%"></div>
+<div class="time" style="width: 0.93457943925234%"></div>
 <pre>
 Defined.</pre>
 </div>
 <div class="code" title="File: Connectedness.v
-Line: 257
-Time: 0s">
-<div class="time" style="width: 0%"></div>
+Line: 60
+Time: 0.001s">
+<div class="time" style="width: 0.93457943925234%"></div>
 <pre>
 
 Global Instance conn_point_incl `{Univalence} {n : trunc_index} {A : Type} (a0:A)
  `{IsConnected n.+1 A} : IsConnMap n (unit_name a0) | 1000.</pre>
 </div>
 <div class="code" title="File: Connectedness.v
-Line: 260
+Line: 63
 Time: 0s">
 <div class="time" style="width: 0%"></div>
 <pre>
 Proof.</pre>
 </div>
 <div class="code" title="File: Connectedness.v
-Line: 261
+Line: 64
 Time: 0s">
 <div class="time" style="width: 0%"></div>
 <pre>
   apply conn_map_from_extension_elim.</pre>
 </div>
 <div class="code" title="File: Connectedness.v
-Line: 262
+Line: 65
 Time: 0s">
 <div class="time" style="width: 0%"></div>
 <pre>
   intros P ?.</pre>
 </div>
 <div class="code" title="File: Connectedness.v
-Line: 263
-Time: 0s">
-<div class="time" style="width: 0%"></div>
+Line: 66
+Time: 0.009s">
+<div class="time" style="width: 8.411214953271%"></div>
 <pre> set (PP := fun a =&gt; BuildTruncType n (P a)).</pre>
 </div>
 <div class="code" title="File: Connectedness.v
-Line: 263
-Time: 0.001s">
-<div class="time" style="width: 0.32786885245902%"></div>
+Line: 66
+Time: 0.035s">
+<div class="time" style="width: 32.710280373832%"></div>
 <pre>
-  assert (QQ :=
-    @isconnected_elim n.+1 _ _ (TruncType n) istrunc_trunctype PP).</pre>
+  assert (QQ := isconnected_elim n.+1 (TruncType n) PP).</pre>
 </div>
 <div class="code" title="File: Connectedness.v
-Line: 265
+Line: 67
 Time: 0.002s">
-<div class="time" style="width: 0.65573770491803%"></div>
+<div class="time" style="width: 1.8691588785047%"></div>
 <pre>
   destruct QQ as [[Q0 HQ] e].</pre>
 </div>
 <div class="code" title="File: Connectedness.v
-Line: 266
-Time: 0s">
-<div class="time" style="width: 0%"></div>
+Line: 68
+Time: 0.001s">
+<div class="time" style="width: 0.93457943925234%"></div>
 <pre>
   assert (e' := fun a =&gt; ap trunctype_type (e a)); simpl in e'.</pre>
 </div>
 <div class="code" title="File: Connectedness.v
-Line: 267
+Line: 69
 Time: 0s">
 <div class="time" style="width: 0%"></div>
 <pre> clear HQ e.</pre>
 </div>
 <div class="code" title="File: Connectedness.v
-Line: 267
+Line: 69
 Time: 0s">
 <div class="time" style="width: 0%"></div>
 <pre>
   intros d.</pre>
 </div>
 <div class="code" title="File: Connectedness.v
-Line: 268
+Line: 70
 Time: 0s">
 <div class="time" style="width: 0%"></div>
 <pre> set (d0 := d tt).</pre>
 </div>
 <div class="code" title="File: Connectedness.v
-Line: 268
+Line: 70
 Time: 0.001s">
-<div class="time" style="width: 0.32786885245902%"></div>
+<div class="time" style="width: 0.93457943925234%"></div>
 <pre>
   exists (fun a =&gt; (transport idmap (e' a0 @ (e' a)^) d0)).</pre>
 </div>
 <div class="code" title="File: Connectedness.v
-Line: 269
+Line: 71
 Time: 0s">
 <div class="time" style="width: 0%"></div>
 <pre>
   intros [].</pre>
 </div>
 <div class="code" title="File: Connectedness.v
-Line: 270
+Line: 72
 Time: 0s">
 <div class="time" style="width: 0%"></div>
 <pre> change (d tt) with (transport idmap 1 d0).</pre>
 </div>
 <div class="code" title="File: Connectedness.v
-Line: 270
+Line: 72
 Time: 0.002s">
-<div class="time" style="width: 0.65573770491803%"></div>
+<div class="time" style="width: 1.8691588785047%"></div>
 <pre>
   apply ap10, ap, concat_pV.</pre>
 </div>
 <div class="code" title="File: Connectedness.v
-Line: 271
-Time: 0.003s">
-<div class="time" style="width: 0.98360655737705%"></div>
+Line: 73
+Time: 0.004s">
+<div class="time" style="width: 3.7383177570093%"></div>
 <pre>
 Defined.</pre>
 </div>
 <div class="code" title="File: Connectedness.v
-Line: 272
+Line: 74
 Time: 0s">
 <div class="time" style="width: 0%"></div>
 <pre>
@@ -1451,13 +421,13 @@ Time: 0s">
 </pre>
 </div>
 <div class="code" title="File: Connectedness.v
-Line: 275
-Time: 0.024s">
-<div class="time" style="width: 7.8688524590164%"></div>
+Line: 77
+Time: 0.003s">
+<div class="time" style="width: 2.803738317757%"></div>
 <pre>End Extensions.</pre>
 </div>
 <div class="code" title="File: Connectedness.v
-Line: 275
+Line: 77
 Time: 0s">
 <div class="time" style="width: 0%"></div>
 <pre>
@@ -1465,7 +435,7 @@ Time: 0s">
 Section Wedge_Incl_Conn.</pre>
 </div>
 <div class="code" title="File: Connectedness.v
-Line: 277
+Line: 79
 Time: 0s">
 <div class="time" style="width: 0%"></div>
 <pre>
@@ -1479,9 +449,9 @@ Once again, we believe that the type of the conclusion is an hprop (though we do
 </pre>
 </div>
 <div class="code" title="File: Connectedness.v
-Line: 284
-Time: 0.001s">
-<div class="time" style="width: 0.32786885245902%"></div>
+Line: 86
+Time: 0.003s">
+<div class="time" style="width: 2.803738317757%"></div>
 <pre>Context `{Univalence}
   {m n : trunc_index}
   {A : Type} (a0 : A) `{IsConnected m.+1 A}
@@ -1492,9 +462,9 @@ Time: 0.001s">
   (f_a0b0 : f_a0 b0 = f_b0 a0).</pre>
 </div>
 <div class="code" title="File: Connectedness.v
-Line: 291
+Line: 93
 Time: 0.002s">
-<div class="time" style="width: 0.65573770491803%"></div>
+<div class="time" style="width: 1.8691588785047%"></div>
 <pre>
 
 Corollary isconn_wedge_incl
@@ -1504,16 +474,16 @@ Corollary isconn_wedge_incl
   &amp; e_b0 a0 = (e_a0 b0) @ f_a0b0 }}}.</pre>
 </div>
 <div class="code" title="File: Connectedness.v
-Line: 297
+Line: 99
 Time: 0s">
 <div class="time" style="width: 0%"></div>
 <pre>
 Proof.</pre>
 </div>
 <div class="code" title="File: Connectedness.v
-Line: 298
+Line: 100
 Time: 0.002s">
-<div class="time" style="width: 0.65573770491803%"></div>
+<div class="time" style="width: 1.8691588785047%"></div>
 <pre>
   assert (goal_as_extension :
     ExtensionAlong (unit_name a0)
@@ -1521,84 +491,84 @@ Time: 0.002s">
       (unit_name (f_a0 ; (unit_name f_a0b0)))).</pre>
 </div>
 <div class="code" title="File: Connectedness.v
-Line: 302
+Line: 104
 Time: 0.001s">
-<div class="time" style="width: 0.32786885245902%"></div>
+<div class="time" style="width: 0.93457943925234%"></div>
 <pre>
-    apply (extension_conn_map_elim (n := m)).</pre>
+    apply (extension_conn_map_elim m).</pre>
 </div>
 <div class="code" title="File: Connectedness.v
-Line: 303
-Time: 0s">
-<div class="time" style="width: 0%"></div>
+Line: 105
+Time: 0.001s">
+<div class="time" style="width: 0.93457943925234%"></div>
 <pre>
       apply (conn_point_incl a0).</pre>
 </div>
 <div class="code" title="File: Connectedness.v
-Line: 304
+Line: 106
 Time: 0s">
 <div class="time" style="width: 0%"></div>
 <pre>
     intros a.</pre>
 </div>
 <div class="code" title="File: Connectedness.v
-Line: 305
-Time: 0.001s">
-<div class="time" style="width: 0.32786885245902%"></div>
+Line: 107
+Time: 0.002s">
+<div class="time" style="width: 1.8691588785047%"></div>
 <pre>
     apply (istrunc_extension_along_conn (n := n)).</pre>
 </div>
 <div class="code" title="File: Connectedness.v
-Line: 306
-Time: 0s">
-<div class="time" style="width: 0%"></div>
+Line: 108
+Time: 0.001s">
+<div class="time" style="width: 0.93457943925234%"></div>
 <pre>
       apply (conn_point_incl b0).</pre>
 </div>
 <div class="code" title="File: Connectedness.v
-Line: 307
+Line: 109
 Time: 0s">
 <div class="time" style="width: 0%"></div>
 <pre>
     apply HP.</pre>
 </div>
 <div class="code" title="File: Connectedness.v
-Line: 308
+Line: 110
 Time: 0.003s">
-<div class="time" style="width: 0.98360655737705%"></div>
+<div class="time" style="width: 2.803738317757%"></div>
 <pre>
   destruct goal_as_extension as [f_eb name_ea_eab].</pre>
 </div>
 <div class="code" title="File: Connectedness.v
-Line: 309
+Line: 111
 Time: 0s">
 <div class="time" style="width: 0%"></div>
 <pre>
   assert (ea_eab := name_ea_eab tt); clear name_ea_eab.</pre>
 </div>
 <div class="code" title="File: Connectedness.v
-Line: 310
+Line: 112
 Time: 0.001s">
-<div class="time" style="width: 0.32786885245902%"></div>
+<div class="time" style="width: 0.93457943925234%"></div>
 <pre>
   exists (fun a =&gt; pr1 (f_eb a)).</pre>
 </div>
 <div class="code" title="File: Connectedness.v
-Line: 311
+Line: 113
 Time: 0.002s">
-<div class="time" style="width: 0.65573770491803%"></div>
+<div class="time" style="width: 1.8691588785047%"></div>
 <pre>
   exists (fun b =&gt; apD10 (ea_eab ..1) b).</pre>
 </div>
 <div class="code" title="File: Connectedness.v
-Line: 312
+Line: 114
 Time: 0.001s">
-<div class="time" style="width: 0.32786885245902%"></div>
+<div class="time" style="width: 0.93457943925234%"></div>
 <pre>
   exists (fun a =&gt; pr2 (f_eb a) tt).</pre>
 </div>
 <div class="code" title="File: Connectedness.v
-Line: 313
+Line: 115
 Time: 0s">
 <div class="time" style="width: 0%"></div>
 <pre>
@@ -1606,78 +576,78 @@ Time: 0s">
  </pre>
 </div>
 <div class="code" title="File: Connectedness.v
-Line: 315
+Line: 117
 Time: 0.001s">
-<div class="time" style="width: 0.32786885245902%"></div>
+<div class="time" style="width: 0.93457943925234%"></div>
 <pre>apply moveL_Mp.</pre>
 </div>
 <div class="code" title="File: Connectedness.v
-Line: 315
+Line: 117
 Time: 0.004s">
-<div class="time" style="width: 1.3114754098361%"></div>
+<div class="time" style="width: 3.7383177570093%"></div>
 <pre>
   apply (concatR (apD10 (ea_eab ..2) tt)).</pre>
 </div>
 <div class="code" title="File: Connectedness.v
-Line: 316
+Line: 118
 Time: 0.005s">
-<div class="time" style="width: 1.6393442622951%"></div>
+<div class="time" style="width: 4.6728971962617%"></div>
 <pre>
   set (ea := ea_eab ..1).</pre>
 </div>
 <div class="code" title="File: Connectedness.v
-Line: 317
-Time: 0.001s">
-<div class="time" style="width: 0.32786885245902%"></div>
+Line: 119
+Time: 0.002s">
+<div class="time" style="width: 1.8691588785047%"></div>
 <pre> generalize ea; simpl.</pre>
 </div>
 <div class="code" title="File: Connectedness.v
-Line: 317
+Line: 119
 Time: 0s">
 <div class="time" style="width: 0%"></div>
 <pre> clear ea_eab ea.</pre>
 </div>
 <div class="code" title="File: Connectedness.v
-Line: 317
+Line: 119
 Time: 0s">
 <div class="time" style="width: 0%"></div>
 <pre> intros.</pre>
 </div>
 <div class="code" title="File: Connectedness.v
-Line: 317
+Line: 119
 Time: 0.005s">
-<div class="time" style="width: 1.6393442622951%"></div>
+<div class="time" style="width: 4.6728971962617%"></div>
 <pre>
   rewrite transport_arrow.</pre>
 </div>
 <div class="code" title="File: Connectedness.v
-Line: 318
+Line: 120
 Time: 0.004s">
-<div class="time" style="width: 1.3114754098361%"></div>
+<div class="time" style="width: 3.7383177570093%"></div>
 <pre> rewrite transport_const.</pre>
 </div>
 <div class="code" title="File: Connectedness.v
-Line: 318
-Time: 0.004s">
-<div class="time" style="width: 1.3114754098361%"></div>
+Line: 120
+Time: 0.006s">
+<div class="time" style="width: 5.607476635514%"></div>
 <pre> rewrite transport_paths_Fl.</pre>
 </div>
 <div class="code" title="File: Connectedness.v
-Line: 318
+Line: 120
 Time: 0s">
 <div class="time" style="width: 0%"></div>
 <pre>
   exact 1.</pre>
 </div>
 <div class="code" title="File: Connectedness.v
-Line: 319
-Time: 0.015s">
-<div class="time" style="width: 4.9180327868852%"></div>
+Line: 121
+Time: 0.021s">
+<div class="time" style="width: 19.626168224299%"></div>
 <pre>
 Qed.</pre>
 </div>
 <div class="code" title="File: Connectedness.v
-Line: 320
+Line: 122
 Time: 0s">
 <div class="time" style="width: 0%"></div>
 <pre>
@@ -1685,34 +655,34 @@ Time: 0s">
 (** It is easier to apply the above result with its components separated. *)</pre>
 </div>
 <div class="code" title="File: Connectedness.v
-Line: 322
+Line: 124
 Time: 0.003s">
-<div class="time" style="width: 0.98360655737705%"></div>
+<div class="time" style="width: 2.803738317757%"></div>
 <pre>Definition wedge_incl_elim : forall a b, P a b
   := isconn_wedge_incl.1.</pre>
 </div>
 <div class="code" title="File: Connectedness.v
-Line: 323
+Line: 125
 Time: 0.004s">
-<div class="time" style="width: 1.3114754098361%"></div>
+<div class="time" style="width: 3.7383177570093%"></div>
 <pre>
 
 Definition wedge_incl_comp1 : forall b, wedge_incl_elim a0 b = f_a0 b
   := isconn_wedge_incl.2.1.</pre>
 </div>
 <div class="code" title="File: Connectedness.v
-Line: 326
-Time: 0.019s">
-<div class="time" style="width: 6.2295081967213%"></div>
+Line: 128
+Time: 0.004s">
+<div class="time" style="width: 3.7383177570093%"></div>
 <pre>
 
 Definition wedge_incl_comp2 : forall a, wedge_incl_elim a b0 = f_b0 a
   := isconn_wedge_incl.2.2.1.</pre>
 </div>
 <div class="code" title="File: Connectedness.v
-Line: 329
-Time: 0.006s">
-<div class="time" style="width: 1.9672131147541%"></div>
+Line: 131
+Time: 0.005s">
+<div class="time" style="width: 4.6728971962617%"></div>
 <pre>
 
 Definition wedge_incl_comp3
@@ -1720,17 +690,17 @@ Definition wedge_incl_comp3
   := isconn_wedge_incl.2.2.2.</pre>
 </div>
 <div class="code" title="File: Connectedness.v
-Line: 333
-Time: 0.008s">
-<div class="time" style="width: 2.6229508196721%"></div>
+Line: 135
+Time: 0.028s">
+<div class="time" style="width: 26.168224299065%"></div>
 <pre>
 
 End Wedge_Incl_Conn.</pre>
 </div>
 <div class="code" title="File: Connectedness.v
-Line: 335
-Time: 0.001s">
-<div class="time" style="width: 0.32786885245902%"></div>
+Line: 137
+Time: 0.002s">
+<div class="time" style="width: 1.8691588785047%"></div>
 <pre>
 
 Definition wedge_incl_elim_uncurried `{Univalence}
@@ -1744,35 +714,35 @@ Definition wedge_incl_elim_uncurried `{Univalence}
   : forall (a : A) (b : B), P a b.</pre>
 </div>
 <div class="code" title="File: Connectedness.v
-Line: 345
+Line: 147
 Time: 0s">
 <div class="time" style="width: 0%"></div>
 <pre>
 Proof.</pre>
 </div>
 <div class="code" title="File: Connectedness.v
-Line: 346
+Line: 148
 Time: 0.001s">
-<div class="time" style="width: 0.32786885245902%"></div>
+<div class="time" style="width: 0.93457943925234%"></div>
 <pre>
   destruct fs as [f_a0 [f_b0 f_a0b0]].</pre>
 </div>
 <div class="code" title="File: Connectedness.v
-Line: 347
+Line: 149
 Time: 0.001s">
-<div class="time" style="width: 0.32786885245902%"></div>
+<div class="time" style="width: 0.93457943925234%"></div>
 <pre>
   refine (wedge_incl_elim _ _ _ _ _ f_a0b0).</pre>
 </div>
 <div class="code" title="File: Connectedness.v
-Line: 348
+Line: 150
 Time: 0.001s">
-<div class="time" style="width: 0.32786885245902%"></div>
+<div class="time" style="width: 0.93457943925234%"></div>
 <pre>
 Defined.</pre>
 </div>
 <div class="code" title="File: Connectedness.v
-Line: 350
+Line: 152
 Time: 0s">
 <div class="time" style="width: 0%"></div>
 <pre>
