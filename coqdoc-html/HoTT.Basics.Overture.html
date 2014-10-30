@@ -1096,6 +1096,25 @@ A convenient tactic for using function extensionality.
 </div>
 
 <div class="doc">
+Test if a tactic succeeds, but always roll-back the results 
+</div>
+<div class="code">
+<span class="id" type="keyword">Tactic Notation</span> "test" <span class="id" type="var">tactic3</span>(<span class="id" type="var">tac</span>) :=<br/>
+&nbsp;&nbsp;<span class="id" type="tactic">try</span> (<span class="id" type="tactic">first</span> [ <span class="id" type="var">tac</span> | <span class="id" type="tactic">fail</span> 2 <span class="id" type="var">tac</span> "does not succeed" ]; <span class="id" type="tactic">fail</span> <span class="id" type="var">tac</span> "succeeds"; []).<br/>
+
+<br/>
+</div>
+
+<div class="doc">
+<span class="inlinecode"><a class="idref" href="HoTT.Basics.Overture.html#not"><span class="id" type="definition">not</span></a></span> <span class="inlinecode"><span class="id" type="var">tac</span></span> is equivalent to <span class="inlinecode"><span class="id" type="tactic">fail</span></span> <span class="inlinecode"><span class="id" type="var">tac</span></span> <span class="inlinecode">"<span class="id" type="var">succeeds</span>"</span> if <span class="inlinecode"><span class="id" type="var">tac</span></span> succeeds, and is equivalent to <span class="inlinecode"><span class="id" type="tactic">idtac</span></span> if <span class="inlinecode"><span class="id" type="var">tac</span></span> fails 
+</div>
+<div class="code">
+<span class="id" type="keyword">Tactic Notation</span> "not" <span class="id" type="var">tactic3</span>(<span class="id" type="var">tac</span>) := <span class="id" type="tactic">try</span> ((<span class="id" type="var">test</span> <span class="id" type="var">tac</span>); <span class="id" type="tactic">fail</span> 1 <span class="id" type="var">tac</span> "succeeds").<br/>
+
+<br/>
+</div>
+
+<div class="doc">
 Removed auto. We can write "by (path_induction;auto with path_hints)"
  if we want to.
 </div>
@@ -1103,8 +1122,7 @@ Removed auto. We can write "by (path_induction;auto with path_hints)"
 <span class="id" type="keyword">Ltac</span> <span class="id" type="var">path_induction</span> :=<br/>
 &nbsp;&nbsp;<span class="id" type="tactic">intros</span>; <span class="id" type="tactic">repeat</span> <span class="id" type="tactic">progress</span> (<br/>
 &nbsp;&nbsp;&nbsp;&nbsp;<span class="id" type="keyword">match</span> <span class="id" type="keyword">goal</span> <span class="id" type="keyword">with</span><br/>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;| [ <span class="id" type="var">p</span> : <span class="id" type="var">_</span> <a class="idref" href="HoTT.Basics.Overture.html#:type_scope:x_'='_x"><span class="id" type="notation">=</span></a> <span class="id" type="var">_</span>  |- <span class="id" type="var">_</span> ] ⇒ <span class="id" type="tactic">induction</span> <span class="id" type="var">p</span><br/>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;| <span class="id" type="var">_</span> ⇒ <span class="id" type="tactic">idtac</span><br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;| [ <span class="id" type="var">p</span> : ?<span class="id" type="var">x</span> <a class="idref" href="HoTT.Basics.Overture.html#:type_scope:x_'='_x"><span class="id" type="notation">=</span></a> <a class="idref" href="HoTT.Basics.Overture.html#:type_scope:x_'='_x"><span class="id" type="notation">?</span></a><span class="id" type="var">y</span>  |- <span class="id" type="var">_</span> ] ⇒ <span class="id" type="var">not</span> <span class="id" type="var">constr_eq</span> <span class="id" type="var">x</span> <span class="id" type="var">y</span>; <span class="id" type="tactic">induction</span> <span class="id" type="var">p</span><br/>
 &nbsp;&nbsp;&nbsp;&nbsp;<span class="id" type="keyword">end</span><br/>
 &nbsp;&nbsp;).<br/>
 
@@ -1140,25 +1158,6 @@ The tactic <span class="inlinecode"><span class="id" type="var">f_ap</span></spa
 &nbsp;&nbsp;&nbsp;&nbsp;| [ |- ?<span class="id" type="var">X</span> <a class="idref" href="HoTT.Basics.Overture.html#:type_scope:x_'=='_x"><span class="id" type="notation">==</span></a> <a class="idref" href="HoTT.Basics.Overture.html#:type_scope:x_'=='_x"><span class="id" type="notation">?</span></a><span class="id" type="var">Y</span> ] ⇒<br/>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="id" type="keyword">let</span> <span class="id" type="var">X'</span> := <span class="id" type="tactic">eval</span> <span class="id" type="tactic">hnf</span> <span class="id" type="keyword">in</span> <span class="id" type="var">X</span> <span class="id" type="keyword">in</span> <span class="id" type="keyword">let</span> <span class="id" type="var">Y'</span> := <span class="id" type="tactic">eval</span> <span class="id" type="tactic">hnf</span> <span class="id" type="keyword">in</span> <span class="id" type="var">Y</span> <span class="id" type="keyword">in</span> <span class="id" type="tactic">change</span> (<span class="id" type="var">X'</span> <a class="idref" href="HoTT.Basics.Overture.html#:type_scope:x_'=='_x"><span class="id" type="notation">==</span></a> <span class="id" type="var">Y'</span>)<br/>
 &nbsp;&nbsp;<span class="id" type="keyword">end</span>; <span class="id" type="tactic">simpl</span>.<br/>
-
-<br/>
-</div>
-
-<div class="doc">
-Test if a tactic succeeds, but always roll-back the results 
-</div>
-<div class="code">
-<span class="id" type="keyword">Tactic Notation</span> "test" <span class="id" type="var">tactic3</span>(<span class="id" type="var">tac</span>) :=<br/>
-&nbsp;&nbsp;<span class="id" type="tactic">try</span> (<span class="id" type="tactic">first</span> [ <span class="id" type="var">tac</span> | <span class="id" type="tactic">fail</span> 2 <span class="id" type="var">tac</span> "does not succeed" ]; <span class="id" type="tactic">fail</span> <span class="id" type="var">tac</span> "succeeds"; []).<br/>
-
-<br/>
-</div>
-
-<div class="doc">
-<span class="inlinecode"><a class="idref" href="HoTT.Basics.Overture.html#not"><span class="id" type="definition">not</span></a></span> <span class="inlinecode"><span class="id" type="var">tac</span></span> is equivalent to <span class="inlinecode"><span class="id" type="tactic">fail</span></span> <span class="inlinecode"><span class="id" type="var">tac</span></span> <span class="inlinecode">"<span class="id" type="var">succeeds</span>"</span> if <span class="inlinecode"><span class="id" type="var">tac</span></span> succeeds, and is equivalent to <span class="inlinecode"><span class="id" type="tactic">idtac</span></span> if <span class="inlinecode"><span class="id" type="var">tac</span></span> fails 
-</div>
-<div class="code">
-<span class="id" type="keyword">Tactic Notation</span> "not" <span class="id" type="var">tactic3</span>(<span class="id" type="var">tac</span>) := <span class="id" type="tactic">try</span> ((<span class="id" type="var">test</span> <span class="id" type="var">tac</span>); <span class="id" type="tactic">fail</span> 1 <span class="id" type="var">tac</span> "succeeds").<br/>
 
 <br/>
 </div>

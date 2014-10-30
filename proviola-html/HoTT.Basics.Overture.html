@@ -6748,7 +6748,7 @@
           
 
             i = 1346;
-            data = "path_induction is defined	";
+            data = "";
             responses[i]=data;
           
 
@@ -6878,7 +6878,7 @@
           
 
             i = 1372;
-            data = "";
+            data = "path_induction is defined	";
             responses[i]=data;
           
 
@@ -7343,7 +7343,7 @@
           
 
             i = 1465;
-            data = "f_ap is defined	";
+            data = "";
             responses[i]=data;
           
 
@@ -7398,7 +7398,7 @@
           
 
             i = 1476;
-            data = "expand is defined	";
+            data = "";
             responses[i]=data;
           
 
@@ -7473,7 +7473,7 @@
           
 
             i = 1491;
-            data = "";
+            data = "f_ap is defined	";
             responses[i]=data;
           
 
@@ -7528,7 +7528,7 @@
           
 
             i = 1502;
-            data = "";
+            data = "expand is defined	";
             responses[i]=data;
           
 
@@ -9913,8 +9913,7 @@ A convenient tactic for using function extensionality.
 </div>
 <div class="goal" id="goal0_3_235"><pre><span></span></pre></div>
 <div class="doc" scenenumber="237">
-Removed auto. We can write "by (path_induction;auto with path_hints)"
- if we want to.
+Test if a tactic succeeds, but always roll-back the results 
 </div>
 <div scenenumber="239" class="code">
 <span class="command" onmouseout="
@@ -9922,13 +9921,8 @@ Removed auto. We can write "by (path_induction;auto with path_hints)"
       " onmouseover="
       mouseover(1346, '0_3_239');
       ">
-<span class="id" type="keyword">Ltac</span> <span class="id" type="var">path_induction</span> :=<br>
-  <span class="id" type="tactic">intros</span>; <span class="id" type="tactic">repeat</span> <span class="id" type="tactic">progress</span> (<br>
-    <span class="id" type="keyword">match</span> <span class="id" type="keyword">goal</span> <span class="id" type="keyword">with</span><br>
-      | [ <span class="id" type="var">p</span> : <span class="id" type="var">_</span> <a class="idref" href="HoTT.Basics.Overture.html#:type_scope:x_'='_x"><span class="id" type="notation">=</span></a> <span class="id" type="var">_</span>  |- <span class="id" type="var">_</span> ] ⇒ <span class="id" type="tactic">induction</span> <span class="id" type="var">p</span><br>
-      | <span class="id" type="var">_</span> ⇒ <span class="id" type="tactic">idtac</span><br>
-    <span class="id" type="keyword">end</span><br>
-  ).</span><span class="command" onmouseout="
+<span class="id" type="keyword">Tactic Notation</span> "test" <span class="id" type="var">tactic3</span>(<span class="id" type="var">tac</span>) :=<br>
+  <span class="id" type="tactic">try</span> (<span class="id" type="tactic">first</span> [ <span class="id" type="var">tac</span> | <span class="id" type="tactic">fail</span> 2 <span class="id" type="var">tac</span> "does not succeed" ]; <span class="id" type="tactic">fail</span> <span class="id" type="var">tac</span> "succeeds"; []).</span><span class="command" onmouseout="
       mouseout('0_3_239');
       " onmouseover="
       mouseover(1347, '0_3_239');
@@ -9938,13 +9932,55 @@ Removed auto. We can write "by (path_induction;auto with path_hints)"
 </div>
 <div class="goal" id="goal0_3_239"><pre><span></span></pre></div>
 <div class="doc" scenenumber="241">
-The tactic <span class="inlinecode"><span class="id" type="var">f_ap</span></span> is a replacement for the previously existing standard library tactic <span class="inlinecode"><span class="id" type="tactic">f_equal</span></span>.  This tactic works by repeatedly applying the fact that <span class="inlinecode"><a class="idref" href="HoTTBookExercises.html#Book_4_5.parts.f"><span class="id" type="variable">f</span></a></span> <span class="inlinecode">=</span> <span class="inlinecode"><a class="idref" href="HoTTBookExercises.html#Book_4_5.parts.g"><span class="id" type="variable">g</span></a></span> <span class="inlinecode">→</span> <span class="inlinecode"><a class="idref" href="HoTT.categories.Grothendieck.PseudofunctorToCat.html#x"><span class="id" type="projection">x</span></a></span> <span class="inlinecode">=</span> <span class="inlinecode"><a class="idref" href="HoTT.categories.Functor.Attributes.html#fully_faithful_helpers.y"><span class="id" type="variable">y</span></a></span> <span class="inlinecode">→</span> <span class="inlinecode"><a class="idref" href="HoTTBookExercises.html#Book_4_5.parts.f"><span class="id" type="variable">f</span></a></span> <span class="inlinecode"><a class="idref" href="HoTT.categories.Grothendieck.PseudofunctorToCat.html#x"><span class="id" type="projection">x</span></a></span> <span class="inlinecode">=</span> <span class="inlinecode"><a class="idref" href="HoTTBookExercises.html#Book_4_5.parts.g"><span class="id" type="variable">g</span></a></span> <span class="inlinecode"><a class="idref" href="HoTT.categories.Functor.Attributes.html#fully_faithful_helpers.y"><span class="id" type="variable">y</span></a></span> to turn, e.g., <span class="inlinecode"><a class="idref" href="HoTTBookExercises.html#Book_4_5.parts.f"><span class="id" type="variable">f</span></a></span> <span class="inlinecode"><a class="idref" href="HoTT.categories.Grothendieck.PseudofunctorToCat.html#x"><span class="id" type="projection">x</span></a></span> <span class="inlinecode"><a class="idref" href="HoTT.categories.Functor.Attributes.html#fully_faithful_helpers.y"><span class="id" type="variable">y</span></a></span> <span class="inlinecode">=</span> <span class="inlinecode"><a class="idref" href="HoTTBookExercises.html#Book_4_5.parts.f"><span class="id" type="variable">f</span></a></span> <span class="inlinecode"><a class="idref" href="Coq.Init.Logic_Type.html#identity_is_a_congruence.z"><span class="id" type="variable">z</span></a></span> <span class="inlinecode"><a class="idref" href="HoTT.Basics.PathGroupoids.html#w"><span class="id" type="variable">w</span></a></span> first into <span class="inlinecode"><a class="idref" href="HoTTBookExercises.html#Book_4_5.parts.f"><span class="id" type="variable">f</span></a></span> <span class="inlinecode"><a class="idref" href="HoTT.categories.Grothendieck.PseudofunctorToCat.html#x"><span class="id" type="projection">x</span></a></span> <span class="inlinecode">=</span> <span class="inlinecode"><a class="idref" href="HoTTBookExercises.html#Book_4_5.parts.f"><span class="id" type="variable">f</span></a></span> <span class="inlinecode"><a class="idref" href="Coq.Init.Logic_Type.html#identity_is_a_congruence.z"><span class="id" type="variable">z</span></a></span> and <span class="inlinecode"><a class="idref" href="HoTT.categories.Functor.Attributes.html#fully_faithful_helpers.y"><span class="id" type="variable">y</span></a></span> <span class="inlinecode">=</span> <span class="inlinecode"><a class="idref" href="HoTT.Basics.PathGroupoids.html#w"><span class="id" type="variable">w</span></a></span>, and then turns the first of these into <span class="inlinecode"><a class="idref" href="HoTTBookExercises.html#Book_4_5.parts.f"><span class="id" type="variable">f</span></a></span> <span class="inlinecode">=</span> <span class="inlinecode"><a class="idref" href="HoTTBookExercises.html#Book_4_5.parts.f"><span class="id" type="variable">f</span></a></span> and <span class="inlinecode"><a class="idref" href="HoTT.categories.Grothendieck.PseudofunctorToCat.html#x"><span class="id" type="projection">x</span></a></span> <span class="inlinecode">=</span> <span class="inlinecode"><a class="idref" href="Coq.Init.Logic_Type.html#identity_is_a_congruence.z"><span class="id" type="variable">z</span></a></span>.  The <span class="inlinecode"><span class="id" type="var">done</span></span> tactic is used to detect the <span class="inlinecode"><a class="idref" href="HoTTBookExercises.html#Book_4_5.parts.f"><span class="id" type="variable">f</span></a></span> <span class="inlinecode">=</span> <span class="inlinecode"><a class="idref" href="HoTTBookExercises.html#Book_4_5.parts.f"><span class="id" type="variable">f</span></a></span> case and finish, and the <span class="inlinecode"><span class="id" type="tactic">trivial</span></span> is used to solve, e.g., <span class="inlinecode"><a class="idref" href="HoTT.categories.Grothendieck.PseudofunctorToCat.html#x"><span class="id" type="projection">x</span></a></span> <span class="inlinecode">=</span> <span class="inlinecode"><a class="idref" href="HoTT.categories.Grothendieck.PseudofunctorToCat.html#x"><span class="id" type="projection">x</span></a></span> when using <span class="inlinecode"><span class="id" type="var">f_ap</span></span> on <span class="inlinecode"><a class="idref" href="HoTTBookExercises.html#Book_4_5.parts.f"><span class="id" type="variable">f</span></a></span> <span class="inlinecode"><a class="idref" href="HoTT.categories.Functor.Attributes.html#fully_faithful_helpers.y"><span class="id" type="variable">y</span></a></span> <span class="inlinecode"><a class="idref" href="HoTT.categories.Grothendieck.PseudofunctorToCat.html#x"><span class="id" type="projection">x</span></a></span> <span class="inlinecode">=</span> <span class="inlinecode"><a class="idref" href="HoTTBookExercises.html#Book_4_5.parts.f"><span class="id" type="variable">f</span></a></span> <span class="inlinecode"><a class="idref" href="Coq.Init.Logic_Type.html#identity_is_a_congruence.z"><span class="id" type="variable">z</span></a></span> <span class="inlinecode"><a class="idref" href="HoTT.categories.Grothendieck.PseudofunctorToCat.html#x"><span class="id" type="projection">x</span></a></span>.  This tactic only works for non-dependently-typed functions; we cannot express <span class="inlinecode"><a class="idref" href="HoTT.categories.Functor.Attributes.html#fully_faithful_helpers.y"><span class="id" type="variable">y</span></a></span> <span class="inlinecode">=</span> <span class="inlinecode"><a class="idref" href="HoTT.Basics.PathGroupoids.html#w"><span class="id" type="variable">w</span></a></span> in the first example if <span class="inlinecode"><a class="idref" href="HoTT.categories.Functor.Attributes.html#fully_faithful_helpers.y"><span class="id" type="variable">y</span></a></span> and <span class="inlinecode"><a class="idref" href="HoTT.Basics.PathGroupoids.html#w"><span class="id" type="variable">w</span></a></span> have different types.  If and when Arnaud's new-tacticals branch lands, and we can have a goal which depends on the term used to discharge another goal, then this tactic should probably be generalized to deal with dependent functions. 
+<span class="inlinecode"><a class="idref" href="HoTT.Basics.Overture.html#not"><span class="id" type="definition">not</span></a></span> <span class="inlinecode"><span class="id" type="var">tac</span></span> is equivalent to <span class="inlinecode"><span class="id" type="tactic">fail</span></span> <span class="inlinecode"><span class="id" type="var">tac</span></span> <span class="inlinecode">"<span class="id" type="var">succeeds</span>"</span> if <span class="inlinecode"><span class="id" type="var">tac</span></span> succeeds, and is equivalent to <span class="inlinecode"><span class="id" type="tactic">idtac</span></span> if <span class="inlinecode"><span class="id" type="var">tac</span></span> fails 
 </div>
 <div scenenumber="243" class="code">
 <span class="command" onmouseout="
       mouseout('0_3_243');
       " onmouseover="
-      mouseover(1465, '0_3_243');
+      mouseover(1367, '0_3_243');
+      ">
+<span class="id" type="keyword">Tactic Notation</span> "not" <span class="id" type="var">tactic3</span>(<span class="id" type="var">tac</span>) := <span class="id" type="tactic">try</span> ((<span class="id" type="var">test</span> <span class="id" type="var">tac</span>); <span class="id" type="tactic">fail</span> 1 <span class="id" type="var">tac</span> "succeeds").</span><span class="command" onmouseout="
+      mouseout('0_3_243');
+      " onmouseover="
+      mouseover(1368, '0_3_243');
+      "><br>
+<br>
+</span>
+</div>
+<div class="goal" id="goal0_3_243"><pre><span></span></pre></div>
+<div class="doc" scenenumber="245">
+Removed auto. We can write "by (path_induction;auto with path_hints)"
+ if we want to.
+</div>
+<div scenenumber="247" class="code">
+<span class="command" onmouseout="
+      mouseout('0_3_247');
+      " onmouseover="
+      mouseover(1372, '0_3_247');
+      ">
+<span class="id" type="keyword">Ltac</span> <span class="id" type="var">path_induction</span> :=<br>
+  <span class="id" type="tactic">intros</span>; <span class="id" type="tactic">repeat</span> <span class="id" type="tactic">progress</span> (<br>
+    <span class="id" type="keyword">match</span> <span class="id" type="keyword">goal</span> <span class="id" type="keyword">with</span><br>
+      | [ <span class="id" type="var">p</span> : ?<span class="id" type="var">x</span> <a class="idref" href="HoTT.Basics.Overture.html#:type_scope:x_'='_x"><span class="id" type="notation">=</span></a> <a class="idref" href="HoTT.Basics.Overture.html#:type_scope:x_'='_x"><span class="id" type="notation">?</span></a><span class="id" type="var">y</span>  |- <span class="id" type="var">_</span> ] ⇒ <span class="id" type="var">not</span> <span class="id" type="var">constr_eq</span> <span class="id" type="var">x</span> <span class="id" type="var">y</span>; <span class="id" type="tactic">induction</span> <span class="id" type="var">p</span><br>
+    <span class="id" type="keyword">end</span><br>
+  ).</span><span class="command" onmouseout="
+      mouseout('0_3_247');
+      " onmouseover="
+      mouseover(1373, '0_3_247');
+      "><br>
+<br>
+</span>
+</div>
+<div class="goal" id="goal0_3_247"><pre><span></span></pre></div>
+<div class="doc" scenenumber="249">
+The tactic <span class="inlinecode"><span class="id" type="var">f_ap</span></span> is a replacement for the previously existing standard library tactic <span class="inlinecode"><span class="id" type="tactic">f_equal</span></span>.  This tactic works by repeatedly applying the fact that <span class="inlinecode"><a class="idref" href="HoTTBookExercises.html#Book_4_5.parts.f"><span class="id" type="variable">f</span></a></span> <span class="inlinecode">=</span> <span class="inlinecode"><a class="idref" href="HoTTBookExercises.html#Book_4_5.parts.g"><span class="id" type="variable">g</span></a></span> <span class="inlinecode">→</span> <span class="inlinecode"><a class="idref" href="HoTT.categories.Grothendieck.PseudofunctorToCat.html#x"><span class="id" type="projection">x</span></a></span> <span class="inlinecode">=</span> <span class="inlinecode"><a class="idref" href="HoTT.categories.Functor.Attributes.html#fully_faithful_helpers.y"><span class="id" type="variable">y</span></a></span> <span class="inlinecode">→</span> <span class="inlinecode"><a class="idref" href="HoTTBookExercises.html#Book_4_5.parts.f"><span class="id" type="variable">f</span></a></span> <span class="inlinecode"><a class="idref" href="HoTT.categories.Grothendieck.PseudofunctorToCat.html#x"><span class="id" type="projection">x</span></a></span> <span class="inlinecode">=</span> <span class="inlinecode"><a class="idref" href="HoTTBookExercises.html#Book_4_5.parts.g"><span class="id" type="variable">g</span></a></span> <span class="inlinecode"><a class="idref" href="HoTT.categories.Functor.Attributes.html#fully_faithful_helpers.y"><span class="id" type="variable">y</span></a></span> to turn, e.g., <span class="inlinecode"><a class="idref" href="HoTTBookExercises.html#Book_4_5.parts.f"><span class="id" type="variable">f</span></a></span> <span class="inlinecode"><a class="idref" href="HoTT.categories.Grothendieck.PseudofunctorToCat.html#x"><span class="id" type="projection">x</span></a></span> <span class="inlinecode"><a class="idref" href="HoTT.categories.Functor.Attributes.html#fully_faithful_helpers.y"><span class="id" type="variable">y</span></a></span> <span class="inlinecode">=</span> <span class="inlinecode"><a class="idref" href="HoTTBookExercises.html#Book_4_5.parts.f"><span class="id" type="variable">f</span></a></span> <span class="inlinecode"><a class="idref" href="Coq.Init.Logic_Type.html#identity_is_a_congruence.z"><span class="id" type="variable">z</span></a></span> <span class="inlinecode"><a class="idref" href="HoTT.Basics.PathGroupoids.html#w"><span class="id" type="variable">w</span></a></span> first into <span class="inlinecode"><a class="idref" href="HoTTBookExercises.html#Book_4_5.parts.f"><span class="id" type="variable">f</span></a></span> <span class="inlinecode"><a class="idref" href="HoTT.categories.Grothendieck.PseudofunctorToCat.html#x"><span class="id" type="projection">x</span></a></span> <span class="inlinecode">=</span> <span class="inlinecode"><a class="idref" href="HoTTBookExercises.html#Book_4_5.parts.f"><span class="id" type="variable">f</span></a></span> <span class="inlinecode"><a class="idref" href="Coq.Init.Logic_Type.html#identity_is_a_congruence.z"><span class="id" type="variable">z</span></a></span> and <span class="inlinecode"><a class="idref" href="HoTT.categories.Functor.Attributes.html#fully_faithful_helpers.y"><span class="id" type="variable">y</span></a></span> <span class="inlinecode">=</span> <span class="inlinecode"><a class="idref" href="HoTT.Basics.PathGroupoids.html#w"><span class="id" type="variable">w</span></a></span>, and then turns the first of these into <span class="inlinecode"><a class="idref" href="HoTTBookExercises.html#Book_4_5.parts.f"><span class="id" type="variable">f</span></a></span> <span class="inlinecode">=</span> <span class="inlinecode"><a class="idref" href="HoTTBookExercises.html#Book_4_5.parts.f"><span class="id" type="variable">f</span></a></span> and <span class="inlinecode"><a class="idref" href="HoTT.categories.Grothendieck.PseudofunctorToCat.html#x"><span class="id" type="projection">x</span></a></span> <span class="inlinecode">=</span> <span class="inlinecode"><a class="idref" href="Coq.Init.Logic_Type.html#identity_is_a_congruence.z"><span class="id" type="variable">z</span></a></span>.  The <span class="inlinecode"><span class="id" type="var">done</span></span> tactic is used to detect the <span class="inlinecode"><a class="idref" href="HoTTBookExercises.html#Book_4_5.parts.f"><span class="id" type="variable">f</span></a></span> <span class="inlinecode">=</span> <span class="inlinecode"><a class="idref" href="HoTTBookExercises.html#Book_4_5.parts.f"><span class="id" type="variable">f</span></a></span> case and finish, and the <span class="inlinecode"><span class="id" type="tactic">trivial</span></span> is used to solve, e.g., <span class="inlinecode"><a class="idref" href="HoTT.categories.Grothendieck.PseudofunctorToCat.html#x"><span class="id" type="projection">x</span></a></span> <span class="inlinecode">=</span> <span class="inlinecode"><a class="idref" href="HoTT.categories.Grothendieck.PseudofunctorToCat.html#x"><span class="id" type="projection">x</span></a></span> when using <span class="inlinecode"><span class="id" type="var">f_ap</span></span> on <span class="inlinecode"><a class="idref" href="HoTTBookExercises.html#Book_4_5.parts.f"><span class="id" type="variable">f</span></a></span> <span class="inlinecode"><a class="idref" href="HoTT.categories.Functor.Attributes.html#fully_faithful_helpers.y"><span class="id" type="variable">y</span></a></span> <span class="inlinecode"><a class="idref" href="HoTT.categories.Grothendieck.PseudofunctorToCat.html#x"><span class="id" type="projection">x</span></a></span> <span class="inlinecode">=</span> <span class="inlinecode"><a class="idref" href="HoTTBookExercises.html#Book_4_5.parts.f"><span class="id" type="variable">f</span></a></span> <span class="inlinecode"><a class="idref" href="Coq.Init.Logic_Type.html#identity_is_a_congruence.z"><span class="id" type="variable">z</span></a></span> <span class="inlinecode"><a class="idref" href="HoTT.categories.Grothendieck.PseudofunctorToCat.html#x"><span class="id" type="projection">x</span></a></span>.  This tactic only works for non-dependently-typed functions; we cannot express <span class="inlinecode"><a class="idref" href="HoTT.categories.Functor.Attributes.html#fully_faithful_helpers.y"><span class="id" type="variable">y</span></a></span> <span class="inlinecode">=</span> <span class="inlinecode"><a class="idref" href="HoTT.Basics.PathGroupoids.html#w"><span class="id" type="variable">w</span></a></span> in the first example if <span class="inlinecode"><a class="idref" href="HoTT.categories.Functor.Attributes.html#fully_faithful_helpers.y"><span class="id" type="variable">y</span></a></span> and <span class="inlinecode"><a class="idref" href="HoTT.Basics.PathGroupoids.html#w"><span class="id" type="variable">w</span></a></span> have different types.  If and when Arnaud's new-tacticals branch lands, and we can have a goal which depends on the term used to discharge another goal, then this tactic should probably be generalized to deal with dependent functions. 
+</div>
+<div scenenumber="251" class="code">
+<span class="command" onmouseout="
+      mouseout('0_3_251');
+      " onmouseover="
+      mouseover(1491, '0_3_251');
       ">
 <span class="id" type="keyword">Ltac</span> <span class="id" type="var">f_ap</span> :=<br>
   <span class="id" type="tactic">idtac</span>;<br>
@@ -9955,22 +9991,22 @@ The tactic <span class="inlinecode"><span class="id" type="var">f_ap</span></spa
           [ <span class="id" type="var">done</span> || <span class="id" type="var">f_ap</span><br>
           | <span class="id" type="tactic">trivial</span> ]<br>
   <span class="id" type="keyword">end</span>.</span><span class="command" onmouseout="
-      mouseout('0_3_243');
+      mouseout('0_3_251');
       " onmouseover="
-      mouseover(1466, '0_3_243');
+      mouseover(1492, '0_3_251');
       "><br>
 <br>
 </span>
 </div>
-<div class="goal" id="goal0_3_243"><pre><span></span></pre></div>
-<div class="doc" scenenumber="245">
+<div class="goal" id="goal0_3_251"><pre><span></span></pre></div>
+<div class="doc" scenenumber="253">
 <span class="inlinecode"><span class="id" type="var">expand</span></span> replaces both terms of an equality (either <span class="inlinecode"><a class="idref" href="HoTT.Basics.Overture.html#paths"><span class="id" type="inductive">paths</span></a></span> or <span class="inlinecode"><a class="idref" href="HoTT.Basics.Overture.html#pointwise_paths"><span class="id" type="definition">pointwise_paths</span></a></span> in the goal with their head normal forms 
 </div>
-<div scenenumber="247" class="code">
+<div scenenumber="255" class="code">
 <span class="command" onmouseout="
-      mouseout('0_3_247');
+      mouseout('0_3_255');
       " onmouseover="
-      mouseover(1476, '0_3_247');
+      mouseover(1502, '0_3_255');
       ">
 <span class="id" type="keyword">Ltac</span> <span class="id" type="var">expand</span> :=<br>
   <span class="id" type="tactic">idtac</span>;<br>
@@ -9980,43 +10016,6 @@ The tactic <span class="inlinecode"><span class="id" type="var">f_ap</span></spa
     | [ |- ?<span class="id" type="var">X</span> <a class="idref" href="HoTT.Basics.Overture.html#:type_scope:x_'=='_x"><span class="id" type="notation">==</span></a> <a class="idref" href="HoTT.Basics.Overture.html#:type_scope:x_'=='_x"><span class="id" type="notation">?</span></a><span class="id" type="var">Y</span> ] ⇒<br>
       <span class="id" type="keyword">let</span> <span class="id" type="var">X'</span> := <span class="id" type="tactic">eval</span> <span class="id" type="tactic">hnf</span> <span class="id" type="keyword">in</span> <span class="id" type="var">X</span> <span class="id" type="keyword">in</span> <span class="id" type="keyword">let</span> <span class="id" type="var">Y'</span> := <span class="id" type="tactic">eval</span> <span class="id" type="tactic">hnf</span> <span class="id" type="keyword">in</span> <span class="id" type="var">Y</span> <span class="id" type="keyword">in</span> <span class="id" type="tactic">change</span> (<span class="id" type="var">X'</span> <a class="idref" href="HoTT.Basics.Overture.html#:type_scope:x_'=='_x"><span class="id" type="notation">==</span></a> <span class="id" type="var">Y'</span>)<br>
   <span class="id" type="keyword">end</span>; <span class="id" type="tactic">simpl</span>.</span><span class="command" onmouseout="
-      mouseout('0_3_247');
-      " onmouseover="
-      mouseover(1477, '0_3_247');
-      "><br>
-<br>
-</span>
-</div>
-<div class="goal" id="goal0_3_247"><pre><span></span></pre></div>
-<div class="doc" scenenumber="249">
-Test if a tactic succeeds, but always roll-back the results 
-</div>
-<div scenenumber="251" class="code">
-<span class="command" onmouseout="
-      mouseout('0_3_251');
-      " onmouseover="
-      mouseover(1481, '0_3_251');
-      ">
-<span class="id" type="keyword">Tactic Notation</span> "test" <span class="id" type="var">tactic3</span>(<span class="id" type="var">tac</span>) :=<br>
-  <span class="id" type="tactic">try</span> (<span class="id" type="tactic">first</span> [ <span class="id" type="var">tac</span> | <span class="id" type="tactic">fail</span> 2 <span class="id" type="var">tac</span> "does not succeed" ]; <span class="id" type="tactic">fail</span> <span class="id" type="var">tac</span> "succeeds"; []).</span><span class="command" onmouseout="
-      mouseout('0_3_251');
-      " onmouseover="
-      mouseover(1482, '0_3_251');
-      "><br>
-<br>
-</span>
-</div>
-<div class="goal" id="goal0_3_251"><pre><span></span></pre></div>
-<div class="doc" scenenumber="253">
-<span class="inlinecode"><a class="idref" href="HoTT.Basics.Overture.html#not"><span class="id" type="definition">not</span></a></span> <span class="inlinecode"><span class="id" type="var">tac</span></span> is equivalent to <span class="inlinecode"><span class="id" type="tactic">fail</span></span> <span class="inlinecode"><span class="id" type="var">tac</span></span> <span class="inlinecode">"<span class="id" type="var">succeeds</span>"</span> if <span class="inlinecode"><span class="id" type="var">tac</span></span> succeeds, and is equivalent to <span class="inlinecode"><span class="id" type="tactic">idtac</span></span> if <span class="inlinecode"><span class="id" type="var">tac</span></span> fails 
-</div>
-<div scenenumber="255" class="code">
-<span class="command" onmouseout="
-      mouseout('0_3_255');
-      " onmouseover="
-      mouseover(1502, '0_3_255');
-      ">
-<span class="id" type="keyword">Tactic Notation</span> "not" <span class="id" type="var">tactic3</span>(<span class="id" type="var">tac</span>) := <span class="id" type="tactic">try</span> ((<span class="id" type="var">test</span> <span class="id" type="var">tac</span>); <span class="id" type="tactic">fail</span> 1 <span class="id" type="var">tac</span> "succeeds").</span><span class="command" onmouseout="
       mouseout('0_3_255');
       " onmouseover="
       mouseover(1503, '0_3_255');
