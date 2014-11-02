@@ -512,6 +512,19 @@ matches anything whose type has a <span class="inlinecode"><a class="idref" href
 &nbsp;&nbsp;<span class="id" type="keyword">end</span>.<br/>
 <span class="id" type="keyword">Ltac</span> <span class="id" type="var">destruct_head_hnf</span> <span class="id" type="var">T</span> := <span class="id" type="var">destruct_all_matches</span> <span class="id" type="keyword">ltac</span>:(<span class="id" type="var">destruct_head_hnf_matcher</span> <span class="id" type="var">T</span>).<br/>
 <span class="id" type="keyword">Ltac</span> <span class="id" type="var">destruct_head_hnf'</span> <span class="id" type="var">T</span> := <span class="id" type="var">destruct_all_matches'</span> <span class="id" type="keyword">ltac</span>:(<span class="id" type="var">destruct_head_hnf_matcher</span> <span class="id" type="var">T</span>).<br/>
+
+<br/>
+</div>
+
+<div class="doc">
+Turns a context object, obtained via, e.g., <span class="inlinecode"><span class="id" type="keyword">match</span></span> <span class="inlinecode"><span class="id" type="keyword">goal</span></span> <span class="inlinecode"><span class="id" type="keyword">with</span></span> <span class="inlinecode">|-</span> <span class="inlinecode"><span class="id" type="keyword">context</span></span> <span class="inlinecode"><a class="idref" href="HoTT.categories.Adjoint.HomCoercions.html#AdjunctionEquivalences'.G"><span class="id" type="variable">G</span></a>[...]</span> <span class="inlinecode">⇒</span> <span class="inlinecode">...</span> <span class="inlinecode"><span class="id" type="keyword">end</span></span>, into a lambda / gallina function. 
+</div>
+<div class="code">
+<span class="id" type="keyword">Ltac</span> <span class="id" type="var">context_to_lambda</span> <span class="id" type="var">G</span> :=<br/>
+&nbsp;&nbsp;<span class="id" type="keyword">let</span> <span class="id" type="var">ret</span> := <span class="id" type="keyword">constr</span>:(<span class="id" type="keyword">fun</span> <span class="id" type="var">x</span> ⇒ <span class="id" type="keyword">let</span> <span class="id" type="var">k</span> := <a class="idref" href="HoTT.Tactics.html#x"><span class="id" type="variable">x</span></a> <span class="id" type="keyword">in</span><br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;$(<span class="id" type="keyword">let</span> <span class="id" type="var">ret</span> := <span class="id" type="keyword">context</span> <span class="id" type="var">G</span>[<span class="id" type="var">k</span>] <span class="id" type="keyword">in</span><br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="id" type="tactic">exact</span> <span class="id" type="var">ret</span>)$) <span class="id" type="keyword">in</span><br/>
+&nbsp;&nbsp;(<span class="id" type="tactic">eval</span> <span class="id" type="tactic">cbv</span> <span class="id" type="keyword">zeta</span> <span class="id" type="keyword">in</span> <span class="id" type="var">ret</span>).<br/>
 </div>
 </div>
 
