@@ -24,7 +24,7 @@
 </div>
 
 <div class="doc">
-<a name="lab183"></a><h1 class="section">Truncations of types, in all dimensions.</h1>
+<a name="lab185"></a><h1 class="section">Truncations of types, in all dimensions.</h1>
 
 </div>
 <div class="code">
@@ -39,7 +39,7 @@
 </div>
 
 <div class="doc">
-<a name="lab184"></a><h2 class="section">Definition.</h2>
+<a name="lab186"></a><h2 class="section">Definition.</h2>
 
 <div class="paragraph"> </div>
 
@@ -72,13 +72,16 @@ However, while we are faking our higher-inductives anyway, we can take some shor
 &nbsp;&nbsp;<a name="Trunc.tr"><span class="id" type="constructor">tr</span></a> : <span class="id" type="var">A</span> <a class="idref" href="Coq.Init.Logic.html#:type_scope:x_'->'_x"><span class="id" type="notation">→</span></a> <a class="idref" href="HoTT.hit.Truncations.html#Trunc"><span class="id" type="inductive">Trunc</span></a> <span class="id" type="var">n</span> <span class="id" type="var">A</span>.<br/>
 <span class="id" type="keyword">Bind</span> <span class="id" type="keyword">Scope</span> <span class="id" type="var">trunc_scope</span> <span class="id" type="keyword">with</span> <span class="id" type="var">Trunc</span>.<br/>
 <span class="id" type="var">Arguments</span> <a class="idref" href="HoTT.hit.Truncations.html#Trunc.tr"><span class="id" type="constructor">tr</span></a> {<span class="id" type="var">n</span> <span class="id" type="var">A</span>} <span class="id" type="var">a</span>.<br/>
+
+<br/>
 </div>
 
 <div class="doc">
-Make the priority 1, so that we don't override, e.g., <span class="inlinecode"><a class="idref" href="HoTT.Basics.Overture.html#Unit"><span class="id" type="inductive">Unit</span></a></span>. 
+Without explicit universe parameters, this instance is insufficiently polymorphic. 
 </div>
 <div class="code">
-<span class="id" type="keyword">Global Instance</span> <a name="Trunc.istrunc_truncation"><span class="id" type="instance">istrunc_truncation</span></a> : <span class="id" type="keyword">∀</span> <span class="id" type="var">n</span> <span class="id" type="var">A</span>, <a class="idref" href="HoTT.Basics.Overture.html#IsTrunc"><span class="id" type="class">IsTrunc</span></a> <a class="idref" href="HoTT.hit.Truncations.html#n"><span class="id" type="variable">n</span></a> (<a class="idref" href="HoTT.hit.Truncations.html#Trunc.Trunc"><span class="id" type="inductive">Trunc</span></a> <a class="idref" href="HoTT.hit.Truncations.html#n"><span class="id" type="variable">n</span></a> <a class="idref" href="HoTT.hit.Truncations.html#A"><span class="id" type="variable">A</span></a>) | 1.<br/>
+<span class="id" type="keyword">Global Instance</span> <a name="Trunc.istrunc_truncation"><span class="id" type="instance">istrunc_truncation</span></a> (<span class="id" type="var">n</span> : <a class="idref" href="HoTT.Basics.Overture.html#trunc_index"><span class="id" type="inductive">trunc_index</span></a>) (<span class="id" type="var">A</span> : <span class="id" type="var">Type@</span>{<span class="id" type="var">i</span>})<br/>
+: <a class="idref" href="HoTT.Basics.Overture.html#IsTrunc"><span class="id" type="class">IsTrunc@</span></a>{<span class="id" type="var">j</span>} <a class="idref" href="HoTT.hit.Truncations.html#n"><span class="id" type="variable">n</span></a> (<a class="idref" href="HoTT.hit.Truncations.html#Trunc.Trunc"><span class="id" type="inductive">Trunc@</span></a>{<span class="id" type="var">i</span>} <a class="idref" href="HoTT.hit.Truncations.html#n"><span class="id" type="variable">n</span></a> <a class="idref" href="HoTT.hit.Truncations.html#A"><span class="id" type="variable">A</span></a>).<br/>
 <span class="id" type="var">Admitted</span>.<br/>
 
 <br/>
@@ -116,27 +119,39 @@ Trunc is a modality
 &nbsp;&nbsp;<span class="id" type="keyword">Context</span> (<span class="id" type="var">n</span> : <a class="idref" href="HoTT.Basics.Overture.html#trunc_index"><span class="id" type="inductive">trunc_index</span></a>).<br/>
 
 <br/>
-&nbsp;&nbsp;<span class="id" type="keyword">Definition</span> <a name="Tr"><span class="id" type="definition">Tr</span></a> : <a class="idref" href="HoTT.Modality.html#Modality"><span class="id" type="record">Modality</span></a>.<br/>
+</div>
+
+<div class="doc">
+Without a universe annotation here, the two universe parameters of <span class="inlinecode"><a class="idref" href="HoTT.Modality.html#Modality"><span class="id" type="record">Modality</span></a></span> get collapsed. 
+</div>
+<div class="code">
+&nbsp;&nbsp;<span class="id" type="keyword">Definition</span> <a name="Tr"><span class="id" type="definition">Tr</span></a> : <a class="idref" href="HoTT.Modality.html#Modality"><span class="id" type="record">Modality@</span></a>{<span class="id" type="var">sm</span> <span class="id" type="var">lg</span>}.<br/>
 &nbsp;&nbsp;<span class="id" type="keyword">Proof</span>.<br/>
 &nbsp;&nbsp;&nbsp;&nbsp;<span class="id" type="tactic">refine</span> (<a class="idref" href="HoTT.Modality.html#Build_Modality"><span class="id" type="constructor">Build_Modality</span></a><br/>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;(<a class="idref" href="HoTT.ReflectiveSubuniverse.html#Build_UnitSubuniverse"><span class="id" type="constructor">Build_UnitSubuniverse</span></a><br/>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;(<span class="id" type="keyword">fun</span> <span class="id" type="var">A</span> ⇒ <a class="idref" href="HoTT.Basics.Overture.html#IsTrunc"><span class="id" type="class">IsTrunc</span></a> <a class="idref" href="HoTT.hit.Truncations.html#TruncationModality.n"><span class="id" type="variable">n</span></a> <a class="idref" href="HoTT.hit.Truncations.html#A"><span class="id" type="variable">A</span></a>)<br/>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;(<a class="idref" href="HoTT.hit.Truncations.html#Trunc.Trunc"><span class="id" type="inductive">Trunc</span></a> <a class="idref" href="HoTT.hit.Truncations.html#TruncationModality.n"><span class="id" type="variable">n</span></a>)<br/>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="id" type="var">_</span><br/>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;(@<a class="idref" href="HoTT.hit.Truncations.html#Trunc.tr"><span class="id" type="constructor">tr</span></a> <a class="idref" href="HoTT.hit.Truncations.html#TruncationModality.n"><span class="id" type="variable">n</span></a>)<br/>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="id" type="var">_</span>)<br/>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="id" type="var">_</span><br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;(<a class="idref" href="HoTT.hit.Truncations.html#Trunc.Trunc"><span class="id" type="inductive">Trunc@</span></a>{<span class="id" type="var">sm</span>} <a class="idref" href="HoTT.hit.Truncations.html#TruncationModality.n"><span class="id" type="variable">n</span></a>)<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;(<a class="idref" href="HoTT.Basics.Overture.html#IsTrunc"><span class="id" type="class">IsTrunc@</span></a>{<span class="id" type="var">lg</span>} <a class="idref" href="HoTT.hit.Truncations.html#TruncationModality.n"><span class="id" type="variable">n</span></a>)<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="id" type="var">_</span><br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;(@<a class="idref" href="HoTT.hit.Truncations.html#Trunc.tr"><span class="id" type="constructor">tr</span></a> <a class="idref" href="HoTT.hit.Truncations.html#TruncationModality.n"><span class="id" type="variable">n</span></a>)<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</div>
+
+<div class="doc">
+Again, we have to use <span class="inlinecode"><a class="idref" href="HoTT.Basics.UniverseLevel.html#Lift'"><span class="id" type="definition">Lift'</span></a></span> to prevent the universes from getting collapsed. 
+</div>
+<div class="code">
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;(<span class="id" type="keyword">fun</span> <span class="id" type="var">A</span> <span class="id" type="var">B</span> <span class="id" type="var">Atr</span> <span class="id" type="var">f</span> <span class="id" type="var">feq</span> ⇒<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;(@<a class="idref" href="HoTT.Basics.Trunc.html#trunc_equiv"><span class="id" type="definition">trunc_equiv</span></a> (<a class="idref" href="HoTT.Basics.UniverseLevel.html#Lift'"><span class="id" type="definition">Lift'@</span></a>{<span class="id" type="var">sm</span> <span class="id" type="var">lg</span>} <a class="idref" href="HoTT.hit.Truncations.html#A"><span class="id" type="variable">A</span></a>) (<a class="idref" href="HoTT.Basics.UniverseLevel.html#Lift'"><span class="id" type="definition">Lift'@</span></a>{<span class="id" type="var">sm</span> <span class="id" type="var">lg</span>} <a class="idref" href="HoTT.hit.Truncations.html#B"><span class="id" type="variable">B</span></a>)<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;(<a class="idref" href="HoTT.Basics.UniverseLevel.html#lift'"><span class="id" type="definition">lift'@</span></a><a class="idref" href="HoTT.Basics.Overture.html#:function_scope:x_'o'_x"><span class="id" type="notation">{</span></a><a class="idref" href="HoTT.Basics.Overture.html#:function_scope:x_'o'_x"><span class="id" type="notation">sm</span></a> <a class="idref" href="HoTT.Basics.Overture.html#:function_scope:x_'o'_x"><span class="id" type="notation">lg</span></a><a class="idref" href="HoTT.Basics.Overture.html#:function_scope:x_'o'_x"><span class="id" type="notation">}</span></a> <a class="idref" href="HoTT.Basics.Overture.html#:function_scope:x_'o'_x"><span class="id" type="notation">o</span></a> <a class="idref" href="HoTT.hit.Truncations.html#f"><span class="id" type="variable">f</span></a> <a class="idref" href="HoTT.Basics.Overture.html#:function_scope:x_'o'_x"><span class="id" type="notation">o</span></a> <a class="idref" href="HoTT.Basics.UniverseLevel.html#lift'"><span class="id" type="definition">lift'@</span></a><a class="idref" href="HoTT.Basics.Overture.html#:equiv_scope:x_'^-1'"><span class="id" type="notation">{</span></a><a class="idref" href="HoTT.Basics.Overture.html#:equiv_scope:x_'^-1'"><span class="id" type="notation">sm</span></a> <a class="idref" href="HoTT.Basics.Overture.html#:equiv_scope:x_'^-1'"><span class="id" type="notation">lg</span></a><a class="idref" href="HoTT.Basics.Overture.html#:equiv_scope:x_'^-1'"><span class="id" type="notation">}^-1</span></a>) <a class="idref" href="HoTT.hit.Truncations.html#TruncationModality.n"><span class="id" type="variable">n</span></a> <span class="id" type="var">_</span> <span class="id" type="var">_</span>))<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="id" type="var">_</span>)<br/>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;(@<a class="idref" href="HoTT.hit.Truncations.html#Trunc.Trunc_ind"><span class="id" type="definition">Trunc_ind</span></a> <a class="idref" href="HoTT.hit.Truncations.html#TruncationModality.n"><span class="id" type="variable">n</span></a>)<br/>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;(<span class="id" type="keyword">fun</span> <span class="id" type="var">A</span> <span class="id" type="var">B</span> <span class="id" type="var">B_inO</span> <span class="id" type="var">f</span> <span class="id" type="var">a</span> ⇒ 1)<br/>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="id" type="var">_</span>); <span class="id" type="var">cbn</span>; <span class="id" type="tactic">try</span> <span class="id" type="tactic">exact</span> <span class="id" type="var">_</span>.<br/>
-&nbsp;&nbsp;&nbsp;&nbsp;<span class="id" type="tactic">intros</span> <span class="id" type="var">A</span> <span class="id" type="var">B</span> ? <span class="id" type="var">f</span> ?; <span class="id" type="var">cbn</span> <span class="id" type="keyword">in</span> ×.<br/>
-&nbsp;&nbsp;&nbsp;&nbsp;<span class="id" type="tactic">refine</span> (<a class="idref" href="HoTT.Basics.Trunc.html#trunc_equiv"><span class="id" type="definition">trunc_equiv</span></a> <span class="id" type="var">_</span> <span class="id" type="var">f</span>); <span class="id" type="tactic">exact</span> <span class="id" type="var">_</span>.<br/>
 &nbsp;&nbsp;<span class="id" type="keyword">Defined</span>.<br/>
 
 <br/>
 &nbsp;&nbsp;<span class="id" type="keyword">Definition</span> <a name="trunc_iff_isequiv_truncation"><span class="id" type="definition">trunc_iff_isequiv_truncation</span></a> (<span class="id" type="var">A</span> : <span class="id" type="keyword">Type</span>)<br/>
 &nbsp;&nbsp;: <a class="idref" href="HoTT.Basics.Overture.html#IsTrunc"><span class="id" type="class">IsTrunc</span></a> <a class="idref" href="HoTT.hit.Truncations.html#TruncationModality.n"><span class="id" type="variable">n</span></a> <a class="idref" href="HoTT.hit.Truncations.html#A"><span class="id" type="variable">A</span></a> <a class="idref" href="Coq.Init.Datatypes.html#:type_scope:x_'<->'_x"><span class="id" type="notation">↔</span></a> <a class="idref" href="HoTT.Basics.Overture.html#IsEquiv"><span class="id" type="class">IsEquiv</span></a> (@<a class="idref" href="HoTT.hit.Truncations.html#Trunc.tr"><span class="id" type="constructor">tr</span></a> <a class="idref" href="HoTT.hit.Truncations.html#TruncationModality.n"><span class="id" type="variable">n</span></a> <a class="idref" href="HoTT.hit.Truncations.html#A"><span class="id" type="variable">A</span></a>)<br/>
-&nbsp;&nbsp;:= @<a class="idref" href="HoTT.ReflectiveSubuniverse.html#inO_iff_isequiv_to_O"><span class="id" type="definition">inO_iff_isequiv_to_O</span></a> <a class="idref" href="HoTT.hit.Truncations.html#Tr"><span class="id" type="definition">Tr</span></a> <span class="id" type="var">_</span> <a class="idref" href="HoTT.hit.Truncations.html#A"><span class="id" type="variable">A</span></a>.<br/>
+&nbsp;&nbsp;:= @<a class="idref" href="HoTT.ReflectiveSubuniverse.html#inO_iff_isequiv_to_O"><span class="id" type="definition">inO_iff_isequiv_to_O</span></a> <a class="idref" href="HoTT.hit.Truncations.html#Tr"><span class="id" type="definition">Tr</span></a> <a class="idref" href="HoTT.hit.Truncations.html#A"><span class="id" type="variable">A</span></a>.<br/>
 
 <br/>
 &nbsp;&nbsp;<span class="id" type="keyword">Global Instance</span> <a name="isequiv_tr"><span class="id" type="instance">isequiv_tr</span></a> <span class="id" type="var">A</span> `{<a class="idref" href="HoTT.Basics.Overture.html#IsTrunc"><span class="id" type="class">IsTrunc</span></a> <a class="idref" href="HoTT.hit.Truncations.html#TruncationModality.n"><span class="id" type="variable">n</span></a> <a class="idref" href="HoTT.hit.Truncations.html#A"><span class="id" type="variable">A</span></a>} : <a class="idref" href="HoTT.Basics.Overture.html#IsEquiv"><span class="id" type="class">IsEquiv</span></a> (@<a class="idref" href="HoTT.hit.Truncations.html#Trunc.tr"><span class="id" type="constructor">tr</span></a> <a class="idref" href="HoTT.hit.Truncations.html#TruncationModality.n"><span class="id" type="variable">n</span></a> <a class="idref" href="HoTT.hit.Truncations.html#A"><span class="id" type="variable">A</span></a>)<br/>
@@ -156,7 +171,7 @@ Trunc is a modality
 </div>
 
 <div class="doc">
-<a name="lab185"></a><h2 class="section">Functoriality</h2>
+<a name="lab187"></a><h2 class="section">Functoriality</h2>
 
 </div>
 <div class="code">
@@ -236,13 +251,13 @@ Having both of these as <span class="inlinecode"><span class="id" type="keyword"
 It's sometimes convenient to use "infinity" to refer to the identity modality in a similar way.  This clashes with some uses in higher topos theory, where "oo-truncated" means instead "hypercomplete", but this has not yet been a big problem. 
 </div>
 <div class="code">
-<span class="id" type="keyword">Notation</span> <a name="oo"><span class="id" type="abbreviation">oo</span></a> := <a class="idref" href="HoTT.Modality.html#identity_modality"><span class="id" type="definition">identity_modality</span></a>.<br/>
+<span class="id" type="keyword">Notation</span> <a name="oo"><span class="id" type="abbreviation">oo</span></a> := <a class="idref" href="HoTT.Modality.html#purely"><span class="id" type="definition">purely</span></a>.<br/>
 
 <br/>
 </div>
 
 <div class="doc">
-<a name="lab186"></a><h2 class="section">A few special things about the (-1)-truncation.</h2>
+<a name="lab188"></a><h2 class="section">A few special things about the (-1)-truncation.</h2>
 
 </div>
 <div class="code">
@@ -301,7 +316,7 @@ Surjections are the (-1)-connected maps, but they can be characterized more simp
 </div>
 
 <div class="doc">
-<a name="lab187"></a><h2 class="section">Tactic to remove truncations in hypotheses if possible.</h2>
+<a name="lab189"></a><h2 class="section">Tactic to remove truncations in hypotheses if possible.</h2>
 
 </div>
 <div class="code">
