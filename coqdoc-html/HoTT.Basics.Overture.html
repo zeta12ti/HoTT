@@ -136,15 +136,51 @@ We redefine <span class="inlinecode"><span class="id" type="tactic">transitivity
 </div>
 <div class="code">
 <span class="id" type="keyword">Notation</span> <a name="Type0"><span class="id" type="abbreviation">Type0</span></a> := <span class="id" type="keyword">Set</span>.<br/>
+
+<br/>
 </div>
 
 <div class="doc">
 Define <span class="inlinecode"><span class="id" type="var">Type₁</span></span> (really, <span class="inlinecode"><span class="id" type="var">Type_i</span></span> for any <span class="inlinecode"><a class="idref" href="HoTT.Basics.PathGroupoids.html#i"><span class="id" type="variable">i</span></a></span> <span class="inlinecode">&gt;</span> <span class="inlinecode">0</span>) so that we can enforce having universes that are not <span class="inlinecode"><span class="id" type="keyword">Set</span></span>.  In trunk, universes will not be unified with <span class="inlinecode"><span class="id" type="keyword">Set</span></span> in most places, so we want to never use <span class="inlinecode"><span class="id" type="keyword">Set</span></span> at all. 
 </div>
 <div class="code">
-<span class="id" type="keyword">Definition</span> <a name="Type1"><span class="id" type="definition">Type1</span></a> := <span class="id" type="keyword">Eval</span> <span class="id" type="tactic">hnf</span> <span class="id" type="keyword">in</span> <span class="id" type="keyword">let</span> <span class="id" type="var">U</span> := <span class="id" type="keyword">Type</span> <span class="id" type="keyword">in</span> <span class="id" type="keyword">let</span> <span class="id" type="var">gt</span> := (<span class="id" type="keyword">Set</span> : <a class="idref" href="HoTT.Basics.Overture.html#U"><span class="id" type="variable">U</span></a>) <span class="id" type="keyword">in</span> <a class="idref" href="HoTT.Basics.Overture.html#U"><span class="id" type="variable">U</span></a>.<br/>
+<span class="id" type="keyword">Definition</span> <a name="Type1"><span class="id" type="definition">Type1</span></a> := <span class="id" type="keyword">Eval</span> <span class="id" type="tactic">hnf</span> <span class="id" type="keyword">in</span> <span class="id" type="keyword">let</span> <span class="id" type="var">gt</span> := (<span class="id" type="keyword">Set</span> : <span class="id" type="var">Type@</span>{<span class="id" type="var">i</span>}) <span class="id" type="keyword">in</span> <span class="id" type="var">Type@</span>{<span class="id" type="var">i</span>}.<br/>
 <span class="id" type="var">Arguments</span> <a class="idref" href="HoTT.Basics.Overture.html#Type1"><span class="id" type="definition">Type1</span></a> / .<br/>
 <span class="id" type="keyword">Identity</span> <span class="id" type="keyword">Coercion</span> <span class="id" type="var">unfold_Type1</span> : <span class="id" type="var">Type1</span> &gt;-&gt; <span class="id" type="var">Sortclass</span>.<br/>
+
+<br/>
+</div>
+
+<div class="doc">
+We also define "the next couple of universes", which are actually an arbitrary universe with another one or two strictly below it.  Note when giving universe annotations to these that their universe parameters appear in order of *decreasing* size. 
+</div>
+<div class="code">
+<span class="id" type="keyword">Definition</span> <a name="Type2"><span class="id" type="definition">Type2</span></a> := <span class="id" type="keyword">Eval</span> <span class="id" type="tactic">hnf</span> <span class="id" type="keyword">in</span> <span class="id" type="keyword">let</span> <span class="id" type="var">gt</span> := (<a class="idref" href="HoTT.Basics.Overture.html#Type1"><span class="id" type="definition">Type1</span></a> : <span class="id" type="var">Type@</span>{<span class="id" type="var">i</span>}) <span class="id" type="keyword">in</span> <span class="id" type="var">Type@</span>{<span class="id" type="var">i</span>}.<br/>
+<span class="id" type="var">Arguments</span> <a class="idref" href="HoTT.Basics.Overture.html#Type2"><span class="id" type="definition">Type2</span></a> / .<br/>
+<span class="id" type="keyword">Identity</span> <span class="id" type="keyword">Coercion</span> <span class="id" type="var">unfold_Type2</span> : <span class="id" type="var">Type2</span> &gt;-&gt; <span class="id" type="var">Sortclass</span>.<br/>
+
+<br/>
+<span class="id" type="keyword">Definition</span> <a name="Type3"><span class="id" type="definition">Type3</span></a> := <span class="id" type="keyword">Eval</span> <span class="id" type="tactic">hnf</span> <span class="id" type="keyword">in</span> <span class="id" type="keyword">let</span> <span class="id" type="var">gt</span> := (<a class="idref" href="HoTT.Basics.Overture.html#Type2"><span class="id" type="definition">Type2</span></a> : <span class="id" type="var">Type@</span>{<span class="id" type="var">i</span>}) <span class="id" type="keyword">in</span> <span class="id" type="var">Type@</span>{<span class="id" type="var">i</span>}.<br/>
+<span class="id" type="var">Arguments</span> <a class="idref" href="HoTT.Basics.Overture.html#Type3"><span class="id" type="definition">Type3</span></a> / .<br/>
+<span class="id" type="keyword">Identity</span> <span class="id" type="keyword">Coercion</span> <span class="id" type="var">unfold_Type3</span> : <span class="id" type="var">Type3</span> &gt;-&gt; <span class="id" type="var">Sortclass</span>.<br/>
+
+<br/>
+</div>
+
+<div class="doc">
+Along the same lines, here is a universe with an extra universe parameter that's less than or equal to it in size.  The <span class="inlinecode"><a class="idref" href="Coq.Init.Peano.html#gt"><span class="id" type="definition">gt</span></a></span> isn't necessary to force the larger universe to be bigger than <span class="inlinecode"><span class="id" type="keyword">Set</span></span> (since we refer to the smaller universe by <span class="inlinecode"><a class="idref" href="HoTT.Basics.Overture.html#Type1"><span class="id" type="definition">Type1</span></a></span> which is already bigger than <span class="inlinecode"><span class="id" type="keyword">Set</span></span>), but we include it anyway to make the universe parameters occur again in (now non-strictly) decreasing order. 
+</div>
+<div class="code">
+<span class="id" type="keyword">Definition</span> <a name="Type2le"><span class="id" type="definition">Type2le</span></a> := <span class="id" type="keyword">Eval</span> <span class="id" type="tactic">hnf</span> <span class="id" type="keyword">in</span> <span class="id" type="keyword">let</span> <span class="id" type="var">gt</span> := (<span class="id" type="keyword">Set</span> : <span class="id" type="var">Type@</span>{<span class="id" type="var">i</span>}) <span class="id" type="keyword">in</span><br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="id" type="keyword">let</span> <span class="id" type="var">ge</span> := ((<span class="id" type="keyword">fun</span> <span class="id" type="var">x</span> ⇒ <a class="idref" href="HoTT.Basics.Overture.html#x"><span class="id" type="variable">x</span></a>) : <a class="idref" href="HoTT.Basics.Overture.html#Type1"><span class="id" type="definition">Type1</span></a> <a class="idref" href="Coq.Init.Logic.html#:type_scope:x_'->'_x"><span class="id" type="notation">→</span></a> <span class="id" type="var">Type@</span>{<span class="id" type="var">i</span>}) <span class="id" type="keyword">in</span> <span class="id" type="var">Type@</span>{<span class="id" type="var">i</span>}.<br/>
+<span class="id" type="var">Arguments</span> <a class="idref" href="HoTT.Basics.Overture.html#Type2le"><span class="id" type="definition">Type2le</span></a> / .<br/>
+<span class="id" type="keyword">Identity</span> <span class="id" type="keyword">Coercion</span> <span class="id" type="var">unfold_Type2le</span> : <span class="id" type="var">Type2le</span> &gt;-&gt; <span class="id" type="var">Sortclass</span>.<br/>
+
+<br/>
+<span class="id" type="keyword">Definition</span> <a name="Type3le"><span class="id" type="definition">Type3le</span></a> := <span class="id" type="keyword">Eval</span> <span class="id" type="tactic">hnf</span> <span class="id" type="keyword">in</span> <span class="id" type="keyword">let</span> <span class="id" type="var">gt</span> := (<span class="id" type="keyword">Set</span> : <span class="id" type="var">Type@</span>{<span class="id" type="var">i</span>}) <span class="id" type="keyword">in</span><br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="id" type="keyword">let</span> <span class="id" type="var">ge</span> := ((<span class="id" type="keyword">fun</span> <span class="id" type="var">x</span> ⇒ <a class="idref" href="HoTT.Basics.Overture.html#x"><span class="id" type="variable">x</span></a>) : <a class="idref" href="HoTT.Basics.Overture.html#Type2le"><span class="id" type="definition">Type2le@</span></a><a class="idref" href="Coq.Init.Logic.html#:type_scope:x_'->'_x"><span class="id" type="notation">{</span></a><a class="idref" href="Coq.Init.Logic.html#:type_scope:x_'->'_x"><span class="id" type="notation">j</span></a> <a class="idref" href="Coq.Init.Logic.html#:type_scope:x_'->'_x"><span class="id" type="notation">k</span></a><a class="idref" href="Coq.Init.Logic.html#:type_scope:x_'->'_x"><span class="id" type="notation">}</span></a> <a class="idref" href="Coq.Init.Logic.html#:type_scope:x_'->'_x"><span class="id" type="notation">→</span></a> <span class="id" type="var">Type@</span>{<span class="id" type="var">i</span>}) <span class="id" type="keyword">in</span> <span class="id" type="var">Type@</span>{<span class="id" type="var">i</span>}.<br/>
+<span class="id" type="var">Arguments</span> <a class="idref" href="HoTT.Basics.Overture.html#Type3le"><span class="id" type="definition">Type3le</span></a> / .<br/>
+<span class="id" type="keyword">Identity</span> <span class="id" type="keyword">Coercion</span> <span class="id" type="var">unfold_Type3le</span> : <span class="id" type="var">Type3le</span> &gt;-&gt; <span class="id" type="var">Sortclass</span>.<br/>
 
 <br/>
 </div>
@@ -866,7 +902,26 @@ Picking up the <span class="inlinecode"><span class="id" type="keyword">∀</spa
 </div>
 
 <div class="doc">
-<a name="lab12"></a><h3 class="section">Truncated relations</h3>
+<a name="lab12"></a><h3 class="section">Simple induction</h3>
+
+<div class="paragraph"> </div>
+
+ The following tactic is designed to be more or less interchangeable with <span class="inlinecode"><span class="id" type="tactic">induction</span></span> <span class="inlinecode"><a class="idref" href="Coq.Init.Peano.html#n"><span class="id" type="variable">n</span></a></span> <span class="inlinecode"><span class="id" type="keyword">as</span></span> <span class="inlinecode">[</span> <span class="inlinecode">|</span> <span class="inlinecode"><a class="idref" href="HoTT.Types.Sum.html#n'"><span class="id" type="variable">n'</span></a></span> <span class="inlinecode"><span class="id" type="var">IH</span></span> <span class="inlinecode">]</span> whenever <span class="inlinecode"><a class="idref" href="Coq.Init.Peano.html#n"><span class="id" type="variable">n</span></a></span> is a <span class="inlinecode"><a class="idref" href="Coq.Init.Datatypes.html#nat"><span class="id" type="inductive">nat</span></a></span> or a <span class="inlinecode"><a class="idref" href="HoTT.Basics.Overture.html#trunc_index"><span class="id" type="inductive">trunc_index</span></a></span>.  The difference is that it produces proof terms involving <span class="inlinecode"><span class="id" type="keyword">match</span></span> and <span class="inlinecode"><span class="id" type="keyword">fix</span></span> explicitly rather than <span class="inlinecode"><a class="idref" href="HoTT.Types.Nat.html#nat_ind"><span class="id" type="definition">nat_ind</span></a></span> or <span class="inlinecode"><a class="idref" href="HoTT.Basics.Overture.html#trunc_index_ind"><span class="id" type="definition">trunc_index_ind</span></a></span>, and therefore does not introduce higher universe parameters. 
+</div>
+<div class="code">
+
+<br/>
+<span class="id" type="keyword">Ltac</span> <span class="id" type="var">simple_induction</span> <span class="id" type="var">n</span> <span class="id" type="var">n'</span> <span class="id" type="var">IH</span> :=<br/>
+&nbsp;&nbsp;<span class="id" type="tactic">generalize</span> <span class="id" type="tactic">dependent</span> <span class="id" type="var">n</span>;<br/>
+&nbsp;&nbsp;<span class="id" type="keyword">fix</span> <span class="id" type="var">IH</span> 1;<br/>
+&nbsp;&nbsp;<span class="id" type="tactic">intros</span> [| <span class="id" type="var">n'</span>];<br/>
+&nbsp;&nbsp;[ <span class="id" type="tactic">clear</span> <span class="id" type="var">IH</span> | <span class="id" type="tactic">specialize</span> (<span class="id" type="var">IH</span> <span class="id" type="var">n'</span>) ].<br/>
+
+<br/>
+</div>
+
+<div class="doc">
+<a name="lab13"></a><h3 class="section">Truncated relations</h3>
 
 <div class="paragraph"> </div>
 
@@ -879,7 +934,7 @@ Picking up the <span class="inlinecode"><span class="id" type="keyword">∀</spa
 </div>
 
 <div class="doc">
-<a name="lab13"></a><h3 class="section">Function extensionality</h3>
+<a name="lab14"></a><h3 class="section">Function extensionality</h3>
 
 <div class="paragraph"> </div>
 
@@ -895,7 +950,7 @@ Picking up the <span class="inlinecode"><span class="id" type="keyword">∀</spa
 
 <div class="paragraph"> </div>
 
-<a name="lab14"></a><h1 class="section">That's not technically true; it might be possible to get non-parametric universe polymorphism using <span class="inlinecode"><span class="id" type="keyword">Module</span></span>s and (<span class="inlinecode"><span class="id" type="keyword">Module</span></span>) Functors; we can use functors to quantify over a <span class="inlinecode"><span class="id" type="keyword">Module</span></span> <span class="inlinecode"><span class="id" type="keyword">Type</span></span> which requires a polymorphic proof of a given hypothesis, and then use that hypothesis polymorphically in any theorem we prove in our new <span class="inlinecode"><span class="id" type="keyword">Module</span></span> Functor.  But that is far beyond the scope of this file.</h1>
+<a name="lab15"></a><h1 class="section">That's not technically true; it might be possible to get non-parametric universe polymorphism using <span class="inlinecode"><span class="id" type="keyword">Module</span></span>s and (<span class="inlinecode"><span class="id" type="keyword">Module</span></span>) Functors; we can use functors to quantify over a <span class="inlinecode"><span class="id" type="keyword">Module</span></span> <span class="inlinecode"><span class="id" type="keyword">Type</span></span> which requires a polymorphic proof of a given hypothesis, and then use that hypothesis polymorphically in any theorem we prove in our new <span class="inlinecode"><span class="id" type="keyword">Module</span></span> Functor.  But that is far beyond the scope of this file.</h1>
 
 </div>
 <div class="code">
@@ -920,7 +975,7 @@ Picking up the <span class="inlinecode"><span class="id" type="keyword">∀</spa
 </div>
 
 <div class="doc">
-<a name="lab15"></a><h3 class="section">Tactics</h3>
+<a name="lab16"></a><h3 class="section">Tactics</h3>
 
 <div class="paragraph"> </div>
 
@@ -1005,7 +1060,7 @@ Likewise, we put <span class="inlinecode"><a class="idref" href="HoTT.Basics.Ove
 </div>
 
 <div class="doc">
-<a name="lab16"></a><h2 class="section">Decidable equality</h2>
+<a name="lab17"></a><h2 class="section">Decidable equality</h2>
 
 </div>
 <div class="code">
@@ -1024,7 +1079,7 @@ Likewise, we put <span class="inlinecode"><a class="idref" href="HoTT.Basics.Ove
 </div>
 
 <div class="doc">
-<a name="lab17"></a><h3 class="section">Pointed types</h3>
+<a name="lab18"></a><h3 class="section">Pointed types</h3>
 
 <div class="paragraph"> </div>
 
@@ -1039,7 +1094,7 @@ Likewise, we put <span class="inlinecode"><a class="idref" href="HoTT.Basics.Ove
 </div>
 
 <div class="doc">
-<a name="lab18"></a><h3 class="section">Homotopy fibers</h3>
+<a name="lab19"></a><h3 class="section">Homotopy fibers</h3>
 
 <div class="paragraph"> </div>
 
