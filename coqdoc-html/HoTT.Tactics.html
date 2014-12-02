@@ -64,7 +64,7 @@ The way the tactic does this is by creating an evar for <span class="inlinecode"
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="id" type="tactic">generalize</span> (@<a class="idref" href="HoTT.Basics.Overture.html#path_forall"><span class="id" type="definition">path_forall</span></a> <span class="id" type="var">H</span> <span class="id" type="var">A</span> <span class="id" type="var">B</span> <span class="id" type="var">f</span> <span class="id" type="var">g</span> <span class="id" type="var">e</span>);<br/>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="id" type="tactic">clear</span> <span class="id" type="var">X</span>; <span class="id" type="tactic">clear</span> <span class="id" type="var">e</span>;<br/>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="id" type="tactic">intro</span> <span class="id" type="var">X</span>; <span class="id" type="tactic">destruct</span> <span class="id" type="var">X</span>;<br/>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="id" type="tactic">simpl</span>;<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="id" type="var">cbn</span>;<br/>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="id" type="tactic">unfold</span> <a class="idref" href="HoTT.Basics.Overture.html#apD10"><span class="id" type="definition">apD10</span></a>;<br/>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="id" type="tactic">rewrite</span> !(<a class="idref" href="HoTT.Types.Forall.html#path_forall_1"><span class="id" type="definition">path_forall_1</span></a> <span class="id" type="var">f</span>)<br/>
 &nbsp;&nbsp;<span class="id" type="keyword">end</span>;<br/>
@@ -209,7 +209,7 @@ Proof.
   repeat match goal with
            | [ |- context[e ?x] ] => induction (e x)
          end;
-    simpl.
+    cbn.
   reflexivity.
 Qed.
 
@@ -301,7 +301,7 @@ Ltac step_path_induction_hammer :=
   match goal with
     | _ =&gt; reflexivity
     | _ =&gt; intro
-    | _ =&gt; progress simpl in *
+    | _ =&gt; progress cbn in *
     | _ =&gt; exact (contr _)
     | <span class="inlinecode"></span> <span class="inlinecode"><a class="idref" href="HoTT.categories.KanExtensions.Functors.html#kan_extension_functors.p"><span class="id" type="variable">p</span></a></span> <span class="inlinecode">:</span> <span class="inlinecode"><span class="id" type="var">_</span></span> <span class="inlinecode">=</span> <span class="inlinecode"><span class="id" type="var">_</span></span> <span class="inlinecode">|-</span> <span class="inlinecode"><span class="id" type="var">_</span></span> <span class="inlinecode"></span>
       =&gt; progress destruct p     | <span class="inlinecode"></span> <span class="inlinecode"><a class="idref" href="HoTT.categories.Adjoint.Composition.AssociativityLaw.html#composition_lemmas.H"><span class="id" type="variable">H</span></a></span> <span class="inlinecode">:</span> <span class="inlinecode"><span class="id" type="var">_</span></span> <span class="inlinecode">|-</span> <span class="inlinecode"><span class="id" type="var">_</span></span> <span class="inlinecode"></span>
@@ -359,7 +359,7 @@ Ltac eapply_hyp := repeat eapply_hyp'.
 Ltac simpl_do_clear tac term :=
   let H := fresh in
   assert (H := term);
-    simpl in H |- *;
+    cbn in H |- *;
     tac H;
     clear H.
 
