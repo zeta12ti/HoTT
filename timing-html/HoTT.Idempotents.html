@@ -1,0 +1,2396 @@
+<html>
+<head>
+<title>Idempotents.v</title>
+<style>
+.time {
+  background-color: #ffaaaa;
+  height: 100%;
+  z-index: -1;
+  position: absolute;
+}
+.code {
+  z-index: 0;
+  position: relative;
+  border-style: solid;
+  border-color: transparent;
+  border-width: 1px;
+}
+.code:hover {
+  border-style: solid;
+  border-color: black;
+  border-width: 1px;
+}
+pre {
+  margin: 1px;
+}
+</style>
+</head>
+<body>
+<h1>Timings for Idempotents.v</h1>
+
+<div class="code" title="File: Idempotents.v
+Line: 1
+Time: 0s">
+<div class="time" style="width: 0%"></div>
+<pre>(* -*- mode: coq; mode: visual-line -*- *)</pre>
+</div>
+<div class="code" title="File: Idempotents.v
+Line: 1
+Time: 0.047s">
+<div class="time" style="width: 0.12806190567015%"></div>
+<pre>Require Import HoTT.Basics HoTT.Types.</pre>
+</div>
+<div class="code" title="File: Idempotents.v
+Line: 1
+Time: 0.003s">
+<div class="time" style="width: 0.0081741641917114%"></div>
+<pre>
+Require Import HoTT.Tactics.</pre>
+</div>
+<div class="code" title="File: Idempotents.v
+Line: 2
+Time: 0.101s">
+<div class="time" style="width: 0.27519686112095%"></div>
+<pre>
+Require Import hit.Truncations.</pre>
+</div>
+<div class="code" title="File: Idempotents.v
+Line: 3
+Time: 0s">
+<div class="time" style="width: 0%"></div>
+<pre>
+
+Local Open Scope path_scope.</pre>
+</div>
+<div class="code" title="File: Idempotents.v
+Line: 5
+Time: 0s">
+<div class="time" style="width: 0%"></div>
+<pre>
+Local Open Scope equiv_scope.</pre>
+</div>
+<div class="code" title="File: Idempotents.v
+Line: 6
+Time: 0s">
+<div class="time" style="width: 0%"></div>
+<pre>
+Local Arguments compose / .</pre>
+</div>
+<div class="code" title="File: Idempotents.v
+Line: 7
+Time: 0s">
+<div class="time" style="width: 0%"></div>
+<pre>
+
+(** * Splitting of Idempotents *)
+
+(** The naive definition of "idempotent" would be a morphism [f : X -&gt; X] such that [forall x, f (f x) = f x].  However, homotopically we may naturally expect to need some coherence on the witness to idempotency.  Indeed, in homotopy theory there are "idempotents" in this sense which do not split; see for instance Warning 1.2.4.8 in *Higher Algebra*.
+
+A priori, a "coherent idempotent" would involve infinitely many data.  However, Lemma 7.3.5.14 of *Higher Algebra* suggests that for an idempotent to be coherent (or, at least, coherentifiable), it suffices to have *one* additional datum.  By modifying the construction given there, we can show in type theory that any idempotent satisfying an additional coherence datum splits. *)
+
+</pre>
+</div>
+<div class="code" title="File: Idempotents.v
+Line: 14
+Time: 0s">
+<div class="time" style="width: 0%"></div>
+<pre>Definition Idempotent {A : Type} (f : A -&gt; A)
+  := forall x, f (f x) = f x.</pre>
+</div>
+<div class="code" title="File: Idempotents.v
+Line: 15
+Time: 0.001s">
+<div class="time" style="width: 0.0027247213972371%"></div>
+<pre>
+
+Definition CoherentIdempotent {A : Type} (f : A -&gt; A)
+  := { I : forall x, f (f x) = f x
+     (** Here is the extra coherence datum. *)
+     &amp; forall x, ap f (I x) = I (f x) }.</pre>
+</div>
+<div class="code" title="File: Idempotents.v
+Line: 20
+Time: 0s">
+<div class="time" style="width: 0%"></div>
+<pre>
+
+(** ** Split idempotents are coherent *)
+
+</pre>
+</div>
+<div class="code" title="File: Idempotents.v
+Line: 23
+Time: 0.001s">
+<div class="time" style="width: 0.0027247213972371%"></div>
+<pre>Definition coherent_split
+           {X A : Type} (r : X -&gt; A) (s : A -&gt; X) (H : r o s == idmap)
+: CoherentIdempotent (s o r).</pre>
+</div>
+<div class="code" title="File: Idempotents.v
+Line: 25
+Time: 0s">
+<div class="time" style="width: 0%"></div>
+<pre>
+Proof.</pre>
+</div>
+<div class="code" title="File: Idempotents.v
+Line: 26
+Time: 0.001s">
+<div class="time" style="width: 0.0027247213972371%"></div>
+<pre>
+  exists (fun x =&gt; ap s (H (r x))); intros x.</pre>
+</div>
+<div class="code" title="File: Idempotents.v
+Line: 27
+Time: 0.004s">
+<div class="time" style="width: 0.010898885588949%"></div>
+<pre>
+  refine ((ap_compose _ _ _) @ _).</pre>
+</div>
+<div class="code" title="File: Idempotents.v
+Line: 28
+Time: 0.001s">
+<div class="time" style="width: 0.0027247213972371%"></div>
+<pre>
+  apply ap.</pre>
+</div>
+<div class="code" title="File: Idempotents.v
+Line: 29
+Time: 0.005s">
+<div class="time" style="width: 0.013623606986186%"></div>
+<pre>
+  refine ((ap_compose _ _ _)^ @ _).</pre>
+</div>
+<div class="code" title="File: Idempotents.v
+Line: 30
+Time: 0.002s">
+<div class="time" style="width: 0.0054494427944743%"></div>
+<pre>
+  refine (cancelR _ _ (H (r x)) _).</pre>
+</div>
+<div class="code" title="File: Idempotents.v
+Line: 31
+Time: 0.001s">
+<div class="time" style="width: 0.0027247213972371%"></div>
+<pre>
+  refine (concat_A1p H (H (r x))).</pre>
+</div>
+<div class="code" title="File: Idempotents.v
+Line: 32
+Time: 0.009s">
+<div class="time" style="width: 0.024522492575134%"></div>
+<pre>
+Defined.</pre>
+</div>
+<div class="code" title="File: Idempotents.v
+Line: 33
+Time: 0s">
+<div class="time" style="width: 0%"></div>
+<pre>
+
+(** ** Coherent idempotents split *)
+
+</pre>
+</div>
+<div class="code" title="File: Idempotents.v
+Line: 36
+Time: 0s">
+<div class="time" style="width: 0%"></div>
+<pre>Section CoherentIdempotents.</pre>
+</div>
+<div class="code" title="File: Idempotents.v
+Line: 36
+Time: 0s">
+<div class="time" style="width: 0%"></div>
+<pre>
+  (** We need funext because our construction will involve a sequential limit.  We could probably also use a HIT sequential colimit, which is more like what Lurie does. *)
+ </pre>
+</div>
+<div class="code" title="File: Idempotents.v
+Line: 38
+Time: 0s">
+<div class="time" style="width: 0%"></div>
+<pre>Context `{Funext}.</pre>
+</div>
+<div class="code" title="File: Idempotents.v
+Line: 38
+Time: 0s">
+<div class="time" style="width: 0%"></div>
+<pre>
+  Context {X : Type} (f : X -&gt; X).</pre>
+</div>
+<div class="code" title="File: Idempotents.v
+Line: 39
+Time: 0s">
+<div class="time" style="width: 0%"></div>
+<pre>
+  Context (IJ : CoherentIdempotent f).</pre>
+</div>
+<div class="code" title="File: Idempotents.v
+Line: 40
+Time: 0s">
+<div class="time" style="width: 0%"></div>
+<pre>
+
+  Let I := IJ.1.</pre>
+</div>
+<div class="code" title="File: Idempotents.v
+Line: 42
+Time: 0s">
+<div class="time" style="width: 0%"></div>
+<pre>
+  Let J := IJ.2.</pre>
+</div>
+<div class="code" title="File: Idempotents.v
+Line: 43
+Time: 0s">
+<div class="time" style="width: 0%"></div>
+<pre>
+
+  (** The splitting will be the sequential limit of the sequence [... -&gt; X -&gt; X -&gt; X]. *)
+ </pre>
+</div>
+<div class="code" title="File: Idempotents.v
+Line: 46
+Time: 0s">
+<div class="time" style="width: 0%"></div>
+<pre>Definition split_idempotent : Type
+    := { a : nat -&gt; X &amp; forall n, f (a n.+1) = a n }.</pre>
+</div>
+<div class="code" title="File: Idempotents.v
+Line: 47
+Time: 0s">
+<div class="time" style="width: 0%"></div>
+<pre>
+
+  Definition split_idempotent_pr1 : split_idempotent -&gt; (nat -&gt; X)
+    := pr1.</pre>
+</div>
+<div class="code" title="File: Idempotents.v
+Line: 50
+Time: 0s">
+<div class="time" style="width: 0%"></div>
+<pre>
+  Coercion split_idempotent_pr1 : split_idempotent &gt;-&gt; Funclass.</pre>
+</div>
+<div class="code" title="File: Idempotents.v
+Line: 51
+Time: 0s">
+<div class="time" style="width: 0%"></div>
+<pre>
+  Arguments split_idempotent_pr1 / .</pre>
+</div>
+<div class="code" title="File: Idempotents.v
+Line: 52
+Time: 0s">
+<div class="time" style="width: 0%"></div>
+<pre>
+
+  (** The section, retraction, and the fact that the composite in one direction is [f] are easy. *)
+
+ </pre>
+</div>
+<div class="code" title="File: Idempotents.v
+Line: 56
+Time: 0s">
+<div class="time" style="width: 0%"></div>
+<pre>Definition split_idempotent_sect : split_idempotent -&gt; X
+    := fun a =&gt; a 0.</pre>
+</div>
+<div class="code" title="File: Idempotents.v
+Line: 57
+Time: 0s">
+<div class="time" style="width: 0%"></div>
+<pre>
+  Arguments split_idempotent_sect / .</pre>
+</div>
+<div class="code" title="File: Idempotents.v
+Line: 58
+Time: 0s">
+<div class="time" style="width: 0%"></div>
+<pre>
+
+  Definition split_idempotent_retr : X -&gt; split_idempotent.</pre>
+</div>
+<div class="code" title="File: Idempotents.v
+Line: 60
+Time: 0s">
+<div class="time" style="width: 0%"></div>
+<pre>
+  Proof.</pre>
+</div>
+<div class="code" title="File: Idempotents.v
+Line: 61
+Time: 0s">
+<div class="time" style="width: 0%"></div>
+<pre>
+    intros x.</pre>
+</div>
+<div class="code" title="File: Idempotents.v
+Line: 62
+Time: 0s">
+<div class="time" style="width: 0%"></div>
+<pre>
+    exists (fun n =&gt; f x).</pre>
+</div>
+<div class="code" title="File: Idempotents.v
+Line: 63
+Time: 0s">
+<div class="time" style="width: 0%"></div>
+<pre>
+    exact (fun n =&gt; I x).</pre>
+</div>
+<div class="code" title="File: Idempotents.v
+Line: 64
+Time: 0s">
+<div class="time" style="width: 0%"></div>
+<pre>
+  Defined.</pre>
+</div>
+<div class="code" title="File: Idempotents.v
+Line: 65
+Time: 0s">
+<div class="time" style="width: 0%"></div>
+<pre>
+  Arguments split_idempotent_retr / .</pre>
+</div>
+<div class="code" title="File: Idempotents.v
+Line: 66
+Time: 0s">
+<div class="time" style="width: 0%"></div>
+<pre>
+
+  Definition split_idempotent_splits (x : X)
+  : split_idempotent_sect (split_idempotent_retr x) = f x
+    := 1.</pre>
+</div>
+<div class="code" title="File: Idempotents.v
+Line: 70
+Time: 0s">
+<div class="time" style="width: 0%"></div>
+<pre>
+
+  (** What remains is to show that the composite in the other direction is the identity.  We begin by showing how to construct paths in [split_idempotent]. *)
+
+ </pre>
+</div>
+<div class="code" title="File: Idempotents.v
+Line: 74
+Time: 0.002s">
+<div class="time" style="width: 0.0054494427944743%"></div>
+<pre>Definition path_split_idempotent {a a' : split_idempotent}
+             (p : a.1 == a'.1)
+             (q : forall n, a.2 n @ p n
+                            = ap f (p n.+1) @ a'.2 n)
+  : a = a'.</pre>
+</div>
+<div class="code" title="File: Idempotents.v
+Line: 78
+Time: 0s">
+<div class="time" style="width: 0%"></div>
+<pre>
+  Proof.</pre>
+</div>
+<div class="code" title="File: Idempotents.v
+Line: 79
+Time: 0.001s">
+<div class="time" style="width: 0.0027247213972371%"></div>
+<pre>
+    refine (path_sigma' _ _ _).</pre>
+</div>
+<div class="code" title="File: Idempotents.v
+Line: 80
+Time: 0s">
+<div class="time" style="width: 0%"></div>
+<pre>
+    -</pre>
+</div>
+<div class="code" title="File: Idempotents.v
+Line: 81
+Time: 0s">
+<div class="time" style="width: 0%"></div>
+<pre> apply path_arrow; intros n.</pre>
+</div>
+<div class="code" title="File: Idempotents.v
+Line: 81
+Time: 0s">
+<div class="time" style="width: 0%"></div>
+<pre>
+      exact (p n).</pre>
+</div>
+<div class="code" title="File: Idempotents.v
+Line: 82
+Time: 0s">
+<div class="time" style="width: 0%"></div>
+<pre>
+    -</pre>
+</div>
+<div class="code" title="File: Idempotents.v
+Line: 83
+Time: 0.001s">
+<div class="time" style="width: 0.0027247213972371%"></div>
+<pre> apply path_forall; intros n.</pre>
+</div>
+<div class="code" title="File: Idempotents.v
+Line: 83
+Time: 0.004s">
+<div class="time" style="width: 0.010898885588949%"></div>
+<pre>
+      rewrite transport_forall_constant.</pre>
+</div>
+<div class="code" title="File: Idempotents.v
+Line: 84
+Time: 0.004s">
+<div class="time" style="width: 0.010898885588949%"></div>
+<pre>
+      rewrite transport_paths_FlFr.</pre>
+</div>
+<div class="code" title="File: Idempotents.v
+Line: 85
+Time: 0.01s">
+<div class="time" style="width: 0.027247213972371%"></div>
+<pre>
+      rewrite ap_apply_l, ap10_path_arrow.</pre>
+</div>
+<div class="code" title="File: Idempotents.v
+Line: 86
+Time: 0.009s">
+<div class="time" style="width: 0.024522492575134%"></div>
+<pre>
+      rewrite (ap_compose (fun b =&gt; b n.+1) (fun x =&gt; f x) _).</pre>
+</div>
+<div class="code" title="File: Idempotents.v
+Line: 87
+Time: 0.01s">
+<div class="time" style="width: 0.027247213972371%"></div>
+<pre>
+      rewrite ap_apply_l, ap10_path_arrow.</pre>
+</div>
+<div class="code" title="File: Idempotents.v
+Line: 88
+Time: 0.003s">
+<div class="time" style="width: 0.0081741641917114%"></div>
+<pre>
+      rewrite concat_pp_p.</pre>
+</div>
+<div class="code" title="File: Idempotents.v
+Line: 89
+Time: 0.014s">
+<div class="time" style="width: 0.03814609956132%"></div>
+<pre>
+      apply moveR_Vp; by symmetry.</pre>
+</div>
+<div class="code" title="File: Idempotents.v
+Line: 90
+Time: 0.02s">
+<div class="time" style="width: 0.054494427944743%"></div>
+<pre>
+  Qed.</pre>
+</div>
+<div class="code" title="File: Idempotents.v
+Line: 91
+Time: 0s">
+<div class="time" style="width: 0%"></div>
+<pre>
+
+  (** Next we show that every element of [split_idempotent] can be nudged to an equivalent one in which all the elements of [X] occurring are double applications of [f]. *)
+
+ </pre>
+</div>
+<div class="code" title="File: Idempotents.v
+Line: 95
+Time: 0s">
+<div class="time" style="width: 0%"></div>
+<pre>Local Definition nudge (a : split_idempotent) : split_idempotent.</pre>
+</div>
+<div class="code" title="File: Idempotents.v
+Line: 95
+Time: 0s">
+<div class="time" style="width: 0%"></div>
+<pre>
+  Proof.</pre>
+</div>
+<div class="code" title="File: Idempotents.v
+Line: 96
+Time: 0s">
+<div class="time" style="width: 0%"></div>
+<pre>
+    exists (fun n =&gt; f (f (a (n.+1)))).</pre>
+</div>
+<div class="code" title="File: Idempotents.v
+Line: 97
+Time: 0.001s">
+<div class="time" style="width: 0.0027247213972371%"></div>
+<pre>
+    exact (fun n =&gt; ap f (ap f (a.2 n.+1))).</pre>
+</div>
+<div class="code" title="File: Idempotents.v
+Line: 98
+Time: 0s">
+<div class="time" style="width: 0%"></div>
+<pre>
+  Defined.</pre>
+</div>
+<div class="code" title="File: Idempotents.v
+Line: 99
+Time: 0s">
+<div class="time" style="width: 0%"></div>
+<pre>
+
+  Local Definition nudge_eq a : nudge a = a.</pre>
+</div>
+<div class="code" title="File: Idempotents.v
+Line: 101
+Time: 0s">
+<div class="time" style="width: 0%"></div>
+<pre>
+  Proof.</pre>
+</div>
+<div class="code" title="File: Idempotents.v
+Line: 102
+Time: 0s">
+<div class="time" style="width: 0%"></div>
+<pre>
+    transparent assert (a' : split_idempotent).</pre>
+</div>
+<div class="code" title="File: Idempotents.v
+Line: 103
+Time: 0s">
+<div class="time" style="width: 0%"></div>
+<pre>
+    {</pre>
+</div>
+<div class="code" title="File: Idempotents.v
+Line: 104
+Time: 0s">
+<div class="time" style="width: 0%"></div>
+<pre> exists (fun n =&gt; f (a (n.+1))).</pre>
+</div>
+<div class="code" title="File: Idempotents.v
+Line: 104
+Time: 0s">
+<div class="time" style="width: 0%"></div>
+<pre>
+      exact (fun n =&gt; ap f (a.2 n.+1)).</pre>
+</div>
+<div class="code" title="File: Idempotents.v
+Line: 105
+Time: 0s">
+<div class="time" style="width: 0%"></div>
+<pre> }</pre>
+</div>
+<div class="code" title="File: Idempotents.v
+Line: 105
+Time: 0.009s">
+<div class="time" style="width: 0.024522492575134%"></div>
+<pre>
+    transitivity a'; refine (path_split_idempotent _ _); intros n; simpl.</pre>
+</div>
+<div class="code" title="File: Idempotents.v
+Line: 106
+Time: 0s">
+<div class="time" style="width: 0%"></div>
+<pre>
+    -</pre>
+</div>
+<div class="code" title="File: Idempotents.v
+Line: 107
+Time: 0s">
+<div class="time" style="width: 0%"></div>
+<pre> exact (I (a n.+1)).</pre>
+</div>
+<div class="code" title="File: Idempotents.v
+Line: 107
+Time: 0s">
+<div class="time" style="width: 0%"></div>
+<pre>
+    -</pre>
+</div>
+<div class="code" title="File: Idempotents.v
+Line: 108
+Time: 0.006s">
+<div class="time" style="width: 0.016348328383423%"></div>
+<pre> exact ((ap_compose f f _ @@ 1)^
+               @ concat_Ap I (a.2 n.+1)
+               @ (J _ @@ 1)^).</pre>
+</div>
+<div class="code" title="File: Idempotents.v
+Line: 110
+Time: 0s">
+<div class="time" style="width: 0%"></div>
+<pre>
+    -</pre>
+</div>
+<div class="code" title="File: Idempotents.v
+Line: 111
+Time: 0s">
+<div class="time" style="width: 0%"></div>
+<pre> exact (a.2 n).</pre>
+</div>
+<div class="code" title="File: Idempotents.v
+Line: 111
+Time: 0s">
+<div class="time" style="width: 0%"></div>
+<pre>
+    -</pre>
+</div>
+<div class="code" title="File: Idempotents.v
+Line: 112
+Time: 0s">
+<div class="time" style="width: 0%"></div>
+<pre> reflexivity.</pre>
+</div>
+<div class="code" title="File: Idempotents.v
+Line: 112
+Time: 0.017s">
+<div class="time" style="width: 0.046320263753031%"></div>
+<pre>
+  Defined.</pre>
+</div>
+<div class="code" title="File: Idempotents.v
+Line: 113
+Time: 0s">
+<div class="time" style="width: 0%"></div>
+<pre>
+
+  (** Now we're ready to prove the final condition. *)
+
+ </pre>
+</div>
+<div class="code" title="File: Idempotents.v
+Line: 117
+Time: 0s">
+<div class="time" style="width: 0%"></div>
+<pre>Definition split_idempotent_issect (a : split_idempotent)
+  : split_idempotent_retr (split_idempotent_sect a) = a.</pre>
+</div>
+<div class="code" title="File: Idempotents.v
+Line: 118
+Time: 0s">
+<div class="time" style="width: 0%"></div>
+<pre>
+  Proof.</pre>
+</div>
+<div class="code" title="File: Idempotents.v
+Line: 119
+Time: 0.002s">
+<div class="time" style="width: 0.0054494427944743%"></div>
+<pre>
+    refine (_ @ nudge_eq a); symmetry.</pre>
+</div>
+<div class="code" title="File: Idempotents.v
+Line: 120
+Time: 0.001s">
+<div class="time" style="width: 0.0027247213972371%"></div>
+<pre>
+    transparent assert (p : (forall n, f (f (a n.+1)) = f (a 0))).</pre>
+</div>
+<div class="code" title="File: Idempotents.v
+Line: 121
+Time: 0s">
+<div class="time" style="width: 0%"></div>
+<pre>
+    {</pre>
+</div>
+<div class="code" title="File: Idempotents.v
+Line: 122
+Time: 0s">
+<div class="time" style="width: 0%"></div>
+<pre> induction n as [|n IH].</pre>
+</div>
+<div class="code" title="File: Idempotents.v
+Line: 122
+Time: 0s">
+<div class="time" style="width: 0%"></div>
+<pre>
+      -</pre>
+</div>
+<div class="code" title="File: Idempotents.v
+Line: 123
+Time: 0s">
+<div class="time" style="width: 0%"></div>
+<pre> exact (ap f (a.2 0)).</pre>
+</div>
+<div class="code" title="File: Idempotents.v
+Line: 123
+Time: 0s">
+<div class="time" style="width: 0%"></div>
+<pre>
+      -</pre>
+</div>
+<div class="code" title="File: Idempotents.v
+Line: 124
+Time: 0.001s">
+<div class="time" style="width: 0.0027247213972371%"></div>
+<pre> exact ((I (f (a n.+2)))^ @ (ap f (ap f (a.2 n.+1))) @ IH).</pre>
+</div>
+<div class="code" title="File: Idempotents.v
+Line: 124
+Time: 0s">
+<div class="time" style="width: 0%"></div>
+<pre> }</pre>
+</div>
+<div class="code" title="File: Idempotents.v
+Line: 124
+Time: 0.007s">
+<div class="time" style="width: 0.01907304978066%"></div>
+<pre>
+    refine (path_split_idempotent _ _); [ exact p | intros n; simpl ].</pre>
+</div>
+<div class="code" title="File: Idempotents.v
+Line: 125
+Time: 0.01s">
+<div class="time" style="width: 0.027247213972371%"></div>
+<pre>
+    induction n as [|n IH]; simpl.</pre>
+</div>
+<div class="code" title="File: Idempotents.v
+Line: 126
+Time: 0s">
+<div class="time" style="width: 0%"></div>
+<pre>
+    Open Scope long_path_scope.</pre>
+</div>
+<div class="code" title="File: Idempotents.v
+Line: 127
+Time: 0s">
+<div class="time" style="width: 0%"></div>
+<pre>
+    -</pre>
+</div>
+<div class="code" title="File: Idempotents.v
+Line: 128
+Time: 0.031s">
+<div class="time" style="width: 0.084466363314351%"></div>
+<pre> rewrite !ap_pp, ap_V.</pre>
+</div>
+<div class="code" title="File: Idempotents.v
+Line: 128
+Time: 0.048s">
+<div class="time" style="width: 0.13078662706738%"></div>
+<pre>
+      rewrite_moveL_Vp_p.</pre>
+</div>
+<div class="code" title="File: Idempotents.v
+Line: 129
+Time: 0.004s">
+<div class="time" style="width: 0.010898885588949%"></div>
+<pre>
+      rewrite J.</pre>
+</div>
+<div class="code" title="File: Idempotents.v
+Line: 130
+Time: 0.018s">
+<div class="time" style="width: 0.049044985150268%"></div>
+<pre>
+      rewrite &lt;- !ap_pp.</pre>
+</div>
+<div class="code" title="File: Idempotents.v
+Line: 131
+Time: 0.026s">
+<div class="time" style="width: 0.070842756328165%"></div>
+<pre>
+      with_rassoc ltac:(rewrite &lt;- !ap_pp).</pre>
+</div>
+<div class="code" title="File: Idempotents.v
+Line: 132
+Time: 0.007s">
+<div class="time" style="width: 0.01907304978066%"></div>
+<pre>
+      rewrite &lt;- ap_compose.</pre>
+</div>
+<div class="code" title="File: Idempotents.v
+Line: 133
+Time: 0.002s">
+<div class="time" style="width: 0.0054494427944743%"></div>
+<pre>
+      exact ((concat_Ap I (ap f (a.2 1%nat) @ a.2 0))^).</pre>
+</div>
+<div class="code" title="File: Idempotents.v
+Line: 134
+Time: 0s">
+<div class="time" style="width: 0%"></div>
+<pre>
+    -</pre>
+</div>
+<div class="code" title="File: Idempotents.v
+Line: 135
+Time: 0s">
+<div class="time" style="width: 0%"></div>
+<pre> (* For some reason [rewrite concat_pp_p] here rewrites *twice*? *)
+     </pre>
+</div>
+<div class="code" title="File: Idempotents.v
+Line: 136
+Time: 0.009s">
+<div class="time" style="width: 0.024522492575134%"></div>
+<pre>refine ((1 @@ concat_pp_p _ _ _) @ _).</pre>
+</div>
+<div class="code" title="File: Idempotents.v
+Line: 136
+Time: 0.039s">
+<div class="time" style="width: 0.10626413449225%"></div>
+<pre>
+      rewrite IH.</pre>
+</div>
+<div class="code" title="File: Idempotents.v
+Line: 137
+Time: 0.116s">
+<div class="time" style="width: 0.31606768207951%"></div>
+<pre>
+      rewrite !ap_pp, !concat_p_pp.</pre>
+</div>
+<div class="code" title="File: Idempotents.v
+Line: 138
+Time: 0.006s">
+<div class="time" style="width: 0.016348328383423%"></div>
+<pre>
+      do 4 apply whiskerR.</pre>
+</div>
+<div class="code" title="File: Idempotents.v
+Line: 139
+Time: 0.011s">
+<div class="time" style="width: 0.029971935369608%"></div>
+<pre>
+      rewrite ap_V; apply moveL_Vp; rewrite concat_p_pp; apply moveR_pV.</pre>
+</div>
+<div class="code" title="File: Idempotents.v
+Line: 140
+Time: 0.004s">
+<div class="time" style="width: 0.010898885588949%"></div>
+<pre>
+      refine (_ @ (ap_compose f f _ @@ 1)).</pre>
+</div>
+<div class="code" title="File: Idempotents.v
+Line: 141
+Time: 0.002s">
+<div class="time" style="width: 0.0054494427944743%"></div>
+<pre>
+      rewrite J.</pre>
+</div>
+<div class="code" title="File: Idempotents.v
+Line: 142
+Time: 0.001s">
+<div class="time" style="width: 0.0027247213972371%"></div>
+<pre>
+      exact ((concat_Ap I (ap f (a.2 n.+2)))^).</pre>
+</div>
+<div class="code" title="File: Idempotents.v
+Line: 143
+Time: 0s">
+<div class="time" style="width: 0%"></div>
+<pre>
+    Close Scope long_path_scope.</pre>
+</div>
+<div class="code" title="File: Idempotents.v
+Line: 144
+Time: 0.159s">
+<div class="time" style="width: 0.4332307021607%"></div>
+<pre>
+  Qed.</pre>
+</div>
+<div class="code" title="File: Idempotents.v
+Line: 145
+Time: 0s">
+<div class="time" style="width: 0%"></div>
+<pre>
+
+  (** Note that a splitting of [f] induces a witness of idempotency of [f] and also any amount of coherence on it that one might ask for.  We ought in theory to investigate whether these witnesses arising from this splitting agree with the given [I] and [J]. *)
+
+</pre>
+</div>
+<div class="code" title="File: Idempotents.v
+Line: 148
+Time: 0.068s">
+<div class="time" style="width: 0.18528105501213%"></div>
+<pre>End CoherentIdempotents.</pre>
+</div>
+<div class="code" title="File: Idempotents.v
+Line: 148
+Time: 0s">
+<div class="time" style="width: 0%"></div>
+<pre>
+
+(** ** An incoherent idempotent *)
+
+(** Finally, we give a specific example of an incoherent idempotent that does not split, hence is not coherentifiable.  This is inspired by Warning 1.2.4.8 in *Higher Algebra*. *)
+
+(** *** Cantor space 2^N *)
+
+(** This should probably go somewhere else. *)
+
+</pre>
+</div>
+<div class="code" title="File: Idempotents.v
+Line: 157
+Time: 0s">
+<div class="time" style="width: 0%"></div>
+<pre>Definition cantor : Type := nat -&gt; Bool.</pre>
+</div>
+<div class="code" title="File: Idempotents.v
+Line: 157
+Time: 0s">
+<div class="time" style="width: 0%"></div>
+<pre>
+
+Definition fold_cantor : cantor + cantor -&gt; cantor.</pre>
+</div>
+<div class="code" title="File: Idempotents.v
+Line: 159
+Time: 0s">
+<div class="time" style="width: 0%"></div>
+<pre>
+Proof.</pre>
+</div>
+<div class="code" title="File: Idempotents.v
+Line: 160
+Time: 0s">
+<div class="time" style="width: 0%"></div>
+<pre>
+  intros [c|c]; intros n.</pre>
+</div>
+<div class="code" title="File: Idempotents.v
+Line: 161
+Time: 0s">
+<div class="time" style="width: 0%"></div>
+<pre>
+  -</pre>
+</div>
+<div class="code" title="File: Idempotents.v
+Line: 162
+Time: 0s">
+<div class="time" style="width: 0%"></div>
+<pre> destruct n as [|n].</pre>
+</div>
+<div class="code" title="File: Idempotents.v
+Line: 162
+Time: 0s">
+<div class="time" style="width: 0%"></div>
+<pre>
+    +</pre>
+</div>
+<div class="code" title="File: Idempotents.v
+Line: 163
+Time: 0s">
+<div class="time" style="width: 0%"></div>
+<pre> exact true.</pre>
+</div>
+<div class="code" title="File: Idempotents.v
+Line: 163
+Time: 0s">
+<div class="time" style="width: 0%"></div>
+<pre>
+    +</pre>
+</div>
+<div class="code" title="File: Idempotents.v
+Line: 164
+Time: 0s">
+<div class="time" style="width: 0%"></div>
+<pre> exact (c n).</pre>
+</div>
+<div class="code" title="File: Idempotents.v
+Line: 164
+Time: 0s">
+<div class="time" style="width: 0%"></div>
+<pre>
+  -</pre>
+</div>
+<div class="code" title="File: Idempotents.v
+Line: 165
+Time: 0s">
+<div class="time" style="width: 0%"></div>
+<pre> destruct n as [|n].</pre>
+</div>
+<div class="code" title="File: Idempotents.v
+Line: 165
+Time: 0s">
+<div class="time" style="width: 0%"></div>
+<pre>
+    +</pre>
+</div>
+<div class="code" title="File: Idempotents.v
+Line: 166
+Time: 0s">
+<div class="time" style="width: 0%"></div>
+<pre> exact false.</pre>
+</div>
+<div class="code" title="File: Idempotents.v
+Line: 166
+Time: 0s">
+<div class="time" style="width: 0%"></div>
+<pre>
+    +</pre>
+</div>
+<div class="code" title="File: Idempotents.v
+Line: 167
+Time: 0s">
+<div class="time" style="width: 0%"></div>
+<pre> exact (c n).</pre>
+</div>
+<div class="code" title="File: Idempotents.v
+Line: 167
+Time: 0s">
+<div class="time" style="width: 0%"></div>
+<pre>
+Defined.</pre>
+</div>
+<div class="code" title="File: Idempotents.v
+Line: 168
+Time: 0s">
+<div class="time" style="width: 0%"></div>
+<pre>
+
+Definition unfold_cantor : cantor -&gt; cantor + cantor.</pre>
+</div>
+<div class="code" title="File: Idempotents.v
+Line: 170
+Time: 0s">
+<div class="time" style="width: 0%"></div>
+<pre>
+Proof.</pre>
+</div>
+<div class="code" title="File: Idempotents.v
+Line: 171
+Time: 0s">
+<div class="time" style="width: 0%"></div>
+<pre>
+  intros c.</pre>
+</div>
+<div class="code" title="File: Idempotents.v
+Line: 172
+Time: 0s">
+<div class="time" style="width: 0%"></div>
+<pre>
+  case (c 0).</pre>
+</div>
+<div class="code" title="File: Idempotents.v
+Line: 173
+Time: 0s">
+<div class="time" style="width: 0%"></div>
+<pre>
+  -</pre>
+</div>
+<div class="code" title="File: Idempotents.v
+Line: 174
+Time: 0s">
+<div class="time" style="width: 0%"></div>
+<pre> exact (inl (fun n =&gt; c n.+1)).</pre>
+</div>
+<div class="code" title="File: Idempotents.v
+Line: 174
+Time: 0s">
+<div class="time" style="width: 0%"></div>
+<pre>
+  -</pre>
+</div>
+<div class="code" title="File: Idempotents.v
+Line: 175
+Time: 0s">
+<div class="time" style="width: 0%"></div>
+<pre> exact (inr (fun n =&gt; c n.+1)).</pre>
+</div>
+<div class="code" title="File: Idempotents.v
+Line: 175
+Time: 0s">
+<div class="time" style="width: 0%"></div>
+<pre>
+Defined.</pre>
+</div>
+<div class="code" title="File: Idempotents.v
+Line: 176
+Time: 0s">
+<div class="time" style="width: 0%"></div>
+<pre>
+
+Global Instance isequiv_fold_cantor `{Funext} : IsEquiv fold_cantor.</pre>
+</div>
+<div class="code" title="File: Idempotents.v
+Line: 178
+Time: 0s">
+<div class="time" style="width: 0%"></div>
+<pre>
+Proof.</pre>
+</div>
+<div class="code" title="File: Idempotents.v
+Line: 179
+Time: 0s">
+<div class="time" style="width: 0%"></div>
+<pre>
+  refine (isequiv_adjointify fold_cantor unfold_cantor _ _).</pre>
+</div>
+<div class="code" title="File: Idempotents.v
+Line: 180
+Time: 0s">
+<div class="time" style="width: 0%"></div>
+<pre>
+  -</pre>
+</div>
+<div class="code" title="File: Idempotents.v
+Line: 181
+Time: 0s">
+<div class="time" style="width: 0%"></div>
+<pre> intros c; apply path_arrow; intros n.</pre>
+</div>
+<div class="code" title="File: Idempotents.v
+Line: 181
+Time: 0s">
+<div class="time" style="width: 0%"></div>
+<pre>
+    induction n as [|n IH].</pre>
+</div>
+<div class="code" title="File: Idempotents.v
+Line: 182
+Time: 0s">
+<div class="time" style="width: 0%"></div>
+<pre>
+    +</pre>
+</div>
+<div class="code" title="File: Idempotents.v
+Line: 183
+Time: 0s">
+<div class="time" style="width: 0%"></div>
+<pre> unfold unfold_cantor.</pre>
+</div>
+<div class="code" title="File: Idempotents.v
+Line: 183
+Time: 0s">
+<div class="time" style="width: 0%"></div>
+<pre>
+      case (c 0); reflexivity.</pre>
+</div>
+<div class="code" title="File: Idempotents.v
+Line: 184
+Time: 0s">
+<div class="time" style="width: 0%"></div>
+<pre>
+    +</pre>
+</div>
+<div class="code" title="File: Idempotents.v
+Line: 185
+Time: 0s">
+<div class="time" style="width: 0%"></div>
+<pre> unfold unfold_cantor.</pre>
+</div>
+<div class="code" title="File: Idempotents.v
+Line: 185
+Time: 0s">
+<div class="time" style="width: 0%"></div>
+<pre>
+      case (c 0); reflexivity.</pre>
+</div>
+<div class="code" title="File: Idempotents.v
+Line: 186
+Time: 0s">
+<div class="time" style="width: 0%"></div>
+<pre>
+  -</pre>
+</div>
+<div class="code" title="File: Idempotents.v
+Line: 187
+Time: 0.001s">
+<div class="time" style="width: 0.0027247213972371%"></div>
+<pre> intros [c|c]; apply path_sum; reflexivity.</pre>
+</div>
+<div class="code" title="File: Idempotents.v
+Line: 187
+Time: 0.002s">
+<div class="time" style="width: 0.0054494427944743%"></div>
+<pre>
+Defined.</pre>
+</div>
+<div class="code" title="File: Idempotents.v
+Line: 188
+Time: 0.006s">
+<div class="time" style="width: 0.016348328383423%"></div>
+<pre>
+
+Definition equiv_fold_cantor `{Funext} : cantor + cantor &lt;~&gt; cantor
+  := BuildEquiv _ _ fold_cantor _.</pre>
+</div>
+<div class="code" title="File: Idempotents.v
+Line: 191
+Time: 0s">
+<div class="time" style="width: 0%"></div>
+<pre>
+
+(** *** BAut *)
+
+(** This should probably go somewhere else too. *)</pre>
+</div>
+<div class="code" title="File: Idempotents.v
+Line: 195
+Time: 0s">
+<div class="time" style="width: 0%"></div>
+<pre>Definition BAut (C : Type) := { Z : Type &amp; merely (Z = C) }.</pre>
+</div>
+<div class="code" title="File: Idempotents.v
+Line: 195
+Time: 0.001s">
+<div class="time" style="width: 0.0027247213972371%"></div>
+<pre>
+
+Global Instance ispointed_baut C : IsPointed (BAut C)
+  := (C ; tr 1).</pre>
+</div>
+<div class="code" title="File: Idempotents.v
+Line: 198
+Time: 0s">
+<div class="time" style="width: 0%"></div>
+<pre>
+
+Definition BAut_pr1 C : BAut C -&gt; Type := pr1.</pre>
+</div>
+<div class="code" title="File: Idempotents.v
+Line: 200
+Time: 0s">
+<div class="time" style="width: 0%"></div>
+<pre>
+Coercion BAut_pr1 : BAut &gt;-&gt; Sortclass.</pre>
+</div>
+<div class="code" title="File: Idempotents.v
+Line: 201
+Time: 0s">
+<div class="time" style="width: 0%"></div>
+<pre>
+
+Definition path_baut `{Univalence} C (Z Z' : BAut C)
+: (Z &lt;~&gt; Z') &lt;~&gt; (Z = Z' :&gt; BAut C).</pre>
+</div>
+<div class="code" title="File: Idempotents.v
+Line: 204
+Time: 0s">
+<div class="time" style="width: 0%"></div>
+<pre>
+Proof.</pre>
+</div>
+<div class="code" title="File: Idempotents.v
+Line: 205
+Time: 0s">
+<div class="time" style="width: 0%"></div>
+<pre>
+  eapply equiv_compose'.</pre>
+</div>
+<div class="code" title="File: Idempotents.v
+Line: 206
+Time: 0s">
+<div class="time" style="width: 0%"></div>
+<pre>
+  -</pre>
+</div>
+<div class="code" title="File: Idempotents.v
+Line: 207
+Time: 0.003s">
+<div class="time" style="width: 0.0081741641917114%"></div>
+<pre> apply equiv_path_sigma_hprop.</pre>
+</div>
+<div class="code" title="File: Idempotents.v
+Line: 207
+Time: 0s">
+<div class="time" style="width: 0%"></div>
+<pre>
+  -</pre>
+</div>
+<div class="code" title="File: Idempotents.v
+Line: 208
+Time: 0s">
+<div class="time" style="width: 0%"></div>
+<pre> apply equiv_path_universe.</pre>
+</div>
+<div class="code" title="File: Idempotents.v
+Line: 208
+Time: 0s">
+<div class="time" style="width: 0%"></div>
+<pre>
+Defined.</pre>
+</div>
+<div class="code" title="File: Idempotents.v
+Line: 209
+Time: 0s">
+<div class="time" style="width: 0%"></div>
+<pre>
+
+(** *** An idempotent on BAut(2^N) *)
+
+(** We go into a non-exported module so that we can use short names for definitions without polluting the global namespace. *)
+
+</pre>
+</div>
+<div class="code" title="File: Idempotents.v
+Line: 214
+Time: 0s">
+<div class="time" style="width: 0%"></div>
+<pre>Module BAut_Cantor_Idempotent.</pre>
+</div>
+<div class="code" title="File: Idempotents.v
+Line: 214
+Time: 0s">
+<div class="time" style="width: 0%"></div>
+<pre>
+Section Assumptions.</pre>
+</div>
+<div class="code" title="File: Idempotents.v
+Line: 215
+Time: 0s">
+<div class="time" style="width: 0%"></div>
+<pre>
+  Context `{Univalence}.</pre>
+</div>
+<div class="code" title="File: Idempotents.v
+Line: 216
+Time: 0s">
+<div class="time" style="width: 0%"></div>
+<pre>
+
+  Definition f : BAut cantor -&gt; BAut cantor.</pre>
+</div>
+<div class="code" title="File: Idempotents.v
+Line: 218
+Time: 0s">
+<div class="time" style="width: 0%"></div>
+<pre>
+  Proof.</pre>
+</div>
+<div class="code" title="File: Idempotents.v
+Line: 219
+Time: 0s">
+<div class="time" style="width: 0%"></div>
+<pre>
+    intros Z.</pre>
+</div>
+<div class="code" title="File: Idempotents.v
+Line: 220
+Time: 0s">
+<div class="time" style="width: 0%"></div>
+<pre>
+    (** Here is the important part of this definition. *)
+   </pre>
+</div>
+<div class="code" title="File: Idempotents.v
+Line: 222
+Time: 0s">
+<div class="time" style="width: 0%"></div>
+<pre>exists (Z + cantor).</pre>
+</div>
+<div class="code" title="File: Idempotents.v
+Line: 222
+Time: 0s">
+<div class="time" style="width: 0%"></div>
+<pre>
+    (** The rest is just a proof that [Z+cantor] is again equivalent to [cantor], using [fold_cantor] and the assumption that [Z] is equivalent to [cantor]. *)
+   </pre>
+</div>
+<div class="code" title="File: Idempotents.v
+Line: 224
+Time: 0s">
+<div class="time" style="width: 0%"></div>
+<pre>pose (e := Z.2); simpl in e; clearbody e.</pre>
+</div>
+<div class="code" title="File: Idempotents.v
+Line: 224
+Time: 0.024s">
+<div class="time" style="width: 0.065393313533691%"></div>
+<pre>
+    strip_truncations.</pre>
+</div>
+<div class="code" title="File: Idempotents.v
+Line: 225
+Time: 0s">
+<div class="time" style="width: 0%"></div>
+<pre>
+    apply tr.</pre>
+</div>
+<div class="code" title="File: Idempotents.v
+Line: 226
+Time: 0s">
+<div class="time" style="width: 0%"></div>
+<pre>
+    apply path_universe_uncurried.</pre>
+</div>
+<div class="code" title="File: Idempotents.v
+Line: 227
+Time: 0s">
+<div class="time" style="width: 0%"></div>
+<pre>
+    refine (equiv_compose' equiv_fold_cantor _).</pre>
+</div>
+<div class="code" title="File: Idempotents.v
+Line: 228
+Time: 0s">
+<div class="time" style="width: 0%"></div>
+<pre>
+    apply equiv_functor_sum'.</pre>
+</div>
+<div class="code" title="File: Idempotents.v
+Line: 229
+Time: 0s">
+<div class="time" style="width: 0%"></div>
+<pre>
+    -</pre>
+</div>
+<div class="code" title="File: Idempotents.v
+Line: 230
+Time: 0s">
+<div class="time" style="width: 0%"></div>
+<pre> apply equiv_path, e.</pre>
+</div>
+<div class="code" title="File: Idempotents.v
+Line: 230
+Time: 0s">
+<div class="time" style="width: 0%"></div>
+<pre>
+    -</pre>
+</div>
+<div class="code" title="File: Idempotents.v
+Line: 231
+Time: 0s">
+<div class="time" style="width: 0%"></div>
+<pre> apply equiv_idmap.</pre>
+</div>
+<div class="code" title="File: Idempotents.v
+Line: 231
+Time: 0.002s">
+<div class="time" style="width: 0.0054494427944743%"></div>
+<pre>
+  Defined.</pre>
+</div>
+<div class="code" title="File: Idempotents.v
+Line: 232
+Time: 0s">
+<div class="time" style="width: 0%"></div>
+<pre>
+
+  (** For the idempotence of [f], the main point is again the existence of the equivalence [fold_cantor]. *)
+ </pre>
+</div>
+<div class="code" title="File: Idempotents.v
+Line: 235
+Time: 0s">
+<div class="time" style="width: 0%"></div>
+<pre>Definition idempotent_f : Idempotent f.</pre>
+</div>
+<div class="code" title="File: Idempotents.v
+Line: 235
+Time: 0s">
+<div class="time" style="width: 0%"></div>
+<pre>
+  Proof.</pre>
+</div>
+<div class="code" title="File: Idempotents.v
+Line: 236
+Time: 0s">
+<div class="time" style="width: 0%"></div>
+<pre>
+    intros Z.</pre>
+</div>
+<div class="code" title="File: Idempotents.v
+Line: 237
+Time: 0s">
+<div class="time" style="width: 0%"></div>
+<pre>
+    apply path_baut.</pre>
+</div>
+<div class="code" title="File: Idempotents.v
+Line: 238
+Time: 0.001s">
+<div class="time" style="width: 0.0027247213972371%"></div>
+<pre>
+    unfold f; simpl.</pre>
+</div>
+<div class="code" title="File: Idempotents.v
+Line: 239
+Time: 0.001s">
+<div class="time" style="width: 0.0027247213972371%"></div>
+<pre>
+    refine (equiv_compose' _ (equiv_sum_assoc Z cantor cantor)).</pre>
+</div>
+<div class="code" title="File: Idempotents.v
+Line: 240
+Time: 0s">
+<div class="time" style="width: 0%"></div>
+<pre>
+    apply (equiv_functor_sum' (equiv_idmap Z) equiv_fold_cantor).</pre>
+</div>
+<div class="code" title="File: Idempotents.v
+Line: 241
+Time: 0.022s">
+<div class="time" style="width: 0.059943870739217%"></div>
+<pre>
+  Defined.</pre>
+</div>
+<div class="code" title="File: Idempotents.v
+Line: 242
+Time: 0s">
+<div class="time" style="width: 0%"></div>
+<pre>
+
+  (** We record how the action of [f] and [f o f] on paths corresponds to an action on equivalences. *)
+ </pre>
+</div>
+<div class="code" title="File: Idempotents.v
+Line: 245
+Time: 0.003s">
+<div class="time" style="width: 0.0081741641917114%"></div>
+<pre>Definition ap_f {Z Z' : BAut cantor} (p : Z = Z')
+  : equiv_path _ _ (ap f p)..1
+    = equiv_functor_sum' (equiv_path Z Z' p..1) (equiv_idmap cantor).</pre>
+</div>
+<div class="code" title="File: Idempotents.v
+Line: 247
+Time: 0s">
+<div class="time" style="width: 0%"></div>
+<pre>
+  Proof.</pre>
+</div>
+<div class="code" title="File: Idempotents.v
+Line: 248
+Time: 0.001s">
+<div class="time" style="width: 0.0027247213972371%"></div>
+<pre>
+    destruct p.</pre>
+</div>
+<div class="code" title="File: Idempotents.v
+Line: 249
+Time: 0.001s">
+<div class="time" style="width: 0.0027247213972371%"></div>
+<pre> apply path_equiv, path_arrow.</pre>
+</div>
+<div class="code" title="File: Idempotents.v
+Line: 249
+Time: 0.007s">
+<div class="time" style="width: 0.01907304978066%"></div>
+<pre>
+    intros [z|a]; reflexivity.</pre>
+</div>
+<div class="code" title="File: Idempotents.v
+Line: 250
+Time: 0.012s">
+<div class="time" style="width: 0.032696656766846%"></div>
+<pre>
+  Defined.</pre>
+</div>
+<div class="code" title="File: Idempotents.v
+Line: 251
+Time: 0.004s">
+<div class="time" style="width: 0.010898885588949%"></div>
+<pre>
+
+  Definition ap_ff {Z Z' : BAut cantor} (p : Z = Z')
+  : equiv_path _ _ (ap (f o f) p)..1
+    = equiv_functor_sum'
+        (equiv_functor_sum' (equiv_path Z Z' p..1) (equiv_idmap cantor))
+        (equiv_idmap cantor).</pre>
+</div>
+<div class="code" title="File: Idempotents.v
+Line: 257
+Time: 0s">
+<div class="time" style="width: 0%"></div>
+<pre>
+  Proof.</pre>
+</div>
+<div class="code" title="File: Idempotents.v
+Line: 258
+Time: 0.003s">
+<div class="time" style="width: 0.0081741641917114%"></div>
+<pre>
+    destruct p.</pre>
+</div>
+<div class="code" title="File: Idempotents.v
+Line: 259
+Time: 0.002s">
+<div class="time" style="width: 0.0054494427944743%"></div>
+<pre> apply path_equiv, path_arrow.</pre>
+</div>
+<div class="code" title="File: Idempotents.v
+Line: 259
+Time: 0.016s">
+<div class="time" style="width: 0.043595542355794%"></div>
+<pre>
+    intros [[z|a]|a]; reflexivity.</pre>
+</div>
+<div class="code" title="File: Idempotents.v
+Line: 260
+Time: 0.025s">
+<div class="time" style="width: 0.068118034930928%"></div>
+<pre>
+  Defined.</pre>
+</div>
+<div class="code" title="File: Idempotents.v
+Line: 261
+Time: 0s">
+<div class="time" style="width: 0%"></div>
+<pre>
+
+  (** Now let's assume [f] is a coherent idempotent. *)
+ </pre>
+</div>
+<div class="code" title="File: Idempotents.v
+Line: 264
+Time: 0s">
+<div class="time" style="width: 0%"></div>
+<pre>Context (IJ : CoherentIdempotent f).</pre>
+</div>
+<div class="code" title="File: Idempotents.v
+Line: 264
+Time: 0.003s">
+<div class="time" style="width: 0.0081741641917114%"></div>
+<pre>
+
+  Definition I (Z : BAut cantor)
+  : (Z + cantor) + cantor &lt;~&gt; Z + cantor
+    := equiv_path _ _ (IJ.1 Z)..1.</pre>
+</div>
+<div class="code" title="File: Idempotents.v
+Line: 268
+Time: 0.003s">
+<div class="time" style="width: 0.0081741641917114%"></div>
+<pre>
+
+  Definition I0
+  : cantor + cantor + cantor + cantor &lt;~&gt; cantor + cantor + cantor
+    := I (f (point (BAut cantor))).</pre>
+</div>
+<div class="code" title="File: Idempotents.v
+Line: 272
+Time: 0s">
+<div class="time" style="width: 0%"></div>
+<pre>
+
+  (** We don't know much about [I0], but we can show that it maps the rightmost two summands to the rightmost one, using the naturality of [I].  Here is the naturality. *)
+ </pre>
+</div>
+<div class="code" title="File: Idempotents.v
+Line: 275
+Time: 0.002s">
+<div class="time" style="width: 0.0054494427944743%"></div>
+<pre>Definition Inat (Z Z' : BAut cantor) (e : Z &lt;~&gt; Z')
+  : equiv_compose' (I Z') (equiv_functor_sum'
+                             (equiv_functor_sum' e (equiv_idmap cantor))
+                             (equiv_idmap cantor))
+    = equiv_compose' (equiv_functor_sum' e (equiv_idmap cantor)) (I Z).</pre>
+</div>
+<div class="code" title="File: Idempotents.v
+Line: 279
+Time: 0s">
+<div class="time" style="width: 0%"></div>
+<pre>
+  Proof.</pre>
+</div>
+<div class="code" title="File: Idempotents.v
+Line: 280
+Time: 0.014s">
+<div class="time" style="width: 0.03814609956132%"></div>
+<pre>
+    revert e; equiv_intro (equiv_path Z Z') q.</pre>
+</div>
+<div class="code" title="File: Idempotents.v
+Line: 281
+Time: 0.255s">
+<div class="time" style="width: 0.69480395629547%"></div>
+<pre>
+    revert q; equiv_intro (equiv_inverse (equiv_path_sigma_hprop Z Z')) p.</pre>
+</div>
+<div class="code" title="File: Idempotents.v
+Line: 282
+Time: 0.009s">
+<div class="time" style="width: 0.024522492575134%"></div>
+<pre>
+    simpl.</pre>
+</div>
+<div class="code" title="File: Idempotents.v
+Line: 283
+Time: 0.022s">
+<div class="time" style="width: 0.059943870739217%"></div>
+<pre> rewrite &lt;- ap_ff, &lt;- ap_f.</pre>
+</div>
+<div class="code" title="File: Idempotents.v
+Line: 283
+Time: 0s">
+<div class="time" style="width: 0%"></div>
+<pre>
+    unfold I.</pre>
+</div>
+<div class="code" title="File: Idempotents.v
+Line: 284
+Time: 0.018s">
+<div class="time" style="width: 0.049044985150268%"></div>
+<pre> refine ((equiv_path_pp _ _)^ @ _ @ (equiv_path_pp _ _)).</pre>
+</div>
+<div class="code" title="File: Idempotents.v
+Line: 284
+Time: 0.001s">
+<div class="time" style="width: 0.0027247213972371%"></div>
+<pre>
+    apply ap.</pre>
+</div>
+<div class="code" title="File: Idempotents.v
+Line: 285
+Time: 0.016s">
+<div class="time" style="width: 0.043595542355794%"></div>
+<pre>
+    refine ((pr1_path_pp (ap (f o f) p) (IJ.1 Z'))^ @ _ @ pr1_path_pp _ _).</pre>
+</div>
+<div class="code" title="File: Idempotents.v
+Line: 286
+Time: 0.002s">
+<div class="time" style="width: 0.0054494427944743%"></div>
+<pre>
+    apply ap, concat_Ap.</pre>
+</div>
+<div class="code" title="File: Idempotents.v
+Line: 287
+Time: 0.059s">
+<div class="time" style="width: 0.16075856243699%"></div>
+<pre>
+  Qed.</pre>
+</div>
+<div class="code" title="File: Idempotents.v
+Line: 288
+Time: 0s">
+<div class="time" style="width: 0%"></div>
+<pre>
+
+  (** To show our claim about the action of [I0], we will apply this naturality to the flip automorphism of [cantor + cantor].  Here are the images of that automorphism under [f] and [f o f]. *)
+ </pre>
+</div>
+<div class="code" title="File: Idempotents.v
+Line: 291
+Time: 0.001s">
+<div class="time" style="width: 0.0027247213972371%"></div>
+<pre>Definition f_flip :=
+    equiv_functor_sum' (equiv_sum_symm cantor cantor)
+                       (equiv_idmap cantor).</pre>
+</div>
+<div class="code" title="File: Idempotents.v
+Line: 293
+Time: 0.002s">
+<div class="time" style="width: 0.0054494427944743%"></div>
+<pre>
+  Definition ff_flip :=
+    equiv_functor_sum'
+      (equiv_functor_sum' (equiv_sum_symm cantor cantor)
+                          (equiv_idmap cantor))
+      (equiv_idmap cantor).</pre>
+</div>
+<div class="code" title="File: Idempotents.v
+Line: 298
+Time: 0s">
+<div class="time" style="width: 0%"></div>
+<pre>
+
+  (** The naturality of [I] implies that [I0] commutes with these images of the flip. *)
+ </pre>
+</div>
+<div class="code" title="File: Idempotents.v
+Line: 301
+Time: 0.019s">
+<div class="time" style="width: 0.051769706547506%"></div>
+<pre>Definition I0nat_flip
+        (x : ((cantor + cantor) + cantor) + cantor)
+  : I0 (ff_flip x) = f_flip (I0 x)
+    := ap10 (ap equiv_fun
+                (Inat (f (point (BAut cantor))) (f (point (BAut cantor)))
+                      (equiv_sum_symm cantor cantor)))
+            x.</pre>
+</div>
+<div class="code" title="File: Idempotents.v
+Line: 307
+Time: 0s">
+<div class="time" style="width: 0%"></div>
+<pre>
+
+  (** The value of this is that we can detect which summand an element is in depending on whether or not it is fixed by [f_flip] or [ff_flip]. *)
+ </pre>
+</div>
+<div class="code" title="File: Idempotents.v
+Line: 310
+Time: 0.001s">
+<div class="time" style="width: 0.0027247213972371%"></div>
+<pre>Definition f_flip_fixed_iff_inr (x : cantor + cantor + cantor)
+  : (f_flip x = x) &lt;-&gt; is_inr x.</pre>
+</div>
+<div class="code" title="File: Idempotents.v
+Line: 311
+Time: 0s">
+<div class="time" style="width: 0%"></div>
+<pre>
+  Proof.</pre>
+</div>
+<div class="code" title="File: Idempotents.v
+Line: 312
+Time: 0.023s">
+<div class="time" style="width: 0.062668592136454%"></div>
+<pre>
+    split; intros p; destruct x as [[c|c]|c]; simpl in p.</pre>
+</div>
+<div class="code" title="File: Idempotents.v
+Line: 313
+Time: 0s">
+<div class="time" style="width: 0%"></div>
+<pre>
+    -</pre>
+</div>
+<div class="code" title="File: Idempotents.v
+Line: 314
+Time: 0s">
+<div class="time" style="width: 0%"></div>
+<pre> apply path_sum_inl in p.</pre>
+</div>
+<div class="code" title="File: Idempotents.v
+Line: 314
+Time: 0.001s">
+<div class="time" style="width: 0.0027247213972371%"></div>
+<pre>
+      elim (inl_ne_inr _ _ p^).</pre>
+</div>
+<div class="code" title="File: Idempotents.v
+Line: 315
+Time: 0s">
+<div class="time" style="width: 0%"></div>
+<pre>
+    -</pre>
+</div>
+<div class="code" title="File: Idempotents.v
+Line: 316
+Time: 0s">
+<div class="time" style="width: 0%"></div>
+<pre> apply path_sum_inl in p.</pre>
+</div>
+<div class="code" title="File: Idempotents.v
+Line: 316
+Time: 0s">
+<div class="time" style="width: 0%"></div>
+<pre>
+      elim (inl_ne_inr _ _ p).</pre>
+</div>
+<div class="code" title="File: Idempotents.v
+Line: 317
+Time: 0s">
+<div class="time" style="width: 0%"></div>
+<pre>
+    -</pre>
+</div>
+<div class="code" title="File: Idempotents.v
+Line: 318
+Time: 0s">
+<div class="time" style="width: 0%"></div>
+<pre> exact tt.</pre>
+</div>
+<div class="code" title="File: Idempotents.v
+Line: 318
+Time: 0s">
+<div class="time" style="width: 0%"></div>
+<pre>
+    -</pre>
+</div>
+<div class="code" title="File: Idempotents.v
+Line: 319
+Time: 0s">
+<div class="time" style="width: 0%"></div>
+<pre> elim p.</pre>
+</div>
+<div class="code" title="File: Idempotents.v
+Line: 319
+Time: 0s">
+<div class="time" style="width: 0%"></div>
+<pre>
+    -</pre>
+</div>
+<div class="code" title="File: Idempotents.v
+Line: 320
+Time: 0s">
+<div class="time" style="width: 0%"></div>
+<pre> elim p.</pre>
+</div>
+<div class="code" title="File: Idempotents.v
+Line: 320
+Time: 0s">
+<div class="time" style="width: 0%"></div>
+<pre>
+    -</pre>
+</div>
+<div class="code" title="File: Idempotents.v
+Line: 321
+Time: 0s">
+<div class="time" style="width: 0%"></div>
+<pre> reflexivity.</pre>
+</div>
+<div class="code" title="File: Idempotents.v
+Line: 321
+Time: 0.008s">
+<div class="time" style="width: 0.021797771177897%"></div>
+<pre>
+  Defined.</pre>
+</div>
+<div class="code" title="File: Idempotents.v
+Line: 322
+Time: 0.002s">
+<div class="time" style="width: 0.0054494427944743%"></div>
+<pre>
+
+  Definition ff_flip_fixed_iff_inr
+        (x : cantor + cantor + cantor + cantor)
+  : (ff_flip x = x) &lt;-&gt; (is_inr x + is_inl_and is_inr x).</pre>
+</div>
+<div class="code" title="File: Idempotents.v
+Line: 326
+Time: 0s">
+<div class="time" style="width: 0%"></div>
+<pre>
+  Proof.</pre>
+</div>
+<div class="code" title="File: Idempotents.v
+Line: 327
+Time: 0.027s">
+<div class="time" style="width: 0.073567477725403%"></div>
+<pre>
+    split; intros p; destruct x as [[[c|c]|c]|c]; simpl in p.</pre>
+</div>
+<div class="code" title="File: Idempotents.v
+Line: 328
+Time: 0s">
+<div class="time" style="width: 0%"></div>
+<pre>
+    -</pre>
+</div>
+<div class="code" title="File: Idempotents.v
+Line: 329
+Time: 0.001s">
+<div class="time" style="width: 0.0027247213972371%"></div>
+<pre> do 2 apply path_sum_inl in p.</pre>
+</div>
+<div class="code" title="File: Idempotents.v
+Line: 329
+Time: 0.001s">
+<div class="time" style="width: 0.0027247213972371%"></div>
+<pre>
+      elim (inl_ne_inr _ _ p^).</pre>
+</div>
+<div class="code" title="File: Idempotents.v
+Line: 330
+Time: 0s">
+<div class="time" style="width: 0%"></div>
+<pre>
+    -</pre>
+</div>
+<div class="code" title="File: Idempotents.v
+Line: 331
+Time: 0.001s">
+<div class="time" style="width: 0.0027247213972371%"></div>
+<pre> do 2 apply path_sum_inl in p.</pre>
+</div>
+<div class="code" title="File: Idempotents.v
+Line: 331
+Time: 0.001s">
+<div class="time" style="width: 0.0027247213972371%"></div>
+<pre>
+      elim (inl_ne_inr _ _ p).</pre>
+</div>
+<div class="code" title="File: Idempotents.v
+Line: 332
+Time: 0s">
+<div class="time" style="width: 0%"></div>
+<pre>
+    -</pre>
+</div>
+<div class="code" title="File: Idempotents.v
+Line: 333
+Time: 0s">
+<div class="time" style="width: 0%"></div>
+<pre> exact (inr tt).</pre>
+</div>
+<div class="code" title="File: Idempotents.v
+Line: 333
+Time: 0s">
+<div class="time" style="width: 0%"></div>
+<pre>
+    -</pre>
+</div>
+<div class="code" title="File: Idempotents.v
+Line: 334
+Time: 0s">
+<div class="time" style="width: 0%"></div>
+<pre> exact (inl tt).</pre>
+</div>
+<div class="code" title="File: Idempotents.v
+Line: 334
+Time: 0s">
+<div class="time" style="width: 0%"></div>
+<pre>
+    -</pre>
+</div>
+<div class="code" title="File: Idempotents.v
+Line: 335
+Time: 0.003s">
+<div class="time" style="width: 0.0081741641917114%"></div>
+<pre> destruct p as [e|e]; elim e.</pre>
+</div>
+<div class="code" title="File: Idempotents.v
+Line: 335
+Time: 0s">
+<div class="time" style="width: 0%"></div>
+<pre>
+    -</pre>
+</div>
+<div class="code" title="File: Idempotents.v
+Line: 336
+Time: 0.003s">
+<div class="time" style="width: 0.0081741641917114%"></div>
+<pre> destruct p as [e|e]; elim e.</pre>
+</div>
+<div class="code" title="File: Idempotents.v
+Line: 336
+Time: 0s">
+<div class="time" style="width: 0%"></div>
+<pre>
+    -</pre>
+</div>
+<div class="code" title="File: Idempotents.v
+Line: 337
+Time: 0.003s">
+<div class="time" style="width: 0.0081741641917114%"></div>
+<pre> destruct p as [e|_]; [ elim e | reflexivity ].</pre>
+</div>
+<div class="code" title="File: Idempotents.v
+Line: 337
+Time: 0s">
+<div class="time" style="width: 0%"></div>
+<pre>
+    -</pre>
+</div>
+<div class="code" title="File: Idempotents.v
+Line: 338
+Time: 0.002s">
+<div class="time" style="width: 0.0054494427944743%"></div>
+<pre> destruct p as [_|e]; [ reflexivity | elim e ].</pre>
+</div>
+<div class="code" title="File: Idempotents.v
+Line: 338
+Time: 0.027s">
+<div class="time" style="width: 0.073567477725403%"></div>
+<pre>
+  Defined.</pre>
+</div>
+<div class="code" title="File: Idempotents.v
+Line: 339
+Time: 0s">
+<div class="time" style="width: 0%"></div>
+<pre>
+  
+  (** And the naturality guarantees that [I0] preserves fixed points. *)
+ </pre>
+</div>
+<div class="code" title="File: Idempotents.v
+Line: 342
+Time: 0.002s">
+<div class="time" style="width: 0.0054494427944743%"></div>
+<pre>Definition I0_fixed_iff_fixed
+        (x : cantor + cantor + cantor + cantor)
+  : (ff_flip x = x) &lt;-&gt; (f_flip (I0 x) = I0 x).</pre>
+</div>
+<div class="code" title="File: Idempotents.v
+Line: 344
+Time: 0s">
+<div class="time" style="width: 0%"></div>
+<pre>
+  Proof.</pre>
+</div>
+<div class="code" title="File: Idempotents.v
+Line: 345
+Time: 0s">
+<div class="time" style="width: 0%"></div>
+<pre>
+    split; intros p.</pre>
+</div>
+<div class="code" title="File: Idempotents.v
+Line: 346
+Time: 0s">
+<div class="time" style="width: 0%"></div>
+<pre>
+    -</pre>
+</div>
+<div class="code" title="File: Idempotents.v
+Line: 347
+Time: 0.002s">
+<div class="time" style="width: 0.0054494427944743%"></div>
+<pre> refine ((I0nat_flip x)^ @ ap I0 p).</pre>
+</div>
+<div class="code" title="File: Idempotents.v
+Line: 347
+Time: 0s">
+<div class="time" style="width: 0%"></div>
+<pre>
+    -</pre>
+</div>
+<div class="code" title="File: Idempotents.v
+Line: 348
+Time: 0.009s">
+<div class="time" style="width: 0.024522492575134%"></div>
+<pre> apply (equiv_inj I0).</pre>
+</div>
+<div class="code" title="File: Idempotents.v
+Line: 348
+Time: 0.001s">
+<div class="time" style="width: 0.0027247213972371%"></div>
+<pre>
+      refine (I0nat_flip x @ p).</pre>
+</div>
+<div class="code" title="File: Idempotents.v
+Line: 349
+Time: 0.008s">
+<div class="time" style="width: 0.021797771177897%"></div>
+<pre>
+  Defined.</pre>
+</div>
+<div class="code" title="File: Idempotents.v
+Line: 350
+Time: 0s">
+<div class="time" style="width: 0%"></div>
+<pre>
+
+  (** Putting it all together, here is the proof of our claim about [I0]. *)
+ </pre>
+</div>
+<div class="code" title="File: Idempotents.v
+Line: 353
+Time: 0.002s">
+<div class="time" style="width: 0.0054494427944743%"></div>
+<pre>Definition I0_preserves_inr
+        (x : cantor + cantor + cantor + cantor)
+  : (is_inr x + is_inl_and is_inr x) &lt;-&gt; is_inr (I0 x).</pre>
+</div>
+<div class="code" title="File: Idempotents.v
+Line: 355
+Time: 0s">
+<div class="time" style="width: 0%"></div>
+<pre>
+  Proof.</pre>
+</div>
+<div class="code" title="File: Idempotents.v
+Line: 356
+Time: 0.002s">
+<div class="time" style="width: 0.0054494427944743%"></div>
+<pre>
+    refine (iff_compose (f_flip_fixed_iff_inr (I0 x)) _).</pre>
+</div>
+<div class="code" title="File: Idempotents.v
+Line: 357
+Time: 0.001s">
+<div class="time" style="width: 0.0027247213972371%"></div>
+<pre>
+    refine (iff_compose (I0_fixed_iff_fixed x) _).</pre>
+</div>
+<div class="code" title="File: Idempotents.v
+Line: 358
+Time: 0.001s">
+<div class="time" style="width: 0.0027247213972371%"></div>
+<pre>
+    apply iff_inverse, ff_flip_fixed_iff_inr.</pre>
+</div>
+<div class="code" title="File: Idempotents.v
+Line: 359
+Time: 0.005s">
+<div class="time" style="width: 0.013623606986186%"></div>
+<pre>
+  Defined.</pre>
+</div>
+<div class="code" title="File: Idempotents.v
+Line: 360
+Time: 0s">
+<div class="time" style="width: 0%"></div>
+<pre>
+
+  (** Now we bring the coherence [J] into play. *)
+ </pre>
+</div>
+<div class="code" title="File: Idempotents.v
+Line: 363
+Time: 0.001s">
+<div class="time" style="width: 0.0027247213972371%"></div>
+<pre>Definition J (Z : BAut cantor)
+  : equiv_functor_sum' (I Z) (equiv_idmap cantor)
+    = I (f Z).</pre>
+</div>
+<div class="code" title="File: Idempotents.v
+Line: 365
+Time: 0s">
+<div class="time" style="width: 0%"></div>
+<pre>
+  Proof.</pre>
+</div>
+<div class="code" title="File: Idempotents.v
+Line: 366
+Time: 0.001s">
+<div class="time" style="width: 0.0027247213972371%"></div>
+<pre>
+    unfold I; simpl.</pre>
+</div>
+<div class="code" title="File: Idempotents.v
+Line: 367
+Time: 0.006s">
+<div class="time" style="width: 0.016348328383423%"></div>
+<pre>
+    refine ((ap_f (IJ.1 Z))^ @ _).</pre>
+</div>
+<div class="code" title="File: Idempotents.v
+Line: 368
+Time: 0.002s">
+<div class="time" style="width: 0.0054494427944743%"></div>
+<pre>
+    do 2 apply ap.</pre>
+</div>
+<div class="code" title="File: Idempotents.v
+Line: 369
+Time: 0s">
+<div class="time" style="width: 0%"></div>
+<pre>
+    apply IJ.2.</pre>
+</div>
+<div class="code" title="File: Idempotents.v
+Line: 370
+Time: 0.011s">
+<div class="time" style="width: 0.029971935369608%"></div>
+<pre>
+  Defined.</pre>
+</div>
+<div class="code" title="File: Idempotents.v
+Line: 371
+Time: 0s">
+<div class="time" style="width: 0%"></div>
+<pre>
+
+  (** We reach a contradiction by showing that the two maps which [J] claims are equal send elements of the third summand of the domain into different summands of the codomain. *)
+ </pre>
+</div>
+<div class="code" title="File: Idempotents.v
+Line: 374
+Time: 0s">
+<div class="time" style="width: 0%"></div>
+<pre>Definition impossible : Empty.</pre>
+</div>
+<div class="code" title="File: Idempotents.v
+Line: 374
+Time: 0s">
+<div class="time" style="width: 0%"></div>
+<pre>
+  Proof.</pre>
+</div>
+<div class="code" title="File: Idempotents.v
+Line: 375
+Time: 0.001s">
+<div class="time" style="width: 0.0027247213972371%"></div>
+<pre>
+    pose (x := inl (inr (fun n =&gt; true))
+               : ((f (point (BAut cantor))) + cantor) + cantor).</pre>
+</div>
+<div class="code" title="File: Idempotents.v
+Line: 377
+Time: 0.001s">
+<div class="time" style="width: 0.0027247213972371%"></div>
+<pre>
+    apply (not_is_inl_and_inr' (I (f (point (BAut cantor))) x)).</pre>
+</div>
+<div class="code" title="File: Idempotents.v
+Line: 378
+Time: 0s">
+<div class="time" style="width: 0%"></div>
+<pre>
+    -</pre>
+</div>
+<div class="code" title="File: Idempotents.v
+Line: 379
+Time: 0.003s">
+<div class="time" style="width: 0.0081741641917114%"></div>
+<pre> exact (transport is_inl
+                       (ap10 (ap equiv_fun (J (point (BAut cantor)))) x) tt).</pre>
+</div>
+<div class="code" title="File: Idempotents.v
+Line: 380
+Time: 0s">
+<div class="time" style="width: 0%"></div>
+<pre>
+    (** TODO: The following line takes 17 seconds with coqtop, but executes instantaneously with coqc.  Why? *)
+   </pre>
+</div>
+<div class="code" title="File: Idempotents.v
+Line: 382
+Time: 0s">
+<div class="time" style="width: 0%"></div>
+<pre>-</pre>
+</div>
+<div class="code" title="File: Idempotents.v
+Line: 382
+Time: 36.701s">
+<div class="time" style="width: 100%"></div>
+<pre> exact (fst (I0_preserves_inr x) (inr tt)).</pre>
+</div>
+<div class="code" title="File: Idempotents.v
+Line: 382
+Time: 0.007s">
+<div class="time" style="width: 0.01907304978066%"></div>
+<pre>
+  Defined.</pre>
+</div>
+<div class="code" title="File: Idempotents.v
+Line: 383
+Time: 0.05s">
+<div class="time" style="width: 0.13623606986186%"></div>
+<pre>
+  
+End Assumptions.</pre>
+</div>
+<div class="code" title="File: Idempotents.v
+Line: 385
+Time: 0s">
+<div class="time" style="width: 0%"></div>
+<pre>
+End BAut_Cantor_Idempotent.</pre>
+</div>
+<div class="code" title="File: Idempotents.v
+Line: 386
+Time: 0s">
+<div class="time" style="width: 0%"></div>
+<pre>
+
+(** Let's make the important conclusions available globally. *)
+
+</pre>
+</div>
+<div class="code" title="File: Idempotents.v
+Line: 389
+Time: 0s">
+<div class="time" style="width: 0%"></div>
+<pre>Definition baut_cantor_idem `{Univalence}
+: BAut cantor -&gt; BAut cantor
+  := BAut_Cantor_Idempotent.f.</pre>
+</div>
+<div class="code" title="File: Idempotents.v
+Line: 391
+Time: 0s">
+<div class="time" style="width: 0%"></div>
+<pre>
+
+Definition idempotent_baut_cantor_idem  `{Univalence}
+: Idempotent baut_cantor_idem
+  := BAut_Cantor_Idempotent.idempotent_f.</pre>
+</div>
+<div class="code" title="File: Idempotents.v
+Line: 395
+Time: 0.001s">
+<div class="time" style="width: 0.0027247213972371%"></div>
+<pre>
+
+Definition not_coherent_baut_cantor_idem `{Univalence}
+: ~(CoherentIdempotent baut_cantor_idem)
+  := BAut_Cantor_Idempotent.impossible.</pre>
+</div>
+<div class="code" title="File: Idempotents.v
+Line: 400
+Time: 0s">
+<div class="time" style="width: 0%"></div>
+<pre>
+
+</pre>
+</div>
+</body>
+</html>
+
