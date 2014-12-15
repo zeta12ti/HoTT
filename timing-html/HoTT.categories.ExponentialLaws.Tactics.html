@@ -36,13 +36,13 @@ Time: 0s">
 </div>
 <div class="code" title="File: Tactics.v
 Line: 1
-Time: 0.014s">
-<div class="time" style="width: 20.289855072464%"></div>
+Time: 0.009s">
+<div class="time" style="width: 18.75%"></div>
 <pre>Require Import Category.Core Functor.Core NaturalTransformation.Core.</pre>
 </div>
 <div class="code" title="File: Tactics.v
 Line: 1
-Time: 0.069s">
+Time: 0.048s">
 <div class="time" style="width: 100%"></div>
 <pre>
 Require Import Functor.Paths NaturalTransformation.Paths.</pre>
@@ -50,7 +50,7 @@ Require Import Functor.Paths NaturalTransformation.Paths.</pre>
 <div class="code" title="File: Tactics.v
 Line: 2
 Time: 0.007s">
-<div class="time" style="width: 10.144927536232%"></div>
+<div class="time" style="width: 14.583333333333%"></div>
 <pre>
 Require Import HoTT.Tactics Basics.PathGroupoids Types.Forall Types.Prod.</pre>
 </div>
@@ -137,12 +137,14 @@ Time: 0s">
 </div>
 <div class="code" title="File: Tactics.v
 Line: 42
-Time: 0.002s">
-<div class="time" style="width: 2.8985507246377%"></div>
+Time: 0.003s">
+<div class="time" style="width: 6.25%"></div>
 <pre>Ltac exp_laws_handle_transport' :=
   idtac;
   match goal with
-    | _ =&gt; progress rewrite ?transport_forall_constant, ?path_forall_2_beta, ?transport_const, ?path_functor_uncurried_fst, ?transport_path_prod
+    | _ =&gt; progress rewrite ?transport_forall_constant, ?path_forall_2_beta, ?transport_const, ?transport_path_prod
+    | [ |- context [path_functor_uncurried ?F ?G (?x; ?y)] ] (* https://coq.inria.fr/bugs/show_bug.cgi?id=3768 *)
+      =&gt; rewrite (@path_functor_uncurried_fst _ _ _ F G x y)
     | [ |- context[transport (fun y =&gt; ?f (@object_of ?C ?D y ?x))] ]
       =&gt; rewrite (fun a b =&gt; @transport_compose _ _ a b (fun y' =&gt; f (y' x)) (@object_of C D))
     | [ |- context[transport (fun y =&gt; ?f (@object_of ?C ?D y ?x) ?z)] ]
@@ -169,7 +171,7 @@ Time: 0.002s">
   end.</pre>
 </div>
 <div class="code" title="File: Tactics.v
-Line: 69
+Line: 71
 Time: 0s">
 <div class="time" style="width: 0%"></div>
 <pre>
@@ -181,7 +183,7 @@ Ltac exp_laws_t' :=
         | exp_laws_handle_transport' ].</pre>
 </div>
 <div class="code" title="File: Tactics.v
-Line: 75
+Line: 77
 Time: 0s">
 <div class="time" style="width: 0%"></div>
 <pre>
@@ -189,7 +191,7 @@ Time: 0s">
 Ltac exp_laws_t := repeat exp_laws_t'.</pre>
 </div>
 <div class="code" title="File: Tactics.v
-Line: 78
+Line: 80
 Time: 0s">
 <div class="time" style="width: 0%"></div>
 <pre>
