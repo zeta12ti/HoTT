@@ -1,0 +1,1005 @@
+<html>
+<head>
+<title>Paths.v</title>
+<style>
+.time {
+  background-color: #ffaaaa;
+  height: 100%;
+  z-index: -1;
+  position: absolute;
+}
+.code {
+  z-index: 0;
+  position: relative;
+  border-style: solid;
+  border-color: transparent;
+  border-width: 1px;
+}
+.code:hover {
+  border-style: solid;
+  border-color: black;
+  border-width: 1px;
+}
+pre {
+  margin: 1px;
+}
+</style>
+</head>
+<body>
+<h1>Timings for Paths.v</h1>
+
+<div class="code" title="File: Paths.v
+Line: 1
+Time: 0s">
+<div class="time" style="width: 0%"></div>
+<pre>(** * Classification of path spaces of precategories *)</pre>
+</div>
+<div class="code" title="File: Paths.v
+Line: 1
+Time: 0.006s">
+<div class="time" style="width: 0.44543429844098%"></div>
+<pre>Require Import Category.Core.</pre>
+</div>
+<div class="code" title="File: Paths.v
+Line: 1
+Time: 0.014s">
+<div class="time" style="width: 1.0393466963623%"></div>
+<pre>
+Require Import HoTT.Basics.Equivalences HoTT.Basics.PathGroupoids HoTT.Basics.Trunc.</pre>
+</div>
+<div class="code" title="File: Paths.v
+Line: 2
+Time: 0.02s">
+<div class="time" style="width: 1.4847809948033%"></div>
+<pre>
+Require Import HoTT.Types.Sigma HoTT.Types.Record HoTT.Types.Arrow HoTT.Types.Forall HoTT.Types.Paths.</pre>
+</div>
+<div class="code" title="File: Paths.v
+Line: 3
+Time: 0.012s">
+<div class="time" style="width: 0.89086859688196%"></div>
+<pre>
+Require Import HoTT.HProp HoTT.Tactics.</pre>
+</div>
+<div class="code" title="File: Paths.v
+Line: 4
+Time: 0s">
+<div class="time" style="width: 0%"></div>
+<pre>
+
+Set Universe Polymorphism.</pre>
+</div>
+<div class="code" title="File: Paths.v
+Line: 6
+Time: 0s">
+<div class="time" style="width: 0%"></div>
+<pre>
+Set Implicit Arguments.</pre>
+</div>
+<div class="code" title="File: Paths.v
+Line: 7
+Time: 0s">
+<div class="time" style="width: 0%"></div>
+<pre>
+Generalizable All Variables.</pre>
+</div>
+<div class="code" title="File: Paths.v
+Line: 8
+Time: 0s">
+<div class="time" style="width: 0%"></div>
+<pre>
+Set Asymmetric Patterns.</pre>
+</div>
+<div class="code" title="File: Paths.v
+Line: 9
+Time: 0s">
+<div class="time" style="width: 0%"></div>
+<pre>
+
+Local Open Scope morphism_scope.</pre>
+</div>
+<div class="code" title="File: Paths.v
+Line: 11
+Time: 0s">
+<div class="time" style="width: 0%"></div>
+<pre>
+Local Open Scope category_scope.</pre>
+</div>
+<div class="code" title="File: Paths.v
+Line: 12
+Time: 0s">
+<div class="time" style="width: 0%"></div>
+<pre>
+
+Section path_category.</pre>
+</div>
+<div class="code" title="File: Paths.v
+Line: 14
+Time: 0s">
+<div class="time" style="width: 0%"></div>
+<pre>
+  Local Open Scope path_scope.</pre>
+</div>
+<div class="code" title="File: Paths.v
+Line: 15
+Time: 0s">
+<div class="time" style="width: 0%"></div>
+<pre>
+  Local Open Scope equiv_scope.</pre>
+</div>
+<div class="code" title="File: Paths.v
+Line: 16
+Time: 0s">
+<div class="time" style="width: 0%"></div>
+<pre>
+
+  (** We add a prime ([']) as an arbitrary convention to denote that
+      we are talking about equality of functions (less convenient for
+      use) rather than pointwise equality of functions (more
+      convenient for use, but more annoying for proofs).  We add two
+      primes to denote the even less convenient version, which
+      requires an identity equality proof. *)
+ </pre>
+</div>
+<div class="code" title="File: Paths.v
+Line: 24
+Time: 0s">
+<div class="time" style="width: 0%"></div>
+<pre>Local Notation path_precategory''_T C D
+    := { Hobj : object C = object D
+       | { Hmor : transport (fun obj =&gt; obj -&gt; obj -&gt; Type)
+                            Hobj
+                            (morphism C)
+                  = morphism D
+         | transport _
+                     Hmor
+                     (transportD (fun obj =&gt; obj -&gt; obj -&gt; Type)
+                                 (fun obj mor =&gt; forall s d d', mor d d' -&gt; mor s d -&gt; mor s d')
+                                 Hobj
+                                 (morphism C)
+                                 (@compose C))
+           = @compose D
+           /\ transport _
+                        Hmor
+                        (transportD (fun obj =&gt; obj -&gt; obj -&gt; Type)
+                                    (fun obj mor =&gt; forall x, mor x x)
+                                    Hobj
+                                    (morphism C)
+                                    (@identity C))
+              = @identity D }}.</pre>
+</div>
+<div class="code" title="File: Paths.v
+Line: 45
+Time: 0s">
+<div class="time" style="width: 0%"></div>
+<pre>
+
+  Local Notation path_precategory'_T C D
+    := { Hobj : object C = object D
+       | { Hmor : transport (fun obj =&gt; obj -&gt; obj -&gt; Type)
+                            Hobj
+                            (morphism C)
+                  = morphism D
+         | transport _
+                     Hmor
+                     (transportD (fun obj =&gt; obj -&gt; obj -&gt; Type)
+                                 (fun obj mor =&gt; forall s d d', mor d d' -&gt; mor s d -&gt; mor s d')
+                                 Hobj
+                                 (morphism C)
+                                 (@compose C))
+           = @compose D }}.</pre>
+</div>
+<div class="code" title="File: Paths.v
+Line: 60
+Time: 0s">
+<div class="time" style="width: 0%"></div>
+<pre>
+
+  (** ** Classify sufficient conditions to prove precategories equal *)
+ </pre>
+</div>
+<div class="code" title="File: Paths.v
+Line: 63
+Time: 0.008s">
+<div class="time" style="width: 0.59391239792131%"></div>
+<pre>Lemma path_precategory_uncurried__identity_helper `{Funext} (C D : PreCategory)
+        (Heq : path_precategory'_T C D)
+  : transport _
+              Heq.2.1
+              (transportD (fun obj =&gt; obj -&gt; obj -&gt; Type)
+                          (fun obj mor =&gt; forall x, mor x x)
+                          Heq.1
+                          (morphism C)
+                          (@identity C))
+    = @identity D.</pre>
+</div>
+<div class="code" title="File: Paths.v
+Line: 72
+Time: 0s">
+<div class="time" style="width: 0%"></div>
+<pre>
+  Proof.</pre>
+</div>
+<div class="code" title="File: Paths.v
+Line: 73
+Time: 0.021s">
+<div class="time" style="width: 1.5590200445434%"></div>
+<pre>
+    destruct Heq as [? [? ?]]; cbn in *.</pre>
+</div>
+<div class="code" title="File: Paths.v
+Line: 74
+Time: 0.001s">
+<div class="time" style="width: 0.074239049740163%"></div>
+<pre>
+    repeat (intro || apply path_forall).</pre>
+</div>
+<div class="code" title="File: Paths.v
+Line: 75
+Time: 0.006s">
+<div class="time" style="width: 0.44543429844098%"></div>
+<pre>
+    apply identity_unique; cbn in *; auto with morphism.</pre>
+</div>
+<div class="code" title="File: Paths.v
+Line: 76
+Time: 0.03s">
+<div class="time" style="width: 2.2271714922049%"></div>
+<pre>
+    destruct C, D; cbn in *.</pre>
+</div>
+<div class="code" title="File: Paths.v
+Line: 77
+Time: 0.089s">
+<div class="time" style="width: 6.6072754268745%"></div>
+<pre>
+    path_induction; cbn in *.</pre>
+</div>
+<div class="code" title="File: Paths.v
+Line: 78
+Time: 0.001s">
+<div class="time" style="width: 0.074239049740163%"></div>
+<pre>
+    auto.</pre>
+</div>
+<div class="code" title="File: Paths.v
+Line: 79
+Time: 0.081s">
+<div class="time" style="width: 6.0133630289532%"></div>
+<pre>
+  Qed.</pre>
+</div>
+<div class="code" title="File: Paths.v
+Line: 80
+Time: 0.022s">
+<div class="time" style="width: 1.6332590942836%"></div>
+<pre>
+
+  Definition path_precategory''_T__of__path_precategory'_T `{Funext} C D
+  : path_precategory'_T C D -&gt; path_precategory''_T C D
+    := fun H =&gt; (H.1; (H.2.1; (H.2.2, path_precategory_uncurried__identity_helper C D H))).</pre>
+</div>
+<div class="code" title="File: Paths.v
+Line: 84
+Time: 0.003s">
+<div class="time" style="width: 0.22271714922049%"></div>
+<pre>
+
+  Lemma eta2_sigma_helper A B P Q `{forall a b, IsHProp (Q a b)}
+        (x : { a : A &amp; { b : B a &amp; P a b /\ Q a b }})
+        q'
+  : (x.1; (x.2.1; (fst x.2.2, q'))) = x.</pre>
+</div>
+<div class="code" title="File: Paths.v
+Line: 89
+Time: 0s">
+<div class="time" style="width: 0%"></div>
+<pre>
+  Proof.</pre>
+</div>
+<div class="code" title="File: Paths.v
+Line: 90
+Time: 0.013s">
+<div class="time" style="width: 0.96510764662212%"></div>
+<pre>
+    destruct x as [? [? [? ?]]]; cbn in *.</pre>
+</div>
+<div class="code" title="File: Paths.v
+Line: 91
+Time: 0.005s">
+<div class="time" style="width: 0.37119524870082%"></div>
+<pre>
+    repeat f_ap; apply path_ishprop.</pre>
+</div>
+<div class="code" title="File: Paths.v
+Line: 92
+Time: 0.008s">
+<div class="time" style="width: 0.59391239792131%"></div>
+<pre>
+  Defined.</pre>
+</div>
+<div class="code" title="File: Paths.v
+Line: 93
+Time: 0.085s">
+<div class="time" style="width: 6.3103192279139%"></div>
+<pre>
+
+  Global Instance isequiv__path_precategory''_T__of__path_precategory'_T `{fs : Funext} C D
+  : IsEquiv (@path_precategory''_T__of__path_precategory'_T fs C D)
+    := isequiv_adjointify
+         (@path_precategory''_T__of__path_precategory'_T fs C D)
+         (fun H =&gt; (H.1; (H.2.1; fst H.2.2)))
+         (fun x =&gt; eta2_sigma_helper _ _ _ x _)
+         eta2_sigma.</pre>
+</div>
+<div class="code" title="File: Paths.v
+Line: 101
+Time: 0.004s">
+<div class="time" style="width: 0.29695619896065%"></div>
+<pre>
+
+  Definition path_precategory_uncurried' `{fs : Funext} (C D : PreCategory)
+  : path_precategory''_T C D -&gt; C = D.</pre>
+</div>
+<div class="code" title="File: Paths.v
+Line: 104
+Time: 0s">
+<div class="time" style="width: 0%"></div>
+<pre>
+  Proof.</pre>
+</div>
+<div class="code" title="File: Paths.v
+Line: 105
+Time: 0.007s">
+<div class="time" style="width: 0.51967334818114%"></div>
+<pre>
+    intros [? [? [? ?]]].</pre>
+</div>
+<div class="code" title="File: Paths.v
+Line: 106
+Time: 0.018s">
+<div class="time" style="width: 1.3363028953229%"></div>
+<pre>
+    destruct C, D; cbn in *.</pre>
+</div>
+<div class="code" title="File: Paths.v
+Line: 107
+Time: 0.067s">
+<div class="time" style="width: 4.9740163325909%"></div>
+<pre>
+    path_induction; cbn in *.</pre>
+</div>
+<div class="code" title="File: Paths.v
+Line: 108
+Time: 0.371s">
+<div class="time" style="width: 27.542687453601%"></div>
+<pre>
+    f_ap;
+      eapply @center; abstract exact _.</pre>
+</div>
+<div class="code" title="File: Paths.v
+Line: 110
+Time: 0.134s">
+<div class="time" style="width: 9.9480326651819%"></div>
+<pre>
+  Defined.</pre>
+</div>
+<div class="code" title="File: Paths.v
+Line: 111
+Time: 0s">
+<div class="time" style="width: 0%"></div>
+<pre>
+
+  (** *** Said proof respects [object] *)
+ </pre>
+</div>
+<div class="code" title="File: Paths.v
+Line: 114
+Time: 0.005s">
+<div class="time" style="width: 0.37119524870082%"></div>
+<pre>Lemma path_precategory_uncurried'_fst `{Funext} C D HO HM HC HI
+  : ap object (@path_precategory_uncurried' _ C D (HO; (HM; (HC, HI)))) = HO.</pre>
+</div>
+<div class="code" title="File: Paths.v
+Line: 115
+Time: 0s">
+<div class="time" style="width: 0%"></div>
+<pre>
+  Proof.</pre>
+</div>
+<div class="code" title="File: Paths.v
+Line: 116
+Time: 0.111s">
+<div class="time" style="width: 8.2405345211581%"></div>
+<pre>
+    destruct C, D; cbn in *.</pre>
+</div>
+<div class="code" title="File: Paths.v
+Line: 117
+Time: 0.869s">
+<div class="time" style="width: 64.513734224202%"></div>
+<pre>
+    path_induction_hammer.</pre>
+</div>
+<div class="code" title="File: Paths.v
+Line: 118
+Time: 0.362s">
+<div class="time" style="width: 26.874536005939%"></div>
+<pre>
+  Qed.</pre>
+</div>
+<div class="code" title="File: Paths.v
+Line: 119
+Time: 0s">
+<div class="time" style="width: 0%"></div>
+<pre>
+
+  (** *** Said proof respects [idpath] *)
+ </pre>
+</div>
+<div class="code" title="File: Paths.v
+Line: 122
+Time: 0.004s">
+<div class="time" style="width: 0.29695619896065%"></div>
+<pre>Lemma path_precategory_uncurried'_idpath `{Funext} C
+  : @path_precategory_uncurried' _ C C (idpath; (idpath; (idpath, idpath))) = idpath.</pre>
+</div>
+<div class="code" title="File: Paths.v
+Line: 123
+Time: 0s">
+<div class="time" style="width: 0%"></div>
+<pre>
+  Proof.</pre>
+</div>
+<div class="code" title="File: Paths.v
+Line: 124
+Time: 0.098s">
+<div class="time" style="width: 7.275426874536%"></div>
+<pre>
+    destruct C; cbn in *.</pre>
+</div>
+<div class="code" title="File: Paths.v
+Line: 125
+Time: 0.04s">
+<div class="time" style="width: 2.9695619896065%"></div>
+<pre>
+    rewrite !(contr idpath).</pre>
+</div>
+<div class="code" title="File: Paths.v
+Line: 126
+Time: 0s">
+<div class="time" style="width: 0%"></div>
+<pre>
+    reflexivity.</pre>
+</div>
+<div class="code" title="File: Paths.v
+Line: 127
+Time: 0.088s">
+<div class="time" style="width: 6.5330363771344%"></div>
+<pre>
+  Qed.</pre>
+</div>
+<div class="code" title="File: Paths.v
+Line: 128
+Time: 0s">
+<div class="time" style="width: 0%"></div>
+<pre>
+
+  (** ** Equality of precategorys gives rise to an inhabitant of the path-classifying-type *)
+ </pre>
+</div>
+<div class="code" title="File: Paths.v
+Line: 131
+Time: 0.004s">
+<div class="time" style="width: 0.29695619896065%"></div>
+<pre>Definition path_precategory_uncurried'_inv (C D : PreCategory)
+  : C = D -&gt; path_precategory''_T C D.</pre>
+</div>
+<div class="code" title="File: Paths.v
+Line: 132
+Time: 0s">
+<div class="time" style="width: 0%"></div>
+<pre>
+  Proof.</pre>
+</div>
+<div class="code" title="File: Paths.v
+Line: 133
+Time: 0s">
+<div class="time" style="width: 0%"></div>
+<pre>
+    intro H'.</pre>
+</div>
+<div class="code" title="File: Paths.v
+Line: 134
+Time: 0.001s">
+<div class="time" style="width: 0.074239049740163%"></div>
+<pre>
+    exists (ap object H').</pre>
+</div>
+<div class="code" title="File: Paths.v
+Line: 135
+Time: 0.002s">
+<div class="time" style="width: 0.14847809948033%"></div>
+<pre>
+    exists ((transport_compose _ object _ _) ^ @ apD (@morphism) H').</pre>
+</div>
+<div class="code" title="File: Paths.v
+Line: 136
+Time: 0.001s">
+<div class="time" style="width: 0.074239049740163%"></div>
+<pre>
+    split.</pre>
+</div>
+<div class="code" title="File: Paths.v
+Line: 137
+Time: 0s">
+<div class="time" style="width: 0%"></div>
+<pre>
+    -</pre>
+</div>
+<div class="code" title="File: Paths.v
+Line: 138
+Time: 0.005s">
+<div class="time" style="width: 0.37119524870082%"></div>
+<pre> refine (_ @ apD (@compose) H'); cbn.</pre>
+</div>
+<div class="code" title="File: Paths.v
+Line: 138
+Time: 0.008s">
+<div class="time" style="width: 0.59391239792131%"></div>
+<pre>
+      refine (transport_pp _ _ _ _ @ _).</pre>
+</div>
+<div class="code" title="File: Paths.v
+Line: 139
+Time: 0.013s">
+<div class="time" style="width: 0.96510764662212%"></div>
+<pre>
+      refine ((ap _ (transportD_compose
+                       (fun obj =&gt; obj -&gt; obj -&gt; Type)
+                       (fun obj mor =&gt;
+                          forall s d d' : obj, mor d d' -&gt; mor s d -&gt; mor s d') object H'
+                       (morphism C) (@compose C))^)
+                @ (transport_apD_transportD
+                     _
+                     morphism
+                     (fun x mor =&gt; forall s d d' : x, mor d d' -&gt; mor s d -&gt; mor s d') H'
+                     (@compose C))).</pre>
+</div>
+<div class="code" title="File: Paths.v
+Line: 149
+Time: 0s">
+<div class="time" style="width: 0%"></div>
+<pre>
+    -</pre>
+</div>
+<div class="code" title="File: Paths.v
+Line: 150
+Time: 0.005s">
+<div class="time" style="width: 0.37119524870082%"></div>
+<pre> refine (_ @ apD (@identity) H'); cbn.</pre>
+</div>
+<div class="code" title="File: Paths.v
+Line: 150
+Time: 0.007s">
+<div class="time" style="width: 0.51967334818114%"></div>
+<pre>
+      refine (transport_pp _ _ _ _ @ _).</pre>
+</div>
+<div class="code" title="File: Paths.v
+Line: 151
+Time: 0.012s">
+<div class="time" style="width: 0.89086859688196%"></div>
+<pre>
+      refine ((ap _ (transportD_compose
+                       (fun obj =&gt; obj -&gt; obj -&gt; Type)
+                       (fun obj mor =&gt;
+                          forall x : obj, mor x x) object H'
+                       (morphism C) (@identity C))^)
+                @ (transport_apD_transportD
+                     _
+                     morphism
+                     (fun x mor =&gt; forall s : x, mor s s) H'
+                     (@identity C))).</pre>
+</div>
+<div class="code" title="File: Paths.v
+Line: 161
+Time: 0.06s">
+<div class="time" style="width: 4.4543429844098%"></div>
+<pre>
+  Defined.</pre>
+</div>
+<div class="code" title="File: Paths.v
+Line: 162
+Time: 0s">
+<div class="time" style="width: 0%"></div>
+<pre>
+
+  (** ** Classify equality of precategorys up to equivalence *)
+ </pre>
+</div>
+<div class="code" title="File: Paths.v
+Line: 165
+Time: 0.01s">
+<div class="time" style="width: 0.74239049740163%"></div>
+<pre>Lemma equiv_path_precategory_uncurried'__eissect `{Funext} (C D : PreCategory)
+  : forall x : path_precategory''_T C D,
+      path_precategory_uncurried'_inv (path_precategory_uncurried' C D x) = x.</pre>
+</div>
+<div class="code" title="File: Paths.v
+Line: 167
+Time: 0s">
+<div class="time" style="width: 0%"></div>
+<pre>
+  Proof.</pre>
+</div>
+<div class="code" title="File: Paths.v
+Line: 168
+Time: 0.062s">
+<div class="time" style="width: 4.6028210838901%"></div>
+<pre>
+    destruct C, D; cbn in *.</pre>
+</div>
+<div class="code" title="File: Paths.v
+Line: 169
+Time: 0.027s">
+<div class="time" style="width: 2.0044543429844%"></div>
+<pre>
+    intros [H0' [H1' [H2' H3']]].</pre>
+</div>
+<div class="code" title="File: Paths.v
+Line: 170
+Time: 0.262s">
+<div class="time" style="width: 19.450631031923%"></div>
+<pre>
+    path_induction.</pre>
+</div>
+<div class="code" title="File: Paths.v
+Line: 171
+Time: 0.085s">
+<div class="time" style="width: 6.3103192279139%"></div>
+<pre>
+    cbn.</pre>
+</div>
+<div class="code" title="File: Paths.v
+Line: 172
+Time: 0.215s">
+<div class="time" style="width: 15.961395694135%"></div>
+<pre>
+    repeat (edestruct (center (_ = _)); try reflexivity).</pre>
+</div>
+<div class="code" title="File: Paths.v
+Line: 173
+Time: 0.289s">
+<div class="time" style="width: 21.455085374907%"></div>
+<pre>
+  Qed.</pre>
+</div>
+<div class="code" title="File: Paths.v
+Line: 174
+Time: 0.005s">
+<div class="time" style="width: 0.37119524870082%"></div>
+<pre>
+
+  Lemma equiv_path_precategory_uncurried' `{Funext} (C D : PreCategory)
+  : path_precategory''_T C D &lt;~&gt; C = D.</pre>
+</div>
+<div class="code" title="File: Paths.v
+Line: 177
+Time: 0s">
+<div class="time" style="width: 0%"></div>
+<pre>
+  Proof.</pre>
+</div>
+<div class="code" title="File: Paths.v
+Line: 178
+Time: 0.004s">
+<div class="time" style="width: 0.29695619896065%"></div>
+<pre>
+    apply (equiv_adjointify (@path_precategory_uncurried' _ C D)
+                            (@path_precategory_uncurried'_inv C D)).</pre>
+</div>
+<div class="code" title="File: Paths.v
+Line: 180
+Time: 0s">
+<div class="time" style="width: 0%"></div>
+<pre>
+    -</pre>
+</div>
+<div class="code" title="File: Paths.v
+Line: 181
+Time: 0s">
+<div class="time" style="width: 0%"></div>
+<pre> hnf.</pre>
+</div>
+<div class="code" title="File: Paths.v
+Line: 181
+Time: 0.001s">
+<div class="time" style="width: 0.074239049740163%"></div>
+<pre>
+      intros [].</pre>
+</div>
+<div class="code" title="File: Paths.v
+Line: 182
+Time: 0.018s">
+<div class="time" style="width: 1.3363028953229%"></div>
+<pre>
+      apply path_precategory_uncurried'_idpath.</pre>
+</div>
+<div class="code" title="File: Paths.v
+Line: 183
+Time: 0s">
+<div class="time" style="width: 0%"></div>
+<pre>
+    -</pre>
+</div>
+<div class="code" title="File: Paths.v
+Line: 184
+Time: 0s">
+<div class="time" style="width: 0%"></div>
+<pre> hnf.</pre>
+</div>
+<div class="code" title="File: Paths.v
+Line: 184
+Time: 0.004s">
+<div class="time" style="width: 0.29695619896065%"></div>
+<pre>
+      apply equiv_path_precategory_uncurried'__eissect.</pre>
+</div>
+<div class="code" title="File: Paths.v
+Line: 185
+Time: 0.029s">
+<div class="time" style="width: 2.1529324424647%"></div>
+<pre>
+  Defined.</pre>
+</div>
+<div class="code" title="File: Paths.v
+Line: 186
+Time: 0.018s">
+<div class="time" style="width: 1.3363028953229%"></div>
+<pre>
+
+  Definition equiv_path_precategory_uncurried `{Funext} (C D : PreCategory)
+  : path_precategory'_T C D &lt;~&gt; C = D
+    := equiv_compose' (equiv_path_precategory_uncurried' C D)
+                      (BuildEquiv
+                         _ _ _
+                         (isequiv__path_precategory''_T__of__path_precategory'_T C D)).</pre>
+</div>
+<div class="code" title="File: Paths.v
+Line: 193
+Time: 0.004s">
+<div class="time" style="width: 0.29695619896065%"></div>
+<pre>
+
+  Definition path_precategory_uncurried `{Funext} C D : _ -&gt; _
+    := equiv_path_precategory_uncurried C D.</pre>
+</div>
+<div class="code" title="File: Paths.v
+Line: 196
+Time: 0s">
+<div class="time" style="width: 0%"></div>
+<pre>
+
+  (** ** Curried version of path classifying lemma *)
+ </pre>
+</div>
+<div class="code" title="File: Paths.v
+Line: 199
+Time: 0.003s">
+<div class="time" style="width: 0.22271714922049%"></div>
+<pre>Lemma path_precategory' `{fs : Funext} (C D : PreCategory)
+  : forall (Hobj : object C = object D)
+           (Hmor : transport (fun obj =&gt; obj -&gt; obj -&gt; Type)
+                             Hobj
+                             (morphism C)
+                   = morphism D),
+      transport _
+                Hmor
+                (transportD (fun obj =&gt; obj -&gt; obj -&gt; Type)
+                            (fun obj mor =&gt; forall s d d', mor d d' -&gt; mor s d -&gt; mor s d')
+                            Hobj
+                            (morphism C)
+                            (@compose C))
+      = @compose D
+      -&gt; C = D.</pre>
+</div>
+<div class="code" title="File: Paths.v
+Line: 213
+Time: 0s">
+<div class="time" style="width: 0%"></div>
+<pre>
+  Proof.</pre>
+</div>
+<div class="code" title="File: Paths.v
+Line: 214
+Time: 0s">
+<div class="time" style="width: 0%"></div>
+<pre>
+    intros.</pre>
+</div>
+<div class="code" title="File: Paths.v
+Line: 215
+Time: 0.001s">
+<div class="time" style="width: 0.074239049740163%"></div>
+<pre>
+    apply path_precategory_uncurried.</pre>
+</div>
+<div class="code" title="File: Paths.v
+Line: 216
+Time: 0.001s">
+<div class="time" style="width: 0.074239049740163%"></div>
+<pre>
+    repeat esplit; eassumption.</pre>
+</div>
+<div class="code" title="File: Paths.v
+Line: 217
+Time: 0.005s">
+<div class="time" style="width: 0.37119524870082%"></div>
+<pre>
+  Defined.</pre>
+</div>
+<div class="code" title="File: Paths.v
+Line: 218
+Time: 0s">
+<div class="time" style="width: 0%"></div>
+<pre>
+
+  (** ** Curried version of path classifying lemma, using [forall] in place of equality of functions *)
+ </pre>
+</div>
+<div class="code" title="File: Paths.v
+Line: 221
+Time: 0.006s">
+<div class="time" style="width: 0.44543429844098%"></div>
+<pre>Lemma path_precategory `{fs : Funext} (C D : PreCategory)
+  : forall (Hobj : object C = object D)
+           (Hmor : forall s d,
+                     morphism C (transport idmap Hobj^ s) (transport idmap Hobj^ d)
+                     = morphism D s d),
+      (forall s d d' m m',
+         transport idmap (Hmor _ _)
+                   (@compose C _ _ _
+                             (transport idmap (Hmor _ _)^ m)
+                             (transport idmap (Hmor _ _)^ m'))
+         = @compose D s d d' m m')
+      -&gt; C = D.</pre>
+</div>
+<div class="code" title="File: Paths.v
+Line: 232
+Time: 0s">
+<div class="time" style="width: 0%"></div>
+<pre>
+  Proof.</pre>
+</div>
+<div class="code" title="File: Paths.v
+Line: 233
+Time: 0s">
+<div class="time" style="width: 0%"></div>
+<pre>
+    intros Hobj Hmor Hcomp.</pre>
+</div>
+<div class="code" title="File: Paths.v
+Line: 234
+Time: 0.006s">
+<div class="time" style="width: 0.44543429844098%"></div>
+<pre>
+    pose (path_forall
+            _ _
+            (fun s =&gt;
+               path_forall
+                 _ _
+                 (fun d =&gt;
+                    (ap10 (@transport_arrow Type idmap (fun x =&gt; x -&gt; Type) _ _ Hobj (@morphism C) _) _)
+                      @ (@transport_arrow Type idmap _ _ _ Hobj (@morphism C _) _)
+                      @ (transport_const _ _)
+                      @ Hmor s d)))
+      as Hmor'.</pre>
+</div>
+<div class="code" title="File: Paths.v
+Line: 245
+Time: 0.001s">
+<div class="time" style="width: 0.074239049740163%"></div>
+<pre>
+    eapply (path_precategory' C D Hobj Hmor').</pre>
+</div>
+<div class="code" title="File: Paths.v
+Line: 246
+Time: 0.007s">
+<div class="time" style="width: 0.51967334818114%"></div>
+<pre>
+    repeat (apply path_forall; intro).</pre>
+</div>
+<div class="code" title="File: Paths.v
+Line: 247
+Time: 0.005s">
+<div class="time" style="width: 0.37119524870082%"></div>
+<pre>
+    refine (_ @ Hcomp _ _ _ _ _); clear Hcomp.</pre>
+</div>
+<div class="code" title="File: Paths.v
+Line: 248
+Time: 0.001s">
+<div class="time" style="width: 0.074239049740163%"></div>
+<pre>
+    subst Hmor'.</pre>
+</div>
+<div class="code" title="File: Paths.v
+Line: 249
+Time: 0.003s">
+<div class="time" style="width: 0.22271714922049%"></div>
+<pre>
+    cbn.</pre>
+</div>
+<div class="code" title="File: Paths.v
+Line: 250
+Time: 1.347s">
+<div class="time" style="width: 100%"></div>
+<pre>
+    abstract (
+        destruct C, D;
+        cbn in *;
+          destruct Hobj;
+        cbn in *;
+          repeat match goal with
+                   | _ =&gt; reflexivity
+                   | _ =&gt; rewrite !concat_1p
+                   | _ =&gt; rewrite !transport_forall_constant, !transport_arrow
+                   | _ =&gt; progress transport_path_forall_hammer
+                   | [ |- transport ?P ?p^ ?u = ?v ]
+                     =&gt; (apply (@moveR_transport_V _ P _ _ p u v); progress transport_path_forall_hammer)
+                   | [ |- ?u = transport ?P ?p^ ?v ]
+                     =&gt; (apply (@moveL_transport_V _ P _ _ p u v); progress transport_path_forall_hammer)
+                   | [ |- context[?H ?x ?y] ]
+                     =&gt; (destruct (H x y); clear H)
+                   | _ =&gt; progress f_ap
+                 end
+      ).</pre>
+</div>
+<div class="code" title="File: Paths.v
+Line: 269
+Time: 0.201s">
+<div class="time" style="width: 14.922048997773%"></div>
+<pre>
+  Defined.</pre>
+</div>
+<div class="code" title="File: Paths.v
+Line: 270
+Time: 0.185s">
+<div class="time" style="width: 13.73422420193%"></div>
+<pre>
+End path_category.</pre>
+</div>
+<div class="code" title="File: Paths.v
+Line: 271
+Time: 0s">
+<div class="time" style="width: 0%"></div>
+<pre>
+
+(** ** Tactic for proving equality of precategories *)
+(** We move the funext inference outside the loop. *)</pre>
+</div>
+<div class="code" title="File: Paths.v
+Line: 274
+Time: 0s">
+<div class="time" style="width: 0%"></div>
+<pre>Ltac path_category :=
+  idtac;
+  let lem := constr:(@path_precategory _) in
+  repeat match goal with
+           | _ =&gt; intro
+           | _ =&gt; reflexivity
+           | _ =&gt; refine (lem _ _ _ _ _); cbn
+         end.</pre>
+</div>
+<div class="code" title="File: Paths.v
+Line: 282
+Time: 0s">
+<div class="time" style="width: 0%"></div>
+<pre>
+
+</pre>
+</div>
+</body>
+</html>
+
