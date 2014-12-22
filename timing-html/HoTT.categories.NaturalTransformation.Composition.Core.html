@@ -36,8 +36,8 @@ Time: 0s">
 </div>
 <div class="code" title="File: Core.v
 Line: 1
-Time: 0.011s">
-<div class="time" style="width: 25%"></div>
+Time: 0.009s">
+<div class="time" style="width: 52.941176470588%"></div>
 <pre>Require Import Category.Core Functor.Core Functor.Composition.Core NaturalTransformation.Core.</pre>
 </div>
 <div class="code" title="File: Core.v
@@ -167,7 +167,7 @@ Time: 0s">
 <div class="code" title="File: Core.v
 Line: 53
 Time: 0.001s">
-<div class="time" style="width: 2.2727272727273%"></div>
+<div class="time" style="width: 5.8823529411765%"></div>
 <pre>
     Variables F F' F'' : Functor C D.</pre>
 </div>
@@ -196,8 +196,8 @@ Time: 0s">
 </div>
 <div class="code" title="File: Core.v
 Line: 59
-Time: 0.02s">
-<div class="time" style="width: 45.454545454545%"></div>
+Time: 0.017s">
+<div class="time" style="width: 100%"></div>
 <pre>
 
     Definition compose_commutes s d (m : morphism C s d)
@@ -219,8 +219,8 @@ Time: 0s">
 </div>
 <div class="code" title="File: Core.v
 Line: 70
-Time: 0.02s">
-<div class="time" style="width: 45.454545454545%"></div>
+Time: 0.017s">
+<div class="time" style="width: 100%"></div>
 <pre>Definition compose_commutes_sym s d (m : morphism C s d)
     : morphism_of F'' m o CO s = CO d o morphism_of F m
       := (associativity_sym _ _ _ _ _ _ _ _)
@@ -246,8 +246,8 @@ Time: 0s">
 </div>
 <div class="code" title="File: Core.v
 Line: 79
-Time: 0.003s">
-<div class="time" style="width: 6.8181818181818%"></div>
+Time: 0.002s">
+<div class="time" style="width: 11.764705882353%"></div>
 <pre>
 
     Definition compose
@@ -260,7 +260,7 @@ Time: 0.003s">
 <div class="code" title="File: Core.v
 Line: 86
 Time: 0.002s">
-<div class="time" style="width: 4.5454545454545%"></div>
+<div class="time" style="width: 11.764705882353%"></div>
 <pre>
   End compose.</pre>
 </div>
@@ -277,30 +277,17 @@ Time: 0s">
 Line: 90
 Time: 0s">
 <div class="time" style="width: 0%"></div>
-<pre>Local Ltac whisker_t :=
-    simpl;
-    repeat first [ apply commutes
-                 | apply ap
-                 | progress (etransitivity; try apply composition_of); []
-                 | progress (etransitivity; try (symmetry; apply composition_of)); [] ].</pre>
+<pre>Section whisker.</pre>
 </div>
 <div class="code" title="File: Core.v
-Line: 95
-Time: 0s">
-<div class="time" style="width: 0%"></div>
-<pre>
-
-  Section whisker.</pre>
-</div>
-<div class="code" title="File: Core.v
-Line: 97
+Line: 90
 Time: 0s">
 <div class="time" style="width: 0%"></div>
 <pre>
     Variables C D E : PreCategory.</pre>
 </div>
 <div class="code" title="File: Core.v
-Line: 98
+Line: 91
 Time: 0s">
 <div class="time" style="width: 0%"></div>
 <pre>
@@ -308,28 +295,28 @@ Time: 0s">
     Section L.</pre>
 </div>
 <div class="code" title="File: Core.v
-Line: 100
+Line: 93
 Time: 0s">
 <div class="time" style="width: 0%"></div>
 <pre>
       Variable F : Functor D E.</pre>
 </div>
 <div class="code" title="File: Core.v
-Line: 101
+Line: 94
 Time: 0s">
 <div class="time" style="width: 0%"></div>
 <pre>
       Variables G G' : Functor C D.</pre>
 </div>
 <div class="code" title="File: Core.v
-Line: 102
+Line: 95
 Time: 0s">
 <div class="time" style="width: 0%"></div>
 <pre>
       Variable T : NaturalTransformation G G'.</pre>
 </div>
 <div class="code" title="File: Core.v
-Line: 103
+Line: 96
 Time: 0s">
 <div class="time" style="width: 0%"></div>
 <pre>
@@ -337,37 +324,31 @@ Time: 0s">
       Local Notation CO c := (morphism_of F (T c)).</pre>
 </div>
 <div class="code" title="File: Core.v
-Line: 105
-Time: 0.005s">
-<div class="time" style="width: 11.363636363636%"></div>
+Line: 98
+Time: 0.016s">
+<div class="time" style="width: 94.117647058824%"></div>
 <pre>
 
       Definition whisker_l_commutes s d (m : morphism C s d)
-      : F _1 (T d) o (F o G) _1 m = (F o G') _1 m o F _1 (T s).</pre>
+      : F _1 (T d) o (F o G) _1 m = (F o G') _1 m o F _1 (T s)
+        := ((composition_of F _ _ _ _ _)^)
+             @ (ap (fun m =&gt; F _1 m) (commutes T _ _ _))
+             @ (composition_of F _ _ _ _ _).</pre>
 </div>
 <div class="code" title="File: Core.v
-Line: 108
-Time: 0s">
-<div class="time" style="width: 0%"></div>
+Line: 104
+Time: 0.016s">
+<div class="time" style="width: 94.117647058824%"></div>
 <pre>
-      Proof.</pre>
-</div>
-<div class="code" title="File: Core.v
-Line: 109
-Time: 0.044s">
-<div class="time" style="width: 100%"></div>
-<pre>
-        whisker_t.</pre>
+
+      Definition whisker_l_commutes_sym s d (m : morphism C s d)
+      : (F o G') _1 m o F _1 (T s) = F _1 (T d) o (F o G) _1 m
+        := ((composition_of F _ _ _ _ _)^)
+             @ (ap (fun m =&gt; F _1 m) (commutes_sym T _ _ _))
+             @ (composition_of F _ _ _ _ _).</pre>
 </div>
 <div class="code" title="File: Core.v
 Line: 110
-Time: 0.008s">
-<div class="time" style="width: 18.181818181818%"></div>
-<pre>
-      Defined.</pre>
-</div>
-<div class="code" title="File: Core.v
-Line: 111
 Time: 0s">
 <div class="time" style="width: 0%"></div>
 <pre>
@@ -375,26 +356,34 @@ Time: 0s">
       Global Arguments whisker_l_commutes : simpl never.</pre>
 </div>
 <div class="code" title="File: Core.v
+Line: 112
+Time: 0s">
+<div class="time" style="width: 0%"></div>
+<pre>
+      Global Arguments whisker_l_commutes_sym : simpl never.</pre>
+</div>
+<div class="code" title="File: Core.v
 Line: 113
-Time: 0.004s">
-<div class="time" style="width: 9.0909090909091%"></div>
+Time: 0.005s">
+<div class="time" style="width: 29.411764705882%"></div>
 <pre>
 
       Definition whisker_l
-        := Build_NaturalTransformation
+        := Build_NaturalTransformation'
              (F o G) (F o G')
              (fun c =&gt; CO c)
-             whisker_l_commutes.</pre>
+             whisker_l_commutes
+             whisker_l_commutes_sym.</pre>
 </div>
 <div class="code" title="File: Core.v
-Line: 119
+Line: 120
 Time: 0.001s">
-<div class="time" style="width: 2.2727272727273%"></div>
+<div class="time" style="width: 5.8823529411765%"></div>
 <pre>
     End L.</pre>
 </div>
 <div class="code" title="File: Core.v
-Line: 120
+Line: 121
 Time: 0s">
 <div class="time" style="width: 0%"></div>
 <pre>
@@ -402,28 +391,28 @@ Time: 0s">
     Section R.</pre>
 </div>
 <div class="code" title="File: Core.v
-Line: 122
+Line: 123
 Time: 0s">
 <div class="time" style="width: 0%"></div>
 <pre>
       Variables F F' : Functor D E.</pre>
 </div>
 <div class="code" title="File: Core.v
-Line: 123
+Line: 124
 Time: 0s">
 <div class="time" style="width: 0%"></div>
 <pre>
       Variable T : NaturalTransformation F F'.</pre>
 </div>
 <div class="code" title="File: Core.v
-Line: 124
+Line: 125
 Time: 0s">
 <div class="time" style="width: 0%"></div>
 <pre>
       Variable G : Functor C D.</pre>
 </div>
 <div class="code" title="File: Core.v
-Line: 125
+Line: 126
 Time: 0s">
 <div class="time" style="width: 0%"></div>
 <pre>
@@ -431,37 +420,27 @@ Time: 0s">
       Local Notation CO c := (T (G c)).</pre>
 </div>
 <div class="code" title="File: Core.v
-Line: 127
-Time: 0.004s">
-<div class="time" style="width: 9.0909090909091%"></div>
+Line: 128
+Time: 0.006s">
+<div class="time" style="width: 35.294117647059%"></div>
 <pre>
 
       Definition whisker_r_commutes s d (m : morphism C s d)
-      : T (G d) o (F o G) _1 m = (F' o G) _1 m o T (G s).</pre>
-</div>
-<div class="code" title="File: Core.v
-Line: 130
-Time: 0s">
-<div class="time" style="width: 0%"></div>
-<pre>
-      Proof.</pre>
-</div>
-<div class="code" title="File: Core.v
-Line: 131
-Time: 0.002s">
-<div class="time" style="width: 4.5454545454545%"></div>
-<pre>
-        whisker_t.</pre>
+      : T (G d) o (F o G) _1 m = (F' o G) _1 m o T (G s)
+        := commutes T _ _ _.</pre>
 </div>
 <div class="code" title="File: Core.v
 Line: 132
-Time: 0.001s">
-<div class="time" style="width: 2.2727272727273%"></div>
+Time: 0.006s">
+<div class="time" style="width: 35.294117647059%"></div>
 <pre>
-      Defined.</pre>
+
+      Definition whisker_r_commutes_sym s d (m : morphism C s d)
+      : (F' o G) _1 m o T (G s) = T (G d) o (F o G) _1 m
+        := commutes_sym T _ _ _.</pre>
 </div>
 <div class="code" title="File: Core.v
-Line: 133
+Line: 136
 Time: 0s">
 <div class="time" style="width: 0%"></div>
 <pre>
@@ -469,40 +448,48 @@ Time: 0s">
       Global Arguments whisker_r_commutes : simpl never.</pre>
 </div>
 <div class="code" title="File: Core.v
-Line: 135
-Time: 0.004s">
-<div class="time" style="width: 9.0909090909091%"></div>
+Line: 138
+Time: 0s">
+<div class="time" style="width: 0%"></div>
+<pre>
+      Global Arguments whisker_r_commutes_sym : simpl never.</pre>
+</div>
+<div class="code" title="File: Core.v
+Line: 139
+Time: 0.005s">
+<div class="time" style="width: 29.411764705882%"></div>
 <pre>
 
       Definition whisker_r
-        := Build_NaturalTransformation
+        := Build_NaturalTransformation'
              (F o G) (F' o G)
              (fun c =&gt; CO c)
-             whisker_r_commutes.</pre>
+             whisker_r_commutes
+             whisker_r_commutes_sym.</pre>
 </div>
 <div class="code" title="File: Core.v
-Line: 141
+Line: 146
 Time: 0s">
 <div class="time" style="width: 0%"></div>
 <pre>
     End R.</pre>
 </div>
 <div class="code" title="File: Core.v
-Line: 142
+Line: 147
 Time: 0.002s">
-<div class="time" style="width: 4.5454545454545%"></div>
+<div class="time" style="width: 11.764705882353%"></div>
 <pre>
   End whisker.</pre>
 </div>
 <div class="code" title="File: Core.v
-Line: 143
+Line: 148
 Time: 0.01s">
-<div class="time" style="width: 22.727272727273%"></div>
+<div class="time" style="width: 58.823529411765%"></div>
 <pre>
 End composition.</pre>
 </div>
 <div class="code" title="File: Core.v
-Line: 144
+Line: 149
 Time: 0s">
 <div class="time" style="width: 0%"></div>
 <pre>
@@ -510,35 +497,35 @@ Time: 0s">
 Module Export NaturalTransformationCompositionCoreNotations.</pre>
 </div>
 <div class="code" title="File: Core.v
-Line: 146
+Line: 151
 Time: 0s">
 <div class="time" style="width: 0%"></div>
 <pre>
   Infix "o" := compose : natural_transformation_scope.</pre>
 </div>
 <div class="code" title="File: Core.v
-Line: 147
+Line: 152
 Time: 0s">
 <div class="time" style="width: 0%"></div>
 <pre>
   Infix "oL" := whisker_l (at level 40, left associativity) : natural_transformation_scope.</pre>
 </div>
 <div class="code" title="File: Core.v
-Line: 148
+Line: 153
 Time: 0s">
 <div class="time" style="width: 0%"></div>
 <pre>
   Infix "oR" := whisker_r (at level 40, left associativity) : natural_transformation_scope.</pre>
 </div>
 <div class="code" title="File: Core.v
-Line: 149
+Line: 154
 Time: 0s">
 <div class="time" style="width: 0%"></div>
 <pre>
 End NaturalTransformationCompositionCoreNotations.</pre>
 </div>
 <div class="code" title="File: Core.v
-Line: 151
+Line: 156
 Time: 0s">
 <div class="time" style="width: 0%"></div>
 <pre>
