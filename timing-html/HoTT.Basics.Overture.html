@@ -553,8 +553,8 @@ Time: 0s">
 </div>
 <div class="code" title="File: Overture.v
 Line: 115
-Time: 0.001s">
-<div class="time" style="width: 33.333333333333%"></div>
+Time: 0s">
+<div class="time" style="width: 0%"></div>
 <pre>Definition composeD {A B C} (g : forall b, C b) (f : A -&gt; B) := fun x : A =&gt; g (f x).</pre>
 </div>
 <div class="code" title="File: Overture.v
@@ -668,8 +668,8 @@ Time: 0s">
 </div>
 <div class="code" title="File: Overture.v
 Line: 140
-Time: 0.001s">
-<div class="time" style="width: 33.333333333333%"></div>
+Time: 0s">
+<div class="time" style="width: 0%"></div>
 <pre>Lemma paths_rew A a y P (X : P a) (H : a = y :&gt; A) : P y.</pre>
 </div>
 <div class="code" title="File: Overture.v
@@ -2324,11 +2324,30 @@ Time: 0s">
 <div class="time" style="width: 0%"></div>
 <pre>
 
+(** [revert_opaque x] is like [revert x], except that it fails if [x] is not an opaque variable (i.e. if it has a [:=] definition rather than just a type). *)</pre>
+</div>
+<div class="code" title="File: Overture.v
+Line: 604
+Time: 0s">
+<div class="time" style="width: 0%"></div>
+<pre>Ltac revert_opaque x :=
+  revert x;
+  match goal with
+    | [ |- forall _, _ ] =&gt; idtac
+    | _ =&gt; fail 1 "Reverted constant is not an opaque variable"
+  end.</pre>
+</div>
+<div class="code" title="File: Overture.v
+Line: 609
+Time: 0s">
+<div class="time" style="width: 0%"></div>
+<pre>
+
 (** [transparent assert (H : T)] is like [assert (H : T)], but leaves the body transparent. *)
 (** Since binders don't respect [fresh], we use a name unlikely to be reused. *)</pre>
 </div>
 <div class="code" title="File: Overture.v
-Line: 605
+Line: 612
 Time: 0s">
 <div class="time" style="width: 0%"></div>
 <pre>Tactic Notation "transparent" "assert" "(" ident(name) ":" constr(type) ")" :=
@@ -2339,7 +2358,7 @@ Time: 0s">
     rename H into name) ].</pre>
 </div>
 <div class="code" title="File: Overture.v
-Line: 610
+Line: 617
 Time: 0s">
 <div class="time" style="width: 0%"></div>
 <pre>
@@ -2347,27 +2366,27 @@ Time: 0s">
 (** [transparent eassert] is like [transparent assert], but allows holes in the type, which will be turned into evars. *)</pre>
 </div>
 <div class="code" title="File: Overture.v
-Line: 612
+Line: 619
 Time: 0s">
 <div class="time" style="width: 0%"></div>
 <pre>Tactic Notation "transparent" "assert" "(" ident(name) ":" constr(type) ")" "by" tactic3(tac) := let name := fresh "H" in transparent assert (name : type); [ solve [ tac ] | ].</pre>
 </div>
 <div class="code" title="File: Overture.v
-Line: 612
+Line: 619
 Time: 0s">
 <div class="time" style="width: 0%"></div>
 <pre>
 Tactic Notation "transparent" "eassert" "(" ident(name) ":" open_constr(type) ")" := transparent assert (name : type).</pre>
 </div>
 <div class="code" title="File: Overture.v
-Line: 613
+Line: 620
 Time: 0s">
 <div class="time" style="width: 0%"></div>
 <pre>
 Tactic Notation "transparent" "eassert" "(" ident(name) ":" open_constr(type) ")" "by" tactic3(tac) := transparent assert (name : type) by tac.</pre>
 </div>
 <div class="code" title="File: Overture.v
-Line: 615
+Line: 622
 Time: 0s">
 <div class="time" style="width: 0%"></div>
 <pre>
