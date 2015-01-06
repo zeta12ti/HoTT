@@ -1,0 +1,374 @@
+<html>
+<head>
+<title>Nat.v</title>
+<style>
+.time {
+  background-color: #ffaaaa;
+  height: 100%;
+  z-index: -1;
+  position: absolute;
+}
+.code {
+  z-index: 0;
+  position: relative;
+  border-style: solid;
+  border-color: transparent;
+  border-width: 1px;
+}
+.code:hover {
+  border-style: solid;
+  border-color: black;
+  border-width: 1px;
+}
+pre {
+  margin: 1px;
+}
+</style>
+</head>
+<body>
+<h1>Timings for Nat.v</h1>
+
+<div class="code" title="File: Nat.v
+Line: 1
+Time: 0s">
+<div class="time" style="width: 0%"></div>
+<pre>(* -*- mode: coq; mode: visual-line -*- *)
+(** * Theorems about the natural numbers, depending on TruncType *)
+
+</pre>
+</div>
+<div class="code" title="File: Nat.v
+Line: 3
+Time: 0.02s">
+<div class="time" style="width: 71.428571428571%"></div>
+<pre>Require Import HoTT.Basics.</pre>
+</div>
+<div class="code" title="File: Nat.v
+Line: 3
+Time: 0.028s">
+<div class="time" style="width: 100%"></div>
+<pre>
+Require Import HoTT.Types.Bool HoTT.Types.Nat HoTT.TruncType.</pre>
+</div>
+<div class="code" title="File: Nat.v
+Line: 4
+Time: 0s">
+<div class="time" style="width: 0%"></div>
+<pre>
+Import BoolSortCoercion.</pre>
+</div>
+<div class="code" title="File: Nat.v
+Line: 5
+Time: 0s">
+<div class="time" style="width: 0%"></div>
+<pre>
+
+Local Open Scope equiv_scope.</pre>
+</div>
+<div class="code" title="File: Nat.v
+Line: 7
+Time: 0s">
+<div class="time" style="width: 0%"></div>
+<pre>
+
+(** ** Equality *)
+(** *** Boolean equality and its properties *)
+
+</pre>
+</div>
+<div class="code" title="File: Nat.v
+Line: 11
+Time: 0s">
+<div class="time" style="width: 0%"></div>
+<pre>Local Notation cast p := (transport is_true p^ tt)%path.</pre>
+</div>
+<div class="code" title="File: Nat.v
+Line: 11
+Time: 0s">
+<div class="time" style="width: 0%"></div>
+<pre>
+Local Notation cast' := (inverse o @path_b_true__of__is_true _).</pre>
+</div>
+<div class="code" title="File: Nat.v
+Line: 12
+Time: 0.002s">
+<div class="time" style="width: 7.1428571428571%"></div>
+<pre>
+
+Definition idcode_nat {n} : n =n n := cast idcode_nat'.</pre>
+</div>
+<div class="code" title="File: Nat.v
+Line: 14
+Time: 0.001s">
+<div class="time" style="width: 3.5714285714286%"></div>
+<pre>
+Definition path_nat {n m} : n =n m -&gt; n = m := path_nat' o cast'.</pre>
+</div>
+<div class="code" title="File: Nat.v
+Line: 15
+Time: 0s">
+<div class="time" style="width: 0%"></div>
+<pre>
+Global Instance isequiv_path_nat {n m} : IsEquiv (@path_nat n m).</pre>
+</div>
+<div class="code" title="File: Nat.v
+Line: 16
+Time: 0s">
+<div class="time" style="width: 0%"></div>
+<pre>
+Proof.</pre>
+</div>
+<div class="code" title="File: Nat.v
+Line: 17
+Time: 0.01s">
+<div class="time" style="width: 35.714285714286%"></div>
+<pre>
+  exact _.</pre>
+</div>
+<div class="code" title="File: Nat.v
+Line: 18
+Time: 0.001s">
+<div class="time" style="width: 3.5714285714286%"></div>
+<pre>
+Defined.</pre>
+</div>
+<div class="code" title="File: Nat.v
+Line: 19
+Time: 0.001s">
+<div class="time" style="width: 3.5714285714286%"></div>
+<pre>
+Definition equiv_path_nat {n m} : (n =n m) &lt;~&gt; (n = m)
+  := BuildEquiv _ _ (@path_nat n m) _.</pre>
+</div>
+<div class="code" title="File: Nat.v
+Line: 21
+Time: 0s">
+<div class="time" style="width: 0%"></div>
+<pre>
+
+(** ** Theorems about natural number ordering *)
+
+</pre>
+</div>
+<div class="code" title="File: Nat.v
+Line: 24
+Time: 0.001s">
+<div class="time" style="width: 3.5714285714286%"></div>
+<pre>Fixpoint leq0n {n} : 0 &lt;= n :=
+  match n as n return 0 &lt;= n with
+    | 0 =&gt; tt
+    | n'.+1 =&gt; @leq0n n'
+  end.</pre>
+</div>
+<div class="code" title="File: Nat.v
+Line: 28
+Time: 0.002s">
+<div class="time" style="width: 7.1428571428571%"></div>
+<pre>
+
+Fixpoint subnn {n} : n - n =n 0 :=
+  match n as n return n - n =n 0 with
+    | 0 =&gt; tt
+    | n'.+1 =&gt; @subnn n'
+  end.</pre>
+</div>
+<div class="code" title="File: Nat.v
+Line: 34
+Time: 0.001s">
+<div class="time" style="width: 3.5714285714286%"></div>
+<pre>
+
+Global Instance leq_refl : Reflexive leq
+  := @subnn.</pre>
+</div>
+<div class="code" title="File: Nat.v
+Line: 37
+Time: 0.014s">
+<div class="time" style="width: 50%"></div>
+<pre>
+
+Fixpoint leq_transb {x y z} : (x &lt;= y -&gt; y &lt;= z -&gt; x &lt;= z)%Bool :=
+  match x as x, y as y, z as z return (x &lt;= y -&gt; y &lt;= z -&gt; x &lt;= z)%Bool with
+    | 0, 0, 0 =&gt; tt
+    | x'.+1, 0, 0 =&gt; tt
+    | 0, y'.+1, 0 =&gt; tt
+    | 0, 0, z'.+1 =&gt; tt
+    | x'.+1, y'.+1, 0 =&gt; cast implb_true
+    | x'.+1, 0, z'.+1 =&gt; tt
+    | 0, y'.+1, z'.+1 =&gt; @leq_transb 0 y' z'
+    | x'.+1, y'.+1, z'.+1 =&gt; @leq_transb x' y' z'
+  end.</pre>
+</div>
+<div class="code" title="File: Nat.v
+Line: 49
+Time: 0s">
+<div class="time" style="width: 0%"></div>
+<pre>
+
+(** TODO: Move this *)</pre>
+</div>
+<div class="code" title="File: Nat.v
+Line: 51
+Time: 0.001s">
+<div class="time" style="width: 3.5714285714286%"></div>
+<pre>Definition implb_impl' {a b : Bool} : (a -&gt; b)%Bool &lt;-&gt; (a -&gt; b).</pre>
+</div>
+<div class="code" title="File: Nat.v
+Line: 51
+Time: 0s">
+<div class="time" style="width: 0%"></div>
+<pre>
+Proof.</pre>
+</div>
+<div class="code" title="File: Nat.v
+Line: 52
+Time: 0.007s">
+<div class="time" style="width: 25%"></div>
+<pre>
+  destruct a, b; simpl; split; try constructor; try (intros; assumption).</pre>
+</div>
+<div class="code" title="File: Nat.v
+Line: 53
+Time: 0s">
+<div class="time" style="width: 0%"></div>
+<pre>
+  intro p; apply p; constructor.</pre>
+</div>
+<div class="code" title="File: Nat.v
+Line: 54
+Time: 0.003s">
+<div class="time" style="width: 10.714285714286%"></div>
+<pre>
+Defined.</pre>
+</div>
+<div class="code" title="File: Nat.v
+Line: 55
+Time: 0s">
+<div class="time" style="width: 0%"></div>
+<pre>
+
+Global Instance leq_trans : Transitive (fun n m =&gt; leq n m).</pre>
+</div>
+<div class="code" title="File: Nat.v
+Line: 57
+Time: 0s">
+<div class="time" style="width: 0%"></div>
+<pre>
+Proof.</pre>
+</div>
+<div class="code" title="File: Nat.v
+Line: 58
+Time: 0s">
+<div class="time" style="width: 0%"></div>
+<pre>
+  intros x y z p.</pre>
+</div>
+<div class="code" title="File: Nat.v
+Line: 59
+Time: 0.001s">
+<div class="time" style="width: 3.5714285714286%"></div>
+<pre>
+  apply implb_impl'; revert p.</pre>
+</div>
+<div class="code" title="File: Nat.v
+Line: 60
+Time: 0.001s">
+<div class="time" style="width: 3.5714285714286%"></div>
+<pre>
+  apply implb_impl'.</pre>
+</div>
+<div class="code" title="File: Nat.v
+Line: 61
+Time: 0s">
+<div class="time" style="width: 0%"></div>
+<pre>
+  apply leq_transb.</pre>
+</div>
+<div class="code" title="File: Nat.v
+Line: 62
+Time: 0.001s">
+<div class="time" style="width: 3.5714285714286%"></div>
+<pre>
+Defined.</pre>
+</div>
+<div class="code" title="File: Nat.v
+Line: 63
+Time: 0.006s">
+<div class="time" style="width: 21.428571428571%"></div>
+<pre>
+
+Fixpoint leq_antisymb {x y} : (x &lt;= y -&gt; y &lt;= x -&gt; x =n y)%Bool :=
+  match x as x, y as y return (x &lt;= y -&gt; y &lt;= x -&gt; x =n y)%Bool with
+    | 0, 0 =&gt; tt
+    | x'.+1, y'.+1 =&gt; @leq_antisymb x' y'
+    | _, _ =&gt; tt
+  end.</pre>
+</div>
+<div class="code" title="File: Nat.v
+Line: 70
+Time: 0.001s">
+<div class="time" style="width: 3.5714285714286%"></div>
+<pre>
+
+Lemma leq_antisym : forall {x y}, x &lt;= y -&gt; y &lt;= x -&gt; x = y.</pre>
+</div>
+<div class="code" title="File: Nat.v
+Line: 72
+Time: 0s">
+<div class="time" style="width: 0%"></div>
+<pre>
+Proof.</pre>
+</div>
+<div class="code" title="File: Nat.v
+Line: 73
+Time: 0s">
+<div class="time" style="width: 0%"></div>
+<pre>
+  intros x y p q.</pre>
+</div>
+<div class="code" title="File: Nat.v
+Line: 74
+Time: 0s">
+<div class="time" style="width: 0%"></div>
+<pre>
+  apply path_nat.</pre>
+</div>
+<div class="code" title="File: Nat.v
+Line: 75
+Time: 0.001s">
+<div class="time" style="width: 3.5714285714286%"></div>
+<pre>
+  revert q; apply implb_impl'.</pre>
+</div>
+<div class="code" title="File: Nat.v
+Line: 76
+Time: 0.001s">
+<div class="time" style="width: 3.5714285714286%"></div>
+<pre>
+  revert p; apply implb_impl'.</pre>
+</div>
+<div class="code" title="File: Nat.v
+Line: 77
+Time: 0s">
+<div class="time" style="width: 0%"></div>
+<pre>
+  apply leq_antisymb.</pre>
+</div>
+<div class="code" title="File: Nat.v
+Line: 78
+Time: 0.001s">
+<div class="time" style="width: 3.5714285714286%"></div>
+<pre>
+Defined.</pre>
+</div>
+<div class="code" title="File: Nat.v
+Line: 80
+Time: 0s">
+<div class="time" style="width: 0%"></div>
+<pre>
+
+</pre>
+</div>
+</body>
+</html>
+
