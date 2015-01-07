@@ -36,14 +36,14 @@ Time: 0s">
 </div>
 <div class="code" title="File: Morphisms.v
 Line: 1
-Time: 0.01s">
-<div class="time" style="width: 2.0366598778004%"></div>
+Time: 0.007s">
+<div class="time" style="width: 1.9774011299435%"></div>
 <pre>Require Import Category.Core Functor.Core.</pre>
 </div>
 <div class="code" title="File: Morphisms.v
 Line: 1
-Time: 0.058s">
-<div class="time" style="width: 11.812627291242%"></div>
+Time: 0.044s">
+<div class="time" style="width: 12.429378531073%"></div>
 <pre>
 Require Import HoTT.Tactics Types.Record Trunc HProp Types.Sigma Equivalences.</pre>
 </div>
@@ -101,8 +101,8 @@ Time: 0s">
 </div>
 <div class="code" title="File: Morphisms.v
 Line: 12
-Time: 0.007s">
-<div class="time" style="width: 1.4256619144603%"></div>
+Time: 0.006s">
+<div class="time" style="width: 1.6949152542373%"></div>
 <pre>Class IsIsomorphism {C : PreCategory} {s d} (m : morphism C s d) :=
   {
     morphism_inverse : morphism C d s;
@@ -137,21 +137,21 @@ Hint Resolve left_inverse right_inverse : category morphism.</pre>
 <div class="code" title="File: Morphisms.v
 Line: 23
 Time: 0.001s">
-<div class="time" style="width: 0.20366598778004%"></div>
+<div class="time" style="width: 0.28248587570621%"></div>
 <pre>
 Hint Rewrite @left_inverse @right_inverse : category.</pre>
 </div>
 <div class="code" title="File: Morphisms.v
 Line: 24
 Time: 0.001s">
-<div class="time" style="width: 0.20366598778004%"></div>
+<div class="time" style="width: 0.28248587570621%"></div>
 <pre>
 Hint Rewrite @left_inverse @right_inverse : morphism.</pre>
 </div>
 <div class="code" title="File: Morphisms.v
 Line: 25
-Time: 0.004s">
-<div class="time" style="width: 0.81466395112016%"></div>
+Time: 0.003s">
+<div class="time" style="width: 0.84745762711864%"></div>
 <pre>
 
 Class Isomorphic {C : PreCategory} s d :=
@@ -240,17 +240,28 @@ Time: 0s">
 <div class="time" style="width: 0%"></div>
 <pre>
 
+  Local Notation IsIsomorphism_sig_T m :=
+    { inverse : morphism C d s
+    | { _ : inverse o m = identity _
+      | m o inverse = identity _ } } (only parsing).</pre>
+</div>
+<div class="code" title="File: Morphisms.v
+Line: 50
+Time: 0s">
+<div class="time" style="width: 0%"></div>
+<pre>
+
   Section IsIsomorphism.</pre>
 </div>
 <div class="code" title="File: Morphisms.v
-Line: 47
+Line: 52
 Time: 0s">
 <div class="time" style="width: 0%"></div>
 <pre>
     Variable m : morphism C s d.</pre>
 </div>
 <div class="code" title="File: Morphisms.v
-Line: 48
+Line: 53
 Time: 0s">
 <div class="time" style="width: 0%"></div>
 <pre>
@@ -259,25 +270,25 @@ Time: 0s">
    </pre>
 </div>
 <div class="code" title="File: Morphisms.v
-Line: 51
-Time: 0.002s">
-<div class="time" style="width: 0.40733197556008%"></div>
+Line: 56
+Time: 0.001s">
+<div class="time" style="width: 0.28248587570621%"></div>
 <pre>Lemma inverse_unique (m_inv0 m_inv1 : morphism C d s)
           (left_inverse_0 : m_inv0 o m = identity _)
           (right_inverse_1 : m o m_inv1 = identity _)
     : m_inv0 = m_inv1.</pre>
 </div>
 <div class="code" title="File: Morphisms.v
-Line: 54
+Line: 59
 Time: 0s">
 <div class="time" style="width: 0%"></div>
 <pre>
     Proof.</pre>
 </div>
 <div class="code" title="File: Morphisms.v
-Line: 55
-Time: 0.052s">
-<div class="time" style="width: 10.590631364562%"></div>
+Line: 60
+Time: 0.04s">
+<div class="time" style="width: 11.299435028249%"></div>
 <pre>
       transitivity (m_inv0 o m o m_inv1);
       try solve [ by (rewrite -&gt; ?associativity; rewrite_hyp;
@@ -286,22 +297,11 @@ Time: 0.052s">
                       autorewrite with morphism) ].</pre>
 </div>
 <div class="code" title="File: Morphisms.v
-Line: 60
+Line: 65
 Time: 0.002s">
-<div class="time" style="width: 0.40733197556008%"></div>
+<div class="time" style="width: 0.56497175141243%"></div>
 <pre>
     Qed.</pre>
-</div>
-<div class="code" title="File: Morphisms.v
-Line: 61
-Time: 0s">
-<div class="time" style="width: 0%"></div>
-<pre>
-
-    Local Notation IsIsomorphism_sig_T :=
-      { inverse : morphism C d s
-      | { _ : inverse o m = identity _
-        | m o inverse = identity _ } } (only parsing).</pre>
 </div>
 <div class="code" title="File: Morphisms.v
 Line: 66
@@ -314,10 +314,10 @@ Time: 0s">
 </div>
 <div class="code" title="File: Morphisms.v
 Line: 69
-Time: 0.002s">
-<div class="time" style="width: 0.40733197556008%"></div>
+Time: 0.001s">
+<div class="time" style="width: 0.28248587570621%"></div>
 <pre>Lemma issig_isisomorphism
-    : IsIsomorphism_sig_T &lt;~&gt; IsIsomorphism m.</pre>
+    : IsIsomorphism_sig_T m &lt;~&gt; IsIsomorphism m.</pre>
 </div>
 <div class="code" title="File: Morphisms.v
 Line: 70
@@ -328,8 +328,8 @@ Time: 0s">
 </div>
 <div class="code" title="File: Morphisms.v
 Line: 71
-Time: 0.012s">
-<div class="time" style="width: 2.4439918533605%"></div>
+Time: 0.01s">
+<div class="time" style="width: 2.8248587570621%"></div>
 <pre>
       issig (@Build_IsIsomorphism _ _ _ m)
             (@morphism_inverse _ _ _ m)
@@ -338,8 +338,8 @@ Time: 0.012s">
 </div>
 <div class="code" title="File: Morphisms.v
 Line: 75
-Time: 0.02s">
-<div class="time" style="width: 4.0733197556008%"></div>
+Time: 0.03s">
+<div class="time" style="width: 8.4745762711864%"></div>
 <pre>
     Defined.</pre>
 </div>
@@ -381,15 +381,15 @@ Time: 0s">
 </div>
 <div class="code" title="File: Morphisms.v
 Line: 82
-Time: 0.017s">
-<div class="time" style="width: 3.4623217922607%"></div>
+Time: 0.007s">
+<div class="time" style="width: 1.9774011299435%"></div>
 <pre>
       intros [x [? ?]] [y [? ?]].</pre>
 </div>
 <div class="code" title="File: Morphisms.v
 Line: 83
-Time: 0.011s">
-<div class="time" style="width: 2.2403258655804%"></div>
+Time: 0.005s">
+<div class="time" style="width: 1.4124293785311%"></div>
 <pre>
       let H := fresh in
       assert (H : x = y) by (apply inverse_unique; assumption);
@@ -397,7 +397,7 @@ Time: 0.011s">
 </div>
 <div class="code" title="File: Morphisms.v
 Line: 86
-Time: 0.491s">
+Time: 0.354s">
 <div class="time" style="width: 100%"></div>
 <pre>
       repeat match goal with
@@ -409,15 +409,15 @@ Time: 0.491s">
 </div>
 <div class="code" title="File: Morphisms.v
 Line: 92
-Time: 0.016s">
-<div class="time" style="width: 3.2586558044807%"></div>
+Time: 0.03s">
+<div class="time" style="width: 8.4745762711864%"></div>
 <pre>
     Qed.</pre>
 </div>
 <div class="code" title="File: Morphisms.v
 Line: 93
-Time: 0.001s">
-<div class="time" style="width: 0.20366598778004%"></div>
+Time: 0.002s">
+<div class="time" style="width: 0.56497175141243%"></div>
 <pre>
   End IsIsomorphism.</pre>
 </div>
@@ -442,8 +442,8 @@ Time: 0s">
 </div>
 <div class="code" title="File: Morphisms.v
 Line: 101
-Time: 0s">
-<div class="time" style="width: 0%"></div>
+Time: 0.001s">
+<div class="time" style="width: 0.28248587570621%"></div>
 <pre>Lemma issig_isomorphic
   : Isomorphic_sig_T &lt;~&gt; Isomorphic s d.</pre>
 </div>
@@ -456,8 +456,8 @@ Time: 0s">
 </div>
 <div class="code" title="File: Morphisms.v
 Line: 103
-Time: 0.003s">
-<div class="time" style="width: 0.61099796334012%"></div>
+Time: 0.005s">
+<div class="time" style="width: 1.4124293785311%"></div>
 <pre>
     issig (@Build_Isomorphic C s d)
           (@morphism_isomorphic C s d)
@@ -465,8 +465,8 @@ Time: 0.003s">
 </div>
 <div class="code" title="File: Morphisms.v
 Line: 106
-Time: 0.002s">
-<div class="time" style="width: 0.40733197556008%"></div>
+Time: 0.005s">
+<div class="time" style="width: 1.4124293785311%"></div>
 <pre>
   Defined.</pre>
 </div>
@@ -476,59 +476,41 @@ Time: 0s">
 <div class="time" style="width: 0%"></div>
 <pre>
 
-  (** *** Isomorphisms form an hSet *)
- </pre>
-</div>
-<div class="code" title="File: Morphisms.v
-Line: 110
-Time: 0s">
-<div class="time" style="width: 0%"></div>
-<pre>Global Instance trunc_Isomorphic : IsHSet (Isomorphic s d).</pre>
-</div>
-<div class="code" title="File: Morphisms.v
-Line: 110
-Time: 0s">
-<div class="time" style="width: 0%"></div>
-<pre>
-  Proof.</pre>
+  Local Notation Isomorphic_full_sig_T :=
+    { m : morphism C s d
+    | IsIsomorphism_sig_T m } (only parsing).</pre>
 </div>
 <div class="code" title="File: Morphisms.v
 Line: 111
 Time: 0s">
 <div class="time" style="width: 0%"></div>
 <pre>
-    eapply trunc_equiv'; [ exact issig_isomorphic | ].</pre>
-</div>
-<div class="code" title="File: Morphisms.v
-Line: 112
-Time: 0.012s">
-<div class="time" style="width: 2.4439918533605%"></div>
-<pre>
-    typeclasses eauto.</pre>
-</div>
-<div class="code" title="File: Morphisms.v
-Line: 113
-Time: 0s">
-<div class="time" style="width: 0%"></div>
-<pre>
-  Qed.</pre>
+
+  (** *** Equivalence between record and fully sigma versions of [Isomorphic] *)
+ </pre>
 </div>
 <div class="code" title="File: Morphisms.v
 Line: 114
+Time: 0.006s">
+<div class="time" style="width: 1.6949152542373%"></div>
+<pre>Definition issig_full_isomorphic
+  : Isomorphic_full_sig_T &lt;~&gt; Isomorphic s d
+    := equiv_compose' issig_isomorphic (equiv_functor_sigma_id issig_isisomorphism).</pre>
+</div>
+<div class="code" title="File: Morphisms.v
+Line: 116
 Time: 0s">
 <div class="time" style="width: 0%"></div>
 <pre>
 
-  (** *** Equality between isomorphisms is determined by equality between their forward components *)
+  (** *** Isomorphisms form an hSet *)
  </pre>
 </div>
 <div class="code" title="File: Morphisms.v
-Line: 117
+Line: 119
 Time: 0s">
 <div class="time" style="width: 0%"></div>
-<pre>Definition path_isomorphic (i j : Isomorphic s d)
-  : @morphism_isomorphic _ _ _ i = @morphism_isomorphic _ _ _ j
-    -&gt; i = j.</pre>
+<pre>Global Instance trunc_Isomorphic : IsHSet (Isomorphic s d).</pre>
 </div>
 <div class="code" title="File: Morphisms.v
 Line: 119
@@ -539,41 +521,167 @@ Time: 0s">
 </div>
 <div class="code" title="File: Morphisms.v
 Line: 120
-Time: 0.002s">
-<div class="time" style="width: 0.40733197556008%"></div>
-<pre>
-    destruct i, j; simpl.</pre>
-</div>
-<div class="code" title="File: Morphisms.v
-Line: 121
 Time: 0s">
 <div class="time" style="width: 0%"></div>
 <pre>
-    intro; path_induction.</pre>
+    eapply trunc_equiv'; [ exact issig_isomorphic | ].</pre>
+</div>
+<div class="code" title="File: Morphisms.v
+Line: 121
+Time: 0.022s">
+<div class="time" style="width: 6.2146892655367%"></div>
+<pre>
+    typeclasses eauto.</pre>
 </div>
 <div class="code" title="File: Morphisms.v
 Line: 122
 Time: 0s">
 <div class="time" style="width: 0%"></div>
 <pre>
-    f_ap.</pre>
+  Qed.</pre>
 </div>
 <div class="code" title="File: Morphisms.v
 Line: 123
+Time: 0s">
+<div class="time" style="width: 0%"></div>
+<pre>
+
+  (** *** Equality between isomorphisms is determined by equality between their forward components *)
+ </pre>
+</div>
+<div class="code" title="File: Morphisms.v
+Line: 126
+Time: 0s">
+<div class="time" style="width: 0%"></div>
+<pre>Definition path_isomorphic (i j : Isomorphic s d)
+  : @morphism_isomorphic _ _ _ i = @morphism_isomorphic _ _ _ j
+    -&gt; i = j.</pre>
+</div>
+<div class="code" title="File: Morphisms.v
+Line: 128
+Time: 0s">
+<div class="time" style="width: 0%"></div>
+<pre>
+  Proof.</pre>
+</div>
+<div class="code" title="File: Morphisms.v
+Line: 129
+Time: 0.002s">
+<div class="time" style="width: 0.56497175141243%"></div>
+<pre>
+    destruct i, j; simpl.</pre>
+</div>
+<div class="code" title="File: Morphisms.v
+Line: 130
 Time: 0.001s">
-<div class="time" style="width: 0.20366598778004%"></div>
+<div class="time" style="width: 0.28248587570621%"></div>
+<pre>
+    intro; path_induction.</pre>
+</div>
+<div class="code" title="File: Morphisms.v
+Line: 131
+Time: 0s">
+<div class="time" style="width: 0%"></div>
+<pre>
+    f_ap.</pre>
+</div>
+<div class="code" title="File: Morphisms.v
+Line: 132
+Time: 0.001s">
+<div class="time" style="width: 0.28248587570621%"></div>
 <pre>
     exact (center _).</pre>
 </div>
 <div class="code" title="File: Morphisms.v
-Line: 124
+Line: 133
 Time: 0.001s">
-<div class="time" style="width: 0.20366598778004%"></div>
+<div class="time" style="width: 0.28248587570621%"></div>
 <pre>
   Defined.</pre>
 </div>
 <div class="code" title="File: Morphisms.v
-Line: 125
+Line: 134
+Time: 0s">
+<div class="time" style="width: 0%"></div>
+<pre>
+
+  (** *** Relations between [path_isomorphic], [ap morphism_inverse], and [ap morphism_isomorphic] *)
+ </pre>
+</div>
+<div class="code" title="File: Morphisms.v
+Line: 137
+Time: 0.001s">
+<div class="time" style="width: 0.28248587570621%"></div>
+<pre>Definition ap_morphism_isomorphic_path_isomorphic (i j : Isomorphic s d) p
+  : ap (@morphism_isomorphic _ _ _) (path_isomorphic i j p) = p.</pre>
+</div>
+<div class="code" title="File: Morphisms.v
+Line: 138
+Time: 0s">
+<div class="time" style="width: 0%"></div>
+<pre>
+  Proof.</pre>
+</div>
+<div class="code" title="File: Morphisms.v
+Line: 139
+Time: 0s">
+<div class="time" style="width: 0%"></div>
+<pre>
+    unfold path_isomorphic.</pre>
+</div>
+<div class="code" title="File: Morphisms.v
+Line: 140
+Time: 0.006s">
+<div class="time" style="width: 1.6949152542373%"></div>
+<pre>
+    destruct i, j.</pre>
+</div>
+<div class="code" title="File: Morphisms.v
+Line: 141
+Time: 0.029s">
+<div class="time" style="width: 8.1920903954802%"></div>
+<pre>
+    path_induction_hammer.</pre>
+</div>
+<div class="code" title="File: Morphisms.v
+Line: 142
+Time: 0.006s">
+<div class="time" style="width: 1.6949152542373%"></div>
+<pre>
+  Qed.</pre>
+</div>
+<div class="code" title="File: Morphisms.v
+Line: 143
+Time: 0.002s">
+<div class="time" style="width: 0.56497175141243%"></div>
+<pre>
+
+  Definition ap_morphism_inverse_path_isomorphic (i j : Isomorphic s d) p q
+  : ap (fun e : Isomorphic s d =&gt; e^-1)%morphism (path_isomorphic i j p) = q.</pre>
+</div>
+<div class="code" title="File: Morphisms.v
+Line: 146
+Time: 0s">
+<div class="time" style="width: 0%"></div>
+<pre>
+  Proof.</pre>
+</div>
+<div class="code" title="File: Morphisms.v
+Line: 147
+Time: 0.003s">
+<div class="time" style="width: 0.84745762711864%"></div>
+<pre>
+    apply path_ishprop.</pre>
+</div>
+<div class="code" title="File: Morphisms.v
+Line: 148
+Time: 0.001s">
+<div class="time" style="width: 0.28248587570621%"></div>
+<pre>
+  Qed.</pre>
+</div>
+<div class="code" title="File: Morphisms.v
+Line: 149
 Time: 0s">
 <div class="time" style="width: 0%"></div>
 <pre>
@@ -582,30 +690,30 @@ Time: 0s">
  </pre>
 </div>
 <div class="code" title="File: Morphisms.v
-Line: 128
+Line: 152
 Time: 0s">
 <div class="time" style="width: 0%"></div>
 <pre>Global Instance isequiv_path_isomorphic
   : IsEquiv (path_isomorphic i j).</pre>
 </div>
 <div class="code" title="File: Morphisms.v
-Line: 129
+Line: 153
 Time: 0s">
 <div class="time" style="width: 0%"></div>
 <pre>
   Proof.</pre>
 </div>
 <div class="code" title="File: Morphisms.v
-Line: 130
+Line: 154
 Time: 0s">
 <div class="time" style="width: 0%"></div>
 <pre>
     intros.</pre>
 </div>
 <div class="code" title="File: Morphisms.v
-Line: 131
-Time: 0.069s">
-<div class="time" style="width: 14.052953156823%"></div>
+Line: 155
+Time: 0.076s">
+<div class="time" style="width: 21.468926553672%"></div>
 <pre>
     apply (isequiv_adjointify
              (path_isomorphic i j)
@@ -614,21 +722,21 @@ Time: 0.069s">
       path_induction_hammer.</pre>
 </div>
 <div class="code" title="File: Morphisms.v
-Line: 136
-Time: 0.007s">
-<div class="time" style="width: 1.4256619144603%"></div>
+Line: 160
+Time: 0.008s">
+<div class="time" style="width: 2.2598870056497%"></div>
 <pre>
   Defined.</pre>
 </div>
 <div class="code" title="File: Morphisms.v
-Line: 137
-Time: 0.02s">
-<div class="time" style="width: 4.0733197556008%"></div>
+Line: 161
+Time: 0.017s">
+<div class="time" style="width: 4.8022598870057%"></div>
 <pre>
 End iso_contr.</pre>
 </div>
 <div class="code" title="File: Morphisms.v
-Line: 138
+Line: 162
 Time: 0s">
 <div class="time" style="width: 0%"></div>
 <pre>
@@ -636,14 +744,14 @@ Time: 0s">
 Section iso_equiv_relation.</pre>
 </div>
 <div class="code" title="File: Morphisms.v
-Line: 140
+Line: 164
 Time: 0s">
 <div class="time" style="width: 0%"></div>
 <pre>
   Variable C : PreCategory.</pre>
 </div>
 <div class="code" title="File: Morphisms.v
-Line: 141
+Line: 165
 Time: 0s">
 <div class="time" style="width: 0%"></div>
 <pre>
@@ -652,16 +760,16 @@ Time: 0s">
  </pre>
 </div>
 <div class="code" title="File: Morphisms.v
-Line: 144
+Line: 168
 Time: 0.001s">
-<div class="time" style="width: 0.20366598778004%"></div>
+<div class="time" style="width: 0.28248587570621%"></div>
 <pre>Global Instance isisomorphism_identity (x : C) : IsIsomorphism (identity x)
     := {| morphism_inverse := identity x;
           left_inverse := left_identity C x x (identity x);
           right_inverse := right_identity C x x (identity x) |}.</pre>
 </div>
 <div class="code" title="File: Morphisms.v
-Line: 147
+Line: 171
 Time: 0s">
 <div class="time" style="width: 0%"></div>
 <pre>
@@ -670,16 +778,16 @@ Time: 0s">
  </pre>
 </div>
 <div class="code" title="File: Morphisms.v
-Line: 150
-Time: 0.002s">
-<div class="time" style="width: 0.40733197556008%"></div>
+Line: 174
+Time: 0.001s">
+<div class="time" style="width: 0.28248587570621%"></div>
 <pre>Definition isisomorphism_inverse `(@IsIsomorphism C x y m) : IsIsomorphism m^-1
     := {| morphism_inverse := m;
           left_inverse := right_inverse;
           right_inverse := left_inverse |}.</pre>
 </div>
 <div class="code" title="File: Morphisms.v
-Line: 153
+Line: 177
 Time: 0s">
 <div class="time" style="width: 0%"></div>
 <pre>
@@ -694,7 +802,7 @@ Time: 0s">
     auto with morphism.</pre>
 </div>
 <div class="code" title="File: Morphisms.v
-Line: 162
+Line: 186
 Time: 0s">
 <div class="time" style="width: 0%"></div>
 <pre>
@@ -703,37 +811,37 @@ Time: 0s">
  </pre>
 </div>
 <div class="code" title="File: Morphisms.v
-Line: 165
+Line: 189
 Time: 0.001s">
-<div class="time" style="width: 0.20366598778004%"></div>
+<div class="time" style="width: 0.28248587570621%"></div>
 <pre>Global Instance isisomorphism_compose `(@IsIsomorphism C y z m0) `(@IsIsomorphism C x y m1)
   : IsIsomorphism (m0 o m1).</pre>
 </div>
 <div class="code" title="File: Morphisms.v
-Line: 166
+Line: 190
 Time: 0s">
 <div class="time" style="width: 0%"></div>
 <pre>
   Proof.</pre>
 </div>
 <div class="code" title="File: Morphisms.v
-Line: 167
+Line: 191
 Time: 0.023s">
-<div class="time" style="width: 4.6843177189409%"></div>
+<div class="time" style="width: 6.4971751412429%"></div>
 <pre>
     exists (m1^-1 o m0^-1);
     [ abstract iso_comp_t @left_inverse
     | abstract iso_comp_t @right_inverse ].</pre>
 </div>
 <div class="code" title="File: Morphisms.v
-Line: 170
+Line: 194
 Time: 0.004s">
-<div class="time" style="width: 0.81466395112016%"></div>
+<div class="time" style="width: 1.1299435028249%"></div>
 <pre>
   Defined.</pre>
 </div>
 <div class="code" title="File: Morphisms.v
-Line: 171
+Line: 195
 Time: 0s">
 <div class="time" style="width: 0%"></div>
 <pre>
@@ -741,7 +849,7 @@ Time: 0s">
   Hint Immediate isisomorphism_inverse : typeclass_instances.</pre>
 </div>
 <div class="code" title="File: Morphisms.v
-Line: 173
+Line: 197
 Time: 0s">
 <div class="time" style="width: 0%"></div>
 <pre>
@@ -750,14 +858,14 @@ Time: 0s">
  </pre>
 </div>
 <div class="code" title="File: Morphisms.v
-Line: 176
+Line: 200
 Time: 0.001s">
-<div class="time" style="width: 0.20366598778004%"></div>
+<div class="time" style="width: 0.28248587570621%"></div>
 <pre>Global Instance isomorphic_refl : Reflexive (@Isomorphic C)
     := fun x : C =&gt; {| morphism_isomorphic := identity x |}.</pre>
 </div>
 <div class="code" title="File: Morphisms.v
-Line: 177
+Line: 201
 Time: 0s">
 <div class="time" style="width: 0%"></div>
 <pre>
@@ -766,14 +874,14 @@ Time: 0s">
  </pre>
 </div>
 <div class="code" title="File: Morphisms.v
-Line: 180
+Line: 204
 Time: 0.001s">
-<div class="time" style="width: 0.20366598778004%"></div>
+<div class="time" style="width: 0.28248587570621%"></div>
 <pre>Global Instance isomorphic_sym : Symmetric (@Isomorphic C)
     := fun x y X =&gt; {| morphism_isomorphic := X^-1 |}.</pre>
 </div>
 <div class="code" title="File: Morphisms.v
-Line: 181
+Line: 205
 Time: 0s">
 <div class="time" style="width: 0%"></div>
 <pre>
@@ -782,14 +890,14 @@ Time: 0s">
  </pre>
 </div>
 <div class="code" title="File: Morphisms.v
-Line: 184
+Line: 208
 Time: 0.002s">
-<div class="time" style="width: 0.40733197556008%"></div>
+<div class="time" style="width: 0.56497175141243%"></div>
 <pre>Global Instance isomorphic_trans : Transitive (@Isomorphic C)
     := fun x y z X Y =&gt; {| morphism_isomorphic := @morphism_isomorphic _ _ _ Y o @morphism_isomorphic _ _ _ X |}.</pre>
 </div>
 <div class="code" title="File: Morphisms.v
-Line: 185
+Line: 209
 Time: 0s">
 <div class="time" style="width: 0%"></div>
 <pre>
@@ -798,23 +906,23 @@ Time: 0s">
  </pre>
 </div>
 <div class="code" title="File: Morphisms.v
-Line: 188
+Line: 212
 Time: 0.001s">
-<div class="time" style="width: 0.20366598778004%"></div>
+<div class="time" style="width: 0.28248587570621%"></div>
 <pre>Definition idtoiso (x y : C) (H : x = y) : Isomorphic x y
     := match H in (_ = y0) return (x &lt;~=~&gt; y0) with
          | 1%path =&gt; reflexivity x
        end.</pre>
 </div>
 <div class="code" title="File: Morphisms.v
-Line: 191
+Line: 215
 Time: 0.003s">
-<div class="time" style="width: 0.61099796334012%"></div>
+<div class="time" style="width: 0.84745762711864%"></div>
 <pre>
 End iso_equiv_relation.</pre>
 </div>
 <div class="code" title="File: Morphisms.v
-Line: 192
+Line: 216
 Time: 0s">
 <div class="time" style="width: 0%"></div>
 <pre>
@@ -822,7 +930,7 @@ Time: 0s">
 Hint Immediate isisomorphism_inverse : typeclass_instances.</pre>
 </div>
 <div class="code" title="File: Morphisms.v
-Line: 194
+Line: 218
 Time: 0s">
 <div class="time" style="width: 0%"></div>
 <pre>
@@ -843,18 +951,18 @@ Time: 0s">
 </pre>
 </div>
 <div class="code" title="File: Morphisms.v
-Line: 208
-Time: 0.002s">
-<div class="time" style="width: 0.40733197556008%"></div>
+Line: 232
+Time: 0.003s">
+<div class="time" style="width: 0.84745762711864%"></div>
 <pre>Class IsEpimorphism {C} {x y} (m : morphism C x y) :=
   is_epimorphism : forall z (m1 m2 : morphism C y z),
                      m1 o m = m2 o m
                      -&gt; m1 = m2.</pre>
 </div>
 <div class="code" title="File: Morphisms.v
-Line: 211
+Line: 235
 Time: 0.003s">
-<div class="time" style="width: 0.61099796334012%"></div>
+<div class="time" style="width: 0.84745762711864%"></div>
 <pre>
 Class IsMonomorphism {C} {x y} (m : morphism C x y) :=
   is_monomorphism : forall z (m1 m2 : morphism C z x),
@@ -862,9 +970,25 @@ Class IsMonomorphism {C} {x y} (m : morphism C x y) :=
                       -&gt; m1 = m2.</pre>
 </div>
 <div class="code" title="File: Morphisms.v
-Line: 215
-Time: 0.002s">
-<div class="time" style="width: 0.40733197556008%"></div>
+Line: 239
+Time: 0s">
+<div class="time" style="width: 0%"></div>
+<pre>
+
+(** We make [IsEpimorphism] and [IsMonomorphism] transparent to
+    typeclass search so that we can infer things like [IsHProp]
+    automatically. *)</pre>
+</div>
+<div class="code" title="File: Morphisms.v
+Line: 243
+Time: 0s">
+<div class="time" style="width: 0%"></div>
+<pre>Typeclasses Transparent IsEpimorphism IsMonomorphism.</pre>
+</div>
+<div class="code" title="File: Morphisms.v
+Line: 243
+Time: 0.003s">
+<div class="time" style="width: 0.84745762711864%"></div>
 <pre>
 
 Record Epimorphism {C} x y :=
@@ -874,9 +998,9 @@ Record Epimorphism {C} x y :=
   }.</pre>
 </div>
 <div class="code" title="File: Morphisms.v
-Line: 221
-Time: 0.002s">
-<div class="time" style="width: 0.40733197556008%"></div>
+Line: 249
+Time: 0.004s">
+<div class="time" style="width: 1.1299435028249%"></div>
 <pre>
 
 Record Monomorphism {C} x y :=
@@ -886,7 +1010,7 @@ Record Monomorphism {C} x y :=
   }.</pre>
 </div>
 <div class="code" title="File: Morphisms.v
-Line: 227
+Line: 255
 Time: 0s">
 <div class="time" style="width: 0%"></div>
 <pre>
@@ -894,7 +1018,7 @@ Time: 0s">
 Global Existing Instances Epimorphism_IsEpimorphism Monomorphism_IsMonomorphism.</pre>
 </div>
 <div class="code" title="File: Morphisms.v
-Line: 229
+Line: 257
 Time: 0s">
 <div class="time" style="width: 0%"></div>
 <pre>
@@ -903,7 +1027,7 @@ Local Notation "x -&gt;&gt; y" := (Epimorphism x y)
                               (at level 99, right associativity, y at level 200).</pre>
 </div>
 <div class="code" title="File: Morphisms.v
-Line: 232
+Line: 260
 Time: 0s">
 <div class="time" style="width: 0%"></div>
 <pre>
@@ -911,16 +1035,16 @@ Local Notation "x (-&gt; y" := (Monomorphism x y)
                               (at level 99, right associativity, y at level 200).</pre>
 </div>
 <div class="code" title="File: Morphisms.v
-Line: 234
-Time: 0.002s">
-<div class="time" style="width: 0.40733197556008%"></div>
+Line: 262
+Time: 0.003s">
+<div class="time" style="width: 0.84745762711864%"></div>
 <pre>
 
 Class IsSectionOf C x y (s : morphism C x y) (r : morphism C y x)
   := is_sect_morphism : r o s = identity _.</pre>
 </div>
 <div class="code" title="File: Morphisms.v
-Line: 237
+Line: 265
 Time: 0s">
 <div class="time" style="width: 0%"></div>
 <pre>
@@ -928,7 +1052,7 @@ Time: 0s">
 Arguments IsSectionOf [C x y] s r.</pre>
 </div>
 <div class="code" title="File: Morphisms.v
-Line: 239
+Line: 267
 Time: 0s">
 <div class="time" style="width: 0%"></div>
 <pre>
@@ -936,14 +1060,14 @@ Time: 0s">
 Section EpiMono.</pre>
 </div>
 <div class="code" title="File: Morphisms.v
-Line: 241
+Line: 269
 Time: 0s">
 <div class="time" style="width: 0%"></div>
 <pre>
   Variable C : PreCategory.</pre>
 </div>
 <div class="code" title="File: Morphisms.v
-Line: 242
+Line: 270
 Time: 0s">
 <div class="time" style="width: 0%"></div>
 <pre>
@@ -951,7 +1075,7 @@ Time: 0s">
   Section properties.</pre>
 </div>
 <div class="code" title="File: Morphisms.v
-Line: 244
+Line: 272
 Time: 0s">
 <div class="time" style="width: 0%"></div>
 <pre>
@@ -959,35 +1083,35 @@ Time: 0s">
    </pre>
 </div>
 <div class="code" title="File: Morphisms.v
-Line: 246
+Line: 274
 Time: 0s">
 <div class="time" style="width: 0%"></div>
 <pre>Global Instance isepimorphism_identity (x : C)
     : IsEpimorphism (identity x).</pre>
 </div>
 <div class="code" title="File: Morphisms.v
-Line: 247
+Line: 275
 Time: 0s">
 <div class="time" style="width: 0%"></div>
 <pre>
     Proof.</pre>
 </div>
 <div class="code" title="File: Morphisms.v
-Line: 248
-Time: 0.01s">
-<div class="time" style="width: 2.0366598778004%"></div>
+Line: 276
+Time: 0.018s">
+<div class="time" style="width: 5.0847457627119%"></div>
 <pre>
       repeat intro; autorewrite with morphism in *; trivial.</pre>
 </div>
 <div class="code" title="File: Morphisms.v
-Line: 249
+Line: 277
 Time: 0.001s">
-<div class="time" style="width: 0.20366598778004%"></div>
+<div class="time" style="width: 0.28248587570621%"></div>
 <pre>
     Qed.</pre>
 </div>
 <div class="code" title="File: Morphisms.v
-Line: 250
+Line: 278
 Time: 0s">
 <div class="time" style="width: 0%"></div>
 <pre>
@@ -996,35 +1120,35 @@ Time: 0s">
    </pre>
 </div>
 <div class="code" title="File: Morphisms.v
-Line: 253
+Line: 281
 Time: 0s">
 <div class="time" style="width: 0%"></div>
 <pre>Global Instance ismonomorphism_identity (x : C)
     : IsMonomorphism (identity x).</pre>
 </div>
 <div class="code" title="File: Morphisms.v
-Line: 254
+Line: 282
 Time: 0s">
 <div class="time" style="width: 0%"></div>
 <pre>
     Proof.</pre>
 </div>
 <div class="code" title="File: Morphisms.v
-Line: 255
-Time: 0.021s">
-<div class="time" style="width: 4.2769857433809%"></div>
+Line: 283
+Time: 0.018s">
+<div class="time" style="width: 5.0847457627119%"></div>
 <pre>
       repeat intro; autorewrite with morphism in *; trivial.</pre>
 </div>
 <div class="code" title="File: Morphisms.v
-Line: 256
+Line: 284
 Time: 0.001s">
-<div class="time" style="width: 0.20366598778004%"></div>
+<div class="time" style="width: 0.28248587570621%"></div>
 <pre>
     Qed.</pre>
 </div>
 <div class="code" title="File: Morphisms.v
-Line: 257
+Line: 285
 Time: 0s">
 <div class="time" style="width: 0%"></div>
 <pre>
@@ -1033,51 +1157,51 @@ Time: 0s">
    </pre>
 </div>
 <div class="code" title="File: Morphisms.v
-Line: 260
-Time: 0.001s">
-<div class="time" style="width: 0.20366598778004%"></div>
+Line: 288
+Time: 0.002s">
+<div class="time" style="width: 0.56497175141243%"></div>
 <pre>Global Instance isepimorphism_compose s d d' m0 m1
     : IsEpimorphism m0
       -&gt; IsEpimorphism m1
       -&gt; IsEpimorphism (@compose C s d d' m0 m1).</pre>
 </div>
 <div class="code" title="File: Morphisms.v
-Line: 263
+Line: 291
 Time: 0s">
 <div class="time" style="width: 0%"></div>
 <pre>
     Proof.</pre>
 </div>
 <div class="code" title="File: Morphisms.v
-Line: 264
+Line: 292
 Time: 0s">
 <div class="time" style="width: 0%"></div>
 <pre>
       repeat intro.</pre>
 </div>
 <div class="code" title="File: Morphisms.v
-Line: 265
-Time: 0.014s">
-<div class="time" style="width: 2.8513238289206%"></div>
+Line: 293
+Time: 0.025s">
+<div class="time" style="width: 7.0621468926554%"></div>
 <pre>
       rewrite &lt;- !associativity in *.</pre>
 </div>
 <div class="code" title="File: Morphisms.v
-Line: 266
+Line: 294
 Time: 0.001s">
-<div class="time" style="width: 0.20366598778004%"></div>
+<div class="time" style="width: 0.28248587570621%"></div>
 <pre>
       apply_hyp.</pre>
 </div>
 <div class="code" title="File: Morphisms.v
-Line: 267
-Time: 0.001s">
-<div class="time" style="width: 0.20366598778004%"></div>
+Line: 295
+Time: 0.003s">
+<div class="time" style="width: 0.84745762711864%"></div>
 <pre>
     Qed.</pre>
 </div>
 <div class="code" title="File: Morphisms.v
-Line: 268
+Line: 296
 Time: 0s">
 <div class="time" style="width: 0%"></div>
 <pre>
@@ -1086,58 +1210,58 @@ Time: 0s">
    </pre>
 </div>
 <div class="code" title="File: Morphisms.v
-Line: 271
-Time: 0.001s">
-<div class="time" style="width: 0.20366598778004%"></div>
+Line: 299
+Time: 0.002s">
+<div class="time" style="width: 0.56497175141243%"></div>
 <pre>Global Instance ismonomorphism_compose s d d' m0 m1
     : IsMonomorphism m0
       -&gt; IsMonomorphism m1
       -&gt; IsMonomorphism (@compose C s d d' m0 m1).</pre>
 </div>
 <div class="code" title="File: Morphisms.v
-Line: 274
+Line: 302
 Time: 0s">
 <div class="time" style="width: 0%"></div>
 <pre>
     Proof.</pre>
 </div>
 <div class="code" title="File: Morphisms.v
-Line: 275
+Line: 303
 Time: 0s">
 <div class="time" style="width: 0%"></div>
 <pre>
       repeat intro.</pre>
 </div>
 <div class="code" title="File: Morphisms.v
-Line: 276
-Time: 0.014s">
-<div class="time" style="width: 2.8513238289206%"></div>
+Line: 304
+Time: 0.04s">
+<div class="time" style="width: 11.299435028249%"></div>
 <pre>
       rewrite !associativity in *.</pre>
 </div>
 <div class="code" title="File: Morphisms.v
-Line: 277
+Line: 305
 Time: 0.001s">
-<div class="time" style="width: 0.20366598778004%"></div>
+<div class="time" style="width: 0.28248587570621%"></div>
 <pre>
       apply_hyp.</pre>
 </div>
 <div class="code" title="File: Morphisms.v
-Line: 278
+Line: 306
 Time: 0.001s">
-<div class="time" style="width: 0.20366598778004%"></div>
+<div class="time" style="width: 0.28248587570621%"></div>
 <pre>
     Qed.</pre>
 </div>
 <div class="code" title="File: Morphisms.v
-Line: 279
+Line: 307
 Time: 0.001s">
-<div class="time" style="width: 0.20366598778004%"></div>
+<div class="time" style="width: 0.28248587570621%"></div>
 <pre>
   End properties.</pre>
 </div>
 <div class="code" title="File: Morphisms.v
-Line: 280
+Line: 308
 Time: 0s">
 <div class="time" style="width: 0%"></div>
 <pre>
@@ -1146,55 +1270,55 @@ Time: 0s">
  </pre>
 </div>
 <div class="code" title="File: Morphisms.v
-Line: 283
+Line: 311
 Time: 0s">
 <div class="time" style="width: 0%"></div>
 <pre>Section equiv.</pre>
 </div>
 <div class="code" title="File: Morphisms.v
-Line: 283
-Time: 0s">
-<div class="time" style="width: 0%"></div>
+Line: 311
+Time: 0.001s">
+<div class="time" style="width: 0.28248587570621%"></div>
 <pre>
     Global Instance reflexive_epimorphism : Reflexive (@Epimorphism C)
       := fun x =&gt; Build_Epimorphism (isepimorphism_identity x).</pre>
 </div>
 <div class="code" title="File: Morphisms.v
-Line: 285
-Time: 0s">
-<div class="time" style="width: 0%"></div>
+Line: 313
+Time: 0.001s">
+<div class="time" style="width: 0.28248587570621%"></div>
 <pre>
 
     Global Instance reflexive_monomorphism : Reflexive (@Monomorphism C)
       := fun x =&gt; Build_Monomorphism (ismonomorphism_identity x).</pre>
 </div>
 <div class="code" title="File: Morphisms.v
-Line: 288
+Line: 316
 Time: 0.001s">
-<div class="time" style="width: 0.20366598778004%"></div>
+<div class="time" style="width: 0.28248587570621%"></div>
 <pre>
 
     Global Instance transitive_epimorphism : Transitive (@Epimorphism C)
       := fun _ _ _ m0 m1 =&gt; Build_Epimorphism (isepimorphism_compose m1 m0).</pre>
 </div>
 <div class="code" title="File: Morphisms.v
-Line: 291
+Line: 319
 Time: 0.001s">
-<div class="time" style="width: 0.20366598778004%"></div>
+<div class="time" style="width: 0.28248587570621%"></div>
 <pre>
 
     Global Instance transitive_monomorphism : Transitive (@Monomorphism C)
       := fun _ _ _ m0 m1 =&gt; Build_Monomorphism (ismonomorphism_compose m1 m0).</pre>
 </div>
 <div class="code" title="File: Morphisms.v
-Line: 294
+Line: 322
 Time: 0s">
 <div class="time" style="width: 0%"></div>
 <pre>
   End equiv.</pre>
 </div>
 <div class="code" title="File: Morphisms.v
-Line: 295
+Line: 323
 Time: 0s">
 <div class="time" style="width: 0%"></div>
 <pre>
@@ -1202,7 +1326,7 @@ Time: 0s">
   Section sect.</pre>
 </div>
 <div class="code" title="File: Morphisms.v
-Line: 297
+Line: 325
 Time: 0s">
 <div class="time" style="width: 0%"></div>
 <pre>
@@ -1217,7 +1341,7 @@ Time: 0s">
             | rewrite &lt;- ?associativity; t].</pre>
 </div>
 <div class="code" title="File: Morphisms.v
-Line: 306
+Line: 334
 Time: 0s">
 <div class="time" style="width: 0%"></div>
 <pre>
@@ -1226,51 +1350,51 @@ Time: 0s">
    </pre>
 </div>
 <div class="code" title="File: Morphisms.v
-Line: 309
+Line: 337
 Time: 0s">
 <div class="time" style="width: 0%"></div>
 <pre>Global Instance isepimorphism_retr `(@IsSectionOf C x y s r)
     : IsEpimorphism r | 1000.</pre>
 </div>
 <div class="code" title="File: Morphisms.v
-Line: 310
+Line: 338
 Time: 0s">
 <div class="time" style="width: 0%"></div>
 <pre>
     Proof.</pre>
 </div>
 <div class="code" title="File: Morphisms.v
-Line: 311
+Line: 339
 Time: 0s">
 <div class="time" style="width: 0%"></div>
 <pre>
       (intros ? m1 m2 ?).</pre>
 </div>
 <div class="code" title="File: Morphisms.v
-Line: 312
+Line: 340
 Time: 0s">
 <div class="time" style="width: 0%"></div>
 <pre>
       unfold IsSectionOf in *.</pre>
 </div>
 <div class="code" title="File: Morphisms.v
-Line: 313
-Time: 0.044s">
-<div class="time" style="width: 8.9613034623218%"></div>
+Line: 341
+Time: 0.047s">
+<div class="time" style="width: 13.276836158192%"></div>
 <pre>
       transitivity ((m1 o r) o s);
         [ | transitivity ((m2 o r) o s) ];
         epi_mono_sect_t.</pre>
 </div>
 <div class="code" title="File: Morphisms.v
-Line: 316
-Time: 0.003s">
-<div class="time" style="width: 0.61099796334012%"></div>
+Line: 344
+Time: 0.002s">
+<div class="time" style="width: 0.56497175141243%"></div>
 <pre>
     Qed.</pre>
 </div>
 <div class="code" title="File: Morphisms.v
-Line: 317
+Line: 345
 Time: 0s">
 <div class="time" style="width: 0%"></div>
 <pre>
@@ -1279,44 +1403,44 @@ Time: 0s">
    </pre>
 </div>
 <div class="code" title="File: Morphisms.v
-Line: 320
+Line: 348
 Time: 0s">
 <div class="time" style="width: 0%"></div>
 <pre>Global Instance ismonomorphism_sect `(@IsSectionOf C x y s r)
     : IsMonomorphism s | 1000.</pre>
 </div>
 <div class="code" title="File: Morphisms.v
-Line: 321
+Line: 349
 Time: 0s">
 <div class="time" style="width: 0%"></div>
 <pre>
     Proof.</pre>
 </div>
 <div class="code" title="File: Morphisms.v
-Line: 322
+Line: 350
 Time: 0s">
 <div class="time" style="width: 0%"></div>
 <pre>
       (intros ? m1 m2 ?).</pre>
 </div>
 <div class="code" title="File: Morphisms.v
-Line: 323
-Time: 0.044s">
-<div class="time" style="width: 8.9613034623218%"></div>
+Line: 351
+Time: 0.046s">
+<div class="time" style="width: 12.994350282486%"></div>
 <pre>
       transitivity (r o (s o m1));
         [ | transitivity (r o (s o m2)) ];
         epi_mono_sect_t.</pre>
 </div>
 <div class="code" title="File: Morphisms.v
-Line: 326
+Line: 354
 Time: 0.002s">
-<div class="time" style="width: 0.40733197556008%"></div>
+<div class="time" style="width: 0.56497175141243%"></div>
 <pre>
     Qed.</pre>
 </div>
 <div class="code" title="File: Morphisms.v
-Line: 327
+Line: 355
 Time: 0s">
 <div class="time" style="width: 0%"></div>
 <pre>
@@ -1325,17 +1449,17 @@ Time: 0s">
    </pre>
 </div>
 <div class="code" title="File: Morphisms.v
-Line: 330
+Line: 358
 Time: 0.001s">
-<div class="time" style="width: 0.20366598778004%"></div>
+<div class="time" style="width: 0.28248587570621%"></div>
 <pre>Global Instance issect_isisomorphism `(@IsIsomorphism C x y m)
     : IsSectionOf m m^-1 | 1000
       := left_inverse.</pre>
 </div>
 <div class="code" title="File: Morphisms.v
-Line: 332
+Line: 360
 Time: 0.001s">
-<div class="time" style="width: 0.20366598778004%"></div>
+<div class="time" style="width: 0.28248587570621%"></div>
 <pre>
 
     Global Instance isretr_isisomorphism `(@IsIsomorphism C x y m)
@@ -1343,14 +1467,14 @@ Time: 0.001s">
       := right_inverse.</pre>
 </div>
 <div class="code" title="File: Morphisms.v
-Line: 336
+Line: 364
 Time: 0.001s">
-<div class="time" style="width: 0.20366598778004%"></div>
+<div class="time" style="width: 0.28248587570621%"></div>
 <pre>
   End sect.</pre>
 </div>
 <div class="code" title="File: Morphisms.v
-Line: 337
+Line: 365
 Time: 0s">
 <div class="time" style="width: 0%"></div>
 <pre>
@@ -1359,45 +1483,45 @@ Time: 0s">
  </pre>
 </div>
 <div class="code" title="File: Morphisms.v
-Line: 340
+Line: 368
 Time: 0s">
 <div class="time" style="width: 0%"></div>
 <pre>Section iso.</pre>
 </div>
 <div class="code" title="File: Morphisms.v
-Line: 340
-Time: 0.002s">
-<div class="time" style="width: 0.40733197556008%"></div>
+Line: 368
+Time: 0.003s">
+<div class="time" style="width: 0.84745762711864%"></div>
 <pre>
     Global Instance isepimorphism_isisomorphism `(@IsIsomorphism C s d m)
     : IsEpimorphism m | 1000
       := _.</pre>
 </div>
 <div class="code" title="File: Morphisms.v
-Line: 343
-Time: 0.002s">
-<div class="time" style="width: 0.40733197556008%"></div>
+Line: 371
+Time: 0.003s">
+<div class="time" style="width: 0.84745762711864%"></div>
 <pre>
     Global Instance ismonomorphism_isisomorphism `(@IsIsomorphism C s d m)
     : IsMonomorphism m | 1000
       := _.</pre>
 </div>
 <div class="code" title="File: Morphisms.v
-Line: 346
+Line: 374
 Time: 0s">
 <div class="time" style="width: 0%"></div>
 <pre>
   End iso.</pre>
 </div>
 <div class="code" title="File: Morphisms.v
-Line: 347
+Line: 375
 Time: 0.007s">
-<div class="time" style="width: 1.4256619144603%"></div>
+<div class="time" style="width: 1.9774011299435%"></div>
 <pre>
 End EpiMono.</pre>
 </div>
 <div class="code" title="File: Morphisms.v
-Line: 348
+Line: 376
 Time: 0s">
 <div class="time" style="width: 0%"></div>
 <pre>
@@ -1405,7 +1529,7 @@ Time: 0s">
 Hint Immediate @isepimorphism_identity @ismonomorphism_identity @ismonomorphism_compose @isepimorphism_compose : category morphism.</pre>
 </div>
 <div class="code" title="File: Morphisms.v
-Line: 350
+Line: 378
 Time: 0s">
 <div class="time" style="width: 0%"></div>
 <pre>
@@ -1413,13 +1537,13 @@ Time: 0s">
 (** ** Lemmas about [idtoiso] *)</pre>
 </div>
 <div class="code" title="File: Morphisms.v
-Line: 352
+Line: 380
 Time: 0s">
 <div class="time" style="width: 0%"></div>
 <pre>Section iso_lemmas.</pre>
 </div>
 <div class="code" title="File: Morphisms.v
-Line: 352
+Line: 380
 Time: 0s">
 <div class="time" style="width: 0%"></div>
 <pre>
@@ -1427,7 +1551,7 @@ Time: 0s">
     path_induction; simpl; autorewrite with morphism; reflexivity.</pre>
 </div>
 <div class="code" title="File: Morphisms.v
-Line: 354
+Line: 382
 Time: 0s">
 <div class="time" style="width: 0%"></div>
 <pre>
@@ -1436,9 +1560,9 @@ Time: 0s">
  </pre>
 </div>
 <div class="code" title="File: Morphisms.v
-Line: 357
+Line: 385
 Time: 0.004s">
-<div class="time" style="width: 0.81466395112016%"></div>
+<div class="time" style="width: 1.1299435028249%"></div>
 <pre>Lemma idtoiso_of_transport (C D : PreCategory) s d
         (m1 m2 : morphism C s d)
         (p : m1 = m2)
@@ -1447,26 +1571,26 @@ Time: 0.004s">
     = idtoiso _ (ap d' p) o u o (idtoiso _ (ap s' p))^-1.</pre>
 </div>
 <div class="code" title="File: Morphisms.v
-Line: 362
+Line: 390
 Time: 0s">
 <div class="time" style="width: 0%"></div>
 <pre>
   Proof.</pre>
 </div>
 <div class="code" title="File: Morphisms.v
-Line: 363
-Time: 0.006s">
-<div class="time" style="width: 1.2219959266802%"></div>
+Line: 391
+Time: 0.007s">
+<div class="time" style="width: 1.9774011299435%"></div>
 <pre> idtoiso_t.</pre>
 </div>
 <div class="code" title="File: Morphisms.v
-Line: 363
+Line: 391
 Time: 0.002s">
-<div class="time" style="width: 0.40733197556008%"></div>
+<div class="time" style="width: 0.56497175141243%"></div>
 <pre> Qed.</pre>
 </div>
 <div class="code" title="File: Morphisms.v
-Line: 363
+Line: 391
 Time: 0s">
 <div class="time" style="width: 0%"></div>
 <pre>
@@ -1475,35 +1599,35 @@ Time: 0s">
  </pre>
 </div>
 <div class="code" title="File: Morphisms.v
-Line: 366
+Line: 394
 Time: 0.001s">
-<div class="time" style="width: 0.20366598778004%"></div>
+<div class="time" style="width: 0.28248587570621%"></div>
 <pre>Lemma idtoiso_inv (C : PreCategory) (s d : C) (p : s = d)
   : (idtoiso _ p)^-1 = idtoiso _ (p^)%path.</pre>
 </div>
 <div class="code" title="File: Morphisms.v
-Line: 367
+Line: 395
 Time: 0s">
 <div class="time" style="width: 0%"></div>
 <pre>
   Proof.</pre>
 </div>
 <div class="code" title="File: Morphisms.v
-Line: 368
+Line: 396
 Time: 0.001s">
-<div class="time" style="width: 0.20366598778004%"></div>
+<div class="time" style="width: 0.28248587570621%"></div>
 <pre>
     path_induction; reflexivity.</pre>
 </div>
 <div class="code" title="File: Morphisms.v
-Line: 369
+Line: 397
 Time: 0s">
 <div class="time" style="width: 0%"></div>
 <pre>
   Defined.</pre>
 </div>
 <div class="code" title="File: Morphisms.v
-Line: 370
+Line: 398
 Time: 0s">
 <div class="time" style="width: 0%"></div>
 <pre>
@@ -1512,166 +1636,12 @@ Time: 0s">
  </pre>
 </div>
 <div class="code" title="File: Morphisms.v
-Line: 373
-Time: 0.001s">
-<div class="time" style="width: 0.20366598778004%"></div>
+Line: 401
+Time: 0.002s">
+<div class="time" style="width: 0.56497175141243%"></div>
 <pre>Lemma idtoiso_comp (C : PreCategory) (s d d' : C)
         (m1 : d = d') (m2 : s = d)
   : idtoiso _ m1 o idtoiso _ m2 = idtoiso _ (m2 @ m1)%path.</pre>
-</div>
-<div class="code" title="File: Morphisms.v
-Line: 375
-Time: 0s">
-<div class="time" style="width: 0%"></div>
-<pre>
-  Proof.</pre>
-</div>
-<div class="code" title="File: Morphisms.v
-Line: 376
-Time: 0.006s">
-<div class="time" style="width: 1.2219959266802%"></div>
-<pre> idtoiso_t.</pre>
-</div>
-<div class="code" title="File: Morphisms.v
-Line: 376
-Time: 0.001s">
-<div class="time" style="width: 0.20366598778004%"></div>
-<pre> Qed.</pre>
-</div>
-<div class="code" title="File: Morphisms.v
-Line: 376
-Time: 0s">
-<div class="time" style="width: 0%"></div>
-<pre>
-
-  (** These are useful when tactics are too slow and [rewrite] doesn't
-      work. *)
- </pre>
-</div>
-<div class="code" title="File: Morphisms.v
-Line: 380
-Time: 0.003s">
-<div class="time" style="width: 0.61099796334012%"></div>
-<pre>Lemma idtoiso_comp3 (C : PreCategory) (s d d' d'' : C)
-        (m0 : d' = d'') (m1 : d = d') (m2 : s = d)
-  : idtoiso _ m0 o (idtoiso _ m1 o idtoiso _ m2) = idtoiso _ ((m2 @ m1) @ m0)%path.</pre>
-</div>
-<div class="code" title="File: Morphisms.v
-Line: 382
-Time: 0s">
-<div class="time" style="width: 0%"></div>
-<pre>
-  Proof.</pre>
-</div>
-<div class="code" title="File: Morphisms.v
-Line: 383
-Time: 0.009s">
-<div class="time" style="width: 1.8329938900204%"></div>
-<pre> idtoiso_t.</pre>
-</div>
-<div class="code" title="File: Morphisms.v
-Line: 383
-Time: 0.003s">
-<div class="time" style="width: 0.61099796334012%"></div>
-<pre> Qed.</pre>
-</div>
-<div class="code" title="File: Morphisms.v
-Line: 383
-Time: 0.002s">
-<div class="time" style="width: 0.40733197556008%"></div>
-<pre>
-
-  Lemma idtoiso_comp3' (C : PreCategory) (s d d' d'' : C)
-        (m0 : d' = d'') (m1 : d = d') (m2 : s = d)
-  : (idtoiso _ m0 o idtoiso _ m1) o idtoiso _ m2 = idtoiso _ (m2 @ (m1 @ m0))%path.</pre>
-</div>
-<div class="code" title="File: Morphisms.v
-Line: 387
-Time: 0s">
-<div class="time" style="width: 0%"></div>
-<pre>
-  Proof.</pre>
-</div>
-<div class="code" title="File: Morphisms.v
-Line: 388
-Time: 0.025s">
-<div class="time" style="width: 5.091649694501%"></div>
-<pre> idtoiso_t.</pre>
-</div>
-<div class="code" title="File: Morphisms.v
-Line: 388
-Time: 0.002s">
-<div class="time" style="width: 0.40733197556008%"></div>
-<pre> Qed.</pre>
-</div>
-<div class="code" title="File: Morphisms.v
-Line: 388
-Time: 0.004s">
-<div class="time" style="width: 0.81466395112016%"></div>
-<pre>
-
-  Lemma idtoiso_comp4 (C : PreCategory) (s d d' d'' d''' : C)
-        (m0 : d'' = d''') (m1 : d' = d'') (m2 : d = d') (m3 : s = d)
-  : idtoiso _ m0 o (idtoiso _ m1 o (idtoiso _ m2 o idtoiso _ m3)) = idtoiso _ (((m3 @ m2) @ m1) @ m0)%path.</pre>
-</div>
-<div class="code" title="File: Morphisms.v
-Line: 392
-Time: 0s">
-<div class="time" style="width: 0%"></div>
-<pre>
-  Proof.</pre>
-</div>
-<div class="code" title="File: Morphisms.v
-Line: 393
-Time: 0.015s">
-<div class="time" style="width: 3.0549898167006%"></div>
-<pre> idtoiso_t.</pre>
-</div>
-<div class="code" title="File: Morphisms.v
-Line: 393
-Time: 0.005s">
-<div class="time" style="width: 1.0183299389002%"></div>
-<pre> Qed.</pre>
-</div>
-<div class="code" title="File: Morphisms.v
-Line: 393
-Time: 0.005s">
-<div class="time" style="width: 1.0183299389002%"></div>
-<pre>
-
-  Lemma idtoiso_comp4' (C : PreCategory) (s d d' d'' d''' : C)
-        (m0 : d'' = d''') (m1 : d' = d'') (m2 : d = d') (m3 : s = d)
-  : ((idtoiso _ m0 o idtoiso _ m1) o idtoiso _ m2) o idtoiso _ m3 = idtoiso _ (m3 @ (m2 @ (m1 @ m0)))%path.</pre>
-</div>
-<div class="code" title="File: Morphisms.v
-Line: 397
-Time: 0s">
-<div class="time" style="width: 0%"></div>
-<pre>
-  Proof.</pre>
-</div>
-<div class="code" title="File: Morphisms.v
-Line: 398
-Time: 0.015s">
-<div class="time" style="width: 3.0549898167006%"></div>
-<pre> idtoiso_t.</pre>
-</div>
-<div class="code" title="File: Morphisms.v
-Line: 398
-Time: 0.004s">
-<div class="time" style="width: 0.81466395112016%"></div>
-<pre> Qed.</pre>
-</div>
-<div class="code" title="File: Morphisms.v
-Line: 398
-Time: 0.006s">
-<div class="time" style="width: 1.2219959266802%"></div>
-<pre>
-
-  Lemma idtoiso_comp5 (C : PreCategory) (s d d' d'' d''' d'''' : C)
-        (m0 : d''' = d'''') (m1 : d'' = d''') (m2 : d' = d'') (m3 : d = d') (m4 : s = d)
-  : idtoiso _ m0 o (idtoiso _ m1 o (idtoiso _ m2 o (idtoiso _ m3 o idtoiso _ m4)))
-    = idtoiso _ ((((m4 @ m3) @ m2) @ m1) @ m0)%path.</pre>
 </div>
 <div class="code" title="File: Morphisms.v
 Line: 403
@@ -1682,62 +1652,62 @@ Time: 0s">
 </div>
 <div class="code" title="File: Morphisms.v
 Line: 404
-Time: 0.016s">
-<div class="time" style="width: 3.2586558044807%"></div>
+Time: 0.006s">
+<div class="time" style="width: 1.6949152542373%"></div>
 <pre> idtoiso_t.</pre>
 </div>
 <div class="code" title="File: Morphisms.v
 Line: 404
-Time: 0.006s">
-<div class="time" style="width: 1.2219959266802%"></div>
+Time: 0.001s">
+<div class="time" style="width: 0.28248587570621%"></div>
 <pre> Qed.</pre>
 </div>
 <div class="code" title="File: Morphisms.v
 Line: 404
-Time: 0.005s">
-<div class="time" style="width: 1.0183299389002%"></div>
+Time: 0s">
+<div class="time" style="width: 0%"></div>
 <pre>
 
-  Lemma idtoiso_comp5' (C : PreCategory) (s d d' d'' d''' d'''' : C)
-        (m0 : d''' = d'''') (m1 : d'' = d''') (m2 : d' = d'') (m3 : d = d') (m4 : s = d)
-  : (((idtoiso _ m0 o idtoiso _ m1) o idtoiso _ m2) o idtoiso _ m3) o idtoiso _ m4
-    = idtoiso _ (m4 @ (m3 @ (m2 @ (m1 @ m0))))%path.</pre>
+  (** These are useful when tactics are too slow and [rewrite] doesn't
+      work. *)
+ </pre>
 </div>
 <div class="code" title="File: Morphisms.v
-Line: 409
+Line: 408
+Time: 0.003s">
+<div class="time" style="width: 0.84745762711864%"></div>
+<pre>Lemma idtoiso_comp3 (C : PreCategory) (s d d' d'' : C)
+        (m0 : d' = d'') (m1 : d = d') (m2 : s = d)
+  : idtoiso _ m0 o (idtoiso _ m1 o idtoiso _ m2) = idtoiso _ ((m2 @ m1) @ m0)%path.</pre>
+</div>
+<div class="code" title="File: Morphisms.v
+Line: 410
 Time: 0s">
 <div class="time" style="width: 0%"></div>
 <pre>
   Proof.</pre>
 </div>
 <div class="code" title="File: Morphisms.v
-Line: 410
-Time: 0.016s">
-<div class="time" style="width: 3.2586558044807%"></div>
+Line: 411
+Time: 0.009s">
+<div class="time" style="width: 2.5423728813559%"></div>
 <pre> idtoiso_t.</pre>
 </div>
 <div class="code" title="File: Morphisms.v
-Line: 410
-Time: 0.006s">
-<div class="time" style="width: 1.2219959266802%"></div>
+Line: 411
+Time: 0.003s">
+<div class="time" style="width: 0.84745762711864%"></div>
 <pre> Qed.</pre>
 </div>
 <div class="code" title="File: Morphisms.v
-Line: 410
-Time: 0s">
-<div class="time" style="width: 0%"></div>
+Line: 411
+Time: 0.003s">
+<div class="time" style="width: 0.84745762711864%"></div>
 <pre>
 
-  (** *** [idtoiso] respects application of functors on morphisms and objects *)
- </pre>
-</div>
-<div class="code" title="File: Morphisms.v
-Line: 413
-Time: 0.002s">
-<div class="time" style="width: 0.40733197556008%"></div>
-<pre>Lemma idtoiso_functor (C D : PreCategory) (s d : C) (m : s = d)
-        (F : Functor C D)
-  : morphism_of F (idtoiso _ m) = idtoiso _ (ap (object_of F) m).</pre>
+  Lemma idtoiso_comp3' (C : PreCategory) (s d d' d'' : C)
+        (m0 : d' = d'') (m1 : d = d') (m2 : s = d)
+  : (idtoiso _ m0 o idtoiso _ m1) o idtoiso _ m2 = idtoiso _ (m2 @ (m1 @ m0))%path.</pre>
 </div>
 <div class="code" title="File: Morphisms.v
 Line: 415
@@ -1748,20 +1718,174 @@ Time: 0s">
 </div>
 <div class="code" title="File: Morphisms.v
 Line: 416
+Time: 0.009s">
+<div class="time" style="width: 2.5423728813559%"></div>
+<pre> idtoiso_t.</pre>
+</div>
+<div class="code" title="File: Morphisms.v
+Line: 416
+Time: 0.003s">
+<div class="time" style="width: 0.84745762711864%"></div>
+<pre> Qed.</pre>
+</div>
+<div class="code" title="File: Morphisms.v
+Line: 416
+Time: 0.004s">
+<div class="time" style="width: 1.1299435028249%"></div>
+<pre>
+
+  Lemma idtoiso_comp4 (C : PreCategory) (s d d' d'' d''' : C)
+        (m0 : d'' = d''') (m1 : d' = d'') (m2 : d = d') (m3 : s = d)
+  : idtoiso _ m0 o (idtoiso _ m1 o (idtoiso _ m2 o idtoiso _ m3)) = idtoiso _ (((m3 @ m2) @ m1) @ m0)%path.</pre>
+</div>
+<div class="code" title="File: Morphisms.v
+Line: 420
+Time: 0s">
+<div class="time" style="width: 0%"></div>
+<pre>
+  Proof.</pre>
+</div>
+<div class="code" title="File: Morphisms.v
+Line: 421
+Time: 0.012s">
+<div class="time" style="width: 3.3898305084746%"></div>
+<pre> idtoiso_t.</pre>
+</div>
+<div class="code" title="File: Morphisms.v
+Line: 421
+Time: 0.004s">
+<div class="time" style="width: 1.1299435028249%"></div>
+<pre> Qed.</pre>
+</div>
+<div class="code" title="File: Morphisms.v
+Line: 421
+Time: 0.004s">
+<div class="time" style="width: 1.1299435028249%"></div>
+<pre>
+
+  Lemma idtoiso_comp4' (C : PreCategory) (s d d' d'' d''' : C)
+        (m0 : d'' = d''') (m1 : d' = d'') (m2 : d = d') (m3 : s = d)
+  : ((idtoiso _ m0 o idtoiso _ m1) o idtoiso _ m2) o idtoiso _ m3 = idtoiso _ (m3 @ (m2 @ (m1 @ m0)))%path.</pre>
+</div>
+<div class="code" title="File: Morphisms.v
+Line: 425
+Time: 0s">
+<div class="time" style="width: 0%"></div>
+<pre>
+  Proof.</pre>
+</div>
+<div class="code" title="File: Morphisms.v
+Line: 426
+Time: 0.012s">
+<div class="time" style="width: 3.3898305084746%"></div>
+<pre> idtoiso_t.</pre>
+</div>
+<div class="code" title="File: Morphisms.v
+Line: 426
+Time: 0.004s">
+<div class="time" style="width: 1.1299435028249%"></div>
+<pre> Qed.</pre>
+</div>
+<div class="code" title="File: Morphisms.v
+Line: 426
+Time: 0.005s">
+<div class="time" style="width: 1.4124293785311%"></div>
+<pre>
+
+  Lemma idtoiso_comp5 (C : PreCategory) (s d d' d'' d''' d'''' : C)
+        (m0 : d''' = d'''') (m1 : d'' = d''') (m2 : d' = d'') (m3 : d = d') (m4 : s = d)
+  : idtoiso _ m0 o (idtoiso _ m1 o (idtoiso _ m2 o (idtoiso _ m3 o idtoiso _ m4)))
+    = idtoiso _ ((((m4 @ m3) @ m2) @ m1) @ m0)%path.</pre>
+</div>
+<div class="code" title="File: Morphisms.v
+Line: 431
+Time: 0s">
+<div class="time" style="width: 0%"></div>
+<pre>
+  Proof.</pre>
+</div>
+<div class="code" title="File: Morphisms.v
+Line: 432
+Time: 0.016s">
+<div class="time" style="width: 4.5197740112994%"></div>
+<pre> idtoiso_t.</pre>
+</div>
+<div class="code" title="File: Morphisms.v
+Line: 432
+Time: 0.022s">
+<div class="time" style="width: 6.2146892655367%"></div>
+<pre> Qed.</pre>
+</div>
+<div class="code" title="File: Morphisms.v
+Line: 432
+Time: 0.005s">
+<div class="time" style="width: 1.4124293785311%"></div>
+<pre>
+
+  Lemma idtoiso_comp5' (C : PreCategory) (s d d' d'' d''' d'''' : C)
+        (m0 : d''' = d'''') (m1 : d'' = d''') (m2 : d' = d'') (m3 : d = d') (m4 : s = d)
+  : (((idtoiso _ m0 o idtoiso _ m1) o idtoiso _ m2) o idtoiso _ m3) o idtoiso _ m4
+    = idtoiso _ (m4 @ (m3 @ (m2 @ (m1 @ m0))))%path.</pre>
+</div>
+<div class="code" title="File: Morphisms.v
+Line: 437
+Time: 0s">
+<div class="time" style="width: 0%"></div>
+<pre>
+  Proof.</pre>
+</div>
+<div class="code" title="File: Morphisms.v
+Line: 438
+Time: 0.016s">
+<div class="time" style="width: 4.5197740112994%"></div>
+<pre> idtoiso_t.</pre>
+</div>
+<div class="code" title="File: Morphisms.v
+Line: 438
+Time: 0.007s">
+<div class="time" style="width: 1.9774011299435%"></div>
+<pre> Qed.</pre>
+</div>
+<div class="code" title="File: Morphisms.v
+Line: 438
+Time: 0s">
+<div class="time" style="width: 0%"></div>
+<pre>
+
+  (** *** [idtoiso] respects application of functors on morphisms and objects *)
+ </pre>
+</div>
+<div class="code" title="File: Morphisms.v
+Line: 441
 Time: 0.002s">
-<div class="time" style="width: 0.40733197556008%"></div>
+<div class="time" style="width: 0.56497175141243%"></div>
+<pre>Lemma idtoiso_functor (C D : PreCategory) (s d : C) (m : s = d)
+        (F : Functor C D)
+  : morphism_of F (idtoiso _ m) = idtoiso _ (ap (object_of F) m).</pre>
+</div>
+<div class="code" title="File: Morphisms.v
+Line: 443
+Time: 0s">
+<div class="time" style="width: 0%"></div>
+<pre>
+  Proof.</pre>
+</div>
+<div class="code" title="File: Morphisms.v
+Line: 444
+Time: 0.001s">
+<div class="time" style="width: 0.28248587570621%"></div>
 <pre>
     path_induction; simpl; apply identity_of.</pre>
 </div>
 <div class="code" title="File: Morphisms.v
-Line: 417
+Line: 445
 Time: 0.001s">
-<div class="time" style="width: 0.20366598778004%"></div>
+<div class="time" style="width: 0.28248587570621%"></div>
 <pre>
   Defined.</pre>
 </div>
 <div class="code" title="File: Morphisms.v
-Line: 418
+Line: 446
 Time: 0s">
 <div class="time" style="width: 0%"></div>
 <pre>
@@ -1770,50 +1894,50 @@ Time: 0s">
  </pre>
 </div>
 <div class="code" title="File: Morphisms.v
-Line: 421
-Time: 0.004s">
-<div class="time" style="width: 0.81466395112016%"></div>
+Line: 449
+Time: 0.003s">
+<div class="time" style="width: 0.84745762711864%"></div>
 <pre>Global Instance iso_functor C D (F : Functor C D) `(@IsIsomorphism C s d m)
   : IsIsomorphism (morphism_of F m)
     := {| morphism_inverse := morphism_of F m^-1 |}.</pre>
 </div>
 <div class="code" title="File: Morphisms.v
-Line: 423
+Line: 451
 Time: 0s">
 <div class="time" style="width: 0%"></div>
 <pre>
   Proof.</pre>
 </div>
 <div class="code" title="File: Morphisms.v
-Line: 424
-Time: 0.009s">
-<div class="time" style="width: 1.8329938900204%"></div>
+Line: 452
+Time: 0.007s">
+<div class="time" style="width: 1.9774011299435%"></div>
 <pre>
     abstract (rewrite &lt;- composition_of, ?left_inverse, ?right_inverse, identity_of; reflexivity).</pre>
 </div>
 <div class="code" title="File: Morphisms.v
-Line: 425
-Time: 0.009s">
-<div class="time" style="width: 1.8329938900204%"></div>
+Line: 453
+Time: 0.008s">
+<div class="time" style="width: 2.2598870056497%"></div>
 <pre>
     abstract (rewrite &lt;- composition_of, ?left_inverse, ?right_inverse, identity_of; reflexivity).</pre>
 </div>
 <div class="code" title="File: Morphisms.v
-Line: 426
+Line: 454
 Time: 0.004s">
-<div class="time" style="width: 0.81466395112016%"></div>
+<div class="time" style="width: 1.1299435028249%"></div>
 <pre>
   Defined.</pre>
 </div>
 <div class="code" title="File: Morphisms.v
-Line: 427
+Line: 455
 Time: 0.013s">
-<div class="time" style="width: 2.6476578411405%"></div>
+<div class="time" style="width: 3.6723163841808%"></div>
 <pre>
 End iso_lemmas.</pre>
 </div>
 <div class="code" title="File: Morphisms.v
-Line: 428
+Line: 456
 Time: 0s">
 <div class="time" style="width: 0%"></div>
 <pre>
@@ -1822,15 +1946,15 @@ Hint Extern 1 (@IsIsomorphism _ _ _ (@morphism_of ?C ?D ?F ?s ?d ?m))
 =&gt; apply (@iso_functor C D F s d m) : typeclass_instances.</pre>
 </div>
 <div class="code" title="File: Morphisms.v
-Line: 431
+Line: 459
 Time: 0.007s">
-<div class="time" style="width: 1.4256619144603%"></div>
+<div class="time" style="width: 1.9774011299435%"></div>
 <pre>
 
 Hint Rewrite idtoiso_of_transport idtoiso_inv idtoiso_comp idtoiso_functor.</pre>
 </div>
 <div class="code" title="File: Morphisms.v
-Line: 433
+Line: 461
 Time: 0s">
 <div class="time" style="width: 0%"></div>
 <pre>
@@ -1838,20 +1962,20 @@ Time: 0s">
 (** ** Lemmas about how to move isomorphisms around equalities, following [HoTT.PathGroupoids] *)</pre>
 </div>
 <div class="code" title="File: Morphisms.v
-Line: 435
+Line: 463
 Time: 0s">
 <div class="time" style="width: 0%"></div>
 <pre>Section iso_concat_lemmas.</pre>
 </div>
 <div class="code" title="File: Morphisms.v
-Line: 435
+Line: 463
 Time: 0s">
 <div class="time" style="width: 0%"></div>
 <pre>
   Variable C : PreCategory.</pre>
 </div>
 <div class="code" title="File: Morphisms.v
-Line: 436
+Line: 464
 Time: 0s">
 <div class="time" style="width: 0%"></div>
 <pre>
@@ -1871,7 +1995,7 @@ Time: 0s">
                  | rewrite &lt;- ?associativity; progress f_ap; [] ].</pre>
 </div>
 <div class="code" title="File: Morphisms.v
-Line: 450
+Line: 478
 Time: 0s">
 <div class="time" style="width: 0%"></div>
 <pre>
@@ -1884,7 +2008,7 @@ Time: 0s">
     iso_concat_t'.</pre>
 </div>
 <div class="code" title="File: Morphisms.v
-Line: 457
+Line: 485
 Time: 0s">
 <div class="time" style="width: 0%"></div>
 <pre>
@@ -1900,7 +2024,7 @@ Time: 0s">
           ] ].</pre>
 </div>
 <div class="code" title="File: Morphisms.v
-Line: 467
+Line: 495
 Time: 0s">
 <div class="time" style="width: 0%"></div>
 <pre>
@@ -1911,9 +2035,9 @@ Time: 0s">
               | solve [ iso_concat_t_id @right_identity ] ].</pre>
 </div>
 <div class="code" title="File: Morphisms.v
-Line: 472
+Line: 500
 Time: 0.001s">
-<div class="time" style="width: 0.20366598778004%"></div>
+<div class="time" style="width: 0.28248587570621%"></div>
 <pre>
 
   Definition iso_compose_pV `(@IsIsomorphism C x y p)
@@ -1921,218 +2045,22 @@ Time: 0.001s">
     := right_inverse.</pre>
 </div>
 <div class="code" title="File: Morphisms.v
-Line: 476
+Line: 504
 Time: 0.001s">
-<div class="time" style="width: 0.20366598778004%"></div>
+<div class="time" style="width: 0.28248587570621%"></div>
 <pre>
   Definition iso_compose_Vp `(@IsIsomorphism C x y p)
   : p^-1 o p = identity _
     := left_inverse.</pre>
 </div>
 <div class="code" title="File: Morphisms.v
-Line: 479
+Line: 507
 Time: 0.001s">
-<div class="time" style="width: 0.20366598778004%"></div>
+<div class="time" style="width: 0.28248587570621%"></div>
 <pre>
 
   Definition iso_compose_V_pp `(@IsIsomorphism C y z p) `(q : morphism C x y)
   : p^-1 o (p o q) = q.</pre>
-</div>
-<div class="code" title="File: Morphisms.v
-Line: 482
-Time: 0s">
-<div class="time" style="width: 0%"></div>
-<pre>
-  Proof.</pre>
-</div>
-<div class="code" title="File: Morphisms.v
-Line: 483
-Time: 0.015s">
-<div class="time" style="width: 3.0549898167006%"></div>
-<pre> iso_concat_t.</pre>
-</div>
-<div class="code" title="File: Morphisms.v
-Line: 483
-Time: 0.001s">
-<div class="time" style="width: 0.20366598778004%"></div>
-<pre> Qed.</pre>
-</div>
-<div class="code" title="File: Morphisms.v
-Line: 483
-Time: 0.001s">
-<div class="time" style="width: 0.20366598778004%"></div>
-<pre>
-
-  Definition iso_compose_p_Vp `(@IsIsomorphism C x z p) `(q : morphism C y z)
-  : p o (p^-1 o q) = q.</pre>
-</div>
-<div class="code" title="File: Morphisms.v
-Line: 486
-Time: 0s">
-<div class="time" style="width: 0%"></div>
-<pre>
-  Proof.</pre>
-</div>
-<div class="code" title="File: Morphisms.v
-Line: 487
-Time: 0.016s">
-<div class="time" style="width: 3.2586558044807%"></div>
-<pre> iso_concat_t.</pre>
-</div>
-<div class="code" title="File: Morphisms.v
-Line: 487
-Time: 0.001s">
-<div class="time" style="width: 0.20366598778004%"></div>
-<pre> Qed.</pre>
-</div>
-<div class="code" title="File: Morphisms.v
-Line: 487
-Time: 0.001s">
-<div class="time" style="width: 0.20366598778004%"></div>
-<pre>
-
-  Definition iso_compose_pp_V `(p : morphism C y z) `(@IsIsomorphism C x y q)
-  : (p o q) o q^-1 = p.</pre>
-</div>
-<div class="code" title="File: Morphisms.v
-Line: 490
-Time: 0s">
-<div class="time" style="width: 0%"></div>
-<pre>
-  Proof.</pre>
-</div>
-<div class="code" title="File: Morphisms.v
-Line: 491
-Time: 0.012s">
-<div class="time" style="width: 2.4439918533605%"></div>
-<pre> iso_concat_t.</pre>
-</div>
-<div class="code" title="File: Morphisms.v
-Line: 491
-Time: 0.001s">
-<div class="time" style="width: 0.20366598778004%"></div>
-<pre> Qed.</pre>
-</div>
-<div class="code" title="File: Morphisms.v
-Line: 491
-Time: 0.001s">
-<div class="time" style="width: 0.20366598778004%"></div>
-<pre>
-
-  Definition iso_compose_pV_p `(p : morphism C x z) `(@IsIsomorphism C x y q)
-  : (p o q^-1) o q = p.</pre>
-</div>
-<div class="code" title="File: Morphisms.v
-Line: 494
-Time: 0s">
-<div class="time" style="width: 0%"></div>
-<pre>
-  Proof.</pre>
-</div>
-<div class="code" title="File: Morphisms.v
-Line: 495
-Time: 0.016s">
-<div class="time" style="width: 3.2586558044807%"></div>
-<pre> iso_concat_t.</pre>
-</div>
-<div class="code" title="File: Morphisms.v
-Line: 495
-Time: 0.001s">
-<div class="time" style="width: 0.20366598778004%"></div>
-<pre> Qed.</pre>
-</div>
-<div class="code" title="File: Morphisms.v
-Line: 495
-Time: 0.005s">
-<div class="time" style="width: 1.0183299389002%"></div>
-<pre>
-
-  Definition iso_inv_pp `(@IsIsomorphism C y z p) `(@IsIsomorphism C x y q)
-  : (p o q)^-1 = q^-1 o p^-1.</pre>
-</div>
-<div class="code" title="File: Morphisms.v
-Line: 498
-Time: 0s">
-<div class="time" style="width: 0%"></div>
-<pre>
-  Proof.</pre>
-</div>
-<div class="code" title="File: Morphisms.v
-Line: 499
-Time: 0s">
-<div class="time" style="width: 0%"></div>
-<pre> iso_concat_t.</pre>
-</div>
-<div class="code" title="File: Morphisms.v
-Line: 499
-Time: 0s">
-<div class="time" style="width: 0%"></div>
-<pre> Qed.</pre>
-</div>
-<div class="code" title="File: Morphisms.v
-Line: 499
-Time: 0.006s">
-<div class="time" style="width: 1.2219959266802%"></div>
-<pre>
-
-  Definition iso_inv_Vp `(@IsIsomorphism C y z p) `(@IsIsomorphism C x z q)
-  : (p^-1 o q)^-1 = q^-1 o p.</pre>
-</div>
-<div class="code" title="File: Morphisms.v
-Line: 502
-Time: 0s">
-<div class="time" style="width: 0%"></div>
-<pre>
-  Proof.</pre>
-</div>
-<div class="code" title="File: Morphisms.v
-Line: 503
-Time: 0s">
-<div class="time" style="width: 0%"></div>
-<pre> iso_concat_t.</pre>
-</div>
-<div class="code" title="File: Morphisms.v
-Line: 503
-Time: 0s">
-<div class="time" style="width: 0%"></div>
-<pre> Qed.</pre>
-</div>
-<div class="code" title="File: Morphisms.v
-Line: 503
-Time: 0.006s">
-<div class="time" style="width: 1.2219959266802%"></div>
-<pre>
-
-  Definition iso_inv_pV `(@IsIsomorphism C x y p) `(@IsIsomorphism C x z q)
-  : (p o q^-1)^-1 = q o p^-1.</pre>
-</div>
-<div class="code" title="File: Morphisms.v
-Line: 506
-Time: 0s">
-<div class="time" style="width: 0%"></div>
-<pre>
-  Proof.</pre>
-</div>
-<div class="code" title="File: Morphisms.v
-Line: 507
-Time: 0s">
-<div class="time" style="width: 0%"></div>
-<pre> iso_concat_t.</pre>
-</div>
-<div class="code" title="File: Morphisms.v
-Line: 507
-Time: 0s">
-<div class="time" style="width: 0%"></div>
-<pre> Qed.</pre>
-</div>
-<div class="code" title="File: Morphisms.v
-Line: 507
-Time: 0.007s">
-<div class="time" style="width: 1.4256619144603%"></div>
-<pre>
-
-  Definition iso_inv_VV `(@IsIsomorphism C x y p) `(@IsIsomorphism C y z q)
-  : (p^-1 o q^-1)^-1 = q o p.</pre>
 </div>
 <div class="code" title="File: Morphisms.v
 Line: 510
@@ -2143,24 +2071,24 @@ Time: 0s">
 </div>
 <div class="code" title="File: Morphisms.v
 Line: 511
-Time: 0s">
-<div class="time" style="width: 0%"></div>
+Time: 0.016s">
+<div class="time" style="width: 4.5197740112994%"></div>
 <pre> iso_concat_t.</pre>
 </div>
 <div class="code" title="File: Morphisms.v
 Line: 511
-Time: 0s">
-<div class="time" style="width: 0%"></div>
+Time: 0.001s">
+<div class="time" style="width: 0.28248587570621%"></div>
 <pre> Qed.</pre>
 </div>
 <div class="code" title="File: Morphisms.v
 Line: 511
-Time: 0.002s">
-<div class="time" style="width: 0.40733197556008%"></div>
+Time: 0.001s">
+<div class="time" style="width: 0.28248587570621%"></div>
 <pre>
 
-  Definition iso_moveR_Mp `(p : morphism C x y) `(q : morphism C x z) `(@IsIsomorphism C y z r)
-  : p = (r^-1 o q) -&gt; (r o p) = q.</pre>
+  Definition iso_compose_p_Vp `(@IsIsomorphism C x z p) `(q : morphism C y z)
+  : p o (p^-1 o q) = q.</pre>
 </div>
 <div class="code" title="File: Morphisms.v
 Line: 514
@@ -2171,24 +2099,24 @@ Time: 0s">
 </div>
 <div class="code" title="File: Morphisms.v
 Line: 515
-Time: 0.023s">
-<div class="time" style="width: 4.6843177189409%"></div>
+Time: 0.016s">
+<div class="time" style="width: 4.5197740112994%"></div>
 <pre> iso_concat_t.</pre>
 </div>
 <div class="code" title="File: Morphisms.v
 Line: 515
-Time: 0.002s">
-<div class="time" style="width: 0.40733197556008%"></div>
+Time: 0.001s">
+<div class="time" style="width: 0.28248587570621%"></div>
 <pre> Qed.</pre>
 </div>
 <div class="code" title="File: Morphisms.v
 Line: 515
-Time: 0.002s">
-<div class="time" style="width: 0.40733197556008%"></div>
+Time: 0.001s">
+<div class="time" style="width: 0.28248587570621%"></div>
 <pre>
 
-  Definition iso_moveR_pM `(@IsIsomorphism C x y p) `(q : morphism C x z) `(r : morphism C y z)
-  : r = (q o p^-1) -&gt; (r o p) = q.</pre>
+  Definition iso_compose_pp_V `(p : morphism C y z) `(@IsIsomorphism C x y q)
+  : (p o q) o q^-1 = p.</pre>
 </div>
 <div class="code" title="File: Morphisms.v
 Line: 518
@@ -2199,24 +2127,24 @@ Time: 0s">
 </div>
 <div class="code" title="File: Morphisms.v
 Line: 519
-Time: 0.019s">
-<div class="time" style="width: 3.8696537678208%"></div>
+Time: 0.013s">
+<div class="time" style="width: 3.6723163841808%"></div>
 <pre> iso_concat_t.</pre>
 </div>
 <div class="code" title="File: Morphisms.v
 Line: 519
-Time: 0.002s">
-<div class="time" style="width: 0.40733197556008%"></div>
+Time: 0.001s">
+<div class="time" style="width: 0.28248587570621%"></div>
 <pre> Qed.</pre>
 </div>
 <div class="code" title="File: Morphisms.v
 Line: 519
-Time: 0.002s">
-<div class="time" style="width: 0.40733197556008%"></div>
+Time: 0.001s">
+<div class="time" style="width: 0.28248587570621%"></div>
 <pre>
 
-  Definition iso_moveR_Vp `(p : morphism C x y) `(q : morphism C x z) `(@IsIsomorphism C z y r)
-  : p = (r o q) -&gt; (r^-1 o p) = q.</pre>
+  Definition iso_compose_pV_p `(p : morphism C x z) `(@IsIsomorphism C x y q)
+  : (p o q^-1) o q = p.</pre>
 </div>
 <div class="code" title="File: Morphisms.v
 Line: 522
@@ -2227,24 +2155,24 @@ Time: 0s">
 </div>
 <div class="code" title="File: Morphisms.v
 Line: 523
-Time: 0.023s">
-<div class="time" style="width: 4.6843177189409%"></div>
+Time: 0.013s">
+<div class="time" style="width: 3.6723163841808%"></div>
 <pre> iso_concat_t.</pre>
 </div>
 <div class="code" title="File: Morphisms.v
 Line: 523
-Time: 0.002s">
-<div class="time" style="width: 0.40733197556008%"></div>
+Time: 0.001s">
+<div class="time" style="width: 0.28248587570621%"></div>
 <pre> Qed.</pre>
 </div>
 <div class="code" title="File: Morphisms.v
 Line: 523
-Time: 0.002s">
-<div class="time" style="width: 0.40733197556008%"></div>
+Time: 0.003s">
+<div class="time" style="width: 0.84745762711864%"></div>
 <pre>
 
-  Definition iso_moveR_pV `(@IsIsomorphism C x y p) `(q : morphism C y z) `(r : morphism C x z)
-  : r = (q o p) -&gt; (r o p^-1) = q.</pre>
+  Definition iso_inv_pp `(@IsIsomorphism C y z p) `(@IsIsomorphism C x y q)
+  : (p o q)^-1 = q^-1 o p^-1.</pre>
 </div>
 <div class="code" title="File: Morphisms.v
 Line: 526
@@ -2255,24 +2183,24 @@ Time: 0s">
 </div>
 <div class="code" title="File: Morphisms.v
 Line: 527
-Time: 0.019s">
-<div class="time" style="width: 3.8696537678208%"></div>
+Time: 0s">
+<div class="time" style="width: 0%"></div>
 <pre> iso_concat_t.</pre>
 </div>
 <div class="code" title="File: Morphisms.v
 Line: 527
-Time: 0.002s">
-<div class="time" style="width: 0.40733197556008%"></div>
+Time: 0s">
+<div class="time" style="width: 0%"></div>
 <pre> Qed.</pre>
 </div>
 <div class="code" title="File: Morphisms.v
 Line: 527
-Time: 0.002s">
-<div class="time" style="width: 0.40733197556008%"></div>
+Time: 0.004s">
+<div class="time" style="width: 1.1299435028249%"></div>
 <pre>
 
-  Definition iso_moveL_Mp `(p : morphism C x y) `(q : morphism C x z) `(@IsIsomorphism C y z r)
-  : (r^-1 o q) = p -&gt; q = (r o p).</pre>
+  Definition iso_inv_Vp `(@IsIsomorphism C y z p) `(@IsIsomorphism C x z q)
+  : (p^-1 o q)^-1 = q^-1 o p.</pre>
 </div>
 <div class="code" title="File: Morphisms.v
 Line: 530
@@ -2283,24 +2211,24 @@ Time: 0s">
 </div>
 <div class="code" title="File: Morphisms.v
 Line: 531
-Time: 0.022s">
-<div class="time" style="width: 4.4806517311609%"></div>
+Time: 0s">
+<div class="time" style="width: 0%"></div>
 <pre> iso_concat_t.</pre>
 </div>
 <div class="code" title="File: Morphisms.v
 Line: 531
-Time: 0.002s">
-<div class="time" style="width: 0.40733197556008%"></div>
+Time: 0s">
+<div class="time" style="width: 0%"></div>
 <pre> Qed.</pre>
 </div>
 <div class="code" title="File: Morphisms.v
 Line: 531
-Time: 0.002s">
-<div class="time" style="width: 0.40733197556008%"></div>
+Time: 0.004s">
+<div class="time" style="width: 1.1299435028249%"></div>
 <pre>
 
-  Definition iso_moveL_pM `(@IsIsomorphism C x y p) `(q : morphism C x z) `(r : morphism C y z)
-  : (q o p^-1) = r -&gt; q = (r o p).</pre>
+  Definition iso_inv_pV `(@IsIsomorphism C x y p) `(@IsIsomorphism C x z q)
+  : (p o q^-1)^-1 = q o p^-1.</pre>
 </div>
 <div class="code" title="File: Morphisms.v
 Line: 534
@@ -2311,24 +2239,24 @@ Time: 0s">
 </div>
 <div class="code" title="File: Morphisms.v
 Line: 535
-Time: 0.028s">
-<div class="time" style="width: 5.7026476578411%"></div>
+Time: 0s">
+<div class="time" style="width: 0%"></div>
 <pre> iso_concat_t.</pre>
 </div>
 <div class="code" title="File: Morphisms.v
 Line: 535
-Time: 0.001s">
-<div class="time" style="width: 0.20366598778004%"></div>
+Time: 0s">
+<div class="time" style="width: 0%"></div>
 <pre> Qed.</pre>
 </div>
 <div class="code" title="File: Morphisms.v
 Line: 535
-Time: 0.002s">
-<div class="time" style="width: 0.40733197556008%"></div>
+Time: 0.005s">
+<div class="time" style="width: 1.4124293785311%"></div>
 <pre>
 
-  Definition iso_moveL_Vp `(p : morphism C x y) `(q : morphism C x z) `(@IsIsomorphism C _ _ r)
-  : (r o q) = p -&gt; q = (r^-1 o p).</pre>
+  Definition iso_inv_VV `(@IsIsomorphism C x y p) `(@IsIsomorphism C y z q)
+  : (p^-1 o q^-1)^-1 = q o p.</pre>
 </div>
 <div class="code" title="File: Morphisms.v
 Line: 538
@@ -2339,24 +2267,24 @@ Time: 0s">
 </div>
 <div class="code" title="File: Morphisms.v
 Line: 539
-Time: 0.022s">
-<div class="time" style="width: 4.4806517311609%"></div>
+Time: 0s">
+<div class="time" style="width: 0%"></div>
 <pre> iso_concat_t.</pre>
 </div>
 <div class="code" title="File: Morphisms.v
 Line: 539
-Time: 0.001s">
-<div class="time" style="width: 0.20366598778004%"></div>
+Time: 0s">
+<div class="time" style="width: 0%"></div>
 <pre> Qed.</pre>
 </div>
 <div class="code" title="File: Morphisms.v
 Line: 539
-Time: 0.002s">
-<div class="time" style="width: 0.40733197556008%"></div>
+Time: 0.001s">
+<div class="time" style="width: 0.28248587570621%"></div>
 <pre>
 
-  Definition iso_moveL_pV `(@IsIsomorphism C x y p) `(q : morphism C y z) r
-  : (q o p) = r -&gt; q = (r o p^-1).</pre>
+  Definition iso_moveR_Mp `(p : morphism C x y) `(q : morphism C x z) `(@IsIsomorphism C y z r)
+  : p = (r^-1 o q) -&gt; (r o p) = q.</pre>
 </div>
 <div class="code" title="File: Morphisms.v
 Line: 542
@@ -2367,24 +2295,24 @@ Time: 0s">
 </div>
 <div class="code" title="File: Morphisms.v
 Line: 543
-Time: 0.018s">
-<div class="time" style="width: 3.6659877800407%"></div>
+Time: 0.017s">
+<div class="time" style="width: 4.8022598870057%"></div>
 <pre> iso_concat_t.</pre>
 </div>
 <div class="code" title="File: Morphisms.v
 Line: 543
 Time: 0.001s">
-<div class="time" style="width: 0.20366598778004%"></div>
+<div class="time" style="width: 0.28248587570621%"></div>
 <pre> Qed.</pre>
 </div>
 <div class="code" title="File: Morphisms.v
 Line: 543
 Time: 0.001s">
-<div class="time" style="width: 0.20366598778004%"></div>
+<div class="time" style="width: 0.28248587570621%"></div>
 <pre>
 
-  Definition iso_moveL_1M `(p : morphism C x y) `(@IsIsomorphism C x y q)
-  : p o q^-1 = identity _ -&gt; p = q.</pre>
+  Definition iso_moveR_pM `(@IsIsomorphism C x y p) `(q : morphism C x z) `(r : morphism C y z)
+  : r = (q o p^-1) -&gt; (r o p) = q.</pre>
 </div>
 <div class="code" title="File: Morphisms.v
 Line: 546
@@ -2395,24 +2323,24 @@ Time: 0s">
 </div>
 <div class="code" title="File: Morphisms.v
 Line: 547
-Time: 0.032s">
-<div class="time" style="width: 6.5173116089613%"></div>
+Time: 0.014s">
+<div class="time" style="width: 3.954802259887%"></div>
 <pre> iso_concat_t.</pre>
 </div>
 <div class="code" title="File: Morphisms.v
 Line: 547
-Time: 0.002s">
-<div class="time" style="width: 0.40733197556008%"></div>
+Time: 0.001s">
+<div class="time" style="width: 0.28248587570621%"></div>
 <pre> Qed.</pre>
 </div>
 <div class="code" title="File: Morphisms.v
 Line: 547
 Time: 0.001s">
-<div class="time" style="width: 0.20366598778004%"></div>
+<div class="time" style="width: 0.28248587570621%"></div>
 <pre>
 
-  Definition iso_moveL_M1 `(p : morphism C x y) `(@IsIsomorphism C x y q)
-  : q^-1 o p = identity _ -&gt; p = q.</pre>
+  Definition iso_moveR_Vp `(p : morphism C x y) `(q : morphism C x z) `(@IsIsomorphism C z y r)
+  : p = (r o q) -&gt; (r^-1 o p) = q.</pre>
 </div>
 <div class="code" title="File: Morphisms.v
 Line: 550
@@ -2423,24 +2351,24 @@ Time: 0s">
 </div>
 <div class="code" title="File: Morphisms.v
 Line: 551
-Time: 0.071s">
-<div class="time" style="width: 14.460285132383%"></div>
+Time: 0.017s">
+<div class="time" style="width: 4.8022598870057%"></div>
 <pre> iso_concat_t.</pre>
 </div>
 <div class="code" title="File: Morphisms.v
 Line: 551
-Time: 0.002s">
-<div class="time" style="width: 0.40733197556008%"></div>
+Time: 0.001s">
+<div class="time" style="width: 0.28248587570621%"></div>
 <pre> Qed.</pre>
 </div>
 <div class="code" title="File: Morphisms.v
 Line: 551
 Time: 0.001s">
-<div class="time" style="width: 0.20366598778004%"></div>
+<div class="time" style="width: 0.28248587570621%"></div>
 <pre>
 
-  Definition iso_moveL_1V `(p : morphism C x y) `(@IsIsomorphism C y x q)
-  : p o q = identity _ -&gt; p = q^-1.</pre>
+  Definition iso_moveR_pV `(@IsIsomorphism C x y p) `(q : morphism C y z) `(r : morphism C x z)
+  : r = (q o p) -&gt; (r o p^-1) = q.</pre>
 </div>
 <div class="code" title="File: Morphisms.v
 Line: 554
@@ -2451,24 +2379,24 @@ Time: 0s">
 </div>
 <div class="code" title="File: Morphisms.v
 Line: 555
-Time: 0.031s">
-<div class="time" style="width: 6.3136456211813%"></div>
+Time: 0.014s">
+<div class="time" style="width: 3.954802259887%"></div>
 <pre> iso_concat_t.</pre>
 </div>
 <div class="code" title="File: Morphisms.v
 Line: 555
-Time: 0.002s">
-<div class="time" style="width: 0.40733197556008%"></div>
+Time: 0.001s">
+<div class="time" style="width: 0.28248587570621%"></div>
 <pre> Qed.</pre>
 </div>
 <div class="code" title="File: Morphisms.v
 Line: 555
 Time: 0.001s">
-<div class="time" style="width: 0.20366598778004%"></div>
+<div class="time" style="width: 0.28248587570621%"></div>
 <pre>
 
-  Definition iso_moveL_V1 `(p : morphism C x y) `(@IsIsomorphism C y x q)
-  : q o p = identity _ -&gt; p = q^-1.</pre>
+  Definition iso_moveL_Mp `(p : morphism C x y) `(q : morphism C x z) `(@IsIsomorphism C y z r)
+  : (r^-1 o q) = p -&gt; q = (r o p).</pre>
 </div>
 <div class="code" title="File: Morphisms.v
 Line: 558
@@ -2479,24 +2407,24 @@ Time: 0s">
 </div>
 <div class="code" title="File: Morphisms.v
 Line: 559
-Time: 0.06s">
-<div class="time" style="width: 12.219959266802%"></div>
+Time: 0.032s">
+<div class="time" style="width: 9.0395480225989%"></div>
 <pre> iso_concat_t.</pre>
 </div>
 <div class="code" title="File: Morphisms.v
 Line: 559
 Time: 0.001s">
-<div class="time" style="width: 0.20366598778004%"></div>
+<div class="time" style="width: 0.28248587570621%"></div>
 <pre> Qed.</pre>
 </div>
 <div class="code" title="File: Morphisms.v
 Line: 559
 Time: 0.001s">
-<div class="time" style="width: 0.20366598778004%"></div>
+<div class="time" style="width: 0.28248587570621%"></div>
 <pre>
 
-  Definition iso_moveR_M1 `(@IsIsomorphism C x y p) q
-  : identity _ = p^-1 o q -&gt; p = q.</pre>
+  Definition iso_moveL_pM `(@IsIsomorphism C x y p) `(q : morphism C x z) `(r : morphism C y z)
+  : (q o p^-1) = r -&gt; q = (r o p).</pre>
 </div>
 <div class="code" title="File: Morphisms.v
 Line: 562
@@ -2507,24 +2435,24 @@ Time: 0s">
 </div>
 <div class="code" title="File: Morphisms.v
 Line: 563
-Time: 0.08s">
-<div class="time" style="width: 16.293279022403%"></div>
+Time: 0.014s">
+<div class="time" style="width: 3.954802259887%"></div>
 <pre> iso_concat_t.</pre>
 </div>
 <div class="code" title="File: Morphisms.v
 Line: 563
-Time: 0.002s">
-<div class="time" style="width: 0.40733197556008%"></div>
+Time: 0.001s">
+<div class="time" style="width: 0.28248587570621%"></div>
 <pre> Qed.</pre>
 </div>
 <div class="code" title="File: Morphisms.v
 Line: 563
 Time: 0.001s">
-<div class="time" style="width: 0.20366598778004%"></div>
+<div class="time" style="width: 0.28248587570621%"></div>
 <pre>
 
-  Definition iso_moveR_1M `(@IsIsomorphism C x y p) q
-  : identity _ = q o p^-1 -&gt; p = q.</pre>
+  Definition iso_moveL_Vp `(p : morphism C x y) `(q : morphism C x z) `(@IsIsomorphism C _ _ r)
+  : (r o q) = p -&gt; q = (r^-1 o p).</pre>
 </div>
 <div class="code" title="File: Morphisms.v
 Line: 566
@@ -2535,24 +2463,24 @@ Time: 0s">
 </div>
 <div class="code" title="File: Morphisms.v
 Line: 567
-Time: 0.054s">
-<div class="time" style="width: 10.997963340122%"></div>
+Time: 0.017s">
+<div class="time" style="width: 4.8022598870057%"></div>
 <pre> iso_concat_t.</pre>
 </div>
 <div class="code" title="File: Morphisms.v
 Line: 567
-Time: 0.002s">
-<div class="time" style="width: 0.40733197556008%"></div>
+Time: 0.001s">
+<div class="time" style="width: 0.28248587570621%"></div>
 <pre> Qed.</pre>
 </div>
 <div class="code" title="File: Morphisms.v
 Line: 567
 Time: 0.001s">
-<div class="time" style="width: 0.20366598778004%"></div>
+<div class="time" style="width: 0.28248587570621%"></div>
 <pre>
 
-  Definition iso_moveR_1V `(@IsIsomorphism C x y p) q
-  : identity _ = q o p -&gt; p^-1 = q.</pre>
+  Definition iso_moveL_pV `(@IsIsomorphism C x y p) `(q : morphism C y z) r
+  : (q o p) = r -&gt; q = (r o p^-1).</pre>
 </div>
 <div class="code" title="File: Morphisms.v
 Line: 570
@@ -2563,24 +2491,24 @@ Time: 0s">
 </div>
 <div class="code" title="File: Morphisms.v
 Line: 571
-Time: 0.053s">
-<div class="time" style="width: 10.794297352342%"></div>
+Time: 0.014s">
+<div class="time" style="width: 3.954802259887%"></div>
 <pre> iso_concat_t.</pre>
 </div>
 <div class="code" title="File: Morphisms.v
 Line: 571
-Time: 0.002s">
-<div class="time" style="width: 0.40733197556008%"></div>
+Time: 0.001s">
+<div class="time" style="width: 0.28248587570621%"></div>
 <pre> Qed.</pre>
 </div>
 <div class="code" title="File: Morphisms.v
 Line: 571
 Time: 0.001s">
-<div class="time" style="width: 0.20366598778004%"></div>
+<div class="time" style="width: 0.28248587570621%"></div>
 <pre>
 
-  Definition iso_moveR_V1 `(@IsIsomorphism C x y p) q
-  : identity _ = p o q -&gt; p^-1 = q.</pre>
+  Definition iso_moveL_1M `(p : morphism C x y) `(@IsIsomorphism C x y q)
+  : p o q^-1 = identity _ -&gt; p = q.</pre>
 </div>
 <div class="code" title="File: Morphisms.v
 Line: 574
@@ -2591,25 +2519,221 @@ Time: 0s">
 </div>
 <div class="code" title="File: Morphisms.v
 Line: 575
-Time: 0.074s">
-<div class="time" style="width: 15.071283095723%"></div>
+Time: 0.025s">
+<div class="time" style="width: 7.0621468926554%"></div>
 <pre> iso_concat_t.</pre>
 </div>
 <div class="code" title="File: Morphisms.v
 Line: 575
-Time: 0.002s">
-<div class="time" style="width: 0.40733197556008%"></div>
+Time: 0.001s">
+<div class="time" style="width: 0.28248587570621%"></div>
 <pre> Qed.</pre>
 </div>
 <div class="code" title="File: Morphisms.v
 Line: 575
+Time: 0.001s">
+<div class="time" style="width: 0.28248587570621%"></div>
+<pre>
+
+  Definition iso_moveL_M1 `(p : morphism C x y) `(@IsIsomorphism C x y q)
+  : q^-1 o p = identity _ -&gt; p = q.</pre>
+</div>
+<div class="code" title="File: Morphisms.v
+Line: 578
+Time: 0s">
+<div class="time" style="width: 0%"></div>
+<pre>
+  Proof.</pre>
+</div>
+<div class="code" title="File: Morphisms.v
+Line: 579
+Time: 0.056s">
+<div class="time" style="width: 15.819209039548%"></div>
+<pre> iso_concat_t.</pre>
+</div>
+<div class="code" title="File: Morphisms.v
+Line: 579
+Time: 0.001s">
+<div class="time" style="width: 0.28248587570621%"></div>
+<pre> Qed.</pre>
+</div>
+<div class="code" title="File: Morphisms.v
+Line: 579
+Time: 0.001s">
+<div class="time" style="width: 0.28248587570621%"></div>
+<pre>
+
+  Definition iso_moveL_1V `(p : morphism C x y) `(@IsIsomorphism C y x q)
+  : p o q = identity _ -&gt; p = q^-1.</pre>
+</div>
+<div class="code" title="File: Morphisms.v
+Line: 582
+Time: 0s">
+<div class="time" style="width: 0%"></div>
+<pre>
+  Proof.</pre>
+</div>
+<div class="code" title="File: Morphisms.v
+Line: 583
+Time: 0.025s">
+<div class="time" style="width: 7.0621468926554%"></div>
+<pre> iso_concat_t.</pre>
+</div>
+<div class="code" title="File: Morphisms.v
+Line: 583
+Time: 0.001s">
+<div class="time" style="width: 0.28248587570621%"></div>
+<pre> Qed.</pre>
+</div>
+<div class="code" title="File: Morphisms.v
+Line: 583
+Time: 0.001s">
+<div class="time" style="width: 0.28248587570621%"></div>
+<pre>
+
+  Definition iso_moveL_V1 `(p : morphism C x y) `(@IsIsomorphism C y x q)
+  : q o p = identity _ -&gt; p = q^-1.</pre>
+</div>
+<div class="code" title="File: Morphisms.v
+Line: 586
+Time: 0s">
+<div class="time" style="width: 0%"></div>
+<pre>
+  Proof.</pre>
+</div>
+<div class="code" title="File: Morphisms.v
+Line: 587
+Time: 0.054s">
+<div class="time" style="width: 15.254237288136%"></div>
+<pre> iso_concat_t.</pre>
+</div>
+<div class="code" title="File: Morphisms.v
+Line: 587
+Time: 0.001s">
+<div class="time" style="width: 0.28248587570621%"></div>
+<pre> Qed.</pre>
+</div>
+<div class="code" title="File: Morphisms.v
+Line: 587
+Time: 0.001s">
+<div class="time" style="width: 0.28248587570621%"></div>
+<pre>
+
+  Definition iso_moveR_M1 `(@IsIsomorphism C x y p) q
+  : identity _ = p^-1 o q -&gt; p = q.</pre>
+</div>
+<div class="code" title="File: Morphisms.v
+Line: 590
+Time: 0s">
+<div class="time" style="width: 0%"></div>
+<pre>
+  Proof.</pre>
+</div>
+<div class="code" title="File: Morphisms.v
+Line: 591
+Time: 0.08s">
+<div class="time" style="width: 22.598870056497%"></div>
+<pre> iso_concat_t.</pre>
+</div>
+<div class="code" title="File: Morphisms.v
+Line: 591
+Time: 0.002s">
+<div class="time" style="width: 0.56497175141243%"></div>
+<pre> Qed.</pre>
+</div>
+<div class="code" title="File: Morphisms.v
+Line: 591
+Time: 0.001s">
+<div class="time" style="width: 0.28248587570621%"></div>
+<pre>
+
+  Definition iso_moveR_1M `(@IsIsomorphism C x y p) q
+  : identity _ = q o p^-1 -&gt; p = q.</pre>
+</div>
+<div class="code" title="File: Morphisms.v
+Line: 594
+Time: 0s">
+<div class="time" style="width: 0%"></div>
+<pre>
+  Proof.</pre>
+</div>
+<div class="code" title="File: Morphisms.v
+Line: 595
+Time: 0.044s">
+<div class="time" style="width: 12.429378531073%"></div>
+<pre> iso_concat_t.</pre>
+</div>
+<div class="code" title="File: Morphisms.v
+Line: 595
+Time: 0.002s">
+<div class="time" style="width: 0.56497175141243%"></div>
+<pre> Qed.</pre>
+</div>
+<div class="code" title="File: Morphisms.v
+Line: 595
+Time: 0.001s">
+<div class="time" style="width: 0.28248587570621%"></div>
+<pre>
+
+  Definition iso_moveR_1V `(@IsIsomorphism C x y p) q
+  : identity _ = q o p -&gt; p^-1 = q.</pre>
+</div>
+<div class="code" title="File: Morphisms.v
+Line: 598
+Time: 0s">
+<div class="time" style="width: 0%"></div>
+<pre>
+  Proof.</pre>
+</div>
+<div class="code" title="File: Morphisms.v
+Line: 599
+Time: 0.044s">
+<div class="time" style="width: 12.429378531073%"></div>
+<pre> iso_concat_t.</pre>
+</div>
+<div class="code" title="File: Morphisms.v
+Line: 599
+Time: 0.002s">
+<div class="time" style="width: 0.56497175141243%"></div>
+<pre> Qed.</pre>
+</div>
+<div class="code" title="File: Morphisms.v
+Line: 599
+Time: 0.001s">
+<div class="time" style="width: 0.28248587570621%"></div>
+<pre>
+
+  Definition iso_moveR_V1 `(@IsIsomorphism C x y p) q
+  : identity _ = p o q -&gt; p^-1 = q.</pre>
+</div>
+<div class="code" title="File: Morphisms.v
+Line: 602
+Time: 0s">
+<div class="time" style="width: 0%"></div>
+<pre>
+  Proof.</pre>
+</div>
+<div class="code" title="File: Morphisms.v
+Line: 603
+Time: 0.076s">
+<div class="time" style="width: 21.468926553672%"></div>
+<pre> iso_concat_t.</pre>
+</div>
+<div class="code" title="File: Morphisms.v
+Line: 603
+Time: 0.002s">
+<div class="time" style="width: 0.56497175141243%"></div>
+<pre> Qed.</pre>
+</div>
+<div class="code" title="File: Morphisms.v
+Line: 603
 Time: 0.016s">
-<div class="time" style="width: 3.2586558044807%"></div>
+<div class="time" style="width: 4.5197740112994%"></div>
 <pre>
 End iso_concat_lemmas.</pre>
 </div>
 <div class="code" title="File: Morphisms.v
-Line: 576
+Line: 604
 Time: 0s">
 <div class="time" style="width: 0%"></div>
 <pre>
@@ -2617,7 +2741,7 @@ Time: 0s">
 (** ** Tactics for moving inverses around *)</pre>
 </div>
 <div class="code" title="File: Morphisms.v
-Line: 578
+Line: 606
 Time: 0s">
 <div class="time" style="width: 0%"></div>
 <pre>Ltac iso_move_inverse' :=
@@ -2633,7 +2757,7 @@ Time: 0s">
   end.</pre>
 </div>
 <div class="code" title="File: Morphisms.v
-Line: 588
+Line: 616
 Time: 0s">
 <div class="time" style="width: 0%"></div>
 <pre>
@@ -2641,7 +2765,7 @@ Time: 0s">
 Ltac iso_move_inverse := progress repeat iso_move_inverse'.</pre>
 </div>
 <div class="code" title="File: Morphisms.v
-Line: 590
+Line: 618
 Time: 0s">
 <div class="time" style="width: 0%"></div>
 <pre>
@@ -2653,7 +2777,7 @@ Time: 0s">
 </pre>
 </div>
 <div class="code" title="File: Morphisms.v
-Line: 595
+Line: 623
 Time: 0s">
 <div class="time" style="width: 0%"></div>
 <pre>Ltac iso_collapse_inverse_left' :=
@@ -2661,7 +2785,7 @@ Time: 0s">
         | progress rewrite ?iso_compose_p_Vp, ?iso_compose_V_pp ].</pre>
 </div>
 <div class="code" title="File: Morphisms.v
-Line: 597
+Line: 625
 Time: 0s">
 <div class="time" style="width: 0%"></div>
 <pre>
@@ -2671,7 +2795,7 @@ Ltac iso_collapse_inverse_left :=
   progress repeat iso_collapse_inverse_left'.</pre>
 </div>
 <div class="code" title="File: Morphisms.v
-Line: 601
+Line: 629
 Time: 0s">
 <div class="time" style="width: 0%"></div>
 <pre>
@@ -2681,7 +2805,7 @@ Ltac iso_collapse_inverse_right' :=
         | progress rewrite ?iso_compose_pV_p, ?iso_compose_pp_V ].</pre>
 </div>
 <div class="code" title="File: Morphisms.v
-Line: 605
+Line: 633
 Time: 0s">
 <div class="time" style="width: 0%"></div>
 <pre>
@@ -2691,7 +2815,7 @@ Ltac iso_collapse_inverse_right :=
   progress repeat iso_collapse_inverse_right'.</pre>
 </div>
 <div class="code" title="File: Morphisms.v
-Line: 609
+Line: 637
 Time: 0s">
 <div class="time" style="width: 0%"></div>
 <pre>
@@ -2701,7 +2825,7 @@ Ltac iso_collapse_inverse :=
                         | iso_collapse_inverse_right ].</pre>
 </div>
 <div class="code" title="File: Morphisms.v
-Line: 613
+Line: 641
 Time: 0s">
 <div class="time" style="width: 0%"></div>
 <pre>
@@ -2709,21 +2833,21 @@ Time: 0s">
 Section associativity_composition.</pre>
 </div>
 <div class="code" title="File: Morphisms.v
-Line: 615
+Line: 643
 Time: 0s">
 <div class="time" style="width: 0%"></div>
 <pre>
   Variable C : PreCategory.</pre>
 </div>
 <div class="code" title="File: Morphisms.v
-Line: 616
+Line: 644
 Time: 0s">
 <div class="time" style="width: 0%"></div>
 <pre>
   Variables x0 x1 x2 x3 x4 : C.</pre>
 </div>
 <div class="code" title="File: Morphisms.v
-Line: 617
+Line: 645
 Time: 0s">
 <div class="time" style="width: 0%"></div>
 <pre>
@@ -2732,44 +2856,44 @@ Time: 0s">
  </pre>
 </div>
 <div class="code" title="File: Morphisms.v
-Line: 620
+Line: 648
 Time: 0.001s">
-<div class="time" style="width: 0.20366598778004%"></div>
+<div class="time" style="width: 0.28248587570621%"></div>
 <pre>Lemma compose4associativity_helper
     (a : morphism C x3 x4) (b : morphism C x2 x3)
     (c : morphism C x1 x2) (d : morphism C x0 x1)
   : a o b o c o d = (a o ((b o c) o d)).</pre>
 </div>
 <div class="code" title="File: Morphisms.v
-Line: 623
+Line: 651
 Time: 0s">
 <div class="time" style="width: 0%"></div>
 <pre>
   Proof.</pre>
 </div>
 <div class="code" title="File: Morphisms.v
-Line: 624
+Line: 652
 Time: 0.004s">
-<div class="time" style="width: 0.81466395112016%"></div>
+<div class="time" style="width: 1.1299435028249%"></div>
 <pre>
     rewrite !associativity; reflexivity.</pre>
 </div>
 <div class="code" title="File: Morphisms.v
-Line: 625
+Line: 653
 Time: 0.001s">
-<div class="time" style="width: 0.20366598778004%"></div>
+<div class="time" style="width: 0.28248587570621%"></div>
 <pre>
   Qed.</pre>
 </div>
 <div class="code" title="File: Morphisms.v
-Line: 626
+Line: 654
 Time: 0s">
 <div class="time" style="width: 0%"></div>
 <pre>
 End associativity_composition.</pre>
 </div>
 <div class="code" title="File: Morphisms.v
-Line: 627
+Line: 655
 Time: 0s">
 <div class="time" style="width: 0%"></div>
 <pre>
@@ -2777,14 +2901,14 @@ Time: 0s">
 Module Export CategoryMorphismsNotations.</pre>
 </div>
 <div class="code" title="File: Morphisms.v
-Line: 629
+Line: 657
 Time: 0s">
 <div class="time" style="width: 0%"></div>
 <pre>
   Notation "m ^-1" := (morphism_inverse m) (at level 3, format "m '^-1'") : morphism_scope.</pre>
 </div>
 <div class="code" title="File: Morphisms.v
-Line: 630
+Line: 658
 Time: 0s">
 <div class="time" style="width: 0%"></div>
 <pre>
@@ -2792,7 +2916,7 @@ Time: 0s">
   Infix "&lt;~=~&gt;" := Isomorphic (at level 70, no associativity) : category_scope.</pre>
 </div>
 <div class="code" title="File: Morphisms.v
-Line: 632
+Line: 660
 Time: 0s">
 <div class="time" style="width: 0%"></div>
 <pre>
@@ -2801,7 +2925,7 @@ Time: 0s">
                           (at level 99, right associativity, y at level 200).</pre>
 </div>
 <div class="code" title="File: Morphisms.v
-Line: 635
+Line: 663
 Time: 0s">
 <div class="time" style="width: 0%"></div>
 <pre>
@@ -2809,14 +2933,14 @@ Time: 0s">
                           (at level 99, right associativity, y at level 200).</pre>
 </div>
 <div class="code" title="File: Morphisms.v
-Line: 637
+Line: 665
 Time: 0s">
 <div class="time" style="width: 0%"></div>
 <pre>
 End CategoryMorphismsNotations.</pre>
 </div>
 <div class="code" title="File: Morphisms.v
-Line: 639
+Line: 667
 Time: 0s">
 <div class="time" style="width: 0%"></div>
 <pre>
