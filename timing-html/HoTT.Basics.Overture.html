@@ -85,7 +85,7 @@ Definition relation (A : Type) := A -&gt; A -&gt; Type.</pre>
 <div class="code" title="File: Overture.v
 Line: 13
 Time: 0.001s">
-<div class="time" style="width: 11.111111111111%"></div>
+<div class="time" style="width: 33.333333333333%"></div>
 <pre>
 
 Class Reflexive {A} (R : relation A) :=
@@ -94,7 +94,7 @@ Class Reflexive {A} (R : relation A) :=
 <div class="code" title="File: Overture.v
 Line: 16
 Time: 0.001s">
-<div class="time" style="width: 11.111111111111%"></div>
+<div class="time" style="width: 33.333333333333%"></div>
 <pre>
 
 Class Symmetric {A} (R : relation A) :=
@@ -103,7 +103,7 @@ Class Symmetric {A} (R : relation A) :=
 <div class="code" title="File: Overture.v
 Line: 19
 Time: 0.001s">
-<div class="time" style="width: 11.111111111111%"></div>
+<div class="time" style="width: 33.333333333333%"></div>
 <pre>
 
 Class Transitive {A} (R : relation A) :=
@@ -119,8 +119,8 @@ Time: 0s">
 </div>
 <div class="code" title="File: Overture.v
 Line: 24
-Time: 0.002s">
-<div class="time" style="width: 22.222222222222%"></div>
+Time: 0.001s">
+<div class="time" style="width: 33.333333333333%"></div>
 <pre>Class PreOrder {A} (R : relation A) :=
   { PreOrder_Reflexive : Reflexive R | 2 ;
     PreOrder_Transitive : Transitive R | 2 }.</pre>
@@ -489,13 +489,13 @@ Time: 0s">
 Line: 103
 Time: 0s">
 <div class="time" style="width: 0%"></div>
-<pre>Notation compose := (fun g' f' x =&gt; g' (f' x)).</pre>
+<pre>Notation compose := (fun g f x =&gt; g (f x)).</pre>
 </div>
 <div class="code" title="File: Overture.v
 Line: 103
 Time: 0s">
 <div class="time" style="width: 0%"></div>
-<pre> (* use primed names because https://coq.inria.fr/bugs/show_bug.cgi?id=3892 *)
+<pre>
 
 (** We put the following notation in a scope because leaving it unscoped causes it to override identical notations in other scopes.  It's convenient to use the same notation for, e.g., function composition, morphism composition in a category, and functor composition, and let Coq automatically infer which one we mean by scopes.  We can't do this if this notation isn't scoped.  Unfortunately, Coq doesn't have a built-in [function_scope] like [type_scope]; [type_scope] is automatically opened wherever Coq is expecting a [Sort], and it would be nice if [function_scope] were automatically opened whenever Coq expects a thing of type [forall _, _] or [_ -&gt; _].  To work around this, we open [function_scope] globally. *)</pre>
 </div>
@@ -535,8 +535,8 @@ Time: 0s">
 </div>
 <div class="code" title="File: Overture.v
 Line: 109
-Time: 0.004s">
-<div class="time" style="width: 44.444444444444%"></div>
+Time: 0.003s">
+<div class="time" style="width: 100%"></div>
 <pre>Definition iff_compose {A B C : Type} (g : B &lt;-&gt; C) (f : A &lt;-&gt; B)
 : A &lt;-&gt; C
 := (fst g o fst f , snd f o snd g).</pre>
@@ -551,8 +551,8 @@ Time: 0s">
 </div>
 <div class="code" title="File: Overture.v
 Line: 113
-Time: 0.002s">
-<div class="time" style="width: 22.222222222222%"></div>
+Time: 0.001s">
+<div class="time" style="width: 33.333333333333%"></div>
 <pre>Definition iff_inverse {A B : Type} : (A &lt;-&gt; B) -&gt; (B &lt;-&gt; A)
   := fun f =&gt; (snd f , fst f).</pre>
 </div>
@@ -566,8 +566,8 @@ Time: 0s">
 </div>
 <div class="code" title="File: Overture.v
 Line: 116
-Time: 0.001s">
-<div class="time" style="width: 11.111111111111%"></div>
+Time: 0s">
+<div class="time" style="width: 0%"></div>
 <pre>Definition composeD {A B C} (g : forall b, C b) (f : A -&gt; B) := fun x : A =&gt; g (f x).</pre>
 </div>
 <div class="code" title="File: Overture.v
@@ -681,8 +681,8 @@ Time: 0s">
 </div>
 <div class="code" title="File: Overture.v
 Line: 141
-Time: 0.001s">
-<div class="time" style="width: 11.111111111111%"></div>
+Time: 0s">
+<div class="time" style="width: 0%"></div>
 <pre>Lemma paths_rew A a y P (X : P a) (H : a = y :&gt; A) : P y.</pre>
 </div>
 <div class="code" title="File: Overture.v
@@ -694,8 +694,8 @@ Proof.</pre>
 </div>
 <div class="code" title="File: Overture.v
 Line: 142
-Time: 0.001s">
-<div class="time" style="width: 11.111111111111%"></div>
+Time: 0s">
+<div class="time" style="width: 0%"></div>
 <pre> rewrite &lt;- H.</pre>
 </div>
 <div class="code" title="File: Overture.v
@@ -851,8 +851,8 @@ Time: 0s">
 </div>
 <div class="code" title="File: Overture.v
 Line: 165
-Time: 0s">
-<div class="time" style="width: 0%"></div>
+Time: 0.001s">
+<div class="time" style="width: 33.333333333333%"></div>
 <pre>Definition inverse {A : Type} {x y : A} (p : x = y) : y = x
   := match p with idpath =&gt; idpath end.</pre>
 </div>
@@ -917,8 +917,8 @@ Module Export symmetric_paths := inverseSymmetric inverse.
 </div>
 <div class="code" title="File: Overture.v
 Line: 194
-Time: 0.001s">
-<div class="time" style="width: 11.111111111111%"></div>
+Time: 0.002s">
+<div class="time" style="width: 66.666666666667%"></div>
 <pre>Definition concat {A : Type} {x y z : A} (p : x = y) (q : y = z) : x = z :=
   match p, q with idpath, idpath =&gt; idpath end.</pre>
 </div>
@@ -1024,8 +1024,8 @@ Time: 0s">
 </div>
 <div class="code" title="File: Overture.v
 Line: 217
-Time: 0s">
-<div class="time" style="width: 0%"></div>
+Time: 0.001s">
+<div class="time" style="width: 33.333333333333%"></div>
 <pre>Definition transport {A : Type} (P : A -&gt; Type) {x y : A} (p : x = y) (u : P x) : P y :=
   match p with idpath =&gt; u end.</pre>
 </div>
@@ -1091,7 +1091,7 @@ We will first see this appearing in the type of [apD]. *)
 <div class="code" title="File: Overture.v
 Line: 234
 Time: 0.001s">
-<div class="time" style="width: 11.111111111111%"></div>
+<div class="time" style="width: 33.333333333333%"></div>
 <pre>Definition ap {A B:Type} (f:A -&gt; B) {x y:A} (p:x = y) : f x = f y
   := match p with idpath =&gt; idpath end.</pre>
 </div>
@@ -1141,7 +1141,7 @@ Notation "f == g" := (pointwise_paths f g) (at level 70, no associativity) : typ
 <div class="code" title="File: Overture.v
 Line: 247
 Time: 0.001s">
-<div class="time" style="width: 11.111111111111%"></div>
+<div class="time" style="width: 33.333333333333%"></div>
 <pre>
 
 Definition apD10 {A} {B:A-&gt;Type} {f g : forall x, B x} (h:f=g)
@@ -1151,7 +1151,7 @@ Definition apD10 {A} {B:A-&gt;Type} {f g : forall x, B x} (h:f=g)
 <div class="code" title="File: Overture.v
 Line: 251
 Time: 0.001s">
-<div class="time" style="width: 11.111111111111%"></div>
+<div class="time" style="width: 33.333333333333%"></div>
 <pre>
 
 Definition ap10 {A B} {f g:A-&gt;B} (h:f=g) : f == g
@@ -1188,8 +1188,8 @@ Proof.</pre>
 </div>
 <div class="code" title="File: Overture.v
 Line: 259
-Time: 0.001s">
-<div class="time" style="width: 11.111111111111%"></div>
+Time: 0.002s">
+<div class="time" style="width: 66.666666666667%"></div>
 <pre>
   case h, p; reflexivity.</pre>
 </div>
@@ -1229,7 +1229,7 @@ Time: 0s">
 <div class="code" title="File: Overture.v
 Line: 268
 Time: 0.002s">
-<div class="time" style="width: 22.222222222222%"></div>
+<div class="time" style="width: 66.666666666667%"></div>
 <pre>Definition apD {A:Type} {B:A-&gt;Type} (f:forall a:A, B a) {x y:A} (p:x=y):
   p # (f x) = f y
   :=
@@ -1291,7 +1291,7 @@ Time: 0s">
 <div class="code" title="File: Overture.v
 Line: 294
 Time: 0.003s">
-<div class="time" style="width: 33.333333333333%"></div>
+<div class="time" style="width: 100%"></div>
 <pre>Class IsEquiv {A B : Type} (f : A -&gt; B) := BuildIsEquiv {
   equiv_inv : B -&gt; A ;
   eisretr : Sect equiv_inv f;
@@ -1309,8 +1309,8 @@ Arguments eisretr {A B} f {_} _.</pre>
 </div>
 <div class="code" title="File: Overture.v
 Line: 301
-Time: 0.009s">
-<div class="time" style="width: 100%"></div>
+Time: 0s">
+<div class="time" style="width: 0%"></div>
 <pre>
 Arguments eissect {A B} f {_} _.</pre>
 </div>
@@ -1332,7 +1332,7 @@ Time: 0s">
 <div class="code" title="File: Overture.v
 Line: 305
 Time: 0.001s">
-<div class="time" style="width: 11.111111111111%"></div>
+<div class="time" style="width: 33.333333333333%"></div>
 <pre>Record Equiv A B := BuildEquiv {
   equiv_fun : A -&gt; B ;
   equiv_isequiv : IsEquiv equiv_fun
@@ -1672,8 +1672,8 @@ Coercion nat_to_trunc_index : nat &gt;-&gt; trunc_index.</pre>
 </div>
 <div class="code" title="File: Overture.v
 Line: 392
-Time: 0s">
-<div class="time" style="width: 0%"></div>
+Time: 0.001s">
+<div class="time" style="width: 33.333333333333%"></div>
 <pre>
 
 Fixpoint IsTrunc_internal (n : trunc_index) (A : Type) : Type :=
@@ -1740,7 +1740,7 @@ Time: 0s">
 <div class="code" title="File: Overture.v
 Line: 408
 Time: 0.001s">
-<div class="time" style="width: 11.111111111111%"></div>
+<div class="time" style="width: 33.333333333333%"></div>
 <pre>Global Instance istrunc_paths (A : Type) n `{H : IsTrunc n.+1 A} (x y : A)
 : IsTrunc n (x = y)
   := H x y.</pre>
@@ -1770,7 +1770,7 @@ Time: 0s">
 <div class="code" title="File: Overture.v
 Line: 413
 Time: 0.001s">
-<div class="time" style="width: 11.111111111111%"></div>
+<div class="time" style="width: 33.333333333333%"></div>
 <pre>Hint Extern 10 =&gt;
 progress match goal with
            | [ H : forall x y : ?T, IsTrunc ?n (x = y) |- _ ]
@@ -1886,7 +1886,7 @@ Monomorphic Class Funext := { dummy_funext_value : dummy_funext_type }.</pre>
 <div class="code" title="File: Overture.v
 Line: 456
 Time: 0.001s">
-<div class="time" style="width: 11.111111111111%"></div>
+<div class="time" style="width: 33.333333333333%"></div>
 <pre>
 Axiom isequiv_apD10 : forall `{Funext} (A : Type) (P : A -&gt; Type) f g, IsEquiv (@apD10 A P f g).</pre>
 </div>
@@ -1900,7 +1900,7 @@ Global Existing Instance isequiv_apD10.</pre>
 <div class="code" title="File: Overture.v
 Line: 458
 Time: 0.002s">
-<div class="time" style="width: 22.222222222222%"></div>
+<div class="time" style="width: 66.666666666667%"></div>
 <pre>
 
 Definition path_forall `{Funext} {A : Type} {P : A -&gt; Type} (f g : forall x : A, P x) :
@@ -1910,8 +1910,8 @@ Definition path_forall `{Funext} {A : Type} {P : A -&gt; Type} (f g : forall x :
 </div>
 <div class="code" title="File: Overture.v
 Line: 463
-Time: 0.002s">
-<div class="time" style="width: 22.222222222222%"></div>
+Time: 0.003s">
+<div class="time" style="width: 100%"></div>
 <pre>
 
 Definition path_forall2 `{Funext} {A B : Type} {P : A -&gt; B -&gt; Type} (f g : forall x y, P x y) :
@@ -2036,8 +2036,8 @@ Notation "x &lt;&gt; y" := (x &lt;&gt; y :&gt; _) (at level 70, no associativity
 </div>
 <div class="code" title="File: Overture.v
 Line: 499
-Time: 0s">
-<div class="time" style="width: 0%"></div>
+Time: 0.001s">
+<div class="time" style="width: 33.333333333333%"></div>
 <pre>
 
 Definition complement {A} (R : relation A) : relation A :=
@@ -2054,7 +2054,7 @@ Typeclasses Opaque complement.</pre>
 <div class="code" title="File: Overture.v
 Line: 504
 Time: 0.001s">
-<div class="time" style="width: 11.111111111111%"></div>
+<div class="time" style="width: 33.333333333333%"></div>
 <pre>
 
 Class Irreflexive {A} (R : relation A) :=
@@ -2063,7 +2063,7 @@ Class Irreflexive {A} (R : relation A) :=
 <div class="code" title="File: Overture.v
 Line: 507
 Time: 0.002s">
-<div class="time" style="width: 22.222222222222%"></div>
+<div class="time" style="width: 66.666666666667%"></div>
 <pre>
 
 Class Asymmetric {A} (R : relation A) :=
@@ -2186,8 +2186,8 @@ Time: 0s">
 </div>
 <div class="code" title="File: Overture.v
 Line: 540
-Time: 0.002s">
-<div class="time" style="width: 22.222222222222%"></div>
+Time: 0.001s">
+<div class="time" style="width: 33.333333333333%"></div>
 <pre>Require Export Coq.Program.Tactics.</pre>
 </div>
 <div class="code" title="File: Overture.v
