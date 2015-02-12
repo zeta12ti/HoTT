@@ -214,6 +214,29 @@ We make the identity map a notation so we do not have to unfold it,
 </div>
 
 <div class="doc">
+We define various scopes and open them in the order we expect to use them. 
+</div>
+<div class="code">
+<span class="id" title="keyword">Delimit</span> <span class="id" title="keyword">Scope</span> <span class="id" title="var">equiv_scope</span> <span class="id" title="keyword">with</span> <span class="id" title="var">equiv</span>.<br/>
+<span class="id" title="keyword">Delimit</span> <span class="id" title="keyword">Scope</span> <span class="id" title="var">function_scope</span> <span class="id" title="keyword">with</span> <span class="id" title="var">function</span>.<br/>
+<span class="id" title="keyword">Delimit</span> <span class="id" title="keyword">Scope</span> <span class="id" title="var">path_scope</span> <span class="id" title="keyword">with</span> <span class="id" title="var">path</span>.<br/>
+<span class="id" title="keyword">Delimit</span> <span class="id" title="keyword">Scope</span> <span class="id" title="var">fibration_scope</span> <span class="id" title="keyword">with</span> <span class="id" title="var">fibration</span>.<br/>
+<span class="id" title="keyword">Delimit</span> <span class="id" title="keyword">Scope</span> <span class="id" title="var">trunc_scope</span> <span class="id" title="keyword">with</span> <span class="id" title="var">trunc</span>.<br/>
+
+<br/>
+<span class="id" title="keyword">Open</span> <span class="id" title="keyword">Scope</span> <span class="id" title="var">trunc_scope</span>.<br/>
+<span class="id" title="keyword">Open</span> <span class="id" title="keyword">Scope</span> <span class="id" title="var">equiv_scope</span>.<br/>
+<span class="id" title="keyword">Open</span> <span class="id" title="keyword">Scope</span> <span class="id" title="var">path_scope</span>.<br/>
+<span class="id" title="keyword">Open</span> <span class="id" title="keyword">Scope</span> <span class="id" title="var">fibration_scope</span>.<br/>
+<span class="id" title="keyword">Open</span> <span class="id" title="keyword">Scope</span> <span class="id" title="var">nat_scope</span>.<br/>
+<span class="id" title="keyword">Open</span> <span class="id" title="keyword">Scope</span> <span class="id" title="var">function_scope</span>.<br/>
+<span class="id" title="keyword">Open</span> <span class="id" title="keyword">Scope</span> <span class="id" title="var">type_scope</span>.<br/>
+<span class="id" title="keyword">Open</span> <span class="id" title="keyword">Scope</span> <span class="id" title="var">core_scope</span>.<br/>
+
+<br/>
+</div>
+
+<div class="doc">
 <a name="lab6"></a><h3 class="section">Constant functions</h3>
 
 </div>
@@ -228,7 +251,6 @@ We define notation for dependent pairs because it is too annoying to write and s
 </div>
 <div class="code">
 <span class="id" title="keyword">Notation</span> <a name="6219320773dc83ab7d1d441169459b9d"><span class="id" title="notation">&quot;</span></a>( x ; y )" := (<a class="idref" href="Coq.Init.Specif.html#existT"><span class="id" title="abbreviation">existT</span></a> <span class="id" title="var">_</span> <span class="id" title="var">x</span> <span class="id" title="var">y</span>) : <span class="id" title="var">fibration_scope</span>.<br/>
-<span class="id" title="keyword">Open</span> <span class="id" title="keyword">Scope</span> <span class="id" title="var">fibration_scope</span>.<br/>
 </div>
 
 <div class="doc">
@@ -273,17 +295,14 @@ Composition of functions.
 
 <div class="doc">
 We put the following notation in a scope because leaving it unscoped causes it to override identical notations in other scopes.  It's convenient to use the same notation for, e.g., function composition, morphism composition in a category, and functor composition, and let Coq automatically infer which one we mean by scopes.  We can't do this if this notation isn't scoped.  Unfortunately, Coq doesn't have a built-in <span class="inlinecode"><span class="id" title="var">function_scope</span></span> like <span class="inlinecode"><span class="id" title="var">type_scope</span></span>; <span class="inlinecode"><span class="id" title="var">type_scope</span></span> is automatically opened wherever Coq is expecting a <span class="inlinecode"><span class="id" title="keyword">Sort</span></span>, and it would be nice if <span class="inlinecode"><span class="id" title="var">function_scope</span></span> were automatically opened whenever Coq expects a thing of type <span class="inlinecode"><span class="id" title="keyword">∀</span></span> <span class="inlinecode"><span class="id" title="var">_</span>,</span> <span class="inlinecode"><span class="id" title="var">_</span></span> or <span class="inlinecode"><span class="id" title="var">_</span></span> <span class="inlinecode">→</span> <span class="inlinecode"><span class="id" title="var">_</span></span>.  To work around this, we open <span class="inlinecode"><span class="id" title="var">function_scope</span></span> globally. 
-</div>
-<div class="code">
-<span class="id" title="keyword">Notation</span> <a name="edadc0d66ba2e614f03a8e21622242b7"><span class="id" title="notation">&quot;</span></a>g &acute;o&acute; f" := (<a class="idref" href="HoTT.Basics.Overture.html#compose"><span class="id" title="abbreviation">compose</span></a> <span class="id" title="var">g</span> <span class="id" title="var">f</span>) (<span class="id" title="tactic">at</span> <span class="id" title="keyword">level</span> 40, <span class="id" title="tactic">left</span> <span class="id" title="keyword">associativity</span>) : <span class="id" title="var">function_scope</span>.<br/>
-<span class="id" title="keyword">Open</span> <span class="id" title="keyword">Scope</span> <span class="id" title="var">function_scope</span>.<br/>
-</div>
+<div class="paragraph"> </div>
 
-<div class="doc">
-We allow writing <span class="inlinecode">(<a class="idref" href="HoTTBookExercises.html#Book_4_5.parts.f"><span class="id" title="variable">f</span></a></span> <span class="inlinecode"><span class="id" title="var">o</span></span> <span class="inlinecode"><a class="idref" href="HoTTBookExercises.html#Book_4_5.parts.g"><span class="id" title="variable">g</span></a>)%<a class="idref" href="HoTT.hit.V.html#function"><span class="id" title="lemma">function</span></a></span> to force <span class="inlinecode"><span class="id" title="var">function_scope</span></span> over, e.g., <span class="inlinecode"><span class="id" title="var">equiv_scope</span></span>. 
+ We allow writing <span class="inlinecode">(<a class="idref" href="HoTTBookExercises.html#Book_4_5.parts.f"><span class="id" title="variable">f</span></a></span> <span class="inlinecode"><span class="id" title="var">o</span></span> <span class="inlinecode"><a class="idref" href="HoTTBookExercises.html#Book_4_5.parts.g"><span class="id" title="variable">g</span></a>)%<a class="idref" href="HoTT.hit.V.html#function"><span class="id" title="lemma">function</span></a></span> to force <span class="inlinecode"><span class="id" title="var">function_scope</span></span> over, e.g., <span class="inlinecode"><span class="id" title="var">morphism_scope</span></span>. 
 </div>
 <div class="code">
-<span class="id" title="keyword">Delimit</span> <span class="id" title="keyword">Scope</span> <span class="id" title="var">function_scope</span> <span class="id" title="keyword">with</span> <span class="id" title="var">function</span>.<br/>
+
+<br/>
+<span class="id" title="keyword">Notation</span> <a name="edadc0d66ba2e614f03a8e21622242b7"><span class="id" title="notation">&quot;</span></a>g &acute;o&acute; f" := (<a class="idref" href="HoTT.Basics.Overture.html#compose"><span class="id" title="abbreviation">compose</span></a> <span class="id" title="var">g</span>%<span class="id" title="var">function</span> <span class="id" title="var">f</span>%<span class="id" title="var">function</span>) (<span class="id" title="tactic">at</span> <span class="id" title="keyword">level</span> 40, <span class="id" title="tactic">left</span> <span class="id" title="keyword">associativity</span>) : <span class="id" title="var">function_scope</span>.<br/>
 
 <br/>
 </div>
@@ -314,6 +333,9 @@ Dependent composition of functions.
 </div>
 <div class="code">
 <span class="id" title="keyword">Definition</span> <a name="composeD"><span class="id" title="definition">composeD</span></a> {<span class="id" title="var">A</span> <span class="id" title="var">B</span> <span class="id" title="var">C</span>} (<span class="id" title="var">g</span> : <span class="id" title="keyword">∀</span> <span class="id" title="var">b</span>, <a class="idref" href="HoTT.Basics.Overture.html#C"><span class="id" title="variable">C</span></a> <a class="idref" href="HoTT.Basics.Overture.html#b"><span class="id" title="variable">b</span></a>) (<span class="id" title="var">f</span> : <a class="idref" href="HoTT.Basics.Overture.html#A"><span class="id" title="variable">A</span></a> <a class="idref" href="Coq.Init.Logic.html#d43e996736952df71ebeeae74d10a287"><span class="id" title="notation">→</span></a> <a class="idref" href="HoTT.Basics.Overture.html#B"><span class="id" title="variable">B</span></a>) := <span class="id" title="keyword">fun</span> <span class="id" title="var">x</span> : <a class="idref" href="HoTT.Basics.Overture.html#A"><span class="id" title="variable">A</span></a> ⇒ <a class="idref" href="HoTT.Basics.Overture.html#g"><span class="id" title="variable">g</span></a> (<a class="idref" href="HoTT.Basics.Overture.html#f"><span class="id" title="variable">f</span></a> <a class="idref" href="HoTT.Basics.Overture.html#x"><span class="id" title="variable">x</span></a>).<br/>
+
+<br/>
+<span class="id" title="keyword">Global</span>&nbsp;<span class="id" title="var">Arguments</span> <a class="idref" href="HoTT.Basics.Overture.html#composeD"><span class="id" title="definition">composeD</span></a> {<span class="id" title="var">A</span> <span class="id" title="var">B</span> <span class="id" title="var">C</span>}%<span class="id" title="var">type_scope</span> (<span class="id" title="var">g</span> <span class="id" title="var">f</span>)%<span class="id" title="var">function_scope</span> <span class="id" title="var">x</span>.<br/>
 
 <br/>
 <span class="id" title="keyword">Hint Unfold</span> <a class="idref" href="HoTT.Basics.Overture.html#composeD"><span class="id" title="definition">composeD</span></a>.<br/>
@@ -393,21 +415,15 @@ Our identity type is the Paulin-Mohring style.  We derive the Martin-Lof elimina
 
 <div class="doc">
 We declare a scope in which we shall place path notations. This way they can be turned on and off by the user. 
-</div>
-<div class="code">
+<div class="paragraph"> </div>
 
-<br/>
-<span class="id" title="keyword">Delimit</span> <span class="id" title="keyword">Scope</span> <span class="id" title="var">path_scope</span> <span class="id" title="keyword">with</span> <span class="id" title="var">path</span>.<br/>
-<span class="id" title="keyword">Local</span>&nbsp;<span class="id" title="keyword">Open</span> <span class="id" title="keyword">Scope</span> <span class="id" title="var">path_scope</span>.<br/>
-
-<br/>
-</div>
-
-<div class="doc">
-We bind <span class="inlinecode"><span class="id" title="var">path_scope</span></span> to <span class="inlinecode"><a class="idref" href="HoTT.Basics.Overture.html#paths"><span class="id" title="inductive">paths</span></a></span> so that when we are constructing arguments to things like <span class="inlinecode"><a class="idref" href="HoTT.Tactics.RewriteModuloAssociativity.html#examples.concat"><span class="id" title="section">concat</span></a></span>, we automatically are in <span class="inlinecode"><span class="id" title="var">path_scope</span></span>. 
+ We bind <span class="inlinecode"><span class="id" title="var">path_scope</span></span> to <span class="inlinecode"><a class="idref" href="HoTT.Basics.Overture.html#paths"><span class="id" title="inductive">paths</span></a></span> so that when we are constructing arguments to things like <span class="inlinecode"><a class="idref" href="HoTT.Tactics.RewriteModuloAssociativity.html#examples.concat"><span class="id" title="section">concat</span></a></span>, we automatically are in <span class="inlinecode"><span class="id" title="var">path_scope</span></span>. 
 </div>
 <div class="code">
 <span class="id" title="keyword">Bind</span> <span class="id" title="keyword">Scope</span> <span class="id" title="var">path_scope</span> <span class="id" title="keyword">with</span> <span class="id" title="var">paths</span>.<br/>
+
+<br/>
+<span class="id" title="keyword">Local</span>&nbsp;<span class="id" title="keyword">Open</span> <span class="id" title="keyword">Scope</span> <span class="id" title="var">path_scope</span>.<br/>
 
 <br/>
 </div>
@@ -496,19 +512,19 @@ Note that you can use the Coq tactics <span class="inlinecode"><span class="id" 
 </div>
 
 <div class="doc">
-The composition of two paths. 
+The composition of two paths.  We put <span class="inlinecode"><a class="idref" href="HoTT.categories.KanExtensions.Functors.html#kan_extension_functors.p"><span class="id" title="variable">p</span></a></span> and <span class="inlinecode"><a class="idref" href="HoTT.Factorization.html#FactSys.q"><span class="id" title="variable">q</span></a></span> in <span class="inlinecode"><span class="id" title="var">path_scope</span></span> explcitly.  This is a partial work-around for https://coq.inria.fr/bugs/show_bug.cgi?id=3990, which is that implicitly bound scopes don't nest well. 
 </div>
 <div class="code">
-<span class="id" title="keyword">Notation</span> <a name="3351948a6e0d36c4877ab109ffc3dfc9"><span class="id" title="notation">&quot;</span></a>p @ q" := (<a class="idref" href="HoTT.Basics.Overture.html#concat"><span class="id" title="definition">concat</span></a> <span class="id" title="var">p</span> <span class="id" title="var">q</span>) (<span class="id" title="tactic">at</span> <span class="id" title="keyword">level</span> 20) : <span class="id" title="var">path_scope</span>.<br/>
+<span class="id" title="keyword">Notation</span> <a name="3351948a6e0d36c4877ab109ffc3dfc9"><span class="id" title="notation">&quot;</span></a>p @ q" := (<a class="idref" href="HoTT.Basics.Overture.html#concat"><span class="id" title="definition">concat</span></a> <span class="id" title="var">p</span>%<span class="id" title="var">path</span> <span class="id" title="var">q</span>%<span class="id" title="var">path</span>) (<span class="id" title="tactic">at</span> <span class="id" title="keyword">level</span> 20) : <span class="id" title="var">path_scope</span>.<br/>
 
 <br/>
 </div>
 
 <div class="doc">
-The inverse of a path. 
+The inverse of a path.  See above about explicitly placing <span class="inlinecode"><a class="idref" href="HoTT.categories.KanExtensions.Functors.html#kan_extension_functors.p"><span class="id" title="variable">p</span></a></span> in <span class="inlinecode"><span class="id" title="var">path_scope</span></span>. 
 </div>
 <div class="code">
-<span class="id" title="keyword">Notation</span> <a name="29af923c7a8513334b9f1a5189c731d3"><span class="id" title="notation">&quot;</span></a>p ^" := (<a class="idref" href="HoTT.Basics.Overture.html#inverse"><span class="id" title="definition">inverse</span></a> <span class="id" title="var">p</span>) (<span class="id" title="tactic">at</span> <span class="id" title="keyword">level</span> 3, <span class="id" title="var">format</span> "p '^'") : <span class="id" title="var">path_scope</span>.<br/>
+<span class="id" title="keyword">Notation</span> <a name="29af923c7a8513334b9f1a5189c731d3"><span class="id" title="notation">&quot;</span></a>p ^" := (<a class="idref" href="HoTT.Basics.Overture.html#inverse"><span class="id" title="definition">inverse</span></a> <span class="id" title="var">p</span>%<span class="id" title="var">path</span>) (<span class="id" title="tactic">at</span> <span class="id" title="keyword">level</span> 3, <span class="id" title="var">format</span> "p '^'") : <span class="id" title="var">path_scope</span>.<br/>
 
 <br/>
 </div>
@@ -541,7 +557,7 @@ An important instance of <span class="inlinecode"><a class="idref" href="HoTT.Ba
 See above for the meaning of <span class="inlinecode"><span class="id" title="tactic">simpl</span></span> <span class="inlinecode"><span class="id" title="var">nomatch</span></span>. 
 </div>
 <div class="code">
-<span class="id" title="var">Arguments</span> <a class="idref" href="HoTT.Basics.Overture.html#transport"><span class="id" title="definition">transport</span></a> {<span class="id" title="var">A</span>} <span class="id" title="var">P</span> {<span class="id" title="var">x</span> <span class="id" title="var">y</span>} <span class="id" title="var">p</span>%<span class="id" title="var">path_scope</span> <span class="id" title="var">u</span> : <span class="id" title="tactic">simpl</span> <span class="id" title="var">nomatch</span>.<br/>
+<span class="id" title="var">Arguments</span> <a class="idref" href="HoTT.Basics.Overture.html#transport"><span class="id" title="definition">transport</span></a> {<span class="id" title="var">A</span>}%<span class="id" title="var">type_scope</span> <span class="id" title="var">P</span>%<span class="id" title="var">function_scope</span> {<span class="id" title="var">x</span> <span class="id" title="var">y</span>} <span class="id" title="var">p</span>%<span class="id" title="var">path_scope</span> <span class="id" title="var">u</span> : <span class="id" title="tactic">simpl</span> <span class="id" title="var">nomatch</span>.<br/>
 
 <br/>
 </div>
@@ -550,8 +566,6 @@ See above for the meaning of <span class="inlinecode"><span class="id" title="ta
 Transport is very common so it is worth introducing a parsing notation for it.  However, we do not use the notation for output because it hides the fibration, and so makes it very hard to read involved transport expression.
 </div>
 <div class="code">
-<span class="id" title="keyword">Delimit</span> <span class="id" title="keyword">Scope</span> <span class="id" title="var">fib_scope</span> <span class="id" title="keyword">with</span> <span class="id" title="var">fib</span>.<br/>
-<span class="id" title="keyword">Local</span>&nbsp;<span class="id" title="keyword">Open</span> <span class="id" title="keyword">Scope</span> <span class="id" title="var">fib_scope</span>.<br/>
 
 <br/>
 <span class="id" title="keyword">Notation</span> <a name="e4b535f859a91001a949d70407b794ae"><span class="id" title="notation">&quot;</span></a>p # x" := (<a class="idref" href="HoTT.Basics.Overture.html#transport"><span class="id" title="definition">transport</span></a> <span class="id" title="var">_</span> <span class="id" title="var">p</span> <span class="id" title="var">x</span>) (<span class="id" title="tactic">right</span> <span class="id" title="keyword">associativity</span>, <span class="id" title="tactic">at</span> <span class="id" title="keyword">level</span> 65, <span class="id" title="var">only</span> <span class="id" title="var">parsing</span>) : <span class="id" title="var">path_scope</span>.<br/>
@@ -580,6 +594,9 @@ We will first see this appearing in the type of <span class="inlinecode"><a clas
 &nbsp;&nbsp;:= <span class="id" title="keyword">match</span> <a class="idref" href="HoTT.Basics.Overture.html#p"><span class="id" title="variable">p</span></a> <span class="id" title="keyword">with</span> <a class="idref" href="HoTT.Basics.Overture.html#idpath"><span class="id" title="constructor">idpath</span></a> ⇒ <a class="idref" href="HoTT.Basics.Overture.html#idpath"><span class="id" title="constructor">idpath</span></a> <span class="id" title="keyword">end</span>.<br/>
 
 <br/>
+<span class="id" title="keyword">Global</span>&nbsp;<span class="id" title="var">Arguments</span> <a class="idref" href="HoTT.Basics.Overture.html#ap"><span class="id" title="definition">ap</span></a> {<span class="id" title="var">A</span> <span class="id" title="var">B</span>}%<span class="id" title="var">type_scope</span> <span class="id" title="var">f</span>%<span class="id" title="var">function_scope</span> {<span class="id" title="var">x</span> <span class="id" title="var">y</span>} <span class="id" title="var">p</span>%<span class="id" title="var">path_scope</span>.<br/>
+
+<br/>
 </div>
 
 <div class="doc">
@@ -597,7 +614,7 @@ We introduce the convention that <span class="inlinecode"><span class="id" title
 &nbsp;&nbsp;:= <span class="id" title="keyword">∀</span> <span class="id" title="var">x</span>:<a class="idref" href="HoTT.Basics.Overture.html#A"><span class="id" title="variable">A</span></a>, <a class="idref" href="HoTT.Basics.Overture.html#f"><span class="id" title="variable">f</span></a> <a class="idref" href="HoTT.Basics.Overture.html#x"><span class="id" title="variable">x</span></a> <a class="idref" href="HoTT.Basics.Overture.html#1c39bf18749e5cc609e83c0a0ba5a372"><span class="id" title="notation">=</span></a> <a class="idref" href="HoTT.Basics.Overture.html#g"><span class="id" title="variable">g</span></a> <a class="idref" href="HoTT.Basics.Overture.html#x"><span class="id" title="variable">x</span></a>.<br/>
 
 <br/>
-<span class="id" title="var">Arguments</span> <a class="idref" href="HoTT.Basics.Overture.html#pointwise_paths"><span class="id" title="definition">pointwise_paths</span></a> {<span class="id" title="var">A</span>}%<span class="id" title="var">type_scope</span> {<span class="id" title="var">P</span>} (<span class="id" title="var">f</span> <span class="id" title="var">g</span>)%<span class="id" title="var">function_scope</span>.<br/>
+<span class="id" title="keyword">Global</span>&nbsp;<span class="id" title="var">Arguments</span> <a class="idref" href="HoTT.Basics.Overture.html#pointwise_paths"><span class="id" title="definition">pointwise_paths</span></a> {<span class="id" title="var">A</span>}%<span class="id" title="var">type_scope</span> {<span class="id" title="var">P</span>} (<span class="id" title="var">f</span> <span class="id" title="var">g</span>)%<span class="id" title="var">function_scope</span>.<br/>
 
 <br/>
 <span class="id" title="keyword">Hint Unfold</span> <a class="idref" href="HoTT.Basics.Overture.html#pointwise_paths"><span class="id" title="definition">pointwise_paths</span></a> : <span class="id" title="var">typeclass_instances</span>.<br/>
@@ -611,8 +628,14 @@ We introduce the convention that <span class="inlinecode"><span class="id" title
 &nbsp;&nbsp;:= <span class="id" title="keyword">fun</span> <span class="id" title="var">x</span> ⇒ <span class="id" title="keyword">match</span> <a class="idref" href="HoTT.Basics.Overture.html#h"><span class="id" title="variable">h</span></a> <span class="id" title="keyword">with</span> <a class="idref" href="HoTT.Basics.Overture.html#idpath"><span class="id" title="constructor">idpath</span></a> ⇒ 1 <span class="id" title="keyword">end</span>.<br/>
 
 <br/>
+<span class="id" title="keyword">Global</span>&nbsp;<span class="id" title="var">Arguments</span> <a class="idref" href="HoTT.Basics.Overture.html#apD10"><span class="id" title="definition">apD10</span></a> {<span class="id" title="var">A</span>%<span class="id" title="var">type_scope</span> <span class="id" title="var">B</span>} {<span class="id" title="var">f</span> <span class="id" title="var">g</span>}%<span class="id" title="var">function_scope</span> <span class="id" title="var">h</span>%<span class="id" title="var">path_scope</span> <span class="id" title="var">_</span>.<br/>
+
+<br/>
 <span class="id" title="keyword">Definition</span> <a name="ap10"><span class="id" title="definition">ap10</span></a> {<span class="id" title="var">A</span> <span class="id" title="var">B</span>} {<span class="id" title="var">f</span> <span class="id" title="var">g</span>:<a class="idref" href="HoTT.Basics.Overture.html#A"><span class="id" title="variable">A</span></a><a class="idref" href="Coq.Init.Logic.html#d43e996736952df71ebeeae74d10a287"><span class="id" title="notation">→</span></a><a class="idref" href="HoTT.Basics.Overture.html#B"><span class="id" title="variable">B</span></a>} (<span class="id" title="var">h</span>:<a class="idref" href="HoTT.Basics.Overture.html#f"><span class="id" title="variable">f</span></a><a class="idref" href="HoTT.Basics.Overture.html#1c39bf18749e5cc609e83c0a0ba5a372"><span class="id" title="notation">=</span></a><a class="idref" href="HoTT.Basics.Overture.html#g"><span class="id" title="variable">g</span></a>) : <a class="idref" href="HoTT.Basics.Overture.html#f"><span class="id" title="variable">f</span></a> <a class="idref" href="HoTT.Basics.Overture.html#cfa37b78c28623fd2a8dbbdb5f080ad4"><span class="id" title="notation">==</span></a> <a class="idref" href="HoTT.Basics.Overture.html#g"><span class="id" title="variable">g</span></a><br/>
 &nbsp;&nbsp;:= <a class="idref" href="HoTT.Basics.Overture.html#apD10"><span class="id" title="definition">apD10</span></a> <a class="idref" href="HoTT.Basics.Overture.html#h"><span class="id" title="variable">h</span></a>.<br/>
+
+<br/>
+<span class="id" title="keyword">Global</span>&nbsp;<span class="id" title="var">Arguments</span> <a class="idref" href="HoTT.Basics.Overture.html#ap10"><span class="id" title="definition">ap10</span></a> {<span class="id" title="var">A</span> <span class="id" title="var">B</span>}%<span class="id" title="var">type_scope</span> {<span class="id" title="var">f</span> <span class="id" title="var">g</span>}%<span class="id" title="var">function_scope</span> <span class="id" title="var">h</span>%<span class="id" title="var">path_scope</span> <span class="id" title="var">_</span>.<br/>
 
 <br/>
 </div>
@@ -628,6 +651,9 @@ For the benefit of readers of the HoTT Book:
 <span class="id" title="keyword">Proof</span>.<br/>
 &nbsp;&nbsp;<span class="id" title="tactic">case</span> <span class="id" title="var">h</span>, <span class="id" title="var">p</span>; <span class="id" title="tactic">reflexivity</span>.<br/>
 <span class="id" title="keyword">Defined</span>.<br/>
+
+<br/>
+<span class="id" title="keyword">Global</span>&nbsp;<span class="id" title="var">Arguments</span> <a class="idref" href="HoTT.Basics.Overture.html#ap11"><span class="id" title="definition">ap11</span></a> {<span class="id" title="var">A</span> <span class="id" title="var">B</span>}%<span class="id" title="var">type_scope</span> {<span class="id" title="var">f</span> <span class="id" title="var">g</span>}%<span class="id" title="var">function_scope</span> <span class="id" title="var">h</span>%<span class="id" title="var">path_scope</span> {<span class="id" title="var">x</span> <span class="id" title="var">y</span>} <span class="id" title="var">p</span>%<span class="id" title="var">path_scope</span>.<br/>
 
 <br/>
 </div>
@@ -663,7 +689,7 @@ Similarly, dependent functions act on paths; but the type is a bit more subtle. 
 See above for the meaning of <span class="inlinecode"><span class="id" title="tactic">simpl</span></span> <span class="inlinecode"><span class="id" title="var">nomatch</span></span>. 
 </div>
 <div class="code">
-<span class="id" title="var">Arguments</span> <a class="idref" href="HoTT.Basics.Overture.html#apD"><span class="id" title="definition">apD</span></a> {<span class="id" title="var">A</span> <span class="id" title="var">B</span>} <span class="id" title="var">f</span> {<span class="id" title="var">x</span> <span class="id" title="var">y</span>} <span class="id" title="var">p</span> : <span class="id" title="tactic">simpl</span> <span class="id" title="var">nomatch</span>.<br/>
+<span class="id" title="var">Arguments</span> <a class="idref" href="HoTT.Basics.Overture.html#apD"><span class="id" title="definition">apD</span></a> {<span class="id" title="var">A</span>%<span class="id" title="var">type_scope</span> <span class="id" title="var">B</span>} <span class="id" title="var">f</span>%<span class="id" title="var">function_scope</span> {<span class="id" title="var">x</span> <span class="id" title="var">y</span>} <span class="id" title="var">p</span>%<span class="id" title="var">path_scope</span> : <span class="id" title="tactic">simpl</span> <span class="id" title="var">nomatch</span>.<br/>
 
 <br/>
 </div>
@@ -706,6 +732,9 @@ See above for the meaning of <span class="inlinecode"><span class="id" title="ta
 &nbsp;&nbsp;<span class="id" title="keyword">∀</span> <span class="id" title="var">x</span> : <a class="idref" href="HoTT.Basics.Overture.html#A"><span class="id" title="variable">A</span></a>, <a class="idref" href="HoTT.Basics.Overture.html#r"><span class="id" title="variable">r</span></a> (<a class="idref" href="HoTT.Basics.Overture.html#s"><span class="id" title="variable">s</span></a> <a class="idref" href="HoTT.Basics.Overture.html#x"><span class="id" title="variable">x</span></a>) <a class="idref" href="HoTT.Basics.Overture.html#1c39bf18749e5cc609e83c0a0ba5a372"><span class="id" title="notation">=</span></a> <a class="idref" href="HoTT.Basics.Overture.html#x"><span class="id" title="variable">x</span></a>.<br/>
 
 <br/>
+<span class="id" title="keyword">Global</span>&nbsp;<span class="id" title="var">Arguments</span> <a class="idref" href="HoTT.Basics.Overture.html#Sect"><span class="id" title="definition">Sect</span></a> {<span class="id" title="var">A</span> <span class="id" title="var">B</span>}%<span class="id" title="var">type_scope</span> (<span class="id" title="var">s</span> <span class="id" title="var">r</span>)%<span class="id" title="var">function_scope</span>.<br/>
+
+<br/>
 </div>
 
 <div class="doc">
@@ -746,9 +775,6 @@ A record that includes all the data of an adjoint equivalence.
 <br/>
 <span class="id" title="var">Arguments</span> <a class="idref" href="HoTT.Basics.Overture.html#equiv_fun"><span class="id" title="projection">equiv_fun</span></a> {<span class="id" title="var">A</span> <span class="id" title="var">B</span>} <span class="id" title="var">_</span> <span class="id" title="var">_</span>.<br/>
 <span class="id" title="var">Arguments</span> <a class="idref" href="HoTT.Basics.Overture.html#equiv_isequiv"><span class="id" title="projection">equiv_isequiv</span></a> {<span class="id" title="var">A</span> <span class="id" title="var">B</span>} <span class="id" title="var">_</span>.<br/>
-
-<br/>
-<span class="id" title="keyword">Delimit</span> <span class="id" title="keyword">Scope</span> <span class="id" title="var">equiv_scope</span> <span class="id" title="keyword">with</span> <span class="id" title="var">equiv</span>.<br/>
 
 <br/>
 <span class="id" title="keyword">Bind</span> <span class="id" title="keyword">Scope</span> <span class="id" title="var">equiv_scope</span> <span class="id" title="keyword">with</span> <span class="id" title="var">Equiv</span>.<br/>
@@ -868,7 +894,6 @@ In order to achieve moderate coverage and speedy resolution, we currently follow
 We will use <span class="inlinecode"><span class="id" title="keyword">Notation</span></span> for <span class="inlinecode"><a class="idref" href="HoTT.Basics.Overture.html#trunc_index"><span class="id" title="inductive">trunc_index</span></a></span>es, so define a scope for them here. 
 </div>
 <div class="code">
-<span class="id" title="keyword">Delimit</span> <span class="id" title="keyword">Scope</span> <span class="id" title="var">trunc_scope</span> <span class="id" title="keyword">with</span> <span class="id" title="var">trunc</span>.<br/>
 <span class="id" title="keyword">Bind</span> <span class="id" title="keyword">Scope</span> <span class="id" title="var">trunc_scope</span> <span class="id" title="keyword">with</span> <span class="id" title="var">trunc_index</span>.<br/>
 <span class="id" title="var">Arguments</span> <a class="idref" href="HoTT.Basics.Overture.html#trunc_S"><span class="id" title="constructor">trunc_S</span></a> <span class="id" title="var">_</span>%<span class="id" title="var">trunc_scope</span>.<br/>
 
@@ -1035,10 +1060,16 @@ Picking up the <span class="inlinecode"><span class="id" title="keyword">∀</sp
 &nbsp;&nbsp;<a class="idref" href="HoTT.Basics.Overture.html#77ed8f3b30fae66d423e9f3dab28cba2"><span class="id" title="notation">(</span></a>@<a class="idref" href="HoTT.Basics.Overture.html#apD10"><span class="id" title="definition">apD10</span></a> <a class="idref" href="HoTT.Basics.Overture.html#A"><span class="id" title="variable">A</span></a> <a class="idref" href="HoTT.Basics.Overture.html#P"><span class="id" title="variable">P</span></a> <a class="idref" href="HoTT.Basics.Overture.html#f"><span class="id" title="variable">f</span></a> <a class="idref" href="HoTT.Basics.Overture.html#g"><span class="id" title="variable">g</span></a><a class="idref" href="HoTT.Basics.Overture.html#77ed8f3b30fae66d423e9f3dab28cba2"><span class="id" title="notation">)^-1</span></a>.<br/>
 
 <br/>
+<span class="id" title="keyword">Global</span>&nbsp;<span class="id" title="var">Arguments</span> <a class="idref" href="HoTT.Basics.Overture.html#path_forall"><span class="id" title="definition">path_forall</span></a> {<span class="id" title="var">_</span> <span class="id" title="var">A</span>%<span class="id" title="var">type_scope</span> <span class="id" title="var">P</span>} (<span class="id" title="var">f</span> <span class="id" title="var">g</span>)%<span class="id" title="var">function_scope</span> <span class="id" title="var">_</span>.<br/>
+
+<br/>
 <span class="id" title="keyword">Definition</span> <a name="path_forall2"><span class="id" title="definition">path_forall2</span></a> `{<a class="idref" href="HoTT.Basics.Overture.html#Funext"><span class="id" title="class">Funext</span></a>} {<span class="id" title="var">A</span> <span class="id" title="var">B</span> : <span class="id" title="keyword">Type</span>} {<span class="id" title="var">P</span> : <a class="idref" href="HoTT.Basics.Overture.html#A"><span class="id" title="variable">A</span></a> <a class="idref" href="Coq.Init.Logic.html#d43e996736952df71ebeeae74d10a287"><span class="id" title="notation">→</span></a> <a class="idref" href="HoTT.Basics.Overture.html#B"><span class="id" title="variable">B</span></a> <a class="idref" href="Coq.Init.Logic.html#d43e996736952df71ebeeae74d10a287"><span class="id" title="notation">→</span></a> <span class="id" title="keyword">Type</span>} (<span class="id" title="var">f</span> <span class="id" title="var">g</span> : <span class="id" title="keyword">∀</span> <span class="id" title="var">x</span> <span class="id" title="var">y</span>, <a class="idref" href="HoTT.Basics.Overture.html#P"><span class="id" title="variable">P</span></a> <a class="idref" href="HoTT.Basics.Overture.html#x"><span class="id" title="variable">x</span></a> <a class="idref" href="HoTT.Basics.Overture.html#y"><span class="id" title="variable">y</span></a>) :<br/>
 &nbsp;&nbsp;<a class="idref" href="Coq.Init.Logic.html#d43e996736952df71ebeeae74d10a287"><span class="id" title="notation">(</span></a><span class="id" title="keyword">∀</span> <span class="id" title="var">x</span> <span class="id" title="var">y</span>, <a class="idref" href="HoTT.Basics.Overture.html#f"><span class="id" title="variable">f</span></a> <a class="idref" href="HoTT.Basics.Overture.html#x"><span class="id" title="variable">x</span></a> <a class="idref" href="HoTT.Basics.Overture.html#y"><span class="id" title="variable">y</span></a> <a class="idref" href="HoTT.Basics.Overture.html#1c39bf18749e5cc609e83c0a0ba5a372"><span class="id" title="notation">=</span></a> <a class="idref" href="HoTT.Basics.Overture.html#g"><span class="id" title="variable">g</span></a> <a class="idref" href="HoTT.Basics.Overture.html#x"><span class="id" title="variable">x</span></a> <a class="idref" href="HoTT.Basics.Overture.html#y"><span class="id" title="variable">y</span></a><a class="idref" href="Coq.Init.Logic.html#d43e996736952df71ebeeae74d10a287"><span class="id" title="notation">)</span></a> <a class="idref" href="Coq.Init.Logic.html#d43e996736952df71ebeeae74d10a287"><span class="id" title="notation">→</span></a> <a class="idref" href="HoTT.Basics.Overture.html#f"><span class="id" title="variable">f</span></a> <a class="idref" href="HoTT.Basics.Overture.html#1c39bf18749e5cc609e83c0a0ba5a372"><span class="id" title="notation">=</span></a> <a class="idref" href="HoTT.Basics.Overture.html#g"><span class="id" title="variable">g</span></a><br/>
 &nbsp;&nbsp;:=<br/>
 &nbsp;&nbsp;(<span class="id" title="keyword">fun</span> <span class="id" title="var">E</span> ⇒ <a class="idref" href="HoTT.Basics.Overture.html#path_forall"><span class="id" title="definition">path_forall</span></a> <a class="idref" href="HoTT.Basics.Overture.html#f"><span class="id" title="variable">f</span></a> <a class="idref" href="HoTT.Basics.Overture.html#g"><span class="id" title="variable">g</span></a> (<span class="id" title="keyword">fun</span> <span class="id" title="var">x</span> ⇒ <a class="idref" href="HoTT.Basics.Overture.html#path_forall"><span class="id" title="definition">path_forall</span></a> (<a class="idref" href="HoTT.Basics.Overture.html#f"><span class="id" title="variable">f</span></a> <a class="idref" href="HoTT.Basics.Overture.html#x"><span class="id" title="variable">x</span></a>) (<a class="idref" href="HoTT.Basics.Overture.html#g"><span class="id" title="variable">g</span></a> <a class="idref" href="HoTT.Basics.Overture.html#x"><span class="id" title="variable">x</span></a>) (<a class="idref" href="HoTT.Basics.Overture.html#E"><span class="id" title="variable">E</span></a> <a class="idref" href="HoTT.Basics.Overture.html#x"><span class="id" title="variable">x</span></a>))).<br/>
+
+<br/>
+<span class="id" title="keyword">Global</span>&nbsp;<span class="id" title="var">Arguments</span> <a class="idref" href="HoTT.Basics.Overture.html#path_forall2"><span class="id" title="definition">path_forall2</span></a> {<span class="id" title="var">_</span>} {<span class="id" title="var">A</span> <span class="id" title="var">B</span>}%<span class="id" title="var">type_scope</span> {<span class="id" title="var">P</span>} (<span class="id" title="var">f</span> <span class="id" title="var">g</span>)%<span class="id" title="var">function_scope</span> <span class="id" title="var">_</span>.<br/>
 
 <br/>
 </div>
@@ -1166,6 +1197,9 @@ Likewise, we put <span class="inlinecode"><a class="idref" href="HoTT.Basics.Ove
 
 <br/>
 <span class="id" title="keyword">Definition</span> <a name="hfiber"><span class="id" title="definition">hfiber</span></a> {<span class="id" title="var">A</span> <span class="id" title="var">B</span> : <span class="id" title="keyword">Type</span>} (<span class="id" title="var">f</span> : <a class="idref" href="HoTT.Basics.Overture.html#A"><span class="id" title="variable">A</span></a> <a class="idref" href="Coq.Init.Logic.html#d43e996736952df71ebeeae74d10a287"><span class="id" title="notation">→</span></a> <a class="idref" href="HoTT.Basics.Overture.html#B"><span class="id" title="variable">B</span></a>) (<span class="id" title="var">y</span> : <a class="idref" href="HoTT.Basics.Overture.html#B"><span class="id" title="variable">B</span></a>) := <a class="idref" href="Coq.Init.Specif.html#50b5d8dd6be4fba768e35617e518ad76"><span class="id" title="notation">{</span></a> <span class="id" title="var">x</span> <a class="idref" href="Coq.Init.Specif.html#50b5d8dd6be4fba768e35617e518ad76"><span class="id" title="notation">:</span></a> <a class="idref" href="HoTT.Basics.Overture.html#A"><span class="id" title="variable">A</span></a> <a class="idref" href="Coq.Init.Specif.html#50b5d8dd6be4fba768e35617e518ad76"><span class="id" title="notation">&amp;</span></a> <a class="idref" href="HoTT.Basics.Overture.html#f"><span class="id" title="variable">f</span></a> <span class="id" title="var">x</span> <a class="idref" href="HoTT.Basics.Overture.html#1c39bf18749e5cc609e83c0a0ba5a372"><span class="id" title="notation">=</span></a> <a class="idref" href="HoTT.Basics.Overture.html#y"><span class="id" title="variable">y</span></a> <a class="idref" href="Coq.Init.Specif.html#50b5d8dd6be4fba768e35617e518ad76"><span class="id" title="notation">}</span></a>.<br/>
+
+<br/>
+<span class="id" title="keyword">Global</span>&nbsp;<span class="id" title="var">Arguments</span> <a class="idref" href="HoTT.Basics.Overture.html#hfiber"><span class="id" title="definition">hfiber</span></a> {<span class="id" title="var">A</span> <span class="id" title="var">B</span>}%<span class="id" title="var">type_scope</span> <span class="id" title="var">f</span>%<span class="id" title="var">function_scope</span> <span class="id" title="var">y</span>.<br/>
 
 <br/>
 </div>

@@ -31,27 +31,27 @@ pre {
 <div class="code" title="File: Utf8.v
 Line: 1
 Time: 0.001s">
-<div class="time" style="width: 0.44052863436123%"></div>
+<div class="time" style="width: 0.6993006993007%"></div>
 <pre>Require Export Coq.Unicode.Utf8.</pre>
 </div>
 <div class="code" title="File: Utf8.v
 Line: 1
-Time: 0.027s">
-<div class="time" style="width: 11.894273127753%"></div>
+Time: 0.049s">
+<div class="time" style="width: 34.265734265734%"></div>
 <pre>
-Require Import HoTT.Basics (*types.Bool*).</pre>
+Require Import HoTT.Basics HoTT.Types.Arrow HoTT.Types.Prod HoTT.Types.Sum.</pre>
 </div>
 <div class="code" title="File: Utf8.v
 Line: 2
-Time: 0.227s">
+Time: 0.143s">
 <div class="time" style="width: 100%"></div>
 <pre>
 Require Import Modalities.Identity.</pre>
 </div>
 <div class="code" title="File: Utf8.v
 Line: 3
-Time: 0.042s">
-<div class="time" style="width: 18.502202643172%"></div>
+Time: 0.064s">
+<div class="time" style="width: 44.755244755245%"></div>
 <pre>
 Require Import hit.Circle hit.TwoSphere hit.Truncations hit.Suspension.</pre>
 </div>
@@ -89,7 +89,13 @@ Line: 9
 Time: 0s">
 <div class="time" style="width: 0%"></div>
 <pre>
-Notation "x ₁" := (x.1) (at level 3) : fibration_scope.</pre>
+(*Notation "f → g" := (f -&gt; g)%equiv : equiv_scope.*)</pre>
+</div>
+<div class="code" title="File: Utf8.v
+Line: 10
+Time: 0s">
+<div class="time" style="width: 0%"></div>
+<pre>Notation "x ₁" := (x.1) (at level 3) : fibration_scope.</pre>
 </div>
 <div class="code" title="File: Utf8.v
 Line: 10
@@ -110,30 +116,58 @@ Line: 12
 Time: 0s">
 <div class="time" style="width: 0%"></div>
 <pre>
-Notation "g ∘ f" := (g o f)%equiv (at level 40, left associativity) : equiv_scope.</pre>
+Notation "g ∘ᴱ f" := (g oE f)%equiv (at level 40, left associativity) : equiv_scope.</pre>
 </div>
 <div class="code" title="File: Utf8.v
 Line: 13
 Time: 0s">
 <div class="time" style="width: 0%"></div>
 <pre>
-(** We copy the HoTT-Agda library with regard to path concatenation. *)</pre>
-</div>
-<div class="code" title="File: Utf8.v
-Line: 14
-Time: 0s">
-<div class="time" style="width: 0%"></div>
-<pre>Notation "p • q" := (p @ q)%path (at level 20) : path_scope.</pre>
+Notation "f *ᴱ g" := (f *E g)%equiv (at level 40, no associativity) : equiv_scope.</pre>
 </div>
 <div class="code" title="File: Utf8.v
 Line: 14
 Time: 0s">
 <div class="time" style="width: 0%"></div>
 <pre>
-Notation "p '⁻¹'" := (p^)%path (at level 3, format "p '⁻¹'") : path_scope.</pre>
+Notation "f ×ᴱ g" := (f *E g)%equiv (at level 40, no associativity) : equiv_scope.</pre>
 </div>
 <div class="code" title="File: Utf8.v
 Line: 15
+Time: 0s">
+<div class="time" style="width: 0%"></div>
+<pre>
+Notation "A × B" := (A * B)%type (at level 40, no associativity) : type_scope.</pre>
+</div>
+<div class="code" title="File: Utf8.v
+Line: 16
+Time: 0s">
+<div class="time" style="width: 0%"></div>
+<pre>
+Notation "f +ᴱ g" := (f +E g)%equiv (at level 50, left associativity) : equiv_scope.</pre>
+</div>
+<div class="code" title="File: Utf8.v
+Line: 17
+Time: 0s">
+<div class="time" style="width: 0%"></div>
+<pre>
+(** We copy the HoTT-Agda library with regard to path concatenation. *)</pre>
+</div>
+<div class="code" title="File: Utf8.v
+Line: 18
+Time: 0s">
+<div class="time" style="width: 0%"></div>
+<pre>Notation "p • q" := (p @ q)%path (at level 20) : path_scope.</pre>
+</div>
+<div class="code" title="File: Utf8.v
+Line: 18
+Time: 0s">
+<div class="time" style="width: 0%"></div>
+<pre>
+Notation "p '⁻¹'" := (p^)%path (at level 3, format "p '⁻¹'") : path_scope.</pre>
+</div>
+<div class="code" title="File: Utf8.v
+Line: 19
 Time: 0s">
 <div class="time" style="width: 0%"></div>
 <pre>
@@ -141,20 +175,20 @@ Notation "p •' q" := (p @ q)%path (at level 21, left associativity,
                                    format "'[v' p '/' '•''  q ']'") : long_path_scope.</pre>
 </div>
 <div class="code" title="File: Utf8.v
-Line: 17
+Line: 21
 Time: 0s">
 <div class="time" style="width: 0%"></div>
 <pre>
 (** Add error messages so people aren't intensely confused by using an almost identical character. *)</pre>
 </div>
 <div class="code" title="File: Utf8.v
-Line: 18
+Line: 22
 Time: 0s">
 <div class="time" style="width: 0%"></div>
 <pre>Infix "∙" := $(fail "You used '∙' (BULLET OPERATOR, #x2219) when you probably meant to use '•' (BULLET, #x2022)")$ (at level 20, only parsing) : path_scope.</pre>
 </div>
 <div class="code" title="File: Utf8.v
-Line: 18
+Line: 22
 Time: 0s">
 <div class="time" style="width: 0%"></div>
 <pre>
@@ -162,41 +196,41 @@ Time: 0s">
 (*Notation "f == g" := (pointwise_paths f g) (at level 70, no associativity) : type_scope.*)</pre>
 </div>
 <div class="code" title="File: Utf8.v
-Line: 20
+Line: 24
 Time: 0s">
 <div class="time" style="width: 0%"></div>
 <pre>Notation "A ≃ B" := (A &lt;~&gt; B) (at level 85) : type_scope.</pre>
 </div>
 <div class="code" title="File: Utf8.v
-Line: 20
+Line: 24
 Time: 0s">
 <div class="time" style="width: 0%"></div>
 <pre>
 Notation "f '⁻¹'" := (f^-1)%function (at level 3, format "f '⁻¹'") : function_scope.</pre>
 </div>
 <div class="code" title="File: Utf8.v
-Line: 21
+Line: 25
 Time: 0s">
 <div class="time" style="width: 0%"></div>
 <pre>
 Notation "f '⁻¹'" := (f^-1)%equiv (at level 3, format "f '⁻¹'") : equiv_scope.</pre>
 </div>
 <div class="code" title="File: Utf8.v
-Line: 22
+Line: 26
 Time: 0s">
 <div class="time" style="width: 0%"></div>
 <pre>
 Notation "¬ x" := (~x) (at level 75, right associativity) : type_scope.</pre>
 </div>
 <div class="code" title="File: Utf8.v
-Line: 23
+Line: 27
 Time: 0s">
 <div class="time" style="width: 0%"></div>
 <pre>
 Notation "x ≠ y" := (x &lt;&gt; y) (at level 70) : type_scope.</pre>
 </div>
 <div class="code" title="File: Utf8.v
-Line: 24
+Line: 28
 Time: 0s">
 <div class="time" style="width: 0%"></div>
 <pre>
@@ -205,13 +239,13 @@ Time: 0s">
 </pre>
 </div>
 <div class="code" title="File: Utf8.v
-Line: 26
+Line: 30
 Time: 0s">
 <div class="time" style="width: 0%"></div>
 <pre>Notation "m ≤ n" := (m &lt;= n)%trunc (at level 70, no associativity) : trunc_scope.</pre>
 </div>
 <div class="code" title="File: Utf8.v
-Line: 26
+Line: 30
 Time: 0s">
 <div class="time" style="width: 0%"></div>
 <pre>
@@ -224,20 +258,20 @@ Time: 0s">
 </pre>
 </div>
 <div class="code" title="File: Utf8.v
-Line: 32
+Line: 36
 Time: 0s">
 <div class="time" style="width: 0%"></div>
 <pre>Notation "'S¹'" := S1.</pre>
 </div>
 <div class="code" title="File: Utf8.v
-Line: 32
+Line: 36
 Time: 0s">
 <div class="time" style="width: 0%"></div>
 <pre>
 Notation "'S²'" := S2.</pre>
 </div>
 <div class="code" title="File: Utf8.v
-Line: 33
+Line: 37
 Time: 0s">
 <div class="time" style="width: 0%"></div>
 <pre>
@@ -245,33 +279,11 @@ Time: 0s">
 Notation "∥ A ∥₋₂" := (Trunc -2 A).</pre>
 </div>
 <div class="code" title="File: Utf8.v
-Line: 35
-Time: 0s">
-<div class="time" style="width: 0%"></div>
-<pre>
-Notation "| a |₋₂" := (@tr -2 _ a) : trunc_scope.</pre>
-</div>
-<div class="code" title="File: Utf8.v
-Line: 36
-Time: 0s">
-<div class="time" style="width: 0%"></div>
-<pre>
-
-Notation "∥ A ∥" := (Trunc -1 A) (only parsing).</pre>
-</div>
-<div class="code" title="File: Utf8.v
-Line: 38
-Time: 0s">
-<div class="time" style="width: 0%"></div>
-<pre>
-Notation "∥ A ∥₋₁" := (Trunc -1 A).</pre>
-</div>
-<div class="code" title="File: Utf8.v
 Line: 39
 Time: 0s">
 <div class="time" style="width: 0%"></div>
 <pre>
-Notation "| a |₋₁" := (@tr -1 _ a) : trunc_scope.</pre>
+Notation "| a |₋₂" := (@tr -2 _ a) : trunc_scope.</pre>
 </div>
 <div class="code" title="File: Utf8.v
 Line: 40
@@ -279,17 +291,39 @@ Time: 0s">
 <div class="time" style="width: 0%"></div>
 <pre>
 
-Notation "∥ A ∥₀" := (Trunc 0 A).</pre>
+Notation "∥ A ∥" := (Trunc -1 A) (only parsing).</pre>
 </div>
 <div class="code" title="File: Utf8.v
 Line: 42
 Time: 0s">
 <div class="time" style="width: 0%"></div>
 <pre>
-Notation "| a |₀" := (@tr 0 _ a) : trunc_scope.</pre>
+Notation "∥ A ∥₋₁" := (Trunc -1 A).</pre>
 </div>
 <div class="code" title="File: Utf8.v
 Line: 43
+Time: 0s">
+<div class="time" style="width: 0%"></div>
+<pre>
+Notation "| a |₋₁" := (@tr -1 _ a) : trunc_scope.</pre>
+</div>
+<div class="code" title="File: Utf8.v
+Line: 44
+Time: 0s">
+<div class="time" style="width: 0%"></div>
+<pre>
+
+Notation "∥ A ∥₀" := (Trunc 0 A).</pre>
+</div>
+<div class="code" title="File: Utf8.v
+Line: 46
+Time: 0s">
+<div class="time" style="width: 0%"></div>
+<pre>
+Notation "| a |₀" := (@tr 0 _ a) : trunc_scope.</pre>
+</div>
+<div class="code" title="File: Utf8.v
+Line: 47
 Time: 0s">
 <div class="time" style="width: 0%"></div>
 <pre>
@@ -297,14 +331,14 @@ Time: 0s">
 Notation "∥ A ∥₁" := (Trunc 1 A).</pre>
 </div>
 <div class="code" title="File: Utf8.v
-Line: 45
+Line: 49
 Time: 0s">
 <div class="time" style="width: 0%"></div>
 <pre>
 Notation "| a |₁" := (@tr 1 _ a) : trunc_scope.</pre>
 </div>
 <div class="code" title="File: Utf8.v
-Line: 46
+Line: 50
 Time: 0s">
 <div class="time" style="width: 0%"></div>
 <pre>
@@ -312,14 +346,14 @@ Time: 0s">
 Notation "∥ A ∥₂" := (Trunc 2 A).</pre>
 </div>
 <div class="code" title="File: Utf8.v
-Line: 48
+Line: 52
 Time: 0s">
 <div class="time" style="width: 0%"></div>
 <pre>
 Notation "| a |₂" := (@tr 2 _ a) : trunc_scope.</pre>
 </div>
 <div class="code" title="File: Utf8.v
-Line: 49
+Line: 53
 Time: 0s">
 <div class="time" style="width: 0%"></div>
 <pre>
@@ -327,7 +361,7 @@ Time: 0s">
 Notation "∞" := purely.</pre>
 </div>
 <div class="code" title="File: Utf8.v
-Line: 51
+Line: 55
 Time: 0s">
 <div class="time" style="width: 0%"></div>
 <pre>
@@ -335,7 +369,7 @@ Time: 0s">
 Notation Σ := Susp.</pre>
 </div>
 <div class="code" title="File: Utf8.v
-Line: 54
+Line: 58
 Time: 0s">
 <div class="time" style="width: 0%"></div>
 <pre>
