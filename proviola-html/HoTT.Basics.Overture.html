@@ -7483,7 +7483,7 @@
           
 
             i = 1493;
-            data = "	";
+            data = "";
             responses[i]=data;
           
 
@@ -7493,7 +7493,7 @@
           
 
             i = 1495;
-            data = "";
+            data = "<infomsg>	rapply is defined</infomsg>		";
             responses[i]=data;
           
 
@@ -11480,34 +11480,16 @@ Likewise, we put <span class="inlinecode"><a class="idref" href="HoTT.Basics.Ove
 <a name="lab20"></a><h3 class="section">More tactics</h3>
 <div class="doc" scenenumber="4"> </div>
 
- We want access to useful standard library tactics, such as <span class="inlinecode"><span class="id" title="var">rapply</span></span>. 
+ A variant of <span class="inlinecode"><span class="id" title="tactic">apply</span></span> using <span class="inlinecode"><span class="id" title="tactic">refine</span></span>, doing as much conversion as necessary, instantiating as few arguments as possible.  This is useful if your lemma constructs an equivalence, and you want to use that equivalence, rather than the underlying function. 
 </div>
 <div scenenumber="259" class="code">
 <span class="command" onmouseout="
       mouseout('0_3_259');
       " onmouseover="
-      mouseover(1493, '0_3_259');
-      ">
-<span class="id" title="keyword">Require</span> <span class="id" title="keyword">Export</span> <a class="idref" href="Coq.Program.Tactics.html#"><span class="id" title="library">Coq.Program.Tactics</span></a>.</span><span class="command" onmouseout="
-      mouseout('0_3_259');
-      " onmouseover="
-      mouseover(1494, '0_3_259');
-      "><br>
-<br>
-</span>
-</div>
-<div class="goal" id="goal0_3_259"><pre><span></span></pre></div>
-<div class="doc" scenenumber="261">
-A variant of <span class="inlinecode"><span class="id" title="tactic">apply</span></span> using <span class="inlinecode"><span class="id" title="tactic">refine</span></span>, doing as much conversion as necessary, instantiating as few arguments as possible.  This is useful if your lemma constructs an equivalence, and you want to use that equivalence, rather than the underlying function. 
-</div>
-<div scenenumber="263" class="code">
-<span class="command" onmouseout="
-      mouseout('0_3_263');
-      " onmouseover="
-      mouseover(1502, '0_3_263');
+      mouseover(1495, '0_3_259');
       ">
 <br>
-<span class="id" title="keyword">Ltac</span> <span class="id" title="var">rapply´</span> <span class="id" title="var">p</span> :=<br>
+<span class="id" title="keyword">Ltac</span> <span class="id" title="var">rapply</span> <span class="id" title="var">p</span> :=<br>
   <span class="id" title="tactic">refine</span> <span class="id" title="var">p</span> ||<br>
   <span class="id" title="tactic">refine</span> (<span class="id" title="var">p</span> <span class="id" title="var">_</span>) ||<br>
   <span class="id" title="tactic">refine</span> (<span class="id" title="var">p</span> <span class="id" title="var">_</span> <span class="id" title="var">_</span>) ||<br>
@@ -11524,6 +11506,41 @@ A variant of <span class="inlinecode"><span class="id" title="tactic">apply</spa
   <span class="id" title="tactic">refine</span> (<span class="id" title="var">p</span> <span class="id" title="var">_</span> <span class="id" title="var">_</span> <span class="id" title="var">_</span> <span class="id" title="var">_</span> <span class="id" title="var">_</span> <span class="id" title="var">_</span> <span class="id" title="var">_</span> <span class="id" title="var">_</span> <span class="id" title="var">_</span> <span class="id" title="var">_</span> <span class="id" title="var">_</span> <span class="id" title="var">_</span> <span class="id" title="var">_</span>) ||<br>
   <span class="id" title="tactic">refine</span> (<span class="id" title="var">p</span> <span class="id" title="var">_</span> <span class="id" title="var">_</span> <span class="id" title="var">_</span> <span class="id" title="var">_</span> <span class="id" title="var">_</span> <span class="id" title="var">_</span> <span class="id" title="var">_</span> <span class="id" title="var">_</span> <span class="id" title="var">_</span> <span class="id" title="var">_</span> <span class="id" title="var">_</span> <span class="id" title="var">_</span> <span class="id" title="var">_</span> <span class="id" title="var">_</span>) ||<br>
   <span class="id" title="tactic">refine</span> (<span class="id" title="var">p</span> <span class="id" title="var">_</span> <span class="id" title="var">_</span> <span class="id" title="var">_</span> <span class="id" title="var">_</span> <span class="id" title="var">_</span> <span class="id" title="var">_</span> <span class="id" title="var">_</span> <span class="id" title="var">_</span> <span class="id" title="var">_</span> <span class="id" title="var">_</span> <span class="id" title="var">_</span> <span class="id" title="var">_</span> <span class="id" title="var">_</span> <span class="id" title="var">_</span> <span class="id" title="var">_</span>).</span><span class="command" onmouseout="
+      mouseout('0_3_259');
+      " onmouseover="
+      mouseover(1496, '0_3_259');
+      "><br>
+<br>
+</span>
+</div>
+<div class="goal" id="goal0_3_259"><pre><span></span></pre></div>
+<div class="doc" scenenumber="261">
+An alternative version that instead instantiates as *many* arguments as possible.  This is what the Coq standard library calls <span class="inlinecode"><span class="id" title="var">rapply</span></span>, but for us it seems that the other version is more useful, hence deserves the unprimed name. 
+</div>
+<div scenenumber="263" class="code">
+<span class="command" onmouseout="
+      mouseout('0_3_263');
+      " onmouseover="
+      mouseover(1502, '0_3_263');
+      ">
+<br>
+<span class="id" title="keyword">Ltac</span> <span class="id" title="var">rapply´</span> <span class="id" title="var">p</span> :=<br>
+  <span class="id" title="tactic">refine</span> (<span class="id" title="var">p</span> <span class="id" title="var">_</span> <span class="id" title="var">_</span> <span class="id" title="var">_</span> <span class="id" title="var">_</span> <span class="id" title="var">_</span> <span class="id" title="var">_</span> <span class="id" title="var">_</span> <span class="id" title="var">_</span> <span class="id" title="var">_</span> <span class="id" title="var">_</span> <span class="id" title="var">_</span> <span class="id" title="var">_</span> <span class="id" title="var">_</span> <span class="id" title="var">_</span> <span class="id" title="var">_</span>) ||<br>
+  <span class="id" title="tactic">refine</span> (<span class="id" title="var">p</span> <span class="id" title="var">_</span> <span class="id" title="var">_</span> <span class="id" title="var">_</span> <span class="id" title="var">_</span> <span class="id" title="var">_</span> <span class="id" title="var">_</span> <span class="id" title="var">_</span> <span class="id" title="var">_</span> <span class="id" title="var">_</span> <span class="id" title="var">_</span> <span class="id" title="var">_</span> <span class="id" title="var">_</span> <span class="id" title="var">_</span> <span class="id" title="var">_</span>) ||<br>
+  <span class="id" title="tactic">refine</span> (<span class="id" title="var">p</span> <span class="id" title="var">_</span> <span class="id" title="var">_</span> <span class="id" title="var">_</span> <span class="id" title="var">_</span> <span class="id" title="var">_</span> <span class="id" title="var">_</span> <span class="id" title="var">_</span> <span class="id" title="var">_</span> <span class="id" title="var">_</span> <span class="id" title="var">_</span> <span class="id" title="var">_</span> <span class="id" title="var">_</span> <span class="id" title="var">_</span>) ||<br>
+  <span class="id" title="tactic">refine</span> (<span class="id" title="var">p</span> <span class="id" title="var">_</span> <span class="id" title="var">_</span> <span class="id" title="var">_</span> <span class="id" title="var">_</span> <span class="id" title="var">_</span> <span class="id" title="var">_</span> <span class="id" title="var">_</span> <span class="id" title="var">_</span> <span class="id" title="var">_</span> <span class="id" title="var">_</span> <span class="id" title="var">_</span> <span class="id" title="var">_</span>) ||<br>
+  <span class="id" title="tactic">refine</span> (<span class="id" title="var">p</span> <span class="id" title="var">_</span> <span class="id" title="var">_</span> <span class="id" title="var">_</span> <span class="id" title="var">_</span> <span class="id" title="var">_</span> <span class="id" title="var">_</span> <span class="id" title="var">_</span> <span class="id" title="var">_</span> <span class="id" title="var">_</span> <span class="id" title="var">_</span> <span class="id" title="var">_</span>) ||<br>
+  <span class="id" title="tactic">refine</span> (<span class="id" title="var">p</span> <span class="id" title="var">_</span> <span class="id" title="var">_</span> <span class="id" title="var">_</span> <span class="id" title="var">_</span> <span class="id" title="var">_</span> <span class="id" title="var">_</span> <span class="id" title="var">_</span> <span class="id" title="var">_</span> <span class="id" title="var">_</span> <span class="id" title="var">_</span>) ||<br>
+  <span class="id" title="tactic">refine</span> (<span class="id" title="var">p</span> <span class="id" title="var">_</span> <span class="id" title="var">_</span> <span class="id" title="var">_</span> <span class="id" title="var">_</span> <span class="id" title="var">_</span> <span class="id" title="var">_</span> <span class="id" title="var">_</span> <span class="id" title="var">_</span> <span class="id" title="var">_</span>) ||<br>
+  <span class="id" title="tactic">refine</span> (<span class="id" title="var">p</span> <span class="id" title="var">_</span> <span class="id" title="var">_</span> <span class="id" title="var">_</span> <span class="id" title="var">_</span> <span class="id" title="var">_</span> <span class="id" title="var">_</span> <span class="id" title="var">_</span> <span class="id" title="var">_</span>) ||<br>
+  <span class="id" title="tactic">refine</span> (<span class="id" title="var">p</span> <span class="id" title="var">_</span> <span class="id" title="var">_</span> <span class="id" title="var">_</span> <span class="id" title="var">_</span> <span class="id" title="var">_</span> <span class="id" title="var">_</span> <span class="id" title="var">_</span>) ||<br>
+  <span class="id" title="tactic">refine</span> (<span class="id" title="var">p</span> <span class="id" title="var">_</span> <span class="id" title="var">_</span> <span class="id" title="var">_</span> <span class="id" title="var">_</span> <span class="id" title="var">_</span> <span class="id" title="var">_</span>) ||<br>
+  <span class="id" title="tactic">refine</span> (<span class="id" title="var">p</span> <span class="id" title="var">_</span> <span class="id" title="var">_</span> <span class="id" title="var">_</span> <span class="id" title="var">_</span> <span class="id" title="var">_</span>) ||<br>
+  <span class="id" title="tactic">refine</span> (<span class="id" title="var">p</span> <span class="id" title="var">_</span> <span class="id" title="var">_</span> <span class="id" title="var">_</span> <span class="id" title="var">_</span>) ||<br>
+  <span class="id" title="tactic">refine</span> (<span class="id" title="var">p</span> <span class="id" title="var">_</span> <span class="id" title="var">_</span> <span class="id" title="var">_</span>) ||<br>
+  <span class="id" title="tactic">refine</span> (<span class="id" title="var">p</span> <span class="id" title="var">_</span> <span class="id" title="var">_</span>) ||<br>
+  <span class="id" title="tactic">refine</span> (<span class="id" title="var">p</span> <span class="id" title="var">_</span>) ||<br>
+  <span class="id" title="tactic">refine</span> <span class="id" title="var">p</span>.</span><span class="command" onmouseout="
       mouseout('0_3_263');
       " onmouseover="
       mouseover(1503, '0_3_263');
