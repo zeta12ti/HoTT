@@ -36,8 +36,8 @@ Time: 0s">
 </div>
 <div class="code" title="File: RewriteModuloAssociativity.v
 Line: 1
-Time: 0.011s">
-<div class="time" style="width: 23.913043478261%"></div>
+Time: 0.012s">
+<div class="time" style="width: 26.086956521739%"></div>
 <pre>Require Import Overture PathGroupoids.</pre>
 </div>
 <div class="code" title="File: RewriteModuloAssociativity.v
@@ -583,7 +583,8 @@ Time: 0s">
 <pre>Ltac left_associate_concat_in H :=
     let rec_tac := left_associate_concat_in in
     let T := type of H in
-    match eval cbv beta in T with
+    let T' := (eval cbv beta in T) in
+    match T' with
       | forall a : ?A, @?P a =&gt; let ret := constr:(fun a : A =&gt; let H' := H a in
                                                                 $(let H'' := (eval unfold H' in H') in
                                                                   let ret := rec_tac H'' in
@@ -592,8 +593,8 @@ Time: 0s">
                                 let T' := (eval cbv beta zeta in T) in
                                 let ret' := (eval cbv beta zeta in ret) in
                                 constr:(ret' : T')
-      | context[?a @ (?b @?c)] =&gt;
-        (lazymatch eval pattern (a @ (b @ c)) in T with
+      | context[@concat ?A1 ?x1 ?y1 ?z1 ?a (@concat ?A2 ?x2 ?y2 ?z2 ?b ?c)] =&gt;
+        (lazymatch eval pattern (@concat A1 x1 y1 z1 a (@concat A2 x2 y2 z2 b c)) in T' with
         | ?P _ =&gt; let H' := constr:(transport P (concat_p_pp a b c) H) in
                   rec_tac H'
          end)
@@ -601,7 +602,7 @@ Time: 0s">
     end.</pre>
 </div>
 <div class="code" title="File: RewriteModuloAssociativity.v
-Line: 201
+Line: 202
 Time: 0s">
 <div class="time" style="width: 0%"></div>
 <pre>
@@ -610,7 +611,7 @@ Time: 0s">
  </pre>
 </div>
 <div class="code" title="File: RewriteModuloAssociativity.v
-Line: 204
+Line: 205
 Time: 0s">
 <div class="time" style="width: 0%"></div>
 <pre>Ltac left_associate_concat :=
@@ -623,7 +624,7 @@ Time: 0s">
            end.</pre>
 </div>
 <div class="code" title="File: RewriteModuloAssociativity.v
-Line: 211
+Line: 212
 Time: 0s">
 <div class="time" style="width: 0%"></div>
 <pre>
@@ -636,7 +637,7 @@ Time: 0s">
         clear H'.</pre>
 </div>
 <div class="code" title="File: RewriteModuloAssociativity.v
-Line: 218
+Line: 219
 Time: 0s">
 <div class="time" style="width: 0%"></div>
 <pre>
@@ -645,7 +646,7 @@ Time: 0s">
     rewriteA_using_helper ltac:(fun lem' =&gt; rewrite lem') lem ltac:preconcat_any ltac:left_associate_concat ltac:left_associate_concat_in_hyp.</pre>
 </div>
 <div class="code" title="File: RewriteModuloAssociativity.v
-Line: 221
+Line: 222
 Time: 0s">
 <div class="time" style="width: 0%"></div>
 <pre>
@@ -653,7 +654,7 @@ Time: 0s">
     rewriteA_using_helper ltac:(fun lem' =&gt; rewrite -&gt; lem') lem ltac:preconcat_any ltac:left_associate_concat ltac:left_associate_concat_in_hyp.</pre>
 </div>
 <div class="code" title="File: RewriteModuloAssociativity.v
-Line: 223
+Line: 224
 Time: 0s">
 <div class="time" style="width: 0%"></div>
 <pre>
@@ -661,7 +662,7 @@ Time: 0s">
     rewriteA_using_helper ltac:(fun lem' =&gt; rewrite &lt;- lem') lem ltac:preconcat_any ltac:left_associate_concat ltac:left_associate_concat_in_hyp.</pre>
 </div>
 <div class="code" title="File: RewriteModuloAssociativity.v
-Line: 225
+Line: 226
 Time: 0s">
 <div class="time" style="width: 0%"></div>
 <pre>
@@ -669,7 +670,7 @@ Time: 0s">
     repeat_rewriteA_using_helper ltac:(fun lem' lem'' =&gt; progress rewrite ?lem', ?lem'') lem ltac:preconcat_any ltac:left_associate_concat ltac:left_associate_concat_in_hyp.</pre>
 </div>
 <div class="code" title="File: RewriteModuloAssociativity.v
-Line: 227
+Line: 228
 Time: 0s">
 <div class="time" style="width: 0%"></div>
 <pre>
@@ -677,7 +678,7 @@ Time: 0s">
     repeat_rewriteA_using_helper ltac:(fun lem' lem'' =&gt; rewrite ?lem', ?lem'') lem ltac:preconcat_any ltac:left_associate_concat ltac:left_associate_concat_in_hyp.</pre>
 </div>
 <div class="code" title="File: RewriteModuloAssociativity.v
-Line: 229
+Line: 230
 Time: 0s">
 <div class="time" style="width: 0%"></div>
 <pre>
@@ -685,7 +686,7 @@ Time: 0s">
     repeat_rewriteA_using_helper ltac:(fun lem' lem'' =&gt; progress rewrite -&gt; ?lem', -&gt; ?lem'') lem ltac:preconcat_any ltac:left_associate_concat ltac:left_associate_concat_in_hyp.</pre>
 </div>
 <div class="code" title="File: RewriteModuloAssociativity.v
-Line: 231
+Line: 232
 Time: 0s">
 <div class="time" style="width: 0%"></div>
 <pre>
@@ -693,7 +694,7 @@ Time: 0s">
     repeat_rewriteA_using_helper ltac:(fun lem' lem'' =&gt; progress rewrite &lt;- ?lem', &lt;- ?lem'') lem ltac:preconcat_any ltac:left_associate_concat ltac:left_associate_concat_in_hyp.</pre>
 </div>
 <div class="code" title="File: RewriteModuloAssociativity.v
-Line: 233
+Line: 234
 Time: 0s">
 <div class="time" style="width: 0%"></div>
 <pre>
@@ -701,7 +702,7 @@ Time: 0s">
     repeat_rewriteA_using_helper ltac:(fun lem' lem'' =&gt; rewrite -&gt; ?lem', -&gt; ?lem'') lem ltac:preconcat_any ltac:left_associate_concat ltac:left_associate_concat_in_hyp.</pre>
 </div>
 <div class="code" title="File: RewriteModuloAssociativity.v
-Line: 235
+Line: 236
 Time: 0s">
 <div class="time" style="width: 0%"></div>
 <pre>
@@ -709,7 +710,7 @@ Time: 0s">
     repeat_rewriteA_using_helper ltac:(fun lem' lem'' =&gt; rewrite &lt;- ?lem', &lt;- ?lem'') lem ltac:preconcat_any ltac:left_associate_concat ltac:left_associate_concat_in_hyp.</pre>
 </div>
 <div class="code" title="File: RewriteModuloAssociativity.v
-Line: 237
+Line: 238
 Time: 0s">
 <div class="time" style="width: 0%"></div>
 <pre>
@@ -720,7 +721,7 @@ Time: 0s">
     rewriteA_using_helper ltac:(fun lem' =&gt; erewrite lem') lem ltac:preconcat_any ltac:left_associate_concat ltac:left_associate_concat_in_hyp.</pre>
 </div>
 <div class="code" title="File: RewriteModuloAssociativity.v
-Line: 242
+Line: 243
 Time: 0s">
 <div class="time" style="width: 0%"></div>
 <pre>
@@ -728,7 +729,7 @@ Time: 0s">
     rewriteA_using_helper ltac:(fun lem' =&gt; erewrite -&gt; lem') lem ltac:preconcat_any ltac:left_associate_concat ltac:left_associate_concat_in_hyp.</pre>
 </div>
 <div class="code" title="File: RewriteModuloAssociativity.v
-Line: 244
+Line: 245
 Time: 0s">
 <div class="time" style="width: 0%"></div>
 <pre>
@@ -736,7 +737,7 @@ Time: 0s">
     rewriteA_using_helper ltac:(fun lem' =&gt; erewrite &lt;- lem') lem ltac:preconcat_any ltac:left_associate_concat ltac:left_associate_concat_in_hyp.</pre>
 </div>
 <div class="code" title="File: RewriteModuloAssociativity.v
-Line: 246
+Line: 247
 Time: 0s">
 <div class="time" style="width: 0%"></div>
 <pre>
@@ -744,7 +745,7 @@ Time: 0s">
     repeat_rewriteA_using_helper ltac:(fun lem' lem'' =&gt; progress erewrite ?lem', ?lem'') lem ltac:preconcat_any ltac:left_associate_concat ltac:left_associate_concat_in_hyp.</pre>
 </div>
 <div class="code" title="File: RewriteModuloAssociativity.v
-Line: 248
+Line: 249
 Time: 0s">
 <div class="time" style="width: 0%"></div>
 <pre>
@@ -752,7 +753,7 @@ Time: 0s">
     repeat_rewriteA_using_helper ltac:(fun lem' lem'' =&gt; erewrite ?lem', ?lem'') lem ltac:preconcat_any ltac:left_associate_concat ltac:left_associate_concat_in_hyp.</pre>
 </div>
 <div class="code" title="File: RewriteModuloAssociativity.v
-Line: 250
+Line: 251
 Time: 0s">
 <div class="time" style="width: 0%"></div>
 <pre>
@@ -760,7 +761,7 @@ Time: 0s">
     repeat_rewriteA_using_helper ltac:(fun lem' lem'' =&gt; progress erewrite -&gt; ?lem', -&gt; ?lem'') lem ltac:preconcat_any ltac:left_associate_concat ltac:left_associate_concat_in_hyp.</pre>
 </div>
 <div class="code" title="File: RewriteModuloAssociativity.v
-Line: 252
+Line: 253
 Time: 0s">
 <div class="time" style="width: 0%"></div>
 <pre>
@@ -768,7 +769,7 @@ Time: 0s">
     repeat_rewriteA_using_helper ltac:(fun lem' lem'' =&gt; progress erewrite &lt;- ?lem', &lt;- ?lem'') lem ltac:preconcat_any ltac:left_associate_concat ltac:left_associate_concat_in_hyp.</pre>
 </div>
 <div class="code" title="File: RewriteModuloAssociativity.v
-Line: 254
+Line: 255
 Time: 0s">
 <div class="time" style="width: 0%"></div>
 <pre>
@@ -776,7 +777,7 @@ Time: 0s">
     repeat_rewriteA_using_helper ltac:(fun lem' lem'' =&gt; erewrite -&gt; ?lem', -&gt; ?lem'') lem ltac:preconcat_any ltac:left_associate_concat ltac:left_associate_concat_in_hyp.</pre>
 </div>
 <div class="code" title="File: RewriteModuloAssociativity.v
-Line: 256
+Line: 257
 Time: 0s">
 <div class="time" style="width: 0%"></div>
 <pre>
@@ -784,7 +785,7 @@ Time: 0s">
     repeat_rewriteA_using_helper ltac:(fun lem' lem'' =&gt; erewrite &lt;- ?lem', &lt;- ?lem'') lem ltac:preconcat_any ltac:left_associate_concat ltac:left_associate_concat_in_hyp.</pre>
 </div>
 <div class="code" title="File: RewriteModuloAssociativity.v
-Line: 258
+Line: 259
 Time: 0s">
 <div class="time" style="width: 0%"></div>
 <pre>
@@ -792,63 +793,63 @@ Time: 0s">
   Tactic Notation "rewrite•A" constr(lem) := rewrite@A lem.</pre>
 </div>
 <div class="code" title="File: RewriteModuloAssociativity.v
-Line: 260
+Line: 261
 Time: 0s">
 <div class="time" style="width: 0%"></div>
 <pre>
   Tactic Notation "rewrite•A" "-&gt;" constr(lem) := rewrite@A -&gt; lem.</pre>
 </div>
 <div class="code" title="File: RewriteModuloAssociativity.v
-Line: 261
+Line: 262
 Time: 0s">
 <div class="time" style="width: 0%"></div>
 <pre>
   Tactic Notation "rewrite•A" "&lt;-" constr(lem) := rewrite@A &lt;- lem.</pre>
 </div>
 <div class="code" title="File: RewriteModuloAssociativity.v
-Line: 262
+Line: 263
 Time: 0s">
 <div class="time" style="width: 0%"></div>
 <pre>
   Tactic Notation "rewrite•A" "!" constr(lem) := rewrite@A !lem.</pre>
 </div>
 <div class="code" title="File: RewriteModuloAssociativity.v
-Line: 263
+Line: 264
 Time: 0s">
 <div class="time" style="width: 0%"></div>
 <pre>
   Tactic Notation "rewrite•A" "?" constr(lem) := rewrite@A ? lem.</pre>
 </div>
 <div class="code" title="File: RewriteModuloAssociativity.v
-Line: 264
+Line: 265
 Time: 0s">
 <div class="time" style="width: 0%"></div>
 <pre>
   Tactic Notation "rewrite•A" "-&gt;" "!" constr(lem) := rewrite@A -&gt; !lem.</pre>
 </div>
 <div class="code" title="File: RewriteModuloAssociativity.v
-Line: 265
+Line: 266
 Time: 0s">
 <div class="time" style="width: 0%"></div>
 <pre>
   Tactic Notation "rewrite•A" "&lt;-" "!" constr(lem) := rewrite@A &lt;- !lem.</pre>
 </div>
 <div class="code" title="File: RewriteModuloAssociativity.v
-Line: 266
+Line: 267
 Time: 0s">
 <div class="time" style="width: 0%"></div>
 <pre>
   Tactic Notation "rewrite•A" "-&gt;" "?" constr(lem) := rewrite@A -&gt; ? lem.</pre>
 </div>
 <div class="code" title="File: RewriteModuloAssociativity.v
-Line: 267
+Line: 268
 Time: 0s">
 <div class="time" style="width: 0%"></div>
 <pre>
   Tactic Notation "rewrite•A" "&lt;-" "?" constr(lem) := rewrite@A &lt;- ? lem.</pre>
 </div>
 <div class="code" title="File: RewriteModuloAssociativity.v
-Line: 268
+Line: 269
 Time: 0s">
 <div class="time" style="width: 0%"></div>
 <pre>
@@ -857,70 +858,70 @@ Time: 0s">
   Tactic Notation "erewrite•A" open_constr(lem) := erewrite@A lem.</pre>
 </div>
 <div class="code" title="File: RewriteModuloAssociativity.v
-Line: 271
+Line: 272
 Time: 0s">
 <div class="time" style="width: 0%"></div>
 <pre>
   Tactic Notation "erewrite•A" "-&gt;" open_constr(lem) := erewrite@A -&gt; lem.</pre>
 </div>
 <div class="code" title="File: RewriteModuloAssociativity.v
-Line: 272
+Line: 273
 Time: 0s">
 <div class="time" style="width: 0%"></div>
 <pre>
   Tactic Notation "erewrite•A" "&lt;-" open_constr(lem) := erewrite@A &lt;- lem.</pre>
 </div>
 <div class="code" title="File: RewriteModuloAssociativity.v
-Line: 273
+Line: 274
 Time: 0s">
 <div class="time" style="width: 0%"></div>
 <pre>
   Tactic Notation "erewrite•A" "!" open_constr(lem) := erewrite@A !lem.</pre>
 </div>
 <div class="code" title="File: RewriteModuloAssociativity.v
-Line: 274
+Line: 275
 Time: 0s">
 <div class="time" style="width: 0%"></div>
 <pre>
   Tactic Notation "erewrite•A" "?" open_constr(lem) := erewrite@A ? lem.</pre>
 </div>
 <div class="code" title="File: RewriteModuloAssociativity.v
-Line: 275
+Line: 276
 Time: 0s">
 <div class="time" style="width: 0%"></div>
 <pre>
   Tactic Notation "erewrite•A" "-&gt;" "!" open_constr(lem) := erewrite@A -&gt; !lem.</pre>
 </div>
 <div class="code" title="File: RewriteModuloAssociativity.v
-Line: 276
+Line: 277
 Time: 0s">
 <div class="time" style="width: 0%"></div>
 <pre>
   Tactic Notation "erewrite•A" "&lt;-" "!" open_constr(lem) := erewrite@A &lt;- !lem.</pre>
 </div>
 <div class="code" title="File: RewriteModuloAssociativity.v
-Line: 277
+Line: 278
 Time: 0s">
 <div class="time" style="width: 0%"></div>
 <pre>
   Tactic Notation "erewrite•A" "-&gt;" "?" open_constr(lem) := erewrite@A -&gt; ? lem.</pre>
 </div>
 <div class="code" title="File: RewriteModuloAssociativity.v
-Line: 278
+Line: 279
 Time: 0s">
 <div class="time" style="width: 0%"></div>
 <pre>
   Tactic Notation "erewrite•A" "&lt;-" "?" open_constr(lem) := erewrite@A &lt;- ? lem.</pre>
 </div>
 <div class="code" title="File: RewriteModuloAssociativity.v
-Line: 279
+Line: 280
 Time: 0s">
 <div class="time" style="width: 0%"></div>
 <pre>
 End Concat.</pre>
 </div>
 <div class="code" title="File: RewriteModuloAssociativity.v
-Line: 280
+Line: 281
 Time: 0s">
 <div class="time" style="width: 0%"></div>
 <pre>
@@ -928,49 +929,49 @@ Time: 0s">
 Section examples.</pre>
 </div>
 <div class="code" title="File: RewriteModuloAssociativity.v
-Line: 282
+Line: 283
 Time: 0s">
 <div class="time" style="width: 0%"></div>
 <pre>
   Section compose.</pre>
 </div>
 <div class="code" title="File: RewriteModuloAssociativity.v
-Line: 283
-Time: 0.005s">
-<div class="time" style="width: 10.869565217391%"></div>
+Line: 284
+Time: 0.003s">
+<div class="time" style="width: 6.5217391304348%"></div>
 <pre>
     Example simple_01 {A} (f g h i j : A -&gt; A) : f o g = h -&gt; (i o f) o (g o j) = i o h o j.</pre>
-</div>
-<div class="code" title="File: RewriteModuloAssociativity.v
-Line: 284
-Time: 0s">
-<div class="time" style="width: 0%"></div>
-<pre>
-    Proof.</pre>
 </div>
 <div class="code" title="File: RewriteModuloAssociativity.v
 Line: 285
 Time: 0s">
 <div class="time" style="width: 0%"></div>
 <pre>
-      intro H.</pre>
+    Proof.</pre>
 </div>
 <div class="code" title="File: RewriteModuloAssociativity.v
 Line: 286
-Time: 0.022s">
-<div class="time" style="width: 47.826086956522%"></div>
+Time: 0s">
+<div class="time" style="width: 0%"></div>
+<pre>
+      intro H.</pre>
+</div>
+<div class="code" title="File: RewriteModuloAssociativity.v
+Line: 287
+Time: 0.017s">
+<div class="time" style="width: 36.95652173913%"></div>
 <pre>
       rewrite∘A H.</pre>
 </div>
 <div class="code" title="File: RewriteModuloAssociativity.v
-Line: 287
+Line: 288
 Time: 0s">
 <div class="time" style="width: 0%"></div>
 <pre>
       reflexivity.</pre>
 </div>
 <div class="code" title="File: RewriteModuloAssociativity.v
-Line: 288
+Line: 289
 Time: 0s">
 <div class="time" style="width: 0%"></div>
 <pre>
@@ -980,34 +981,34 @@ Time: 0s">
    </pre>
 </div>
 <div class="code" title="File: RewriteModuloAssociativity.v
-Line: 292
+Line: 293
 Time: 0s">
 <div class="time" style="width: 0%"></div>
 <pre>Proof.</pre>
 </div>
 <div class="code" title="File: RewriteModuloAssociativity.v
-Line: 292
+Line: 293
 Time: 0s">
 <div class="time" style="width: 0%"></div>
 <pre>
       intro H.</pre>
 </div>
 <div class="code" title="File: RewriteModuloAssociativity.v
-Line: 293
+Line: 294
 Time: 0.046s">
 <div class="time" style="width: 100%"></div>
 <pre>
       rewrite∘A !H.</pre>
 </div>
 <div class="code" title="File: RewriteModuloAssociativity.v
-Line: 294
+Line: 295
 Time: 0s">
 <div class="time" style="width: 0%"></div>
 <pre>
       reflexivity.</pre>
 </div>
 <div class="code" title="File: RewriteModuloAssociativity.v
-Line: 295
+Line: 296
 Time: 0s">
 <div class="time" style="width: 0%"></div>
 <pre>
@@ -1017,48 +1018,48 @@ Time: 0s">
  </pre>
 </div>
 <div class="code" title="File: RewriteModuloAssociativity.v
-Line: 299
+Line: 300
 Time: 0s">
 <div class="time" style="width: 0%"></div>
 <pre>Section concat.</pre>
 </div>
 <div class="code" title="File: RewriteModuloAssociativity.v
-Line: 299
+Line: 300
 Time: 0.003s">
 <div class="time" style="width: 6.5217391304348%"></div>
 <pre>
     Example simple_01 {A} {a : A} (f g h i j : a = a) : f @ g = h -&gt; (i @ f) @ (g @ j) = i @ h @ j.</pre>
 </div>
 <div class="code" title="File: RewriteModuloAssociativity.v
-Line: 300
+Line: 301
 Time: 0s">
 <div class="time" style="width: 0%"></div>
 <pre>
     Proof.</pre>
 </div>
 <div class="code" title="File: RewriteModuloAssociativity.v
-Line: 301
+Line: 302
 Time: 0s">
 <div class="time" style="width: 0%"></div>
 <pre>
       intro H.</pre>
 </div>
 <div class="code" title="File: RewriteModuloAssociativity.v
-Line: 302
-Time: 0.024s">
-<div class="time" style="width: 52.173913043478%"></div>
+Line: 303
+Time: 0.023s">
+<div class="time" style="width: 50%"></div>
 <pre>
       rewrite@A H.</pre>
 </div>
 <div class="code" title="File: RewriteModuloAssociativity.v
-Line: 303
+Line: 304
 Time: 0s">
 <div class="time" style="width: 0%"></div>
 <pre>
       reflexivity.</pre>
 </div>
 <div class="code" title="File: RewriteModuloAssociativity.v
-Line: 304
+Line: 305
 Time: 0s">
 <div class="time" style="width: 0%"></div>
 <pre>
@@ -1068,34 +1069,34 @@ Time: 0s">
    </pre>
 </div>
 <div class="code" title="File: RewriteModuloAssociativity.v
-Line: 308
+Line: 309
 Time: 0s">
 <div class="time" style="width: 0%"></div>
 <pre>Proof.</pre>
 </div>
 <div class="code" title="File: RewriteModuloAssociativity.v
-Line: 308
+Line: 309
 Time: 0s">
 <div class="time" style="width: 0%"></div>
 <pre>
       intro H.</pre>
 </div>
 <div class="code" title="File: RewriteModuloAssociativity.v
-Line: 309
-Time: 0.038s">
-<div class="time" style="width: 82.608695652174%"></div>
+Line: 310
+Time: 0.039s">
+<div class="time" style="width: 84.782608695652%"></div>
 <pre>
       rewrite@A !H.</pre>
 </div>
 <div class="code" title="File: RewriteModuloAssociativity.v
-Line: 310
+Line: 311
 Time: 0s">
 <div class="time" style="width: 0%"></div>
 <pre>
       reflexivity.</pre>
 </div>
 <div class="code" title="File: RewriteModuloAssociativity.v
-Line: 311
+Line: 312
 Time: 0s">
 <div class="time" style="width: 0%"></div>
 <pre>
@@ -1103,13 +1104,13 @@ Time: 0s">
   End concat.</pre>
 </div>
 <div class="code" title="File: RewriteModuloAssociativity.v
-Line: 313
+Line: 314
 Time: 0s">
 <div class="time" style="width: 0%"></div>
 <pre>End examples.</pre>
 </div>
 <div class="code" title="File: RewriteModuloAssociativity.v
-Line: 314
+Line: 315
 Time: 0s">
 <div class="time" style="width: 0%"></div>
 <pre>
