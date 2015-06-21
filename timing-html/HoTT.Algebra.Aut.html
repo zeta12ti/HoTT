@@ -1,0 +1,261 @@
+<html>
+<head>
+<title>Aut.v</title>
+<style>
+.time {
+  background-color: #ffaaaa;
+  height: 100%;
+  z-index: -1;
+  position: absolute;
+}
+.code {
+  z-index: 0;
+  position: relative;
+  border-style: solid;
+  border-color: transparent;
+  border-width: 1px;
+}
+.code:hover {
+  border-style: solid;
+  border-color: black;
+  border-width: 1px;
+}
+pre {
+  margin: 1px;
+}
+</style>
+</head>
+<body>
+<h1>Timings for Aut.v</h1>
+
+<div class="code" title="File: Aut.v
+Line: 1
+Time: 0s">
+<div class="time" style="width: 0%"></div>
+<pre>(* -*- mode: coq; mode: visual-line -*-  *)</pre>
+</div>
+<div class="code" title="File: Aut.v
+Line: 1
+Time: 0.052s">
+<div class="time" style="width: 2.2308022308022%"></div>
+<pre>Require Import HoTT.Basics HoTT.Types.</pre>
+</div>
+<div class="code" title="File: Aut.v
+Line: 1
+Time: 0.189s">
+<div class="time" style="width: 8.1081081081081%"></div>
+<pre>
+Require Import Pointed UnivalenceImpliesFunext Factorization.</pre>
+</div>
+<div class="code" title="File: Aut.v
+Line: 2
+Time: 0s">
+<div class="time" style="width: 0%"></div>
+<pre>
+Require Import Modalities.Modality.</pre>
+</div>
+<div class="code" title="File: Aut.v
+Line: 3
+Time: 0.011s">
+<div class="time" style="width: 0.47190047190047%"></div>
+<pre>
+Require Import hit.Truncations hit.Connectedness hit.quotient.</pre>
+</div>
+<div class="code" title="File: Aut.v
+Line: 4
+Time: 0.002s">
+<div class="time" style="width: 0.085800085800086%"></div>
+<pre>
+Require Import Algebra.ooGroup.</pre>
+</div>
+<div class="code" title="File: Aut.v
+Line: 5
+Time: 0.004s">
+<div class="time" style="width: 0.17160017160017%"></div>
+<pre>
+Import TrM.</pre>
+</div>
+<div class="code" title="File: Aut.v
+Line: 6
+Time: 0s">
+<div class="time" style="width: 0%"></div>
+<pre>
+
+Local Open Scope path_scope.</pre>
+</div>
+<div class="code" title="File: Aut.v
+Line: 8
+Time: 0s">
+<div class="time" style="width: 0%"></div>
+<pre>
+
+(** * Automorphism oo-Groups *)
+
+(** To define the automorphism oo-group [Aut X], we have to construct its classifying space [BAut X]. *)
+
+(** [BAut X] is the type of types that are merely equivalent to [X].  We put this in a module to make it local to this file; at the end of the file we'll redefine [BAut X] for export to be the classifying space of [Aut X] (which will be judgmentally, but not syntactically, equal to this definition.) *)</pre>
+</div>
+<div class="code" title="File: Aut.v
+Line: 14
+Time: 0s">
+<div class="time" style="width: 0%"></div>
+<pre>Module Import BAut.</pre>
+</div>
+<div class="code" title="File: Aut.v
+Line: 14
+Time: 0.001s">
+<div class="time" style="width: 0.042900042900043%"></div>
+<pre>
+  Definition BAut (X : Type) := { Z : Type &amp; merely (Z = X) }.</pre>
+</div>
+<div class="code" title="File: Aut.v
+Line: 15
+Time: 0s">
+<div class="time" style="width: 0%"></div>
+<pre>
+End BAut.</pre>
+</div>
+<div class="code" title="File: Aut.v
+Line: 16
+Time: 0s">
+<div class="time" style="width: 0%"></div>
+<pre>
+
+(** Equivalently, [BAut X] is the (-1)-image of the classifying map [1 -&gt; Type] of [X]. *)</pre>
+</div>
+<div class="code" title="File: Aut.v
+Line: 18
+Time: 0.003s">
+<div class="time" style="width: 0.12870012870013%"></div>
+<pre>Definition equiv_baut_image_unit X
+: BAut X &lt;~&gt; image (Tr -1) (unit_name X).</pre>
+</div>
+<div class="code" title="File: Aut.v
+Line: 19
+Time: 0s">
+<div class="time" style="width: 0%"></div>
+<pre>
+Proof.</pre>
+</div>
+<div class="code" title="File: Aut.v
+Line: 20
+Time: 0.001s">
+<div class="time" style="width: 0.042900042900043%"></div>
+<pre>
+  unfold BAut, image; simpl.</pre>
+</div>
+<div class="code" title="File: Aut.v
+Line: 21
+Time: 0.002s">
+<div class="time" style="width: 0.085800085800086%"></div>
+<pre>
+  refine (equiv_functor_sigma' (equiv_idmap Type) _); intros Z; simpl.</pre>
+</div>
+<div class="code" title="File: Aut.v
+Line: 22
+Time: 0.001s">
+<div class="time" style="width: 0.042900042900043%"></div>
+<pre>
+  apply equiv_O_functor; unfold hfiber.</pre>
+</div>
+<div class="code" title="File: Aut.v
+Line: 23
+Time: 0.002s">
+<div class="time" style="width: 0.085800085800086%"></div>
+<pre>
+  refine ((equiv_contr_sigma _)^-1 oE _).</pre>
+</div>
+<div class="code" title="File: Aut.v
+Line: 24
+Time: 0s">
+<div class="time" style="width: 0%"></div>
+<pre>
+  apply equiv_path_inverse.</pre>
+</div>
+<div class="code" title="File: Aut.v
+Line: 25
+Time: 0.013s">
+<div class="time" style="width: 0.55770055770056%"></div>
+<pre>
+Defined.</pre>
+</div>
+<div class="code" title="File: Aut.v
+Line: 26
+Time: 0s">
+<div class="time" style="width: 0%"></div>
+<pre>
+
+(** Now we can define [Aut X], by proving that [BAut X] is connected. *)</pre>
+</div>
+<div class="code" title="File: Aut.v
+Line: 28
+Time: 0s">
+<div class="time" style="width: 0%"></div>
+<pre>Definition Aut (X : Type@{i}) : ooGroup@{j u a}.</pre>
+</div>
+<div class="code" title="File: Aut.v
+Line: 28
+Time: 0s">
+<div class="time" style="width: 0%"></div>
+<pre>
+Proof.</pre>
+</div>
+<div class="code" title="File: Aut.v
+Line: 29
+Time: 0.465s">
+<div class="time" style="width: 19.94851994852%"></div>
+<pre>
+  refine (Build_ooGroup
+            (Build_pType { Z : Type &amp; merely (Z = X) } (X ; tr 1)) _).</pre>
+</div>
+<div class="code" title="File: Aut.v
+Line: 31
+Time: 2.331s">
+<div class="time" style="width: 100%"></div>
+<pre>
+  refine (conn_pointed_type (point _)); try exact _.</pre>
+</div>
+<div class="code" title="File: Aut.v
+Line: 32
+Time: 0.485s">
+<div class="time" style="width: 20.806520806521%"></div>
+<pre>
+  pose (c := conn_map_compose (Tr -1)
+                              (factor1 (image (Tr -1) (unit_name X)))
+                              (equiv_baut_image_unit X)^-1).</pre>
+</div>
+<div class="code" title="File: Aut.v
+Line: 35
+Time: 0.008s">
+<div class="time" style="width: 0.34320034320034%"></div>
+<pre>
+  refine (conn_map_homotopic _ _ _ _ c); intros []; reflexivity.</pre>
+</div>
+<div class="code" title="File: Aut.v
+Line: 36
+Time: 0.013s">
+<div class="time" style="width: 0.55770055770056%"></div>
+<pre>
+Defined.</pre>
+</div>
+<div class="code" title="File: Aut.v
+Line: 37
+Time: 0.001s">
+<div class="time" style="width: 0.042900042900043%"></div>
+<pre>
+
+Definition BAut X : Type := classifying_space (Aut X).</pre>
+</div>
+<div class="code" title="File: Aut.v
+Line: 40
+Time: 0s">
+<div class="time" style="width: 0%"></div>
+<pre>
+
+(** The type [BAut X] is studied further in [Spaces.BAut] and its subdirectories. *)
+
+</pre>
+</div>
+</body>
+</html>
+

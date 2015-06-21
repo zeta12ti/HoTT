@@ -1,0 +1,428 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
+"http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<link href="coqdoc.css" rel="stylesheet" type="text/css" />
+<title>HoTT.Algebra.ooGroup</title>
+</head>
+
+<body>
+
+<div id="page">
+
+<div id="header">
+</div>
+
+<div id="main">
+
+<h1 class="libtitle">Library HoTT.Algebra.ooGroup</h1>
+
+<div class="code">
+<span class="id" title="keyword">Require</span> <span class="id" title="keyword">Import</span> <a class="idref" href="HoTT.Basics.html#"><span class="id" title="library">HoTT.Basics</span></a> <a class="idref" href="HoTT.Types.html#"><span class="id" title="library">HoTT.Types</span></a>.<br/>
+<span class="id" title="keyword">Require</span> <span class="id" title="keyword">Import</span> <a class="idref" href="HoTT.Pointed.html#"><span class="id" title="library">Pointed</span></a> <a class="idref" href="HoTT.UnivalenceImpliesFunext.html#"><span class="id" title="library">UnivalenceImpliesFunext</span></a>.<br/>
+<span class="id" title="keyword">Require</span> <span class="id" title="keyword">Import</span> <a class="idref" href="HoTT.Modalities.Modality.html#"><span class="id" title="library">Modalities.Modality</span></a>.<br/>
+<span class="id" title="keyword">Require</span> <span class="id" title="keyword">Import</span> <a class="idref" href="HoTT.hit.Truncations.html#"><span class="id" title="library">hit.Truncations</span></a> <a class="idref" href="HoTT.hit.Connectedness.html#"><span class="id" title="library">hit.Connectedness</span></a> <a class="idref" href="HoTT.hit.quotient.html#"><span class="id" title="library">hit.quotient</span></a>.<br/>
+<span class="id" title="keyword">Import</span> <span class="id" title="var">TrM</span>.<br/>
+
+<br/>
+<span class="id" title="keyword">Local Open</span> <span class="id" title="keyword">Scope</span> <span class="id" title="var">path_scope</span>.<br/>
+
+<br/>
+</div>
+
+<div class="doc">
+<a name="lab424"></a><h1 class="section">oo-Groups</h1>
+
+<div class="paragraph"> </div>
+
+ We want a workable definition of "oo-group" (what a classical homotopy theorist would call a "grouplike Aoo-space"). The classical definitions using operads or Segal spaces involve infinitely much data, which we don't know how to handle in HoTT. But instead, we can invoke the theorem (which is a theorem in classical homotopy theory, and also in any oo-topos) that every oo-group is the loop space of some pointed connected object, and use it instead as a definition: we define an oo-group to be a pointed connected type (its classifying space or delooping). Then we make subsidiary definitions to allow us to treat such an object in the way we would expect, e.g. an oo-group homomorphism is a pointed map between classifying spaces. 
+<div class="paragraph"> </div>
+
+<a name="lab425"></a><h2 class="section">Definition</h2>
+
+</div>
+<div class="code">
+
+<br/>
+<span class="id" title="keyword">Record</span> <a name="ooGroup"><span class="id" title="record">ooGroup</span></a> :=<br/>
+&nbsp;&nbsp;{ <a name="classifying_space"><span class="id" title="projection">classifying_space</span></a> : <a class="idref" href="HoTT.Basics.Overture.html#pType"><span class="id" title="record">pType@</span></a>{<span class="id" title="var">i</span>} ;<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;<a name="isconn_classifying_space"><span class="id" title="projection">isconn_classifying_space</span></a> : <a class="idref" href="HoTT.hit.Truncations.html#TrM.IsConnected"><span class="id" title="class">IsConnected@</span></a>{<span class="id" title="var">u</span> <span class="id" title="var">a</span> <span class="id" title="var">i</span>} 0 <a class="idref" href="HoTT.Algebra.ooGroup.html#classifying_space"><span class="id" title="method">classifying_space</span></a><br/>
+&nbsp;&nbsp;}.<br/>
+
+<br/>
+<span class="id" title="keyword">Global</span> <span class="id" title="var">Existing</span> <span class="id" title="keyword">Instance</span> <span class="id" title="var">isconn_classifying_space</span>.<br/>
+
+<br/>
+<span class="id" title="keyword">Local</span> <span class="id" title="keyword">Notation</span> <a name="B"><span class="id" title="abbreviation">B</span></a> := <a class="idref" href="HoTT.Algebra.ooGroup.html#classifying_space"><span class="id" title="projection">classifying_space</span></a>.<br/>
+
+<br/>
+<span class="id" title="keyword">Definition</span> <a name="group_type"><span class="id" title="definition">group_type</span></a> (<span class="id" title="var">G</span> : <a class="idref" href="HoTT.Algebra.ooGroup.html#ooGroup"><span class="id" title="record">ooGroup</span></a>) : <span class="id" title="keyword">Type</span><br/>
+&nbsp;&nbsp;:= <a class="idref" href="HoTT.Basics.Overture.html#point"><span class="id" title="definition">point</span></a> (<a class="idref" href="HoTT.Algebra.ooGroup.html#B"><span class="id" title="abbreviation">B</span></a> <a class="idref" href="HoTT.Algebra.ooGroup.html#G"><span class="id" title="variable">G</span></a>) <a class="idref" href="HoTT.Basics.Overture.html#1c39bf18749e5cc609e83c0a0ba5a372"><span class="id" title="notation">=</span></a> <a class="idref" href="HoTT.Basics.Overture.html#point"><span class="id" title="definition">point</span></a> (<a class="idref" href="HoTT.Algebra.ooGroup.html#B"><span class="id" title="abbreviation">B</span></a> <a class="idref" href="HoTT.Algebra.ooGroup.html#G"><span class="id" title="variable">G</span></a>).<br/>
+
+<br/>
+</div>
+
+<div class="doc">
+The following is fundamental: we declare a coercion from oo-groups to types which takes a pointed connected type not to its underlying type, but to its loop space. Thus, if <span class="inlinecode"><a class="idref" href="HoTT.categories.Adjoint.Pointwise.html#AdjointPointwise.r.G"><span class="id" title="variable">G</span></a></span> <span class="inlinecode">:</span> <span class="inlinecode"><a class="idref" href="HoTT.Algebra.ooGroup.html#ooGroup"><span class="id" title="record">ooGroup</span></a></span>, then <span class="inlinecode"><a class="idref" href="HoTTBookExercises.html#Book_4_5.parts.g"><span class="id" title="variable">g</span></a></span> <span class="inlinecode">:</span> <span class="inlinecode"><a class="idref" href="HoTT.categories.Adjoint.Pointwise.html#AdjointPointwise.r.G"><span class="id" title="variable">G</span></a></span> means that <span class="inlinecode"><a class="idref" href="HoTTBookExercises.html#Book_4_5.parts.g"><span class="id" title="variable">g</span></a></span> is an element of the oo-group that <span class="inlinecode"><a class="idref" href="HoTT.categories.Adjoint.Pointwise.html#AdjointPointwise.r.G"><span class="id" title="variable">G</span></a></span> is intended to denote, which is the loop space of the pointed connected type that is technically the data of which <span class="inlinecode"><a class="idref" href="HoTT.categories.Adjoint.Pointwise.html#AdjointPointwise.r.G"><span class="id" title="variable">G</span></a></span> <span class="inlinecode">:</span> <span class="inlinecode"><a class="idref" href="HoTT.Algebra.ooGroup.html#ooGroup"><span class="id" title="record">ooGroup</span></a></span> consists. This makes it easier to really think of <span class="inlinecode"><a class="idref" href="HoTT.categories.Adjoint.Pointwise.html#AdjointPointwise.r.G"><span class="id" title="variable">G</span></a></span> as "really being" an oo-group rather than its classifying space.
+
+<div class="paragraph"> </div>
+
+This is also convenient because elements of oo-groups are, definitionally, loops in some type. Thus, the oo-group operations like multiplication, inverse, associativity, higher associativity, etc. are simply special cases of the corresponding operations for paths. 
+</div>
+<div class="code">
+
+<br/>
+<span class="id" title="keyword">Coercion</span> <a class="idref" href="HoTT.Algebra.ooGroup.html#group_type"><span class="id" title="definition">group_type</span></a> : <span class="id" title="var">ooGroup</span> &gt;-&gt; <span class="id" title="var">Sortclass</span>.<br/>
+
+<br/>
+</div>
+
+<div class="doc">
+Every pointed type has a loop space that is an oo-group. 
+</div>
+<div class="code">
+<span class="id" title="keyword">Definition</span> <a name="group_loops"><span class="id" title="definition">group_loops</span></a> (<span class="id" title="var">X</span> : <a class="idref" href="HoTT.Basics.Overture.html#pType"><span class="id" title="record">pType</span></a>)<br/>
+: <a class="idref" href="HoTT.Algebra.ooGroup.html#ooGroup"><span class="id" title="record">ooGroup</span></a>.<br/>
+<span class="id" title="keyword">Proof</span>.<br/>
+&nbsp;&nbsp;<span class="id" title="tactic">pose</span> (<span class="id" title="var">x0</span> := <a class="idref" href="HoTT.Basics.Overture.html#point"><span class="id" title="definition">point</span></a> <span class="id" title="var">X</span>);<br/>
+&nbsp;&nbsp;<span class="id" title="tactic">pose</span> (<span class="id" title="var">BG</span> := (<a class="idref" href="HoTT.Basics.Overture.html#Build_pType"><span class="id" title="constructor">Build_pType</span></a><br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a class="idref" href="Coq.Init.Specif.html#50b5d8dd6be4fba768e35617e518ad76"><span class="id" title="notation">{</span></a> <span class="id" title="var">x</span><a class="idref" href="Coq.Init.Specif.html#50b5d8dd6be4fba768e35617e518ad76"><span class="id" title="notation">:</span></a><span class="id" title="var">X</span> <a class="idref" href="Coq.Init.Specif.html#50b5d8dd6be4fba768e35617e518ad76"><span class="id" title="notation">&amp;</span></a> <a class="idref" href="HoTT.hit.Truncations.html#merely"><span class="id" title="definition">merely</span></a> (<span class="id" title="var">x</span> <a class="idref" href="HoTT.Basics.Overture.html#1c39bf18749e5cc609e83c0a0ba5a372"><span class="id" title="notation">=</span></a> <a class="idref" href="HoTT.Basics.Overture.html#point"><span class="id" title="definition">point</span></a> <span class="id" title="var">X</span>) <a class="idref" href="Coq.Init.Specif.html#50b5d8dd6be4fba768e35617e518ad76"><span class="id" title="notation">}</span></a><br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;(<a class="idref" href="Coq.Init.Specif.html#existT"><span class="id" title="abbreviation">existT</span></a> (<span class="id" title="keyword">fun</span> <span class="id" title="var">x</span>:<span class="id" title="var">X</span> ⇒ <a class="idref" href="HoTT.hit.Truncations.html#merely"><span class="id" title="definition">merely</span></a> (<a class="idref" href="HoTT.Algebra.ooGroup.html#x"><span class="id" title="variable">x</span></a> <a class="idref" href="HoTT.Basics.Overture.html#1c39bf18749e5cc609e83c0a0ba5a372"><span class="id" title="notation">=</span></a> <a class="idref" href="HoTT.Basics.Overture.html#point"><span class="id" title="definition">point</span></a> <span class="id" title="var">X</span>)) <span class="id" title="var">x0</span> (<a class="idref" href="HoTT.hit.Truncations.html#Trunc.tr"><span class="id" title="constructor">tr</span></a> 1)))).<br/>
+</div>
+
+<div class="doc">
+Using <span class="inlinecode"><span class="id" title="tactic">cut</span></span> prevents Coq from looking for these facts with typeclass search, which is slow and (for some reason) introduces scads of extra universes. 
+</div>
+<div class="code">
+&nbsp;&nbsp;<span class="id" title="tactic">cut</span> (<a class="idref" href="HoTT.hit.Truncations.html#TrM.IsConnected"><span class="id" title="class">IsConnected</span></a> 0 <span class="id" title="var">BG</span>).<br/>
+&nbsp;&nbsp;{ <span class="id" title="tactic">exact</span> (<a class="idref" href="HoTT.Algebra.ooGroup.html#Build_ooGroup"><span class="id" title="constructor">Build_ooGroup</span></a> <span class="id" title="var">BG</span>). }<br/>
+&nbsp;&nbsp;<span class="id" title="tactic">cut</span> (<a class="idref" href="HoTT.hit.Truncations.html#IsSurjection"><span class="id" title="abbreviation">IsSurjection</span></a> (<a class="idref" href="HoTT.Types.Unit.html#unit_name"><span class="id" title="abbreviation">unit_name</span></a> (<a class="idref" href="HoTT.Basics.Overture.html#point"><span class="id" title="definition">point</span></a> <span class="id" title="var">BG</span>))).<br/>
+&nbsp;&nbsp;{ <span class="id" title="tactic">intros</span>; <span class="id" title="tactic">refine</span> (<a class="idref" href="HoTT.hit.Connectedness.html#conn_pointed_type"><span class="id" title="instance">conn_pointed_type</span></a> (<a class="idref" href="HoTT.Basics.Overture.html#point"><span class="id" title="definition">point</span></a> <span class="id" title="var">_</span>)). }<br/>
+&nbsp;&nbsp;<span class="id" title="tactic">apply</span> <a class="idref" href="HoTT.hit.Truncations.html#BuildIsSurjection"><span class="id" title="definition">BuildIsSurjection</span></a>; <span class="id" title="tactic">simpl</span>; <span class="id" title="tactic">intros</span> [<span class="id" title="var">x</span> <span class="id" title="var">p</span>].<br/>
+&nbsp;&nbsp;<span class="id" title="var">strip_truncations</span>; <span class="id" title="tactic">apply</span> <a class="idref" href="HoTT.hit.Truncations.html#Trunc.tr"><span class="id" title="constructor">tr</span></a>; <span class="id" title="tactic">∃</span> <a class="idref" href="HoTT.Basics.Overture.html#tt"><span class="id" title="constructor">tt</span></a>.<br/>
+&nbsp;&nbsp;<span class="id" title="tactic">apply</span> <a class="idref" href="HoTT.Types.Sigma.html#path_sigma_hprop"><span class="id" title="definition">path_sigma_hprop</span></a>; <span class="id" title="tactic">simpl</span>.<br/>
+&nbsp;&nbsp;<span class="id" title="tactic">exact</span> (<span class="id" title="var">p</span><a class="idref" href="HoTT.Basics.Overture.html#29af923c7a8513334b9f1a5189c731d3"><span class="id" title="notation">^</span></a>).<br/>
+<span class="id" title="keyword">Defined</span>.<br/>
+
+<br/>
+</div>
+
+<div class="doc">
+Unfortunately, the underlying type of that oo-group is not *definitionally* the same as the ordinary loop space, but it is equivalent to it. 
+</div>
+<div class="code">
+<span class="id" title="keyword">Definition</span> <a name="loops_group"><span class="id" title="definition">loops_group</span></a> (<span class="id" title="var">X</span> : <a class="idref" href="HoTT.Basics.Overture.html#pType"><span class="id" title="record">pType</span></a>)<br/>
+: <a class="idref" href="HoTT.Pointed.html#loops"><span class="id" title="definition">loops</span></a> <a class="idref" href="HoTT.Algebra.ooGroup.html#X"><span class="id" title="variable">X</span></a> <a class="idref" href="HoTT.Basics.Overture.html#fdd951a86e2a1b4ef3630e8a03060363"><span class="id" title="notation">&lt;~&gt;</span></a> <a class="idref" href="HoTT.Algebra.ooGroup.html#group_loops"><span class="id" title="definition">group_loops</span></a> <a class="idref" href="HoTT.Algebra.ooGroup.html#X"><span class="id" title="variable">X</span></a>.<br/>
+<span class="id" title="keyword">Proof</span>.<br/>
+&nbsp;&nbsp;<span class="id" title="tactic">unfold</span> <a class="idref" href="HoTT.Pointed.html#loops"><span class="id" title="definition">loops</span></a>, <a class="idref" href="HoTT.Algebra.ooGroup.html#group_type"><span class="id" title="definition">group_type</span></a>. <span class="id" title="tactic">simpl</span>.<br/>
+&nbsp;&nbsp;<span class="id" title="tactic">exact</span> (<a class="idref" href="HoTT.Types.Sigma.html#equiv_path_sigma_hprop"><span class="id" title="definition">equiv_path_sigma_hprop</span></a> <a class="idref" href="HoTT.Basics.Overture.html#6219320773dc83ab7d1d441169459b9d"><span class="id" title="notation">(</span></a><a class="idref" href="HoTT.Basics.Overture.html#point"><span class="id" title="definition">point</span></a> <span class="id" title="var">X</span> <a class="idref" href="HoTT.Basics.Overture.html#6219320773dc83ab7d1d441169459b9d"><span class="id" title="notation">;</span></a> <a class="idref" href="HoTT.hit.Truncations.html#Trunc.tr"><span class="id" title="constructor">tr</span></a> 1<a class="idref" href="HoTT.Basics.Overture.html#6219320773dc83ab7d1d441169459b9d"><span class="id" title="notation">)</span></a> <a class="idref" href="HoTT.Basics.Overture.html#6219320773dc83ab7d1d441169459b9d"><span class="id" title="notation">(</span></a><a class="idref" href="HoTT.Basics.Overture.html#point"><span class="id" title="definition">point</span></a> <span class="id" title="var">X</span> <a class="idref" href="HoTT.Basics.Overture.html#6219320773dc83ab7d1d441169459b9d"><span class="id" title="notation">;</span></a> <a class="idref" href="HoTT.hit.Truncations.html#Trunc.tr"><span class="id" title="constructor">tr</span></a> 1<a class="idref" href="HoTT.Basics.Overture.html#6219320773dc83ab7d1d441169459b9d"><span class="id" title="notation">)</span></a>).<br/>
+<span class="id" title="keyword">Defined</span>.<br/>
+
+<br/>
+</div>
+
+<div class="doc">
+<a name="lab426"></a><h2 class="section">Homomorphisms</h2>
+
+<div class="paragraph"> </div>
+
+<a name="lab427"></a><h3 class="section">Definition</h3>
+
+</div>
+<div class="code">
+
+<br/>
+<span class="id" title="keyword">Definition</span> <a name="ooGroupHom"><span class="id" title="definition">ooGroupHom</span></a> (<span class="id" title="var">G</span> <span class="id" title="var">H</span> : <a class="idref" href="HoTT.Algebra.ooGroup.html#ooGroup"><span class="id" title="record">ooGroup</span></a>)<br/>
+&nbsp;&nbsp;:= <a class="idref" href="HoTT.Pointed.html#pMap"><span class="id" title="record">pMap</span></a> (<a class="idref" href="HoTT.Algebra.ooGroup.html#B"><span class="id" title="abbreviation">B</span></a> <a class="idref" href="HoTT.Algebra.ooGroup.html#G"><span class="id" title="variable">G</span></a>) (<a class="idref" href="HoTT.Algebra.ooGroup.html#B"><span class="id" title="abbreviation">B</span></a> <a class="idref" href="HoTT.Algebra.ooGroup.html#H"><span class="id" title="variable">H</span></a>).<br/>
+
+<br/>
+<span class="id" title="keyword">Definition</span> <a name="grouphom_fun"><span class="id" title="definition">grouphom_fun</span></a> {<span class="id" title="var">G</span> <span class="id" title="var">H</span>} (<span class="id" title="var">phi</span> : <a class="idref" href="HoTT.Algebra.ooGroup.html#ooGroupHom"><span class="id" title="definition">ooGroupHom</span></a> <a class="idref" href="HoTT.Algebra.ooGroup.html#G"><span class="id" title="variable">G</span></a> <a class="idref" href="HoTT.Algebra.ooGroup.html#H"><span class="id" title="variable">H</span></a>) : <a class="idref" href="HoTT.Algebra.ooGroup.html#G"><span class="id" title="variable">G</span></a> <a class="idref" href="Coq.Init.Logic.html#d43e996736952df71ebeeae74d10a287"><span class="id" title="notation">→</span></a> <a class="idref" href="HoTT.Algebra.ooGroup.html#H"><span class="id" title="variable">H</span></a><br/>
+&nbsp;&nbsp;:= <a class="idref" href="HoTT.Pointed.html#loops_functor"><span class="id" title="definition">loops_functor</span></a> <a class="idref" href="HoTT.Algebra.ooGroup.html#phi"><span class="id" title="variable">phi</span></a>.<br/>
+
+<br/>
+<span class="id" title="keyword">Coercion</span> <a class="idref" href="HoTT.Algebra.ooGroup.html#grouphom_fun"><span class="id" title="definition">grouphom_fun</span></a> : <span class="id" title="var">ooGroupHom</span> &gt;-&gt; <span class="id" title="var">Funclass</span>.<br/>
+
+<br/>
+</div>
+
+<div class="doc">
+The loop group functor takes values in oo-group homomorphisms. 
+</div>
+<div class="code">
+<span class="id" title="keyword">Definition</span> <a name="group_loops_functor"><span class="id" title="definition">group_loops_functor</span></a><br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;{<span class="id" title="var">X</span> <span class="id" title="var">Y</span> : <a class="idref" href="HoTT.Basics.Overture.html#pType"><span class="id" title="record">pType</span></a>} (<span class="id" title="var">f</span> : <a class="idref" href="HoTT.Pointed.html#pMap"><span class="id" title="record">pMap</span></a> <a class="idref" href="HoTT.Algebra.ooGroup.html#X"><span class="id" title="variable">X</span></a> <a class="idref" href="HoTT.Algebra.ooGroup.html#Y"><span class="id" title="variable">Y</span></a>)<br/>
+: <a class="idref" href="HoTT.Algebra.ooGroup.html#ooGroupHom"><span class="id" title="definition">ooGroupHom</span></a> (<a class="idref" href="HoTT.Algebra.ooGroup.html#group_loops"><span class="id" title="definition">group_loops</span></a> <a class="idref" href="HoTT.Algebra.ooGroup.html#X"><span class="id" title="variable">X</span></a>) (<a class="idref" href="HoTT.Algebra.ooGroup.html#group_loops"><span class="id" title="definition">group_loops</span></a> <a class="idref" href="HoTT.Algebra.ooGroup.html#Y"><span class="id" title="variable">Y</span></a>).<br/>
+<span class="id" title="keyword">Proof</span>.<br/>
+&nbsp;&nbsp;<span class="id" title="tactic">refine</span> (<a class="idref" href="HoTT.Pointed.html#Build_pMap"><span class="id" title="constructor">Build_pMap</span></a> <span class="id" title="var">_</span> <span class="id" title="var">_</span> <span class="id" title="var">_</span> <span class="id" title="var">_</span>); <span class="id" title="tactic">simpl</span>.<br/>
+&nbsp;&nbsp;- <span class="id" title="tactic">intros</span> [<span class="id" title="var">x</span> <span class="id" title="var">p</span>].<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="id" title="tactic">∃</span> (<span class="id" title="var">f</span> <span class="id" title="var">x</span>).<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="id" title="var">strip_truncations</span>; <span class="id" title="tactic">apply</span> <a class="idref" href="HoTT.hit.Truncations.html#Trunc.tr"><span class="id" title="constructor">tr</span></a>.<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="id" title="tactic">exact</span> (<a class="idref" href="HoTT.Basics.Overture.html#ap"><span class="id" title="definition">ap</span></a> <span class="id" title="var">f</span> <span class="id" title="var">p</span> <a class="idref" href="HoTT.Basics.Overture.html#3351948a6e0d36c4877ab109ffc3dfc9"><span class="id" title="notation">@</span></a> <a class="idref" href="HoTT.Pointed.html#point_eq"><span class="id" title="projection">point_eq</span></a> <span class="id" title="var">f</span>).<br/>
+&nbsp;&nbsp;- <span class="id" title="tactic">apply</span> <a class="idref" href="HoTT.Types.Sigma.html#path_sigma_hprop"><span class="id" title="definition">path_sigma_hprop</span></a>; <span class="id" title="tactic">simpl</span>.<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="id" title="tactic">apply</span> <a class="idref" href="HoTT.Pointed.html#point_eq"><span class="id" title="projection">point_eq</span></a>.<br/>
+<span class="id" title="keyword">Defined</span>.<br/>
+
+<br/>
+</div>
+
+<div class="doc">
+And this functor "is" the same as the ordinary loop space functor. 
+</div>
+<div class="code">
+<span class="id" title="keyword">Definition</span> <a name="loops_functor_group"><span class="id" title="definition">loops_functor_group</span></a><br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;{<span class="id" title="var">X</span> <span class="id" title="var">Y</span> : <a class="idref" href="HoTT.Basics.Overture.html#pType"><span class="id" title="record">pType</span></a>} (<span class="id" title="var">f</span> : <a class="idref" href="HoTT.Pointed.html#pMap"><span class="id" title="record">pMap</span></a> <a class="idref" href="HoTT.Algebra.ooGroup.html#X"><span class="id" title="variable">X</span></a> <a class="idref" href="HoTT.Algebra.ooGroup.html#Y"><span class="id" title="variable">Y</span></a>)<br/>
+: <a class="idref" href="HoTT.Pointed.html#loops_functor"><span class="id" title="definition">loops_functor</span></a> (<a class="idref" href="HoTT.Algebra.ooGroup.html#group_loops_functor"><span class="id" title="definition">group_loops_functor</span></a> <a class="idref" href="HoTT.Algebra.ooGroup.html#f"><span class="id" title="variable">f</span></a>) <a class="idref" href="HoTT.Basics.Overture.html#edadc0d66ba2e614f03a8e21622242b7"><span class="id" title="notation">o</span></a> <a class="idref" href="HoTT.Algebra.ooGroup.html#loops_group"><span class="id" title="definition">loops_group</span></a> <a class="idref" href="HoTT.Algebra.ooGroup.html#X"><span class="id" title="variable">X</span></a><br/>
+&nbsp;&nbsp;<a class="idref" href="HoTT.Basics.Overture.html#cfa37b78c28623fd2a8dbbdb5f080ad4"><span class="id" title="notation">==</span></a> <a class="idref" href="HoTT.Algebra.ooGroup.html#loops_group"><span class="id" title="definition">loops_group</span></a> <a class="idref" href="HoTT.Algebra.ooGroup.html#Y"><span class="id" title="variable">Y</span></a> <a class="idref" href="HoTT.Basics.Overture.html#edadc0d66ba2e614f03a8e21622242b7"><span class="id" title="notation">o</span></a> <a class="idref" href="HoTT.Pointed.html#loops_functor"><span class="id" title="definition">loops_functor</span></a> <a class="idref" href="HoTT.Algebra.ooGroup.html#f"><span class="id" title="variable">f</span></a>.<br/>
+<span class="id" title="keyword">Proof</span>.<br/>
+&nbsp;&nbsp;<span class="id" title="tactic">intros</span> <span class="id" title="var">x</span>.<br/>
+&nbsp;&nbsp;<span class="id" title="tactic">apply</span> (<a class="idref" href="HoTT.Types.Paths.html#equiv_inj"><span class="id" title="definition">equiv_inj</span></a> <a class="idref" href="HoTT.Basics.Overture.html#77ed8f3b30fae66d423e9f3dab28cba2"><span class="id" title="notation">(</span></a><a class="idref" href="HoTT.Types.Sigma.html#equiv_path_sigma_hprop"><span class="id" title="definition">equiv_path_sigma_hprop</span></a> <span class="id" title="var">_</span> <span class="id" title="var">_</span><a class="idref" href="HoTT.Basics.Overture.html#77ed8f3b30fae66d423e9f3dab28cba2"><span class="id" title="notation">)^-1</span></a>).<br/>
+&nbsp;&nbsp;<span class="id" title="tactic">simpl</span>.<br/>
+&nbsp;&nbsp;<span class="id" title="tactic">unfold</span> <a class="idref" href="HoTT.Types.Sigma.html#pr1_path"><span class="id" title="definition">pr1_path</span></a>; <span class="id" title="tactic">rewrite</span> !<a class="idref" href="HoTT.Basics.PathGroupoids.html#ap_pp"><span class="id" title="definition">ap_pp</span></a>.<br/>
+&nbsp;&nbsp;<span class="id" title="tactic">rewrite</span> <a class="idref" href="HoTT.Basics.PathGroupoids.html#ap_V"><span class="id" title="definition">ap_V</span></a>, !<a class="idref" href="HoTT.Types.Sigma.html#ap_pr1_path_sigma_hprop"><span class="id" title="definition">ap_pr1_path_sigma_hprop</span></a>.<br/>
+&nbsp;&nbsp;<span class="id" title="tactic">apply</span> <a class="idref" href="HoTT.Basics.PathGroupoids.html#whiskerL"><span class="id" title="definition">whiskerL</span></a>, <a class="idref" href="HoTT.Basics.PathGroupoids.html#whiskerR"><span class="id" title="definition">whiskerR</span></a>.<br/>
+&nbsp;&nbsp;<span class="id" title="tactic">transitivity</span> (<a class="idref" href="HoTT.Basics.Overture.html#ap"><span class="id" title="definition">ap</span></a> (<span class="id" title="keyword">fun</span> <span class="id" title="var">X0</span> : <a class="idref" href="Coq.Init.Specif.html#50b5d8dd6be4fba768e35617e518ad76"><span class="id" title="notation">{</span></a><span class="id" title="var">x0</span> <a class="idref" href="Coq.Init.Specif.html#50b5d8dd6be4fba768e35617e518ad76"><span class="id" title="notation">:</span></a> <span class="id" title="var">X</span> <a class="idref" href="Coq.Init.Specif.html#50b5d8dd6be4fba768e35617e518ad76"><span class="id" title="notation">&amp;</span></a> <a class="idref" href="HoTT.hit.Truncations.html#merely"><span class="id" title="definition">merely</span></a> (<span class="id" title="var">x0</span> <a class="idref" href="HoTT.Basics.Overture.html#1c39bf18749e5cc609e83c0a0ba5a372"><span class="id" title="notation">=</span></a> <a class="idref" href="HoTT.Basics.Overture.html#point"><span class="id" title="definition">point</span></a> <span class="id" title="var">X</span>)<a class="idref" href="Coq.Init.Specif.html#50b5d8dd6be4fba768e35617e518ad76"><span class="id" title="notation">}</span></a> ⇒ <span class="id" title="var">f</span> <a class="idref" href="HoTT.Algebra.ooGroup.html#X0"><span class="id" title="variable">X0</span></a><a class="idref" href="HoTT.Basics.Overture.html#70142a8c3dba04f5a64047914b5e18ea"><span class="id" title="notation">.1</span></a>)<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;(<a class="idref" href="HoTT.Types.Sigma.html#path_sigma_hprop"><span class="id" title="definition">path_sigma_hprop</span></a> <a class="idref" href="HoTT.Basics.Overture.html#6219320773dc83ab7d1d441169459b9d"><span class="id" title="notation">(</span></a><a class="idref" href="HoTT.Basics.Overture.html#point"><span class="id" title="definition">point</span></a> <span class="id" title="var">X</span><a class="idref" href="HoTT.Basics.Overture.html#6219320773dc83ab7d1d441169459b9d"><span class="id" title="notation">;</span></a> <a class="idref" href="HoTT.hit.Truncations.html#Trunc.tr"><span class="id" title="constructor">tr</span></a> 1<a class="idref" href="HoTT.Basics.Overture.html#6219320773dc83ab7d1d441169459b9d"><span class="id" title="notation">)</span></a> <a class="idref" href="HoTT.Basics.Overture.html#6219320773dc83ab7d1d441169459b9d"><span class="id" title="notation">(</span></a><a class="idref" href="HoTT.Basics.Overture.html#point"><span class="id" title="definition">point</span></a> <span class="id" title="var">X</span><a class="idref" href="HoTT.Basics.Overture.html#6219320773dc83ab7d1d441169459b9d"><span class="id" title="notation">;</span></a> <a class="idref" href="HoTT.hit.Truncations.html#Trunc.tr"><span class="id" title="constructor">tr</span></a> 1<a class="idref" href="HoTT.Basics.Overture.html#6219320773dc83ab7d1d441169459b9d"><span class="id" title="notation">)</span></a> <span class="id" title="var">x</span>)).<br/>
+&nbsp;&nbsp;- <span class="id" title="keyword">match</span> <span class="id" title="keyword">goal</span> <span class="id" title="keyword">with</span><br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;|- <a class="idref" href="HoTT.Basics.Overture.html#ap"><span class="id" title="definition">ap</span></a> ?<span class="id" title="var">f</span> (<a class="idref" href="HoTT.Basics.Overture.html#ap"><span class="id" title="definition">ap</span></a> ?<span class="id" title="var">g</span> ?<span class="id" title="var">p</span>) <a class="idref" href="HoTT.Basics.Overture.html#1c39bf18749e5cc609e83c0a0ba5a372"><span class="id" title="notation">=</span></a> <a class="idref" href="HoTT.Basics.Overture.html#1c39bf18749e5cc609e83c0a0ba5a372"><span class="id" title="notation">?</span></a><span class="id" title="var">z</span> ⇒<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="id" title="tactic">symmetry</span>; <span class="id" title="tactic">refine</span> (<a class="idref" href="HoTT.Basics.PathGroupoids.html#ap_compose"><span class="id" title="definition">ap_compose</span></a> <span class="id" title="var">g</span> <span class="id" title="var">f</span> <span class="id" title="var">p</span>)<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="id" title="keyword">end</span>.<br/>
+&nbsp;&nbsp;- <span class="id" title="tactic">rewrite</span> <a class="idref" href="HoTT.Basics.PathGroupoids.html#ap_compose"><span class="id" title="definition">ap_compose</span></a>; <span class="id" title="tactic">apply</span> <a class="idref" href="HoTT.Basics.Overture.html#ap"><span class="id" title="definition">ap</span></a>.<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="id" title="tactic">apply</span> <a class="idref" href="HoTT.Types.Sigma.html#ap_pr1_path_sigma_hprop"><span class="id" title="definition">ap_pr1_path_sigma_hprop</span></a>.<br/>
+<span class="id" title="keyword">Qed</span>.<br/>
+
+<br/>
+<span class="id" title="keyword">Definition</span> <a name="grouphom_compose"><span class="id" title="definition">grouphom_compose</span></a> {<span class="id" title="var">G</span> <span class="id" title="var">H</span> <span class="id" title="var">K</span> : <a class="idref" href="HoTT.Algebra.ooGroup.html#ooGroup"><span class="id" title="record">ooGroup</span></a>}<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;(<span class="id" title="var">psi</span> : <a class="idref" href="HoTT.Algebra.ooGroup.html#ooGroupHom"><span class="id" title="definition">ooGroupHom</span></a> <a class="idref" href="HoTT.Algebra.ooGroup.html#H"><span class="id" title="variable">H</span></a> <a class="idref" href="HoTT.Algebra.ooGroup.html#K"><span class="id" title="variable">K</span></a>) (<span class="id" title="var">phi</span> : <a class="idref" href="HoTT.Algebra.ooGroup.html#ooGroupHom"><span class="id" title="definition">ooGroupHom</span></a> <a class="idref" href="HoTT.Algebra.ooGroup.html#G"><span class="id" title="variable">G</span></a> <a class="idref" href="HoTT.Algebra.ooGroup.html#H"><span class="id" title="variable">H</span></a>)<br/>
+: <a class="idref" href="HoTT.Algebra.ooGroup.html#ooGroupHom"><span class="id" title="definition">ooGroupHom</span></a> <a class="idref" href="HoTT.Algebra.ooGroup.html#G"><span class="id" title="variable">G</span></a> <a class="idref" href="HoTT.Algebra.ooGroup.html#K"><span class="id" title="variable">K</span></a><br/>
+&nbsp;&nbsp;:= <a class="idref" href="HoTT.Pointed.html#pmap_compose"><span class="id" title="definition">pmap_compose</span></a> <a class="idref" href="HoTT.Algebra.ooGroup.html#psi"><span class="id" title="variable">psi</span></a> <a class="idref" href="HoTT.Algebra.ooGroup.html#phi"><span class="id" title="variable">phi</span></a>.<br/>
+
+<br/>
+</div>
+
+<div class="doc">
+<a name="lab428"></a><h3 class="section">Functoriality</h3>
+
+</div>
+<div class="code">
+
+<br/>
+<span class="id" title="keyword">Definition</span> <a name="group_loops_functor_compose"><span class="id" title="definition">group_loops_functor_compose</span></a><br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;{<span class="id" title="var">X</span> <span class="id" title="var">Y</span> <span class="id" title="var">Z</span> : <a class="idref" href="HoTT.Basics.Overture.html#pType"><span class="id" title="record">pType</span></a>}<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;(<span class="id" title="var">psi</span> : <a class="idref" href="HoTT.Pointed.html#pMap"><span class="id" title="record">pMap</span></a> <a class="idref" href="HoTT.Algebra.ooGroup.html#Y"><span class="id" title="variable">Y</span></a> <a class="idref" href="HoTT.Algebra.ooGroup.html#Z"><span class="id" title="variable">Z</span></a>) (<span class="id" title="var">phi</span> : <a class="idref" href="HoTT.Pointed.html#pMap"><span class="id" title="record">pMap</span></a> <a class="idref" href="HoTT.Algebra.ooGroup.html#X"><span class="id" title="variable">X</span></a> <a class="idref" href="HoTT.Algebra.ooGroup.html#Y"><span class="id" title="variable">Y</span></a>)<br/>
+: <a class="idref" href="HoTT.Algebra.ooGroup.html#grouphom_compose"><span class="id" title="definition">grouphom_compose</span></a> (<a class="idref" href="HoTT.Algebra.ooGroup.html#group_loops_functor"><span class="id" title="definition">group_loops_functor</span></a> <a class="idref" href="HoTT.Algebra.ooGroup.html#psi"><span class="id" title="variable">psi</span></a>) (<a class="idref" href="HoTT.Algebra.ooGroup.html#group_loops_functor"><span class="id" title="definition">group_loops_functor</span></a> <a class="idref" href="HoTT.Algebra.ooGroup.html#phi"><span class="id" title="variable">phi</span></a>)<br/>
+&nbsp;&nbsp;<a class="idref" href="HoTT.Basics.Overture.html#cfa37b78c28623fd2a8dbbdb5f080ad4"><span class="id" title="notation">==</span></a> <a class="idref" href="HoTT.Algebra.ooGroup.html#group_loops_functor"><span class="id" title="definition">group_loops_functor</span></a> (<a class="idref" href="HoTT.Pointed.html#pmap_compose"><span class="id" title="definition">pmap_compose</span></a> <a class="idref" href="HoTT.Algebra.ooGroup.html#psi"><span class="id" title="variable">psi</span></a> <a class="idref" href="HoTT.Algebra.ooGroup.html#phi"><span class="id" title="variable">phi</span></a>).<br/>
+<span class="id" title="keyword">Proof</span>.<br/>
+&nbsp;&nbsp;<span class="id" title="tactic">intros</span> <span class="id" title="var">g</span>.<br/>
+&nbsp;&nbsp;<span class="id" title="tactic">unfold</span> <a class="idref" href="HoTT.Algebra.ooGroup.html#grouphom_fun"><span class="id" title="definition">grouphom_fun</span></a>, <a class="idref" href="HoTT.Algebra.ooGroup.html#grouphom_compose"><span class="id" title="definition">grouphom_compose</span></a>.<br/>
+&nbsp;&nbsp;<span class="id" title="tactic">refine</span> (<a class="idref" href="HoTT.Pointed.html#pointed_htpy"><span class="id" title="projection">pointed_htpy</span></a> (<a class="idref" href="HoTT.Pointed.html#loops_functor_compose"><span class="id" title="definition">loops_functor_compose</span></a> <span class="id" title="var">_</span> <span class="id" title="var">_</span>) <span class="id" title="var">g</span> <a class="idref" href="HoTT.Basics.Overture.html#3351948a6e0d36c4877ab109ffc3dfc9"><span class="id" title="notation">@</span></a> <span class="id" title="var">_</span>).<br/>
+&nbsp;&nbsp;<span class="id" title="tactic">pose</span> (<span class="id" title="var">p</span> := <a class="idref" href="HoTT.Basics.Overture.html#eisretr"><span class="id" title="projection">eisretr</span></a> (<a class="idref" href="HoTT.Algebra.ooGroup.html#loops_group"><span class="id" title="definition">loops_group</span></a> <span class="id" title="var">X</span>) <span class="id" title="var">g</span>).<br/>
+&nbsp;&nbsp;<span class="id" title="tactic">change</span> (<a class="idref" href="HoTT.Pointed.html#loops_functor"><span class="id" title="definition">loops_functor</span></a> (<a class="idref" href="HoTT.Algebra.ooGroup.html#group_loops_functor"><span class="id" title="definition">group_loops_functor</span></a> <span class="id" title="var">psi</span>)<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;(<a class="idref" href="HoTT.Pointed.html#loops_functor"><span class="id" title="definition">loops_functor</span></a> (<a class="idref" href="HoTT.Algebra.ooGroup.html#group_loops_functor"><span class="id" title="definition">group_loops_functor</span></a> <span class="id" title="var">phi</span>) <span class="id" title="var">g</span>)<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a class="idref" href="HoTT.Basics.Overture.html#1c39bf18749e5cc609e83c0a0ba5a372"><span class="id" title="notation">=</span></a> <a class="idref" href="HoTT.Pointed.html#loops_functor"><span class="id" title="definition">loops_functor</span></a> (<a class="idref" href="HoTT.Algebra.ooGroup.html#group_loops_functor"><span class="id" title="definition">group_loops_functor</span></a><br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;(<a class="idref" href="HoTT.Pointed.html#pmap_compose"><span class="id" title="definition">pmap_compose</span></a> <span class="id" title="var">psi</span> <span class="id" title="var">phi</span>)) <span class="id" title="var">g</span>).<br/>
+&nbsp;&nbsp;<span class="id" title="tactic">rewrite</span> &lt;- <span class="id" title="var">p</span>.<br/>
+&nbsp;&nbsp;<span class="id" title="tactic">rewrite</span> !<a class="idref" href="HoTT.Algebra.ooGroup.html#loops_functor_group"><span class="id" title="definition">loops_functor_group</span></a>.<br/>
+&nbsp;&nbsp;<span class="id" title="tactic">apply</span> <a class="idref" href="HoTT.Basics.Overture.html#ap"><span class="id" title="definition">ap</span></a>.<br/>
+&nbsp;&nbsp;<span class="id" title="tactic">symmetry</span>; <span class="id" title="tactic">apply</span> <a class="idref" href="HoTT.Pointed.html#loops_functor_compose"><span class="id" title="definition">loops_functor_compose</span></a>.<br/>
+<span class="id" title="keyword">Qed</span>.<br/>
+
+<br/>
+<span class="id" title="keyword">Definition</span> <a name="grouphom_idmap"><span class="id" title="definition">grouphom_idmap</span></a> (<span class="id" title="var">G</span> : <a class="idref" href="HoTT.Algebra.ooGroup.html#ooGroup"><span class="id" title="record">ooGroup</span></a>) : <a class="idref" href="HoTT.Algebra.ooGroup.html#ooGroupHom"><span class="id" title="definition">ooGroupHom</span></a> <a class="idref" href="HoTT.Algebra.ooGroup.html#G"><span class="id" title="variable">G</span></a> <a class="idref" href="HoTT.Algebra.ooGroup.html#G"><span class="id" title="variable">G</span></a><br/>
+&nbsp;&nbsp;:= <a class="idref" href="HoTT.Pointed.html#pmap_idmap"><span class="id" title="definition">pmap_idmap</span></a> (<a class="idref" href="HoTT.Algebra.ooGroup.html#B"><span class="id" title="abbreviation">B</span></a> <a class="idref" href="HoTT.Algebra.ooGroup.html#G"><span class="id" title="variable">G</span></a>).<br/>
+
+<br/>
+<span class="id" title="keyword">Definition</span> <a name="group_loops_functor_idmap"><span class="id" title="definition">group_loops_functor_idmap</span></a> {<span class="id" title="var">X</span> : <a class="idref" href="HoTT.Basics.Overture.html#pType"><span class="id" title="record">pType</span></a>}<br/>
+: <a class="idref" href="HoTT.Algebra.ooGroup.html#grouphom_idmap"><span class="id" title="definition">grouphom_idmap</span></a> (<a class="idref" href="HoTT.Algebra.ooGroup.html#group_loops"><span class="id" title="definition">group_loops</span></a> <a class="idref" href="HoTT.Algebra.ooGroup.html#X"><span class="id" title="variable">X</span></a>)<br/>
+&nbsp;&nbsp;<a class="idref" href="HoTT.Basics.Overture.html#cfa37b78c28623fd2a8dbbdb5f080ad4"><span class="id" title="notation">==</span></a> <a class="idref" href="HoTT.Algebra.ooGroup.html#group_loops_functor"><span class="id" title="definition">group_loops_functor</span></a> (<a class="idref" href="HoTT.Pointed.html#pmap_idmap"><span class="id" title="definition">pmap_idmap</span></a> <a class="idref" href="HoTT.Algebra.ooGroup.html#X"><span class="id" title="variable">X</span></a>).<br/>
+<span class="id" title="keyword">Proof</span>.<br/>
+&nbsp;&nbsp;<span class="id" title="tactic">intros</span> <span class="id" title="var">g</span>.<br/>
+&nbsp;&nbsp;<span class="id" title="tactic">unfold</span> <a class="idref" href="HoTT.Algebra.ooGroup.html#grouphom_fun"><span class="id" title="definition">grouphom_fun</span></a>, <a class="idref" href="HoTT.Algebra.ooGroup.html#grouphom_idmap"><span class="id" title="definition">grouphom_idmap</span></a>.<br/>
+&nbsp;&nbsp;<span class="id" title="tactic">assert</span> (<span class="id" title="var">p</span> := <a class="idref" href="HoTT.Basics.Overture.html#eisretr"><span class="id" title="projection">eisretr</span></a> (<a class="idref" href="HoTT.Algebra.ooGroup.html#loops_group"><span class="id" title="definition">loops_group</span></a> <span class="id" title="var">X</span>) <span class="id" title="var">g</span>).<br/>
+&nbsp;&nbsp;<span class="id" title="tactic">rewrite</span> &lt;- <span class="id" title="var">p</span>.<br/>
+&nbsp;&nbsp;<span class="id" title="tactic">rewrite</span> !<a class="idref" href="HoTT.Algebra.ooGroup.html#loops_functor_group"><span class="id" title="definition">loops_functor_group</span></a>.<br/>
+&nbsp;&nbsp;<span class="id" title="tactic">rewrite</span> (<a class="idref" href="HoTT.Pointed.html#pointed_htpy"><span class="id" title="projection">pointed_htpy</span></a> (<a class="idref" href="HoTT.Pointed.html#loops_functor_idmap"><span class="id" title="definition">loops_functor_idmap</span></a> <span class="id" title="var">_</span>)).<br/>
+&nbsp;&nbsp;<span class="id" title="tactic">simpl</span>. <span class="id" title="tactic">apply</span> <a class="idref" href="HoTT.Basics.Overture.html#ap"><span class="id" title="definition">ap</span></a>.<br/>
+&nbsp;&nbsp;<span class="id" title="tactic">rewrite</span> <a class="idref" href="HoTT.Basics.PathGroupoids.html#concat_p1"><span class="id" title="definition">concat_p1</span></a>, <a class="idref" href="HoTT.Basics.PathGroupoids.html#concat_1p"><span class="id" title="definition">concat_1p</span></a>, <a class="idref" href="HoTT.Basics.PathGroupoids.html#ap_idmap"><span class="id" title="definition">ap_idmap</span></a>.<br/>
+&nbsp;&nbsp;<span class="id" title="tactic">reflexivity</span>.<br/>
+<span class="id" title="keyword">Qed</span>.<br/>
+
+<br/>
+<span class="id" title="keyword">Definition</span> <a name="group_loops_2functor"><span class="id" title="definition">group_loops_2functor</span></a><br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;{<span class="id" title="var">X</span> <span class="id" title="var">Y</span> : <a class="idref" href="HoTT.Basics.Overture.html#pType"><span class="id" title="record">pType</span></a>} {<span class="id" title="var">phi</span> <span class="id" title="var">psi</span> : <a class="idref" href="HoTT.Pointed.html#pMap"><span class="id" title="record">pMap</span></a> <a class="idref" href="HoTT.Algebra.ooGroup.html#X"><span class="id" title="variable">X</span></a> <a class="idref" href="HoTT.Algebra.ooGroup.html#Y"><span class="id" title="variable">Y</span></a>}<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;(<span class="id" title="var">theta</span> : <a class="idref" href="HoTT.Pointed.html#pHomotopy"><span class="id" title="record">pHomotopy</span></a> <a class="idref" href="HoTT.Algebra.ooGroup.html#phi"><span class="id" title="variable">phi</span></a> <a class="idref" href="HoTT.Algebra.ooGroup.html#psi"><span class="id" title="variable">psi</span></a>)<br/>
+: <a class="idref" href="HoTT.Basics.Overture.html#cfa37b78c28623fd2a8dbbdb5f080ad4"><span class="id" title="notation">(</span></a><a class="idref" href="HoTT.Algebra.ooGroup.html#group_loops_functor"><span class="id" title="definition">group_loops_functor</span></a> <a class="idref" href="HoTT.Algebra.ooGroup.html#phi"><span class="id" title="variable">phi</span></a><a class="idref" href="HoTT.Basics.Overture.html#cfa37b78c28623fd2a8dbbdb5f080ad4"><span class="id" title="notation">)</span></a> <a class="idref" href="HoTT.Basics.Overture.html#cfa37b78c28623fd2a8dbbdb5f080ad4"><span class="id" title="notation">==</span></a> <a class="idref" href="HoTT.Basics.Overture.html#cfa37b78c28623fd2a8dbbdb5f080ad4"><span class="id" title="notation">(</span></a><a class="idref" href="HoTT.Algebra.ooGroup.html#group_loops_functor"><span class="id" title="definition">group_loops_functor</span></a> <a class="idref" href="HoTT.Algebra.ooGroup.html#psi"><span class="id" title="variable">psi</span></a><a class="idref" href="HoTT.Basics.Overture.html#cfa37b78c28623fd2a8dbbdb5f080ad4"><span class="id" title="notation">)</span></a>.<br/>
+<span class="id" title="keyword">Proof</span>.<br/>
+&nbsp;&nbsp;<span class="id" title="tactic">intros</span> <span class="id" title="var">g</span>.<br/>
+&nbsp;&nbsp;<span class="id" title="tactic">assert</span> (<span class="id" title="var">p</span> := <a class="idref" href="HoTT.Basics.Overture.html#eisretr"><span class="id" title="projection">eisretr</span></a> (<a class="idref" href="HoTT.Algebra.ooGroup.html#loops_group"><span class="id" title="definition">loops_group</span></a> <span class="id" title="var">X</span>) <span class="id" title="var">g</span>).<br/>
+&nbsp;&nbsp;<span class="id" title="tactic">rewrite</span> &lt;- <span class="id" title="var">p</span>.<br/>
+&nbsp;&nbsp;<span class="id" title="tactic">unfold</span> <a class="idref" href="HoTT.Algebra.ooGroup.html#grouphom_fun"><span class="id" title="definition">grouphom_fun</span></a>.<br/>
+&nbsp;&nbsp;<span class="id" title="tactic">rewrite</span> !<a class="idref" href="HoTT.Algebra.ooGroup.html#loops_functor_group"><span class="id" title="definition">loops_functor_group</span></a>.<br/>
+&nbsp;&nbsp;<span class="id" title="tactic">apply</span> <a class="idref" href="HoTT.Basics.Overture.html#ap"><span class="id" title="definition">ap</span></a>.<br/>
+&nbsp;&nbsp;<span class="id" title="tactic">apply</span> <a class="idref" href="HoTT.Pointed.html#loops_2functor"><span class="id" title="definition">loops_2functor</span></a>; <span class="id" title="tactic">assumption</span>.<br/>
+<span class="id" title="keyword">Defined</span>.<br/>
+
+<br/>
+</div>
+
+<div class="doc">
+<a name="lab429"></a><h3 class="section">Homomorphic properties</h3>
+
+<div class="paragraph"> </div>
+
+ The following tactic often allows us to "pretend" that phi preserves basepoints strictly.  This is basically a simple extension of <span class="inlinecode"><span class="id" title="var">pointed_reduce</span></span> (see Pointed.v). 
+</div>
+<div class="code">
+<span class="id" title="keyword">Ltac</span> <span class="id" title="var">grouphom_reduce</span> :=<br/>
+&nbsp;&nbsp;<span class="id" title="tactic">unfold</span> <a class="idref" href="HoTT.Algebra.ooGroup.html#grouphom_fun"><span class="id" title="definition">grouphom_fun</span></a>; <span class="id" title="var">cbn</span>;<br/>
+&nbsp;&nbsp;<span class="id" title="tactic">repeat</span> <span class="id" title="keyword">match</span> <span class="id" title="keyword">goal</span> <span class="id" title="keyword">with</span><br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;| [ <span class="id" title="var">G</span> : <a class="idref" href="HoTT.Algebra.ooGroup.html#ooGroup"><span class="id" title="record">ooGroup</span></a> |- <span class="id" title="var">_</span> ] ⇒ <span class="id" title="tactic">destruct</span> <span class="id" title="var">G</span> <span class="id" title="keyword">as</span> [<span class="id" title="var">G</span> ?]<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;| [ <span class="id" title="var">phi</span> : <a class="idref" href="HoTT.Algebra.ooGroup.html#ooGroupHom"><span class="id" title="definition">ooGroupHom</span></a> ?<span class="id" title="var">G</span> ?<span class="id" title="var">H</span> |- <span class="id" title="var">_</span> ] ⇒ <span class="id" title="tactic">destruct</span> <span class="id" title="var">phi</span> <span class="id" title="keyword">as</span> [<span class="id" title="var">phi</span> ?]<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="id" title="keyword">end</span>;<br/>
+&nbsp;&nbsp;<span class="id" title="var">pointed_reduce</span>.<br/>
+
+<br/>
+<span class="id" title="keyword">Definition</span> <a name="compose_grouphom"><span class="id" title="definition">compose_grouphom</span></a> {<span class="id" title="var">G</span> <span class="id" title="var">H</span> <span class="id" title="var">K</span> : <a class="idref" href="HoTT.Algebra.ooGroup.html#ooGroup"><span class="id" title="record">ooGroup</span></a>}<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;(<span class="id" title="var">psi</span> : <a class="idref" href="HoTT.Algebra.ooGroup.html#ooGroupHom"><span class="id" title="definition">ooGroupHom</span></a> <a class="idref" href="HoTT.Algebra.ooGroup.html#H"><span class="id" title="variable">H</span></a> <a class="idref" href="HoTT.Algebra.ooGroup.html#K"><span class="id" title="variable">K</span></a>) (<span class="id" title="var">phi</span> : <a class="idref" href="HoTT.Algebra.ooGroup.html#ooGroupHom"><span class="id" title="definition">ooGroupHom</span></a> <a class="idref" href="HoTT.Algebra.ooGroup.html#G"><span class="id" title="variable">G</span></a> <a class="idref" href="HoTT.Algebra.ooGroup.html#H"><span class="id" title="variable">H</span></a>)<br/>
+: <a class="idref" href="HoTT.Algebra.ooGroup.html#grouphom_compose"><span class="id" title="definition">grouphom_compose</span></a> <a class="idref" href="HoTT.Algebra.ooGroup.html#psi"><span class="id" title="variable">psi</span></a> <a class="idref" href="HoTT.Algebra.ooGroup.html#phi"><span class="id" title="variable">phi</span></a> <a class="idref" href="HoTT.Basics.Overture.html#cfa37b78c28623fd2a8dbbdb5f080ad4"><span class="id" title="notation">==</span></a> <a class="idref" href="HoTT.Algebra.ooGroup.html#psi"><span class="id" title="variable">psi</span></a> <a class="idref" href="HoTT.Basics.Overture.html#edadc0d66ba2e614f03a8e21622242b7"><span class="id" title="notation">o</span></a> <a class="idref" href="HoTT.Algebra.ooGroup.html#phi"><span class="id" title="variable">phi</span></a>.<br/>
+<span class="id" title="keyword">Proof</span>.<br/>
+&nbsp;&nbsp;<span class="id" title="tactic">intros</span> <span class="id" title="var">g</span>; <span class="id" title="var">grouphom_reduce</span>.<br/>
+&nbsp;&nbsp;<span class="id" title="tactic">exact</span> (<a class="idref" href="HoTT.Basics.PathGroupoids.html#ap_compose"><span class="id" title="definition">ap_compose</span></a> <span class="id" title="var">phi</span> <span class="id" title="var">psi</span> <span class="id" title="var">g</span>).<br/>
+<span class="id" title="keyword">Qed</span>.<br/>
+
+<br/>
+<span class="id" title="keyword">Definition</span> <a name="idmap_grouphom"><span class="id" title="definition">idmap_grouphom</span></a> (<span class="id" title="var">G</span> : <a class="idref" href="HoTT.Algebra.ooGroup.html#ooGroup"><span class="id" title="record">ooGroup</span></a>)<br/>
+: <a class="idref" href="HoTT.Algebra.ooGroup.html#grouphom_idmap"><span class="id" title="definition">grouphom_idmap</span></a> <a class="idref" href="HoTT.Algebra.ooGroup.html#G"><span class="id" title="variable">G</span></a> <a class="idref" href="HoTT.Basics.Overture.html#cfa37b78c28623fd2a8dbbdb5f080ad4"><span class="id" title="notation">==</span></a> <a class="idref" href="HoTT.Basics.Overture.html#idmap"><span class="id" title="abbreviation">idmap</span></a>.<br/>
+<span class="id" title="keyword">Proof</span>.<br/>
+&nbsp;&nbsp;<span class="id" title="tactic">intros</span> <span class="id" title="var">g</span>; <span class="id" title="var">grouphom_reduce</span>.<br/>
+&nbsp;&nbsp;<span class="id" title="tactic">exact</span> (<a class="idref" href="HoTT.Basics.PathGroupoids.html#ap_idmap"><span class="id" title="definition">ap_idmap</span></a> <span class="id" title="var">g</span>).<br/>
+<span class="id" title="keyword">Qed</span>.<br/>
+
+<br/>
+<span class="id" title="keyword">Definition</span> <a name="grouphom_pp"><span class="id" title="definition">grouphom_pp</span></a> {<span class="id" title="var">G</span> <span class="id" title="var">H</span>} (<span class="id" title="var">phi</span> : <a class="idref" href="HoTT.Algebra.ooGroup.html#ooGroupHom"><span class="id" title="definition">ooGroupHom</span></a> <a class="idref" href="HoTT.Algebra.ooGroup.html#G"><span class="id" title="variable">G</span></a> <a class="idref" href="HoTT.Algebra.ooGroup.html#H"><span class="id" title="variable">H</span></a>) (<span class="id" title="var">g1</span> <span class="id" title="var">g2</span> : <a class="idref" href="HoTT.Algebra.ooGroup.html#G"><span class="id" title="variable">G</span></a>)<br/>
+: <a class="idref" href="HoTT.Algebra.ooGroup.html#phi"><span class="id" title="variable">phi</span></a> (<a class="idref" href="HoTT.Algebra.ooGroup.html#g1"><span class="id" title="variable">g1</span></a> <a class="idref" href="HoTT.Basics.Overture.html#3351948a6e0d36c4877ab109ffc3dfc9"><span class="id" title="notation">@</span></a> <a class="idref" href="HoTT.Algebra.ooGroup.html#g2"><span class="id" title="variable">g2</span></a>) <a class="idref" href="HoTT.Basics.Overture.html#1c39bf18749e5cc609e83c0a0ba5a372"><span class="id" title="notation">=</span></a> <a class="idref" href="HoTT.Algebra.ooGroup.html#phi"><span class="id" title="variable">phi</span></a> <a class="idref" href="HoTT.Algebra.ooGroup.html#g1"><span class="id" title="variable">g1</span></a> <a class="idref" href="HoTT.Basics.Overture.html#3351948a6e0d36c4877ab109ffc3dfc9"><span class="id" title="notation">@</span></a> <a class="idref" href="HoTT.Algebra.ooGroup.html#phi"><span class="id" title="variable">phi</span></a> <a class="idref" href="HoTT.Algebra.ooGroup.html#g2"><span class="id" title="variable">g2</span></a>.<br/>
+<span class="id" title="keyword">Proof</span>.<br/>
+&nbsp;&nbsp;<span class="id" title="var">grouphom_reduce</span>.<br/>
+&nbsp;&nbsp;<span class="id" title="tactic">exact</span> (<a class="idref" href="HoTT.Basics.PathGroupoids.html#ap_pp"><span class="id" title="definition">ap_pp</span></a> <span class="id" title="var">phi</span> <span class="id" title="var">g1</span> <span class="id" title="var">g2</span>).<br/>
+<span class="id" title="keyword">Qed</span>.<br/>
+
+<br/>
+<span class="id" title="keyword">Definition</span> <a name="grouphom_V"><span class="id" title="definition">grouphom_V</span></a> {<span class="id" title="var">G</span> <span class="id" title="var">H</span>} (<span class="id" title="var">phi</span> : <a class="idref" href="HoTT.Algebra.ooGroup.html#ooGroupHom"><span class="id" title="definition">ooGroupHom</span></a> <a class="idref" href="HoTT.Algebra.ooGroup.html#G"><span class="id" title="variable">G</span></a> <a class="idref" href="HoTT.Algebra.ooGroup.html#H"><span class="id" title="variable">H</span></a>) (<span class="id" title="var">g</span> : <a class="idref" href="HoTT.Algebra.ooGroup.html#G"><span class="id" title="variable">G</span></a>)<br/>
+: <a class="idref" href="HoTT.Algebra.ooGroup.html#phi"><span class="id" title="variable">phi</span></a> <a class="idref" href="HoTT.Algebra.ooGroup.html#g"><span class="id" title="variable">g</span></a><a class="idref" href="HoTT.Basics.Overture.html#29af923c7a8513334b9f1a5189c731d3"><span class="id" title="notation">^</span></a> <a class="idref" href="HoTT.Basics.Overture.html#1c39bf18749e5cc609e83c0a0ba5a372"><span class="id" title="notation">=</span></a> <a class="idref" href="HoTT.Basics.Overture.html#29af923c7a8513334b9f1a5189c731d3"><span class="id" title="notation">(</span></a><a class="idref" href="HoTT.Algebra.ooGroup.html#phi"><span class="id" title="variable">phi</span></a> <a class="idref" href="HoTT.Algebra.ooGroup.html#g"><span class="id" title="variable">g</span></a><a class="idref" href="HoTT.Basics.Overture.html#29af923c7a8513334b9f1a5189c731d3"><span class="id" title="notation">)^</span></a>.<br/>
+<span class="id" title="keyword">Proof</span>.<br/>
+&nbsp;&nbsp;<span class="id" title="var">grouphom_reduce</span>.<br/>
+&nbsp;&nbsp;<span class="id" title="tactic">exact</span> (<a class="idref" href="HoTT.Basics.PathGroupoids.html#ap_V"><span class="id" title="definition">ap_V</span></a> <span class="id" title="var">phi</span> <span class="id" title="var">g</span>).<br/>
+<span class="id" title="keyword">Qed</span>.<br/>
+
+<br/>
+<span class="id" title="keyword">Definition</span> <a name="grouphom_1"><span class="id" title="definition">grouphom_1</span></a> {<span class="id" title="var">G</span> <span class="id" title="var">H</span>} (<span class="id" title="var">phi</span> : <a class="idref" href="HoTT.Algebra.ooGroup.html#ooGroupHom"><span class="id" title="definition">ooGroupHom</span></a> <a class="idref" href="HoTT.Algebra.ooGroup.html#G"><span class="id" title="variable">G</span></a> <a class="idref" href="HoTT.Algebra.ooGroup.html#H"><span class="id" title="variable">H</span></a>)<br/>
+: <a class="idref" href="HoTT.Algebra.ooGroup.html#phi"><span class="id" title="variable">phi</span></a> 1 <a class="idref" href="HoTT.Basics.Overture.html#1c39bf18749e5cc609e83c0a0ba5a372"><span class="id" title="notation">=</span></a> 1.<br/>
+<span class="id" title="keyword">Proof</span>.<br/>
+&nbsp;&nbsp;<span class="id" title="var">grouphom_reduce</span>.<br/>
+&nbsp;&nbsp;<span class="id" title="tactic">reflexivity</span>.<br/>
+<span class="id" title="keyword">Qed</span>.<br/>
+
+<br/>
+<span class="id" title="keyword">Definition</span> <a name="grouphom_pp_p"><span class="id" title="definition">grouphom_pp_p</span></a> {<span class="id" title="var">G</span> <span class="id" title="var">H</span>} (<span class="id" title="var">phi</span> : <a class="idref" href="HoTT.Algebra.ooGroup.html#ooGroupHom"><span class="id" title="definition">ooGroupHom</span></a> <a class="idref" href="HoTT.Algebra.ooGroup.html#G"><span class="id" title="variable">G</span></a> <a class="idref" href="HoTT.Algebra.ooGroup.html#H"><span class="id" title="variable">H</span></a>) (<span class="id" title="var">g1</span> <span class="id" title="var">g2</span> <span class="id" title="var">g3</span> : <a class="idref" href="HoTT.Algebra.ooGroup.html#G"><span class="id" title="variable">G</span></a>)<br/>
+: <a class="idref" href="HoTT.Algebra.ooGroup.html#grouphom_pp"><span class="id" title="definition">grouphom_pp</span></a> <a class="idref" href="HoTT.Algebra.ooGroup.html#phi"><span class="id" title="variable">phi</span></a> (<a class="idref" href="HoTT.Algebra.ooGroup.html#g1"><span class="id" title="variable">g1</span></a> <a class="idref" href="HoTT.Basics.Overture.html#3351948a6e0d36c4877ab109ffc3dfc9"><span class="id" title="notation">@</span></a> <a class="idref" href="HoTT.Algebra.ooGroup.html#g2"><span class="id" title="variable">g2</span></a>) <a class="idref" href="HoTT.Algebra.ooGroup.html#g3"><span class="id" title="variable">g3</span></a><br/>
+&nbsp;&nbsp;<a class="idref" href="HoTT.Basics.Overture.html#3351948a6e0d36c4877ab109ffc3dfc9"><span class="id" title="notation">@</span></a> <a class="idref" href="HoTT.Basics.PathGroupoids.html#whiskerR"><span class="id" title="definition">whiskerR</span></a> (<a class="idref" href="HoTT.Algebra.ooGroup.html#grouphom_pp"><span class="id" title="definition">grouphom_pp</span></a> <a class="idref" href="HoTT.Algebra.ooGroup.html#phi"><span class="id" title="variable">phi</span></a> <a class="idref" href="HoTT.Algebra.ooGroup.html#g1"><span class="id" title="variable">g1</span></a> <a class="idref" href="HoTT.Algebra.ooGroup.html#g2"><span class="id" title="variable">g2</span></a>) (<a class="idref" href="HoTT.Algebra.ooGroup.html#phi"><span class="id" title="variable">phi</span></a> <a class="idref" href="HoTT.Algebra.ooGroup.html#g3"><span class="id" title="variable">g3</span></a>)<br/>
+&nbsp;&nbsp;<a class="idref" href="HoTT.Basics.Overture.html#3351948a6e0d36c4877ab109ffc3dfc9"><span class="id" title="notation">@</span></a> <a class="idref" href="HoTT.Basics.PathGroupoids.html#concat_pp_p"><span class="id" title="definition">concat_pp_p</span></a> (<a class="idref" href="HoTT.Algebra.ooGroup.html#phi"><span class="id" title="variable">phi</span></a> <a class="idref" href="HoTT.Algebra.ooGroup.html#g1"><span class="id" title="variable">g1</span></a>) (<a class="idref" href="HoTT.Algebra.ooGroup.html#phi"><span class="id" title="variable">phi</span></a> <a class="idref" href="HoTT.Algebra.ooGroup.html#g2"><span class="id" title="variable">g2</span></a>) (<a class="idref" href="HoTT.Algebra.ooGroup.html#phi"><span class="id" title="variable">phi</span></a> <a class="idref" href="HoTT.Algebra.ooGroup.html#g3"><span class="id" title="variable">g3</span></a>)<br/>
+&nbsp;&nbsp;<a class="idref" href="HoTT.Basics.Overture.html#1c39bf18749e5cc609e83c0a0ba5a372"><span class="id" title="notation">=</span></a> <a class="idref" href="HoTT.Basics.Overture.html#ap"><span class="id" title="definition">ap</span></a> <a class="idref" href="HoTT.Algebra.ooGroup.html#phi"><span class="id" title="variable">phi</span></a> (<a class="idref" href="HoTT.Basics.PathGroupoids.html#concat_pp_p"><span class="id" title="definition">concat_pp_p</span></a> <a class="idref" href="HoTT.Algebra.ooGroup.html#g1"><span class="id" title="variable">g1</span></a> <a class="idref" href="HoTT.Algebra.ooGroup.html#g2"><span class="id" title="variable">g2</span></a> <a class="idref" href="HoTT.Algebra.ooGroup.html#g3"><span class="id" title="variable">g3</span></a>)<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;<a class="idref" href="HoTT.Basics.Overture.html#3351948a6e0d36c4877ab109ffc3dfc9"><span class="id" title="notation">@</span></a> <a class="idref" href="HoTT.Algebra.ooGroup.html#grouphom_pp"><span class="id" title="definition">grouphom_pp</span></a> <a class="idref" href="HoTT.Algebra.ooGroup.html#phi"><span class="id" title="variable">phi</span></a> <a class="idref" href="HoTT.Algebra.ooGroup.html#g1"><span class="id" title="variable">g1</span></a> (<a class="idref" href="HoTT.Algebra.ooGroup.html#g2"><span class="id" title="variable">g2</span></a> <a class="idref" href="HoTT.Basics.Overture.html#3351948a6e0d36c4877ab109ffc3dfc9"><span class="id" title="notation">@</span></a> <a class="idref" href="HoTT.Algebra.ooGroup.html#g3"><span class="id" title="variable">g3</span></a>)<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;<a class="idref" href="HoTT.Basics.Overture.html#3351948a6e0d36c4877ab109ffc3dfc9"><span class="id" title="notation">@</span></a> <a class="idref" href="HoTT.Basics.PathGroupoids.html#whiskerL"><span class="id" title="definition">whiskerL</span></a> (<a class="idref" href="HoTT.Algebra.ooGroup.html#phi"><span class="id" title="variable">phi</span></a> <a class="idref" href="HoTT.Algebra.ooGroup.html#g1"><span class="id" title="variable">g1</span></a>) (<a class="idref" href="HoTT.Algebra.ooGroup.html#grouphom_pp"><span class="id" title="definition">grouphom_pp</span></a> <a class="idref" href="HoTT.Algebra.ooGroup.html#phi"><span class="id" title="variable">phi</span></a> <a class="idref" href="HoTT.Algebra.ooGroup.html#g2"><span class="id" title="variable">g2</span></a> <a class="idref" href="HoTT.Algebra.ooGroup.html#g3"><span class="id" title="variable">g3</span></a>).<br/>
+<span class="id" title="keyword">Proof</span>.<br/>
+&nbsp;&nbsp;<span class="id" title="var">grouphom_reduce</span>.<br/>
+<span class="id" title="keyword">Abort</span>.<br/>
+
+<br/>
+</div>
+
+<div class="doc">
+<a name="lab430"></a><h2 class="section">Subgroups</h2>
+
+</div>
+<div class="code">
+
+<br/>
+<span class="id" title="keyword">Section</span> <a name="Subgroups"><span class="id" title="section">Subgroups</span></a>.<br/>
+&nbsp;&nbsp;<span class="id" title="keyword">Context</span> {<span class="id" title="var">G</span> <span class="id" title="var">H</span> : <a class="idref" href="HoTT.Algebra.ooGroup.html#ooGroup"><span class="id" title="record">ooGroup</span></a>} (<span class="id" title="var">incl</span> : <a class="idref" href="HoTT.Algebra.ooGroup.html#ooGroupHom"><span class="id" title="definition">ooGroupHom</span></a> <a class="idref" href="HoTT.Algebra.ooGroup.html#H"><span class="id" title="variable">H</span></a> <a class="idref" href="HoTT.Algebra.ooGroup.html#G"><span class="id" title="variable">G</span></a>) `{<a class="idref" href="HoTT.Basics.Trunc.html#IsEmbedding"><span class="id" title="abbreviation">IsEmbedding</span></a> <a class="idref" href="HoTT.Algebra.ooGroup.html#incl"><span class="id" title="variable">incl</span></a>}.<br/>
+
+<br/>
+</div>
+
+<div class="doc">
+A subgroup induces an equivalence relation on the ambient group, whose equivalence classes are called "cosets". 
+</div>
+<div class="code">
+&nbsp;&nbsp;<span class="id" title="keyword">Definition</span> <a name="in_coset"><span class="id" title="definition">in_coset</span></a> : <a class="idref" href="HoTT.Algebra.ooGroup.html#Subgroups.G"><span class="id" title="variable">G</span></a> <a class="idref" href="Coq.Init.Logic.html#d43e996736952df71ebeeae74d10a287"><span class="id" title="notation">→</span></a> <a class="idref" href="HoTT.Algebra.ooGroup.html#Subgroups.G"><span class="id" title="variable">G</span></a> <a class="idref" href="Coq.Init.Logic.html#d43e996736952df71ebeeae74d10a287"><span class="id" title="notation">→</span></a> <span class="id" title="keyword">Type</span><br/>
+&nbsp;&nbsp;&nbsp;&nbsp;:= <span class="id" title="keyword">fun</span> <span class="id" title="var">g1</span> <span class="id" title="var">g2</span> ⇒ <a class="idref" href="HoTT.Basics.Overture.html#hfiber"><span class="id" title="definition">hfiber</span></a> <a class="idref" href="HoTT.Algebra.ooGroup.html#Subgroups.incl"><span class="id" title="variable">incl</span></a> (<a class="idref" href="HoTT.Algebra.ooGroup.html#g1"><span class="id" title="variable">g1</span></a> <a class="idref" href="HoTT.Basics.Overture.html#3351948a6e0d36c4877ab109ffc3dfc9"><span class="id" title="notation">@</span></a> <a class="idref" href="HoTT.Algebra.ooGroup.html#g2"><span class="id" title="variable">g2</span></a><a class="idref" href="HoTT.Basics.Overture.html#29af923c7a8513334b9f1a5189c731d3"><span class="id" title="notation">^</span></a>).<br/>
+
+<br/>
+&nbsp;&nbsp;<span class="id" title="keyword">Global Instance</span> <a name="ishprop_in_coset"><span class="id" title="instance">ishprop_in_coset</span></a> : <a class="idref" href="HoTT.Basics.Overture.html#is_mere_relation"><span class="id" title="abbreviation">is_mere_relation</span></a> <a class="idref" href="HoTT.Algebra.ooGroup.html#Subgroups.G"><span class="id" title="variable">G</span></a> <a class="idref" href="HoTT.Algebra.ooGroup.html#in_coset"><span class="id" title="definition">in_coset</span></a>.<br/>
+&nbsp;&nbsp;<span class="id" title="keyword">Proof</span>.<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="id" title="tactic">exact</span> <span class="id" title="var">_</span>.<br/>
+&nbsp;&nbsp;<span class="id" title="keyword">Defined</span>.<br/>
+
+<br/>
+&nbsp;&nbsp;<span class="id" title="keyword">Global Instance</span> <a name="reflexive_coset"><span class="id" title="instance">reflexive_coset</span></a> : <a class="idref" href="HoTT.Basics.Overture.html#Reflexive"><span class="id" title="class">Reflexive</span></a> <a class="idref" href="HoTT.Algebra.ooGroup.html#in_coset"><span class="id" title="definition">in_coset</span></a>.<br/>
+&nbsp;&nbsp;<span class="id" title="keyword">Proof</span>.<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="id" title="tactic">intros</span> <span class="id" title="var">g</span>.<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="id" title="tactic">exact</span> <a class="idref" href="HoTT.Basics.Overture.html#6219320773dc83ab7d1d441169459b9d"><span class="id" title="notation">(</span></a>1 <a class="idref" href="HoTT.Basics.Overture.html#6219320773dc83ab7d1d441169459b9d"><span class="id" title="notation">;</span></a> <a class="idref" href="HoTT.Algebra.ooGroup.html#grouphom_1"><span class="id" title="definition">grouphom_1</span></a> <a class="idref" href="HoTT.Algebra.ooGroup.html#Subgroups.incl"><span class="id" title="variable">incl</span></a> <a class="idref" href="HoTT.Basics.Overture.html#3351948a6e0d36c4877ab109ffc3dfc9"><span class="id" title="notation">@</span></a> <a class="idref" href="HoTT.Basics.Overture.html#29af923c7a8513334b9f1a5189c731d3"><span class="id" title="notation">(</span></a><a class="idref" href="HoTT.Basics.PathGroupoids.html#concat_pV"><span class="id" title="definition">concat_pV</span></a> <span class="id" title="var">g</span><a class="idref" href="HoTT.Basics.Overture.html#29af923c7a8513334b9f1a5189c731d3"><span class="id" title="notation">)^</span></a><a class="idref" href="HoTT.Basics.Overture.html#6219320773dc83ab7d1d441169459b9d"><span class="id" title="notation">)</span></a>.<br/>
+&nbsp;&nbsp;<span class="id" title="keyword">Defined</span>.<br/>
+
+<br/>
+&nbsp;&nbsp;<span class="id" title="keyword">Global Instance</span> <a name="symmetric_coset"><span class="id" title="instance">symmetric_coset</span></a> : <a class="idref" href="HoTT.Basics.Overture.html#Symmetric"><span class="id" title="class">Symmetric</span></a> <a class="idref" href="HoTT.Algebra.ooGroup.html#in_coset"><span class="id" title="definition">in_coset</span></a>.<br/>
+&nbsp;&nbsp;<span class="id" title="keyword">Proof</span>.<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="id" title="tactic">intros</span> <span class="id" title="var">g1</span> <span class="id" title="var">g2</span> [<span class="id" title="var">h</span> <span class="id" title="var">p</span>].<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="id" title="tactic">∃</span> (<span class="id" title="var">h</span><a class="idref" href="HoTT.Basics.Overture.html#29af923c7a8513334b9f1a5189c731d3"><span class="id" title="notation">^</span></a>).<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="id" title="tactic">refine</span> (<a class="idref" href="HoTT.Algebra.ooGroup.html#grouphom_V"><span class="id" title="definition">grouphom_V</span></a> <a class="idref" href="HoTT.Algebra.ooGroup.html#Subgroups.incl"><span class="id" title="variable">incl</span></a> <span class="id" title="var">h</span> <a class="idref" href="HoTT.Basics.Overture.html#3351948a6e0d36c4877ab109ffc3dfc9"><span class="id" title="notation">@</span></a> <a class="idref" href="HoTT.Basics.PathGroupoids.html#inverse2"><span class="id" title="definition">inverse2</span></a> <span class="id" title="var">p</span> <a class="idref" href="HoTT.Basics.Overture.html#3351948a6e0d36c4877ab109ffc3dfc9"><span class="id" title="notation">@</span></a> <a class="idref" href="HoTT.Basics.PathGroupoids.html#inv_pp"><span class="id" title="definition">inv_pp</span></a> <span class="id" title="var">_</span> <span class="id" title="var">_</span> <a class="idref" href="HoTT.Basics.Overture.html#3351948a6e0d36c4877ab109ffc3dfc9"><span class="id" title="notation">@</span></a> <a class="idref" href="HoTT.Basics.PathGroupoids.html#whiskerR"><span class="id" title="definition">whiskerR</span></a> (<a class="idref" href="HoTT.Basics.PathGroupoids.html#inv_V"><span class="id" title="definition">inv_V</span></a> <span class="id" title="var">_</span>) <span class="id" title="var">_</span>).<br/>
+&nbsp;&nbsp;<span class="id" title="keyword">Defined</span>.<br/>
+
+<br/>
+&nbsp;&nbsp;<span class="id" title="keyword">Global Instance</span> <a name="transitive_coset"><span class="id" title="instance">transitive_coset</span></a> : <a class="idref" href="HoTT.Basics.Overture.html#Transitive"><span class="id" title="class">Transitive</span></a> <a class="idref" href="HoTT.Algebra.ooGroup.html#in_coset"><span class="id" title="definition">in_coset</span></a>.<br/>
+&nbsp;&nbsp;<span class="id" title="keyword">Proof</span>.<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="id" title="tactic">intros</span> <span class="id" title="var">g1</span> <span class="id" title="var">g2</span> <span class="id" title="var">g3</span> [<span class="id" title="var">h1</span> <span class="id" title="var">p1</span>] [<span class="id" title="var">h2</span> <span class="id" title="var">p2</span>].<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="id" title="tactic">∃</span> (<span class="id" title="var">h1</span> <a class="idref" href="HoTT.Basics.Overture.html#3351948a6e0d36c4877ab109ffc3dfc9"><span class="id" title="notation">@</span></a> <span class="id" title="var">h2</span>).<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="id" title="tactic">refine</span> (<a class="idref" href="HoTT.Algebra.ooGroup.html#grouphom_pp"><span class="id" title="definition">grouphom_pp</span></a> <a class="idref" href="HoTT.Algebra.ooGroup.html#Subgroups.incl"><span class="id" title="variable">incl</span></a> <span class="id" title="var">h1</span> <span class="id" title="var">h2</span><br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a class="idref" href="HoTT.Basics.Overture.html#3351948a6e0d36c4877ab109ffc3dfc9"><span class="id" title="notation">@</span></a> <a class="idref" href="HoTT.Basics.Overture.html#3351948a6e0d36c4877ab109ffc3dfc9"><span class="id" title="notation">(</span></a><span class="id" title="var">p1</span> <a class="idref" href="HoTT.Basics.PathGroupoids.html#3900f7738576f20268441019de062370"><span class="id" title="notation">@@</span></a> <span class="id" title="var">p2</span><a class="idref" href="HoTT.Basics.Overture.html#3351948a6e0d36c4877ab109ffc3dfc9"><span class="id" title="notation">)</span></a><br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a class="idref" href="HoTT.Basics.Overture.html#3351948a6e0d36c4877ab109ffc3dfc9"><span class="id" title="notation">@</span></a> <a class="idref" href="HoTT.Basics.PathGroupoids.html#concat_p_pp"><span class="id" title="definition">concat_p_pp</span></a> <span class="id" title="var">_</span> <span class="id" title="var">_</span> <span class="id" title="var">_</span><br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a class="idref" href="HoTT.Basics.Overture.html#3351948a6e0d36c4877ab109ffc3dfc9"><span class="id" title="notation">@</span></a> <a class="idref" href="HoTT.Basics.PathGroupoids.html#whiskerR"><span class="id" title="definition">whiskerR</span></a> (<a class="idref" href="HoTT.Basics.PathGroupoids.html#concat_pV_p"><span class="id" title="definition">concat_pV_p</span></a> <span class="id" title="var">_</span> <span class="id" title="var">_</span>) <span class="id" title="var">_</span>).<br/>
+&nbsp;&nbsp;<span class="id" title="keyword">Defined</span>.<br/>
+
+<br/>
+</div>
+
+<div class="doc">
+Every coset is equivalent (as a type) to the subgroup itself. 
+</div>
+<div class="code">
+&nbsp;&nbsp;<span class="id" title="keyword">Definition</span> <a name="equiv_coset_subgroup"><span class="id" title="definition">equiv_coset_subgroup</span></a> (<span class="id" title="var">g</span> : <a class="idref" href="HoTT.Algebra.ooGroup.html#Subgroups.G"><span class="id" title="variable">G</span></a>)<br/>
+&nbsp;&nbsp;: <a class="idref" href="Coq.Init.Specif.html#50b5d8dd6be4fba768e35617e518ad76"><span class="id" title="notation">{</span></a> <span class="id" title="var">g'</span> <a class="idref" href="Coq.Init.Specif.html#50b5d8dd6be4fba768e35617e518ad76"><span class="id" title="notation">:</span></a> <a class="idref" href="HoTT.Algebra.ooGroup.html#Subgroups.G"><span class="id" title="variable">G</span></a> <a class="idref" href="Coq.Init.Specif.html#50b5d8dd6be4fba768e35617e518ad76"><span class="id" title="notation">&amp;</span></a> <a class="idref" href="HoTT.Algebra.ooGroup.html#in_coset"><span class="id" title="definition">in_coset</span></a> <a class="idref" href="HoTT.Algebra.ooGroup.html#g"><span class="id" title="variable">g</span></a> <span class="id" title="var">g'</span><a class="idref" href="Coq.Init.Specif.html#50b5d8dd6be4fba768e35617e518ad76"><span class="id" title="notation">}</span></a> <a class="idref" href="HoTT.Basics.Overture.html#fdd951a86e2a1b4ef3630e8a03060363"><span class="id" title="notation">&lt;~&gt;</span></a> <a class="idref" href="HoTT.Algebra.ooGroup.html#Subgroups.H"><span class="id" title="variable">H</span></a>.<br/>
+&nbsp;&nbsp;<span class="id" title="keyword">Proof</span>.<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="id" title="tactic">refine</span> (<a class="idref" href="HoTT.Basics.Equivalences.html#equiv_adjointify"><span class="id" title="definition">equiv_adjointify</span></a> <span class="id" title="var">_</span> <span class="id" title="var">_</span> <span class="id" title="var">_</span> <span class="id" title="var">_</span>).<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;- <span class="id" title="tactic">intros</span> [? [<span class="id" title="var">h</span> ?]]; <span class="id" title="tactic">exact</span> <span class="id" title="var">h</span>.<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;- <span class="id" title="tactic">intros</span> <span class="id" title="var">h</span>; <span class="id" title="tactic">∃</span> (<a class="idref" href="HoTT.Algebra.ooGroup.html#Subgroups.incl"><span class="id" title="variable">incl</span></a> <span class="id" title="var">h</span><a class="idref" href="HoTT.Basics.Overture.html#29af923c7a8513334b9f1a5189c731d3"><span class="id" title="notation">^</span></a> <a class="idref" href="HoTT.Basics.Overture.html#3351948a6e0d36c4877ab109ffc3dfc9"><span class="id" title="notation">@</span></a> <span class="id" title="var">g</span>); <span class="id" title="tactic">∃</span> <span class="id" title="var">h</span>; <span class="id" title="tactic">simpl</span>.<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="id" title="tactic">abstract</span> (<span class="id" title="tactic">rewrite</span> <a class="idref" href="HoTT.Basics.PathGroupoids.html#inv_pp"><span class="id" title="definition">inv_pp</span></a>, <a class="idref" href="HoTT.Algebra.ooGroup.html#grouphom_V"><span class="id" title="definition">grouphom_V</span></a>, <a class="idref" href="HoTT.Basics.PathGroupoids.html#inv_V"><span class="id" title="definition">inv_V</span></a>, <a class="idref" href="HoTT.Basics.PathGroupoids.html#concat_p_Vp"><span class="id" title="definition">concat_p_Vp</span></a>; <span class="id" title="tactic">reflexivity</span>).<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;- <span class="id" title="tactic">intros</span> <span class="id" title="var">h</span>; <span class="id" title="tactic">reflexivity</span>.<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;- <span class="id" title="tactic">intros</span> [<span class="id" title="var">g'</span> [<span class="id" title="var">h</span> <span class="id" title="var">p</span>]].<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="id" title="tactic">apply</span> <a class="idref" href="HoTT.Types.Sigma.html#path_sigma_hprop"><span class="id" title="definition">path_sigma_hprop</span></a>; <span class="id" title="tactic">simpl</span>.<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="id" title="tactic">refine</span> (<a class="idref" href="HoTT.Basics.Overture.html#3351948a6e0d36c4877ab109ffc3dfc9"><span class="id" title="notation">(</span></a><a class="idref" href="HoTT.Algebra.ooGroup.html#grouphom_V"><span class="id" title="definition">grouphom_V</span></a> <a class="idref" href="HoTT.Algebra.ooGroup.html#Subgroups.incl"><span class="id" title="variable">incl</span></a> <span class="id" title="var">h</span> <a class="idref" href="HoTT.Basics.PathGroupoids.html#3900f7738576f20268441019de062370"><span class="id" title="notation">@@</span></a> 1<a class="idref" href="HoTT.Basics.Overture.html#3351948a6e0d36c4877ab109ffc3dfc9"><span class="id" title="notation">)</span></a> <a class="idref" href="HoTT.Basics.Overture.html#3351948a6e0d36c4877ab109ffc3dfc9"><span class="id" title="notation">@</span></a> <span class="id" title="var">_</span>).<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="id" title="tactic">apply</span> <a class="idref" href="HoTT.Basics.PathGroupoids.html#moveR_Vp"><span class="id" title="definition">moveR_Vp</span></a>, <a class="idref" href="HoTT.Basics.PathGroupoids.html#moveL_pM"><span class="id" title="definition">moveL_pM</span></a>. <span class="id" title="tactic">exact</span> (<span class="id" title="var">p</span><a class="idref" href="HoTT.Basics.Overture.html#29af923c7a8513334b9f1a5189c731d3"><span class="id" title="notation">^</span></a>).<br/>
+&nbsp;&nbsp;<span class="id" title="keyword">Defined</span>.<br/>
+
+<br/>
+&nbsp;&nbsp;<span class="id" title="keyword">Definition</span> <a name="cosets"><span class="id" title="definition">cosets</span></a> := <a class="idref" href="HoTT.hit.quotient.html#Quotient.quotient"><span class="id" title="inductive">quotient</span></a> <a class="idref" href="HoTT.Algebra.ooGroup.html#in_coset"><span class="id" title="definition">in_coset</span></a>.<br/>
+
+<br/>
+<span class="id" title="keyword">End</span> <a class="idref" href="HoTT.Algebra.ooGroup.html#Subgroups"><span class="id" title="section">Subgroups</span></a>.<br/>
+</div>
+</div>
+
+<div id="footer">
+<hr/><a href="index.html">Index</a><hr/>This page has been generated by <a href="http://coq.inria.fr/">coqdoc</a>
+</div>
+
+</div>
+
+</body>
+</html>
