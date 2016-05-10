@@ -38,7 +38,7 @@ Time: 0s">
 </div>
 <div class="code" title="File: BinderApply.v
 Line: 3
-Time: 0.006s">
+Time: 0.009s">
 <div class="time" style="width: 100%"></div>
 <pre>Require Import Basics.Overture Tactics.EvalIn.</pre>
 </div>
@@ -95,8 +95,9 @@ Time: 0s">
     | forall x : ?T, @?P x
       =&gt; let ret := constr:(fun x : T =&gt;
                               let Hx := H x in
-                              $(let ret' := rec_tac Hx in
-                                exact ret')$) in
+                              ltac:(
+                                let ret' := rec_tac Hx in
+                                exact ret')) in
          let ret' := (eval cbv zeta in ret) in
          constr:(ret')
     (** Base case - simply return [tac H]  *)
@@ -104,7 +105,7 @@ Time: 0s">
   end.</pre>
 </div>
 <div class="code" title="File: BinderApply.v
-Line: 33
+Line: 34
 Time: 0s">
 <div class="time" style="width: 0%"></div>
 <pre>
@@ -122,14 +123,14 @@ Time: 0s">
     N.B. We do not require [Funext] to use this tactic; [Funext] would only required to relate the term returned by this tactic and the original term.  Note also that we only rewrite under top-level binders (e.g., under the [x] in a hypothesis of type [forall x, P x], but not under the [x] in a hypothesis of type [(fun x y =&gt; x + y) = (fun x y =&gt; y + x)]). *)</pre>
 </div>
 <div class="code" title="File: BinderApply.v
-Line: 45
+Line: 46
 Time: 0s">
 <div class="time" style="width: 0%"></div>
 <pre>Ltac make_tac_under_binders_using_in tac using_tac H :=
   eval_under_binders ltac:(fun H' =&gt; eval_in_using tac using_tac H') H.</pre>
 </div>
 <div class="code" title="File: BinderApply.v
-Line: 46
+Line: 47
 Time: 0s">
 <div class="time" style="width: 0%"></div>
 <pre>
@@ -142,7 +143,7 @@ Ltac do_tac_under_binders_using_in tac using_tac H :=
     rename H'' into H.</pre>
 </div>
 <div class="code" title="File: BinderApply.v
-Line: 53
+Line: 54
 Time: 0s">
 <div class="time" style="width: 0%"></div>
 <pre>
@@ -151,7 +152,7 @@ Tactic Notation "constrbinder" "apply" constr(lem) "in" constr(H) "using" tactic
   := make_tac_under_binders_using_in ltac:(fun H' =&gt; apply lem in H') tac H.</pre>
 </div>
 <div class="code" title="File: BinderApply.v
-Line: 56
+Line: 57
 Time: 0s">
 <div class="time" style="width: 0%"></div>
 <pre>
@@ -159,7 +160,7 @@ Tactic Notation "constrbinder" "eapply" open_constr(lem) "in" constr(H) "using" 
   := constrbinder apply lem in H using tac.</pre>
 </div>
 <div class="code" title="File: BinderApply.v
-Line: 58
+Line: 59
 Time: 0s">
 <div class="time" style="width: 0%"></div>
 <pre>
@@ -168,7 +169,7 @@ Tactic Notation "binder" "apply" constr(lem) "in" constr(H) "using" tactic3(tac)
   := do_tac_under_binders_using_in ltac:(fun H' =&gt; apply lem in H') tac H.</pre>
 </div>
 <div class="code" title="File: BinderApply.v
-Line: 61
+Line: 62
 Time: 0s">
 <div class="time" style="width: 0%"></div>
 <pre>
@@ -176,7 +177,7 @@ Tactic Notation "binder" "eapply" open_constr(lem) "in" constr(H) "using" tactic
   := binder apply lem in H using tac.</pre>
 </div>
 <div class="code" title="File: BinderApply.v
-Line: 63
+Line: 64
 Time: 0s">
 <div class="time" style="width: 0%"></div>
 <pre>
@@ -184,14 +185,14 @@ Time: 0s">
 Tactic Notation "constrbinder" "apply" constr(lem) "in" constr(H) := constrbinder apply lem in H using idtac.</pre>
 </div>
 <div class="code" title="File: BinderApply.v
-Line: 65
+Line: 66
 Time: 0s">
 <div class="time" style="width: 0%"></div>
 <pre>
 Tactic Notation "constrbinder" "eapply" open_constr(lem) "in" constr(H) := constrbinder eapply lem in H using idtac.</pre>
 </div>
 <div class="code" title="File: BinderApply.v
-Line: 66
+Line: 67
 Time: 0s">
 <div class="time" style="width: 0%"></div>
 <pre>
@@ -199,14 +200,14 @@ Time: 0s">
 Tactic Notation "binder" "apply" constr(lem) := binder_apply ltac:(apply lem) ltac:(fail 1 "Cannot apply" lem).</pre>
 </div>
 <div class="code" title="File: BinderApply.v
-Line: 68
+Line: 69
 Time: 0s">
 <div class="time" style="width: 0%"></div>
 <pre>
 Tactic Notation "binder" "eapply" open_constr(lem) := binder_apply ltac:(eapply lem) ltac:(fail 1 "Cannot eapply" lem).</pre>
 </div>
 <div class="code" title="File: BinderApply.v
-Line: 69
+Line: 70
 Time: 0s">
 <div class="time" style="width: 0%"></div>
 <pre>
@@ -214,29 +215,29 @@ Time: 0s">
 Tactic Notation "binder" "apply" constr(lem) "in" constr(H) := binder apply lem in H using idtac.</pre>
 </div>
 <div class="code" title="File: BinderApply.v
-Line: 71
+Line: 72
 Time: 0s">
 <div class="time" style="width: 0%"></div>
 <pre>
 Tactic Notation "binder" "eapply" open_constr(lem) "in" constr(H) := binder eapply lem in H using idtac.</pre>
 </div>
 <div class="code" title="File: BinderApply.v
-Line: 72
-Time: 0s">
-<div class="time" style="width: 0%"></div>
+Line: 73
+Time: 0.001s">
+<div class="time" style="width: 11.111111111111%"></div>
 <pre>
 
 Example basic_goal {A B C} (HA : forall x : A, B x) (HB : forall x : A, B x -&gt; C x) : forall x : A, C x.</pre>
 </div>
 <div class="code" title="File: BinderApply.v
-Line: 74
+Line: 75
 Time: 0s">
 <div class="time" style="width: 0%"></div>
 <pre>
 Proof.</pre>
 </div>
 <div class="code" title="File: BinderApply.v
-Line: 75
+Line: 76
 Time: 0s">
 <div class="time" style="width: 0%"></div>
 <pre>
@@ -244,13 +245,13 @@ Time: 0s">
  </pre>
 </div>
 <div class="code" title="File: BinderApply.v
-Line: 77
+Line: 78
 Time: 0s">
 <div class="time" style="width: 0%"></div>
 <pre>Fail apply HB.</pre>
 </div>
 <div class="code" title="File: BinderApply.v
-Line: 77
+Line: 78
 Time: 0s">
 <div class="time" style="width: 0%"></div>
 <pre>
@@ -258,20 +259,20 @@ Time: 0s">
  </pre>
 </div>
 <div class="code" title="File: BinderApply.v
-Line: 79
+Line: 80
 Time: 0s">
 <div class="time" style="width: 0%"></div>
 <pre>binder apply HB.</pre>
 </div>
 <div class="code" title="File: BinderApply.v
-Line: 79
+Line: 80
 Time: 0s">
 <div class="time" style="width: 0%"></div>
 <pre>
   exact HA.</pre>
 </div>
 <div class="code" title="File: BinderApply.v
-Line: 80
+Line: 81
 Time: 0s">
 <div class="time" style="width: 0%"></div>
 <pre>
@@ -281,13 +282,13 @@ Abort.
 Example basic {A B C} (HA : forall x : A, B x) (HB : forall x : A, B x -&gt; C x) : forall x : A, C x.</pre>
 </div>
 <div class="code" title="File: BinderApply.v
-Line: 84
+Line: 85
 Time: 0s">
 <div class="time" style="width: 0%"></div>
 <pre>Proof.</pre>
 </div>
 <div class="code" title="File: BinderApply.v
-Line: 84
+Line: 85
 Time: 0s">
 <div class="time" style="width: 0%"></div>
 <pre>
@@ -295,13 +296,13 @@ Time: 0s">
  </pre>
 </div>
 <div class="code" title="File: BinderApply.v
-Line: 86
+Line: 87
 Time: 0s">
 <div class="time" style="width: 0%"></div>
 <pre>Fail apply HB in HA.</pre>
 </div>
 <div class="code" title="File: BinderApply.v
-Line: 86
+Line: 87
 Time: 0s">
 <div class="time" style="width: 0%"></div>
 <pre>
@@ -309,20 +310,20 @@ Time: 0s">
  </pre>
 </div>
 <div class="code" title="File: BinderApply.v
-Line: 88
+Line: 89
 Time: 0s">
 <div class="time" style="width: 0%"></div>
 <pre>binder apply HB in HA.</pre>
 </div>
 <div class="code" title="File: BinderApply.v
-Line: 88
+Line: 89
 Time: 0s">
 <div class="time" style="width: 0%"></div>
 <pre>
   exact HA.</pre>
 </div>
 <div class="code" title="File: BinderApply.v
-Line: 89
+Line: 90
 Time: 0s">
 <div class="time" style="width: 0%"></div>
 <pre>
@@ -334,13 +335,13 @@ Example ex_funext `{Funext} {A} f g
 : f = g.</pre>
 </div>
 <div class="code" title="File: BinderApply.v
-Line: 95
+Line: 96
 Time: 0s">
 <div class="time" style="width: 0%"></div>
 <pre>Proof.</pre>
 </div>
 <div class="code" title="File: BinderApply.v
-Line: 95
+Line: 96
 Time: 0s">
 <div class="time" style="width: 0%"></div>
 <pre>
@@ -349,20 +350,20 @@ Time: 0s">
  </pre>
 </div>
 <div class="code" title="File: BinderApply.v
-Line: 98
+Line: 99
 Time: 0s">
 <div class="time" style="width: 0%"></div>
 <pre>Fail binder apply path_forall in H'.</pre>
 </div>
 <div class="code" title="File: BinderApply.v
-Line: 98
-Time: 0.002s">
+Line: 99
+Time: 0.003s">
 <div class="time" style="width: 33.333333333333%"></div>
 <pre>
   binder eapply path_forall in H'.</pre>
 </div>
 <div class="code" title="File: BinderApply.v
-Line: 99
+Line: 100
 Time: 0s">
 <div class="time" style="width: 0%"></div>
 <pre>
@@ -381,27 +382,27 @@ Funext . Extended goal with context:
  </pre>
 </div>
 <div class="code" title="File: BinderApply.v
-Line: 112
+Line: 113
 Time: 0.002s">
-<div class="time" style="width: 33.333333333333%"></div>
+<div class="time" style="width: 22.222222222222%"></div>
 <pre>binder apply @path_forall in H' using assumption.</pre>
 </div>
 <div class="code" title="File: BinderApply.v
-Line: 112
-Time: 0.001s">
-<div class="time" style="width: 16.666666666667%"></div>
+Line: 113
+Time: 0.002s">
+<div class="time" style="width: 22.222222222222%"></div>
 <pre>
   binder apply @path_forall in H' using typeclasses eauto.</pre>
 </div>
 <div class="code" title="File: BinderApply.v
-Line: 113
+Line: 114
 Time: 0.001s">
-<div class="time" style="width: 16.666666666667%"></div>
+<div class="time" style="width: 11.111111111111%"></div>
 <pre>
   binder apply (@path_forall _) in H'.</pre>
 </div>
 <div class="code" title="File: BinderApply.v
-Line: 114
+Line: 115
 Time: 0s">
 <div class="time" style="width: 0%"></div>
 <pre>
@@ -409,13 +410,13 @@ Time: 0s">
  </pre>
 </div>
 <div class="code" title="File: BinderApply.v
-Line: 116
+Line: 117
 Time: 0s">
 <div class="time" style="width: 0%"></div>
 <pre>exact H'.</pre>
 </div>
 <div class="code" title="File: BinderApply.v
-Line: 117
+Line: 118
 Time: 0s">
 <div class="time" style="width: 0%"></div>
 <pre>

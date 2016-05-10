@@ -738,12 +738,12 @@
           
 
             i = 144;
-            data = "<infomsg>	eval_in_using is defined</infomsg>	";
+            data = "<infomsg>eval_in_using is defined</infomsg>	";
             responses[i]=data;
           
 
             i = 145;
-            data = "<infomsg>	eval_in is defined</infomsg>	";
+            data = "<infomsg>eval_in is defined</infomsg>	";
             responses[i]=data;
           
 
@@ -763,7 +763,7 @@
           
 
             i = 149;
-            data = "1 subgoal, subgoal 1 (ID 14)	  	  A, B : Type0	  H : A = B	  a : A	  b := (Overture.internal_paths_rew Type0 A idmap a B H:B) : B	  ============================	   B		(dependent evars:)		";
+            data = "1 subgoal, subgoal 1 (ID 14)	  	  A, B : Type0	  H : A = B	  a : A	  b := (internal_paths_rew Type0 A idmap a B H : B) : B	  ============================	   B		(dependent evars:)		";
             responses[i]=data;
           
 
@@ -958,12 +958,12 @@
           
 
             i = 188;
-            data = "<infomsg>	dummy is defined</infomsg>	<infomsg>	dummy_rect is defined</infomsg>	<infomsg>	dummy_ind is defined</infomsg>	<infomsg>	dummy_rec is defined</infomsg>	";
+            data = "<infomsg>dummy is defined</infomsg>	<infomsg>dummy_rect is defined</infomsg>	<infomsg>dummy_ind is defined</infomsg>	<infomsg>dummy_rec is defined</infomsg>	";
             responses[i]=data;
           
 
             i = 189;
-            data = "<infomsg>	rewrite_refl is defined</infomsg>	";
+            data = "<infomsg>rewrite_refl is defined</infomsg>	";
             responses[i]=data;
           
 
@@ -1249,7 +1249,8 @@ The syntax <span class="inlinecode">$(...)$</span> allows execution of an arbitr
       " onmouseover="
       mouseover(112, '0_3_15');
       ">
-  <span class="id" title="keyword">let</span> <span class="id" title="var">ret</span> := <span class="id" title="keyword">constr</span>:($(<span class="id" title="keyword">let</span> <span class="id" title="var">H'</span> := <span class="id" title="tactic">fresh</span> <span class="id" title="keyword">in</span><br>
+  <span class="id" title="keyword">let</span> <span class="id" title="var">ret</span> := <span class="id" title="keyword">constr</span>:(<span class="id" title="keyword">ltac</span>:(<br>
+                       <span class="id" title="keyword">let</span> <span class="id" title="var">H'</span> := <span class="id" title="tactic">fresh</span> <span class="id" title="keyword">in</span><br>
                        <span class="id" title="tactic">pose</span> <span class="id" title="var">H</span> <span class="id" title="keyword">as</span> <span class="id" title="var">H'</span>;<br>
                        <span class="id" title="var">tac_in</span> <span class="id" title="var">H'</span>;<br>
                        [ <span class="id" title="tactic">exact</span> <span class="id" title="var">H'</span><br>
@@ -1259,7 +1260,7 @@ The syntax <span class="inlinecode">$(...)$</span> allows execution of an arbitr
                                    <span class="id" title="keyword">let</span> <span class="id" title="var">G'</span> := <span class="id" title="keyword">match</span> <span class="id" title="keyword">goal</span> <span class="id" title="keyword">with</span> |- ?<span class="id" title="var">G</span> ⇒ <span class="id" title="keyword">constr</span>:(<span class="id" title="var">G</span>) <span class="id" title="keyword">end</span> <span class="id" title="keyword">in</span><br>
                                    <span class="id" title="tactic">fail</span> 1<br>
                                         "Cannot use" <span class="id" title="var">using_tac</span> "to solve side-condition goal" <span class="id" title="var">G</span> "."<br>
-                                        "Extended goal with context:" <span class="id" title="var">G'</span> ].. ])$) <span class="id" title="keyword">in</span><br>
+                                        "Extended goal with context:" <span class="id" title="var">G'</span> ].. ])) <span class="id" title="keyword">in</span><br>
   </span></div>
 <div class="goal" id="goal0_3_15"><pre><span></span></pre></div>
 <div class="doc" scenenumber="17">
@@ -1353,7 +1354,7 @@ we get a <span class="inlinecode"><a class="idref" href="HoTT.categories.LaxComm
 <br>
 <span class="id" title="keyword">Ltac</span> <span class="id" title="var">rewrite_refl</span> <span class="id" title="var">H</span> :=<br>
   <span class="id" title="keyword">match</span> <span class="id" title="keyword">goal</span> <span class="id" title="keyword">with</span><br>
-    | [ |- ?<span class="id" title="var">X</span> ] ⇒ <br>
+    | [ |- ?<span class="id" title="var">X</span> ] ⇒<br>
       <span class="id" title="keyword">let</span> <span class="id" title="var">dX'</span> := <span class="id" title="var">eval_in</span> <span class="id" title="keyword">ltac</span>:(<span class="id" title="keyword">fun</span> <span class="id" title="var">H'</span> ⇒ <span class="id" title="tactic">rewrite</span> <span class="id" title="var">H</span> <span class="id" title="keyword">in</span> <span class="id" title="var">H'</span>) (<a class="idref" href="HoTT.Tactics.EvalIn.html#adummy"><span class="id" title="constructor">adummy</span></a> <span class="id" title="var">X</span>) <span class="id" title="keyword">in</span><br>
       <span class="id" title="keyword">match</span> <span class="id" title="var">type</span> <span class="id" title="var">of</span> <span class="id" title="var">dX'</span> <span class="id" title="keyword">with</span><br>
         | <a class="idref" href="HoTT.Tactics.EvalIn.html#dummy"><span class="id" title="inductive">dummy</span></a> ?<span class="id" title="var">X'</span> ⇒ <span class="id" title="tactic">change</span> <span class="id" title="var">X'</span><br>
