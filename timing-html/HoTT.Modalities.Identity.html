@@ -36,14 +36,14 @@ Time: 0s">
 </div>
 <div class="code" title="File: Identity.v
 Line: 1
-Time: 0.045s">
-<div class="time" style="width: 28.481012658228%"></div>
+Time: 0.041s">
+<div class="time" style="width: 30.37037037037%"></div>
 <pre>Require Import HoTT.Basics HoTT.Types.</pre>
 </div>
 <div class="code" title="File: Identity.v
 Line: 1
-Time: 0.09s">
-<div class="time" style="width: 56.962025316456%"></div>
+Time: 0.076s">
+<div class="time" style="width: 56.296296296296%"></div>
 <pre>
 Require Import Modality Accessible Nullification.</pre>
 </div>
@@ -71,7 +71,7 @@ Time: 0s">
 <div class="code" title="File: Identity.v
 Line: 10
 Time: 0.001s">
-<div class="time" style="width: 0.63291139240506%"></div>
+<div class="time" style="width: 0.74074074074074%"></div>
 <pre>Inductive Identity_Modality : Type1
   := purely : Identity_Modality.</pre>
 </div>
@@ -110,7 +110,7 @@ Time: 0s">
 
   Definition In : forall (O : Modality@{u a}),
                              Type@{i} -&gt; Type@{i}
-    := fun O X =&gt; Unit@{i}.</pre>
+    := fun O X =&gt; Unit.</pre>
 </div>
 <div class="code" title="File: Identity.v
 Line: 24
@@ -135,7 +135,7 @@ Time: 0s">
 <div class="code" title="File: Identity.v
 Line: 32
 Time: 0.001s">
-<div class="time" style="width: 0.63291139240506%"></div>
+<div class="time" style="width: 0.74074074074074%"></div>
 <pre>
 
   Definition inO_equiv_inO :
@@ -148,19 +148,19 @@ Time: 0.001s">
 </div>
 <div class="code" title="File: Identity.v
 Line: 40
-Time: 0.006s">
-<div class="time" style="width: 3.7974683544304%"></div>
+Time: 0.001s">
+<div class="time" style="width: 0.74074074074074%"></div>
 <pre>
 
-  Definition hprop_inO
+  Definition hprop_inO@{u a i}
   : Funext -&gt; forall (O : Modality@{u a}) (T : Type@{i}),
                 IsHProp (In@{u a i} O T)
-    := fun _ O T =&gt; _.</pre>
+    := fun _ O T =&gt; trunc_contr@{i a}.</pre>
 </div>
 <div class="code" title="File: Identity.v
 Line: 45
 Time: 0.001s">
-<div class="time" style="width: 0.63291139240506%"></div>
+<div class="time" style="width: 0.74074074074074%"></div>
 <pre>
 
   Definition O_ind_internal
@@ -175,7 +175,7 @@ Time: 0.001s">
 <div class="code" title="File: Identity.v
 Line: 54
 Time: 0.002s">
-<div class="time" style="width: 1.2658227848101%"></div>
+<div class="time" style="width: 1.4814814814815%"></div>
 <pre>
 
   Definition O_ind_beta_internal
@@ -200,15 +200,15 @@ Time: 0s">
 </div>
 <div class="code" title="File: Identity.v
 Line: 68
-Time: 0s">
-<div class="time" style="width: 0%"></div>
+Time: 0.001s">
+<div class="time" style="width: 0.74074074074074%"></div>
 <pre>
 
 End Identity_Modalities.</pre>
 </div>
 <div class="code" title="File: Identity.v
 Line: 70
-Time: 0.158s">
+Time: 0.135s">
 <div class="time" style="width: 100%"></div>
 <pre>
 
@@ -240,7 +240,7 @@ Coercion Identity_Modalities_to_Modalities := idmap
 <div class="code" title="File: Identity.v
 Line: 77
 Time: 0.003s">
-<div class="time" style="width: 1.8987341772152%"></div>
+<div class="time" style="width: 2.2222222222222%"></div>
 <pre>
 
 
@@ -248,8 +248,8 @@ Module Accessible_Identity &lt;: Accessible_Modalities Identity_Modalities.</pre
 </div>
 <div class="code" title="File: Identity.v
 Line: 80
-Time: 0.115s">
-<div class="time" style="width: 72.784810126582%"></div>
+Time: 0.134s">
+<div class="time" style="width: 99.259259259259%"></div>
 <pre>
 
   Module Import Os_Theory := Modalities_Theory Identity_Modalities.</pre>
@@ -261,31 +261,33 @@ Time: 0s">
 <pre>
 
   Definition acc_gen : Modality@{u a} -&gt; NullGenerators@{a}
-    := fun _ =&gt; Build_NullGenerators Empty@{a} (fun _ =&gt; Empty@{a}).</pre>
+    := fun _ =&gt; Build_NullGenerators Empty (fun _ =&gt; Empty).</pre>
 </div>
 <div class="code" title="File: Identity.v
 Line: 85
 Time: 0.003s">
-<div class="time" style="width: 1.8987341772152%"></div>
+<div class="time" style="width: 2.2222222222222%"></div>
 <pre>
 
-  Definition inO_iff_isnull
+  Definition inO_iff_isnull@{u a i}
   : forall (O : Modality@{u a}) (X : Type@{i}),
       iff@{i i i}
         (In@{u a i} O X)
         (IsNull@{u a i} (acc_gen O) X)
-    := fun O X =&gt; (fun _ =&gt; Empty_ind _ , fun _ =&gt; tt).</pre>
+  := fun O X =&gt; @pair _ (_ -&gt; Unit)
+     (fun _ =&gt; Empty_ind _)
+     (fun _ =&gt; tt).</pre>
 </div>
 <div class="code" title="File: Identity.v
-Line: 92
+Line: 94
 Time: 0.057s">
-<div class="time" style="width: 36.075949367089%"></div>
+<div class="time" style="width: 42.222222222222%"></div>
 <pre>
 
 End Accessible_Identity.</pre>
 </div>
 <div class="code" title="File: Identity.v
-Line: 95
+Line: 97
 Time: 0s">
 <div class="time" style="width: 0%"></div>
 <pre>
