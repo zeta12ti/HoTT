@@ -1,0 +1,220 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
+"http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<link href="coqdoc.css" rel="stylesheet" type="text/css" />
+<title>HoTT.Categories.Limits.Core</title>
+</head>
+
+<body>
+
+<div id="page">
+
+<div id="header">
+</div>
+
+<div id="main">
+
+<h1 class="libtitle">Library HoTT.Categories.Limits.Core</h1>
+
+<div class="code">
+</div>
+
+<div class="doc">
+<a name="lab1085"></a><h1 class="section">Limits and Colimits</h1>
+
+</div>
+<div class="code">
+<span class="id" title="keyword">Require</span> <span class="id" title="keyword">Import</span> <a class="idref" href="HoTT.Categories.Category.Core.html#"><span class="id" title="library">Category.Core</span></a> <a class="idref" href="HoTT.Categories.Functor.Core.html#"><span class="id" title="library">Functor.Core</span></a> <a class="idref" href="HoTT.Categories.NaturalTransformation.Core.html#"><span class="id" title="library">NaturalTransformation.Core</span></a>.<br/>
+<span class="id" title="keyword">Require</span> <span class="id" title="keyword">Import</span> <a class="idref" href="HoTT.Categories.Functor.Composition.Core.html#"><span class="id" title="library">Functor.Composition.Core</span></a>.<br/>
+<span class="id" title="keyword">Require</span> <span class="id" title="keyword">Import</span> <a class="idref" href="HoTT.Categories.ExponentialLaws.Law1.Functors.html#"><span class="id" title="library">ExponentialLaws.Law1.Functors</span></a> <a class="idref" href="HoTT.Categories.FunctorCategory.Core.html#"><span class="id" title="library">FunctorCategory.Core</span></a>.<br/>
+<span class="id" title="keyword">Require</span> <span class="id" title="keyword">Import</span> <a class="idref" href="HoTT.Categories.UniversalProperties.html#"><span class="id" title="library">UniversalProperties</span></a> <a class="idref" href="HoTT.Categories.KanExtensions.Core.html#"><span class="id" title="library">KanExtensions.Core</span></a> <a class="idref" href="HoTT.Categories.InitialTerminalCategory.Core.html#"><span class="id" title="library">InitialTerminalCategory.Core</span></a> <a class="idref" href="HoTT.Categories.NatCategory.html#"><span class="id" title="library">NatCategory</span></a>.<br/>
+<span class="id" title="keyword">Require</span> <span class="id" title="keyword">Import</span> <a class="idref" href="HoTT.Categories.Functor.Paths.html#"><span class="id" title="library">Functor.Paths</span></a> <a class="idref" href="HoTT.Categories.NaturalTransformation.Paths.html#"><span class="id" title="library">NaturalTransformation.Paths</span></a>.<br/>
+<span class="id" title="keyword">Require</span> <span class="id" title="keyword">Import</span> <a class="idref" href="HoTT.Categories.Comma.Core.html#"><span class="id" title="library">Comma.Core</span></a>.<br/>
+<span class="id" title="keyword">Require</span> <span class="id" title="keyword">Import</span> <a class="idref" href="HoTT.Basics.Equivalences.html#"><span class="id" title="library">Equivalences</span></a>.<br/>
+
+<br/>
+<span class="id" title="keyword">Set</span> <span class="id" title="var">Universe</span> <span class="id" title="var">Polymorphism</span>.<br/>
+<span class="id" title="keyword">Set Implicit Arguments</span>.<br/>
+<span class="id" title="keyword">Generalizable</span> <span class="id" title="keyword">All</span> <span class="id" title="keyword">Variables</span>.<br/>
+<span class="id" title="keyword">Set</span> <span class="id" title="var">Asymmetric</span> <span class="id" title="var">Patterns</span>.<br/>
+
+<br/>
+<span class="id" title="keyword">Local Open</span> <span class="id" title="keyword">Scope</span> <span class="id" title="var">functor_scope</span>.<br/>
+<span class="id" title="keyword">Local Open</span> <span class="id" title="keyword">Scope</span> <span class="id" title="var">category_scope</span>.<br/>
+
+<br/>
+</div>
+
+<div class="doc">
+<a name="lab1086"></a><h2 class="section">The diagonal or "constant diagram" functor Δ</h2>
+
+</div>
+<div class="code">
+<span class="id" title="keyword">Section</span> <a name="diagonal_functor"><span class="id" title="section">diagonal_functor</span></a>.<br/>
+&nbsp;&nbsp;<span class="id" title="keyword">Context</span> `{<a class="idref" href="HoTT.Basics.Overture.html#Funext"><span class="id" title="class">Funext</span></a>}.<br/>
+&nbsp;&nbsp;<span class="id" title="keyword">Variables</span> <a name="diagonal_functor.C"><span class="id" title="variable">C</span></a> <a name="diagonal_functor.D"><span class="id" title="variable">D</span></a> : <a class="idref" href="HoTT.Categories.Category.Core.html#PreCategory"><span class="id" title="record">PreCategory</span></a>.<br/>
+
+<br/>
+</div>
+
+<div class="doc">
+     Quoting Dwyer and Spalinski:
+
+<div class="paragraph"> </div>
+
+     There is a diagonal or ``constant diagram'' functor
+
+<div class="paragraph"> </div>
+
+<pre>
+     Δ : C → Cᴰ,
+</pre>
+
+<div class="paragraph"> </div>
+
+     which carries an object <span class="inlinecode"><a class="idref" href="HoTT.Categories.UniversalProperties.html#UniversalMorphism.TerminalMorphism.X"><span class="id" title="variable">X</span></a></span> <span class="inlinecode">:</span> <span class="inlinecode"><a class="idref" href="HoTTBookExercises.html#Book_4_5.parts.C"><span class="id" title="variable">C</span></a></span> to the constant functor <span class="inlinecode"><a class="idref" href="HoTT.Categories.SimplicialSets.html#55962ab2243c40029a299cab4819b082"><span class="id" title="abbreviation">Δ</span></a></span> <span class="inlinecode"><a class="idref" href="HoTT.Categories.UniversalProperties.html#UniversalMorphism.TerminalMorphism.X"><span class="id" title="variable">X</span></a></span> <span class="inlinecode">:</span> <span class="inlinecode"><a class="idref" href="HoTTBookExercises.html#Book_4_5.parts.D"><span class="id" title="variable">D</span></a></span>
+     <span class="inlinecode">→</span> <span class="inlinecode"><a class="idref" href="HoTTBookExercises.html#Book_4_5.parts.C"><span class="id" title="variable">C</span></a></span> (by definition, this ``constant functor'' sends each object
+     of <span class="inlinecode"><a class="idref" href="HoTTBookExercises.html#Book_4_5.parts.D"><span class="id" title="variable">D</span></a></span> to <span class="inlinecode"><a class="idref" href="HoTT.Categories.UniversalProperties.html#UniversalMorphism.TerminalMorphism.X"><span class="id" title="variable">X</span></a></span> and each morphism of <span class="inlinecode"><a class="idref" href="HoTTBookExercises.html#Book_4_5.parts.D"><span class="id" title="variable">D</span></a></span> to <span class="inlinecode"><span class="id" title="library">Identity</span></span> <span class="inlinecode"><a class="idref" href="HoTT.Categories.UniversalProperties.html#UniversalMorphism.TerminalMorphism.X"><span class="id" title="variable">X</span></a></span>). The
+     functor Δ assigns to each morphism <span class="inlinecode"><a class="idref" href="HoTTBookExercises.html#Book_4_5.parts.f"><span class="id" title="variable">f</span></a></span> <span class="inlinecode">:</span> <span class="inlinecode"><a class="idref" href="HoTT.Categories.UniversalProperties.html#UniversalMorphism.TerminalMorphism.X"><span class="id" title="variable">X</span></a></span> <span class="inlinecode">→</span> <span class="inlinecode"><span class="id" title="var">X'</span></span> of <span class="inlinecode"><a class="idref" href="HoTTBookExercises.html#Book_4_5.parts.C"><span class="id" title="variable">C</span></a></span> the
+     constant natural transformation <span class="inlinecode"><a class="idref" href="HoTT.Basics.PathGroupoids.html#t"><span class="id" title="variable">t</span></a>(<a class="idref" href="HoTTBookExercises.html#Book_4_5.parts.f"><span class="id" title="variable">f</span></a>)</span> <span class="inlinecode">:</span> <span class="inlinecode"><a class="idref" href="HoTT.Categories.SimplicialSets.html#55962ab2243c40029a299cab4819b082"><span class="id" title="abbreviation">Δ</span></a></span> <span class="inlinecode"><a class="idref" href="HoTT.Categories.UniversalProperties.html#UniversalMorphism.TerminalMorphism.X"><span class="id" title="variable">X</span></a></span> <span class="inlinecode">→</span> <span class="inlinecode"><a class="idref" href="HoTT.Categories.SimplicialSets.html#55962ab2243c40029a299cab4819b082"><span class="id" title="abbreviation">Δ</span></a></span> <span class="inlinecode"><span class="id" title="var">X'</span></span> determined
+     by the formula <span class="inlinecode"><a class="idref" href="HoTT.Basics.PathGroupoids.html#t"><span class="id" title="variable">t</span></a>(<a class="idref" href="HoTTBookExercises.html#Book_4_5.parts.f"><span class="id" title="variable">f</span></a>)</span> <span class="inlinecode"><a class="idref" href="HoTT.Categories.Cat.Morphisms.html#iso_lemmas.d"><span class="id" title="variable">d</span></a></span> <span class="inlinecode">=</span> <span class="inlinecode"><a class="idref" href="HoTTBookExercises.html#Book_4_5.parts.f"><span class="id" title="variable">f</span></a></span> for each object <span class="inlinecode"><a class="idref" href="HoTT.Categories.Cat.Morphisms.html#iso_lemmas.d"><span class="id" title="variable">d</span></a></span> of <span class="inlinecode"><a class="idref" href="HoTTBookExercises.html#Book_4_5.parts.D"><span class="id" title="variable">D</span></a></span>.  
+<div class="paragraph"> </div>
+
+ We use <span class="inlinecode"><span class="id" title="var">C¹</span></span> rather than <span class="inlinecode"><a class="idref" href="HoTTBookExercises.html#Book_4_5.parts.C"><span class="id" title="variable">C</span></a></span> for judgemental compatibility with
+      Kan extensions. 
+</div>
+<div class="code">
+
+<br/>
+&nbsp;&nbsp;<span class="id" title="keyword">Definition</span> <a name="diagonal_functor"><span class="id" title="definition">diagonal_functor</span></a> : <a class="idref" href="HoTT.Categories.Functor.Core.html#Functor"><span class="id" title="record">Functor</span></a> (1 <a class="idref" href="HoTT.Categories.FunctorCategory.Core.html#34686eb233232c64a967dae81760a280"><span class="id" title="notation">→</span></a> <a class="idref" href="HoTT.Categories.Limits.Core.html#diagonal_functor.C"><span class="id" title="variable">C</span></a>) (<a class="idref" href="HoTT.Categories.Limits.Core.html#diagonal_functor.D"><span class="id" title="variable">D</span></a> <a class="idref" href="HoTT.Categories.FunctorCategory.Core.html#34686eb233232c64a967dae81760a280"><span class="id" title="notation">→</span></a> <a class="idref" href="HoTT.Categories.Limits.Core.html#diagonal_functor.C"><span class="id" title="variable">C</span></a>)<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;:= @<a class="idref" href="HoTT.Categories.KanExtensions.Core.html#pullback_along"><span class="id" title="definition">pullback_along</span></a> <span class="id" title="var">_</span> <a class="idref" href="HoTT.Categories.Limits.Core.html#diagonal_functor.D"><span class="id" title="variable">D</span></a> 1 <a class="idref" href="HoTT.Categories.Limits.Core.html#diagonal_functor.C"><span class="id" title="variable">C</span></a> (<a class="idref" href="HoTT.Categories.InitialTerminalCategory.Functors.html#to_terminal"><span class="id" title="definition">Functors.to_terminal</span></a> <span class="id" title="var">_</span>).<br/>
+
+<br/>
+&nbsp;&nbsp;<span class="id" title="keyword">Definition</span> <a name="diagonal_functor'"><span class="id" title="definition">diagonal_functor'</span></a> : <a class="idref" href="HoTT.Categories.Functor.Core.html#Functor"><span class="id" title="record">Functor</span></a> <a class="idref" href="HoTT.Categories.Limits.Core.html#diagonal_functor.C"><span class="id" title="variable">C</span></a> (<a class="idref" href="HoTT.Categories.Limits.Core.html#diagonal_functor.D"><span class="id" title="variable">D</span></a> <a class="idref" href="HoTT.Categories.FunctorCategory.Core.html#34686eb233232c64a967dae81760a280"><span class="id" title="notation">→</span></a> <a class="idref" href="HoTT.Categories.Limits.Core.html#diagonal_functor.C"><span class="id" title="variable">C</span></a>)<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;:= <a class="idref" href="HoTT.Categories.Limits.Core.html#diagonal_functor"><span class="id" title="definition">diagonal_functor</span></a> <a class="idref" href="HoTT.Categories.Functor.Composition.Core.html#bd0af3afadd89896a4f04c95dcc20702"><span class="id" title="notation">o</span></a> <a class="idref" href="HoTT.Categories.ExponentialLaws.Law1.Functors.html#inverse"><span class="id" title="definition">ExponentialLaws.Law1.Functors.inverse</span></a> <span class="id" title="var">_</span>.<br/>
+
+<br/>
+&nbsp;&nbsp;<span class="id" title="keyword">Section</span> <a name="diagonal_functor.convert"><span class="id" title="section">convert</span></a>.<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="id" title="keyword">Lemma</span> <a name="diagonal_functor_diagonal_functor'"><span class="id" title="lemma">diagonal_functor_diagonal_functor'</span></a> <span class="id" title="var">X</span><br/>
+&nbsp;&nbsp;&nbsp;&nbsp;: <a class="idref" href="HoTT.Categories.Limits.Core.html#diagonal_functor"><span class="id" title="definition">diagonal_functor</span></a> <a class="idref" href="HoTT.Categories.Limits.Core.html#X"><span class="id" title="variable">X</span></a> <a class="idref" href="HoTT.Basics.Overture.html#1c39bf18749e5cc609e83c0a0ba5a372"><span class="id" title="notation">=</span></a> <a class="idref" href="HoTT.Categories.Limits.Core.html#diagonal_functor'"><span class="id" title="definition">diagonal_functor'</span></a> (<a class="idref" href="HoTT.Categories.Limits.Core.html#X"><span class="id" title="variable">X</span></a> (<a class="idref" href="HoTT.Basics.Overture.html#center"><span class="id" title="projection">center</span></a> <span class="id" title="var">_</span>)).<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="id" title="keyword">Proof</span>.<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="id" title="var">path_functor</span>.<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="id" title="tactic">simpl</span>.<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="id" title="tactic">repeat</span> (<span class="id" title="tactic">apply</span> <a class="idref" href="HoTT.Basics.Overture.html#path_forall"><span class="id" title="definition">path_forall</span></a> || <span class="id" title="tactic">intro</span>).<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="id" title="tactic">apply</span> <a class="idref" href="HoTT.Categories.Functor.Core.html#identity_of"><span class="id" title="projection">identity_of</span></a>.<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="id" title="keyword">Qed</span>.<br/>
+&nbsp;&nbsp;<span class="id" title="keyword">End</span> <a class="idref" href="HoTT.Categories.Limits.Core.html#diagonal_functor.convert"><span class="id" title="section">convert</span></a>.<br/>
+<span class="id" title="keyword">End</span> <a class="idref" href="HoTT.Categories.Limits.Core.html#diagonal_functor"><span class="id" title="section">diagonal_functor</span></a>.<br/>
+
+<br/>
+<span class="id" title="var">Arguments</span> <a class="idref" href="HoTT.Categories.Limits.Core.html#diagonal_functor"><span class="id" title="definition">diagonal_functor</span></a> : <span class="id" title="tactic">simpl</span> <span class="id" title="var">never</span>.<br/>
+
+<br/>
+<span class="id" title="keyword">Section</span> <a name="diagonal_functor_lemmas"><span class="id" title="section">diagonal_functor_lemmas</span></a>.<br/>
+&nbsp;&nbsp;<span class="id" title="keyword">Context</span> `{<a class="idref" href="HoTT.Basics.Overture.html#Funext"><span class="id" title="class">Funext</span></a>}.<br/>
+&nbsp;&nbsp;<span class="id" title="keyword">Variables</span> <a name="diagonal_functor_lemmas.C"><span class="id" title="variable">C</span></a> <a name="diagonal_functor_lemmas.D"><span class="id" title="variable">D</span></a> <a name="diagonal_functor_lemmas.D'"><span class="id" title="variable">D'</span></a> : <a class="idref" href="HoTT.Categories.Category.Core.html#PreCategory"><span class="id" title="record">PreCategory</span></a>.<br/>
+
+<br/>
+&nbsp;&nbsp;<span class="id" title="keyword">Lemma</span> <a name="compose_diagonal_functor"><span class="id" title="lemma">compose_diagonal_functor</span></a> <span class="id" title="var">x</span> (<span class="id" title="var">F</span> : <a class="idref" href="HoTT.Categories.Functor.Core.html#Functor"><span class="id" title="record">Functor</span></a> <a class="idref" href="HoTT.Categories.Limits.Core.html#diagonal_functor_lemmas.D'"><span class="id" title="variable">D'</span></a> <a class="idref" href="HoTT.Categories.Limits.Core.html#diagonal_functor_lemmas.D"><span class="id" title="variable">D</span></a>)<br/>
+&nbsp;&nbsp;: <a class="idref" href="HoTT.Categories.Limits.Core.html#diagonal_functor"><span class="id" title="definition">diagonal_functor</span></a> <a class="idref" href="HoTT.Categories.Limits.Core.html#diagonal_functor_lemmas.C"><span class="id" title="variable">C</span></a> <a class="idref" href="HoTT.Categories.Limits.Core.html#diagonal_functor_lemmas.D"><span class="id" title="variable">D</span></a> <a class="idref" href="HoTT.Categories.Limits.Core.html#x"><span class="id" title="variable">x</span></a> <a class="idref" href="HoTT.Categories.Functor.Composition.Core.html#bd0af3afadd89896a4f04c95dcc20702"><span class="id" title="notation">o</span></a> <a class="idref" href="HoTT.Categories.Limits.Core.html#F"><span class="id" title="variable">F</span></a> <a class="idref" href="HoTT.Basics.Overture.html#1c39bf18749e5cc609e83c0a0ba5a372"><span class="id" title="notation">=</span></a> <a class="idref" href="HoTT.Categories.Limits.Core.html#diagonal_functor"><span class="id" title="definition">diagonal_functor</span></a> <span class="id" title="var">_</span> <span class="id" title="var">_</span> <a class="idref" href="HoTT.Categories.Limits.Core.html#x"><span class="id" title="variable">x</span></a>.<br/>
+&nbsp;&nbsp;<span class="id" title="keyword">Proof</span>.<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="id" title="var">path_functor</span>.<br/>
+&nbsp;&nbsp;<span class="id" title="keyword">Qed</span>.<br/>
+
+<br/>
+&nbsp;&nbsp;<span class="id" title="keyword">Definition</span> <a name="compose_diagonal_functor_natural_transformation"><span class="id" title="definition">compose_diagonal_functor_natural_transformation</span></a><br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="id" title="var">x</span> (<span class="id" title="var">F</span> : <a class="idref" href="HoTT.Categories.Functor.Core.html#Functor"><span class="id" title="record">Functor</span></a> <a class="idref" href="HoTT.Categories.Limits.Core.html#diagonal_functor_lemmas.D'"><span class="id" title="variable">D'</span></a> <a class="idref" href="HoTT.Categories.Limits.Core.html#diagonal_functor_lemmas.D"><span class="id" title="variable">D</span></a>)<br/>
+&nbsp;&nbsp;: <a class="idref" href="HoTT.Categories.NaturalTransformation.Core.html#NaturalTransformation"><span class="id" title="record">NaturalTransformation</span></a> (<a class="idref" href="HoTT.Categories.Limits.Core.html#diagonal_functor"><span class="id" title="definition">diagonal_functor</span></a> <a class="idref" href="HoTT.Categories.Limits.Core.html#diagonal_functor_lemmas.C"><span class="id" title="variable">C</span></a> <a class="idref" href="HoTT.Categories.Limits.Core.html#diagonal_functor_lemmas.D"><span class="id" title="variable">D</span></a> <a class="idref" href="HoTT.Categories.Limits.Core.html#x"><span class="id" title="variable">x</span></a> <a class="idref" href="HoTT.Categories.Functor.Composition.Core.html#bd0af3afadd89896a4f04c95dcc20702"><span class="id" title="notation">o</span></a> <a class="idref" href="HoTT.Categories.Limits.Core.html#F"><span class="id" title="variable">F</span></a>) (<a class="idref" href="HoTT.Categories.Limits.Core.html#diagonal_functor"><span class="id" title="definition">diagonal_functor</span></a> <span class="id" title="var">_</span> <span class="id" title="var">_</span> <a class="idref" href="HoTT.Categories.Limits.Core.html#x"><span class="id" title="variable">x</span></a>)<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;:= <a class="idref" href="HoTT.Categories.NaturalTransformation.Core.html#Build_NaturalTransformation"><span class="id" title="definition">Build_NaturalTransformation</span></a><br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;(<a class="idref" href="HoTT.Categories.Limits.Core.html#diagonal_functor"><span class="id" title="definition">diagonal_functor</span></a> <a class="idref" href="HoTT.Categories.Limits.Core.html#diagonal_functor_lemmas.C"><span class="id" title="variable">C</span></a> <a class="idref" href="HoTT.Categories.Limits.Core.html#diagonal_functor_lemmas.D"><span class="id" title="variable">D</span></a> <a class="idref" href="HoTT.Categories.Limits.Core.html#x"><span class="id" title="variable">x</span></a> <a class="idref" href="HoTT.Categories.Functor.Composition.Core.html#bd0af3afadd89896a4f04c95dcc20702"><span class="id" title="notation">o</span></a> <a class="idref" href="HoTT.Categories.Limits.Core.html#F"><span class="id" title="variable">F</span></a>)<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;(<a class="idref" href="HoTT.Categories.Limits.Core.html#diagonal_functor"><span class="id" title="definition">diagonal_functor</span></a> <span class="id" title="var">_</span> <span class="id" title="var">_</span> <a class="idref" href="HoTT.Categories.Limits.Core.html#x"><span class="id" title="variable">x</span></a>)<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;(<span class="id" title="keyword">fun</span> <span class="id" title="var">z</span> ⇒ <a class="idref" href="HoTT.Categories.Category.Core.html#identity"><span class="id" title="projection">identity</span></a> <span class="id" title="var">_</span>)<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;(<span class="id" title="keyword">fun</span> <span class="id" title="var">_</span> <span class="id" title="var">_</span> <span class="id" title="var">_</span> ⇒ <a class="idref" href="HoTT.Basics.Overture.html#transitivity"><span class="id" title="definition">transitivity</span></a><br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;(<a class="idref" href="HoTT.Categories.Category.Core.html#left_identity"><span class="id" title="projection">left_identity</span></a> <span class="id" title="var">_</span> <span class="id" title="var">_</span> <span class="id" title="var">_</span> <span class="id" title="var">_</span>)<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;(<a class="idref" href="HoTT.Basics.Overture.html#symmetry"><span class="id" title="definition">symmetry</span></a><br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="id" title="var">_</span> <span class="id" title="var">_</span><br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;(<a class="idref" href="HoTT.Categories.Category.Core.html#right_identity"><span class="id" title="projection">right_identity</span></a> <span class="id" title="var">_</span> <span class="id" title="var">_</span> <span class="id" title="var">_</span> <span class="id" title="var">_</span>))).<br/>
+<span class="id" title="keyword">End</span> <a class="idref" href="HoTT.Categories.Limits.Core.html#diagonal_functor_lemmas"><span class="id" title="section">diagonal_functor_lemmas</span></a>.<br/>
+
+<br/>
+<span class="id" title="keyword">Hint Rewrite</span> @<a class="idref" href="HoTT.Categories.Limits.Core.html#compose_diagonal_functor"><span class="id" title="lemma">compose_diagonal_functor</span></a> : <span class="id" title="var">category</span>.<br/>
+
+<br/>
+<span class="id" title="keyword">Section</span> <a name="Limit"><span class="id" title="section">Limit</span></a>.<br/>
+&nbsp;&nbsp;<span class="id" title="keyword">Context</span> `{<a class="idref" href="HoTT.Basics.Overture.html#Funext"><span class="id" title="class">Funext</span></a>}.<br/>
+&nbsp;&nbsp;<span class="id" title="keyword">Variables</span> <a name="Limit.C"><span class="id" title="variable">C</span></a> <a name="Limit.D"><span class="id" title="variable">D</span></a> : <a class="idref" href="HoTT.Categories.Category.Core.html#PreCategory"><span class="id" title="record">PreCategory</span></a>.<br/>
+&nbsp;&nbsp;<span class="id" title="keyword">Variable</span> <a name="Limit.F"><span class="id" title="variable">F</span></a> : <a class="idref" href="HoTT.Categories.Functor.Core.html#Functor"><span class="id" title="record">Functor</span></a> <a class="idref" href="HoTT.Categories.Limits.Core.html#Limit.D"><span class="id" title="variable">D</span></a> <a class="idref" href="HoTT.Categories.Limits.Core.html#Limit.C"><span class="id" title="variable">C</span></a>.<br/>
+
+<br/>
+</div>
+
+<div class="doc">
+<a name="lab1087"></a><h2 class="section">Definition of Limit</h2>
+
+<div class="paragraph"> </div>
+
+     Quoting Dwyer and Spalinski:
+
+<div class="paragraph"> </div>
+
+     Let <span class="inlinecode"><a class="idref" href="HoTTBookExercises.html#Book_4_5.parts.D"><span class="id" title="variable">D</span></a></span> be a small category and <span class="inlinecode"><a class="idref" href="HoTT.Categories.Limits.Core.html#Limit.F"><span class="id" title="variable">F</span></a></span> <span class="inlinecode">:</span> <span class="inlinecode"><a class="idref" href="HoTTBookExercises.html#Book_4_5.parts.D"><span class="id" title="variable">D</span></a></span> <span class="inlinecode">→</span> <span class="inlinecode"><a class="idref" href="HoTTBookExercises.html#Book_4_5.parts.C"><span class="id" title="variable">C</span></a></span> a functor. A limit
+     for <span class="inlinecode"><a class="idref" href="HoTT.Categories.Limits.Core.html#Limit.F"><span class="id" title="variable">F</span></a></span> is an object <span class="inlinecode"><a class="idref" href="HoTT.Categories.NaturalTransformation.Composition.Core.html#composition.whisker.L"><span class="id" title="section">L</span></a></span> of <span class="inlinecode"><a class="idref" href="HoTTBookExercises.html#Book_4_5.parts.C"><span class="id" title="variable">C</span></a></span> together with a natural
+     transformation <span class="inlinecode"><a class="idref" href="HoTT.Basics.PathGroupoids.html#t"><span class="id" title="variable">t</span></a></span> <span class="inlinecode">:</span> <span class="inlinecode"><a class="idref" href="HoTT.Categories.SimplicialSets.html#55962ab2243c40029a299cab4819b082"><span class="id" title="abbreviation">Δ</span></a></span> <span class="inlinecode"><a class="idref" href="HoTT.Categories.NaturalTransformation.Composition.Core.html#composition.whisker.L"><span class="id" title="section">L</span></a></span> <span class="inlinecode">→</span> <span class="inlinecode"><a class="idref" href="HoTT.Categories.Limits.Core.html#Limit.F"><span class="id" title="variable">F</span></a></span> such that for every object <span class="inlinecode"><a class="idref" href="HoTT.Categories.UniversalProperties.html#UniversalMorphism.TerminalMorphism.X"><span class="id" title="variable">X</span></a></span> of
+     <span class="inlinecode"><a class="idref" href="HoTTBookExercises.html#Book_4_5.parts.C"><span class="id" title="variable">C</span></a></span> and every natural transformation <span class="inlinecode"><a class="idref" href="HoTT.Categories.Cat.Morphisms.html#iso_lemmas.s"><span class="id" title="variable">s</span></a></span> <span class="inlinecode">:</span> <span class="inlinecode"><a class="idref" href="HoTT.Categories.SimplicialSets.html#55962ab2243c40029a299cab4819b082"><span class="id" title="abbreviation">Δ</span></a></span> <span class="inlinecode"><a class="idref" href="HoTT.Categories.UniversalProperties.html#UniversalMorphism.TerminalMorphism.X"><span class="id" title="variable">X</span></a></span> <span class="inlinecode">→</span> <span class="inlinecode"><a class="idref" href="HoTT.Categories.Limits.Core.html#Limit.F"><span class="id" title="variable">F</span></a></span>, there exists
+     a unique map <span class="inlinecode"><a class="idref" href="HoTT.Categories.Category.Morphisms.html#s'"><span class="id" title="variable">s'</span></a></span> <span class="inlinecode">:</span> <span class="inlinecode"><a class="idref" href="HoTT.Categories.UniversalProperties.html#UniversalMorphism.TerminalMorphism.X"><span class="id" title="variable">X</span></a></span> <span class="inlinecode">→</span> <span class="inlinecode"><a class="idref" href="HoTT.Categories.NaturalTransformation.Composition.Core.html#composition.whisker.L"><span class="id" title="section">L</span></a></span> in <span class="inlinecode"><a class="idref" href="HoTTBookExercises.html#Book_4_5.parts.C"><span class="id" title="variable">C</span></a></span> such that <span class="inlinecode"><a class="idref" href="HoTT.Basics.PathGroupoids.html#t"><span class="id" title="variable">t</span></a></span> <span class="inlinecode">(<a class="idref" href="HoTT.Categories.SimplicialSets.html#55962ab2243c40029a299cab4819b082"><span class="id" title="abbreviation">Δ</span></a></span> <span class="inlinecode"><a class="idref" href="HoTT.Categories.Category.Morphisms.html#s'"><span class="id" title="variable">s'</span></a>)</span> <span class="inlinecode">=</span> <span class="inlinecode"><a class="idref" href="HoTT.Categories.Cat.Morphisms.html#iso_lemmas.s"><span class="id" title="variable">s</span></a></span>.  
+</div>
+<div class="code">
+
+<br/>
+&nbsp;&nbsp;<span class="id" title="keyword">Definition</span> <a name="IsLimit"><span class="id" title="definition">IsLimit</span></a><br/>
+&nbsp;&nbsp;&nbsp;&nbsp;:= @<a class="idref" href="HoTT.Categories.KanExtensions.Core.html#IsRightKanExtensionAlong"><span class="id" title="definition">IsRightKanExtensionAlong</span></a> <span class="id" title="var">_</span> <a class="idref" href="HoTT.Categories.Limits.Core.html#Limit.D"><span class="id" title="variable">D</span></a> 1 <a class="idref" href="HoTT.Categories.Limits.Core.html#Limit.C"><span class="id" title="variable">C</span></a> (<a class="idref" href="HoTT.Categories.InitialTerminalCategory.Functors.html#to_terminal"><span class="id" title="definition">Functors.to_terminal</span></a> <span class="id" title="var">_</span>) <a class="idref" href="HoTT.Categories.Limits.Core.html#Limit.F"><span class="id" title="variable">F</span></a>.<br/>
+
+<br/>
+</div>
+
+<div class="doc">
+     Quoting Dwyer and Spalinski:
+
+<div class="paragraph"> </div>
+
+     Let <span class="inlinecode"><a class="idref" href="HoTTBookExercises.html#Book_4_5.parts.D"><span class="id" title="variable">D</span></a></span> be a small category and <span class="inlinecode"><a class="idref" href="HoTT.Categories.Limits.Core.html#Limit.F"><span class="id" title="variable">F</span></a></span> <span class="inlinecode">:</span> <span class="inlinecode"><a class="idref" href="HoTTBookExercises.html#Book_4_5.parts.D"><span class="id" title="variable">D</span></a></span> <span class="inlinecode">→</span> <span class="inlinecode"><a class="idref" href="HoTTBookExercises.html#Book_4_5.parts.C"><span class="id" title="variable">C</span></a></span> a functor. A colimit
+     for <span class="inlinecode"><a class="idref" href="HoTT.Categories.Limits.Core.html#Limit.F"><span class="id" title="variable">F</span></a></span> is an object <span class="inlinecode"><a class="idref" href="HoTT.Categories.Grothendieck.PseudofunctorToCat.html#c"><span class="id" title="projection">c</span></a></span> of <span class="inlinecode"><a class="idref" href="HoTTBookExercises.html#Book_4_5.parts.C"><span class="id" title="variable">C</span></a></span> together with a natural
+     transformation <span class="inlinecode"><a class="idref" href="HoTT.Basics.PathGroupoids.html#t"><span class="id" title="variable">t</span></a></span> <span class="inlinecode">:</span> <span class="inlinecode"><a class="idref" href="HoTT.Categories.Limits.Core.html#Limit.F"><span class="id" title="variable">F</span></a></span> <span class="inlinecode">→</span> <span class="inlinecode"><a class="idref" href="HoTT.Categories.SimplicialSets.html#55962ab2243c40029a299cab4819b082"><span class="id" title="abbreviation">Δ</span></a></span> <span class="inlinecode"><a class="idref" href="HoTT.Categories.Grothendieck.PseudofunctorToCat.html#c"><span class="id" title="projection">c</span></a></span> such that for every object <span class="inlinecode"><a class="idref" href="HoTT.Categories.UniversalProperties.html#UniversalMorphism.TerminalMorphism.X"><span class="id" title="variable">X</span></a></span> of
+     <span class="inlinecode"><a class="idref" href="HoTTBookExercises.html#Book_4_5.parts.C"><span class="id" title="variable">C</span></a></span> and every natural transformation <span class="inlinecode"><a class="idref" href="HoTT.Categories.Cat.Morphisms.html#iso_lemmas.s"><span class="id" title="variable">s</span></a></span> <span class="inlinecode">:</span> <span class="inlinecode"><a class="idref" href="HoTT.Categories.Limits.Core.html#Limit.F"><span class="id" title="variable">F</span></a></span> <span class="inlinecode">→</span> <span class="inlinecode"><a class="idref" href="HoTT.Categories.SimplicialSets.html#55962ab2243c40029a299cab4819b082"><span class="id" title="abbreviation">Δ</span></a></span> <span class="inlinecode"><a class="idref" href="HoTT.Categories.UniversalProperties.html#UniversalMorphism.TerminalMorphism.X"><span class="id" title="variable">X</span></a></span>, there exists
+     a unique map <span class="inlinecode"><a class="idref" href="HoTT.Categories.Category.Morphisms.html#s'"><span class="id" title="variable">s'</span></a></span> <span class="inlinecode">:</span> <span class="inlinecode"><a class="idref" href="HoTT.Categories.Grothendieck.PseudofunctorToCat.html#c"><span class="id" title="projection">c</span></a></span> <span class="inlinecode">→</span> <span class="inlinecode"><a class="idref" href="HoTT.Categories.UniversalProperties.html#UniversalMorphism.TerminalMorphism.X"><span class="id" title="variable">X</span></a></span> in <span class="inlinecode"><a class="idref" href="HoTTBookExercises.html#Book_4_5.parts.C"><span class="id" title="variable">C</span></a></span> such that <span class="inlinecode">(<a class="idref" href="HoTT.Categories.SimplicialSets.html#55962ab2243c40029a299cab4819b082"><span class="id" title="abbreviation">Δ</span></a></span> <span class="inlinecode"><a class="idref" href="HoTT.Categories.Category.Morphisms.html#s'"><span class="id" title="variable">s'</span></a>)</span> <span class="inlinecode"><a class="idref" href="HoTT.Basics.PathGroupoids.html#t"><span class="id" title="variable">t</span></a></span> <span class="inlinecode">=</span> <span class="inlinecode"><a class="idref" href="HoTT.Categories.Cat.Morphisms.html#iso_lemmas.s"><span class="id" title="variable">s</span></a></span>.  
+<div class="paragraph"> </div>
+
+<a name="lab1088"></a><h2 class="section">Definition of Colimit</h2>
+
+</div>
+<div class="code">
+&nbsp;&nbsp;<span class="id" title="keyword">Definition</span> <a name="IsColimit"><span class="id" title="definition">IsColimit</span></a><br/>
+&nbsp;&nbsp;&nbsp;&nbsp;:= @<a class="idref" href="HoTT.Categories.KanExtensions.Core.html#IsLeftKanExtensionAlong"><span class="id" title="definition">IsLeftKanExtensionAlong</span></a> <span class="id" title="var">_</span> <a class="idref" href="HoTT.Categories.Limits.Core.html#Limit.D"><span class="id" title="variable">D</span></a> 1 <a class="idref" href="HoTT.Categories.Limits.Core.html#Limit.C"><span class="id" title="variable">C</span></a> (<a class="idref" href="HoTT.Categories.InitialTerminalCategory.Functors.html#to_terminal"><span class="id" title="definition">Functors.to_terminal</span></a> <span class="id" title="var">_</span>) <a class="idref" href="HoTT.Categories.Limits.Core.html#Limit.F"><span class="id" title="variable">F</span></a>.<br/>
+</div>
+
+<div class="doc">
+TODO(JasonGross): Figure out how to get good introduction and elimination rules working, which don't mention spurious identities. 
+</div>
+<div class="code">
+<span class="id" title="keyword">End</span> <a class="idref" href="HoTT.Categories.Limits.Core.html#Limit"><span class="id" title="section">Limit</span></a>.<br/>
+
+<br/>
+</div>
+
+<div class="doc">
+TODO(JasonGross): Port MorphismsBetweenLimits from catdb 
+</div>
+<div class="code">
+</div>
+</div>
+
+<div id="footer">
+<hr/><a href="index.html">Index</a><hr/>This page has been generated by <a href="http://coq.inria.fr/">coqdoc</a>
+</div>
+
+</div>
+
+</body>
+</html>

@@ -1,0 +1,310 @@
+<html>
+<head>
+<title>FundamentalPreGroupoidCategory.v</title>
+<style>
+.time {
+  background-color: #ffaaaa;
+  height: 100%;
+  z-index: -1;
+  position: absolute;
+}
+.code {
+  z-index: 0;
+  position: relative;
+  border-style: solid;
+  border-color: transparent;
+  border-width: 1px;
+}
+.code:hover {
+  border-style: solid;
+  border-color: black;
+  border-width: 1px;
+}
+pre {
+  margin: 1px;
+}
+</style>
+</head>
+<body>
+<h1>Timings for FundamentalPreGroupoidCategory.v</h1>
+
+<div class="code" title="File: FundamentalPreGroupoidCategory.v
+Line: 1
+Time: 0s">
+<div class="time" style="width: 0%"></div>
+<pre>(** * Fundamental Pregroupoids *)</pre>
+</div>
+<div class="code" title="File: FundamentalPreGroupoidCategory.v
+Line: 1
+Time: 0.048s">
+<div class="time" style="width: 19.2%"></div>
+<pre>Require Import Category.Core Category.Morphisms.</pre>
+</div>
+<div class="code" title="File: FundamentalPreGroupoidCategory.v
+Line: 1
+Time: 0.121s">
+<div class="time" style="width: 48.4%"></div>
+<pre>
+Require Import HIT.Truncations PathGroupoids.</pre>
+</div>
+<div class="code" title="File: FundamentalPreGroupoidCategory.v
+Line: 2
+Time: 0s">
+<div class="time" style="width: 0%"></div>
+<pre>
+
+Set Universe Polymorphism.</pre>
+</div>
+<div class="code" title="File: FundamentalPreGroupoidCategory.v
+Line: 4
+Time: 0s">
+<div class="time" style="width: 0%"></div>
+<pre>
+Set Implicit Arguments.</pre>
+</div>
+<div class="code" title="File: FundamentalPreGroupoidCategory.v
+Line: 5
+Time: 0s">
+<div class="time" style="width: 0%"></div>
+<pre>
+Generalizable All Variables.</pre>
+</div>
+<div class="code" title="File: FundamentalPreGroupoidCategory.v
+Line: 6
+Time: 0s">
+<div class="time" style="width: 0%"></div>
+<pre>
+Set Asymmetric Patterns.</pre>
+</div>
+<div class="code" title="File: FundamentalPreGroupoidCategory.v
+Line: 7
+Time: 0s">
+<div class="time" style="width: 0%"></div>
+<pre>
+
+Local Open Scope path_scope.</pre>
+</div>
+<div class="code" title="File: FundamentalPreGroupoidCategory.v
+Line: 9
+Time: 0s">
+<div class="time" style="width: 0%"></div>
+<pre>
+
+Local Open Scope category_scope.</pre>
+</div>
+<div class="code" title="File: FundamentalPreGroupoidCategory.v
+Line: 11
+Time: 0s">
+<div class="time" style="width: 0%"></div>
+<pre>
+
+(** Quoting the HoTT Book:
+
+    Example. For _any_ type [X], there is a precategory with [X] as
+    its type of objects and with [hom(x,y) : ∥x = y∥₀]. The
+    composition operation [∥y = z∥₀ → ∥x = y∥₀ → ∥x = z∥₀] is defined
+    by induction on truncation from concatenation [(y = z) → (x = y) →
+    (x = z)]. We call this the fundamental pregroupoid of [X]. *)
+
+(** We don't want access to all of the internals of a groupoid category at top level. *)</pre>
+</div>
+<div class="code" title="File: FundamentalPreGroupoidCategory.v
+Line: 21
+Time: 0s">
+<div class="time" style="width: 0%"></div>
+<pre>Module FundamentalPreGroupoidCategoryInternals.</pre>
+</div>
+<div class="code" title="File: FundamentalPreGroupoidCategory.v
+Line: 21
+Time: 0s">
+<div class="time" style="width: 0%"></div>
+<pre>
+  Section fundamental_pregroupoid_category.</pre>
+</div>
+<div class="code" title="File: FundamentalPreGroupoidCategory.v
+Line: 22
+Time: 0s">
+<div class="time" style="width: 0%"></div>
+<pre>
+    Variable X : Type.</pre>
+</div>
+<div class="code" title="File: FundamentalPreGroupoidCategory.v
+Line: 23
+Time: 0s">
+<div class="time" style="width: 0%"></div>
+<pre>
+
+    Local Notation object := X (only parsing).</pre>
+</div>
+<div class="code" title="File: FundamentalPreGroupoidCategory.v
+Line: 25
+Time: 0s">
+<div class="time" style="width: 0%"></div>
+<pre>
+    Local Notation morphism s d := (Trunc 0 (s = d :&gt; X)) (only parsing).</pre>
+</div>
+<div class="code" title="File: FundamentalPreGroupoidCategory.v
+Line: 26
+Time: 0s">
+<div class="time" style="width: 0%"></div>
+<pre>
+
+    Definition compose s d d' (m : morphism d d') (m' : morphism s d)
+    : morphism s d'.</pre>
+</div>
+<div class="code" title="File: FundamentalPreGroupoidCategory.v
+Line: 29
+Time: 0s">
+<div class="time" style="width: 0%"></div>
+<pre>
+    Proof.</pre>
+</div>
+<div class="code" title="File: FundamentalPreGroupoidCategory.v
+Line: 30
+Time: 0s">
+<div class="time" style="width: 0%"></div>
+<pre>
+      revert m'; apply Trunc_rec; intro m'.</pre>
+</div>
+<div class="code" title="File: FundamentalPreGroupoidCategory.v
+Line: 31
+Time: 0s">
+<div class="time" style="width: 0%"></div>
+<pre>
+      revert m; apply Trunc_rec; intro m.</pre>
+</div>
+<div class="code" title="File: FundamentalPreGroupoidCategory.v
+Line: 32
+Time: 0s">
+<div class="time" style="width: 0%"></div>
+<pre>
+      apply tr.</pre>
+</div>
+<div class="code" title="File: FundamentalPreGroupoidCategory.v
+Line: 33
+Time: 0s">
+<div class="time" style="width: 0%"></div>
+<pre>
+      exact (m' @ m).</pre>
+</div>
+<div class="code" title="File: FundamentalPreGroupoidCategory.v
+Line: 34
+Time: 0s">
+<div class="time" style="width: 0%"></div>
+<pre>
+    Defined.</pre>
+</div>
+<div class="code" title="File: FundamentalPreGroupoidCategory.v
+Line: 35
+Time: 0.001s">
+<div class="time" style="width: 0.4%"></div>
+<pre>
+
+    Definition identity x : morphism x x
+      := tr (reflexivity _).</pre>
+</div>
+<div class="code" title="File: FundamentalPreGroupoidCategory.v
+Line: 38
+Time: 0s">
+<div class="time" style="width: 0%"></div>
+<pre>
+
+    Global Arguments compose [s d d'] m m' / .</pre>
+</div>
+<div class="code" title="File: FundamentalPreGroupoidCategory.v
+Line: 40
+Time: 0s">
+<div class="time" style="width: 0%"></div>
+<pre>
+    Global Arguments identity x / .</pre>
+</div>
+<div class="code" title="File: FundamentalPreGroupoidCategory.v
+Line: 41
+Time: 0s">
+<div class="time" style="width: 0%"></div>
+<pre>
+  End fundamental_pregroupoid_category.</pre>
+</div>
+<div class="code" title="File: FundamentalPreGroupoidCategory.v
+Line: 42
+Time: 0s">
+<div class="time" style="width: 0%"></div>
+<pre>
+End FundamentalPreGroupoidCategoryInternals.</pre>
+</div>
+<div class="code" title="File: FundamentalPreGroupoidCategory.v
+Line: 43
+Time: 0s">
+<div class="time" style="width: 0%"></div>
+<pre>
+
+(** ** Categorification of the fundamental pregroupoid of a type *)</pre>
+</div>
+<div class="code" title="File: FundamentalPreGroupoidCategory.v
+Line: 45
+Time: 0s">
+<div class="time" style="width: 0%"></div>
+<pre>Definition fundamental_pregroupoid_category (X : Type) : PreCategory.</pre>
+</div>
+<div class="code" title="File: FundamentalPreGroupoidCategory.v
+Line: 45
+Time: 0s">
+<div class="time" style="width: 0%"></div>
+<pre>
+Proof.</pre>
+</div>
+<div class="code" title="File: FundamentalPreGroupoidCategory.v
+Line: 46
+Time: 0.25s">
+<div class="time" style="width: 100%"></div>
+<pre>
+  refine (@Build_PreCategory
+            X
+            _
+            (@FundamentalPreGroupoidCategoryInternals.identity X)
+            (@FundamentalPreGroupoidCategoryInternals.compose X)
+            _
+            _
+            _
+            _);
+  simpl; intros;
+  abstract (
+      repeat match goal with
+               | [ m : Trunc _ _ |- _ ]
+                 =&gt; revert m;
+               apply Trunc_ind;
+               [ intro;
+                 match goal with
+                   | [ |- IsHSet (?a = ?b :&gt; ?T) ]
+                     =&gt; generalize a b; intros;
+                        let H := fresh in
+                        assert (H : forall x y : T, IsHProp (x = y))
+                 end;
+                 typeclasses eauto
+               | intro ]
+             end;
+      simpl;
+      apply ap;
+      first [ apply concat_p_pp
+            | apply concat_1p
+            | apply concat_p1 ]
+    ).</pre>
+</div>
+<div class="code" title="File: FundamentalPreGroupoidCategory.v
+Line: 77
+Time: 0.01s">
+<div class="time" style="width: 4%"></div>
+<pre>
+Defined.</pre>
+</div>
+<div class="code" title="File: FundamentalPreGroupoidCategory.v
+Line: 79
+Time: 0s">
+<div class="time" style="width: 0%"></div>
+<pre>
+
+</pre>
+</div>
+</body>
+</html>
+

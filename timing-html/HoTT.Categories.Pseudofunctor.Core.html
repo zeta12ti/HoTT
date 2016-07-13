@@ -1,0 +1,398 @@
+<html>
+<head>
+<title>Core.v</title>
+<style>
+.time {
+  background-color: #ffaaaa;
+  height: 100%;
+  z-index: -1;
+  position: absolute;
+}
+.code {
+  z-index: 0;
+  position: relative;
+  border-style: solid;
+  border-color: transparent;
+  border-width: 1px;
+}
+.code:hover {
+  border-style: solid;
+  border-color: black;
+  border-width: 1px;
+}
+pre {
+  margin: 1px;
+}
+</style>
+</head>
+<body>
+<h1>Timings for Core.v</h1>
+
+<div class="code" title="File: Core.v
+Line: 1
+Time: 0s">
+<div class="time" style="width: 0%"></div>
+<pre>(** * Pseudofunctors *)</pre>
+</div>
+<div class="code" title="File: Core.v
+Line: 1
+Time: 0.006s">
+<div class="time" style="width: 5.2631578947368%"></div>
+<pre>Require Import Category.Core Functor.Core NaturalTransformation.Core.</pre>
+</div>
+<div class="code" title="File: Core.v
+Line: 1
+Time: 0.039s">
+<div class="time" style="width: 34.210526315789%"></div>
+<pre>
+Require Import FunctorCategory.Core.</pre>
+</div>
+<div class="code" title="File: Core.v
+Line: 2
+Time: 0.009s">
+<div class="time" style="width: 7.8947368421053%"></div>
+<pre>
+Require Import Category.Morphisms FunctorCategory.Morphisms.</pre>
+</div>
+<div class="code" title="File: Core.v
+Line: 3
+Time: 0s">
+<div class="time" style="width: 0%"></div>
+<pre>
+Require Import Functor.Composition.Core Functor.Identity.</pre>
+</div>
+<div class="code" title="File: Core.v
+Line: 4
+Time: 0s">
+<div class="time" style="width: 0%"></div>
+<pre>
+Require Import NaturalTransformation.Composition.Core NaturalTransformation.Composition.Laws.</pre>
+</div>
+<div class="code" title="File: Core.v
+Line: 5
+Time: 0.002s">
+<div class="time" style="width: 1.7543859649123%"></div>
+<pre>
+Require Import NaturalTransformation.Isomorphisms.</pre>
+</div>
+<div class="code" title="File: Core.v
+Line: 6
+Time: 0s">
+<div class="time" style="width: 0%"></div>
+<pre>
+Require Import NaturalTransformation.Paths.</pre>
+</div>
+<div class="code" title="File: Core.v
+Line: 7
+Time: 0s">
+<div class="time" style="width: 0%"></div>
+<pre>
+Require Import FunctorCategory.Core.</pre>
+</div>
+<div class="code" title="File: Core.v
+Line: 8
+Time: 0s">
+<div class="time" style="width: 0%"></div>
+<pre>
+
+Set Universe Polymorphism.</pre>
+</div>
+<div class="code" title="File: Core.v
+Line: 10
+Time: 0s">
+<div class="time" style="width: 0%"></div>
+<pre>
+Set Implicit Arguments.</pre>
+</div>
+<div class="code" title="File: Core.v
+Line: 11
+Time: 0s">
+<div class="time" style="width: 0%"></div>
+<pre>
+Generalizable All Variables.</pre>
+</div>
+<div class="code" title="File: Core.v
+Line: 12
+Time: 0s">
+<div class="time" style="width: 0%"></div>
+<pre>
+Set Asymmetric Patterns.</pre>
+</div>
+<div class="code" title="File: Core.v
+Line: 13
+Time: 0s">
+<div class="time" style="width: 0%"></div>
+<pre>
+
+Local Open Scope morphism_scope.</pre>
+</div>
+<div class="code" title="File: Core.v
+Line: 15
+Time: 0s">
+<div class="time" style="width: 0%"></div>
+<pre>
+
+Section pseudofunctor.</pre>
+</div>
+<div class="code" title="File: Core.v
+Line: 17
+Time: 0s">
+<div class="time" style="width: 0%"></div>
+<pre>
+  Local Open Scope natural_transformation_scope.</pre>
+</div>
+<div class="code" title="File: Core.v
+Line: 18
+Time: 0s">
+<div class="time" style="width: 0%"></div>
+<pre>
+  Context `{Funext}.</pre>
+</div>
+<div class="code" title="File: Core.v
+Line: 19
+Time: 0s">
+<div class="time" style="width: 0%"></div>
+<pre>
+
+  Variable C : PreCategory.</pre>
+</div>
+<div class="code" title="File: Core.v
+Line: 21
+Time: 0s">
+<div class="time" style="width: 0%"></div>
+<pre>
+
+  (** Quoting from nCatLab (http://ncatlab.org/nlab/show/pseudofunctor):
+
+      Given bicategories [C] and [D], a pseudofunctor (or weak 2-functor,
+      or just functor) [P : C → D] consists of:
+
+      - for each object [x] of [C], an object [P_x] of [D];
+
+      - for each hom-category [C(x,y)] in [C], a functor [P_{x,y} :
+        C(x,y) → D(P_x, P_y)];
+
+      - for each object [x] of [C], an invertible 2-morphism (2-cell)
+        [P_{id_x} : id_{P_x} ⇒ P_{x,x}(id_x)];
+
+      - for each triple [x],[y],[z] of [C]-objects, a isomorphism
+        (natural in [f : x → y] and [g : y → z]) [P_{x,y,z}(f,g) :
+        P_{x,y}(f);P_{y,z}(g) ⇒ P_{x,z}(f;g)];
+
+      - for each hom-category [C(x,y)],
+&lt;&lt;
+                                    id_{Pₓ} ; P_{x, y}(f)
+                                      //              \\
+                                    //                  \\
+        P_{idₓ} ; id_{P_{x,y}(f)} //                      \\  λ_{P_{x,y}(f)}
+                                //                          \\
+                               ⇙                              ⇘
+              Pₓ,ₓ(idₓ) ; P_{x,y}(f)                       P_{x,y}(f)
+                               \\                             ⇗
+                                 \\                         //
+                P_{x,x,y}(idₓ, f)  \\                     // P_{x,y}(λ_f)
+                                     \\                 //
+                                       ⇘              //
+                                        P_{x,y}(idₓ ; f)
+&gt;&gt;
+
+        and
+
+&lt;&lt;
+                                    P_{x, y}(f) ; id_{P_y}
+                                      //              \\
+                                    //                  \\
+       id_{P_{x,y}(f)} ; P_{id_y} //                      \\  ρ_{P_{x,y}(f)}
+                                //                          \\
+                               ⇙                              ⇘
+              P_{x,y}(f) ; P_{y,y}(id_y)                   P_{x,y}(f)
+                               \\                             ⇗
+                                 \\                         //
+                P_{x,y,y}(f, id_y) \\                     // P_{x,y}(ρ_f)
+                                     \\                 //
+                                       ⇘              //
+                                       P_{x,y}(f ; id_y)
+&gt;&gt;
+        commute; and
+
+      - for each quadruple [w],[x],[y],[z] of [C]-objects,
+&lt;&lt;
+                                                  α_{P_{w,x}(f),P_{x,y}(g),P_{y,z}(h)}
+        (P_{w,x}(f) ; P_{x,y}(g)) ; P_{y,z}(h) ========================================⇒ P_{w,x}(f) ; (P_{x,y}(g) ; P_{y,z}(h))
+                                         ∥                                                   ∥
+                                         ∥                                                   ∥
+        P_{w,x,y}(f,g) ; id_{P_{y,z}(h)} ∥                                                   ∥ id_{P_{w,x}(f)} ; P_{x,y,z}(g, h)
+                                         ∥                                                   ∥
+                                         ⇓                                                   ⇓
+                   P_{w,y}(f ; g) ; P_{y,z}(h)                                           P_{w,x}(f) ; P_{x,z}(g ; h)
+                                         ∥                                                   ∥
+                                         ∥                                                   ∥
+                     P_{w,y,z}(f ; g, h) ∥                                                   ∥ P_{w,x,z}(f, g ; h)
+                                         ∥                                                   ∥
+                                         ⇓                                                   ⇓
+                          P_{w,z}((f ; g) ; h) ========================================⇒ P_{w,z}(f ; (g ; h))
+                                                          P_{w,z}(α_{f,g,h})
+&gt;&gt;
+        commutes.
+*)
+
+  (* To obtain the [p_composition_of_coherent] type, I ran
+&lt;&lt;
+  Unset Implicit Arguments.
+  Variable F : Pseudofunctor.
+  Goal forall (w x y z : C) (f : morphism C w x) (g : morphism C x y) (h : morphism C y z), Type.
+  Proof.
+    intros.
+    pose ((idtoiso (_ -&gt; _) (ap (p_morphism_of F w z) (associativity C _ _ _ _ f g h))) : morphism _ _ _).
+    pose ((p_composition_of F w y z h (g ∘ f)) : NaturalTransformation _ _).
+    pose (p_morphism_of F y z h ∘ p_composition_of F w x y g f).
+
+    pose (associator_1 (p_morphism_of F y z h) (p_morphism_of F x y g) (p_morphism_of F w x f)).
+    pose (p_composition_of F x y z h g ∘ p_morphism_of F w x f).
+    pose ((p_composition_of F w x z (h ∘ g) f) : NaturalTransformation _ _).
+    simpl in *.
+    repeat match goal with
+             | [ H : _, H' : _ |- _ ] =&gt; unique_pose_with_body (NTComposeT H H'); subst H H'
+           end.
+    match goal with
+      | [ H := _, H' := _ |- _ ] =&gt; assert (H = H'); subst H H'
+    end.
+&gt;&gt;
+
+&lt;&lt;
+  Unset Implicit Arguments.
+  Variable F : Pseudofunctor.
+  Goal forall (x y : C) (f : morphism C x y), Type.
+  Proof.
+    intros.
+    pose (p_identity_of F y ∘ p_morphism_of F x y f).
+    pose (p_composition_of F x y y (Identity y) f : NaturalTransformation _ _).
+    pose (idtoiso (_ -&gt; _) (ap (p_morphism_of F x y) (left_identity _ _ _ f)) : morphism _ _ _).
+    pose (left_identity_natural_transformation_2 (p_morphism_of F x y f)).
+    simpl in *.
+    repeat match goal with
+             | [ H : _, H' : _ |- _ ] =&gt; unique_pose_with_body (NTComposeT H H'); subst H H'
+           end.
+    match goal with
+      | [ H := _, H' := _ |- _ ] =&gt; assert (H = H'); subst H H'
+    end.
+&gt;&gt;
+
+&lt;&lt;
+  Unset Implicit Arguments.
+  Variable F : Pseudofunctor.
+  Goal forall (x y : C) (f : morphism C x y), Type.
+  Proof.
+    intros.
+    pose (p_morphism_of F x y f ∘ p_identity_of F x).
+    pose (p_composition_of F x x y f (Identity x) : NaturalTransformation _ _).
+    pose (idtoiso (_ -&gt; _) (ap (p_morphism_of F x y) (right_identity _ _ _ f)) : morphism _ _ _).
+    pose (right_identity_natural_transformation_2 (p_morphism_of F x y f)).
+    simpl in *.
+    repeat match goal with
+             | [ H : _, H' : _ |- _ ] =&gt; unique_pose_with_body (NTComposeT H H'); subst H H'
+           end.
+    match goal with
+      | [ H := _, H' := _ |- _ ] =&gt; assert (H = H'); subst H H'
+    end.
+&gt;&gt;
+ *)
+
+ </pre>
+</div>
+<div class="code" title="File: Core.v
+Line: 159
+Time: 0.114s">
+<div class="time" style="width: 100%"></div>
+<pre>Record Pseudofunctor :=
+    {
+      p_object_of :&gt; C -&gt; PreCategory;
+      p_morphism_of : forall s d, morphism C s d
+                                  -&gt; Functor (p_object_of s) (p_object_of d);
+      p_composition_of : forall s d d'
+                                (m1 : morphism C d d') (m2 : morphism C s d),
+                           (p_morphism_of _ _ (m1 o m2))
+                             &lt;~=~&gt; (p_morphism_of _ _ m1 o p_morphism_of _ _ m2)%functor;
+      p_identity_of : forall x, p_morphism_of x x 1 &lt;~=~&gt; 1%functor;
+      p_composition_of_coherent
+      : forall w x y z
+               (f : morphism C w x) (g : morphism C x y) (h : morphism C y z),
+          ((associator_1 (p_morphism_of y z h) (p_morphism_of x y g) (p_morphism_of w x f))
+             o ((p_composition_of x y z h g oR p_morphism_of w x f)
+                  o (p_composition_of w x z (h o g) f)))
+          = ((p_morphism_of y z h oL p_composition_of w x y g f)
+               o ((p_composition_of w y z h (g o f))
+                    o (Category.Morphisms.idtoiso (_ -&gt; _) (ap (p_morphism_of w z) (Category.Core.associativity C w x y z f g h)) : morphism _ _ _)));
+      p_left_identity_of_coherent
+      : forall x y (f : morphism C x y),
+          ((p_identity_of y oR p_morphism_of x y f)
+             o p_composition_of x y y 1 f)
+          = ((left_identity_natural_transformation_2 (p_morphism_of x y f))
+               o (Category.Morphisms.idtoiso (_ -&gt; _) (ap (p_morphism_of x y) (Category.Core.left_identity C x y f)) : morphism _ _ _));
+      p_right_identity_of_coherent
+      : forall x y (f : morphism C x y),
+          ((p_morphism_of x y f oL p_identity_of x)
+             o p_composition_of x x y f 1)
+          = ((right_identity_natural_transformation_2 (p_morphism_of x y f))
+               o (Category.Morphisms.idtoiso (_ -&gt; _) (ap (p_morphism_of x y) (Category.Core.right_identity C x y f)) : morphism _ _ _))
+    }.</pre>
+</div>
+<div class="code" title="File: Core.v
+Line: 190
+Time: 0.052s">
+<div class="time" style="width: 45.614035087719%"></div>
+<pre>
+End pseudofunctor.</pre>
+</div>
+<div class="code" title="File: Core.v
+Line: 191
+Time: 0s">
+<div class="time" style="width: 0%"></div>
+<pre>
+
+Delimit Scope pseudofunctor_scope with pseudofunctor.</pre>
+</div>
+<div class="code" title="File: Core.v
+Line: 193
+Time: 0s">
+<div class="time" style="width: 0%"></div>
+<pre>
+Bind Scope pseudofunctor_scope with Pseudofunctor.</pre>
+</div>
+<div class="code" title="File: Core.v
+Line: 194
+Time: 0s">
+<div class="time" style="width: 0%"></div>
+<pre>
+
+Create HintDb pseudofunctor discriminated.</pre>
+</div>
+<div class="code" title="File: Core.v
+Line: 196
+Time: 0s">
+<div class="time" style="width: 0%"></div>
+<pre>
+
+Arguments p_object_of {_} {C%category} F%pseudofunctor / c%object : rename.</pre>
+</div>
+<div class="code" title="File: Core.v
+Line: 198
+Time: 0s">
+<div class="time" style="width: 0%"></div>
+<pre>
+Arguments p_morphism_of {_} {C%category} F%pseudofunctor / {s d}%object m%morphism : rename.</pre>
+</div>
+<div class="code" title="File: Core.v
+Line: 200
+Time: 0s">
+<div class="time" style="width: 0%"></div>
+<pre>
+
+(*Notation "F ₀ x" := (p_object_of F x) : object_scope.
+Notation "F ₁ m" := (p_morphism_of F m) : morphism_scope.*)
+
+</pre>
+</div>
+</body>
+</html>
+

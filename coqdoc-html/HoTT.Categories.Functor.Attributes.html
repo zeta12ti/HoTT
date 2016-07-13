@@ -1,0 +1,264 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
+"http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<link href="coqdoc.css" rel="stylesheet" type="text/css" />
+<title>HoTT.Categories.Functor.Attributes</title>
+</head>
+
+<body>
+
+<div id="page">
+
+<div id="header">
+</div>
+
+<div id="main">
+
+<h1 class="libtitle">Library HoTT.Categories.Functor.Attributes</h1>
+
+<div class="code">
+</div>
+
+<div class="doc">
+<a name="lab662"></a><h1 class="section">Attributes of functors (full, faithful, split essentially surjective)</h1>
+
+</div>
+<div class="code">
+<span class="id" title="keyword">Require</span> <span class="id" title="keyword">Import</span> <a class="idref" href="HoTT.Categories.Category.Core.html#"><span class="id" title="library">Category.Core</span></a> <a class="idref" href="HoTT.Categories.Functor.Core.html#"><span class="id" title="library">Functor.Core</span></a> <a class="idref" href="HoTT.Categories.HomFunctor.html#"><span class="id" title="library">HomFunctor</span></a> <a class="idref" href="HoTT.Categories.Category.Morphisms.html#"><span class="id" title="library">Category.Morphisms</span></a> <a class="idref" href="HoTT.Categories.Category.Dual.html#"><span class="id" title="library">Category.Dual</span></a> <a class="idref" href="HoTT.Categories.Functor.Dual.html#"><span class="id" title="library">Functor.Dual</span></a> <a class="idref" href="HoTT.Categories.Category.Prod.html#"><span class="id" title="library">Category.Prod</span></a> <a class="idref" href="HoTT.Categories.Functor.Prod.html#"><span class="id" title="library">Functor.Prod</span></a> <a class="idref" href="HoTT.Categories.NaturalTransformation.Core.html#"><span class="id" title="library">NaturalTransformation.Core</span></a> <a class="idref" href="HoTT.Categories.SetCategory.Core.html#"><span class="id" title="library">SetCategory.Core</span></a> <a class="idref" href="HoTT.Categories.Functor.Composition.Core.html#"><span class="id" title="library">Functor.Composition.Core</span></a>.<br/>
+<span class="id" title="keyword">Require</span> <span class="id" title="keyword">Import</span> <a class="idref" href="HoTT.Basics.Overture.html#"><span class="id" title="library">Basics.Overture</span></a> <a class="idref" href="HoTT.Basics.Trunc.html#"><span class="id" title="library">Basics.Trunc</span></a> <a class="idref" href="HoTT.HIT.epi.html#"><span class="id" title="library">HIT.epi</span></a> <a class="idref" href="HoTT.Types.Universe.html#"><span class="id" title="library">Types.Universe</span></a> <a class="idref" href="HoTT.HSet.html#"><span class="id" title="library">HSet</span></a> <a class="idref" href="HoTT.HIT.iso.html#"><span class="id" title="library">HIT.iso</span></a> <a class="idref" href="HoTT.HIT.Truncations.html#"><span class="id" title="library">HIT.Truncations</span></a> <a class="idref" href="HoTT.UnivalenceImpliesFunext.html#"><span class="id" title="library">UnivalenceImpliesFunext</span></a> <a class="idref" href="HoTT.TruncType.html#"><span class="id" title="library">TruncType</span></a>.<br/>
+
+<br/>
+<span class="id" title="keyword">Set</span> <span class="id" title="var">Universe</span> <span class="id" title="var">Polymorphism</span>.<br/>
+<span class="id" title="keyword">Set Implicit Arguments</span>.<br/>
+<span class="id" title="keyword">Generalizable</span> <span class="id" title="keyword">All</span> <span class="id" title="keyword">Variables</span>.<br/>
+<span class="id" title="keyword">Set</span> <span class="id" title="var">Asymmetric</span> <span class="id" title="var">Patterns</span>.<br/>
+
+<br/>
+<span class="id" title="keyword">Local Open</span> <span class="id" title="keyword">Scope</span> <span class="id" title="var">category_scope</span>.<br/>
+
+<br/>
+<span class="id" title="keyword">Section</span> <a name="full_faithful"><span class="id" title="section">full_faithful</span></a>.<br/>
+&nbsp;&nbsp;<span class="id" title="keyword">Context</span> `{<a class="idref" href="HoTT.Basics.Overture.html#Funext"><span class="id" title="class">Funext</span></a>}.<br/>
+&nbsp;&nbsp;<span class="id" title="keyword">Variables</span> <a name="full_faithful.C"><span class="id" title="variable">C</span></a> <a name="full_faithful.D"><span class="id" title="variable">D</span></a> : <a class="idref" href="HoTT.Categories.Category.Core.html#PreCategory"><span class="id" title="record">PreCategory</span></a>.<br/>
+&nbsp;&nbsp;<span class="id" title="keyword">Variable</span> <a name="full_faithful.F"><span class="id" title="variable">F</span></a> : <a class="idref" href="HoTT.Categories.Functor.Core.html#Functor"><span class="id" title="record">Functor</span></a> <a class="idref" href="HoTT.Categories.Functor.Attributes.html#full_faithful.C"><span class="id" title="variable">C</span></a> <a class="idref" href="HoTT.Categories.Functor.Attributes.html#full_faithful.D"><span class="id" title="variable">D</span></a>.<br/>
+
+<br/>
+</div>
+
+<div class="doc">
+<a name="lab663"></a><h2 class="section">Natural transformation <span class="inlinecode"><span class="id" title="var">hom_C</span>(─,</span> <span class="inlinecode">─)</span> <span class="inlinecode">→</span> <span class="inlinecode"><span class="id" title="var">hom_D</span>(<a class="idref" href="HoTT.Categories.Limits.Core.html#Limit.F"><span class="id" title="variable">F</span></a>ᵒᵖ(─),</span> <span class="inlinecode"><a class="idref" href="HoTT.Categories.Limits.Core.html#Limit.F"><span class="id" title="variable">F</span></a>(─))</span></h2>
+ TODO(JasonGross): Come up with a better name and location for this. 
+</div>
+<div class="code">
+&nbsp;&nbsp;<span class="id" title="keyword">Definition</span> <a name="induced_hom_natural_transformation"><span class="id" title="definition">induced_hom_natural_transformation</span></a><br/>
+&nbsp;&nbsp;: <a class="idref" href="HoTT.Categories.NaturalTransformation.Core.html#NaturalTransformation"><span class="id" title="record">NaturalTransformation</span></a> (<a class="idref" href="HoTT.Categories.HomFunctor.html#hom_functor"><span class="id" title="definition">hom_functor</span></a> <a class="idref" href="HoTT.Categories.Functor.Attributes.html#full_faithful.C"><span class="id" title="variable">C</span></a>) (<a class="idref" href="HoTT.Categories.HomFunctor.html#hom_functor"><span class="id" title="definition">hom_functor</span></a> <a class="idref" href="HoTT.Categories.Functor.Attributes.html#full_faithful.D"><span class="id" title="variable">D</span></a> <a class="idref" href="HoTT.Categories.Functor.Composition.Core.html#bd0af3afadd89896a4f04c95dcc20702"><span class="id" title="notation">o</span></a> <a class="idref" href="HoTT.Categories.Functor.Prod.Core.html#95b3b6f80301d7c476ac8fdd30bb78a5"><span class="id" title="notation">(</span></a><a class="idref" href="HoTT.Categories.Functor.Attributes.html#full_faithful.F"><span class="id" title="variable">F</span></a><a class="idref" href="HoTT.Categories.Functor.Dual.html#a7e7ccbdbc1fb3fcfad5e585ea2daa31"><span class="id" title="notation">^</span></a><a class="idref" href="HoTT.Categories.Functor.Dual.html#a7e7ccbdbc1fb3fcfad5e585ea2daa31"><span class="id" title="notation">op</span></a><a class="idref" href="HoTT.Categories.Functor.Prod.Core.html#95b3b6f80301d7c476ac8fdd30bb78a5"><span class="id" title="notation">,</span></a> <a class="idref" href="HoTT.Categories.Functor.Attributes.html#full_faithful.F"><span class="id" title="variable">F</span></a><a class="idref" href="HoTT.Categories.Functor.Prod.Core.html#95b3b6f80301d7c476ac8fdd30bb78a5"><span class="id" title="notation">)</span></a>).<br/>
+&nbsp;&nbsp;<span class="id" title="keyword">Proof</span>.<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="id" title="tactic">refine</span> (<a class="idref" href="HoTT.Categories.NaturalTransformation.Core.html#Build_NaturalTransformation"><span class="id" title="definition">Build_NaturalTransformation</span></a><br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;(<a class="idref" href="HoTT.Categories.HomFunctor.html#hom_functor"><span class="id" title="definition">hom_functor</span></a> <a class="idref" href="HoTT.Categories.Functor.Attributes.html#full_faithful.C"><span class="id" title="variable">C</span></a>)<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;(<a class="idref" href="HoTT.Categories.HomFunctor.html#hom_functor"><span class="id" title="definition">hom_functor</span></a> <a class="idref" href="HoTT.Categories.Functor.Attributes.html#full_faithful.D"><span class="id" title="variable">D</span></a> <a class="idref" href="HoTT.Categories.Functor.Composition.Core.html#bd0af3afadd89896a4f04c95dcc20702"><span class="id" title="notation">o</span></a> <a class="idref" href="HoTT.Categories.Functor.Prod.Core.html#95b3b6f80301d7c476ac8fdd30bb78a5"><span class="id" title="notation">(</span></a><a class="idref" href="HoTT.Categories.Functor.Attributes.html#full_faithful.F"><span class="id" title="variable">F</span></a><a class="idref" href="HoTT.Categories.Functor.Dual.html#a7e7ccbdbc1fb3fcfad5e585ea2daa31"><span class="id" title="notation">^</span></a><a class="idref" href="HoTT.Categories.Functor.Dual.html#a7e7ccbdbc1fb3fcfad5e585ea2daa31"><span class="id" title="notation">op</span></a><a class="idref" href="HoTT.Categories.Functor.Prod.Core.html#95b3b6f80301d7c476ac8fdd30bb78a5"><span class="id" title="notation">,</span></a> <a class="idref" href="HoTT.Categories.Functor.Attributes.html#full_faithful.F"><span class="id" title="variable">F</span></a><a class="idref" href="HoTT.Categories.Functor.Prod.Core.html#95b3b6f80301d7c476ac8fdd30bb78a5"><span class="id" title="notation">)</span></a>)<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;(<span class="id" title="keyword">fun</span> <span class="id" title="var">sd</span> : <a class="idref" href="HoTT.Categories.Category.Core.html#object"><span class="id" title="projection">object</span></a> (<a class="idref" href="HoTT.Categories.Functor.Attributes.html#full_faithful.C"><span class="id" title="variable">C</span></a><a class="idref" href="HoTT.Categories.Category.Dual.html#4b8a2681f69e2521eaa7f7297d899055"><span class="id" title="notation">^</span></a><a class="idref" href="HoTT.Categories.Category.Dual.html#4b8a2681f69e2521eaa7f7297d899055"><span class="id" title="notation">op</span></a> <a class="idref" href="HoTT.Categories.Category.Prod.html#abdc9ca76e7262ea64eed5f55bf85407"><span class="id" title="notation">×</span></a> <a class="idref" href="HoTT.Categories.Functor.Attributes.html#full_faithful.C"><span class="id" title="variable">C</span></a>) ⇒<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a class="idref" href="HoTT.Categories.Functor.Core.html#morphism_of"><span class="id" title="projection">morphism_of</span></a> <a class="idref" href="HoTT.Categories.Functor.Attributes.html#full_faithful.F"><span class="id" title="variable">F</span></a> (<span class="id" title="var">s</span> := <span class="id" title="var">_</span>) (<span class="id" title="var">d</span> := <span class="id" title="var">_</span>))<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="id" title="var">_</span><br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;).<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="id" title="tactic">abstract</span> (<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="id" title="tactic">repeat</span> (<span class="id" title="tactic">intros</span> [] || <span class="id" title="tactic">intro</span>);<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="id" title="tactic">simpl</span> <span class="id" title="keyword">in</span> *;<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="id" title="tactic">repeat</span> (<span class="id" title="tactic">apply</span> <a class="idref" href="HoTT.Basics.Overture.html#path_forall"><span class="id" title="definition">path_forall</span></a>; <span class="id" title="tactic">intro</span>);<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="id" title="tactic">simpl</span>;<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="id" title="tactic">rewrite</span> !<a class="idref" href="HoTT.Categories.Functor.Core.html#composition_of"><span class="id" title="projection">composition_of</span></a>;<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="id" title="tactic">reflexivity</span><br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;).<br/>
+&nbsp;&nbsp;<span class="id" title="keyword">Defined</span>.<br/>
+
+<br/>
+</div>
+
+<div class="doc">
+<a name="lab664"></a><h2 class="section">Full</h2>
+
+</div>
+<div class="code">
+&nbsp;&nbsp;<span class="id" title="keyword">Class</span> <a name="IsFull"><span class="id" title="record">IsFull</span></a><br/>
+&nbsp;&nbsp;&nbsp;&nbsp;:= <a name="is_full"><span class="id" title="projection">is_full</span></a><br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;: <span class="id" title="keyword">∀</span> <span class="id" title="var">x</span> <span class="id" title="var">y</span> : <a class="idref" href="HoTT.Categories.Functor.Attributes.html#full_faithful.C"><span class="id" title="variable">C</span></a>,<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a class="idref" href="HoTT.Categories.Category.Morphisms.html#IsEpimorphism"><span class="id" title="class">IsEpimorphism</span></a> (<a class="idref" href="HoTT.Categories.Functor.Attributes.html#induced_hom_natural_transformation"><span class="id" title="definition">induced_hom_natural_transformation</span></a> <a class="idref" href="Coq.Init.Datatypes.html#44400027531d4bc3f586a1997dc874c0"><span class="id" title="notation">(</span></a><a class="idref" href="HoTT.Categories.Functor.Attributes.html#x"><span class="id" title="variable">x</span></a><a class="idref" href="Coq.Init.Datatypes.html#44400027531d4bc3f586a1997dc874c0"><span class="id" title="notation">,</span></a> <a class="idref" href="HoTT.Categories.Functor.Attributes.html#y"><span class="id" title="variable">y</span></a><a class="idref" href="Coq.Init.Datatypes.html#44400027531d4bc3f586a1997dc874c0"><span class="id" title="notation">)</span></a>).<br/>
+</div>
+
+<div class="doc">
+<a name="lab665"></a><h2 class="section">Faithful</h2>
+
+</div>
+<div class="code">
+&nbsp;&nbsp;<span class="id" title="keyword">Class</span> <a name="IsFaithful"><span class="id" title="record">IsFaithful</span></a><br/>
+&nbsp;&nbsp;&nbsp;&nbsp;:= <a name="is_faithful"><span class="id" title="projection">is_faithful</span></a><br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;: <span class="id" title="keyword">∀</span> <span class="id" title="var">x</span> <span class="id" title="var">y</span> : <a class="idref" href="HoTT.Categories.Functor.Attributes.html#full_faithful.C"><span class="id" title="variable">C</span></a>,<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a class="idref" href="HoTT.Categories.Category.Morphisms.html#IsMonomorphism"><span class="id" title="class">IsMonomorphism</span></a> (<a class="idref" href="HoTT.Categories.Functor.Attributes.html#induced_hom_natural_transformation"><span class="id" title="definition">induced_hom_natural_transformation</span></a> <a class="idref" href="Coq.Init.Datatypes.html#44400027531d4bc3f586a1997dc874c0"><span class="id" title="notation">(</span></a><a class="idref" href="HoTT.Categories.Functor.Attributes.html#x"><span class="id" title="variable">x</span></a><a class="idref" href="Coq.Init.Datatypes.html#44400027531d4bc3f586a1997dc874c0"><span class="id" title="notation">,</span></a> <a class="idref" href="HoTT.Categories.Functor.Attributes.html#y"><span class="id" title="variable">y</span></a><a class="idref" href="Coq.Init.Datatypes.html#44400027531d4bc3f586a1997dc874c0"><span class="id" title="notation">)</span></a>).<br/>
+
+<br/>
+</div>
+
+<div class="doc">
+<a name="lab666"></a><h2 class="section">Fully Faithful</h2>
+
+</div>
+<div class="code">
+&nbsp;&nbsp;<span class="id" title="keyword">Class</span> <a name="IsFullyFaithful"><span class="id" title="record">IsFullyFaithful</span></a><br/>
+&nbsp;&nbsp;&nbsp;&nbsp;:= <a name="is_fully_faithful"><span class="id" title="projection">is_fully_faithful</span></a><br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;: <span class="id" title="keyword">∀</span> <span class="id" title="var">x</span> <span class="id" title="var">y</span> : <a class="idref" href="HoTT.Categories.Functor.Attributes.html#full_faithful.C"><span class="id" title="variable">C</span></a>,<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a class="idref" href="HoTT.Categories.Category.Morphisms.html#IsIsomorphism"><span class="id" title="class">IsIsomorphism</span></a> (<a class="idref" href="HoTT.Categories.Functor.Attributes.html#induced_hom_natural_transformation"><span class="id" title="definition">induced_hom_natural_transformation</span></a> <a class="idref" href="Coq.Init.Datatypes.html#44400027531d4bc3f586a1997dc874c0"><span class="id" title="notation">(</span></a><a class="idref" href="HoTT.Categories.Functor.Attributes.html#x"><span class="id" title="variable">x</span></a><a class="idref" href="Coq.Init.Datatypes.html#44400027531d4bc3f586a1997dc874c0"><span class="id" title="notation">,</span></a> <a class="idref" href="HoTT.Categories.Functor.Attributes.html#y"><span class="id" title="variable">y</span></a><a class="idref" href="Coq.Init.Datatypes.html#44400027531d4bc3f586a1997dc874c0"><span class="id" title="notation">)</span></a>).<br/>
+
+<br/>
+</div>
+
+<div class="doc">
+<a name="lab667"></a><h2 class="section">Fully Faithful → Full</h2>
+
+</div>
+<div class="code">
+&nbsp;&nbsp;<span class="id" title="keyword">Global Instance</span> <a name="isfull_isfullyfaithful"><span class="id" title="instance">isfull_isfullyfaithful</span></a> `{<a class="idref" href="HoTT.Categories.Functor.Attributes.html#IsFullyFaithful"><span class="id" title="class">IsFullyFaithful</span></a>}<br/>
+&nbsp;&nbsp;: <a class="idref" href="HoTT.Categories.Functor.Attributes.html#IsFull"><span class="id" title="class">IsFull</span></a>.<br/>
+&nbsp;&nbsp;<span class="id" title="keyword">Proof</span>.<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="id" title="tactic">intros</span> ? ?; <span class="id" title="tactic">hnf</span> <span class="id" title="keyword">in</span> × |- .<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="id" title="var">typeclasses</span> <span class="id" title="tactic">eauto</span>.<br/>
+&nbsp;&nbsp;<span class="id" title="keyword">Qed</span>.<br/>
+
+<br/>
+</div>
+
+<div class="doc">
+<a name="lab668"></a><h2 class="section">Fully Faithful → Faithful</h2>
+
+</div>
+<div class="code">
+&nbsp;&nbsp;<span class="id" title="keyword">Global Instance</span> <a name="isfaithful_isfullyfaithful"><span class="id" title="instance">isfaithful_isfullyfaithful</span></a> `{<a class="idref" href="HoTT.Categories.Functor.Attributes.html#IsFullyFaithful"><span class="id" title="class">IsFullyFaithful</span></a>}<br/>
+&nbsp;&nbsp;: <a class="idref" href="HoTT.Categories.Functor.Attributes.html#IsFaithful"><span class="id" title="class">IsFaithful</span></a>.<br/>
+&nbsp;&nbsp;<span class="id" title="keyword">Proof</span>.<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="id" title="tactic">intros</span> ? ?; <span class="id" title="tactic">hnf</span> <span class="id" title="keyword">in</span> × |- .<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="id" title="var">typeclasses</span> <span class="id" title="tactic">eauto</span>.<br/>
+&nbsp;&nbsp;<span class="id" title="keyword">Qed</span>.<br/>
+
+<br/>
+</div>
+
+<div class="doc">
+<a name="lab669"></a><h2 class="section">Full * Faithful → Fully Faithful</h2>
+ We start with a helper method, which assumes that epi * mono → iso, and ten prove this assumption 
+</div>
+<div class="code">
+&nbsp;&nbsp;<span class="id" title="keyword">Lemma</span> <a name="isfullyfaithful_isfull_isfaithful_helper"><span class="id" title="lemma">isfullyfaithful_isfull_isfaithful_helper</span></a> `{<a class="idref" href="HoTT.Categories.Functor.Attributes.html#IsFull"><span class="id" title="class">IsFull</span></a>} `{<a class="idref" href="HoTT.Categories.Functor.Attributes.html#IsFaithful"><span class="id" title="class">IsFaithful</span></a>}<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;(<span class="id" title="var">H'</span> : <span class="id" title="keyword">∀</span> <span class="id" title="var">x</span> <span class="id" title="var">y</span> (<span class="id" title="var">m</span> : <a class="idref" href="HoTT.Categories.Category.Core.html#morphism"><span class="id" title="projection">morphism</span></a> <a class="idref" href="HoTT.Categories.SetCategory.Core.html#set_cat"><span class="id" title="definition">set_cat</span></a> <a class="idref" href="HoTT.Categories.Functor.Attributes.html#x"><span class="id" title="variable">x</span></a> <a class="idref" href="HoTT.Categories.Functor.Attributes.html#y"><span class="id" title="variable">y</span></a>),<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a class="idref" href="HoTT.Categories.Category.Morphisms.html#IsEpimorphism"><span class="id" title="class">IsEpimorphism</span></a> <a class="idref" href="HoTT.Categories.Functor.Attributes.html#m"><span class="id" title="variable">m</span></a><br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a class="idref" href="Coq.Init.Logic.html#d43e996736952df71ebeeae74d10a287"><span class="id" title="notation">→</span></a> <a class="idref" href="HoTT.Categories.Category.Morphisms.html#IsMonomorphism"><span class="id" title="class">IsMonomorphism</span></a> <a class="idref" href="HoTT.Categories.Functor.Attributes.html#m"><span class="id" title="variable">m</span></a><br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a class="idref" href="Coq.Init.Logic.html#d43e996736952df71ebeeae74d10a287"><span class="id" title="notation">→</span></a> <a class="idref" href="HoTT.Categories.Category.Morphisms.html#IsIsomorphism"><span class="id" title="class">IsIsomorphism</span></a> <a class="idref" href="HoTT.Categories.Functor.Attributes.html#m"><span class="id" title="variable">m</span></a>)<br/>
+&nbsp;&nbsp;: <a class="idref" href="HoTT.Categories.Functor.Attributes.html#IsFullyFaithful"><span class="id" title="class">IsFullyFaithful</span></a>.<br/>
+&nbsp;&nbsp;<span class="id" title="keyword">Proof</span>.<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="id" title="tactic">intros</span> ? ?; <span class="id" title="tactic">hnf</span> <span class="id" title="keyword">in</span> × |- .<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="id" title="tactic">apply</span> <span class="id" title="var">H'</span>; <span class="id" title="tactic">eauto</span>.<br/>
+&nbsp;&nbsp;<span class="id" title="keyword">Qed</span>.<br/>
+<span class="id" title="keyword">End</span> <a class="idref" href="HoTT.Categories.Functor.Attributes.html#full_faithful"><span class="id" title="section">full_faithful</span></a>.<br/>
+
+<br/>
+<span class="id" title="keyword">Section</span> <a name="fully_faithful_helpers"><span class="id" title="section">fully_faithful_helpers</span></a>.<br/>
+&nbsp;&nbsp;<span class="id" title="keyword">Context</span> `{<span class="id" title="var">ua</span> : <a class="idref" href="HoTT.Types.Universe.html#Univalence"><span class="id" title="class">Univalence</span></a>}.<br/>
+&nbsp;&nbsp;<span class="id" title="keyword">Variables</span> <a name="fully_faithful_helpers.x"><span class="id" title="variable">x</span></a> <a name="fully_faithful_helpers.y"><span class="id" title="variable">y</span></a> : <a class="idref" href="HoTT.Basics.Trunc.html#hSet"><span class="id" title="abbreviation">hSet</span></a>.<br/>
+&nbsp;&nbsp;<span class="id" title="keyword">Variable</span> <a name="fully_faithful_helpers.m"><span class="id" title="variable">m</span></a> : <a class="idref" href="HoTT.Categories.Functor.Attributes.html#fully_faithful_helpers.x"><span class="id" title="variable">x</span></a> <a class="idref" href="Coq.Init.Logic.html#d43e996736952df71ebeeae74d10a287"><span class="id" title="notation">→</span></a> <a class="idref" href="HoTT.Categories.Functor.Attributes.html#fully_faithful_helpers.y"><span class="id" title="variable">y</span></a>.<br/>
+
+<br/>
+&nbsp;&nbsp;<span class="id" title="keyword">Lemma</span> <a name="isisomorphism_isequiv_set_cat"><span class="id" title="lemma">isisomorphism_isequiv_set_cat</span></a><br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;`{<span class="id" title="var">H'</span> : <a class="idref" href="HoTT.Basics.Overture.html#IsEquiv"><span class="id" title="class">IsEquiv</span></a> <span class="id" title="var">_</span> <span class="id" title="var">_</span> <a class="idref" href="HoTT.Categories.Functor.Attributes.html#fully_faithful_helpers.m"><span class="id" title="variable">m</span></a>}<br/>
+&nbsp;&nbsp;: <a class="idref" href="HoTT.Categories.Category.Morphisms.html#IsIsomorphism"><span class="id" title="class">IsIsomorphism</span></a> (<a class="idref" href="HoTT.Categories.Functor.Attributes.html#fully_faithful_helpers.m"><span class="id" title="variable">m</span></a> : <a class="idref" href="HoTT.Categories.Category.Core.html#morphism"><span class="id" title="projection">morphism</span></a> <a class="idref" href="HoTT.Categories.SetCategory.Core.html#set_cat"><span class="id" title="definition">set_cat</span></a> <a class="idref" href="HoTT.Categories.Functor.Attributes.html#fully_faithful_helpers.x"><span class="id" title="variable">x</span></a> <a class="idref" href="HoTT.Categories.Functor.Attributes.html#fully_faithful_helpers.y"><span class="id" title="variable">y</span></a>).<br/>
+&nbsp;&nbsp;<span class="id" title="keyword">Proof</span>.<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="id" title="tactic">∃</span> (<a class="idref" href="HoTT.Categories.Functor.Attributes.html#fully_faithful_helpers.m"><span class="id" title="variable">m</span></a><a class="idref" href="HoTT.Basics.Overture.html#77ed8f3b30fae66d423e9f3dab28cba2"><span class="id" title="notation">^-1</span></a>)%<span class="id" title="var">core</span>;<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="id" title="tactic">apply</span> <a class="idref" href="HoTT.Basics.Overture.html#path_forall"><span class="id" title="definition">path_forall</span></a>; <span class="id" title="tactic">intro</span>;<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="id" title="tactic">destruct</span> <span class="id" title="var">H'</span>;<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="id" title="tactic">simpl</span> <span class="id" title="keyword">in</span> *;<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="id" title="tactic">eauto</span>.<br/>
+&nbsp;&nbsp;<span class="id" title="keyword">Qed</span>.<br/>
+
+<br/>
+&nbsp;&nbsp;<span class="id" title="keyword">Definition</span> <a name="isequiv_isepimorphism_ismonomorphism"><span class="id" title="definition">isequiv_isepimorphism_ismonomorphism</span></a><br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;(<span class="id" title="var">Hepi</span> : <a class="idref" href="HoTT.Categories.Category.Morphisms.html#IsEpimorphism"><span class="id" title="class">IsEpimorphism</span></a> (<a class="idref" href="HoTT.Categories.Functor.Attributes.html#fully_faithful_helpers.m"><span class="id" title="variable">m</span></a> : <a class="idref" href="HoTT.Categories.Category.Core.html#morphism"><span class="id" title="projection">morphism</span></a> <a class="idref" href="HoTT.Categories.SetCategory.Core.html#set_cat"><span class="id" title="definition">set_cat</span></a> <a class="idref" href="HoTT.Categories.Functor.Attributes.html#fully_faithful_helpers.x"><span class="id" title="variable">x</span></a> <a class="idref" href="HoTT.Categories.Functor.Attributes.html#fully_faithful_helpers.y"><span class="id" title="variable">y</span></a>))<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;(<span class="id" title="var">Hmono</span> : <a class="idref" href="HoTT.Categories.Category.Morphisms.html#IsMonomorphism"><span class="id" title="class">IsMonomorphism</span></a> (<a class="idref" href="HoTT.Categories.Functor.Attributes.html#fully_faithful_helpers.m"><span class="id" title="variable">m</span></a> : <a class="idref" href="HoTT.Categories.Category.Core.html#morphism"><span class="id" title="projection">morphism</span></a> <a class="idref" href="HoTT.Categories.SetCategory.Core.html#set_cat"><span class="id" title="definition">set_cat</span></a> <a class="idref" href="HoTT.Categories.Functor.Attributes.html#fully_faithful_helpers.x"><span class="id" title="variable">x</span></a> <a class="idref" href="HoTT.Categories.Functor.Attributes.html#fully_faithful_helpers.y"><span class="id" title="variable">y</span></a>))<br/>
+&nbsp;&nbsp;: @<a class="idref" href="HoTT.Basics.Overture.html#IsEquiv"><span class="id" title="class">IsEquiv</span></a> <span class="id" title="var">_</span> <span class="id" title="var">_</span> <a class="idref" href="HoTT.Categories.Functor.Attributes.html#fully_faithful_helpers.m"><span class="id" title="variable">m</span></a><br/>
+&nbsp;&nbsp;&nbsp;&nbsp;<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;:= @<a class="idref" href="HoTT.HIT.iso.html#isequiv_isepi_ismono"><span class="id" title="definition">isequiv_isepi_ismono</span></a> <span class="id" title="var">_</span> <a class="idref" href="HoTT.Categories.Functor.Attributes.html#fully_faithful_helpers.x"><span class="id" title="variable">x</span></a> <a class="idref" href="HoTT.Categories.Functor.Attributes.html#fully_faithful_helpers.y"><span class="id" title="variable">y</span></a> <a class="idref" href="HoTT.Categories.Functor.Attributes.html#fully_faithful_helpers.m"><span class="id" title="variable">m</span></a> <a class="idref" href="HoTT.Categories.Functor.Attributes.html#Hepi"><span class="id" title="variable">Hepi</span></a> <a class="idref" href="HoTT.Categories.Functor.Attributes.html#Hmono"><span class="id" title="variable">Hmono</span></a>.<br/>
+<span class="id" title="keyword">End</span> <a class="idref" href="HoTT.Categories.Functor.Attributes.html#fully_faithful_helpers"><span class="id" title="section">fully_faithful_helpers</span></a>.<br/>
+
+<br/>
+<span class="id" title="keyword">Global Instance</span> <a name="isfullyfaithful_isfull_isfaithful"><span class="id" title="instance">isfullyfaithful_isfull_isfaithful</span></a><br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;`{<a class="idref" href="HoTT.Types.Universe.html#Univalence"><span class="id" title="class">Univalence</span></a>}<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;`{<span class="id" title="var">Hfull</span> : @<a class="idref" href="HoTT.Categories.Functor.Attributes.html#IsFull"><span class="id" title="class">IsFull</span></a> <span class="id" title="var">_</span> <span class="id" title="var">C</span> <span class="id" title="var">D</span> <span class="id" title="var">F</span>}<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;`{<span class="id" title="var">Hfaithful</span> : @<a class="idref" href="HoTT.Categories.Functor.Attributes.html#IsFaithful"><span class="id" title="class">IsFaithful</span></a> <span class="id" title="var">_</span> <a class="idref" href="HoTT.Categories.Functor.Attributes.html#C"><span class="id" title="variable">C</span></a> <a class="idref" href="HoTT.Categories.Functor.Attributes.html#D"><span class="id" title="variable">D</span></a> <a class="idref" href="HoTT.Categories.Functor.Attributes.html#F"><span class="id" title="variable">F</span></a>}<br/>
+: @<a class="idref" href="HoTT.Categories.Functor.Attributes.html#IsFullyFaithful"><span class="id" title="class">IsFullyFaithful</span></a> <span class="id" title="var">_</span> <a class="idref" href="HoTT.Categories.Functor.Attributes.html#C"><span class="id" title="variable">C</span></a> <a class="idref" href="HoTT.Categories.Functor.Attributes.html#D"><span class="id" title="variable">D</span></a> <a class="idref" href="HoTT.Categories.Functor.Attributes.html#F"><span class="id" title="variable">F</span></a><br/>
+&nbsp;&nbsp;:= <span class="id" title="keyword">fun</span> <span class="id" title="var">x</span> <span class="id" title="var">y</span> ⇒ @<a class="idref" href="HoTT.Categories.Functor.Attributes.html#isisomorphism_isequiv_set_cat"><span class="id" title="lemma">isisomorphism_isequiv_set_cat</span></a><br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="id" title="var">_</span> <span class="id" title="var">_</span> <span class="id" title="var">_</span> <span class="id" title="var">_</span><br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;(@<a class="idref" href="HoTT.Categories.Functor.Attributes.html#isequiv_isepimorphism_ismonomorphism"><span class="id" title="definition">isequiv_isepimorphism_ismonomorphism</span></a><br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="id" title="var">_</span> <span class="id" title="var">_</span> <span class="id" title="var">_</span> <span class="id" title="var">_</span><br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;(<span class="id" title="var">Hfull</span> <a class="idref" href="HoTT.Categories.Functor.Attributes.html#x"><span class="id" title="variable">x</span></a> <a class="idref" href="HoTT.Categories.Functor.Attributes.html#y"><span class="id" title="variable">y</span></a>)<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;(<span class="id" title="var">Hfaithful</span> <a class="idref" href="HoTT.Categories.Functor.Attributes.html#x"><span class="id" title="variable">x</span></a> <a class="idref" href="HoTT.Categories.Functor.Attributes.html#y"><span class="id" title="variable">y</span></a>)).<br/>
+
+<br/>
+</div>
+
+<div class="doc">
+<a name="lab670"></a><h2 class="section">Split Essentially Surjective</h2>
+ Quoting the HoTT Book:
+
+<div class="paragraph"> </div>
+
+    We say a functor <span class="inlinecode"><a class="idref" href="HoTT.Categories.Limits.Core.html#Limit.F"><span class="id" title="variable">F</span></a></span> <span class="inlinecode">:</span> <span class="inlinecode"><a class="idref" href="HoTTBookExercises.html#Book_4_5.parts.A"><span class="id" title="variable">A</span></a></span> <span class="inlinecode">→</span> <span class="inlinecode"><a class="idref" href="HoTTBookExercises.html#Book_4_5.parts.B"><span class="id" title="variable">B</span></a></span> is <i>split essentially surjective</i> if
+    for all <span class="inlinecode"><a class="idref" href="HoTT.Categories.LaxComma.CoreParts.html#LaxCommaCategoryParts.b"><span class="id" title="projection">b</span></a></span> <span class="inlinecode">:</span> <span class="inlinecode"><a class="idref" href="HoTTBookExercises.html#Book_4_5.parts.B"><span class="id" title="variable">B</span></a></span> there exists an <span class="inlinecode"><a class="idref" href="HoTT.Categories.LaxComma.CoreParts.html#LaxCommaCategoryParts.a"><span class="id" title="projection">a</span></a></span> <span class="inlinecode">:</span> <span class="inlinecode"><a class="idref" href="HoTTBookExercises.html#Book_4_5.parts.A"><span class="id" title="variable">A</span></a></span> such that <span class="inlinecode"><a class="idref" href="HoTT.Categories.Limits.Core.html#Limit.F"><span class="id" title="variable">F</span></a></span> <span class="inlinecode"><a class="idref" href="HoTT.Categories.LaxComma.CoreParts.html#LaxCommaCategoryParts.a"><span class="id" title="projection">a</span></a></span> <span class="inlinecode">≅</span> <span class="inlinecode"><a class="idref" href="HoTT.Categories.LaxComma.CoreParts.html#LaxCommaCategoryParts.b"><span class="id" title="projection">b</span></a></span>. 
+</div>
+<div class="code">
+
+<br/>
+<span class="id" title="keyword">Class</span> <a name="IsSplitEssentiallySurjective"><span class="id" title="record">IsSplitEssentiallySurjective</span></a> <span class="id" title="var">A</span> <span class="id" title="var">B</span> (<span class="id" title="var">F</span> : <a class="idref" href="HoTT.Categories.Functor.Core.html#Functor"><span class="id" title="record">Functor</span></a> <a class="idref" href="HoTT.Categories.Functor.Attributes.html#A"><span class="id" title="variable">A</span></a> <a class="idref" href="HoTT.Categories.Functor.Attributes.html#B"><span class="id" title="variable">B</span></a>)<br/>
+&nbsp;&nbsp;:= <a name="is_split_essentially_surjective"><span class="id" title="projection">is_split_essentially_surjective</span></a><br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;: <span class="id" title="keyword">∀</span> <span class="id" title="var">b</span> : <a class="idref" href="HoTT.Categories.Functor.Attributes.html#B"><span class="id" title="variable">B</span></a>, <a class="idref" href="Coq.Init.Specif.html#84eb6d2849dbf3581b1c0c05add5f2d8"><span class="id" title="notation">∃</span></a> <span class="id" title="var">a</span> : <a class="idref" href="HoTT.Categories.Functor.Attributes.html#A"><span class="id" title="variable">A</span></a><a class="idref" href="Coq.Init.Specif.html#84eb6d2849dbf3581b1c0c05add5f2d8"><span class="id" title="notation">,</span></a> <a class="idref" href="HoTT.Categories.Functor.Attributes.html#F"><span class="id" title="variable">F</span></a> <a class="idref" href="HoTT.Categories.Functor.Attributes.html#a"><span class="id" title="variable">a</span></a> <a class="idref" href="HoTT.Categories.Category.Morphisms.html#5a93d46675877ed251bc4274dd923115"><span class="id" title="notation">&lt;~=~&gt;</span></a> <a class="idref" href="HoTT.Categories.Functor.Attributes.html#b"><span class="id" title="variable">b</span></a>.<br/>
+
+<br/>
+</div>
+
+<div class="doc">
+<a name="lab671"></a><h2 class="section">Essentially Surjective</h2>
+ Quoting the HoTT Book:
+
+<div class="paragraph"> </div>
+
+    A functor <span class="inlinecode"><a class="idref" href="HoTT.Categories.Limits.Core.html#Limit.F"><span class="id" title="variable">F</span></a></span> <span class="inlinecode">:</span> <span class="inlinecode"><a class="idref" href="HoTTBookExercises.html#Book_4_5.parts.A"><span class="id" title="variable">A</span></a></span> <span class="inlinecode">→</span> <span class="inlinecode"><a class="idref" href="HoTTBookExercises.html#Book_4_5.parts.B"><span class="id" title="variable">B</span></a></span> is <i>split essentially surjective</i> if for all
+    <span class="inlinecode"><a class="idref" href="HoTT.Categories.LaxComma.CoreParts.html#LaxCommaCategoryParts.b"><span class="id" title="projection">b</span></a></span> <span class="inlinecode">:</span> <span class="inlinecode"><a class="idref" href="HoTTBookExercises.html#Book_4_5.parts.B"><span class="id" title="variable">B</span></a></span> there <i>merely</i> exists an <span class="inlinecode"><a class="idref" href="HoTT.Categories.LaxComma.CoreParts.html#LaxCommaCategoryParts.a"><span class="id" title="projection">a</span></a></span> <span class="inlinecode">:</span> <span class="inlinecode"><a class="idref" href="HoTTBookExercises.html#Book_4_5.parts.A"><span class="id" title="variable">A</span></a></span> such that <span class="inlinecode"><a class="idref" href="HoTT.Categories.Limits.Core.html#Limit.F"><span class="id" title="variable">F</span></a></span> <span class="inlinecode"><a class="idref" href="HoTT.Categories.LaxComma.CoreParts.html#LaxCommaCategoryParts.a"><span class="id" title="projection">a</span></a></span> <span class="inlinecode">≅</span> <span class="inlinecode"><a class="idref" href="HoTT.Categories.LaxComma.CoreParts.html#LaxCommaCategoryParts.b"><span class="id" title="projection">b</span></a></span>. 
+</div>
+<div class="code">
+<span class="id" title="keyword">Class</span> <a name="IsEssentiallySurjective"><span class="id" title="record">IsEssentiallySurjective</span></a> <span class="id" title="var">A</span> <span class="id" title="var">B</span> (<span class="id" title="var">F</span> : <a class="idref" href="HoTT.Categories.Functor.Core.html#Functor"><span class="id" title="record">Functor</span></a> <a class="idref" href="HoTT.Categories.Functor.Attributes.html#A"><span class="id" title="variable">A</span></a> <a class="idref" href="HoTT.Categories.Functor.Attributes.html#B"><span class="id" title="variable">B</span></a>)<br/>
+&nbsp;&nbsp;:= <a name="is_essentially_surjective"><span class="id" title="projection">is_essentially_surjective</span></a><br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;: <span class="id" title="keyword">∀</span> <span class="id" title="var">b</span> : <a class="idref" href="HoTT.Categories.Functor.Attributes.html#B"><span class="id" title="variable">B</span></a>, <a class="idref" href="HoTT.HIT.Truncations.html#hexists"><span class="id" title="definition">hexists</span></a> (<span class="id" title="keyword">fun</span> <span class="id" title="var">a</span> : <a class="idref" href="HoTT.Categories.Functor.Attributes.html#A"><span class="id" title="variable">A</span></a> ⇒ <a class="idref" href="HoTT.Categories.Functor.Attributes.html#F"><span class="id" title="variable">F</span></a> <a class="idref" href="HoTT.Categories.Functor.Attributes.html#a"><span class="id" title="variable">a</span></a> <a class="idref" href="HoTT.Categories.Category.Morphisms.html#5a93d46675877ed251bc4274dd923115"><span class="id" title="notation">&lt;~=~&gt;</span></a> <a class="idref" href="HoTT.Categories.Functor.Attributes.html#b"><span class="id" title="variable">b</span></a>).<br/>
+
+<br/>
+</div>
+
+<div class="doc">
+<a name="lab672"></a><h2 class="section">Weak Equivalence</h2>
+ Quoting the HoTT Book:
+
+<div class="paragraph"> </div>
+
+    We say <span class="inlinecode"><a class="idref" href="HoTT.Categories.Limits.Core.html#Limit.F"><span class="id" title="variable">F</span></a></span> is a <i>weak equivalence</i> if it is fully faithful and
+    essentially surjective. 
+</div>
+<div class="code">
+<span class="id" title="keyword">Class</span> <a name="IsWeakEquivalence"><span class="id" title="record">IsWeakEquivalence</span></a> `{<a class="idref" href="HoTT.Basics.Overture.html#Funext"><span class="id" title="class">Funext</span></a>} <span class="id" title="var">A</span> <span class="id" title="var">B</span> (<span class="id" title="var">F</span> : <a class="idref" href="HoTT.Categories.Functor.Core.html#Functor"><span class="id" title="record">Functor</span></a> <a class="idref" href="HoTT.Categories.Functor.Attributes.html#A"><span class="id" title="variable">A</span></a> <a class="idref" href="HoTT.Categories.Functor.Attributes.html#B"><span class="id" title="variable">B</span></a>)<br/>
+&nbsp;&nbsp;:= { <a name="is_fully_faithful__is_weak_equivalence"><span class="id" title="projection">is_fully_faithful__is_weak_equivalence</span></a> :&gt; <a class="idref" href="HoTT.Categories.Functor.Attributes.html#IsFullyFaithful"><span class="id" title="class">IsFullyFaithful</span></a> <a class="idref" href="HoTT.Categories.Functor.Attributes.html#F"><span class="id" title="variable">F</span></a>;<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a name="is_essentially_surjective__is_weak_equivalence"><span class="id" title="projection">is_essentially_surjective__is_weak_equivalence</span></a> :&gt; <a class="idref" href="HoTT.Categories.Functor.Attributes.html#IsEssentiallySurjective"><span class="id" title="class">IsEssentiallySurjective</span></a> <a class="idref" href="HoTT.Categories.Functor.Attributes.html#F"><span class="id" title="variable">F</span></a> }.<br/>
+</div>
+</div>
+
+<div id="footer">
+<hr/><a href="index.html">Index</a><hr/>This page has been generated by <a href="http://coq.inria.fr/">coqdoc</a>
+</div>
+
+</div>
+
+</body>
+</html>

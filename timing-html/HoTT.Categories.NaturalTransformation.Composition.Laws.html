@@ -1,0 +1,944 @@
+<html>
+<head>
+<title>Laws.v</title>
+<style>
+.time {
+  background-color: #ffaaaa;
+  height: 100%;
+  z-index: -1;
+  position: absolute;
+}
+.code {
+  z-index: 0;
+  position: relative;
+  border-style: solid;
+  border-color: transparent;
+  border-width: 1px;
+}
+.code:hover {
+  border-style: solid;
+  border-color: black;
+  border-width: 1px;
+}
+pre {
+  margin: 1px;
+}
+</style>
+</head>
+<body>
+<h1>Timings for Laws.v</h1>
+
+<div class="code" title="File: Laws.v
+Line: 1
+Time: 0s">
+<div class="time" style="width: 0%"></div>
+<pre>(** * Laws about composition of functors *)</pre>
+</div>
+<div class="code" title="File: Laws.v
+Line: 1
+Time: 0.03s">
+<div class="time" style="width: 100%"></div>
+<pre>Require Import Category.Core Functor.Core Functor.Identity Functor.Composition.Core NaturalTransformation.Core NaturalTransformation.Identity NaturalTransformation.Composition.Core NaturalTransformation.Paths.</pre>
+</div>
+<div class="code" title="File: Laws.v
+Line: 1
+Time: 0s">
+<div class="time" style="width: 0%"></div>
+<pre>
+
+Set Universe Polymorphism.</pre>
+</div>
+<div class="code" title="File: Laws.v
+Line: 3
+Time: 0s">
+<div class="time" style="width: 0%"></div>
+<pre>
+Set Implicit Arguments.</pre>
+</div>
+<div class="code" title="File: Laws.v
+Line: 4
+Time: 0s">
+<div class="time" style="width: 0%"></div>
+<pre>
+Generalizable All Variables.</pre>
+</div>
+<div class="code" title="File: Laws.v
+Line: 5
+Time: 0s">
+<div class="time" style="width: 0%"></div>
+<pre>
+Set Asymmetric Patterns.</pre>
+</div>
+<div class="code" title="File: Laws.v
+Line: 6
+Time: 0s">
+<div class="time" style="width: 0%"></div>
+<pre>
+
+Local Open Scope morphism_scope.</pre>
+</div>
+<div class="code" title="File: Laws.v
+Line: 8
+Time: 0s">
+<div class="time" style="width: 0%"></div>
+<pre>
+Local Open Scope natural_transformation_scope.</pre>
+</div>
+<div class="code" title="File: Laws.v
+Line: 9
+Time: 0s">
+<div class="time" style="width: 0%"></div>
+<pre>
+
+Section natural_transformation_identity.</pre>
+</div>
+<div class="code" title="File: Laws.v
+Line: 11
+Time: 0s">
+<div class="time" style="width: 0%"></div>
+<pre>
+  Context `{Funext}.</pre>
+</div>
+<div class="code" title="File: Laws.v
+Line: 12
+Time: 0s">
+<div class="time" style="width: 0%"></div>
+<pre>
+
+  Variables C D : PreCategory.</pre>
+</div>
+<div class="code" title="File: Laws.v
+Line: 14
+Time: 0s">
+<div class="time" style="width: 0%"></div>
+<pre>
+
+  (** ** left identity : [1 ∘ T = T] *)
+ </pre>
+</div>
+<div class="code" title="File: Laws.v
+Line: 17
+Time: 0.002s">
+<div class="time" style="width: 6.6666666666667%"></div>
+<pre>Lemma left_identity (F F' : Functor C D)
+        (T : NaturalTransformation F F')
+  : 1 o T = T.</pre>
+</div>
+<div class="code" title="File: Laws.v
+Line: 19
+Time: 0s">
+<div class="time" style="width: 0%"></div>
+<pre>
+  Proof.</pre>
+</div>
+<div class="code" title="File: Laws.v
+Line: 20
+Time: 0.002s">
+<div class="time" style="width: 6.6666666666667%"></div>
+<pre>
+    path_natural_transformation; auto with morphism.</pre>
+</div>
+<div class="code" title="File: Laws.v
+Line: 21
+Time: 0.001s">
+<div class="time" style="width: 3.3333333333333%"></div>
+<pre>
+  Qed.</pre>
+</div>
+<div class="code" title="File: Laws.v
+Line: 22
+Time: 0s">
+<div class="time" style="width: 0%"></div>
+<pre>
+
+  (** ** right identity : [T ∘ 1 = T] *)
+ </pre>
+</div>
+<div class="code" title="File: Laws.v
+Line: 25
+Time: 0.002s">
+<div class="time" style="width: 6.6666666666667%"></div>
+<pre>Lemma right_identity (F F' : Functor C D)
+        (T : NaturalTransformation F F')
+  : T o 1 = T.</pre>
+</div>
+<div class="code" title="File: Laws.v
+Line: 27
+Time: 0s">
+<div class="time" style="width: 0%"></div>
+<pre>
+  Proof.</pre>
+</div>
+<div class="code" title="File: Laws.v
+Line: 28
+Time: 0.001s">
+<div class="time" style="width: 3.3333333333333%"></div>
+<pre>
+    path_natural_transformation; auto with morphism.</pre>
+</div>
+<div class="code" title="File: Laws.v
+Line: 29
+Time: 0.001s">
+<div class="time" style="width: 3.3333333333333%"></div>
+<pre>
+  Qed.</pre>
+</div>
+<div class="code" title="File: Laws.v
+Line: 30
+Time: 0s">
+<div class="time" style="width: 0%"></div>
+<pre>
+
+  (** ** right whisker left identity : [1 ∘ᴿ F = 1] *)
+ </pre>
+</div>
+<div class="code" title="File: Laws.v
+Line: 33
+Time: 0.002s">
+<div class="time" style="width: 6.6666666666667%"></div>
+<pre>Definition whisker_r_left_identity E
+             (G : Functor D E) (F : Functor C D)
+  : identity G oR F = 1.</pre>
+</div>
+<div class="code" title="File: Laws.v
+Line: 35
+Time: 0s">
+<div class="time" style="width: 0%"></div>
+<pre>
+  Proof.</pre>
+</div>
+<div class="code" title="File: Laws.v
+Line: 36
+Time: 0.001s">
+<div class="time" style="width: 3.3333333333333%"></div>
+<pre>
+    path_natural_transformation; auto with morphism.</pre>
+</div>
+<div class="code" title="File: Laws.v
+Line: 37
+Time: 0.001s">
+<div class="time" style="width: 3.3333333333333%"></div>
+<pre>
+  Qed.</pre>
+</div>
+<div class="code" title="File: Laws.v
+Line: 38
+Time: 0s">
+<div class="time" style="width: 0%"></div>
+<pre>
+
+  (** ** left whisker right identity : [G ∘ᴸ 1 = 1] *)
+ </pre>
+</div>
+<div class="code" title="File: Laws.v
+Line: 41
+Time: 0.015s">
+<div class="time" style="width: 50%"></div>
+<pre>Definition whisker_l_right_identity E
+             (G : Functor D E) (F : Functor C D)
+  : G oL identity F = 1.</pre>
+</div>
+<div class="code" title="File: Laws.v
+Line: 43
+Time: 0s">
+<div class="time" style="width: 0%"></div>
+<pre>
+  Proof.</pre>
+</div>
+<div class="code" title="File: Laws.v
+Line: 44
+Time: 0.002s">
+<div class="time" style="width: 6.6666666666667%"></div>
+<pre>
+    path_natural_transformation; auto with functor.</pre>
+</div>
+<div class="code" title="File: Laws.v
+Line: 45
+Time: 0.001s">
+<div class="time" style="width: 3.3333333333333%"></div>
+<pre>
+  Qed.</pre>
+</div>
+<div class="code" title="File: Laws.v
+Line: 46
+Time: 0.003s">
+<div class="time" style="width: 10%"></div>
+<pre>
+End natural_transformation_identity.</pre>
+</div>
+<div class="code" title="File: Laws.v
+Line: 47
+Time: 0.004s">
+<div class="time" style="width: 13.333333333333%"></div>
+<pre>
+
+Hint Rewrite @left_identity @right_identity : category.</pre>
+</div>
+<div class="code" title="File: Laws.v
+Line: 49
+Time: 0.004s">
+<div class="time" style="width: 13.333333333333%"></div>
+<pre>
+Hint Rewrite @left_identity @right_identity : natural_transformation.</pre>
+</div>
+<div class="code" title="File: Laws.v
+Line: 50
+Time: 0s">
+<div class="time" style="width: 0%"></div>
+<pre>
+
+Section whisker.</pre>
+</div>
+<div class="code" title="File: Laws.v
+Line: 52
+Time: 0s">
+<div class="time" style="width: 0%"></div>
+<pre>
+  Context `{fs : Funext}.</pre>
+</div>
+<div class="code" title="File: Laws.v
+Line: 53
+Time: 0s">
+<div class="time" style="width: 0%"></div>
+<pre>
+
+  (** ** whisker exchange law : [(G' ∘ᴸ T) ∘ (T' ∘ᴿ F) = (T' ∘ᴿ F') ∘ (G ∘ᴸ T)] *)
+ </pre>
+</div>
+<div class="code" title="File: Laws.v
+Line: 56
+Time: 0s">
+<div class="time" style="width: 0%"></div>
+<pre>Section exch.</pre>
+</div>
+<div class="code" title="File: Laws.v
+Line: 56
+Time: 0s">
+<div class="time" style="width: 0%"></div>
+<pre>
+    Variables C D E : PreCategory.</pre>
+</div>
+<div class="code" title="File: Laws.v
+Line: 57
+Time: 0s">
+<div class="time" style="width: 0%"></div>
+<pre>
+    Variables G G' : Functor D E.</pre>
+</div>
+<div class="code" title="File: Laws.v
+Line: 58
+Time: 0s">
+<div class="time" style="width: 0%"></div>
+<pre>
+    Variables F F' : Functor C D.</pre>
+</div>
+<div class="code" title="File: Laws.v
+Line: 59
+Time: 0s">
+<div class="time" style="width: 0%"></div>
+<pre>
+    Variable T' : NaturalTransformation G G'.</pre>
+</div>
+<div class="code" title="File: Laws.v
+Line: 60
+Time: 0s">
+<div class="time" style="width: 0%"></div>
+<pre>
+    Variable T : NaturalTransformation F F'.</pre>
+</div>
+<div class="code" title="File: Laws.v
+Line: 61
+Time: 0.004s">
+<div class="time" style="width: 13.333333333333%"></div>
+<pre>
+
+    Lemma exchange_whisker
+    : (G' oL T) o (T' oR F) = (T' oR F') o (G oL T).</pre>
+</div>
+<div class="code" title="File: Laws.v
+Line: 64
+Time: 0s">
+<div class="time" style="width: 0%"></div>
+<pre>
+    Proof.</pre>
+</div>
+<div class="code" title="File: Laws.v
+Line: 65
+Time: 0.002s">
+<div class="time" style="width: 6.6666666666667%"></div>
+<pre>
+      path_natural_transformation; simpl.</pre>
+</div>
+<div class="code" title="File: Laws.v
+Line: 66
+Time: 0.003s">
+<div class="time" style="width: 10%"></div>
+<pre>
+      symmetry.</pre>
+</div>
+<div class="code" title="File: Laws.v
+Line: 67
+Time: 0.001s">
+<div class="time" style="width: 3.3333333333333%"></div>
+<pre>
+      apply NaturalTransformation.Core.commutes.</pre>
+</div>
+<div class="code" title="File: Laws.v
+Line: 68
+Time: 0.004s">
+<div class="time" style="width: 13.333333333333%"></div>
+<pre>
+    Qed.</pre>
+</div>
+<div class="code" title="File: Laws.v
+Line: 69
+Time: 0.001s">
+<div class="time" style="width: 3.3333333333333%"></div>
+<pre>
+  End exch.</pre>
+</div>
+<div class="code" title="File: Laws.v
+Line: 70
+Time: 0s">
+<div class="time" style="width: 0%"></div>
+<pre>
+
+  Section whisker.</pre>
+</div>
+<div class="code" title="File: Laws.v
+Line: 72
+Time: 0s">
+<div class="time" style="width: 0%"></div>
+<pre>
+    Variables C D : PreCategory.</pre>
+</div>
+<div class="code" title="File: Laws.v
+Line: 73
+Time: 0.001s">
+<div class="time" style="width: 3.3333333333333%"></div>
+<pre>
+    Variables F G H : Functor C D.</pre>
+</div>
+<div class="code" title="File: Laws.v
+Line: 74
+Time: 0s">
+<div class="time" style="width: 0%"></div>
+<pre>
+    Variable T : NaturalTransformation G H.</pre>
+</div>
+<div class="code" title="File: Laws.v
+Line: 75
+Time: 0s">
+<div class="time" style="width: 0%"></div>
+<pre>
+    Variable T' : NaturalTransformation F G.</pre>
+</div>
+<div class="code" title="File: Laws.v
+Line: 76
+Time: 0s">
+<div class="time" style="width: 0%"></div>
+<pre>
+
+    (** ** left whisker composition : [F ∘ᴸ (T ∘ T') = (F ∘ᴸ T) ∘ (F ∘ᴸ T')] *)
+   </pre>
+</div>
+<div class="code" title="File: Laws.v
+Line: 79
+Time: 0.004s">
+<div class="time" style="width: 13.333333333333%"></div>
+<pre>Lemma composition_of_whisker_l E (I : Functor D E)
+    : I oL (T o T') = (I oL T) o (I oL T').</pre>
+</div>
+<div class="code" title="File: Laws.v
+Line: 80
+Time: 0s">
+<div class="time" style="width: 0%"></div>
+<pre>
+    Proof.</pre>
+</div>
+<div class="code" title="File: Laws.v
+Line: 81
+Time: 0.002s">
+<div class="time" style="width: 6.6666666666667%"></div>
+<pre>
+      path_natural_transformation; apply composition_of.</pre>
+</div>
+<div class="code" title="File: Laws.v
+Line: 82
+Time: 0.002s">
+<div class="time" style="width: 6.6666666666667%"></div>
+<pre>
+    Qed.</pre>
+</div>
+<div class="code" title="File: Laws.v
+Line: 83
+Time: 0s">
+<div class="time" style="width: 0%"></div>
+<pre>
+
+    (** ** right whisker composition : [(T ∘ T') ∘ᴿ F = (T ∘ᴿ F) ∘ (T' ∘ᴿ F)] *)
+   </pre>
+</div>
+<div class="code" title="File: Laws.v
+Line: 86
+Time: 0.004s">
+<div class="time" style="width: 13.333333333333%"></div>
+<pre>Lemma composition_of_whisker_r B (I : Functor B C)
+    : (T o T') oR I = (T oR I) o (T' oR I).</pre>
+</div>
+<div class="code" title="File: Laws.v
+Line: 87
+Time: 0s">
+<div class="time" style="width: 0%"></div>
+<pre>
+    Proof.</pre>
+</div>
+<div class="code" title="File: Laws.v
+Line: 88
+Time: 0.002s">
+<div class="time" style="width: 6.6666666666667%"></div>
+<pre>
+      path_natural_transformation; apply idpath.</pre>
+</div>
+<div class="code" title="File: Laws.v
+Line: 89
+Time: 0.002s">
+<div class="time" style="width: 6.6666666666667%"></div>
+<pre>
+    Qed.</pre>
+</div>
+<div class="code" title="File: Laws.v
+Line: 90
+Time: 0.001s">
+<div class="time" style="width: 3.3333333333333%"></div>
+<pre>
+  End whisker.</pre>
+</div>
+<div class="code" title="File: Laws.v
+Line: 91
+Time: 0.004s">
+<div class="time" style="width: 13.333333333333%"></div>
+<pre>
+End whisker.</pre>
+</div>
+<div class="code" title="File: Laws.v
+Line: 92
+Time: 0s">
+<div class="time" style="width: 0%"></div>
+<pre>
+
+Section associativity.</pre>
+</div>
+<div class="code" title="File: Laws.v
+Line: 94
+Time: 0s">
+<div class="time" style="width: 0%"></div>
+<pre>
+  (** ** associators - natural transformations between [F ∘ (G ∘ H)] and [(F ∘ G) ∘ H] *)
+ </pre>
+</div>
+<div class="code" title="File: Laws.v
+Line: 96
+Time: 0s">
+<div class="time" style="width: 0%"></div>
+<pre>Section functors.</pre>
+</div>
+<div class="code" title="File: Laws.v
+Line: 96
+Time: 0s">
+<div class="time" style="width: 0%"></div>
+<pre>
+    Variables B C D E : PreCategory.</pre>
+</div>
+<div class="code" title="File: Laws.v
+Line: 97
+Time: 0s">
+<div class="time" style="width: 0%"></div>
+<pre>
+    Variable F : Functor D E.</pre>
+</div>
+<div class="code" title="File: Laws.v
+Line: 98
+Time: 0s">
+<div class="time" style="width: 0%"></div>
+<pre>
+    Variable G : Functor C D.</pre>
+</div>
+<div class="code" title="File: Laws.v
+Line: 99
+Time: 0s">
+<div class="time" style="width: 0%"></div>
+<pre>
+    Variable H : Functor B C.</pre>
+</div>
+<div class="code" title="File: Laws.v
+Line: 100
+Time: 0s">
+<div class="time" style="width: 0%"></div>
+<pre>
+
+    Local Notation F0 := ((F o G) o H)%functor.</pre>
+</div>
+<div class="code" title="File: Laws.v
+Line: 102
+Time: 0s">
+<div class="time" style="width: 0%"></div>
+<pre>
+    Local Notation F1 := (F o (G o H))%functor.</pre>
+</div>
+<div class="code" title="File: Laws.v
+Line: 103
+Time: 0.009s">
+<div class="time" style="width: 30%"></div>
+<pre>
+
+    Definition associator_1 : NaturalTransformation F0 F1
+      := Eval simpl in
+          generalized_identity F0 F1 idpath idpath.</pre>
+</div>
+<div class="code" title="File: Laws.v
+Line: 107
+Time: 0.008s">
+<div class="time" style="width: 26.666666666667%"></div>
+<pre>
+
+    Definition associator_2 : NaturalTransformation F1 F0
+      := Eval simpl in
+          generalized_identity F1 F0 idpath idpath.</pre>
+</div>
+<div class="code" title="File: Laws.v
+Line: 111
+Time: 0s">
+<div class="time" style="width: 0%"></div>
+<pre>
+  End functors.</pre>
+</div>
+<div class="code" title="File: Laws.v
+Line: 112
+Time: 0s">
+<div class="time" style="width: 0%"></div>
+<pre>
+
+  (** ** associativity : [(T ∘ U) ∘ V = T ∘ (U ∘ V)] *)
+ </pre>
+</div>
+<div class="code" title="File: Laws.v
+Line: 115
+Time: 0s">
+<div class="time" style="width: 0%"></div>
+<pre>Section nt.</pre>
+</div>
+<div class="code" title="File: Laws.v
+Line: 115
+Time: 0s">
+<div class="time" style="width: 0%"></div>
+<pre>
+    Context `{fs : Funext}.</pre>
+</div>
+<div class="code" title="File: Laws.v
+Line: 116
+Time: 0s">
+<div class="time" style="width: 0%"></div>
+<pre>
+
+    Local Open Scope natural_transformation_scope.</pre>
+</div>
+<div class="code" title="File: Laws.v
+Line: 118
+Time: 0.005s">
+<div class="time" style="width: 16.666666666667%"></div>
+<pre>
+
+    Definition associativity
+               C D F G H I
+               (V : @NaturalTransformation C D F G)
+               (U : @NaturalTransformation C D G H)
+               (T : @NaturalTransformation C D H I)
+    : (T o U) o V = T o (U o V).</pre>
+</div>
+<div class="code" title="File: Laws.v
+Line: 125
+Time: 0s">
+<div class="time" style="width: 0%"></div>
+<pre>
+    Proof.</pre>
+</div>
+<div class="code" title="File: Laws.v
+Line: 126
+Time: 0.001s">
+<div class="time" style="width: 3.3333333333333%"></div>
+<pre>
+      path_natural_transformation.</pre>
+</div>
+<div class="code" title="File: Laws.v
+Line: 127
+Time: 0s">
+<div class="time" style="width: 0%"></div>
+<pre>
+      apply associativity.</pre>
+</div>
+<div class="code" title="File: Laws.v
+Line: 128
+Time: 0.002s">
+<div class="time" style="width: 6.6666666666667%"></div>
+<pre>
+    Qed.</pre>
+</div>
+<div class="code" title="File: Laws.v
+Line: 129
+Time: 0s">
+<div class="time" style="width: 0%"></div>
+<pre>
+  End nt.</pre>
+</div>
+<div class="code" title="File: Laws.v
+Line: 130
+Time: 0.003s">
+<div class="time" style="width: 10%"></div>
+<pre>
+End associativity.</pre>
+</div>
+<div class="code" title="File: Laws.v
+Line: 131
+Time: 0s">
+<div class="time" style="width: 0%"></div>
+<pre>
+
+Section functor_identity.</pre>
+</div>
+<div class="code" title="File: Laws.v
+Line: 133
+Time: 0s">
+<div class="time" style="width: 0%"></div>
+<pre>
+  Context `{Funext}.</pre>
+</div>
+<div class="code" title="File: Laws.v
+Line: 134
+Time: 0s">
+<div class="time" style="width: 0%"></div>
+<pre>
+
+  Variables C D : PreCategory.</pre>
+</div>
+<div class="code" title="File: Laws.v
+Line: 136
+Time: 0s">
+<div class="time" style="width: 0%"></div>
+<pre>
+
+  Local Ltac nt_id_t := split; path_natural_transformation;
+                        autorewrite with morphism; reflexivity.</pre>
+</div>
+<div class="code" title="File: Laws.v
+Line: 139
+Time: 0s">
+<div class="time" style="width: 0%"></div>
+<pre>
+
+  (** ** left unitors : natural transformations between [1 ∘ F] and [F] *)
+ </pre>
+</div>
+<div class="code" title="File: Laws.v
+Line: 142
+Time: 0s">
+<div class="time" style="width: 0%"></div>
+<pre>Section left.</pre>
+</div>
+<div class="code" title="File: Laws.v
+Line: 142
+Time: 0s">
+<div class="time" style="width: 0%"></div>
+<pre>
+    Variable F : Functor D C.</pre>
+</div>
+<div class="code" title="File: Laws.v
+Line: 143
+Time: 0.006s">
+<div class="time" style="width: 20%"></div>
+<pre>
+
+    Definition left_identity_natural_transformation_1
+    : NaturalTransformation (1 o F) F
+      := Eval simpl in generalized_identity (1 o F) F idpath idpath.</pre>
+</div>
+<div class="code" title="File: Laws.v
+Line: 147
+Time: 0.005s">
+<div class="time" style="width: 16.666666666667%"></div>
+<pre>
+    Definition left_identity_natural_transformation_2
+    : NaturalTransformation F (1 o F)
+      := Eval simpl in generalized_identity F (1 o F) idpath idpath.</pre>
+</div>
+<div class="code" title="File: Laws.v
+Line: 150
+Time: 0.004s">
+<div class="time" style="width: 13.333333333333%"></div>
+<pre>
+
+    Theorem left_identity_isomorphism
+    : left_identity_natural_transformation_1 o left_identity_natural_transformation_2 = 1
+      /\ left_identity_natural_transformation_2 o left_identity_natural_transformation_1 = 1.</pre>
+</div>
+<div class="code" title="File: Laws.v
+Line: 154
+Time: 0s">
+<div class="time" style="width: 0%"></div>
+<pre>
+    Proof.</pre>
+</div>
+<div class="code" title="File: Laws.v
+Line: 155
+Time: 0.01s">
+<div class="time" style="width: 33.333333333333%"></div>
+<pre>
+      nt_id_t.</pre>
+</div>
+<div class="code" title="File: Laws.v
+Line: 156
+Time: 0.004s">
+<div class="time" style="width: 13.333333333333%"></div>
+<pre>
+    Qed.</pre>
+</div>
+<div class="code" title="File: Laws.v
+Line: 157
+Time: 0s">
+<div class="time" style="width: 0%"></div>
+<pre>
+  End left.</pre>
+</div>
+<div class="code" title="File: Laws.v
+Line: 158
+Time: 0s">
+<div class="time" style="width: 0%"></div>
+<pre>
+
+  (** ** right unitors : natural transformations between [F ∘ 1] and [F] *)
+ </pre>
+</div>
+<div class="code" title="File: Laws.v
+Line: 161
+Time: 0s">
+<div class="time" style="width: 0%"></div>
+<pre>Section right.</pre>
+</div>
+<div class="code" title="File: Laws.v
+Line: 161
+Time: 0s">
+<div class="time" style="width: 0%"></div>
+<pre>
+    Variable F : Functor C D.</pre>
+</div>
+<div class="code" title="File: Laws.v
+Line: 162
+Time: 0.005s">
+<div class="time" style="width: 16.666666666667%"></div>
+<pre>
+
+    Definition right_identity_natural_transformation_1 : NaturalTransformation (F o 1) F
+      := Eval simpl in generalized_identity (F o 1) F idpath idpath.</pre>
+</div>
+<div class="code" title="File: Laws.v
+Line: 165
+Time: 0.005s">
+<div class="time" style="width: 16.666666666667%"></div>
+<pre>
+    Definition right_identity_natural_transformation_2 : NaturalTransformation F (F o 1)
+      := Eval simpl in generalized_identity F (F o 1) idpath idpath.</pre>
+</div>
+<div class="code" title="File: Laws.v
+Line: 167
+Time: 0.006s">
+<div class="time" style="width: 20%"></div>
+<pre>
+
+    Theorem right_identity_isomorphism
+    : right_identity_natural_transformation_1 o right_identity_natural_transformation_2 = 1
+      /\ right_identity_natural_transformation_2 o right_identity_natural_transformation_1 = 1.</pre>
+</div>
+<div class="code" title="File: Laws.v
+Line: 171
+Time: 0s">
+<div class="time" style="width: 0%"></div>
+<pre>
+    Proof.</pre>
+</div>
+<div class="code" title="File: Laws.v
+Line: 172
+Time: 0.01s">
+<div class="time" style="width: 33.333333333333%"></div>
+<pre>
+      nt_id_t.</pre>
+</div>
+<div class="code" title="File: Laws.v
+Line: 173
+Time: 0.004s">
+<div class="time" style="width: 13.333333333333%"></div>
+<pre>
+    Qed.</pre>
+</div>
+<div class="code" title="File: Laws.v
+Line: 174
+Time: 0s">
+<div class="time" style="width: 0%"></div>
+<pre>
+  End right.</pre>
+</div>
+<div class="code" title="File: Laws.v
+Line: 175
+Time: 0.006s">
+<div class="time" style="width: 20%"></div>
+<pre>
+End functor_identity.</pre>
+</div>
+<div class="code" title="File: Laws.v
+Line: 176
+Time: 0s">
+<div class="time" style="width: 0%"></div>
+<pre>
+
+(** ** Tactics for inserting appropriate associators, whiskers, and unitors *)</pre>
+</div>
+<div class="code" title="File: Laws.v
+Line: 178
+Time: 0s">
+<div class="time" style="width: 0%"></div>
+<pre>Ltac nt_solve_associator' :=
+  repeat match goal with
+           | _ =&gt; exact (associator_1 _ _ _)
+           | _ =&gt; exact (associator_2 _ _ _)
+           | _ =&gt; exact (left_identity_natural_transformation_1 _)
+           | _ =&gt; exact (left_identity_natural_transformation_2 _)
+           | _ =&gt; exact (right_identity_natural_transformation_1 _)
+           | _ =&gt; exact (right_identity_natural_transformation_2 _)
+           | [ |- NaturalTransformation (?F o _) (?F o _) ] =&gt;
+             refine (whisker_l F _)
+           | [ |- NaturalTransformation (_ o ?F) (_ o ?F) ] =&gt;
+             refine (whisker_r _ F)
+         end.</pre>
+</div>
+<div class="code" title="File: Laws.v
+Line: 190
+Time: 0s">
+<div class="time" style="width: 0%"></div>
+<pre>
+Ltac nt_solve_associator :=
+  repeat first [ progress nt_solve_associator'
+               | refine (compose (associator_1 _ _ _) _); progress nt_solve_associator'
+               | refine (compose _ (associator_1 _ _ _)); progress nt_solve_associator'
+               | refine (compose (associator_2 _ _ _) _); progress nt_solve_associator'
+               | refine (compose _ (associator_2 _ _ _)); progress nt_solve_associator' ].</pre>
+</div>
+<div class="code" title="File: Laws.v
+Line: 197
+Time: 0s">
+<div class="time" style="width: 0%"></div>
+<pre>
+
+</pre>
+</div>
+</body>
+</html>
+

@@ -1,0 +1,306 @@
+<html>
+<head>
+<title>Core.v</title>
+<style>
+.time {
+  background-color: #ffaaaa;
+  height: 100%;
+  z-index: -1;
+  position: absolute;
+}
+.code {
+  z-index: 0;
+  position: relative;
+  border-style: solid;
+  border-color: transparent;
+  border-width: 1px;
+}
+.code:hover {
+  border-style: solid;
+  border-color: black;
+  border-width: 1px;
+}
+pre {
+  margin: 1px;
+}
+</style>
+</head>
+<body>
+<h1>Timings for Core.v</h1>
+
+<div class="code" title="File: Core.v
+Line: 1
+Time: 0s">
+<div class="time" style="width: 0%"></div>
+<pre>(** * Cat, the precategory of strict categories *)</pre>
+</div>
+<div class="code" title="File: Core.v
+Line: 1
+Time: 0.071s">
+<div class="time" style="width: 100%"></div>
+<pre>Require Import Category.Core Category.Objects InitialTerminalCategory.Core InitialTerminalCategory.Functors Functor.Core Category.Strict Category.Univalent Functor.Paths.</pre>
+</div>
+<div class="code" title="File: Core.v
+Line: 1
+Time: 0.002s">
+<div class="time" style="width: 2.8169014084507%"></div>
+<pre>
+Require Import Functor.Identity Functor.Composition.Core Functor.Composition.Laws.</pre>
+</div>
+<div class="code" title="File: Core.v
+Line: 2
+Time: 0s">
+<div class="time" style="width: 0%"></div>
+<pre>
+
+Set Universe Polymorphism.</pre>
+</div>
+<div class="code" title="File: Core.v
+Line: 4
+Time: 0s">
+<div class="time" style="width: 0%"></div>
+<pre>
+Set Implicit Arguments.</pre>
+</div>
+<div class="code" title="File: Core.v
+Line: 5
+Time: 0s">
+<div class="time" style="width: 0%"></div>
+<pre>
+Generalizable All Variables.</pre>
+</div>
+<div class="code" title="File: Core.v
+Line: 6
+Time: 0s">
+<div class="time" style="width: 0%"></div>
+<pre>
+Set Asymmetric Patterns.</pre>
+</div>
+<div class="code" title="File: Core.v
+Line: 7
+Time: 0s">
+<div class="time" style="width: 0%"></div>
+<pre>
+
+Local Open Scope functor_scope.</pre>
+</div>
+<div class="code" title="File: Core.v
+Line: 9
+Time: 0s">
+<div class="time" style="width: 0%"></div>
+<pre>
+
+Section sub_pre_cat.</pre>
+</div>
+<div class="code" title="File: Core.v
+Line: 11
+Time: 0s">
+<div class="time" style="width: 0%"></div>
+<pre>
+  Context `{Funext}.</pre>
+</div>
+<div class="code" title="File: Core.v
+Line: 12
+Time: 0s">
+<div class="time" style="width: 0%"></div>
+<pre>
+
+  (** We use a slight generalization; we look at a full 1-precategory
+      of the 2-precategory Cat, such that all types of functors are
+      hSets.  It might be possible to prove that this doesn't buy you
+      anything, because it's probably the case that [IsHSet (Functor C
+      C) → IsStrictCategory C]. *)
+
+ </pre>
+</div>
+<div class="code" title="File: Core.v
+Line: 20
+Time: 0s">
+<div class="time" style="width: 0%"></div>
+<pre>Variable P : PreCategory -&gt; Type.</pre>
+</div>
+<div class="code" title="File: Core.v
+Line: 20
+Time: 0.001s">
+<div class="time" style="width: 1.4084507042254%"></div>
+<pre>
+  Context `{HF : forall C D, P C -&gt; P D -&gt; IsHSet (Functor C D)}.</pre>
+</div>
+<div class="code" title="File: Core.v
+Line: 21
+Time: 0s">
+<div class="time" style="width: 0%"></div>
+<pre>
+
+  (** There is a precategory of precategories which satisfy the proposition P *)
+
+ </pre>
+</div>
+<div class="code" title="File: Core.v
+Line: 25
+Time: 0.013s">
+<div class="time" style="width: 18.30985915493%"></div>
+<pre>Definition sub_pre_cat : PreCategory
+    := @Build_PreCategory
+         { C : PreCategory | P C }
+         (fun C D =&gt; Functor C.1 D.1)
+         (fun C =&gt; identity C.1)
+         (fun _ _ _ F G =&gt; F o G)
+         (fun _ _ _ _ _ _ _ =&gt; associativity _ _ _)
+         (fun _ _ _ =&gt; left_identity _)
+         (fun _ _ _ =&gt; right_identity _)
+         (fun s d =&gt; HF s.2 d.2).</pre>
+</div>
+<div class="code" title="File: Core.v
+Line: 34
+Time: 0.001s">
+<div class="time" style="width: 1.4084507042254%"></div>
+<pre>
+End sub_pre_cat.</pre>
+</div>
+<div class="code" title="File: Core.v
+Line: 35
+Time: 0s">
+<div class="time" style="width: 0%"></div>
+<pre>
+
+Arguments sub_pre_cat {_} P {_}, {_} P _.</pre>
+</div>
+<div class="code" title="File: Core.v
+Line: 37
+Time: 0.023s">
+<div class="time" style="width: 32.394366197183%"></div>
+<pre>
+
+Definition strict_cat `{Funext} : PreCategory
+  := sub_pre_cat (fun C =&gt; IsStrictCategory C).</pre>
+</div>
+<div class="code" title="File: Core.v
+Line: 40
+Time: 0s">
+<div class="time" style="width: 0%"></div>
+<pre>
+
+(*Definition Cat `{Funext} : PreCategory.
+  refine (@sub_pre_cat _ (fun C =&gt; IsCategory C) _).
+  *)
+
+(** ** The initial and terminal categories are initial and terminal objects in cat *)</pre>
+</div>
+<div class="code" title="File: Core.v
+Line: 46
+Time: 0s">
+<div class="time" style="width: 0%"></div>
+<pre>Section objects.</pre>
+</div>
+<div class="code" title="File: Core.v
+Line: 46
+Time: 0s">
+<div class="time" style="width: 0%"></div>
+<pre>
+  Context `{Funext}.</pre>
+</div>
+<div class="code" title="File: Core.v
+Line: 47
+Time: 0s">
+<div class="time" style="width: 0%"></div>
+<pre>
+
+  Variable P : PreCategory -&gt; Type.</pre>
+</div>
+<div class="code" title="File: Core.v
+Line: 49
+Time: 0s">
+<div class="time" style="width: 0%"></div>
+<pre>
+  Context `{forall C, IsHProp (P C)}.</pre>
+</div>
+<div class="code" title="File: Core.v
+Line: 50
+Time: 0s">
+<div class="time" style="width: 0%"></div>
+<pre>
+  Context `{HF : forall C D, P C -&gt; P D -&gt; IsHSet (Functor C D)}.</pre>
+</div>
+<div class="code" title="File: Core.v
+Line: 51
+Time: 0.003s">
+<div class="time" style="width: 4.2253521126761%"></div>
+<pre>
+
+  Lemma is_terminal_object__is_terminal_category
+        `(IsTerminalCategory one)
+        (HT : P one)
+  : IsTerminalObject (sub_pre_cat P HF) (one; HT).</pre>
+</div>
+<div class="code" title="File: Core.v
+Line: 56
+Time: 0s">
+<div class="time" style="width: 0%"></div>
+<pre>
+  Proof.</pre>
+</div>
+<div class="code" title="File: Core.v
+Line: 57
+Time: 0.019s">
+<div class="time" style="width: 26.760563380282%"></div>
+<pre>
+    typeclasses eauto.</pre>
+</div>
+<div class="code" title="File: Core.v
+Line: 58
+Time: 0.001s">
+<div class="time" style="width: 1.4084507042254%"></div>
+<pre>
+  Defined.</pre>
+</div>
+<div class="code" title="File: Core.v
+Line: 59
+Time: 0.003s">
+<div class="time" style="width: 4.2253521126761%"></div>
+<pre>
+
+  Lemma is_initial_object__is_initial_category
+        `(IsInitialCategory zero)
+        (HI : P zero)
+  : IsInitialObject (sub_pre_cat P HF) (zero; HI).</pre>
+</div>
+<div class="code" title="File: Core.v
+Line: 64
+Time: 0s">
+<div class="time" style="width: 0%"></div>
+<pre>
+  Proof.</pre>
+</div>
+<div class="code" title="File: Core.v
+Line: 65
+Time: 0.014s">
+<div class="time" style="width: 19.718309859155%"></div>
+<pre>
+    typeclasses eauto.</pre>
+</div>
+<div class="code" title="File: Core.v
+Line: 66
+Time: 0.001s">
+<div class="time" style="width: 1.4084507042254%"></div>
+<pre>
+  Defined.</pre>
+</div>
+<div class="code" title="File: Core.v
+Line: 67
+Time: 0.002s">
+<div class="time" style="width: 2.8169014084507%"></div>
+<pre>
+End objects.</pre>
+</div>
+<div class="code" title="File: Core.v
+Line: 69
+Time: 0s">
+<div class="time" style="width: 0%"></div>
+<pre>
+
+</pre>
+</div>
+</body>
+</html>
+

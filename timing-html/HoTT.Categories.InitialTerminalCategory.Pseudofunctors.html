@@ -1,0 +1,299 @@
+<html>
+<head>
+<title>Pseudofunctors.v</title>
+<style>
+.time {
+  background-color: #ffaaaa;
+  height: 100%;
+  z-index: -1;
+  position: absolute;
+}
+.code {
+  z-index: 0;
+  position: relative;
+  border-style: solid;
+  border-color: transparent;
+  border-width: 1px;
+}
+.code:hover {
+  border-style: solid;
+  border-color: black;
+  border-width: 1px;
+}
+pre {
+  margin: 1px;
+}
+</style>
+</head>
+<body>
+<h1>Timings for Pseudofunctors.v</h1>
+
+<div class="code" title="File: Pseudofunctors.v
+Line: 1
+Time: 0s">
+<div class="time" style="width: 0%"></div>
+<pre>(** * Pseudofunctors from initial and terminal categories *)</pre>
+</div>
+<div class="code" title="File: Pseudofunctors.v
+Line: 1
+Time: 0.006s">
+<div class="time" style="width: 2.5210084033613%"></div>
+<pre>Require Import Category.Core Functor.Core NaturalTransformation.Core.</pre>
+</div>
+<div class="code" title="File: Pseudofunctors.v
+Line: 1
+Time: 0s">
+<div class="time" style="width: 0%"></div>
+<pre>
+Require Import Functor.Identity Functor.Composition.Core.</pre>
+</div>
+<div class="code" title="File: Pseudofunctors.v
+Line: 2
+Time: 0.025s">
+<div class="time" style="width: 10.504201680672%"></div>
+<pre>
+Require Import NaturalTransformation.Composition.Core NaturalTransformation.Composition.Laws.</pre>
+</div>
+<div class="code" title="File: Pseudofunctors.v
+Line: 3
+Time: 0.044s">
+<div class="time" style="width: 18.487394957983%"></div>
+<pre>
+Require Import Pseudofunctor.Core.</pre>
+</div>
+<div class="code" title="File: Pseudofunctors.v
+Line: 4
+Time: 0.007s">
+<div class="time" style="width: 2.9411764705882%"></div>
+<pre>
+Require Import InitialTerminalCategory.Core.</pre>
+</div>
+<div class="code" title="File: Pseudofunctors.v
+Line: 5
+Time: 0s">
+<div class="time" style="width: 0%"></div>
+<pre>
+Require Import FunctorCategory.Morphisms.</pre>
+</div>
+<div class="code" title="File: Pseudofunctors.v
+Line: 6
+Time: 0.001s">
+<div class="time" style="width: 0.42016806722689%"></div>
+<pre>
+Require Import Category.Morphisms.</pre>
+</div>
+<div class="code" title="File: Pseudofunctors.v
+Line: 7
+Time: 0s">
+<div class="time" style="width: 0%"></div>
+<pre>
+Require Import NaturalTransformation.Paths.</pre>
+</div>
+<div class="code" title="File: Pseudofunctors.v
+Line: 8
+Time: 0s">
+<div class="time" style="width: 0%"></div>
+<pre>
+Require Import NatCategory.</pre>
+</div>
+<div class="code" title="File: Pseudofunctors.v
+Line: 9
+Time: 0.001s">
+<div class="time" style="width: 0.42016806722689%"></div>
+<pre>
+Require Import Contractible PathGroupoids.</pre>
+</div>
+<div class="code" title="File: Pseudofunctors.v
+Line: 10
+Time: 0s">
+<div class="time" style="width: 0%"></div>
+<pre>
+
+Set Universe Polymorphism.</pre>
+</div>
+<div class="code" title="File: Pseudofunctors.v
+Line: 12
+Time: 0s">
+<div class="time" style="width: 0%"></div>
+<pre>
+Set Implicit Arguments.</pre>
+</div>
+<div class="code" title="File: Pseudofunctors.v
+Line: 13
+Time: 0s">
+<div class="time" style="width: 0%"></div>
+<pre>
+Generalizable All Variables.</pre>
+</div>
+<div class="code" title="File: Pseudofunctors.v
+Line: 14
+Time: 0s">
+<div class="time" style="width: 0%"></div>
+<pre>
+Set Asymmetric Patterns.</pre>
+</div>
+<div class="code" title="File: Pseudofunctors.v
+Line: 15
+Time: 0s">
+<div class="time" style="width: 0%"></div>
+<pre>
+
+Section pseudofunctors.</pre>
+</div>
+<div class="code" title="File: Pseudofunctors.v
+Line: 17
+Time: 0s">
+<div class="time" style="width: 0%"></div>
+<pre>
+  (** ** Constant functor from any terminal category *)
+ </pre>
+</div>
+<div class="code" title="File: Pseudofunctors.v
+Line: 19
+Time: 0.001s">
+<div class="time" style="width: 0.42016806722689%"></div>
+<pre>Definition from_terminal `{Funext} `{@IsTerminalCategory one Hone Hone'}
+             (c : PreCategory)
+  : Pseudofunctor one.</pre>
+</div>
+<div class="code" title="File: Pseudofunctors.v
+Line: 21
+Time: 0s">
+<div class="time" style="width: 0%"></div>
+<pre>
+  Proof.</pre>
+</div>
+<div class="code" title="File: Pseudofunctors.v
+Line: 22
+Time: 0.138s">
+<div class="time" style="width: 57.983193277311%"></div>
+<pre>
+    refine (Build_Pseudofunctor
+              one
+              (fun _ =&gt; c)
+              (fun _ _ _ =&gt; 1%functor)
+              (fun _ _ _ _ _ =&gt; reflexivity _)
+              (fun _ =&gt; reflexivity _)
+              _
+              _
+              _);
+      simpl;
+      abstract (
+          intros;
+          path_natural_transformation;
+          rewrite ap_const; simpl;
+          reflexivity
+        ).</pre>
+</div>
+<div class="code" title="File: Pseudofunctors.v
+Line: 38
+Time: 0.031s">
+<div class="time" style="width: 13.025210084034%"></div>
+<pre>
+  Defined.</pre>
+</div>
+<div class="code" title="File: Pseudofunctors.v
+Line: 39
+Time: 0s">
+<div class="time" style="width: 0%"></div>
+<pre>
+
+  (** *** Functor from any initial category *)
+ </pre>
+</div>
+<div class="code" title="File: Pseudofunctors.v
+Line: 42
+Time: 0.238s">
+<div class="time" style="width: 100%"></div>
+<pre>Definition from_initial `{Funext} `{@IsInitialCategory zero}
+  : Pseudofunctor zero
+    := Build_Pseudofunctor
+         zero
+         (fun x =&gt; initial_category_ind _ x)
+         (fun x _ _ =&gt; initial_category_ind _ x)
+         (fun x _ _ _ _ =&gt; initial_category_ind _ x)
+         (fun x =&gt; initial_category_ind _ x)
+         (fun x =&gt; initial_category_ind _ x)
+         (fun x =&gt; initial_category_ind _ x)
+         (fun x =&gt; initial_category_ind _ x).</pre>
+</div>
+<div class="code" title="File: Pseudofunctors.v
+Line: 52
+Time: 0.027s">
+<div class="time" style="width: 11.344537815126%"></div>
+<pre>
+End pseudofunctors.</pre>
+</div>
+<div class="code" title="File: Pseudofunctors.v
+Line: 53
+Time: 0s">
+<div class="time" style="width: 0%"></div>
+<pre>
+
+Local Arguments from_terminal / .</pre>
+</div>
+<div class="code" title="File: Pseudofunctors.v
+Line: 55
+Time: 0s">
+<div class="time" style="width: 0%"></div>
+<pre>
+Local Arguments from_initial / .</pre>
+</div>
+<div class="code" title="File: Pseudofunctors.v
+Line: 56
+Time: 0.032s">
+<div class="time" style="width: 13.445378151261%"></div>
+<pre>
+
+Definition from_1 `{Funext} c : Pseudofunctor 1
+  := Eval simpl in from_terminal c.</pre>
+</div>
+<div class="code" title="File: Pseudofunctors.v
+Line: 59
+Time: 0.07s">
+<div class="time" style="width: 29.411764705882%"></div>
+<pre>
+Definition from_0 `{Funext} : Pseudofunctor 0
+  := Eval simpl in from_initial.</pre>
+</div>
+<div class="code" title="File: Pseudofunctors.v
+Line: 61
+Time: 0s">
+<div class="time" style="width: 0%"></div>
+<pre>
+
+Local Notation "! x" := (@from_terminal _ terminal_category _ _ _ x) (at level 3, format "'!' x") : pseudofunctor_scope.</pre>
+</div>
+<div class="code" title="File: Pseudofunctors.v
+Line: 63
+Time: 0s">
+<div class="time" style="width: 0%"></div>
+<pre>
+
+Module Export InitialTerminalCategoryPseudofunctorsNotations.</pre>
+</div>
+<div class="code" title="File: Pseudofunctors.v
+Line: 65
+Time: 0s">
+<div class="time" style="width: 0%"></div>
+<pre>
+  Notation "! x" := (@from_terminal _ terminal_category _ _ _ x) (at level 3, format "'!' x") : pseudofunctor_scope.</pre>
+</div>
+<div class="code" title="File: Pseudofunctors.v
+Line: 66
+Time: 0s">
+<div class="time" style="width: 0%"></div>
+<pre>
+End InitialTerminalCategoryPseudofunctorsNotations.</pre>
+</div>
+<div class="code" title="File: Pseudofunctors.v
+Line: 68
+Time: 0s">
+<div class="time" style="width: 0%"></div>
+<pre>
+
+</pre>
+</div>
+</body>
+</html>
+

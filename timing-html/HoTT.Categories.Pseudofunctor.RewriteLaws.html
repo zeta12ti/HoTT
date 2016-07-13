@@ -1,0 +1,683 @@
+<html>
+<head>
+<title>RewriteLaws.v</title>
+<style>
+.time {
+  background-color: #ffaaaa;
+  height: 100%;
+  z-index: -1;
+  position: absolute;
+}
+.code {
+  z-index: 0;
+  position: relative;
+  border-style: solid;
+  border-color: transparent;
+  border-width: 1px;
+}
+.code:hover {
+  border-style: solid;
+  border-color: black;
+  border-width: 1px;
+}
+pre {
+  margin: 1px;
+}
+</style>
+</head>
+<body>
+<h1>Timings for RewriteLaws.v</h1>
+
+<div class="code" title="File: RewriteLaws.v
+Line: 1
+Time: 0s">
+<div class="time" style="width: 0%"></div>
+<pre>(** * Pseudofunctor rewriting helper lemmas *)</pre>
+</div>
+<div class="code" title="File: RewriteLaws.v
+Line: 1
+Time: 0.007s">
+<div class="time" style="width: 6.7961165048544%"></div>
+<pre>Require Import Category.Core Functor.Core NaturalTransformation.Core.</pre>
+</div>
+<div class="code" title="File: RewriteLaws.v
+Line: 1
+Time: 0.04s">
+<div class="time" style="width: 38.834951456311%"></div>
+<pre>
+Require Import FunctorCategory.Core.</pre>
+</div>
+<div class="code" title="File: RewriteLaws.v
+Line: 2
+Time: 0.009s">
+<div class="time" style="width: 8.7378640776699%"></div>
+<pre>
+Require Import Category.Morphisms FunctorCategory.Morphisms.</pre>
+</div>
+<div class="code" title="File: RewriteLaws.v
+Line: 3
+Time: 0s">
+<div class="time" style="width: 0%"></div>
+<pre>
+Require Import Functor.Composition.Core Functor.Identity.</pre>
+</div>
+<div class="code" title="File: RewriteLaws.v
+Line: 4
+Time: 0s">
+<div class="time" style="width: 0%"></div>
+<pre>
+Require Import NaturalTransformation.Composition.Core NaturalTransformation.Composition.Laws.</pre>
+</div>
+<div class="code" title="File: RewriteLaws.v
+Line: 5
+Time: 0.001s">
+<div class="time" style="width: 0.97087378640777%"></div>
+<pre>
+Require Import NaturalTransformation.Isomorphisms.</pre>
+</div>
+<div class="code" title="File: RewriteLaws.v
+Line: 6
+Time: 0s">
+<div class="time" style="width: 0%"></div>
+<pre>
+Require Import NaturalTransformation.Paths.</pre>
+</div>
+<div class="code" title="File: RewriteLaws.v
+Line: 7
+Time: 0s">
+<div class="time" style="width: 0%"></div>
+<pre>
+Require Import FunctorCategory.Core.</pre>
+</div>
+<div class="code" title="File: RewriteLaws.v
+Line: 8
+Time: 0.001s">
+<div class="time" style="width: 0.97087378640777%"></div>
+<pre>
+Require Import Pseudofunctor.Core.</pre>
+</div>
+<div class="code" title="File: RewriteLaws.v
+Line: 9
+Time: 0.001s">
+<div class="time" style="width: 0.97087378640777%"></div>
+<pre>
+Require Import HoTT.Tactics.</pre>
+</div>
+<div class="code" title="File: RewriteLaws.v
+Line: 10
+Time: 0s">
+<div class="time" style="width: 0%"></div>
+<pre>
+
+Set Universe Polymorphism.</pre>
+</div>
+<div class="code" title="File: RewriteLaws.v
+Line: 12
+Time: 0s">
+<div class="time" style="width: 0%"></div>
+<pre>
+Set Implicit Arguments.</pre>
+</div>
+<div class="code" title="File: RewriteLaws.v
+Line: 13
+Time: 0s">
+<div class="time" style="width: 0%"></div>
+<pre>
+Generalizable All Variables.</pre>
+</div>
+<div class="code" title="File: RewriteLaws.v
+Line: 14
+Time: 0s">
+<div class="time" style="width: 0%"></div>
+<pre>
+Set Asymmetric Patterns.</pre>
+</div>
+<div class="code" title="File: RewriteLaws.v
+Line: 15
+Time: 0s">
+<div class="time" style="width: 0%"></div>
+<pre>
+
+Local Open Scope morphism_scope.</pre>
+</div>
+<div class="code" title="File: RewriteLaws.v
+Line: 17
+Time: 0s">
+<div class="time" style="width: 0%"></div>
+<pre>
+
+Section lemmas.</pre>
+</div>
+<div class="code" title="File: RewriteLaws.v
+Line: 19
+Time: 0s">
+<div class="time" style="width: 0%"></div>
+<pre>
+  Local Open Scope natural_transformation_scope.</pre>
+</div>
+<div class="code" title="File: RewriteLaws.v
+Line: 20
+Time: 0s">
+<div class="time" style="width: 0%"></div>
+<pre>
+  Context `{Funext}.</pre>
+</div>
+<div class="code" title="File: RewriteLaws.v
+Line: 21
+Time: 0s">
+<div class="time" style="width: 0%"></div>
+<pre>
+
+  Variable C : PreCategory.</pre>
+</div>
+<div class="code" title="File: RewriteLaws.v
+Line: 23
+Time: 0s">
+<div class="time" style="width: 0%"></div>
+<pre>
+  Variable F : Pseudofunctor C.</pre>
+</div>
+<div class="code" title="File: RewriteLaws.v
+Line: 24
+Time: 0.029s">
+<div class="time" style="width: 28.155339805825%"></div>
+<pre>
+
+  Lemma p_composition_of_coherent_for_rewrite_helper w x y z
+        (f : morphism C w x) (g : morphism C x y) (h : morphism C y z)
+        (p p0 p1 p2 : PreCategory) (f0 : morphism C w z -&gt; Functor p2 p1)
+        (f1 : Functor p0 p1) (f2 : Functor p2 p) (f3 : Functor p p0)
+        (f4 : Functor p2 p0) `(@IsIsomorphism (_ -&gt; _) f4 (f3 o f2)%functor n)
+        `(@IsIsomorphism (_ -&gt; _) (f0 (h o (g o f))%morphism) (f1 o f4)%functor n0)
+  : @paths (NaturalTransformation _ _)
+           (@morphism_isomorphic _ _ _ (Category.Morphisms.idtoiso (p2 -&gt; p1) (ap f0 (Category.Core.associativity C w x y z f g h))))
+           (n0^-1
+              o ((f1 oL n^-1)
+                   o ((f1 oL n)
+                        o (n0
+                             o (@morphism_isomorphic _ _ _ (Category.Morphisms.idtoiso (p2 -&gt; p1) (ap f0 (Category.Core.associativity C w x y z f g h))))))))%natural_transformation.</pre>
+</div>
+<div class="code" title="File: RewriteLaws.v
+Line: 38
+Time: 0s">
+<div class="time" style="width: 0%"></div>
+<pre>
+  Proof.</pre>
+</div>
+<div class="code" title="File: RewriteLaws.v
+Line: 39
+Time: 0.001s">
+<div class="time" style="width: 0.97087378640777%"></div>
+<pre>
+    simpl in *.</pre>
+</div>
+<div class="code" title="File: RewriteLaws.v
+Line: 40
+Time: 0.031s">
+<div class="time" style="width: 30.097087378641%"></div>
+<pre>
+    let C := match goal with |- @paths (@NaturalTransformation ?C ?D ?F ?G) _ _ =&gt; constr:(C -&gt; D)%category end in
+    apply (@iso_moveL_Vp C);
+      apply (@iso_moveL_Mp C _ _ _ _ _ _ (iso_whisker_l _ _ _ _ _ _ _)).</pre>
+</div>
+<div class="code" title="File: RewriteLaws.v
+Line: 43
+Time: 0.004s">
+<div class="time" style="width: 3.8834951456311%"></div>
+<pre>
+    path_natural_transformation.</pre>
+</div>
+<div class="code" title="File: RewriteLaws.v
+Line: 44
+Time: 0s">
+<div class="time" style="width: 0%"></div>
+<pre>
+    reflexivity.</pre>
+</div>
+<div class="code" title="File: RewriteLaws.v
+Line: 45
+Time: 0.024s">
+<div class="time" style="width: 23.300970873786%"></div>
+<pre>
+  Qed.</pre>
+</div>
+<div class="code" title="File: RewriteLaws.v
+Line: 46
+Time: 0.002s">
+<div class="time" style="width: 1.9417475728155%"></div>
+<pre>
+
+  Arguments p_composition_of_coherent_for_rewrite_helper {_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _}.</pre>
+</div>
+<div class="code" title="File: RewriteLaws.v
+Line: 48
+Time: 0s">
+<div class="time" style="width: 0%"></div>
+<pre>
+
+  Section helper.</pre>
+</div>
+<div class="code" title="File: RewriteLaws.v
+Line: 50
+Time: 0.02s">
+<div class="time" style="width: 19.417475728155%"></div>
+<pre>
+    Context
+      {w x y z}
+      {f : Functor (F w) (F z)} {f0 : Functor (F w) (F y)}
+      {f1 : Functor (F x) (F y)} {f2 : Functor (F y) (F z)}
+      {f3 : Functor (F w) (F x)} {f4 : Functor (F x) (F z)}
+      {f5 : Functor (F w) (F z)} {n : f5 &lt;~=~&gt; (f4 o f3)%functor}
+      {n0 : f4 &lt;~=~&gt; (f2 o f1)%functor} {n1 : f0 &lt;~=~&gt; (f1 o f3)%functor}
+      {n2 : f &lt;~=~&gt; (f2 o f0)%functor}.</pre>
+</div>
+<div class="code" title="File: RewriteLaws.v
+Line: 58
+Time: 0.015s">
+<div class="time" style="width: 14.563106796117%"></div>
+<pre>
+
+    Lemma p_composition_of_coherent_iso_for_rewrite__isisomorphism_helper'
+    : @IsIsomorphism
+        (_ -&gt; _) _ _
+        (n2 ^-1 o (f2 oL n1 ^-1 o (associator_1 f2 f1 f3 o (n0 oR f3 o n))))%natural_transformation.</pre>
+</div>
+<div class="code" title="File: RewriteLaws.v
+Line: 63
+Time: 0s">
+<div class="time" style="width: 0%"></div>
+<pre>
+    Proof.</pre>
+</div>
+<div class="code" title="File: RewriteLaws.v
+Line: 64
+Time: 0.034s">
+<div class="time" style="width: 33.009708737864%"></div>
+<pre>
+      eapply isisomorphism_compose;
+      [ eapply isisomorphism_inverse
+      | eapply isisomorphism_compose;
+        [ eapply iso_whisker_l; eapply isisomorphism_inverse
+        | eapply isisomorphism_compose;
+          [ typeclasses eauto
+          | eapply isisomorphism_compose;
+            [ eapply iso_whisker_r; typeclasses eauto
+            | typeclasses eauto ] ] ] ].</pre>
+</div>
+<div class="code" title="File: RewriteLaws.v
+Line: 73
+Time: 0.008s">
+<div class="time" style="width: 7.7669902912621%"></div>
+<pre>
+    Defined.</pre>
+</div>
+<div class="code" title="File: RewriteLaws.v
+Line: 74
+Time: 0.024s">
+<div class="time" style="width: 23.300970873786%"></div>
+<pre>
+
+    Definition p_composition_of_coherent_iso_for_rewrite__isisomorphism_helper
+      := Eval hnf in p_composition_of_coherent_iso_for_rewrite__isisomorphism_helper'.</pre>
+</div>
+<div class="code" title="File: RewriteLaws.v
+Line: 77
+Time: 0s">
+<div class="time" style="width: 0%"></div>
+<pre>
+
+    Local Arguments p_composition_of_coherent_iso_for_rewrite__isisomorphism_helper / .</pre>
+</div>
+<div class="code" title="File: RewriteLaws.v
+Line: 79
+Time: 0.003s">
+<div class="time" style="width: 2.9126213592233%"></div>
+<pre>
+    Let inv := Eval simpl in @morphism_inverse _ _ _ _ p_composition_of_coherent_iso_for_rewrite__isisomorphism_helper.</pre>
+</div>
+<div class="code" title="File: RewriteLaws.v
+Line: 80
+Time: 0.078s">
+<div class="time" style="width: 75.728155339806%"></div>
+<pre>
+
+    Definition p_composition_of_coherent_iso_for_rewrite__isisomorphism_helper__to_inverse
+          X
+          (H' : X = @Build_Isomorphic (_ -&gt; _) _ _ _ p_composition_of_coherent_iso_for_rewrite__isisomorphism_helper)
+    : @morphism_inverse _ _ _ _ X = inv
+      := ap (fun i =&gt; @morphism_inverse _ _ _ _ (@isisomorphism_isomorphic _ _ _ i)) H'.</pre>
+</div>
+<div class="code" title="File: RewriteLaws.v
+Line: 86
+Time: 0.016s">
+<div class="time" style="width: 15.533980582524%"></div>
+<pre>
+  End helper.</pre>
+</div>
+<div class="code" title="File: RewriteLaws.v
+Line: 87
+Time: 0.051s">
+<div class="time" style="width: 49.514563106796%"></div>
+<pre>
+
+  Lemma p_composition_of_coherent_iso_for_rewrite w x y z
+        (f : morphism C w x) (g : morphism C x y) (h : morphism C y z)
+  : (Category.Morphisms.idtoiso (_ -&gt; _) (ap (@p_morphism_of _ _ F w z) (Category.Core.associativity C w x y z f g h)))
+    = @Build_Isomorphic
+        (_ -&gt; _) _ _
+        ((((p_composition_of F w y z h (g o f))^-1)
+            o ((p_morphism_of F h oL (p_composition_of F w x y g f)^-1)
+                 o ((associator_1 (p_morphism_of F h) (p_morphism_of F g) (p_morphism_of F f))
+                      o ((p_composition_of F x y z h g oR p_morphism_of F f)
+                           o p_composition_of F w x z (h o g) f)))))%natural_transformation
+        p_composition_of_coherent_iso_for_rewrite__isisomorphism_helper.</pre>
+</div>
+<div class="code" title="File: RewriteLaws.v
+Line: 99
+Time: 0s">
+<div class="time" style="width: 0%"></div>
+<pre>
+  Proof.</pre>
+</div>
+<div class="code" title="File: RewriteLaws.v
+Line: 100
+Time: 0.003s">
+<div class="time" style="width: 2.9126213592233%"></div>
+<pre>
+    apply path_isomorphic; simpl.</pre>
+</div>
+<div class="code" title="File: RewriteLaws.v
+Line: 101
+Time: 0.017s">
+<div class="time" style="width: 16.504854368932%"></div>
+<pre>
+    simpl rewrite (@p_composition_of_coherent _ C F w x y z f g h).</pre>
+</div>
+<div class="code" title="File: RewriteLaws.v
+Line: 102
+Time: 0.009s">
+<div class="time" style="width: 8.7378640776699%"></div>
+<pre>
+    exact p_composition_of_coherent_for_rewrite_helper.</pre>
+</div>
+<div class="code" title="File: RewriteLaws.v
+Line: 103
+Time: 0.036s">
+<div class="time" style="width: 34.95145631068%"></div>
+<pre>
+  Qed.</pre>
+</div>
+<div class="code" title="File: RewriteLaws.v
+Line: 104
+Time: 0.084s">
+<div class="time" style="width: 81.553398058252%"></div>
+<pre>
+
+  Lemma p_left_identity_of_coherent_iso_for_rewrite x y (f : morphism C x y)
+  : (Category.Morphisms.idtoiso (_ -&gt; _) (ap (@p_morphism_of _ _ F x y) (Category.Core.left_identity C x y f)))
+    = @Build_Isomorphic
+        (_ -&gt; _) _ _
+        ((left_identity_natural_transformation_1 (p_morphism_of F f))
+           o ((p_identity_of F y oR p_morphism_of F f)
+                o p_composition_of F x y y 1 f))%natural_transformation
+        _.</pre>
+</div>
+<div class="code" title="File: RewriteLaws.v
+Line: 113
+Time: 0s">
+<div class="time" style="width: 0%"></div>
+<pre>
+  Proof.</pre>
+</div>
+<div class="code" title="File: RewriteLaws.v
+Line: 114
+Time: 0.003s">
+<div class="time" style="width: 2.9126213592233%"></div>
+<pre>
+    apply path_isomorphic; simpl.</pre>
+</div>
+<div class="code" title="File: RewriteLaws.v
+Line: 115
+Time: 0.011s">
+<div class="time" style="width: 10.679611650485%"></div>
+<pre>
+    simpl rewrite (@p_left_identity_of_coherent _ C F x y f).</pre>
+</div>
+<div class="code" title="File: RewriteLaws.v
+Line: 116
+Time: 0.003s">
+<div class="time" style="width: 2.9126213592233%"></div>
+<pre>
+    path_natural_transformation.</pre>
+</div>
+<div class="code" title="File: RewriteLaws.v
+Line: 117
+Time: 0.008s">
+<div class="time" style="width: 7.7669902912621%"></div>
+<pre>
+    symmetry.</pre>
+</div>
+<div class="code" title="File: RewriteLaws.v
+Line: 118
+Time: 0.012s">
+<div class="time" style="width: 11.650485436893%"></div>
+<pre>
+    etransitivity; apply Category.Core.left_identity.</pre>
+</div>
+<div class="code" title="File: RewriteLaws.v
+Line: 119
+Time: 0.043s">
+<div class="time" style="width: 41.747572815534%"></div>
+<pre>
+  Qed.</pre>
+</div>
+<div class="code" title="File: RewriteLaws.v
+Line: 120
+Time: 0.088s">
+<div class="time" style="width: 85.436893203883%"></div>
+<pre>
+
+  Lemma p_right_identity_of_coherent_iso_for_rewrite x y (f : morphism C x y)
+  : (Category.Morphisms.idtoiso (_ -&gt; _) (ap (@p_morphism_of _ _ F x y) (Category.Core.right_identity C x y f)))
+    = @Build_Isomorphic
+        (_ -&gt; _) _ _
+        ((right_identity_natural_transformation_1 (p_morphism_of F f))
+           o ((p_morphism_of F f oL p_identity_of F x)
+                o p_composition_of F x x y f 1))%natural_transformation
+        _.</pre>
+</div>
+<div class="code" title="File: RewriteLaws.v
+Line: 129
+Time: 0s">
+<div class="time" style="width: 0%"></div>
+<pre>
+  Proof.</pre>
+</div>
+<div class="code" title="File: RewriteLaws.v
+Line: 130
+Time: 0.003s">
+<div class="time" style="width: 2.9126213592233%"></div>
+<pre>
+    apply path_isomorphic; simpl.</pre>
+</div>
+<div class="code" title="File: RewriteLaws.v
+Line: 131
+Time: 0.007s">
+<div class="time" style="width: 6.7961165048544%"></div>
+<pre>
+    simpl rewrite (@p_right_identity_of_coherent _ C F x y f).</pre>
+</div>
+<div class="code" title="File: RewriteLaws.v
+Line: 132
+Time: 0.003s">
+<div class="time" style="width: 2.9126213592233%"></div>
+<pre>
+    path_natural_transformation.</pre>
+</div>
+<div class="code" title="File: RewriteLaws.v
+Line: 133
+Time: 0.008s">
+<div class="time" style="width: 7.7669902912621%"></div>
+<pre>
+    symmetry.</pre>
+</div>
+<div class="code" title="File: RewriteLaws.v
+Line: 134
+Time: 0.012s">
+<div class="time" style="width: 11.650485436893%"></div>
+<pre>
+    etransitivity; apply Category.Core.left_identity.</pre>
+</div>
+<div class="code" title="File: RewriteLaws.v
+Line: 135
+Time: 0.045s">
+<div class="time" style="width: 43.68932038835%"></div>
+<pre>
+  Qed.</pre>
+</div>
+<div class="code" title="File: RewriteLaws.v
+Line: 136
+Time: 0s">
+<div class="time" style="width: 0%"></div>
+<pre>
+
+  Local Notation typeof x := ((fun T (_ : T) =&gt; T) _ x) (only parsing).</pre>
+</div>
+<div class="code" title="File: RewriteLaws.v
+Line: 138
+Time: 0.026s">
+<div class="time" style="width: 25.242718446602%"></div>
+<pre>
+
+  Let p_composition_of_coherent_for_rewrite_type w x y z f g h
+    := Eval simpl in typeof (ap (@morphism_isomorphic _ _ _)
+                                (@p_composition_of_coherent_iso_for_rewrite w x y z f g h)).</pre>
+</div>
+<div class="code" title="File: RewriteLaws.v
+Line: 142
+Time: 0.026s">
+<div class="time" style="width: 25.242718446602%"></div>
+<pre>
+  Definition p_composition_of_coherent_for_rewrite w x y z f g h
+  : p_composition_of_coherent_for_rewrite_type w x y z f g h
+    := ap (@morphism_isomorphic _ _ _)
+          (@p_composition_of_coherent_iso_for_rewrite w x y z f g h).</pre>
+</div>
+<div class="code" title="File: RewriteLaws.v
+Line: 146
+Time: 0.036s">
+<div class="time" style="width: 34.95145631068%"></div>
+<pre>
+
+  Let p_composition_of_coherent_inverse_for_rewrite_type w x y z f g h
+    := Eval simpl in typeof (ap (fun i =&gt; @morphism_inverse _ _ _ _ (@isisomorphism_isomorphic _ _ _ i))
+                                (@p_composition_of_coherent_iso_for_rewrite w x y z f g h)).</pre>
+</div>
+<div class="code" title="File: RewriteLaws.v
+Line: 150
+Time: 0.023s">
+<div class="time" style="width: 22.330097087379%"></div>
+<pre>
+  Definition p_composition_of_coherent_inverse_for_rewrite w x y z f g h
+  : p_composition_of_coherent_inverse_for_rewrite_type w x y z f g h
+    := p_composition_of_coherent_iso_for_rewrite__isisomorphism_helper__to_inverse
+         (p_composition_of_coherent_iso_for_rewrite w x y z f g h).</pre>
+</div>
+<div class="code" title="File: RewriteLaws.v
+Line: 154
+Time: 0.022s">
+<div class="time" style="width: 21.359223300971%"></div>
+<pre>
+
+  Let p_left_identity_of_coherent_for_rewrite_type x y f
+    := Eval simpl in typeof (ap (@morphism_isomorphic _ _ _)
+                                (@p_left_identity_of_coherent_iso_for_rewrite x y f)).</pre>
+</div>
+<div class="code" title="File: RewriteLaws.v
+Line: 158
+Time: 0.023s">
+<div class="time" style="width: 22.330097087379%"></div>
+<pre>
+  Definition p_left_identity_of_coherent_for_rewrite x y f
+  : p_left_identity_of_coherent_for_rewrite_type x y f
+    := ap (@morphism_isomorphic _ _ _)
+          (@p_left_identity_of_coherent_iso_for_rewrite x y f).</pre>
+</div>
+<div class="code" title="File: RewriteLaws.v
+Line: 162
+Time: 0.023s">
+<div class="time" style="width: 22.330097087379%"></div>
+<pre>
+
+  Let p_left_identity_of_coherent_inverse_for_rewrite_type x y f
+    := Eval simpl in typeof (ap (fun i =&gt; @morphism_inverse _ _ _ _ (@isisomorphism_isomorphic _ _ _ i))
+                                (@p_left_identity_of_coherent_iso_for_rewrite x y f)).</pre>
+</div>
+<div class="code" title="File: RewriteLaws.v
+Line: 166
+Time: 0.027s">
+<div class="time" style="width: 26.21359223301%"></div>
+<pre>
+  Definition p_left_identity_of_coherent_inverse_for_rewrite x y f
+  : p_left_identity_of_coherent_inverse_for_rewrite_type x y f
+    := ap (fun i =&gt; @morphism_inverse _ _ _ _ (@isisomorphism_isomorphic _ _ _ i))
+          (@p_left_identity_of_coherent_iso_for_rewrite x y f).</pre>
+</div>
+<div class="code" title="File: RewriteLaws.v
+Line: 170
+Time: 0.023s">
+<div class="time" style="width: 22.330097087379%"></div>
+<pre>
+
+  Let p_right_identity_of_coherent_for_rewrite_type x y f
+    := Eval simpl in typeof (ap (@morphism_isomorphic _ _ _)
+                                (@p_right_identity_of_coherent_iso_for_rewrite x y f)).</pre>
+</div>
+<div class="code" title="File: RewriteLaws.v
+Line: 174
+Time: 0.023s">
+<div class="time" style="width: 22.330097087379%"></div>
+<pre>
+  Definition p_right_identity_of_coherent_for_rewrite x y f
+  : p_right_identity_of_coherent_for_rewrite_type x y f
+    := Eval simpl in ap (@morphism_isomorphic _ _ _)
+                        (@p_right_identity_of_coherent_iso_for_rewrite x y f).</pre>
+</div>
+<div class="code" title="File: RewriteLaws.v
+Line: 178
+Time: 0.023s">
+<div class="time" style="width: 22.330097087379%"></div>
+<pre>
+
+  Let p_right_identity_of_coherent_inverse_for_rewrite_type x y f
+    := Eval simpl in typeof (ap (fun i =&gt; @morphism_inverse _ _ _ _ (@isisomorphism_isomorphic _ _ _ i))
+                                (@p_right_identity_of_coherent_iso_for_rewrite x y f)).</pre>
+</div>
+<div class="code" title="File: RewriteLaws.v
+Line: 182
+Time: 0.027s">
+<div class="time" style="width: 26.21359223301%"></div>
+<pre>
+  Definition p_right_identity_of_coherent_inverse_for_rewrite x y f
+  : p_right_identity_of_coherent_inverse_for_rewrite_type x y f
+    := ap (fun i =&gt; @morphism_inverse _ _ _ _ (@isisomorphism_isomorphic _ _ _ i))
+          (@p_right_identity_of_coherent_iso_for_rewrite x y f).</pre>
+</div>
+<div class="code" title="File: RewriteLaws.v
+Line: 186
+Time: 0.103s">
+<div class="time" style="width: 100%"></div>
+<pre>
+End lemmas.</pre>
+</div>
+<div class="code" title="File: RewriteLaws.v
+Line: 188
+Time: 0s">
+<div class="time" style="width: 0%"></div>
+<pre>
+
+</pre>
+</div>
+</body>
+</html>
+

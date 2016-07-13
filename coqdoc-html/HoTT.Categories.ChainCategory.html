@@ -1,0 +1,160 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
+"http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<link href="coqdoc.css" rel="stylesheet" type="text/css" />
+<title>HoTT.Categories.ChainCategory</title>
+</head>
+
+<body>
+
+<div id="page">
+
+<div id="header">
+</div>
+
+<div id="main">
+
+<h1 class="libtitle">Library HoTT.Categories.ChainCategory</h1>
+
+<div class="code">
+</div>
+
+<div class="doc">
+<a name="lab808"></a><h1 class="section">The category ω of (ℕ, ≤), and the chain categories <span class="inlinecode">[<a class="idref" href="Coq.Init.Peano.html#n"><span class="id" title="variable">n</span></a>]</span></h1>
+
+</div>
+<div class="code">
+<span class="id" title="keyword">Require</span> <span class="id" title="keyword">Import</span> <a class="idref" href="HoTT.Categories.Category.Core.html#"><span class="id" title="library">Category.Core</span></a> <a class="idref" href="HoTT.Categories.Category.Subcategory.Full.html#"><span class="id" title="library">Category.Subcategory.Full</span></a>.<br/>
+<span class="id" title="keyword">Require</span> <span class="id" title="keyword">Import</span> <a class="idref" href="HoTT.Categories.Category.Sigma.Univalent.html#"><span class="id" title="library">Category.Sigma.Univalent</span></a>.<br/>
+<span class="id" title="keyword">Require</span> <span class="id" title="keyword">Import</span> <a class="idref" href="HoTT.Categories.Category.Morphisms.html#"><span class="id" title="library">Category.Morphisms</span></a> <a class="idref" href="HoTT.Categories.Category.Univalent.html#"><span class="id" title="library">Category.Univalent</span></a> <a class="idref" href="HoTT.Categories.Category.Strict.html#"><span class="id" title="library">Category.Strict</span></a>.<br/>
+<span class="id" title="keyword">Require</span> <span class="id" title="keyword">Import</span> <a class="idref" href="HoTT.Basics.Trunc.html#"><span class="id" title="library">HoTT.Basics.Trunc</span></a> <a class="idref" href="HoTT.DProp.html#"><span class="id" title="library">HoTT.DProp</span></a> <a class="idref" href="HoTT.TruncType.html#"><span class="id" title="library">HoTT.TruncType</span></a> <a class="idref" href="HoTT.Spaces.Nat.html#"><span class="id" title="library">HoTT.Spaces.Nat</span></a>.<br/>
+
+<br/>
+<span class="id" title="keyword">Set</span> <span class="id" title="var">Universe</span> <span class="id" title="var">Polymorphism</span>.<br/>
+<span class="id" title="keyword">Set Implicit Arguments</span>.<br/>
+<span class="id" title="keyword">Generalizable</span> <span class="id" title="keyword">All</span> <span class="id" title="keyword">Variables</span>.<br/>
+<span class="id" title="keyword">Set</span> <span class="id" title="var">Asymmetric</span> <span class="id" title="var">Patterns</span>.<br/>
+
+<br/>
+</div>
+
+<div class="doc">
+<a name="lab809"></a><h2 class="section">Definitions</h2>
+ Quoting Wikipedia (http://en.wikipedia.org/wiki/Total_order#Chains):
+
+<div class="paragraph"> </div>
+
+    While chain is sometimes merely a synonym for totally ordered set,
+    it can also refer to a totally ordered subset of some partially
+    ordered set. The latter definition has a crucial role in Zorn's
+    lemma.  We take the convention that a "chain" is a totally ordered or
+    linearly ordered set; the corresponding category on that set has,
+    as morphisms, the order relation. 
+</div>
+<div class="code">
+
+<br/>
+<span class="id" title="keyword">Module</span> <span class="id" title="keyword">Export</span> <a name="Core"><span class="id" title="module">Core</span></a>.<br/>
+</div>
+
+<div class="doc">
+<a name="lab810"></a><h3 class="section"><span class="inlinecode">[ω]</span>, the linear order on ℕ</h3>
+
+</div>
+<div class="code">
+&nbsp;&nbsp;<span class="id" title="keyword">Definition</span> <a name="Core.omega"><span class="id" title="definition">omega</span></a> : <a class="idref" href="HoTT.Categories.Category.Core.html#PreCategory"><span class="id" title="record">PreCategory</span></a><br/>
+&nbsp;&nbsp;&nbsp;&nbsp;:= @<a class="idref" href="HoTT.Categories.Category.Core.html#Build_PreCategory"><span class="id" title="definition">Build_PreCategory</span></a><br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a class="idref" href="Coq.Init.Datatypes.html#nat"><span class="id" title="inductive">nat</span></a><br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a class="idref" href="HoTT.Spaces.Nat.html#leq"><span class="id" title="definition">leq</span></a><br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a class="idref" href="HoTT.Spaces.Nat.html#leq_refl"><span class="id" title="instance">leq_refl</span></a><br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;(<span class="id" title="keyword">fun</span> <span class="id" title="var">x</span> <span class="id" title="var">y</span> <span class="id" title="var">z</span> <span class="id" title="var">p</span> <span class="id" title="var">q</span> ⇒ <a class="idref" href="HoTT.Spaces.Nat.html#leq_trans"><span class="id" title="instance">leq_trans</span></a> <span class="id" title="var">_</span> <span class="id" title="var">_</span> <span class="id" title="var">_</span> <a class="idref" href="HoTT.Categories.ChainCategory.html#q"><span class="id" title="variable">q</span></a> <a class="idref" href="HoTT.Categories.ChainCategory.html#p"><span class="id" title="variable">p</span></a>)<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;(<span class="id" title="keyword">fun</span> <span class="id" title="var">_</span> <span class="id" title="var">_</span> <span class="id" title="var">_</span> <span class="id" title="var">_</span> <span class="id" title="var">_</span> <span class="id" title="var">_</span> <span class="id" title="var">_</span> ⇒ <a class="idref" href="HoTT.Basics.Trunc.html#path_ishprop"><span class="id" title="lemma">path_ishprop</span></a> <span class="id" title="var">_</span> <span class="id" title="var">_</span>)<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;(<span class="id" title="keyword">fun</span> <span class="id" title="var">_</span> <span class="id" title="var">_</span> <span class="id" title="var">_</span> ⇒ <a class="idref" href="HoTT.Basics.Trunc.html#path_ishprop"><span class="id" title="lemma">path_ishprop</span></a> <span class="id" title="var">_</span> <span class="id" title="var">_</span>)<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;(<span class="id" title="keyword">fun</span> <span class="id" title="var">_</span> <span class="id" title="var">_</span> <span class="id" title="var">_</span> ⇒ <a class="idref" href="HoTT.Basics.Trunc.html#path_ishprop"><span class="id" title="lemma">path_ishprop</span></a> <span class="id" title="var">_</span> <span class="id" title="var">_</span>)<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="id" title="var">_</span>.<br/>
+
+<br/>
+</div>
+
+<div class="doc">
+<a name="lab811"></a><h3 class="section"><span class="inlinecode">[<a class="idref" href="Coq.Init.Peano.html#n"><span class="id" title="variable">n</span></a>]</span>, a linear order on a finite set with <span class="inlinecode"><a class="idref" href="Coq.Init.Peano.html#n"><span class="id" title="variable">n</span></a></span> <span class="inlinecode">+</span> <span class="inlinecode">1</span> elements</h3>
+ Using <span class="inlinecode"><a class="idref" href="Coq.Init.Peano.html#n"><span class="id" title="variable">n</span></a></span> <span class="inlinecode">+</span> <span class="inlinecode">1</span> elements allows us to agree with the common
+      definition of an <span class="inlinecode"><a class="idref" href="Coq.Init.Peano.html#n"><span class="id" title="variable">n</span></a></span>-simplex, where a 0-simplex is a point, and
+      a 1-simplex has two end-points, etc. 
+</div>
+<div class="code">
+&nbsp;&nbsp;<span class="id" title="keyword">Definition</span> <a name="Core.chain"><span class="id" title="definition">chain</span></a> (<span class="id" title="var">n</span> : <a class="idref" href="Coq.Init.Datatypes.html#nat"><span class="id" title="inductive">nat</span></a>) : <a class="idref" href="HoTT.Categories.Category.Core.html#PreCategory"><span class="id" title="record">PreCategory</span></a><br/>
+&nbsp;&nbsp;&nbsp;&nbsp;:= <a class="idref" href="HoTT.Categories.Category.Subcategory.Full.html#0e0f594a2426d204e773bfa7dfb46d90"><span class="id" title="notation">{</span></a> <span class="id" title="var">m</span> <a class="idref" href="HoTT.Categories.Category.Subcategory.Full.html#0e0f594a2426d204e773bfa7dfb46d90"><span class="id" title="notation">:</span></a> <a class="idref" href="HoTT.Categories.ChainCategory.html#Core.omega"><span class="id" title="definition">omega</span></a> <a class="idref" href="HoTT.Categories.Category.Subcategory.Full.html#0e0f594a2426d204e773bfa7dfb46d90"><span class="id" title="notation">|</span></a> <span class="id" title="var">m</span> <a class="idref" href="HoTT.Spaces.Nat.html#9b077c369e19739ef880736ba34623ff"><span class="id" title="notation">≤</span></a> <a class="idref" href="HoTT.Categories.ChainCategory.html#n"><span class="id" title="variable">n</span></a> <a class="idref" href="HoTT.Categories.Category.Subcategory.Full.html#0e0f594a2426d204e773bfa7dfb46d90"><span class="id" title="notation">}</span></a>%<span class="id" title="var">category</span>.<br/>
+
+<br/>
+</div>
+
+<div class="doc">
+TODO: Possibly generalize this to arbitrary sets with arbitrary
+      (total?) orders on them? 
+</div>
+<div class="code">
+
+<br/>
+&nbsp;&nbsp;<span class="id" title="keyword">Module</span> <span class="id" title="keyword">Export</span> <a name="Core.ChainCategoryCoreNotations"><span class="id" title="module">ChainCategoryCoreNotations</span></a>.<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="id" title="keyword">Notation</span> <a name="827d31a56b3331e0d47f6ae5e967d501"><span class="id" title="notation">&quot;</span></a>[ n ]" := (<a class="idref" href="HoTT.Categories.ChainCategory.html#Core.ChainCategoryCoreNotations.chain"><span class="id" title="definition">chain</span></a> <span class="id" title="var">n</span>) : <span class="id" title="var">category_scope</span>.<br/>
+&nbsp;&nbsp;<span class="id" title="keyword">End</span> <a class="idref" href="HoTT.Categories.ChainCategory.html#Core.ChainCategoryCoreNotations"><span class="id" title="module">ChainCategoryCoreNotations</span></a>.<br/>
+<span class="id" title="keyword">End</span> <a class="idref" href="HoTT.Categories.ChainCategory.html#Core"><span class="id" title="module">Core</span></a>.<br/>
+
+<br/>
+<span class="id" title="keyword">Module</span> <span class="id" title="keyword">Export</span> <a name="Notations"><span class="id" title="module">Notations</span></a>.<br/>
+&nbsp;&nbsp;<span class="id" title="keyword">Include</span> <a class="idref" href="HoTT.Categories.ChainCategory.html#Core.ChainCategoryCoreNotations"><span class="id" title="module">ChainCategoryCoreNotations</span></a>.<br/>
+<span class="id" title="keyword">End</span> <a class="idref" href="HoTT.Categories.ChainCategory.html#Notations"><span class="id" title="module">Notations</span></a>.<br/>
+
+<br/>
+<span class="id" title="keyword">Module</span> <a name="Utf8"><span class="id" title="module">Utf8</span></a>.<br/>
+&nbsp;&nbsp;<span class="id" title="keyword">Export</span> <span class="id" title="var">Notations</span>.<br/>
+
+<br/>
+&nbsp;&nbsp;<span class="id" title="keyword">Notation</span> <a name="c5cf2da5141e01db48f9ac821ca8965b"><span class="id" title="notation">&quot;</span></a>[ ∞ ]" := <a class="idref" href="HoTT.Categories.ChainCategory.html#Core.omega"><span class="id" title="definition">omega</span></a> : <span class="id" title="var">category_scope</span>.<br/>
+&nbsp;&nbsp;<span class="id" title="keyword">Notation</span> <a name="e4cec037a5d4bc2fd328cc8b6195a738"><span class="id" title="notation">&quot;</span></a>[ 'ω' ]" := <a class="idref" href="HoTT.Categories.ChainCategory.html#Core.omega"><span class="id" title="definition">omega</span></a> : <span class="id" title="var">category_scope</span>.<br/>
+<span class="id" title="keyword">End</span> <a class="idref" href="HoTT.Categories.ChainCategory.html#Utf8"><span class="id" title="module">Utf8</span></a>.<br/>
+
+<br/>
+<span class="id" title="keyword">Module</span> <span class="id" title="keyword">Export</span> <span class="id" title="keyword">Strict</span>.<br/>
+&nbsp;&nbsp;<span class="id" title="keyword">Definition</span> <a name="Strict.isstrict_omega"><span class="id" title="definition">isstrict_omega</span></a> : <a class="idref" href="HoTT.Categories.Category.Strict.html#IsStrictCategory"><span class="id" title="abbreviation">IsStrictCategory</span></a> <a class="idref" href="HoTT.Categories.ChainCategory.html#Core.omega"><span class="id" title="definition">omega</span></a>.<br/>
+&nbsp;&nbsp;<span class="id" title="keyword">Proof</span>.<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="id" title="tactic">exact</span> <span class="id" title="var">_</span>.<br/>
+&nbsp;&nbsp;<span class="id" title="keyword">Defined</span>.<br/>
+
+<br/>
+&nbsp;&nbsp;<span class="id" title="keyword">Definition</span> <a name="Strict.isstrict_chain"><span class="id" title="definition">isstrict_chain</span></a> {<span class="id" title="var">n</span>} : <a class="idref" href="HoTT.Categories.Category.Strict.html#IsStrictCategory"><span class="id" title="abbreviation">IsStrictCategory</span></a> <a class="idref" href="HoTT.Categories.ChainCategory.html#827d31a56b3331e0d47f6ae5e967d501"><span class="id" title="notation">[</span></a><a class="idref" href="HoTT.Categories.ChainCategory.html#n"><span class="id" title="variable">n</span></a><a class="idref" href="HoTT.Categories.ChainCategory.html#827d31a56b3331e0d47f6ae5e967d501"><span class="id" title="notation">]</span></a>.<br/>
+&nbsp;&nbsp;<span class="id" title="keyword">Proof</span>.<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="id" title="tactic">exact</span> <span class="id" title="var">_</span>.<br/>
+&nbsp;&nbsp;<span class="id" title="keyword">Defined</span>.<br/>
+<span class="id" title="keyword">End</span> <span class="id" title="keyword">Strict</span>.<br/>
+
+<br/>
+<span class="id" title="keyword">Module</span> <span class="id" title="keyword">Export</span> <a name="Univalent"><span class="id" title="module">Univalent</span></a>.<br/>
+&nbsp;&nbsp;<span class="id" title="keyword">Global Instance</span> <a name="Univalent.iscategory_omega"><span class="id" title="instance">iscategory_omega</span></a> : <a class="idref" href="HoTT.Categories.Category.Univalent.html#IsCategory"><span class="id" title="abbreviation">IsCategory</span></a> <a class="idref" href="HoTT.Categories.ChainCategory.html#Core.omega"><span class="id" title="definition">omega</span></a>.<br/>
+&nbsp;&nbsp;<span class="id" title="keyword">Proof</span>.<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="id" title="tactic">intros</span> <span class="id" title="var">s</span> <span class="id" title="var">d</span>.<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="id" title="tactic">refine</span> (<a class="idref" href="HoTT.Basics.Trunc.html#isequiv_iff_hprop"><span class="id" title="definition">isequiv_iff_hprop</span></a> <span class="id" title="var">_</span> <span class="id" title="var">_</span>).<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;{ <span class="id" title="tactic">refine</span> (<a class="idref" href="HoTT.Basics.Trunc.html#trunc_equiv'"><span class="id" title="definition">trunc_equiv'</span></a> <span class="id" title="var">_</span> (<a class="idref" href="HoTT.Categories.Category.Morphisms.html#issig_isomorphic"><span class="id" title="lemma">issig_isomorphic</span></a> <span class="id" title="var">_</span> <span class="id" title="var">_</span> <span class="id" title="var">_</span>)). }<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;{ <span class="id" title="tactic">intro</span> <span class="id" title="var">m</span>; <span class="id" title="tactic">apply</span> <a class="idref" href="HoTT.Spaces.Nat.html#leq_antisym"><span class="id" title="lemma">leq_antisym</span></a>; <span class="id" title="tactic">apply</span> <span class="id" title="var">m</span>. }<br/>
+&nbsp;&nbsp;<span class="id" title="keyword">Defined</span>.<br/>
+
+<br/>
+&nbsp;&nbsp;<span class="id" title="keyword">Definition</span> <a name="Univalent.iscategory_chain"><span class="id" title="definition">iscategory_chain</span></a> {<span class="id" title="var">n</span>} : <a class="idref" href="HoTT.Categories.Category.Univalent.html#IsCategory"><span class="id" title="abbreviation">IsCategory</span></a> <a class="idref" href="HoTT.Categories.ChainCategory.html#827d31a56b3331e0d47f6ae5e967d501"><span class="id" title="notation">[</span></a><a class="idref" href="HoTT.Categories.ChainCategory.html#n"><span class="id" title="variable">n</span></a><a class="idref" href="HoTT.Categories.ChainCategory.html#827d31a56b3331e0d47f6ae5e967d501"><span class="id" title="notation">]</span></a>.<br/>
+&nbsp;&nbsp;<span class="id" title="keyword">Proof</span>.<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="id" title="tactic">exact</span> <span class="id" title="var">_</span>.<br/>
+&nbsp;&nbsp;<span class="id" title="keyword">Defined</span>.<br/>
+<span class="id" title="keyword">End</span> <a class="idref" href="HoTT.Categories.ChainCategory.html#Univalent"><span class="id" title="module">Univalent</span></a>.<br/>
+</div>
+</div>
+
+<div id="footer">
+<hr/><a href="index.html">Index</a><hr/>This page has been generated by <a href="http://coq.inria.fr/">coqdoc</a>
+</div>
+
+</div>
+
+</body>
+</html>

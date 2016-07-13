@@ -1,0 +1,357 @@
+<html>
+<head>
+<title>Core.v</title>
+<style>
+.time {
+  background-color: #ffaaaa;
+  height: 100%;
+  z-index: -1;
+  position: absolute;
+}
+.code {
+  z-index: 0;
+  position: relative;
+  border-style: solid;
+  border-color: transparent;
+  border-width: 1px;
+}
+.code:hover {
+  border-style: solid;
+  border-color: black;
+  border-width: 1px;
+}
+pre {
+  margin: 1px;
+}
+</style>
+</head>
+<body>
+<h1>Timings for Core.v</h1>
+
+<div class="code" title="File: Core.v
+Line: 1
+Time: 0s">
+<div class="time" style="width: 0%"></div>
+<pre>(** * Kan Extensions *)</pre>
+</div>
+<div class="code" title="File: Core.v
+Line: 1
+Time: 0.007s">
+<div class="time" style="width: 15.909090909091%"></div>
+<pre>Require Import Category.Core Functor.Core NaturalTransformation.Core.</pre>
+</div>
+<div class="code" title="File: Core.v
+Line: 1
+Time: 0.044s">
+<div class="time" style="width: 100%"></div>
+<pre>
+Require Import ExponentialLaws.Law4.Functors FunctorCategory.Core.</pre>
+</div>
+<div class="code" title="File: Core.v
+Line: 2
+Time: 0.039s">
+<div class="time" style="width: 88.636363636364%"></div>
+<pre>
+Require Import Functor.Composition.Functorial.Core.</pre>
+</div>
+<div class="code" title="File: Core.v
+Line: 3
+Time: 0.006s">
+<div class="time" style="width: 13.636363636364%"></div>
+<pre>
+Require Import UniversalProperties.</pre>
+</div>
+<div class="code" title="File: Core.v
+Line: 4
+Time: 0s">
+<div class="time" style="width: 0%"></div>
+<pre>
+
+Set Universe Polymorphism.</pre>
+</div>
+<div class="code" title="File: Core.v
+Line: 6
+Time: 0s">
+<div class="time" style="width: 0%"></div>
+<pre>
+Set Implicit Arguments.</pre>
+</div>
+<div class="code" title="File: Core.v
+Line: 7
+Time: 0s">
+<div class="time" style="width: 0%"></div>
+<pre>
+Generalizable All Variables.</pre>
+</div>
+<div class="code" title="File: Core.v
+Line: 8
+Time: 0s">
+<div class="time" style="width: 0%"></div>
+<pre>
+Set Asymmetric Patterns.</pre>
+</div>
+<div class="code" title="File: Core.v
+Line: 9
+Time: 0s">
+<div class="time" style="width: 0%"></div>
+<pre>
+
+Local Open Scope category_scope.</pre>
+</div>
+<div class="code" title="File: Core.v
+Line: 11
+Time: 0s">
+<div class="time" style="width: 0%"></div>
+<pre>
+
+(** Quoting nCatLab on Kan Exensions:
+
+    ** Idea
+
+    The Kan extension of a functor [F : C → D] with respect to a
+    functor
+
+&lt;&lt;
+    C
+    |
+    | p
+    ↓
+    C'
+&gt;&gt;
+
+    is, if it exists, a kind of best approximation to the problem of
+    finding a functor [C' → D] such that
+
+&lt;&lt;
+        F
+    C -----&gt; D
+    |       ↗
+    | p   /
+    |   /
+    ↓ /
+    C'
+&gt;&gt;
+
+    hence to extending the domain of [F] through [p] from [C] to [C'].
+
+    More generally, this makes sense not only in Cat but in any
+    2-category.
+
+    Similarly, a Kan lift is the best approximation to lifting a
+    morphism [F : C → D] through a morphism
+
+&lt;&lt;
+    D'
+    |
+    ↓
+    D
+&gt;&gt;
+
+    to a morphism [F̂]
+
+&lt;&lt;
+                D'
+              ↗ |
+            /   |
+        F̂ /     |
+        /       |
+      /   F     ↓
+    C --------&gt; D
+&gt;&gt;
+
+    Kan extensions are ubiquitous. See the discussion at Examples
+    below.
+
+    ** Definitions
+
+    There are various slight variants of the definition of Kan
+    extension. In good cases they all exist and all coincide, but in
+    some cases only some of these will actually exist.
+
+    We (have to) distinguish the following cases:
+
+    - “ordinary” or “weak” Kan extensions
+
+      These define the extension of an entire functor, by an
+      adjointness relation.
+
+      Here we (have to) distinguish further between
+
+      - global Kan extensions,
+
+        which define extensions of all possible functors of given
+        domain and codomain (if all of them indeed exist);
+
+      - local Kan extensions,
+
+        which define extensions of single functors only, which may
+        exist even if not every functor has an extension.
+
+    - “pointwise” or “strong” Kan extensions
+
+      These define the value of an extended functor on each object
+      (each “point”) by a weighted (co)limit.
+
+      Furthermore, a pointwise Kan extension can be “absolute”.
+
+    If the pointwise version exists, then it coincides with the
+    “ordinary” or “weak” version, but the former may exist without the
+    pointwise version existing. See below for more.
+
+    Some authors (such as Kelly) assert that only pointwise Kan
+    extensions deserve the name “Kan extension,” and use the term as
+    “weak Kan extension” for a functor equipped with a universal
+    natural transformation. It is certainly true that most Kan
+    extensions which arise in practice are pointwise. This distinction
+    is even more important in enriched category theory. *)
+
+</pre>
+</div>
+<div class="code" title="File: Core.v
+Line: 113
+Time: 0s">
+<div class="time" style="width: 0%"></div>
+<pre>Section kan_extensions.</pre>
+</div>
+<div class="code" title="File: Core.v
+Line: 113
+Time: 0s">
+<div class="time" style="width: 0%"></div>
+<pre>
+  (** ** Ordinary or weak Kan extensions
+
+      *** Global Kan extensions
+
+      Let [p : C → C'] be a functor. For [D] any other category, write
+      [p* : (C' → D) → (C → D)] for the induced functor on the functor
+      categories: this sends a functor [h : C' → D] to the composite functor
+
+&lt;&lt;
+                p      h
+      p* h : C --&gt; C' --&gt; D
+&gt;&gt;
+   *)
+
+
+  (** *** Pullback-along functor *)
+ </pre>
+</div>
+<div class="code" title="File: Core.v
+Line: 130
+Time: 0s">
+<div class="time" style="width: 0%"></div>
+<pre>Context `{Funext}.</pre>
+</div>
+<div class="code" title="File: Core.v
+Line: 130
+Time: 0s">
+<div class="time" style="width: 0%"></div>
+<pre>
+  Variables C C' D : PreCategory.</pre>
+</div>
+<div class="code" title="File: Core.v
+Line: 131
+Time: 0s">
+<div class="time" style="width: 0%"></div>
+<pre>
+
+  Section pullback_along.</pre>
+</div>
+<div class="code" title="File: Core.v
+Line: 133
+Time: 0.033s">
+<div class="time" style="width: 75%"></div>
+<pre>
+    Definition pullback_along_functor
+    : object ((C -&gt; C') -&gt; (C' -&gt; D) -&gt; (C -&gt; D))
+      := Functor.Composition.Functorial.Core.compose_functor _ _ _.</pre>
+</div>
+<div class="code" title="File: Core.v
+Line: 136
+Time: 0.011s">
+<div class="time" style="width: 25%"></div>
+<pre>
+
+    Definition pullback_along (p : Functor C C')
+    : object ((C' -&gt; D) -&gt; (C -&gt; D))
+      := Eval hnf in pullback_along_functor p.</pre>
+</div>
+<div class="code" title="File: Core.v
+Line: 140
+Time: 0s">
+<div class="time" style="width: 0%"></div>
+<pre>
+  End pullback_along.</pre>
+</div>
+<div class="code" title="File: Core.v
+Line: 141
+Time: 0s">
+<div class="time" style="width: 0%"></div>
+<pre>
+
+  (** Definition. If [p*] has a left adjoint, typically denoted [p_! :
+      (C → D) → (C' → D)] or [Lan_p : (C → D) → (C' → D)] then this
+      left adjoint is called the (ordinary or weak) left Kan extension
+      operation along [p]. For [h ∈ (C -&gt; D)] we call [p_! h] the left
+      Kan extension of [h] along [p].
+
+      Similarly, if [p*] has a right adjoint, this right adjoint is
+      called the right Kan extension operation along [p]. It is
+      typically denoted [p_* : (C → D) → (C' → D)] or [Ran = Ran_p :
+      (C → D) → (C' → D)].
+
+      The analogous definition clearly makes sense as stated in other
+      contexts, such as in enriched category theory.
+
+      Observation. If [C' = 1] is the terminal category, then
+
+      - the left Kan extension operation forms the colimit of a functor;
+
+      - the right Kan extension operation forms the limit of a functor. *)
+
+  (** *** Left Kan extensions *)
+  (** Colimits are initial morphisms. *)
+ </pre>
+</div>
+<div class="code" title="File: Core.v
+Line: 165
+Time: 0.014s">
+<div class="time" style="width: 31.818181818182%"></div>
+<pre>Definition IsLeftKanExtensionAlong (p : Functor C C') (h : Functor C D)
+    := @IsInitialMorphism (_ -&gt; _) _ h (pullback_along p).</pre>
+</div>
+<div class="code" title="File: Core.v
+Line: 166
+Time: 0s">
+<div class="time" style="width: 0%"></div>
+<pre>
+
+  (** *** Right Kan extensions *)
+  (** Limits are terminal morphisms *)
+ </pre>
+</div>
+<div class="code" title="File: Core.v
+Line: 170
+Time: 0.012s">
+<div class="time" style="width: 27.272727272727%"></div>
+<pre>Definition IsRightKanExtensionAlong (p : Functor C C') (h : Functor C D)
+    := @IsTerminalMorphism _ (_ -&gt; _) (pullback_along p) h.</pre>
+</div>
+<div class="code" title="File: Core.v
+Line: 171
+Time: 0.007s">
+<div class="time" style="width: 15.909090909091%"></div>
+<pre>
+End kan_extensions.</pre>
+</div>
+<div class="code" title="File: Core.v
+Line: 173
+Time: 0s">
+<div class="time" style="width: 0%"></div>
+<pre>
+
+</pre>
+</div>
+</body>
+</html>
+

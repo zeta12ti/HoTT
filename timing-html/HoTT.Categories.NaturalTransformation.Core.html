@@ -1,0 +1,271 @@
+<html>
+<head>
+<title>Core.v</title>
+<style>
+.time {
+  background-color: #ffaaaa;
+  height: 100%;
+  z-index: -1;
+  position: absolute;
+}
+.code {
+  z-index: 0;
+  position: relative;
+  border-style: solid;
+  border-color: transparent;
+  border-width: 1px;
+}
+.code:hover {
+  border-style: solid;
+  border-color: black;
+  border-width: 1px;
+}
+pre {
+  margin: 1px;
+}
+</style>
+</head>
+<body>
+<h1>Timings for Core.v</h1>
+
+<div class="code" title="File: Core.v
+Line: 1
+Time: 0s">
+<div class="time" style="width: 0%"></div>
+<pre>(** * Definition of natural transformation *)</pre>
+</div>
+<div class="code" title="File: Core.v
+Line: 1
+Time: 0.006s">
+<div class="time" style="width: 31.578947368421%"></div>
+<pre>Require Import Category.Core Functor.Core.</pre>
+</div>
+<div class="code" title="File: Core.v
+Line: 1
+Time: 0s">
+<div class="time" style="width: 0%"></div>
+<pre>
+
+Set Universe Polymorphism.</pre>
+</div>
+<div class="code" title="File: Core.v
+Line: 3
+Time: 0s">
+<div class="time" style="width: 0%"></div>
+<pre>
+Set Implicit Arguments.</pre>
+</div>
+<div class="code" title="File: Core.v
+Line: 4
+Time: 0s">
+<div class="time" style="width: 0%"></div>
+<pre>
+Generalizable All Variables.</pre>
+</div>
+<div class="code" title="File: Core.v
+Line: 5
+Time: 0s">
+<div class="time" style="width: 0%"></div>
+<pre>
+Set Asymmetric Patterns.</pre>
+</div>
+<div class="code" title="File: Core.v
+Line: 6
+Time: 0s">
+<div class="time" style="width: 0%"></div>
+<pre>
+
+Delimit Scope natural_transformation_scope with natural_transformation.</pre>
+</div>
+<div class="code" title="File: Core.v
+Line: 8
+Time: 0s">
+<div class="time" style="width: 0%"></div>
+<pre>
+
+Local Open Scope morphism_scope.</pre>
+</div>
+<div class="code" title="File: Core.v
+Line: 10
+Time: 0s">
+<div class="time" style="width: 0%"></div>
+<pre>
+Local Open Scope natural_transformation_scope.</pre>
+</div>
+<div class="code" title="File: Core.v
+Line: 11
+Time: 0s">
+<div class="time" style="width: 0%"></div>
+<pre>
+
+Section NaturalTransformation.</pre>
+</div>
+<div class="code" title="File: Core.v
+Line: 13
+Time: 0s">
+<div class="time" style="width: 0%"></div>
+<pre>
+  Variables C D : PreCategory.</pre>
+</div>
+<div class="code" title="File: Core.v
+Line: 14
+Time: 0s">
+<div class="time" style="width: 0%"></div>
+<pre>
+  Variables F G : Functor C D.</pre>
+</div>
+<div class="code" title="File: Core.v
+Line: 15
+Time: 0s">
+<div class="time" style="width: 0%"></div>
+<pre>
+
+  (**
+     Quoting from the lecture notes for 18.705, Commutative Algebra:
+
+     A map of functors is known as a natural transformation. Namely,
+     given two functors [F : C -&gt; D], [G : C -&gt; D], a natural
+     transformation [T: F -&gt; G] is a collection of maps [T A : F A -&gt;
+     G A], one for each object [A] of [C], such that [(T B) ∘ (F m) =
+     (G m) ∘ (T A)] for every map [m : A -&gt; B] of [C]; that is, the
+     following diagram is commutative:
+
+&lt;&lt;
+           F m
+     F A -------&gt; F B
+      |            |
+      |            |
+      | T A        | T B
+      |            |
+      V    G m     V
+     G A --------&gt; G B
+&gt;&gt;
+     **)
+
+ </pre>
+</div>
+<div class="code" title="File: Core.v
+Line: 39
+Time: 0.006s">
+<div class="time" style="width: 31.578947368421%"></div>
+<pre>Record NaturalTransformation :=
+    Build_NaturalTransformation' {
+        components_of :&gt; forall c, morphism D (F c) (G c);
+        commutes : forall s d (m : morphism C s d),
+                     components_of d o F _1 m = G _1 m o components_of s;
+        (* We require the following symmetrized version so that for eta-expanded [T], we have [(T^op)^op = T] judgementally. *)
+        commutes_sym : forall s d (m : C.(morphism) s d),
+                         G _1 m o components_of s = components_of d o F _1 m
+      }.</pre>
+</div>
+<div class="code" title="File: Core.v
+Line: 47
+Time: 0.004s">
+<div class="time" style="width: 21.052631578947%"></div>
+<pre>
+
+  Definition Build_NaturalTransformation CO COM
+    := Build_NaturalTransformation'
+         CO
+         COM
+         (fun _ _ _ =&gt; symmetry _ _ (COM _ _ _)).</pre>
+</div>
+<div class="code" title="File: Core.v
+Line: 53
+Time: 0.005s">
+<div class="time" style="width: 26.315789473684%"></div>
+<pre>
+End NaturalTransformation.</pre>
+</div>
+<div class="code" title="File: Core.v
+Line: 54
+Time: 0s">
+<div class="time" style="width: 0%"></div>
+<pre>
+
+Bind Scope natural_transformation_scope with NaturalTransformation.</pre>
+</div>
+<div class="code" title="File: Core.v
+Line: 56
+Time: 0s">
+<div class="time" style="width: 0%"></div>
+<pre>
+
+Create HintDb natural_transformation discriminated.</pre>
+</div>
+<div class="code" title="File: Core.v
+Line: 58
+Time: 0s">
+<div class="time" style="width: 0%"></div>
+<pre>
+
+Global Arguments components_of {C D}%category {F G}%functor T%natural_transformation /
+          c%object : rename.</pre>
+</div>
+<div class="code" title="File: Core.v
+Line: 61
+Time: 0s">
+<div class="time" style="width: 0%"></div>
+<pre>
+Global Arguments commutes {C D F G} !T / _ _ _ : rename.</pre>
+</div>
+<div class="code" title="File: Core.v
+Line: 62
+Time: 0s">
+<div class="time" style="width: 0%"></div>
+<pre>
+Global Arguments commutes_sym {C D F G} !T / _ _ _ : rename.</pre>
+</div>
+<div class="code" title="File: Core.v
+Line: 63
+Time: 0s">
+<div class="time" style="width: 0%"></div>
+<pre>
+
+Hint Resolve @commutes : category natural_transformation.</pre>
+</div>
+<div class="code" title="File: Core.v
+Line: 65
+Time: 0s">
+<div class="time" style="width: 0%"></div>
+<pre>
+
+(** ** Helper lemmas *)
+(** Some helper lemmas for rewriting.  In the names, [p] stands for a
+    morphism, [T] for natural transformation, and [F] for functor. *)</pre>
+</div>
+<div class="code" title="File: Core.v
+Line: 69
+Time: 0.017s">
+<div class="time" style="width: 89.473684210526%"></div>
+<pre>Definition commutes_pT_F C D (F G : Functor C D) (T : NaturalTransformation F G)
+      s d d' (m : morphism C s d) (m' : morphism D _ d')
+: (m' o T d) o F _1 m = (m' o G _1 m) o T s
+  := ((Category.Core.associativity _ _ _ _ _ _ _ _)
+        @ ap _ (commutes _ _ _ _)
+        @ (Category.Core.associativity_sym _ _ _ _ _ _ _ _))%path.</pre>
+</div>
+<div class="code" title="File: Core.v
+Line: 74
+Time: 0.019s">
+<div class="time" style="width: 100%"></div>
+<pre>
+
+Definition commutes_T_Fp C D (F G : Functor C D) (T : NaturalTransformation F G)
+      s d d' (m : morphism C s d) (m' : morphism D d' _)
+: T d o (F _1 m o m') = G _1 m o (T s o m')
+  := ((Category.Core.associativity_sym _ _ _ _ _ _ _ _)
+        @ ap10 (ap _ (commutes _ _ _ _)) _
+        @ (Category.Core.associativity _ _ _ _ _ _ _ _))%path.</pre>
+</div>
+<div class="code" title="File: Core.v
+Line: 82
+Time: 0s">
+<div class="time" style="width: 0%"></div>
+<pre>
+
+</pre>
+</div>
+</body>
+</html>
+

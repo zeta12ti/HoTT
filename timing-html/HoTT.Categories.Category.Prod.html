@@ -1,0 +1,234 @@
+<html>
+<head>
+<title>Prod.v</title>
+<style>
+.time {
+  background-color: #ffaaaa;
+  height: 100%;
+  z-index: -1;
+  position: absolute;
+}
+.code {
+  z-index: 0;
+  position: relative;
+  border-style: solid;
+  border-color: transparent;
+  border-width: 1px;
+}
+.code:hover {
+  border-style: solid;
+  border-color: black;
+  border-width: 1px;
+}
+pre {
+  margin: 1px;
+}
+</style>
+</head>
+<body>
+<h1>Timings for Prod.v</h1>
+
+<div class="code" title="File: Prod.v
+Line: 1
+Time: 0s">
+<div class="time" style="width: 0%"></div>
+<pre>(** * Product Category *)</pre>
+</div>
+<div class="code" title="File: Prod.v
+Line: 1
+Time: 0.005s">
+<div class="time" style="width: 3.448275862069%"></div>
+<pre>Require Import Category.Core Category.Strict.</pre>
+</div>
+<div class="code" title="File: Prod.v
+Line: 1
+Time: 0.01s">
+<div class="time" style="width: 6.8965517241379%"></div>
+<pre>
+Require Import Types.Prod.</pre>
+</div>
+<div class="code" title="File: Prod.v
+Line: 2
+Time: 0s">
+<div class="time" style="width: 0%"></div>
+<pre>
+
+Set Universe Polymorphism.</pre>
+</div>
+<div class="code" title="File: Prod.v
+Line: 4
+Time: 0s">
+<div class="time" style="width: 0%"></div>
+<pre>
+Set Implicit Arguments.</pre>
+</div>
+<div class="code" title="File: Prod.v
+Line: 5
+Time: 0s">
+<div class="time" style="width: 0%"></div>
+<pre>
+Generalizable All Variables.</pre>
+</div>
+<div class="code" title="File: Prod.v
+Line: 6
+Time: 0s">
+<div class="time" style="width: 0%"></div>
+<pre>
+Set Asymmetric Patterns.</pre>
+</div>
+<div class="code" title="File: Prod.v
+Line: 7
+Time: 0s">
+<div class="time" style="width: 0%"></div>
+<pre>
+
+Local Open Scope category_scope.</pre>
+</div>
+<div class="code" title="File: Prod.v
+Line: 9
+Time: 0s">
+<div class="time" style="width: 0%"></div>
+<pre>
+Local Open Scope morphism_scope.</pre>
+</div>
+<div class="code" title="File: Prod.v
+Line: 10
+Time: 0s">
+<div class="time" style="width: 0%"></div>
+<pre>
+
+(** ** Definition of [*] for categories *)</pre>
+</div>
+<div class="code" title="File: Prod.v
+Line: 12
+Time: 0s">
+<div class="time" style="width: 0%"></div>
+<pre>Section prod.</pre>
+</div>
+<div class="code" title="File: Prod.v
+Line: 12
+Time: 0s">
+<div class="time" style="width: 0%"></div>
+<pre>
+  Variables C D : PreCategory.</pre>
+</div>
+<div class="code" title="File: Prod.v
+Line: 13
+Time: 0s">
+<div class="time" style="width: 0%"></div>
+<pre>
+
+  Definition prod : PreCategory.</pre>
+</div>
+<div class="code" title="File: Prod.v
+Line: 15
+Time: 0.145s">
+<div class="time" style="width: 100%"></div>
+<pre>
+    refine (@Build_PreCategory
+              (C * D)%type
+              (fun s d =&gt; (morphism C (fst s) (fst d)
+                           * morphism D (snd s) (snd d))%type)
+              (fun x =&gt; (identity (fst x), identity (snd x)))
+              (fun s d d' m2 m1 =&gt; (fst m2 o fst m1, snd m2 o snd m1))
+              _
+              _
+              _
+              _);
+    abstract (
+        repeat (simpl || intros [] || intro);
+        try f_ap; auto with morphism
+      ).</pre>
+</div>
+<div class="code" title="File: Prod.v
+Line: 29
+Time: 0.01s">
+<div class="time" style="width: 6.8965517241379%"></div>
+<pre>
+  Defined.</pre>
+</div>
+<div class="code" title="File: Prod.v
+Line: 30
+Time: 0.01s">
+<div class="time" style="width: 6.8965517241379%"></div>
+<pre>
+End prod.</pre>
+</div>
+<div class="code" title="File: Prod.v
+Line: 31
+Time: 0s">
+<div class="time" style="width: 0%"></div>
+<pre>
+
+Local Infix "*" := prod : category_scope.</pre>
+</div>
+<div class="code" title="File: Prod.v
+Line: 33
+Time: 0s">
+<div class="time" style="width: 0%"></div>
+<pre>
+
+(** ** The product of strict categories is strict *)</pre>
+</div>
+<div class="code" title="File: Prod.v
+Line: 35
+Time: 0.001s">
+<div class="time" style="width: 0.68965517241379%"></div>
+<pre>Global Instance isstrict_category_product
+       `{IsStrictCategory C, IsStrictCategory D}
+: IsStrictCategory (C * D).</pre>
+</div>
+<div class="code" title="File: Prod.v
+Line: 37
+Time: 0s">
+<div class="time" style="width: 0%"></div>
+<pre>
+Proof.</pre>
+</div>
+<div class="code" title="File: Prod.v
+Line: 38
+Time: 0.017s">
+<div class="time" style="width: 11.724137931034%"></div>
+<pre>
+  typeclasses eauto.</pre>
+</div>
+<div class="code" title="File: Prod.v
+Line: 39
+Time: 0.003s">
+<div class="time" style="width: 2.0689655172414%"></div>
+<pre>
+Qed.</pre>
+</div>
+<div class="code" title="File: Prod.v
+Line: 40
+Time: 0s">
+<div class="time" style="width: 0%"></div>
+<pre>
+
+Module Export CategoryProdNotations.</pre>
+</div>
+<div class="code" title="File: Prod.v
+Line: 42
+Time: 0s">
+<div class="time" style="width: 0%"></div>
+<pre>
+  Infix "*" := prod : category_scope.</pre>
+</div>
+<div class="code" title="File: Prod.v
+Line: 43
+Time: 0s">
+<div class="time" style="width: 0%"></div>
+<pre>
+End CategoryProdNotations.</pre>
+</div>
+<div class="code" title="File: Prod.v
+Line: 45
+Time: 0s">
+<div class="time" style="width: 0%"></div>
+<pre>
+
+</pre>
+</div>
+</body>
+</html>
+

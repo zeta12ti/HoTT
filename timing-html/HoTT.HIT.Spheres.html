@@ -1,0 +1,659 @@
+<html>
+<head>
+<title>Spheres.v</title>
+<style>
+.time {
+  background-color: #ffaaaa;
+  height: 100%;
+  z-index: -1;
+  position: absolute;
+}
+.code {
+  z-index: 0;
+  position: relative;
+  border-style: solid;
+  border-color: transparent;
+  border-width: 1px;
+}
+.code:hover {
+  border-style: solid;
+  border-color: black;
+  border-width: 1px;
+}
+pre {
+  margin: 1px;
+}
+</style>
+</head>
+<body>
+<h1>Timings for Spheres.v</h1>
+
+<div class="code" title="File: Spheres.v
+Line: 1
+Time: 0s">
+<div class="time" style="width: 0%"></div>
+<pre>(* -*- mode: coq; mode: visual-line -*- *)
+
+(** * The spheres, in all dimensions. *)
+
+</pre>
+</div>
+<div class="code" title="File: Spheres.v
+Line: 4
+Time: 0.016s">
+<div class="time" style="width: 11.851851851852%"></div>
+<pre>Require Import HoTT.Basics.</pre>
+</div>
+<div class="code" title="File: Spheres.v
+Line: 4
+Time: 0.015s">
+<div class="time" style="width: 11.111111111111%"></div>
+<pre>
+Require Import Types.Sigma Types.Forall Types.Paths Types.Bool.</pre>
+</div>
+<div class="code" title="File: Spheres.v
+Line: 5
+Time: 0.009s">
+<div class="time" style="width: 6.6666666666667%"></div>
+<pre>
+Require Import HProp NullHomotopy.</pre>
+</div>
+<div class="code" title="File: Spheres.v
+Line: 6
+Time: 0.124s">
+<div class="time" style="width: 91.851851851852%"></div>
+<pre>
+Require Import HIT.Suspension HIT.Circle.</pre>
+</div>
+<div class="code" title="File: Spheres.v
+Line: 7
+Time: 0s">
+<div class="time" style="width: 0%"></div>
+<pre>
+Local Open Scope trunc_scope.</pre>
+</div>
+<div class="code" title="File: Spheres.v
+Line: 8
+Time: 0s">
+<div class="time" style="width: 0%"></div>
+<pre>
+Local Open Scope path_scope.</pre>
+</div>
+<div class="code" title="File: Spheres.v
+Line: 9
+Time: 0s">
+<div class="time" style="width: 0%"></div>
+<pre>
+
+Generalizable Variables X A B f g n.</pre>
+</div>
+<div class="code" title="File: Spheres.v
+Line: 11
+Time: 0s">
+<div class="time" style="width: 0%"></div>
+<pre>
+
+(** ** Definition, by iterated suspension. *)
+
+(** To match the usual indexing for spheres, we have to pad the sequence with a dummy term [Sphere -2]. *)</pre>
+</div>
+<div class="code" title="File: Spheres.v
+Line: 15
+Time: 0.001s">
+<div class="time" style="width: 0.74074074074074%"></div>
+<pre>Fixpoint Sphere (n : trunc_index)
+  := match n return Type with
+       | -2 =&gt; Empty
+       | -1 =&gt; Empty
+       | n'.+1 =&gt; Susp (Sphere n')
+     end.</pre>
+</div>
+<div class="code" title="File: Spheres.v
+Line: 20
+Time: 0s">
+<div class="time" style="width: 0%"></div>
+<pre>
+
+(** ** Explicit equivalences in low dimensions  *)
+
+</pre>
+</div>
+<div class="code" title="File: Spheres.v
+Line: 23
+Time: 0s">
+<div class="time" style="width: 0%"></div>
+<pre>Definition Sph0_to_Bool : (Sphere 0) -&gt; Bool.</pre>
+</div>
+<div class="code" title="File: Spheres.v
+Line: 23
+Time: 0s">
+<div class="time" style="width: 0%"></div>
+<pre>
+Proof.</pre>
+</div>
+<div class="code" title="File: Spheres.v
+Line: 24
+Time: 0s">
+<div class="time" style="width: 0%"></div>
+<pre>
+  simpl.</pre>
+</div>
+<div class="code" title="File: Spheres.v
+Line: 25
+Time: 0s">
+<div class="time" style="width: 0%"></div>
+<pre> apply (Susp_rec true false).</pre>
+</div>
+<div class="code" title="File: Spheres.v
+Line: 25
+Time: 0s">
+<div class="time" style="width: 0%"></div>
+<pre> intros [].</pre>
+</div>
+<div class="code" title="File: Spheres.v
+Line: 25
+Time: 0s">
+<div class="time" style="width: 0%"></div>
+<pre>
+Defined.</pre>
+</div>
+<div class="code" title="File: Spheres.v
+Line: 26
+Time: 0s">
+<div class="time" style="width: 0%"></div>
+<pre>
+
+Global Instance isequiv_Sph0_to_Bool : IsEquiv (Sph0_to_Bool) | 0.</pre>
+</div>
+<div class="code" title="File: Spheres.v
+Line: 28
+Time: 0s">
+<div class="time" style="width: 0%"></div>
+<pre>
+Proof.</pre>
+</div>
+<div class="code" title="File: Spheres.v
+Line: 29
+Time: 0s">
+<div class="time" style="width: 0%"></div>
+<pre>
+  apply isequiv_adjointify with (fun b : Bool =&gt; if b then North else South).</pre>
+</div>
+<div class="code" title="File: Spheres.v
+Line: 30
+Time: 0s">
+<div class="time" style="width: 0%"></div>
+<pre>
+  intros [ | ]; exact 1.</pre>
+</div>
+<div class="code" title="File: Spheres.v
+Line: 31
+Time: 0s">
+<div class="time" style="width: 0%"></div>
+<pre>
+  unfold Sect.</pre>
+</div>
+<div class="code" title="File: Spheres.v
+Line: 32
+Time: 0.002s">
+<div class="time" style="width: 1.4814814814815%"></div>
+<pre> refine (Susp_ind _ 1 1 _).</pre>
+</div>
+<div class="code" title="File: Spheres.v
+Line: 32
+Time: 0s">
+<div class="time" style="width: 0%"></div>
+<pre> intros [].</pre>
+</div>
+<div class="code" title="File: Spheres.v
+Line: 32
+Time: 0.003s">
+<div class="time" style="width: 2.2222222222222%"></div>
+<pre>
+Defined.</pre>
+</div>
+<div class="code" title="File: Spheres.v
+Line: 33
+Time: 0s">
+<div class="time" style="width: 0%"></div>
+<pre>
+
+Definition Sph1_to_S1 : (Sphere (nat_to_trunc_index 1)) -&gt; S1.</pre>
+</div>
+<div class="code" title="File: Spheres.v
+Line: 35
+Time: 0s">
+<div class="time" style="width: 0%"></div>
+<pre>
+Proof.</pre>
+</div>
+<div class="code" title="File: Spheres.v
+Line: 36
+Time: 0s">
+<div class="time" style="width: 0%"></div>
+<pre>
+  apply (Susp_rec base base).</pre>
+</div>
+<div class="code" title="File: Spheres.v
+Line: 37
+Time: 0s">
+<div class="time" style="width: 0%"></div>
+<pre>
+  exact (fun x =&gt; if (Sph0_to_Bool x) then loop else 1).</pre>
+</div>
+<div class="code" title="File: Spheres.v
+Line: 38
+Time: 0s">
+<div class="time" style="width: 0%"></div>
+<pre>
+Defined.</pre>
+</div>
+<div class="code" title="File: Spheres.v
+Line: 39
+Time: 0s">
+<div class="time" style="width: 0%"></div>
+<pre>
+
+Definition S1_to_Sph1 : S1 -&gt; (Sphere (nat_to_trunc_index 1)).</pre>
+</div>
+<div class="code" title="File: Spheres.v
+Line: 41
+Time: 0s">
+<div class="time" style="width: 0%"></div>
+<pre>
+Proof.</pre>
+</div>
+<div class="code" title="File: Spheres.v
+Line: 42
+Time: 0s">
+<div class="time" style="width: 0%"></div>
+<pre>
+  apply (S1_rec _ North).</pre>
+</div>
+<div class="code" title="File: Spheres.v
+Line: 43
+Time: 0.001s">
+<div class="time" style="width: 0.74074074074074%"></div>
+<pre> exact (merid North @ (merid South)^).</pre>
+</div>
+<div class="code" title="File: Spheres.v
+Line: 43
+Time: 0s">
+<div class="time" style="width: 0%"></div>
+<pre>
+Defined.</pre>
+</div>
+<div class="code" title="File: Spheres.v
+Line: 44
+Time: 0s">
+<div class="time" style="width: 0%"></div>
+<pre>
+
+Definition isequiv_Sph1_to_S1 : IsEquiv (Sph1_to_S1).</pre>
+</div>
+<div class="code" title="File: Spheres.v
+Line: 46
+Time: 0s">
+<div class="time" style="width: 0%"></div>
+<pre>
+Proof.</pre>
+</div>
+<div class="code" title="File: Spheres.v
+Line: 47
+Time: 0s">
+<div class="time" style="width: 0%"></div>
+<pre>
+  apply isequiv_adjointify with S1_to_Sph1.</pre>
+</div>
+<div class="code" title="File: Spheres.v
+Line: 48
+Time: 0.002s">
+<div class="time" style="width: 1.4814814814815%"></div>
+<pre>
+    refine (S1_ind _ 1 _).</pre>
+</div>
+<div class="code" title="File: Spheres.v
+Line: 49
+Time: 0.003s">
+<div class="time" style="width: 2.2222222222222%"></div>
+<pre>
+    refine ((transport_paths_FFlr _ _) @ _).</pre>
+</div>
+<div class="code" title="File: Spheres.v
+Line: 50
+Time: 0.016s">
+<div class="time" style="width: 11.851851851852%"></div>
+<pre>
+    unfold S1_to_Sph1; rewrite S1_rec_beta_loop.</pre>
+</div>
+<div class="code" title="File: Spheres.v
+Line: 51
+Time: 0.025s">
+<div class="time" style="width: 18.518518518519%"></div>
+<pre>
+    rewrite ap_pp, ap_V.</pre>
+</div>
+<div class="code" title="File: Spheres.v
+Line: 52
+Time: 0s">
+<div class="time" style="width: 0%"></div>
+<pre>
+    unfold Sph1_to_S1.</pre>
+</div>
+<div class="code" title="File: Spheres.v
+Line: 53
+Time: 0.004s">
+<div class="time" style="width: 2.962962962963%"></div>
+<pre> simpl.</pre>
+</div>
+<div class="code" title="File: Spheres.v
+Line: 53
+Time: 0.006s">
+<div class="time" style="width: 4.4444444444444%"></div>
+<pre> rewrite 2 Susp_comp_nd_merid.</pre>
+</div>
+<div class="code" title="File: Spheres.v
+Line: 53
+Time: 0.001s">
+<div class="time" style="width: 0.74074074074074%"></div>
+<pre> simpl.</pre>
+</div>
+<div class="code" title="File: Spheres.v
+Line: 53
+Time: 0.069s">
+<div class="time" style="width: 51.111111111111%"></div>
+<pre>
+    hott_simpl.</pre>
+</div>
+<div class="code" title="File: Spheres.v
+Line: 54
+Time: 0.006s">
+<div class="time" style="width: 4.4444444444444%"></div>
+<pre>
+  refine (Susp_ind (fun x =&gt; S1_to_Sph1 (Sph1_to_S1 x) = x)
+    1 (merid South) _); intros x.</pre>
+</div>
+<div class="code" title="File: Spheres.v
+Line: 56
+Time: 0.006s">
+<div class="time" style="width: 4.4444444444444%"></div>
+<pre>
+  refine ((transport_paths_FFlr _ _) @ _).</pre>
+</div>
+<div class="code" title="File: Spheres.v
+Line: 57
+Time: 0.012s">
+<div class="time" style="width: 8.8888888888889%"></div>
+<pre>
+  unfold Sph1_to_S1; rewrite (Susp_comp_nd_merid x).</pre>
+</div>
+<div class="code" title="File: Spheres.v
+Line: 58
+Time: 0s">
+<div class="time" style="width: 0%"></div>
+<pre>
+  revert x.</pre>
+</div>
+<div class="code" title="File: Spheres.v
+Line: 59
+Time: 0s">
+<div class="time" style="width: 0%"></div>
+<pre> change (Susp Empty) with (Sphere 0).</pre>
+</div>
+<div class="code" title="File: Spheres.v
+Line: 59
+Time: 0.062s">
+<div class="time" style="width: 45.925925925926%"></div>
+<pre>
+  apply (equiv_ind (Sph0_to_Bool ^-1)); intros x.</pre>
+</div>
+<div class="code" title="File: Spheres.v
+Line: 60
+Time: 0.047s">
+<div class="time" style="width: 34.814814814815%"></div>
+<pre>
+  case x; simpl.</pre>
+</div>
+<div class="code" title="File: Spheres.v
+Line: 61
+Time: 0s">
+<div class="time" style="width: 0%"></div>
+<pre>
+    2: apply concat_1p.</pre>
+</div>
+<div class="code" title="File: Spheres.v
+Line: 62
+Time: 0.006s">
+<div class="time" style="width: 4.4444444444444%"></div>
+<pre>
+  unfold S1_to_Sph1; rewrite S1_rec_beta_loop.</pre>
+</div>
+<div class="code" title="File: Spheres.v
+Line: 63
+Time: 0.007s">
+<div class="time" style="width: 5.1851851851852%"></div>
+<pre>
+  refine (whiskerR (concat_p1 _) _ @ _).</pre>
+</div>
+<div class="code" title="File: Spheres.v
+Line: 64
+Time: 0.001s">
+<div class="time" style="width: 0.74074074074074%"></div>
+<pre>
+  apply moveR_Vp.</pre>
+</div>
+<div class="code" title="File: Spheres.v
+Line: 65
+Time: 0.057s">
+<div class="time" style="width: 42.222222222222%"></div>
+<pre> hott_simpl.</pre>
+</div>
+<div class="code" title="File: Spheres.v
+Line: 65
+Time: 0.135s">
+<div class="time" style="width: 100%"></div>
+<pre>
+Defined.</pre>
+</div>
+<div class="code" title="File: Spheres.v
+Line: 66
+Time: 0s">
+<div class="time" style="width: 0%"></div>
+<pre>
+
+(** ** Truncatedness via spheres  *)
+
+(** We show here that a type is n-truncated if and only if every map from the (n+1)-sphere into it is null-homotopic.  (One direction of this is of course the assertion that the (n+1)-sphere is n-connected.) *)
+
+(** TODO: re-type these lemmas in terms of truncation. *)
+
+</pre>
+</div>
+<div class="code" title="File: Spheres.v
+Line: 73
+Time: 0.009s">
+<div class="time" style="width: 6.6666666666667%"></div>
+<pre>Fixpoint allnullhomot_trunc {n : trunc_index} {X : Type} `{IsTrunc n X}
+  (f : Sphere n.+1 -&gt; X) {struct n}
+: NullHomotopy f.</pre>
+</div>
+<div class="code" title="File: Spheres.v
+Line: 75
+Time: 0s">
+<div class="time" style="width: 0%"></div>
+<pre>
+Proof.</pre>
+</div>
+<div class="code" title="File: Spheres.v
+Line: 76
+Time: 0.001s">
+<div class="time" style="width: 0.74074074074074%"></div>
+<pre>
+  destruct n as [ | n'].</pre>
+</div>
+<div class="code" title="File: Spheres.v
+Line: 77
+Time: 0s">
+<div class="time" style="width: 0%"></div>
+<pre>
+  -</pre>
+</div>
+<div class="code" title="File: Spheres.v
+Line: 78
+Time: 0s">
+<div class="time" style="width: 0%"></div>
+<pre> simpl in *.</pre>
+</div>
+<div class="code" title="File: Spheres.v
+Line: 78
+Time: 0.001s">
+<div class="time" style="width: 0.74074074074074%"></div>
+<pre> exists (center X).</pre>
+</div>
+<div class="code" title="File: Spheres.v
+Line: 78
+Time: 0s">
+<div class="time" style="width: 0%"></div>
+<pre> intros [ ].</pre>
+</div>
+<div class="code" title="File: Spheres.v
+Line: 78
+Time: 0s">
+<div class="time" style="width: 0%"></div>
+<pre>
+  -</pre>
+</div>
+<div class="code" title="File: Spheres.v
+Line: 79
+Time: 0s">
+<div class="time" style="width: 0%"></div>
+<pre> apply nullhomot_susp_from_paths.</pre>
+</div>
+<div class="code" title="File: Spheres.v
+Line: 79
+Time: 0.003s">
+<div class="time" style="width: 2.2222222222222%"></div>
+<pre>
+    apply allnullhomot_trunc; auto with typeclass_instances.</pre>
+</div>
+<div class="code" title="File: Spheres.v
+Line: 80
+Time: 0.004s">
+<div class="time" style="width: 2.962962962963%"></div>
+<pre>
+Defined.</pre>
+</div>
+<div class="code" title="File: Spheres.v
+Line: 81
+Time: 0s">
+<div class="time" style="width: 0%"></div>
+<pre>
+
+Fixpoint trunc_allnullhomot {n : trunc_index} {X : Type}
+  (HX : forall (f : Sphere n.+2 -&gt; X), NullHomotopy f) {struct n}
+: IsTrunc n.+1 X.</pre>
+</div>
+<div class="code" title="File: Spheres.v
+Line: 85
+Time: 0s">
+<div class="time" style="width: 0%"></div>
+<pre>
+Proof.</pre>
+</div>
+<div class="code" title="File: Spheres.v
+Line: 86
+Time: 0s">
+<div class="time" style="width: 0%"></div>
+<pre>
+  destruct n as [ | n'].</pre>
+</div>
+<div class="code" title="File: Spheres.v
+Line: 87
+Time: 0s">
+<div class="time" style="width: 0%"></div>
+<pre>
+  (* n = -2 *)</pre>
+</div>
+<div class="code" title="File: Spheres.v
+Line: 88
+Time: 0s">
+<div class="time" style="width: 0%"></div>
+<pre>apply hprop_allpath.</pre>
+</div>
+<div class="code" title="File: Spheres.v
+Line: 88
+Time: 0s">
+<div class="time" style="width: 0%"></div>
+<pre>
+    intros x0 x1.</pre>
+</div>
+<div class="code" title="File: Spheres.v
+Line: 89
+Time: 0s">
+<div class="time" style="width: 0%"></div>
+<pre> set (f := (fun b =&gt; if (Sph0_to_Bool b) then x0 else x1)).</pre>
+</div>
+<div class="code" title="File: Spheres.v
+Line: 89
+Time: 0s">
+<div class="time" style="width: 0%"></div>
+<pre>
+    set (n := HX f).</pre>
+</div>
+<div class="code" title="File: Spheres.v
+Line: 90
+Time: 0.001s">
+<div class="time" style="width: 0.74074074074074%"></div>
+<pre> exact (n.2 North @ (n.2 South)^).</pre>
+</div>
+<div class="code" title="File: Spheres.v
+Line: 90
+Time: 0s">
+<div class="time" style="width: 0%"></div>
+<pre>
+  (* n ≥ -1 *)</pre>
+</div>
+<div class="code" title="File: Spheres.v
+Line: 91
+Time: 0s">
+<div class="time" style="width: 0%"></div>
+<pre>intros x0 x1.</pre>
+</div>
+<div class="code" title="File: Spheres.v
+Line: 91
+Time: 0s">
+<div class="time" style="width: 0%"></div>
+<pre>
+    apply (trunc_allnullhomot n').</pre>
+</div>
+<div class="code" title="File: Spheres.v
+Line: 92
+Time: 0s">
+<div class="time" style="width: 0%"></div>
+<pre>
+    intro f.</pre>
+</div>
+<div class="code" title="File: Spheres.v
+Line: 93
+Time: 0s">
+<div class="time" style="width: 0%"></div>
+<pre> apply nullhomot_paths_from_susp, HX.</pre>
+</div>
+<div class="code" title="File: Spheres.v
+Line: 93
+Time: 0.002s">
+<div class="time" style="width: 1.4814814814815%"></div>
+<pre>
+Defined.</pre>
+</div>
+<div class="code" title="File: Spheres.v
+Line: 95
+Time: 0s">
+<div class="time" style="width: 0%"></div>
+<pre>
+
+</pre>
+</div>
+</body>
+</html>
+

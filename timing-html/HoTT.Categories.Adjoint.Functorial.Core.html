@@ -1,0 +1,300 @@
+<html>
+<head>
+<title>Core.v</title>
+<style>
+.time {
+  background-color: #ffaaaa;
+  height: 100%;
+  z-index: -1;
+  position: absolute;
+}
+.code {
+  z-index: 0;
+  position: relative;
+  border-style: solid;
+  border-color: transparent;
+  border-width: 1px;
+}
+.code:hover {
+  border-style: solid;
+  border-color: black;
+  border-width: 1px;
+}
+pre {
+  margin: 1px;
+}
+</style>
+</head>
+<body>
+<h1>Timings for Core.v</h1>
+
+<div class="code" title="File: Core.v
+Line: 1
+Time: 0s">
+<div class="time" style="width: 0%"></div>
+<pre>(** * Functoriality of the construction of adjunctions *)</pre>
+</div>
+<div class="code" title="File: Core.v
+Line: 1
+Time: 0.007s">
+<div class="time" style="width: 3.1674208144796%"></div>
+<pre>Require Import Category.Core Functor.Core NaturalTransformation.Core.</pre>
+</div>
+<div class="code" title="File: Core.v
+Line: 1
+Time: 0s">
+<div class="time" style="width: 0%"></div>
+<pre>
+Require Import Functor.Identity Functor.Composition.Core.</pre>
+</div>
+<div class="code" title="File: Core.v
+Line: 2
+Time: 0.042s">
+<div class="time" style="width: 19.004524886878%"></div>
+<pre>
+Require Import Category.Dual.</pre>
+</div>
+<div class="code" title="File: Core.v
+Line: 3
+Time: 0.005s">
+<div class="time" style="width: 2.262443438914%"></div>
+<pre>
+Require Import FunctorCategory.Core.</pre>
+</div>
+<div class="code" title="File: Core.v
+Line: 4
+Time: 0.001s">
+<div class="time" style="width: 0.45248868778281%"></div>
+<pre>
+Require Import Category.Sigma.OnObjects Category.Prod.</pre>
+</div>
+<div class="code" title="File: Core.v
+Line: 5
+Time: 0.003s">
+<div class="time" style="width: 1.3574660633484%"></div>
+<pre>
+Require Import Adjoint.Core Adjoint.UnitCounit Adjoint.Dual.</pre>
+</div>
+<div class="code" title="File: Core.v
+Line: 6
+Time: 0.003s">
+<div class="time" style="width: 1.3574660633484%"></div>
+<pre>
+Require Import Adjoint.Functorial.Parts Adjoint.Functorial.Laws.</pre>
+</div>
+<div class="code" title="File: Core.v
+Line: 7
+Time: 0s">
+<div class="time" style="width: 0%"></div>
+<pre>
+Require Import HoTT.Types.Prod.</pre>
+</div>
+<div class="code" title="File: Core.v
+Line: 8
+Time: 0s">
+<div class="time" style="width: 0%"></div>
+<pre>
+
+Set Universe Polymorphism.</pre>
+</div>
+<div class="code" title="File: Core.v
+Line: 10
+Time: 0s">
+<div class="time" style="width: 0%"></div>
+<pre>
+Set Implicit Arguments.</pre>
+</div>
+<div class="code" title="File: Core.v
+Line: 11
+Time: 0s">
+<div class="time" style="width: 0%"></div>
+<pre>
+Generalizable All Variables.</pre>
+</div>
+<div class="code" title="File: Core.v
+Line: 12
+Time: 0s">
+<div class="time" style="width: 0%"></div>
+<pre>
+Set Asymmetric Patterns.</pre>
+</div>
+<div class="code" title="File: Core.v
+Line: 13
+Time: 0s">
+<div class="time" style="width: 0%"></div>
+<pre>
+
+Local Open Scope natural_transformation_scope.</pre>
+</div>
+<div class="code" title="File: Core.v
+Line: 15
+Time: 0s">
+<div class="time" style="width: 0%"></div>
+<pre>
+Local Open Scope morphism_scope.</pre>
+</div>
+<div class="code" title="File: Core.v
+Line: 16
+Time: 0s">
+<div class="time" style="width: 0%"></div>
+<pre>
+Local Open Scope category_scope.</pre>
+</div>
+<div class="code" title="File: Core.v
+Line: 17
+Time: 0s">
+<div class="time" style="width: 0%"></div>
+<pre>
+
+Section left.</pre>
+</div>
+<div class="code" title="File: Core.v
+Line: 19
+Time: 0s">
+<div class="time" style="width: 0%"></div>
+<pre>
+  (** ** Non-dependent functor for left adjoints *)
+  (** We'd need Π types (dependent functors) to include functoriality
+      on the categories. *)
+ </pre>
+</div>
+<div class="code" title="File: Core.v
+Line: 23
+Time: 0s">
+<div class="time" style="width: 0%"></div>
+<pre>Section nondep.</pre>
+</div>
+<div class="code" title="File: Core.v
+Line: 23
+Time: 0s">
+<div class="time" style="width: 0%"></div>
+<pre>
+    Context `{Funext}.</pre>
+</div>
+<div class="code" title="File: Core.v
+Line: 24
+Time: 0s">
+<div class="time" style="width: 0%"></div>
+<pre>
+    Variables C D : PreCategory.</pre>
+</div>
+<div class="code" title="File: Core.v
+Line: 25
+Time: 0.199s">
+<div class="time" style="width: 90.045248868778%"></div>
+<pre>
+
+    Definition left_functor_nondep
+    : Functor (sigT_obj (D -&gt; C) (fun G =&gt; { F : Functor C D &amp; F -| G }))
+              (sigT_obj ((C -&gt; D)^op * (D -&gt; C)) (fun FG =&gt; fst FG -| snd FG))
+      := Build_Functor
+           (sigT_obj (D -&gt; C) (fun G =&gt; { F : Functor C D &amp; F -| G }))
+           (sigT_obj ((C -&gt; D)^op * (D -&gt; C)) (fun FG =&gt; fst FG -| snd FG))
+           (fun GFA =&gt; ((GFA.2.1, GFA.1); GFA.2.2))
+           (fun GFA G'F'A' m =&gt; (left_morphism_of_nondep GFA.2.2 G'F'A'.2.2 m, m))
+           (fun s d d' m1 m2 =&gt; path_prod' (left_composition_of_nondep _ _ _ _ _) 1)
+           (fun x =&gt; path_prod' (left_identity_of_nondep _) 1).</pre>
+</div>
+<div class="code" title="File: Core.v
+Line: 36
+Time: 0.003s">
+<div class="time" style="width: 1.3574660633484%"></div>
+<pre>
+  End nondep.</pre>
+</div>
+<div class="code" title="File: Core.v
+Line: 37
+Time: 0.006s">
+<div class="time" style="width: 2.7149321266968%"></div>
+<pre>
+End left.</pre>
+</div>
+<div class="code" title="File: Core.v
+Line: 38
+Time: 0s">
+<div class="time" style="width: 0%"></div>
+<pre>
+
+Section right.</pre>
+</div>
+<div class="code" title="File: Core.v
+Line: 40
+Time: 0s">
+<div class="time" style="width: 0%"></div>
+<pre>
+  (** ** Non-dependent functor for right adjoints *)
+  (** We'd need Π types (dependent functors) to include functoriality
+      on the categories. *)
+ </pre>
+</div>
+<div class="code" title="File: Core.v
+Line: 44
+Time: 0s">
+<div class="time" style="width: 0%"></div>
+<pre>Section nondep.</pre>
+</div>
+<div class="code" title="File: Core.v
+Line: 44
+Time: 0s">
+<div class="time" style="width: 0%"></div>
+<pre>
+    Context `{Funext}.</pre>
+</div>
+<div class="code" title="File: Core.v
+Line: 45
+Time: 0s">
+<div class="time" style="width: 0%"></div>
+<pre>
+    Variables C D : PreCategory.</pre>
+</div>
+<div class="code" title="File: Core.v
+Line: 46
+Time: 0s">
+<div class="time" style="width: 0%"></div>
+<pre>
+
+    (** TODO: Is there a nice way to write this functor as a
+              composition of the above with some dualization functors?
+              (I suspect there is.) *)
+   </pre>
+</div>
+<div class="code" title="File: Core.v
+Line: 51
+Time: 0.221s">
+<div class="time" style="width: 100%"></div>
+<pre>Definition right_functor_nondep
+    : Functor (sigT_obj (C -&gt; D) (fun F =&gt; { G : Functor D C &amp; F -| G }))
+              (sigT_obj ((C -&gt; D) * (D -&gt; C)^op) (fun FG =&gt; fst FG -| snd FG))
+      := Build_Functor
+           (sigT_obj (C -&gt; D) (fun F =&gt; { G : Functor D C &amp; F -| G }))
+           (sigT_obj ((C -&gt; D) * (D -&gt; C)^op) (fun FG =&gt; fst FG -| snd FG))
+           (fun GFA =&gt; ((GFA.1, GFA.2.1); GFA.2.2))
+           (fun GFA G'F'A' m =&gt; (m, right_morphism_of_nondep G'F'A'.2.2 GFA.2.2 m))
+           (fun s d d' m1 m2 =&gt; path_prod' 1 (right_composition_of_nondep _ _ _ _ _))
+           (fun x =&gt; path_prod' 1 (right_identity_of_nondep _)).</pre>
+</div>
+<div class="code" title="File: Core.v
+Line: 60
+Time: 0.003s">
+<div class="time" style="width: 1.3574660633484%"></div>
+<pre>
+  End nondep.</pre>
+</div>
+<div class="code" title="File: Core.v
+Line: 61
+Time: 0.006s">
+<div class="time" style="width: 2.7149321266968%"></div>
+<pre>
+End right.</pre>
+</div>
+<div class="code" title="File: Core.v
+Line: 63
+Time: 0s">
+<div class="time" style="width: 0%"></div>
+<pre>
+
+</pre>
+</div>
+</body>
+</html>
+

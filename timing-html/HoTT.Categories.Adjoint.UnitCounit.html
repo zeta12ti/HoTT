@@ -1,0 +1,639 @@
+<html>
+<head>
+<title>UnitCounit.v</title>
+<style>
+.time {
+  background-color: #ffaaaa;
+  height: 100%;
+  z-index: -1;
+  position: absolute;
+}
+.code {
+  z-index: 0;
+  position: relative;
+  border-style: solid;
+  border-color: transparent;
+  border-width: 1px;
+}
+.code:hover {
+  border-style: solid;
+  border-color: black;
+  border-width: 1px;
+}
+pre {
+  margin: 1px;
+}
+</style>
+</head>
+<body>
+<h1>Timings for UnitCounit.v</h1>
+
+<div class="code" title="File: UnitCounit.v
+Line: 1
+Time: 0s">
+<div class="time" style="width: 0%"></div>
+<pre>(** * Adjunctions by units and counits *)</pre>
+</div>
+<div class="code" title="File: UnitCounit.v
+Line: 1
+Time: 0.006s">
+<div class="time" style="width: 13.953488372093%"></div>
+<pre>Require Import Category.Core Functor.Core NaturalTransformation.Core.</pre>
+</div>
+<div class="code" title="File: UnitCounit.v
+Line: 1
+Time: 0.043s">
+<div class="time" style="width: 100%"></div>
+<pre>
+Require Import Category.Dual Functor.Dual NaturalTransformation.Dual.</pre>
+</div>
+<div class="code" title="File: UnitCounit.v
+Line: 2
+Time: 0s">
+<div class="time" style="width: 0%"></div>
+<pre>
+Require Import Functor.Composition.Core Functor.Identity.</pre>
+</div>
+<div class="code" title="File: UnitCounit.v
+Line: 3
+Time: 0s">
+<div class="time" style="width: 0%"></div>
+<pre>
+
+Set Universe Polymorphism.</pre>
+</div>
+<div class="code" title="File: UnitCounit.v
+Line: 5
+Time: 0s">
+<div class="time" style="width: 0%"></div>
+<pre>
+Set Implicit Arguments.</pre>
+</div>
+<div class="code" title="File: UnitCounit.v
+Line: 6
+Time: 0s">
+<div class="time" style="width: 0%"></div>
+<pre>
+Generalizable All Variables.</pre>
+</div>
+<div class="code" title="File: UnitCounit.v
+Line: 7
+Time: 0s">
+<div class="time" style="width: 0%"></div>
+<pre>
+Set Asymmetric Patterns.</pre>
+</div>
+<div class="code" title="File: UnitCounit.v
+Line: 8
+Time: 0s">
+<div class="time" style="width: 0%"></div>
+<pre>
+
+Local Open Scope category_scope.</pre>
+</div>
+<div class="code" title="File: UnitCounit.v
+Line: 10
+Time: 0s">
+<div class="time" style="width: 0%"></div>
+<pre>
+Local Open Scope morphism_scope.</pre>
+</div>
+<div class="code" title="File: UnitCounit.v
+Line: 11
+Time: 0s">
+<div class="time" style="width: 0%"></div>
+<pre>
+
+Section Adjunction.</pre>
+</div>
+<div class="code" title="File: UnitCounit.v
+Line: 13
+Time: 0s">
+<div class="time" style="width: 0%"></div>
+<pre>
+  (** ** Unit + UMP definition of adjunction *)
+  (** Quoting from Awodey's "Category Theory":
+
+      An adjunction between categories [C] and [D] consists of
+      functors
+
+      [F : C &lt;-&gt; D : G]
+
+      and a natural transformation
+
+      [T : 1_C -&gt; G ∘ F]
+
+      with the property:
+
+      (o) For any [c : C], [d : D], and [f : c -&gt; G d], there exists a
+          unique [g : F c -&gt; d] such that [f = (G g) ∘ (T c)] as
+          indicated in
+
+&lt;&lt;
+                g
+     F c ..................&gt; d
+
+                 G g
+     G (F c) --------------&gt; G d
+       ^                    _
+       |                    /|
+       |                  /
+       |                /
+       |              /
+       | T c        /
+       |          /  f
+       |        /
+       |      /
+       |    /
+       |  /
+        c
+&gt;&gt;
+
+     Terminology and notation:
+
+     - [F] is called the left adjoint, [G] is called the right
+       adjoint, and [T] is called the unit of the adjunction.
+
+     - One sometimes writes [F -| G] for ``[F] is left and [G] right
+       adjoint.''
+
+     - The statement (o) is the UMP of the unit [T].
+
+     Note that the situation [F ⊣ G] is a generalization of
+     equivalence of categories, in that a pseudo-inverse is an
+     adjoint. In that case, however, it is the relation between
+     categories that one is interested in. Here, one is concerned with
+     the relation between special functors. That is to say, it is not
+     the relation on categories ``there exists an adjunction,'' but
+     rather ``this functor has an adjoint'' that we are concerned
+     with. *)
+
+ </pre>
+</div>
+<div class="code" title="File: UnitCounit.v
+Line: 71
+Time: 0s">
+<div class="time" style="width: 0%"></div>
+<pre>Section unit.</pre>
+</div>
+<div class="code" title="File: UnitCounit.v
+Line: 71
+Time: 0s">
+<div class="time" style="width: 0%"></div>
+<pre>
+    Variables C D : PreCategory.</pre>
+</div>
+<div class="code" title="File: UnitCounit.v
+Line: 72
+Time: 0s">
+<div class="time" style="width: 0%"></div>
+<pre>
+    Variable F : Functor C D.</pre>
+</div>
+<div class="code" title="File: UnitCounit.v
+Line: 73
+Time: 0s">
+<div class="time" style="width: 0%"></div>
+<pre>
+    Variable G : Functor D C.</pre>
+</div>
+<div class="code" title="File: UnitCounit.v
+Line: 74
+Time: 0.019s">
+<div class="time" style="width: 44.186046511628%"></div>
+<pre>
+
+    Definition AdjunctionUnit :=
+      { T : NaturalTransformation 1 (G o F)
+      | forall (c : C) (d : D) (f : morphism C c (G d)),
+          Contr { g : morphism D (F c) d | G _1 g o T c = f }
+      }.</pre>
+</div>
+<div class="code" title="File: UnitCounit.v
+Line: 80
+Time: 0s">
+<div class="time" style="width: 0%"></div>
+<pre>
+  End unit.</pre>
+</div>
+<div class="code" title="File: UnitCounit.v
+Line: 81
+Time: 0s">
+<div class="time" style="width: 0%"></div>
+<pre>
+
+  (** ** Counit + UMP definition of adjunction *)
+  (**
+     Paraphrasing and quoting from Awody's "Category Theory":
+
+     An adjunction between categories [C] and [D] consists of functors
+
+     [F : C &lt;-&gt; D : G]
+
+     and a natural transformation
+
+     [U : F ∘ G -&gt; 1_D]
+
+     with the property:
+
+     (o) For any [c : C], [d : D], and [g : F c -&gt; d], there exists a
+         unique [f : c -&gt; G d] such that [g = (U d) ∘ (F f)] as
+         indicated in the diagram
+
+&lt;&lt;
+                f
+     c ..................&gt; G d
+
+               F f
+     F c --------------&gt; F (G d)
+      \                    |
+        \                  |
+          \                |
+            \              |
+              \            | U d
+             g  \          |
+                  \        |
+                    \      |
+                      \    |
+                       _\| V
+                          d
+&gt;&gt;
+
+    Terminology and notation:
+
+    - The statement (o) is the UMP of the counit [U].
+    *)
+ </pre>
+</div>
+<div class="code" title="File: UnitCounit.v
+Line: 124
+Time: 0s">
+<div class="time" style="width: 0%"></div>
+<pre>Section counit.</pre>
+</div>
+<div class="code" title="File: UnitCounit.v
+Line: 124
+Time: 0s">
+<div class="time" style="width: 0%"></div>
+<pre>
+    Variables C D : PreCategory.</pre>
+</div>
+<div class="code" title="File: UnitCounit.v
+Line: 125
+Time: 0s">
+<div class="time" style="width: 0%"></div>
+<pre>
+    Variable F : Functor C D.</pre>
+</div>
+<div class="code" title="File: UnitCounit.v
+Line: 126
+Time: 0s">
+<div class="time" style="width: 0%"></div>
+<pre>
+    Variable G : Functor D C.</pre>
+</div>
+<div class="code" title="File: UnitCounit.v
+Line: 127
+Time: 0.003s">
+<div class="time" style="width: 6.9767441860465%"></div>
+<pre>
+
+    Definition AdjunctionCounit :=
+      { U : NaturalTransformation (F o G) 1
+      | forall (c : C) (d : D) (g : morphism D (F c) d),
+          Contr { f : morphism C c (G d) | U d o F _1 f = g }
+      }.</pre>
+</div>
+<div class="code" title="File: UnitCounit.v
+Line: 133
+Time: 0s">
+<div class="time" style="width: 0%"></div>
+<pre>
+  End counit.</pre>
+</div>
+<div class="code" title="File: UnitCounit.v
+Line: 134
+Time: 0s">
+<div class="time" style="width: 0%"></div>
+<pre>
+
+  (** The counit is just the dual of the unit.  We formalize this here
+      so that we can use it to make coercions easier. *)
+
+ </pre>
+</div>
+<div class="code" title="File: UnitCounit.v
+Line: 139
+Time: 0s">
+<div class="time" style="width: 0%"></div>
+<pre>Section unit_counit_op.</pre>
+</div>
+<div class="code" title="File: UnitCounit.v
+Line: 139
+Time: 0s">
+<div class="time" style="width: 0%"></div>
+<pre>
+    Variables C D : PreCategory.</pre>
+</div>
+<div class="code" title="File: UnitCounit.v
+Line: 140
+Time: 0s">
+<div class="time" style="width: 0%"></div>
+<pre>
+    Variable F : Functor C D.</pre>
+</div>
+<div class="code" title="File: UnitCounit.v
+Line: 141
+Time: 0s">
+<div class="time" style="width: 0%"></div>
+<pre>
+    Variable G : Functor D C.</pre>
+</div>
+<div class="code" title="File: UnitCounit.v
+Line: 142
+Time: 0.015s">
+<div class="time" style="width: 34.883720930233%"></div>
+<pre>
+
+    Definition adjunction_counit__op__adjunction_unit (A : AdjunctionUnit G^op F^op)
+    : AdjunctionCounit F G
+      := existT
+           (fun U : NaturalTransformation (F o G) 1 =&gt;
+              forall (c : C) (d : D) (g : morphism D (F c) d),
+                Contr {f : morphism C c (G d)
+                      | U d o F _1 f = g })
+           (A.1^op)%natural_transformation
+           (fun c d g =&gt; A.2 d c g).</pre>
+</div>
+<div class="code" title="File: UnitCounit.v
+Line: 152
+Time: 0.022s">
+<div class="time" style="width: 51.162790697674%"></div>
+<pre>
+
+    Definition adjunction_counit__op__adjunction_unit__inv (A : AdjunctionUnit G F)
+    : AdjunctionCounit F^op G^op
+      := existT
+           (fun U : NaturalTransformation (F^op o G^op) 1
+            =&gt; forall (c : C^op) (d : D^op) (g : morphism D^op ((F^op)%functor c) d),
+                 Contr {f : morphism C^op c ((G^op)%functor d)
+                       | U d o F^op _1 f = g })
+           (A.1^op)%natural_transformation
+           (fun c d g =&gt; A.2 d c g).</pre>
+</div>
+<div class="code" title="File: UnitCounit.v
+Line: 162
+Time: 0.015s">
+<div class="time" style="width: 34.883720930233%"></div>
+<pre>
+
+    Definition adjunction_unit__op__adjunction_counit (A : AdjunctionCounit G^op F^op)
+    : AdjunctionUnit F G
+      := existT
+           (fun T : NaturalTransformation 1 (G o F) =&gt;
+              forall (c : C) (d : D) (f : morphism C c (G d)),
+                Contr { g : morphism D (F c) d
+                      | G _1 g o T c = f })
+           (A.1^op)%natural_transformation
+           (fun c d g =&gt; A.2 d c g).</pre>
+</div>
+<div class="code" title="File: UnitCounit.v
+Line: 172
+Time: 0.017s">
+<div class="time" style="width: 39.53488372093%"></div>
+<pre>
+
+    Definition adjunction_unit__op__adjunction_counit__inv (A : AdjunctionCounit G F)
+    : AdjunctionUnit F^op G^op
+      := existT
+           (fun T : NaturalTransformation 1 (G^op o F^op)
+            =&gt; forall (c : C^op) (d : D^op) (f : morphism C^op c ((G^op)%functor d)),
+                 Contr {g : morphism D^op ((F^op)%functor c) d
+                       | G^op _1 g o T c = f })
+           (A.1^op)%natural_transformation
+           (fun c d g =&gt; A.2 d c g).</pre>
+</div>
+<div class="code" title="File: UnitCounit.v
+Line: 182
+Time: 0.002s">
+<div class="time" style="width: 4.6511627906977%"></div>
+<pre>
+  End unit_counit_op.</pre>
+</div>
+<div class="code" title="File: UnitCounit.v
+Line: 183
+Time: 0s">
+<div class="time" style="width: 0%"></div>
+<pre>
+
+  (** ** Unit + Counit + Zig + Zag definition of adjunction *)
+  (** Quoting Wikipedia on Adjoint Functors:
+
+      A counit-unit adjunction between two categories [C] and [D]
+      consists of two functors [F : C ← D] and [G : C → D] and two
+      natural transformations
+
+&lt;&lt;
+      ε : FG → 1_C
+      η : 1_D → GF
+&gt;&gt;
+
+      respectively called the counit and the unit of the adjunction
+      (terminology from universal algebra), such that the compositions
+
+&lt;&lt;
+          F η            ε F
+      F -------&gt; F G F -------&gt; F
+
+          η G            G ε
+      G -------&gt; G F G -------&gt; G
+&gt;&gt;
+
+      are the identity transformations [1_F] and [1_G] on [F] and [G]
+      respectively.
+
+      In this situation we say that ``[F] is left adjoint to [G]'' and
+      ''[G] is right adjoint to [F]'', and may indicate this
+      relationship by writing [(ε, η) : F ⊣ G], or simply [F ⊣ G].
+
+      In equation form, the above conditions on (ε, η) are the
+      counit-unit equations
+
+&lt;&lt;
+      1_F = ε F ∘ F η
+      1_G = G ε ∘ η G
+&gt;&gt;
+
+      which mean that for each [X] in [C] and each [Y] in [D],
+
+&lt;&lt;
+      1_{FY} = ε_{FY} ∘ F(η_Y)
+      1_{GX} = G(ε_X) ∘ η_{GX}
+&gt;&gt;
+
+      These equations are useful in reducing proofs about adjoint
+      functors to algebraic manipulations.  They are sometimes called
+      the ``zig-zag equations'' because of the appearance of the
+      corresponding string diagrams.  A way to remember them is to
+      first write down the nonsensical equation [1 = ε ∘ η] and then
+      fill in either [F] or [G] in one of the two simple ways which
+      make the compositions defined.
+
+      Note: The use of the prefix ``co'' in counit here is not
+      consistent with the terminology of limits and colimits, because
+      a colimit satisfies an initial property whereas the counit
+      morphisms will satisfy terminal properties, and dually.  The
+      term unit here is borrowed from the theory of monads where it
+      looks like the insertion of the identity 1 into a monoid.  *)
+
+ </pre>
+</div>
+<div class="code" title="File: UnitCounit.v
+Line: 245
+Time: 0s">
+<div class="time" style="width: 0%"></div>
+<pre>Section unit_counit.</pre>
+</div>
+<div class="code" title="File: UnitCounit.v
+Line: 245
+Time: 0s">
+<div class="time" style="width: 0%"></div>
+<pre>
+    Variables C D : PreCategory.</pre>
+</div>
+<div class="code" title="File: UnitCounit.v
+Line: 246
+Time: 0s">
+<div class="time" style="width: 0%"></div>
+<pre>
+    Variable F : Functor C D.</pre>
+</div>
+<div class="code" title="File: UnitCounit.v
+Line: 247
+Time: 0s">
+<div class="time" style="width: 0%"></div>
+<pre>
+    Variable G : Functor D C.</pre>
+</div>
+<div class="code" title="File: UnitCounit.v
+Line: 248
+Time: 0s">
+<div class="time" style="width: 0%"></div>
+<pre>
+
+    (*Local Reserved Notation "'ε'".
+    Local Reserved Notation "'η'".*)
+
+    (** Use the per-object version of the equations, so that we don't
+        need the associator in the middle.  Also, explicitly simplify
+        some of the types so that [rewrite] works better. *)
+   </pre>
+</div>
+<div class="code" title="File: UnitCounit.v
+Line: 256
+Time: 0.01s">
+<div class="time" style="width: 23.255813953488%"></div>
+<pre>Record AdjunctionUnitCounit :=
+      {
+        unit : NaturalTransformation (identity C) (G o F)
+        (*where "'η'" := unit*);
+        counit : NaturalTransformation (F o G) (identity D)
+        (*where "'ε'" := counit*);
+        unit_counit_equation_1
+        : forall Y : C, (*ε (F Y) ∘ F ₁ (η Y) = identity (F Y);*)
+            Category.Core.compose (C := D) (s := F Y) (d := F (G (F Y))) (d' := F Y)
+                                  (counit (F Y))
+                                  (morphism_of F (s := Y) (d := G (F Y)) (unit Y))
+            = 1;
+        unit_counit_equation_2
+        : forall X : D, (* G ₁ (ε X) ∘ η (G X) = identity (G X) *)
+            Category.Core.compose (C := C) (s := G X) (d := G (F (G X))) (d' := G X)
+                                  (morphism_of G (s := F (G X)) (d := X) (counit X))
+                                  (unit (G X))
+            = 1
+      }.</pre>
+</div>
+<div class="code" title="File: UnitCounit.v
+Line: 274
+Time: 0.004s">
+<div class="time" style="width: 9.3023255813953%"></div>
+<pre>
+  End unit_counit.</pre>
+</div>
+<div class="code" title="File: UnitCounit.v
+Line: 275
+Time: 0.009s">
+<div class="time" style="width: 20.93023255814%"></div>
+<pre>
+End Adjunction.</pre>
+</div>
+<div class="code" title="File: UnitCounit.v
+Line: 276
+Time: 0s">
+<div class="time" style="width: 0%"></div>
+<pre>
+
+Delimit Scope adjunction_scope with adjunction.</pre>
+</div>
+<div class="code" title="File: UnitCounit.v
+Line: 278
+Time: 0s">
+<div class="time" style="width: 0%"></div>
+<pre>
+
+Bind Scope adjunction_scope with AdjunctionUnit.</pre>
+</div>
+<div class="code" title="File: UnitCounit.v
+Line: 280
+Time: 0s">
+<div class="time" style="width: 0%"></div>
+<pre>
+Bind Scope adjunction_scope with AdjunctionCounit.</pre>
+</div>
+<div class="code" title="File: UnitCounit.v
+Line: 281
+Time: 0s">
+<div class="time" style="width: 0%"></div>
+<pre>
+Bind Scope adjunction_scope with AdjunctionUnitCounit.</pre>
+</div>
+<div class="code" title="File: UnitCounit.v
+Line: 282
+Time: 0s">
+<div class="time" style="width: 0%"></div>
+<pre>
+
+Arguments unit [C D]%category [F G]%functor _%adjunction / .</pre>
+</div>
+<div class="code" title="File: UnitCounit.v
+Line: 284
+Time: 0s">
+<div class="time" style="width: 0%"></div>
+<pre>
+Arguments counit [C D]%category [F G]%functor _%adjunction / .</pre>
+</div>
+<div class="code" title="File: UnitCounit.v
+Line: 285
+Time: 0s">
+<div class="time" style="width: 0%"></div>
+<pre>
+Arguments unit_counit_equation_1 [C D]%category [F G]%functor _%adjunction _%object.</pre>
+</div>
+<div class="code" title="File: UnitCounit.v
+Line: 286
+Time: 0s">
+<div class="time" style="width: 0%"></div>
+<pre>
+Arguments unit_counit_equation_2 [C D]%category [F G]%functor _%adjunction _%object.</pre>
+</div>
+<div class="code" title="File: UnitCounit.v
+Line: 288
+Time: 0s">
+<div class="time" style="width: 0%"></div>
+<pre>
+
+</pre>
+</div>
+</body>
+</html>
+

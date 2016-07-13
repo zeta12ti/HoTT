@@ -1,0 +1,100 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
+"http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<link href="coqdoc.css" rel="stylesheet" type="text/css" />
+<title>HoTT.Categories.ExponentialLaws.Law2.Functors</title>
+</head>
+
+<body>
+
+<div id="page">
+
+<div id="header">
+</div>
+
+<div id="main">
+
+<h1 class="libtitle">Library HoTT.Categories.ExponentialLaws.Law2.Functors</h1>
+
+<div class="code">
+</div>
+
+<div class="doc">
+<a name="lab741"></a><h1 class="section">Exponential functors between products and sums in exponents</h1>
+
+</div>
+<div class="code">
+<span class="id" title="keyword">Require</span> <span class="id" title="keyword">Import</span> <a class="idref" href="HoTT.Categories.Category.Core.html#"><span class="id" title="library">Category.Core</span></a> <a class="idref" href="HoTT.Categories.Functor.Core.html#"><span class="id" title="library">Functor.Core</span></a> <a class="idref" href="HoTT.Categories.FunctorCategory.Core.html#"><span class="id" title="library">FunctorCategory.Core</span></a> <a class="idref" href="HoTT.Categories.Functor.Identity.html#"><span class="id" title="library">Functor.Identity</span></a> <a class="idref" href="HoTT.Categories.NaturalTransformation.Core.html#"><span class="id" title="library">NaturalTransformation.Core</span></a> <a class="idref" href="HoTT.Categories.NaturalTransformation.Paths.html#"><span class="id" title="library">NaturalTransformation.Paths</span></a> <a class="idref" href="HoTT.Categories.Functor.Composition.Core.html#"><span class="id" title="library">Functor.Composition.Core</span></a> <a class="idref" href="HoTT.Categories.Category.Sum.html#"><span class="id" title="library">Category.Sum</span></a> <a class="idref" href="HoTT.Categories.Category.Prod.html#"><span class="id" title="library">Category.Prod</span></a> <a class="idref" href="HoTT.Categories.Functor.Sum.html#"><span class="id" title="library">Functor.Sum</span></a> <a class="idref" href="HoTT.Categories.Functor.Prod.Core.html#"><span class="id" title="library">Functor.Prod.Core</span></a> <a class="idref" href="HoTT.Categories.NaturalTransformation.Sum.html#"><span class="id" title="library">NaturalTransformation.Sum</span></a> <a class="idref" href="HoTT.Categories.Functor.Pointwise.Core.html#"><span class="id" title="library">Functor.Pointwise.Core</span></a> <a class="idref" href="HoTT.Categories.NaturalTransformation.Paths.html#"><span class="id" title="library">NaturalTransformation.Paths</span></a>.<br/>
+<span class="id" title="keyword">Require</span> <span class="id" title="keyword">Import</span> <a class="idref" href="HoTT.Categories.InitialTerminalCategory.Core.html#"><span class="id" title="library">InitialTerminalCategory.Core</span></a>.<br/>
+
+<br/>
+<span class="id" title="keyword">Set</span> <span class="id" title="var">Universe</span> <span class="id" title="var">Polymorphism</span>.<br/>
+<span class="id" title="keyword">Set Implicit Arguments</span>.<br/>
+<span class="id" title="keyword">Generalizable</span> <span class="id" title="keyword">All</span> <span class="id" title="keyword">Variables</span>.<br/>
+<span class="id" title="keyword">Set</span> <span class="id" title="var">Asymmetric</span> <span class="id" title="var">Patterns</span>.<br/>
+
+<br/>
+<span class="id" title="keyword">Local Open</span> <span class="id" title="keyword">Scope</span> <span class="id" title="var">functor_scope</span>.<br/>
+
+<br/>
+<span class="id" title="keyword">Local</span> <span class="id" title="keyword">Notation</span> <a name="fst_type"><span class="id" title="abbreviation">fst_type</span></a> := <a class="idref" href="Coq.Init.Datatypes.html#fst"><span class="id" title="projection">Coq.Init.Datatypes.fst</span></a>.<br/>
+<span class="id" title="keyword">Local</span> <span class="id" title="keyword">Notation</span> <a name="snd_type"><span class="id" title="abbreviation">snd_type</span></a> := <a class="idref" href="Coq.Init.Datatypes.html#snd"><span class="id" title="projection">Coq.Init.Datatypes.snd</span></a>.<br/>
+<span class="id" title="keyword">Local</span> <span class="id" title="keyword">Notation</span> <a name="pair_type"><span class="id" title="abbreviation">pair_type</span></a> := <a class="idref" href="Coq.Init.Datatypes.html#pair"><span class="id" title="constructor">Coq.Init.Datatypes.pair</span></a>.<br/>
+
+<br/>
+<span class="id" title="keyword">Section</span> <a name="law2"><span class="id" title="section">law2</span></a>.<br/>
+&nbsp;&nbsp;<span class="id" title="keyword">Context</span> `{<a class="idref" href="HoTT.Basics.Overture.html#Funext"><span class="id" title="class">Funext</span></a>}.<br/>
+&nbsp;&nbsp;<span class="id" title="keyword">Variables</span> <a name="law2.D"><span class="id" title="variable">D</span></a> <a name="law2.C1"><span class="id" title="variable">C1</span></a> <a name="law2.C2"><span class="id" title="variable">C2</span></a> : <a class="idref" href="HoTT.Categories.Category.Core.html#PreCategory"><span class="id" title="record">PreCategory</span></a>.<br/>
+
+<br/>
+</div>
+
+<div class="doc">
+<a name="lab742"></a><h2 class="section"><span class="inlinecode"><a class="idref" href="HoTT.Categories.Functor.Attributes.html#fully_faithful_helpers.y"><span class="id" title="variable">y</span></a>ⁿ<span class="id" title="var">⁺</span>ᵐ</span> <span class="inlinecode">→</span> <span class="inlinecode"><a class="idref" href="HoTT.Categories.Functor.Attributes.html#fully_faithful_helpers.y"><span class="id" title="variable">y</span></a>ⁿ</span> <span class="inlinecode">×</span> <span class="inlinecode"><a class="idref" href="HoTT.Categories.Functor.Attributes.html#fully_faithful_helpers.y"><span class="id" title="variable">y</span></a>ᵐ</span></h2>
+
+</div>
+<div class="code">
+&nbsp;&nbsp;<span class="id" title="keyword">Definition</span> <a name="functor"><span class="id" title="definition">functor</span></a><br/>
+&nbsp;&nbsp;: <a class="idref" href="HoTT.Categories.Functor.Core.html#Functor"><span class="id" title="record">Functor</span></a> (<a class="idref" href="HoTT.Categories.ExponentialLaws.Law2.Functors.html#law2.C1"><span class="id" title="variable">C1</span></a> <a class="idref" href="HoTT.Categories.Category.Sum.html#1eb59d4a0e416a727f17ca9724444b24"><span class="id" title="notation">+</span></a> <a class="idref" href="HoTT.Categories.ExponentialLaws.Law2.Functors.html#law2.C2"><span class="id" title="variable">C2</span></a> <a class="idref" href="HoTT.Categories.FunctorCategory.Core.html#34686eb233232c64a967dae81760a280"><span class="id" title="notation">→</span></a> <a class="idref" href="HoTT.Categories.ExponentialLaws.Law2.Functors.html#law2.D"><span class="id" title="variable">D</span></a>) (<a class="idref" href="HoTT.Categories.Category.Prod.html#abdc9ca76e7262ea64eed5f55bf85407"><span class="id" title="notation">(</span></a><a class="idref" href="HoTT.Categories.ExponentialLaws.Law2.Functors.html#law2.C1"><span class="id" title="variable">C1</span></a> <a class="idref" href="HoTT.Categories.FunctorCategory.Core.html#34686eb233232c64a967dae81760a280"><span class="id" title="notation">→</span></a> <a class="idref" href="HoTT.Categories.ExponentialLaws.Law2.Functors.html#law2.D"><span class="id" title="variable">D</span></a><a class="idref" href="HoTT.Categories.Category.Prod.html#abdc9ca76e7262ea64eed5f55bf85407"><span class="id" title="notation">)</span></a> <a class="idref" href="HoTT.Categories.Category.Prod.html#abdc9ca76e7262ea64eed5f55bf85407"><span class="id" title="notation">×</span></a> <a class="idref" href="HoTT.Categories.Category.Prod.html#abdc9ca76e7262ea64eed5f55bf85407"><span class="id" title="notation">(</span></a><a class="idref" href="HoTT.Categories.ExponentialLaws.Law2.Functors.html#law2.C2"><span class="id" title="variable">C2</span></a> <a class="idref" href="HoTT.Categories.FunctorCategory.Core.html#34686eb233232c64a967dae81760a280"><span class="id" title="notation">→</span></a> <a class="idref" href="HoTT.Categories.ExponentialLaws.Law2.Functors.html#law2.D"><span class="id" title="variable">D</span></a><a class="idref" href="HoTT.Categories.Category.Prod.html#abdc9ca76e7262ea64eed5f55bf85407"><span class="id" title="notation">)</span></a>)<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;:= <a class="idref" href="HoTT.Categories.Functor.Pointwise.Core.html#pointwise"><span class="id" title="definition">pointwise</span></a> (<a class="idref" href="HoTT.Categories.Functor.Sum.html#inl"><span class="id" title="definition">inl</span></a> <a class="idref" href="HoTT.Categories.ExponentialLaws.Law2.Functors.html#law2.C1"><span class="id" title="variable">C1</span></a> <a class="idref" href="HoTT.Categories.ExponentialLaws.Law2.Functors.html#law2.C2"><span class="id" title="variable">C2</span></a>) 1<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a class="idref" href="HoTT.Categories.Functor.Prod.Core.html#eeff2117c35be99eb5ec7404484a9654"><span class="id" title="notation">×</span></a> <a class="idref" href="HoTT.Categories.Functor.Pointwise.Core.html#pointwise"><span class="id" title="definition">pointwise</span></a> (<a class="idref" href="HoTT.Categories.Functor.Sum.html#inr"><span class="id" title="definition">inr</span></a> <a class="idref" href="HoTT.Categories.ExponentialLaws.Law2.Functors.html#law2.C1"><span class="id" title="variable">C1</span></a> <a class="idref" href="HoTT.Categories.ExponentialLaws.Law2.Functors.html#law2.C2"><span class="id" title="variable">C2</span></a>) 1.<br/>
+
+<br/>
+</div>
+
+<div class="doc">
+<a name="lab743"></a><h2 class="section"><span class="inlinecode"><a class="idref" href="HoTT.Categories.Functor.Attributes.html#fully_faithful_helpers.y"><span class="id" title="variable">y</span></a>ⁿ</span> <span class="inlinecode">×</span> <span class="inlinecode"><a class="idref" href="HoTT.Categories.Functor.Attributes.html#fully_faithful_helpers.y"><span class="id" title="variable">y</span></a>ᵐ</span> <span class="inlinecode">→</span> <span class="inlinecode"><a class="idref" href="HoTT.Categories.Functor.Attributes.html#fully_faithful_helpers.y"><span class="id" title="variable">y</span></a>ⁿ<span class="id" title="var">⁺</span>ᵐ</span></h2>
+
+</div>
+<div class="code">
+&nbsp;&nbsp;<span class="id" title="keyword">Definition</span> <a name="inverse"><span class="id" title="definition">inverse</span></a><br/>
+&nbsp;&nbsp;: <a class="idref" href="HoTT.Categories.Functor.Core.html#Functor"><span class="id" title="record">Functor</span></a> (<a class="idref" href="HoTT.Categories.Category.Prod.html#abdc9ca76e7262ea64eed5f55bf85407"><span class="id" title="notation">(</span></a><a class="idref" href="HoTT.Categories.ExponentialLaws.Law2.Functors.html#law2.C1"><span class="id" title="variable">C1</span></a> <a class="idref" href="HoTT.Categories.FunctorCategory.Core.html#34686eb233232c64a967dae81760a280"><span class="id" title="notation">→</span></a> <a class="idref" href="HoTT.Categories.ExponentialLaws.Law2.Functors.html#law2.D"><span class="id" title="variable">D</span></a><a class="idref" href="HoTT.Categories.Category.Prod.html#abdc9ca76e7262ea64eed5f55bf85407"><span class="id" title="notation">)</span></a> <a class="idref" href="HoTT.Categories.Category.Prod.html#abdc9ca76e7262ea64eed5f55bf85407"><span class="id" title="notation">×</span></a> <a class="idref" href="HoTT.Categories.Category.Prod.html#abdc9ca76e7262ea64eed5f55bf85407"><span class="id" title="notation">(</span></a><a class="idref" href="HoTT.Categories.ExponentialLaws.Law2.Functors.html#law2.C2"><span class="id" title="variable">C2</span></a> <a class="idref" href="HoTT.Categories.FunctorCategory.Core.html#34686eb233232c64a967dae81760a280"><span class="id" title="notation">→</span></a> <a class="idref" href="HoTT.Categories.ExponentialLaws.Law2.Functors.html#law2.D"><span class="id" title="variable">D</span></a><a class="idref" href="HoTT.Categories.Category.Prod.html#abdc9ca76e7262ea64eed5f55bf85407"><span class="id" title="notation">)</span></a>) (<a class="idref" href="HoTT.Categories.ExponentialLaws.Law2.Functors.html#law2.C1"><span class="id" title="variable">C1</span></a> <a class="idref" href="HoTT.Categories.Category.Sum.html#1eb59d4a0e416a727f17ca9724444b24"><span class="id" title="notation">+</span></a> <a class="idref" href="HoTT.Categories.ExponentialLaws.Law2.Functors.html#law2.C2"><span class="id" title="variable">C2</span></a> <a class="idref" href="HoTT.Categories.FunctorCategory.Core.html#34686eb233232c64a967dae81760a280"><span class="id" title="notation">→</span></a> <a class="idref" href="HoTT.Categories.ExponentialLaws.Law2.Functors.html#law2.D"><span class="id" title="variable">D</span></a>).<br/>
+&nbsp;&nbsp;<span class="id" title="keyword">Proof</span>.<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="id" title="tactic">refine</span> (<a class="idref" href="HoTT.Categories.Functor.Core.html#Build_Functor"><span class="id" title="constructor">Build_Functor</span></a><br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;(<a class="idref" href="HoTT.Categories.Category.Prod.html#abdc9ca76e7262ea64eed5f55bf85407"><span class="id" title="notation">(</span></a><a class="idref" href="HoTT.Categories.ExponentialLaws.Law2.Functors.html#law2.C1"><span class="id" title="variable">C1</span></a> <a class="idref" href="HoTT.Categories.FunctorCategory.Core.html#34686eb233232c64a967dae81760a280"><span class="id" title="notation">→</span></a> <a class="idref" href="HoTT.Categories.ExponentialLaws.Law2.Functors.html#law2.D"><span class="id" title="variable">D</span></a><a class="idref" href="HoTT.Categories.Category.Prod.html#abdc9ca76e7262ea64eed5f55bf85407"><span class="id" title="notation">)</span></a> <a class="idref" href="HoTT.Categories.Category.Prod.html#abdc9ca76e7262ea64eed5f55bf85407"><span class="id" title="notation">×</span></a> <a class="idref" href="HoTT.Categories.Category.Prod.html#abdc9ca76e7262ea64eed5f55bf85407"><span class="id" title="notation">(</span></a><a class="idref" href="HoTT.Categories.ExponentialLaws.Law2.Functors.html#law2.C2"><span class="id" title="variable">C2</span></a> <a class="idref" href="HoTT.Categories.FunctorCategory.Core.html#34686eb233232c64a967dae81760a280"><span class="id" title="notation">→</span></a> <a class="idref" href="HoTT.Categories.ExponentialLaws.Law2.Functors.html#law2.D"><span class="id" title="variable">D</span></a><a class="idref" href="HoTT.Categories.Category.Prod.html#abdc9ca76e7262ea64eed5f55bf85407"><span class="id" title="notation">)</span></a>) (<a class="idref" href="HoTT.Categories.ExponentialLaws.Law2.Functors.html#law2.C1"><span class="id" title="variable">C1</span></a> <a class="idref" href="HoTT.Categories.Category.Sum.html#1eb59d4a0e416a727f17ca9724444b24"><span class="id" title="notation">+</span></a> <a class="idref" href="HoTT.Categories.ExponentialLaws.Law2.Functors.html#law2.C2"><span class="id" title="variable">C2</span></a> <a class="idref" href="HoTT.Categories.FunctorCategory.Core.html#34686eb233232c64a967dae81760a280"><span class="id" title="notation">→</span></a> <a class="idref" href="HoTT.Categories.ExponentialLaws.Law2.Functors.html#law2.D"><span class="id" title="variable">D</span></a>)<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;(<span class="id" title="keyword">fun</span> <span class="id" title="var">FG</span> ⇒ <a class="idref" href="HoTT.Categories.Functor.Prod.Core.html#fst"><span class="id" title="definition">fst</span></a> <a class="idref" href="HoTT.Categories.ExponentialLaws.Law2.Functors.html#FG"><span class="id" title="variable">FG</span></a> <a class="idref" href="HoTT.Categories.Functor.Sum.html#ebe3d6b04ce78cfb5a2bcf5ae4fb01b3"><span class="id" title="notation">+</span></a> <a class="idref" href="HoTT.Categories.Functor.Prod.Core.html#snd"><span class="id" title="definition">snd</span></a> <a class="idref" href="HoTT.Categories.ExponentialLaws.Law2.Functors.html#FG"><span class="id" title="variable">FG</span></a>)%<span class="id" title="var">functor</span><br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;(<span class="id" title="keyword">fun</span> <span class="id" title="var">_</span> <span class="id" title="var">_</span> <span class="id" title="var">m</span> ⇒ <a class="idref" href="HoTT.Categories.ExponentialLaws.Law2.Functors.html#fst_type"><span class="id" title="abbreviation">fst_type</span></a> <a class="idref" href="HoTT.Categories.ExponentialLaws.Law2.Functors.html#m"><span class="id" title="variable">m</span></a> <a class="idref" href="HoTT.Categories.NaturalTransformation.Sum.html#3a07992901fbd89ccdb19c0ae185827b"><span class="id" title="notation">+</span></a> <a class="idref" href="HoTT.Categories.ExponentialLaws.Law2.Functors.html#snd_type"><span class="id" title="abbreviation">snd_type</span></a> <a class="idref" href="HoTT.Categories.ExponentialLaws.Law2.Functors.html#m"><span class="id" title="variable">m</span></a>)%<span class="id" title="var">natural_transformation</span><br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="id" title="var">_</span><br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="id" title="var">_</span>);<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="id" title="tactic">simpl</span> <span class="id" title="keyword">in</span> *;<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="id" title="tactic">abstract</span> (<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="id" title="tactic">repeat</span> (<span class="id" title="tactic">intros</span> [?|?] || <span class="id" title="tactic">intros</span> [? ?]);<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="id" title="tactic">simpl</span> <span class="id" title="keyword">in</span> *;<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="id" title="tactic">apply</span> <a class="idref" href="HoTT.Categories.NaturalTransformation.Paths.html#path_natural_transformation"><span class="id" title="lemma">path_natural_transformation</span></a>; <span class="id" title="tactic">intros</span> [?|?];<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="id" title="tactic">reflexivity</span><br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;).<br/>
+&nbsp;&nbsp;<span class="id" title="keyword">Defined</span>.<br/>
+<span class="id" title="keyword">End</span> <a class="idref" href="HoTT.Categories.ExponentialLaws.Law2.Functors.html#law2"><span class="id" title="section">law2</span></a>.<br/>
+</div>
+</div>
+
+<div id="footer">
+<hr/><a href="index.html">Index</a><hr/>This page has been generated by <a href="http://coq.inria.fr/">coqdoc</a>
+</div>
+
+</div>
+
+</body>
+</html>

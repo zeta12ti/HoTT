@@ -1,0 +1,461 @@
+<html>
+<head>
+<title>ChainCategory.v</title>
+<style>
+.time {
+  background-color: #ffaaaa;
+  height: 100%;
+  z-index: -1;
+  position: absolute;
+}
+.code {
+  z-index: 0;
+  position: relative;
+  border-style: solid;
+  border-color: transparent;
+  border-width: 1px;
+}
+.code:hover {
+  border-style: solid;
+  border-color: black;
+  border-width: 1px;
+}
+pre {
+  margin: 1px;
+}
+</style>
+</head>
+<body>
+<h1>Timings for ChainCategory.v</h1>
+
+<div class="code" title="File: ChainCategory.v
+Line: 1
+Time: 0s">
+<div class="time" style="width: 0%"></div>
+<pre>(** * The category ω of (ℕ, ≤), and the chain categories [[n]] *)</pre>
+</div>
+<div class="code" title="File: ChainCategory.v
+Line: 1
+Time: 0.044s">
+<div class="time" style="width: 15.384615384615%"></div>
+<pre>Require Import Category.Core Category.Subcategory.Full.</pre>
+</div>
+<div class="code" title="File: ChainCategory.v
+Line: 1
+Time: 0.028s">
+<div class="time" style="width: 9.7902097902098%"></div>
+<pre>
+Require Import Category.Sigma.Univalent.</pre>
+</div>
+<div class="code" title="File: ChainCategory.v
+Line: 2
+Time: 0.001s">
+<div class="time" style="width: 0.34965034965035%"></div>
+<pre>
+Require Import Category.Morphisms Category.Univalent Category.Strict.</pre>
+</div>
+<div class="code" title="File: ChainCategory.v
+Line: 3
+Time: 0.176s">
+<div class="time" style="width: 61.538461538462%"></div>
+<pre>
+Require Import HoTT.Basics.Trunc HoTT.DProp HoTT.TruncType HoTT.Spaces.Nat.</pre>
+</div>
+<div class="code" title="File: ChainCategory.v
+Line: 4
+Time: 0s">
+<div class="time" style="width: 0%"></div>
+<pre>
+
+Set Universe Polymorphism.</pre>
+</div>
+<div class="code" title="File: ChainCategory.v
+Line: 6
+Time: 0s">
+<div class="time" style="width: 0%"></div>
+<pre>
+Set Implicit Arguments.</pre>
+</div>
+<div class="code" title="File: ChainCategory.v
+Line: 7
+Time: 0s">
+<div class="time" style="width: 0%"></div>
+<pre>
+Generalizable All Variables.</pre>
+</div>
+<div class="code" title="File: ChainCategory.v
+Line: 8
+Time: 0s">
+<div class="time" style="width: 0%"></div>
+<pre>
+Set Asymmetric Patterns.</pre>
+</div>
+<div class="code" title="File: ChainCategory.v
+Line: 9
+Time: 0s">
+<div class="time" style="width: 0%"></div>
+<pre>
+
+(** ** Definitions *)
+(** Quoting Wikipedia (http://en.wikipedia.org/wiki/Total_order##Chains):
+
+    While chain is sometimes merely a synonym for totally ordered set,
+    it can also refer to a totally ordered subset of some partially
+    ordered set. The latter definition has a crucial role in Zorn's
+    lemma. *)
+(** We take the convention that a "chain" is a totally ordered or
+    linearly ordered set; the corresponding category on that set has,
+    as morphisms, the order relation. *)
+(* N.B. The notation here (including that [[n]] have as objects the
+   set [{0, 1, ..., n}]) was originally suggested by David Spivak.
+   It's possible that we should pick a different or more common
+   terminology. *)
+
+</pre>
+</div>
+<div class="code" title="File: ChainCategory.v
+Line: 25
+Time: 0s">
+<div class="time" style="width: 0%"></div>
+<pre>Module Export Core.</pre>
+</div>
+<div class="code" title="File: ChainCategory.v
+Line: 25
+Time: 0s">
+<div class="time" style="width: 0%"></div>
+<pre>
+  (** *** [[ω]], the linear order on ℕ *)
+ </pre>
+</div>
+<div class="code" title="File: ChainCategory.v
+Line: 27
+Time: 0.019s">
+<div class="time" style="width: 6.6433566433566%"></div>
+<pre>Definition omega : PreCategory
+    := @Build_PreCategory
+         nat
+         leq
+         leq_refl
+         (fun x y z p q =&gt; leq_trans _ _ _ q p)
+         (fun _ _ _ _ _ _ _ =&gt; path_ishprop _ _)
+         (fun _ _ _ =&gt; path_ishprop _ _)
+         (fun _ _ _ =&gt; path_ishprop _ _)
+         _.</pre>
+</div>
+<div class="code" title="File: ChainCategory.v
+Line: 36
+Time: 0s">
+<div class="time" style="width: 0%"></div>
+<pre>
+
+  (** *** [[n]], a linear order on a finite set with [n + 1] elements *)
+  (** Using [n + 1] elements allows us to agree with the common
+      definition of an [n]-simplex, where a 0-simplex is a point, and
+      a 1-simplex has two end-points, etc. *)
+ </pre>
+</div>
+<div class="code" title="File: ChainCategory.v
+Line: 42
+Time: 0.001s">
+<div class="time" style="width: 0.34965034965035%"></div>
+<pre>Definition chain (n : nat) : PreCategory
+    := { m : omega | m &lt;= n }%category.</pre>
+</div>
+<div class="code" title="File: ChainCategory.v
+Line: 43
+Time: 0s">
+<div class="time" style="width: 0%"></div>
+<pre>
+
+  (** TODO: Possibly generalize this to arbitrary sets with arbitrary
+      (total?) orders on them? *)
+
+ </pre>
+</div>
+<div class="code" title="File: ChainCategory.v
+Line: 48
+Time: 0s">
+<div class="time" style="width: 0%"></div>
+<pre>Module Export ChainCategoryCoreNotations.</pre>
+</div>
+<div class="code" title="File: ChainCategory.v
+Line: 48
+Time: 0s">
+<div class="time" style="width: 0%"></div>
+<pre>
+    Notation "[ n ]" := (chain n) : category_scope.</pre>
+</div>
+<div class="code" title="File: ChainCategory.v
+Line: 49
+Time: 0s">
+<div class="time" style="width: 0%"></div>
+<pre>
+  End ChainCategoryCoreNotations.</pre>
+</div>
+<div class="code" title="File: ChainCategory.v
+Line: 50
+Time: 0s">
+<div class="time" style="width: 0%"></div>
+<pre>
+End Core.</pre>
+</div>
+<div class="code" title="File: ChainCategory.v
+Line: 51
+Time: 0s">
+<div class="time" style="width: 0%"></div>
+<pre>
+
+Module Export Notations.</pre>
+</div>
+<div class="code" title="File: ChainCategory.v
+Line: 53
+Time: 0s">
+<div class="time" style="width: 0%"></div>
+<pre>
+  Include ChainCategoryCoreNotations.</pre>
+</div>
+<div class="code" title="File: ChainCategory.v
+Line: 54
+Time: 0s">
+<div class="time" style="width: 0%"></div>
+<pre>
+End Notations.</pre>
+</div>
+<div class="code" title="File: ChainCategory.v
+Line: 55
+Time: 0s">
+<div class="time" style="width: 0%"></div>
+<pre>
+
+Module Utf8.</pre>
+</div>
+<div class="code" title="File: ChainCategory.v
+Line: 57
+Time: 0s">
+<div class="time" style="width: 0%"></div>
+<pre>
+  Export Notations.</pre>
+</div>
+<div class="code" title="File: ChainCategory.v
+Line: 58
+Time: 0s">
+<div class="time" style="width: 0%"></div>
+<pre>
+
+  Notation "[ ∞ ]" := omega : category_scope.</pre>
+</div>
+<div class="code" title="File: ChainCategory.v
+Line: 60
+Time: 0s">
+<div class="time" style="width: 0%"></div>
+<pre>
+  Notation "[ 'ω' ]" := omega : category_scope.</pre>
+</div>
+<div class="code" title="File: ChainCategory.v
+Line: 61
+Time: 0s">
+<div class="time" style="width: 0%"></div>
+<pre>
+End Utf8.</pre>
+</div>
+<div class="code" title="File: ChainCategory.v
+Line: 62
+Time: 0s">
+<div class="time" style="width: 0%"></div>
+<pre>
+
+
+Module Export Strict.</pre>
+</div>
+<div class="code" title="File: ChainCategory.v
+Line: 65
+Time: 0s">
+<div class="time" style="width: 0%"></div>
+<pre>
+  Definition isstrict_omega : IsStrictCategory omega.</pre>
+</div>
+<div class="code" title="File: ChainCategory.v
+Line: 66
+Time: 0s">
+<div class="time" style="width: 0%"></div>
+<pre>
+  Proof.</pre>
+</div>
+<div class="code" title="File: ChainCategory.v
+Line: 67
+Time: 0.036s">
+<div class="time" style="width: 12.587412587413%"></div>
+<pre>
+    exact _.</pre>
+</div>
+<div class="code" title="File: ChainCategory.v
+Line: 68
+Time: 0s">
+<div class="time" style="width: 0%"></div>
+<pre>
+  Defined.</pre>
+</div>
+<div class="code" title="File: ChainCategory.v
+Line: 69
+Time: 0s">
+<div class="time" style="width: 0%"></div>
+<pre>
+
+  Definition isstrict_chain {n} : IsStrictCategory [n].</pre>
+</div>
+<div class="code" title="File: ChainCategory.v
+Line: 71
+Time: 0s">
+<div class="time" style="width: 0%"></div>
+<pre>
+  Proof.</pre>
+</div>
+<div class="code" title="File: ChainCategory.v
+Line: 72
+Time: 0.101s">
+<div class="time" style="width: 35.314685314685%"></div>
+<pre>
+    exact _.</pre>
+</div>
+<div class="code" title="File: ChainCategory.v
+Line: 73
+Time: 0.002s">
+<div class="time" style="width: 0.6993006993007%"></div>
+<pre>
+  Defined.</pre>
+</div>
+<div class="code" title="File: ChainCategory.v
+Line: 74
+Time: 0s">
+<div class="time" style="width: 0%"></div>
+<pre>
+End Strict.</pre>
+</div>
+<div class="code" title="File: ChainCategory.v
+Line: 75
+Time: 0s">
+<div class="time" style="width: 0%"></div>
+<pre>
+
+Module Export Univalent.</pre>
+</div>
+<div class="code" title="File: ChainCategory.v
+Line: 77
+Time: 0s">
+<div class="time" style="width: 0%"></div>
+<pre>
+  Global Instance iscategory_omega : IsCategory omega.</pre>
+</div>
+<div class="code" title="File: ChainCategory.v
+Line: 78
+Time: 0s">
+<div class="time" style="width: 0%"></div>
+<pre>
+  Proof.</pre>
+</div>
+<div class="code" title="File: ChainCategory.v
+Line: 79
+Time: 0s">
+<div class="time" style="width: 0%"></div>
+<pre>
+    intros s d.</pre>
+</div>
+<div class="code" title="File: ChainCategory.v
+Line: 80
+Time: 0.286s">
+<div class="time" style="width: 100%"></div>
+<pre>
+    refine (isequiv_iff_hprop _ _).</pre>
+</div>
+<div class="code" title="File: ChainCategory.v
+Line: 81
+Time: 0s">
+<div class="time" style="width: 0%"></div>
+<pre>
+    {</pre>
+</div>
+<div class="code" title="File: ChainCategory.v
+Line: 82
+Time: 0.03s">
+<div class="time" style="width: 10.48951048951%"></div>
+<pre> refine (trunc_equiv' _ (issig_isomorphic _ _ _)).</pre>
+</div>
+<div class="code" title="File: ChainCategory.v
+Line: 82
+Time: 0s">
+<div class="time" style="width: 0%"></div>
+<pre> }</pre>
+</div>
+<div class="code" title="File: ChainCategory.v
+Line: 82
+Time: 0s">
+<div class="time" style="width: 0%"></div>
+<pre>
+    {</pre>
+</div>
+<div class="code" title="File: ChainCategory.v
+Line: 83
+Time: 0.002s">
+<div class="time" style="width: 0.6993006993007%"></div>
+<pre> intro m; apply leq_antisym; apply m.</pre>
+</div>
+<div class="code" title="File: ChainCategory.v
+Line: 83
+Time: 0s">
+<div class="time" style="width: 0%"></div>
+<pre> }</pre>
+</div>
+<div class="code" title="File: ChainCategory.v
+Line: 83
+Time: 0.002s">
+<div class="time" style="width: 0.6993006993007%"></div>
+<pre>
+  Defined.</pre>
+</div>
+<div class="code" title="File: ChainCategory.v
+Line: 84
+Time: 0.001s">
+<div class="time" style="width: 0.34965034965035%"></div>
+<pre>
+
+  Definition iscategory_chain {n} : IsCategory [n].</pre>
+</div>
+<div class="code" title="File: ChainCategory.v
+Line: 86
+Time: 0s">
+<div class="time" style="width: 0%"></div>
+<pre>
+  Proof.</pre>
+</div>
+<div class="code" title="File: ChainCategory.v
+Line: 87
+Time: 0.076s">
+<div class="time" style="width: 26.573426573427%"></div>
+<pre>
+    exact _.</pre>
+</div>
+<div class="code" title="File: ChainCategory.v
+Line: 88
+Time: 0.002s">
+<div class="time" style="width: 0.6993006993007%"></div>
+<pre>
+  Defined.</pre>
+</div>
+<div class="code" title="File: ChainCategory.v
+Line: 89
+Time: 0s">
+<div class="time" style="width: 0%"></div>
+<pre>
+End Univalent.</pre>
+</div>
+<div class="code" title="File: ChainCategory.v
+Line: 91
+Time: 0s">
+<div class="time" style="width: 0%"></div>
+<pre>
+
+</pre>
+</div>
+</body>
+</html>
+

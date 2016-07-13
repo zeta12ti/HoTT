@@ -1,0 +1,351 @@
+<html>
+<head>
+<title>Prod.v</title>
+<style>
+.time {
+  background-color: #ffaaaa;
+  height: 100%;
+  z-index: -1;
+  position: absolute;
+}
+.code {
+  z-index: 0;
+  position: relative;
+  border-style: solid;
+  border-color: transparent;
+  border-width: 1px;
+}
+.code:hover {
+  border-style: solid;
+  border-color: black;
+  border-width: 1px;
+}
+pre {
+  margin: 1px;
+}
+</style>
+</head>
+<body>
+<h1>Timings for Prod.v</h1>
+
+<div class="code" title="File: Prod.v
+Line: 1
+Time: 0s">
+<div class="time" style="width: 0%"></div>
+<pre>(** * Natural transformations involving product categories *)</pre>
+</div>
+<div class="code" title="File: Prod.v
+Line: 1
+Time: 0.044s">
+<div class="time" style="width: 86.274509803922%"></div>
+<pre>Require Import Category.Core Functor.Core Category.Prod Functor.Prod.Core NaturalTransformation.Core.</pre>
+</div>
+<div class="code" title="File: Prod.v
+Line: 1
+Time: 0s">
+<div class="time" style="width: 0%"></div>
+<pre>
+Require Functor.Composition.Core Functor.Identity.</pre>
+</div>
+<div class="code" title="File: Prod.v
+Line: 2
+Time: 0.013s">
+<div class="time" style="width: 25.490196078431%"></div>
+<pre>
+Require Import InitialTerminalCategory.Core.</pre>
+</div>
+<div class="code" title="File: Prod.v
+Line: 3
+Time: 0s">
+<div class="time" style="width: 0%"></div>
+<pre>
+Require Import Types.Prod.</pre>
+</div>
+<div class="code" title="File: Prod.v
+Line: 4
+Time: 0s">
+<div class="time" style="width: 0%"></div>
+<pre>
+
+Set Universe Polymorphism.</pre>
+</div>
+<div class="code" title="File: Prod.v
+Line: 6
+Time: 0s">
+<div class="time" style="width: 0%"></div>
+<pre>
+Set Implicit Arguments.</pre>
+</div>
+<div class="code" title="File: Prod.v
+Line: 7
+Time: 0s">
+<div class="time" style="width: 0%"></div>
+<pre>
+Generalizable All Variables.</pre>
+</div>
+<div class="code" title="File: Prod.v
+Line: 8
+Time: 0s">
+<div class="time" style="width: 0%"></div>
+<pre>
+Set Asymmetric Patterns.</pre>
+</div>
+<div class="code" title="File: Prod.v
+Line: 9
+Time: 0s">
+<div class="time" style="width: 0%"></div>
+<pre>
+
+(** ** Product of natural transformations *)</pre>
+</div>
+<div class="code" title="File: Prod.v
+Line: 11
+Time: 0s">
+<div class="time" style="width: 0%"></div>
+<pre>Section prod.</pre>
+</div>
+<div class="code" title="File: Prod.v
+Line: 11
+Time: 0s">
+<div class="time" style="width: 0%"></div>
+<pre>
+  Context {A : PreCategory}.</pre>
+</div>
+<div class="code" title="File: Prod.v
+Line: 12
+Time: 0s">
+<div class="time" style="width: 0%"></div>
+<pre>
+  Context {B : PreCategory}.</pre>
+</div>
+<div class="code" title="File: Prod.v
+Line: 13
+Time: 0s">
+<div class="time" style="width: 0%"></div>
+<pre>
+  Context {C : PreCategory}.</pre>
+</div>
+<div class="code" title="File: Prod.v
+Line: 14
+Time: 0s">
+<div class="time" style="width: 0%"></div>
+<pre>
+  Variables F F' : Functor A B.</pre>
+</div>
+<div class="code" title="File: Prod.v
+Line: 15
+Time: 0s">
+<div class="time" style="width: 0%"></div>
+<pre>
+  Variables G G' : Functor A C.</pre>
+</div>
+<div class="code" title="File: Prod.v
+Line: 16
+Time: 0s">
+<div class="time" style="width: 0%"></div>
+<pre>
+  Variable T : NaturalTransformation F F'.</pre>
+</div>
+<div class="code" title="File: Prod.v
+Line: 17
+Time: 0s">
+<div class="time" style="width: 0%"></div>
+<pre>
+  Variable U : NaturalTransformation G G'.</pre>
+</div>
+<div class="code" title="File: Prod.v
+Line: 18
+Time: 0.01s">
+<div class="time" style="width: 19.607843137255%"></div>
+<pre>
+
+  Definition prod
+  : NaturalTransformation (F * G) (F' * G')
+    := Build_NaturalTransformation
+         (F * G) (F' * G')
+         (fun x : A =&gt; (T x, U x))
+         (fun _ _ _ =&gt; path_prod' (commutes T _ _ _) (commutes U _ _ _)).</pre>
+</div>
+<div class="code" title="File: Prod.v
+Line: 25
+Time: 0s">
+<div class="time" style="width: 0%"></div>
+<pre>
+End prod.</pre>
+</div>
+<div class="code" title="File: Prod.v
+Line: 26
+Time: 0s">
+<div class="time" style="width: 0%"></div>
+<pre>
+
+Local Infix "*" := prod : natural_transformation_scope.</pre>
+</div>
+<div class="code" title="File: Prod.v
+Line: 28
+Time: 0s">
+<div class="time" style="width: 0%"></div>
+<pre>
+
+(** ** Natural transformations between partially applied functors *)</pre>
+</div>
+<div class="code" title="File: Prod.v
+Line: 30
+Time: 0s">
+<div class="time" style="width: 0%"></div>
+<pre>Section induced.</pre>
+</div>
+<div class="code" title="File: Prod.v
+Line: 30
+Time: 0s">
+<div class="time" style="width: 0%"></div>
+<pre>
+  Variables C D E : PreCategory.</pre>
+</div>
+<div class="code" title="File: Prod.v
+Line: 31
+Time: 0s">
+<div class="time" style="width: 0%"></div>
+<pre>
+
+  Variable F : Functor (C * D) E.</pre>
+</div>
+<div class="code" title="File: Prod.v
+Line: 33
+Time: 0s">
+<div class="time" style="width: 0%"></div>
+<pre>
+
+  Local Ltac t :=
+    simpl; intros;
+    rewrite &lt;- !composition_of;
+    simpl;
+    rewrite ?left_identity, ?right_identity;
+    reflexivity.</pre>
+</div>
+<div class="code" title="File: Prod.v
+Line: 40
+Time: 0.001s">
+<div class="time" style="width: 1.9607843137255%"></div>
+<pre>
+
+  Definition induced_fst s d (m : morphism C s d)
+  : NaturalTransformation (Functor.Prod.Core.induced_snd F s)
+                          (Functor.Prod.Core.induced_snd F d).</pre>
+</div>
+<div class="code" title="File: Prod.v
+Line: 44
+Time: 0s">
+<div class="time" style="width: 0%"></div>
+<pre>
+  Proof.</pre>
+</div>
+<div class="code" title="File: Prod.v
+Line: 45
+Time: 0.009s">
+<div class="time" style="width: 17.647058823529%"></div>
+<pre>
+    let F0 := match goal with |- NaturalTransformation ?F0 ?G0 =&gt; constr:(F0) end in
+    let G0 := match goal with |- NaturalTransformation ?F0 ?G0 =&gt; constr:(G0) end in
+    refine (Build_NaturalTransformation
+              F0 G0
+              (fun d =&gt; @morphism_of _ _ F (_, _) (_, _) (m, @identity D d))
+              _).</pre>
+</div>
+<div class="code" title="File: Prod.v
+Line: 51
+Time: 0.049s">
+<div class="time" style="width: 96.078431372549%"></div>
+<pre>
+    abstract t.</pre>
+</div>
+<div class="code" title="File: Prod.v
+Line: 52
+Time: 0.002s">
+<div class="time" style="width: 3.921568627451%"></div>
+<pre>
+  Defined.</pre>
+</div>
+<div class="code" title="File: Prod.v
+Line: 53
+Time: 0.001s">
+<div class="time" style="width: 1.9607843137255%"></div>
+<pre>
+
+  Definition induced_snd s d (m : morphism D s d)
+  : NaturalTransformation (Functor.Prod.Core.induced_fst F s)
+                          (Functor.Prod.Core.induced_fst F d).</pre>
+</div>
+<div class="code" title="File: Prod.v
+Line: 57
+Time: 0s">
+<div class="time" style="width: 0%"></div>
+<pre>
+  Proof.</pre>
+</div>
+<div class="code" title="File: Prod.v
+Line: 58
+Time: 0.026s">
+<div class="time" style="width: 50.980392156863%"></div>
+<pre>
+    let F0 := match goal with |- NaturalTransformation ?F0 ?G0 =&gt; constr:(F0) end in
+    let G0 := match goal with |- NaturalTransformation ?F0 ?G0 =&gt; constr:(G0) end in
+    refine (Build_NaturalTransformation
+              F0 G0
+              (fun c =&gt; @morphism_of _ _ F (_, _) (_, _) (@identity C c, m))
+              _).</pre>
+</div>
+<div class="code" title="File: Prod.v
+Line: 64
+Time: 0.051s">
+<div class="time" style="width: 100%"></div>
+<pre>
+    abstract t.</pre>
+</div>
+<div class="code" title="File: Prod.v
+Line: 65
+Time: 0.003s">
+<div class="time" style="width: 5.8823529411765%"></div>
+<pre>
+  Defined.</pre>
+</div>
+<div class="code" title="File: Prod.v
+Line: 66
+Time: 0.01s">
+<div class="time" style="width: 19.607843137255%"></div>
+<pre>
+End induced.</pre>
+</div>
+<div class="code" title="File: Prod.v
+Line: 67
+Time: 0s">
+<div class="time" style="width: 0%"></div>
+<pre>
+
+Module Export NaturalTransformationProdNotations.</pre>
+</div>
+<div class="code" title="File: Prod.v
+Line: 69
+Time: 0s">
+<div class="time" style="width: 0%"></div>
+<pre>
+  Infix "*" := prod : natural_transformation_scope.</pre>
+</div>
+<div class="code" title="File: Prod.v
+Line: 70
+Time: 0s">
+<div class="time" style="width: 0%"></div>
+<pre>
+End NaturalTransformationProdNotations.</pre>
+</div>
+<div class="code" title="File: Prod.v
+Line: 72
+Time: 0s">
+<div class="time" style="width: 0%"></div>
+<pre>
+
+</pre>
+</div>
+</body>
+</html>
+

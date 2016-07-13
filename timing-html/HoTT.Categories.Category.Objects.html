@@ -1,0 +1,312 @@
+<html>
+<head>
+<title>Objects.v</title>
+<style>
+.time {
+  background-color: #ffaaaa;
+  height: 100%;
+  z-index: -1;
+  position: absolute;
+}
+.code {
+  z-index: 0;
+  position: relative;
+  border-style: solid;
+  border-color: transparent;
+  border-width: 1px;
+}
+.code:hover {
+  border-style: solid;
+  border-color: black;
+  border-width: 1px;
+}
+pre {
+  margin: 1px;
+}
+</style>
+</head>
+<body>
+<h1>Timings for Objects.v</h1>
+
+<div class="code" title="File: Objects.v
+Line: 1
+Time: 0s">
+<div class="time" style="width: 0%"></div>
+<pre>(** * Universal objects *)</pre>
+</div>
+<div class="code" title="File: Objects.v
+Line: 1
+Time: 0.047s">
+<div class="time" style="width: 100%"></div>
+<pre>Require Import Category.Core Category.Morphisms.</pre>
+</div>
+<div class="code" title="File: Objects.v
+Line: 1
+Time: 0s">
+<div class="time" style="width: 0%"></div>
+<pre>
+
+Set Universe Polymorphism.</pre>
+</div>
+<div class="code" title="File: Objects.v
+Line: 3
+Time: 0s">
+<div class="time" style="width: 0%"></div>
+<pre>
+Set Implicit Arguments.</pre>
+</div>
+<div class="code" title="File: Objects.v
+Line: 4
+Time: 0s">
+<div class="time" style="width: 0%"></div>
+<pre>
+Generalizable All Variables.</pre>
+</div>
+<div class="code" title="File: Objects.v
+Line: 5
+Time: 0s">
+<div class="time" style="width: 0%"></div>
+<pre>
+Set Asymmetric Patterns.</pre>
+</div>
+<div class="code" title="File: Objects.v
+Line: 6
+Time: 0s">
+<div class="time" style="width: 0%"></div>
+<pre>
+
+Local Open Scope category_scope.</pre>
+</div>
+<div class="code" title="File: Objects.v
+Line: 8
+Time: 0s">
+<div class="time" style="width: 0%"></div>
+<pre>
+Local Open Scope morphism_scope.</pre>
+</div>
+<div class="code" title="File: Objects.v
+Line: 9
+Time: 0s">
+<div class="time" style="width: 0%"></div>
+<pre>
+
+(** ** Definition of "unique up to unique isomorphism" *)
+
+</pre>
+</div>
+<div class="code" title="File: Objects.v
+Line: 12
+Time: 0.002s">
+<div class="time" style="width: 4.2553191489362%"></div>
+<pre>Definition unique_up_to_unique_isomorphism (C : PreCategory) (P : C -&gt; Type) :=
+  forall x (_ : P x) x' (_ : P x'),
+    { c : Contr (morphism C x x')
+    | IsIsomorphism (center (morphism C x x')) }.</pre>
+</div>
+<div class="code" title="File: Objects.v
+Line: 15
+Time: 0s">
+<div class="time" style="width: 0%"></div>
+<pre>
+
+(** ** Terminal objects *)
+(** A terminal object is an object with a unique morphism from every
+    other object. *)</pre>
+</div>
+<div class="code" title="File: Objects.v
+Line: 19
+Time: 0s">
+<div class="time" style="width: 0%"></div>
+<pre>Notation IsTerminalObject C x :=
+  (forall x' : object C, Contr (morphism C x' x)).</pre>
+</div>
+<div class="code" title="File: Objects.v
+Line: 20
+Time: 0.002s">
+<div class="time" style="width: 4.2553191489362%"></div>
+<pre>
+
+Record TerminalObject (C : PreCategory) :=
+  {
+    object_terminal :&gt; C;
+    isterminal_object_terminal :&gt; IsTerminalObject C object_terminal
+  }.</pre>
+</div>
+<div class="code" title="File: Objects.v
+Line: 26
+Time: 0s">
+<div class="time" style="width: 0%"></div>
+<pre>
+
+Global Existing Instance isterminal_object_terminal.</pre>
+</div>
+<div class="code" title="File: Objects.v
+Line: 28
+Time: 0s">
+<div class="time" style="width: 0%"></div>
+<pre>
+
+(** ** Initial objects *)
+(** An initial object is an object with a unique morphism from every
+    other object. *)</pre>
+</div>
+<div class="code" title="File: Objects.v
+Line: 32
+Time: 0s">
+<div class="time" style="width: 0%"></div>
+<pre>Notation IsInitialObject C x :=
+  (forall x' : object C, Contr (morphism C x x')).</pre>
+</div>
+<div class="code" title="File: Objects.v
+Line: 33
+Time: 0.002s">
+<div class="time" style="width: 4.2553191489362%"></div>
+<pre>
+
+Record InitialObject (C : PreCategory) :=
+  {
+    object_initial :&gt; C;
+    isinitial_object_initial :&gt; IsInitialObject C object_initial
+  }.</pre>
+</div>
+<div class="code" title="File: Objects.v
+Line: 39
+Time: 0s">
+<div class="time" style="width: 0%"></div>
+<pre>
+
+Global Existing Instance isinitial_object_initial.</pre>
+</div>
+<div class="code" title="File: Objects.v
+Line: 41
+Time: 0s">
+<div class="time" style="width: 0%"></div>
+<pre>
+
+Arguments unique_up_to_unique_isomorphism [C] P.</pre>
+</div>
+<div class="code" title="File: Objects.v
+Line: 43
+Time: 0s">
+<div class="time" style="width: 0%"></div>
+<pre>
+
+(** ** Initial and terminal objects are unique up to unique isomorphism *)</pre>
+</div>
+<div class="code" title="File: Objects.v
+Line: 45
+Time: 0s">
+<div class="time" style="width: 0%"></div>
+<pre>Section CategoryObjectsTheorems.</pre>
+</div>
+<div class="code" title="File: Objects.v
+Line: 45
+Time: 0s">
+<div class="time" style="width: 0%"></div>
+<pre>
+  Variable C : PreCategory.</pre>
+</div>
+<div class="code" title="File: Objects.v
+Line: 46
+Time: 0s">
+<div class="time" style="width: 0%"></div>
+<pre>
+
+  Local Ltac unique :=
+    repeat first [ intro
+                 | exists _
+                 | exists (center (morphism C _ _))
+                 | etransitivity; [ symmetry | ]; apply contr ].</pre>
+</div>
+<div class="code" title="File: Objects.v
+Line: 52
+Time: 0s">
+<div class="time" style="width: 0%"></div>
+<pre>
+
+  (** The terminal object is unique up to unique isomorphism. *)
+ </pre>
+</div>
+<div class="code" title="File: Objects.v
+Line: 55
+Time: 0s">
+<div class="time" style="width: 0%"></div>
+<pre>Theorem terminal_object_unique
+  : unique_up_to_unique_isomorphism (fun x =&gt; IsTerminalObject C x).</pre>
+</div>
+<div class="code" title="File: Objects.v
+Line: 56
+Time: 0s">
+<div class="time" style="width: 0%"></div>
+<pre>
+  Proof.</pre>
+</div>
+<div class="code" title="File: Objects.v
+Line: 57
+Time: 0.016s">
+<div class="time" style="width: 34.042553191489%"></div>
+<pre>
+    unique.</pre>
+</div>
+<div class="code" title="File: Objects.v
+Line: 58
+Time: 0.003s">
+<div class="time" style="width: 6.3829787234043%"></div>
+<pre>
+  Qed.</pre>
+</div>
+<div class="code" title="File: Objects.v
+Line: 59
+Time: 0s">
+<div class="time" style="width: 0%"></div>
+<pre>
+
+  (** The initial object is unique up to unique isomorphism. *)
+ </pre>
+</div>
+<div class="code" title="File: Objects.v
+Line: 62
+Time: 0s">
+<div class="time" style="width: 0%"></div>
+<pre>Theorem initial_object_unique
+  : unique_up_to_unique_isomorphism (fun x =&gt; IsInitialObject C x).</pre>
+</div>
+<div class="code" title="File: Objects.v
+Line: 63
+Time: 0s">
+<div class="time" style="width: 0%"></div>
+<pre>
+  Proof.</pre>
+</div>
+<div class="code" title="File: Objects.v
+Line: 64
+Time: 0.015s">
+<div class="time" style="width: 31.914893617021%"></div>
+<pre>
+    unique.</pre>
+</div>
+<div class="code" title="File: Objects.v
+Line: 65
+Time: 0.003s">
+<div class="time" style="width: 6.3829787234043%"></div>
+<pre>
+  Qed.</pre>
+</div>
+<div class="code" title="File: Objects.v
+Line: 66
+Time: 0.001s">
+<div class="time" style="width: 2.1276595744681%"></div>
+<pre>
+End CategoryObjectsTheorems.</pre>
+</div>
+<div class="code" title="File: Objects.v
+Line: 68
+Time: 0s">
+<div class="time" style="width: 0%"></div>
+<pre>
+
+</pre>
+</div>
+</body>
+</html>
+
