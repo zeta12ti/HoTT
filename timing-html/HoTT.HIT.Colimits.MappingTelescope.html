@@ -1,0 +1,327 @@
+<html>
+<head>
+<title>MappingTelescope.v</title>
+<style>
+.time {
+  background-color: #ffaaaa;
+  height: 100%;
+  z-index: -1;
+  position: absolute;
+}
+.code {
+  z-index: 0;
+  position: relative;
+  border-style: solid;
+  border-color: transparent;
+  border-width: 1px;
+}
+.code:hover {
+  border-style: solid;
+  border-color: black;
+  border-width: 1px;
+}
+pre {
+  margin: 1px;
+}
+</style>
+</head>
+<body>
+<h1>Timings for MappingTelescope.v</h1>
+
+<div class="code" title="File: MappingTelescope.v
+Line: 1
+Time: 0.03s">
+<div class="time" style="width: 58.823529411765%"></div>
+<pre>Require Import HoTT.Basics HoTT.Types.Bool HoTT.Types.Paths.</pre>
+</div>
+<div class="code" title="File: MappingTelescope.v
+Line: 1
+Time: 0.016s">
+<div class="time" style="width: 31.372549019608%"></div>
+<pre>
+Require Import Colimits.Diagram Colimits.Colimit.</pre>
+</div>
+<div class="code" title="File: MappingTelescope.v
+Line: 2
+Time: 0s">
+<div class="time" style="width: 0%"></div>
+<pre>
+Local Open Scope path.</pre>
+</div>
+<div class="code" title="File: MappingTelescope.v
+Line: 3
+Time: 0s">
+<div class="time" style="width: 0%"></div>
+<pre>
+
+(** * Mapping telescope *)
+
+(** A mapping telescope, or a sequence, is an infinite sequence of types [X(n)] with an arrow from [X(n)] to [X(n+1)]. *)
+
+</pre>
+</div>
+<div class="code" title="File: MappingTelescope.v
+Line: 8
+Time: 0s">
+<div class="time" style="width: 0%"></div>
+<pre>Definition mappingtelescope_graph : graph.</pre>
+</div>
+<div class="code" title="File: MappingTelescope.v
+Line: 8
+Time: 0s">
+<div class="time" style="width: 0%"></div>
+<pre>
+Proof.</pre>
+</div>
+<div class="code" title="File: MappingTelescope.v
+Line: 9
+Time: 0s">
+<div class="time" style="width: 0%"></div>
+<pre>
+  simple refine (Build_graph _ _).</pre>
+</div>
+<div class="code" title="File: MappingTelescope.v
+Line: 10
+Time: 0s">
+<div class="time" style="width: 0%"></div>
+<pre>
+  -</pre>
+</div>
+<div class="code" title="File: MappingTelescope.v
+Line: 11
+Time: 0s">
+<div class="time" style="width: 0%"></div>
+<pre> exact nat.</pre>
+</div>
+<div class="code" title="File: MappingTelescope.v
+Line: 11
+Time: 0s">
+<div class="time" style="width: 0%"></div>
+<pre>
+  -</pre>
+</div>
+<div class="code" title="File: MappingTelescope.v
+Line: 12
+Time: 0s">
+<div class="time" style="width: 0%"></div>
+<pre> intros n m; exact (S n = m).</pre>
+</div>
+<div class="code" title="File: MappingTelescope.v
+Line: 12
+Time: 0s">
+<div class="time" style="width: 0%"></div>
+<pre>
+Defined.</pre>
+</div>
+<div class="code" title="File: MappingTelescope.v
+Line: 13
+Time: 0s">
+<div class="time" style="width: 0%"></div>
+<pre>
+
+
+Definition sequence := diagram mappingtelescope_graph.</pre>
+</div>
+<div class="code" title="File: MappingTelescope.v
+Line: 16
+Time: 0s">
+<div class="time" style="width: 0%"></div>
+<pre>
+
+
+Definition Build_sequence (X : nat -&gt; Type) (f : forall n, X n -&gt; X n.+1)
+  : sequence.</pre>
+</div>
+<div class="code" title="File: MappingTelescope.v
+Line: 20
+Time: 0s">
+<div class="time" style="width: 0%"></div>
+<pre>
+Proof.</pre>
+</div>
+<div class="code" title="File: MappingTelescope.v
+Line: 21
+Time: 0s">
+<div class="time" style="width: 0%"></div>
+<pre>
+  unshelve econstructor.</pre>
+</div>
+<div class="code" title="File: MappingTelescope.v
+Line: 22
+Time: 0s">
+<div class="time" style="width: 0%"></div>
+<pre>
+  exact X.</pre>
+</div>
+<div class="code" title="File: MappingTelescope.v
+Line: 23
+Time: 0.001s">
+<div class="time" style="width: 1.9607843137255%"></div>
+<pre> intros i j p; destruct p.</pre>
+</div>
+<div class="code" title="File: MappingTelescope.v
+Line: 23
+Time: 0s">
+<div class="time" style="width: 0%"></div>
+<pre> apply f.</pre>
+</div>
+<div class="code" title="File: MappingTelescope.v
+Line: 23
+Time: 0s">
+<div class="time" style="width: 0%"></div>
+<pre>
+Defined.</pre>
+</div>
+<div class="code" title="File: MappingTelescope.v
+Line: 24
+Time: 0s">
+<div class="time" style="width: 0%"></div>
+<pre>
+
+(** A useful lemma to show than two sequences are equivalent. *)
+
+</pre>
+</div>
+<div class="code" title="File: MappingTelescope.v
+Line: 27
+Time: 0.006s">
+<div class="time" style="width: 11.764705882353%"></div>
+<pre>Definition equiv_sequence (D1 D2: sequence)
+           (H0: (D1 0) &lt;~&gt; (D2 0))
+           (Hn: forall n (e: (D1 n) &lt;~&gt; (D2 n)),
+               {e' : (D1 n.+1) &lt;~&gt; (D2 n.+1)
+                     &amp; (D2 _f 1) o e == e' o (D1 _f 1)})
+  : D1 ~d~ D2.</pre>
+</div>
+<div class="code" title="File: MappingTelescope.v
+Line: 32
+Time: 0s">
+<div class="time" style="width: 0%"></div>
+<pre>
+Proof.</pre>
+</div>
+<div class="code" title="File: MappingTelescope.v
+Line: 33
+Time: 0.051s">
+<div class="time" style="width: 100%"></div>
+<pre>
+  simple refine (Build_diagram_equiv (Build_diagram_map _ _) _).</pre>
+</div>
+<div class="code" title="File: MappingTelescope.v
+Line: 34
+Time: 0s">
+<div class="time" style="width: 0%"></div>
+<pre>
+  -</pre>
+</div>
+<div class="code" title="File: MappingTelescope.v
+Line: 35
+Time: 0s">
+<div class="time" style="width: 0%"></div>
+<pre> intros n.</pre>
+</div>
+<div class="code" title="File: MappingTelescope.v
+Line: 35
+Time: 0s">
+<div class="time" style="width: 0%"></div>
+<pre> apply equiv_fun.</pre>
+</div>
+<div class="code" title="File: MappingTelescope.v
+Line: 35
+Time: 0s">
+<div class="time" style="width: 0%"></div>
+<pre> induction n.</pre>
+</div>
+<div class="code" title="File: MappingTelescope.v
+Line: 35
+Time: 0s">
+<div class="time" style="width: 0%"></div>
+<pre> apply H0.</pre>
+</div>
+<div class="code" title="File: MappingTelescope.v
+Line: 35
+Time: 0s">
+<div class="time" style="width: 0%"></div>
+<pre> exact (Hn n IHn).1.</pre>
+</div>
+<div class="code" title="File: MappingTelescope.v
+Line: 35
+Time: 0s">
+<div class="time" style="width: 0%"></div>
+<pre>
+  -</pre>
+</div>
+<div class="code" title="File: MappingTelescope.v
+Line: 36
+Time: 0.002s">
+<div class="time" style="width: 3.921568627451%"></div>
+<pre> intros n m q; destruct q.</pre>
+</div>
+<div class="code" title="File: MappingTelescope.v
+Line: 36
+Time: 0.002s">
+<div class="time" style="width: 3.921568627451%"></div>
+<pre> induction n; simpl.</pre>
+</div>
+<div class="code" title="File: MappingTelescope.v
+Line: 36
+Time: 0s">
+<div class="time" style="width: 0%"></div>
+<pre> exact (Hn 0 H0).2.</pre>
+</div>
+<div class="code" title="File: MappingTelescope.v
+Line: 36
+Time: 0.001s">
+<div class="time" style="width: 1.9607843137255%"></div>
+<pre>
+    simple refine (Hn n.+1 _).2.</pre>
+</div>
+<div class="code" title="File: MappingTelescope.v
+Line: 37
+Time: 0s">
+<div class="time" style="width: 0%"></div>
+<pre>
+  -</pre>
+</div>
+<div class="code" title="File: MappingTelescope.v
+Line: 38
+Time: 0s">
+<div class="time" style="width: 0%"></div>
+<pre> intros n; simpl.</pre>
+</div>
+<div class="code" title="File: MappingTelescope.v
+Line: 38
+Time: 0.001s">
+<div class="time" style="width: 1.9607843137255%"></div>
+<pre> induction n; simpl.</pre>
+</div>
+<div class="code" title="File: MappingTelescope.v
+Line: 38
+Time: 0s">
+<div class="time" style="width: 0%"></div>
+<pre> apply H0.</pre>
+</div>
+<div class="code" title="File: MappingTelescope.v
+Line: 38
+Time: 0.001s">
+<div class="time" style="width: 1.9607843137255%"></div>
+<pre> apply (Hn n _ ).1.</pre>
+</div>
+<div class="code" title="File: MappingTelescope.v
+Line: 38
+Time: 0.016s">
+<div class="time" style="width: 31.372549019608%"></div>
+<pre>
+Defined.</pre>
+</div>
+<div class="code" title="File: MappingTelescope.v
+Line: 40
+Time: 0s">
+<div class="time" style="width: 0%"></div>
+<pre>
+
+</pre>
+</div>
+</body>
+</html>
+
