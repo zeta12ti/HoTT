@@ -23,7 +23,7 @@
 <br/>
 <span class="id" title="keyword">Require</span> <span class="id" title="keyword">Import</span> <a class="idref" href="HoTT.Basics.html#"><span class="id" title="library">HoTT.Basics</span></a> <a class="idref" href="HoTT.Types.html#"><span class="id" title="library">HoTT.Types</span></a>.<br/>
 <span class="id" title="keyword">Require</span> <span class="id" title="keyword">Import</span> <a class="idref" href="HoTT.HProp.html#"><span class="id" title="library">HProp</span></a> <a class="idref" href="HoTT.HSet.html#"><span class="id" title="library">HSet</span></a>.<br/>
-<span class="id" title="keyword">Require</span> <span class="id" title="keyword">Import</span> <a class="idref" href="HoTT.HIT.Pushout.html#"><span class="id" title="library">HIT.Pushout</span></a>.<br/>
+<span class="id" title="keyword">Require</span> <span class="id" title="keyword">Import</span> <a class="idref" href="HoTT.HIT.Pushout.html#"><span class="id" title="library">HIT.Pushout</span></a> <a class="idref" href="HoTT.HIT.Truncations.html#"><span class="id" title="library">HIT.Truncations</span></a>.<br/>
 <span class="id" title="keyword">Local Open</span> <span class="id" title="keyword">Scope</span> <span class="id" title="var">path_scope</span>.<br/>
 
 <br/>
@@ -68,6 +68,55 @@ Joining with a contractible type produces a contractible type
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="id" title="tactic">rewrite</span> &lt;- <a class="idref" href="HoTT.Basics.PathGroupoids.html#ap_compose"><span class="id" title="definition">ap_compose</span></a>; <span class="id" title="tactic">unfold</span> <a class="idref" href="HoTT.HIT.Join.html#joinpp"><span class="id" title="definition">joinpp</span></a>.<br/>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="id" title="tactic">rewrite</span> <a class="idref" href="HoTT.Basics.PathGroupoids.html#ap_const"><span class="id" title="definition">ap_const</span></a>, <a class="idref" href="HoTT.Basics.PathGroupoids.html#concat_p1"><span class="id" title="definition">concat_p1</span></a>.<br/>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="id" title="tactic">reflexivity</span>.<br/>
+&nbsp;&nbsp;<span class="id" title="keyword">Defined</span>.<br/>
+
+<br/>
+</div>
+
+<div class="doc">
+Join is symmetric 
+</div>
+<div class="code">
+&nbsp;&nbsp;<span class="id" title="keyword">Definition</span> <a name="join_sym"><span class="id" title="definition">join_sym</span></a> <span class="id" title="var">A</span> <span class="id" title="var">B</span> : <a class="idref" href="HoTT.HIT.Join.html#join"><span class="id" title="definition">join</span></a> <a class="idref" href="HoTT.HIT.Join.html#A"><span class="id" title="variable">A</span></a> <a class="idref" href="HoTT.HIT.Join.html#B"><span class="id" title="variable">B</span></a> <a class="idref" href="HoTT.Basics.Overture.html#fdd951a86e2a1b4ef3630e8a03060363"><span class="id" title="notation">&lt;~&gt;</span></a> <a class="idref" href="HoTT.HIT.Join.html#join"><span class="id" title="definition">join</span></a> <a class="idref" href="HoTT.HIT.Join.html#B"><span class="id" title="variable">B</span></a> <a class="idref" href="HoTT.HIT.Join.html#A"><span class="id" title="variable">A</span></a>.<br/>
+&nbsp;&nbsp;<span class="id" title="keyword">Proof</span>.<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="id" title="tactic">unfold</span> <a class="idref" href="HoTT.HIT.Join.html#join"><span class="id" title="definition">join</span></a>; <span class="id" title="tactic">refine</span> (<a class="idref" href="HoTT.HIT.Pushout.html#pushout_sym"><span class="id" title="definition">pushout_sym</span></a> <a class="idref" href="HoTT.Basics.Equivalences.html#e4f125badd7d48f77249897c8bdc044f"><span class="id" title="notation">oE</span></a> <span class="id" title="var">_</span>).<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="id" title="tactic">refine</span> (<a class="idref" href="HoTT.HIT.Pushout.html#equiv_pushout"><span class="id" title="lemma">equiv_pushout</span></a> (<a class="idref" href="HoTT.Types.Prod.html#equiv_prod_symm"><span class="id" title="definition">equiv_prod_symm</span></a> <span class="id" title="var">A</span> <span class="id" title="var">B</span>) 1 1 <span class="id" title="var">_</span> <span class="id" title="var">_</span>);<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="id" title="tactic">intros</span> [<span class="id" title="var">a</span> <span class="id" title="var">b</span>]; <span class="id" title="tactic">reflexivity</span>.<br/>
+&nbsp;&nbsp;<span class="id" title="keyword">Defined</span>.<br/>
+
+<br/>
+</div>
+
+<div class="doc">
+The join of hprops is an hprop 
+</div>
+<div class="code">
+&nbsp;&nbsp;<span class="id" title="keyword">Global Instance</span> <a name="ishprop_join"><span class="id" title="instance">ishprop_join</span></a> `{<a class="idref" href="HoTT.Basics.Overture.html#Funext"><span class="id" title="class">Funext</span></a>} <span class="id" title="var">A</span> <span class="id" title="var">B</span> `{<a class="idref" href="HoTT.Basics.Overture.html#IsHProp"><span class="id" title="abbreviation">IsHProp</span></a> <a class="idref" href="HoTT.HIT.Join.html#A"><span class="id" title="variable">A</span></a>} `{<a class="idref" href="HoTT.Basics.Overture.html#IsHProp"><span class="id" title="abbreviation">IsHProp</span></a> <a class="idref" href="HoTT.HIT.Join.html#B"><span class="id" title="variable">B</span></a>} : <a class="idref" href="HoTT.Basics.Overture.html#IsHProp"><span class="id" title="abbreviation">IsHProp</span></a> (<a class="idref" href="HoTT.HIT.Join.html#join"><span class="id" title="definition">join</span></a> <a class="idref" href="HoTT.HIT.Join.html#A"><span class="id" title="variable">A</span></a> <a class="idref" href="HoTT.HIT.Join.html#B"><span class="id" title="variable">B</span></a>).<br/>
+&nbsp;&nbsp;<span class="id" title="keyword">Proof</span>.<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="id" title="tactic">apply</span> <a class="idref" href="HoTT.Basics.Trunc.html#hprop_inhabited_contr"><span class="id" title="instance">hprop_inhabited_contr</span></a>.<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="id" title="tactic">unfold</span> <a class="idref" href="HoTT.HIT.Join.html#join"><span class="id" title="definition">join</span></a>.<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="id" title="tactic">refine</span> (<a class="idref" href="HoTT.HIT.Pushout.html#pushout_rec"><span class="id" title="definition">pushout_rec</span></a> <span class="id" title="var">_</span> <span class="id" title="var">_</span> (<span class="id" title="keyword">fun</span> <span class="id" title="var">_</span> ⇒ <a class="idref" href="HoTT.Basics.Trunc.html#path_ishprop"><span class="id" title="lemma">path_ishprop</span></a> <span class="id" title="var">_</span> <span class="id" title="var">_</span>)).<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="id" title="tactic">intros</span> [<span class="id" title="var">a</span>|<span class="id" title="var">b</span>].<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;- <span class="id" title="tactic">apply</span> <a class="idref" href="HoTT.HIT.Join.html#contr_join"><span class="id" title="instance">contr_join</span></a>.<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="id" title="tactic">exact</span> (<a class="idref" href="HoTT.Basics.Trunc.html#contr_inhabited_hprop"><span class="id" title="lemma">contr_inhabited_hprop</span></a> <span class="id" title="var">A</span> <span class="id" title="var">a</span>).<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;- <span class="id" title="tactic">refine</span> (<a class="idref" href="HoTT.Basics.Trunc.html#trunc_equiv"><span class="id" title="definition">trunc_equiv</span></a> (<a class="idref" href="HoTT.HIT.Join.html#join"><span class="id" title="definition">join</span></a> <span class="id" title="var">B</span> <span class="id" title="var">A</span>) (<a class="idref" href="HoTT.HIT.Join.html#join_sym"><span class="id" title="definition">join_sym</span></a> <span class="id" title="var">B</span> <span class="id" title="var">A</span>)).<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="id" title="tactic">apply</span> <a class="idref" href="HoTT.HIT.Join.html#contr_join"><span class="id" title="instance">contr_join</span></a>.<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="id" title="tactic">exact</span> (<a class="idref" href="HoTT.Basics.Trunc.html#contr_inhabited_hprop"><span class="id" title="lemma">contr_inhabited_hprop</span></a> <span class="id" title="var">B</span> <span class="id" title="var">b</span>).<br/>
+&nbsp;&nbsp;<span class="id" title="keyword">Defined</span>.<br/>
+
+<br/>
+</div>
+
+<div class="doc">
+And coincides with their disjunction 
+</div>
+<div class="code">
+&nbsp;&nbsp;<span class="id" title="keyword">Definition</span> <a name="equiv_join_hor"><span class="id" title="definition">equiv_join_hor</span></a> `{<a class="idref" href="HoTT.Basics.Overture.html#Funext"><span class="id" title="class">Funext</span></a>} <span class="id" title="var">A</span> <span class="id" title="var">B</span> `{<a class="idref" href="HoTT.Basics.Overture.html#IsHProp"><span class="id" title="abbreviation">IsHProp</span></a> <a class="idref" href="HoTT.HIT.Join.html#A"><span class="id" title="variable">A</span></a>} `{<a class="idref" href="HoTT.Basics.Overture.html#IsHProp"><span class="id" title="abbreviation">IsHProp</span></a> <a class="idref" href="HoTT.HIT.Join.html#B"><span class="id" title="variable">B</span></a>} <br/>
+&nbsp;&nbsp;&nbsp;&nbsp;: <a class="idref" href="HoTT.HIT.Join.html#join"><span class="id" title="definition">join</span></a> <a class="idref" href="HoTT.HIT.Join.html#A"><span class="id" title="variable">A</span></a> <a class="idref" href="HoTT.HIT.Join.html#B"><span class="id" title="variable">B</span></a> <a class="idref" href="HoTT.Basics.Overture.html#fdd951a86e2a1b4ef3630e8a03060363"><span class="id" title="notation">&lt;~&gt;</span></a> <a class="idref" href="HoTT.HIT.Truncations.html#hor"><span class="id" title="definition">hor</span></a> <a class="idref" href="HoTT.HIT.Join.html#A"><span class="id" title="variable">A</span></a> <a class="idref" href="HoTT.HIT.Join.html#B"><span class="id" title="variable">B</span></a>.<br/>
+&nbsp;&nbsp;<span class="id" title="keyword">Proof</span>.<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="id" title="tactic">apply</span> <a class="idref" href="HoTT.Basics.Trunc.html#equiv_iff_hprop"><span class="id" title="definition">equiv_iff_hprop</span></a>.<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;- <span class="id" title="tactic">refine</span> (<a class="idref" href="HoTT.HIT.Pushout.html#pushout_rec"><span class="id" title="definition">pushout_rec</span></a> <span class="id" title="var">_</span> <a class="idref" href="HoTT.HIT.Truncations.html#Trunc.tr"><span class="id" title="constructor">tr</span></a> (<span class="id" title="keyword">fun</span> <span class="id" title="var">_</span> ⇒ <a class="idref" href="HoTT.Basics.Trunc.html#path_ishprop"><span class="id" title="lemma">path_ishprop</span></a> <span class="id" title="var">_</span> <span class="id" title="var">_</span>)).<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;- <span class="id" title="tactic">apply</span> <a class="idref" href="HoTT.HIT.Truncations.html#Trunc_rec"><span class="id" title="definition">Trunc_rec</span></a>, <a class="idref" href="HoTT.HIT.Pushout.html#push"><span class="id" title="definition">push</span></a>.<br/>
 &nbsp;&nbsp;<span class="id" title="keyword">Defined</span>.<br/>
 
 <br/>
