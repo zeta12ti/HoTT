@@ -127,7 +127,7 @@ Line: 17
 Time: 0s">
 <div class="time" style="width: 0%"></div>
 <pre>
-  Local Notation c_morphism_of m := (morphism_of G (morphism_of F m)) (only parsing).</pre>
+  Local Notation c_morphism_of m := (G _1 (F _1 m)) (only parsing).</pre>
 </div>
 <div class="code" title="File: Core.v
 Line: 18
@@ -139,7 +139,7 @@ Time: 0.007s">
   : c_morphism_of (m2 o m1) = c_morphism_of m2 o c_morphism_of m1
     := transport (@paths _ (c_morphism_of (m2 o m1)))
                  (composition_of G _ _ _ _ _)
-                 (ap (@morphism_of _ _ G _ _) (composition_of F _ _ _ m1 m2)).</pre>
+                 (ap (fun m =&gt; G _1 m) (composition_of F _ _ _ m1 m2)).</pre>
 </div>
 <div class="code" title="File: Core.v
 Line: 24
@@ -151,7 +151,7 @@ Time: 0.004s">
   : c_morphism_of (identity x) = identity (c_object_of x)
     := transport (@paths _ _)
                  (identity_of G _)
-                 (ap (@morphism_of _ _ G _ _) (identity_of F x)).</pre>
+                 (ap (fun m =&gt; G _1 m) (identity_of F x)).</pre>
 </div>
 <div class="code" title="File: Core.v
 Line: 30
@@ -163,7 +163,7 @@ Time: 0.002s">
     := Build_Functor
          C E
          (fun c =&gt; G (F c))
-         (fun _ _ m =&gt; morphism_of G (morphism_of F m))
+         (fun _ _ m =&gt; G _1 (F _1 m))
          compose_composition_of
          compose_identity_of.</pre>
 </div>

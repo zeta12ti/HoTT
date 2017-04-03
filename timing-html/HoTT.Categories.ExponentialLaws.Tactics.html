@@ -37,12 +37,12 @@ Time: 0s">
 <div class="code" title="File: Tactics.v
 Line: 1
 Time: 0.007s">
-<div class="time" style="width: 17.5%"></div>
+<div class="time" style="width: 17.948717948718%"></div>
 <pre>Require Import Category.Core Functor.Core NaturalTransformation.Core.</pre>
 </div>
 <div class="code" title="File: Tactics.v
 Line: 1
-Time: 0.04s">
+Time: 0.039s">
 <div class="time" style="width: 100%"></div>
 <pre>
 Require Import Functor.Paths NaturalTransformation.Paths.</pre>
@@ -50,7 +50,7 @@ Require Import Functor.Paths NaturalTransformation.Paths.</pre>
 <div class="code" title="File: Tactics.v
 Line: 2
 Time: 0.002s">
-<div class="time" style="width: 5%"></div>
+<div class="time" style="width: 5.1282051282051%"></div>
 <pre>
 Require Import HoTT.Tactics Basics.PathGroupoids Types.Forall Types.Prod.</pre>
 </div>
@@ -145,15 +145,15 @@ Time: 0s">
     | _ =&gt; progress rewrite ?transport_forall_constant, ?path_forall_2_beta, ?transport_const, ?transport_path_prod
     | [ |- context [path_functor_uncurried ?F ?G (?x; ?y)] ] (* https://coq.inria.fr/bugs/show_bug.cgi?id=3768 *)
       =&gt; rewrite (@path_functor_uncurried_fst _ _ _ F G x y)
-    | [ |- context[transport (fun y =&gt; ?f (@object_of ?C ?D y ?x))] ]
+    | [ |- context[transport (fun y : Functor ?C ?D =&gt; ?f (y _0 ?x)%object)] ]
       =&gt; rewrite (fun a b =&gt; @transport_compose _ _ a b (fun y' =&gt; f (y' x)) (@object_of C D))
-    | [ |- context[transport (fun y =&gt; ?f (@object_of ?C ?D y ?x) ?z)] ]
+    | [ |- context[transport (fun y : Functor ?C ?D =&gt; ?f (y _0 ?x)%object ?z)] ]
       =&gt; rewrite (fun a b =&gt; @transport_compose _ _ a b (fun y' =&gt; f (y' x) z) (@object_of C D))
-    | [ |- context[transport (fun y =&gt; ?f (@object_of ?C ?D y ?x) ?z)] ]
+    | [ |- context[transport (fun y : Functor ?C ?D =&gt; ?f (y _0 ?x)%object ?z)] ]
       =&gt; rewrite (fun a b =&gt; @transport_compose _ _ a b (fun y' =&gt; f (y' x) z) (@object_of C D))
-    | [ |- context[transport (fun y =&gt; ?f (?g (@object_of ?C ?D y ?x)))] ]
+    | [ |- context[transport (fun y : Functor ?C ?D =&gt; ?f (?g (y _0 ?x)%object))] ]
       =&gt; rewrite (fun a b =&gt; @transport_compose _ _ a b (fun y' =&gt; f (g (y' x))) (@object_of C D))
-    | [ |- context[transport (fun y =&gt; ?f (?g (@object_of ?C ?D y ?x)) ?z)] ]
+    | [ |- context[transport (fun y : Functor ?C ?D =&gt; ?f (?g (y _0 ?x)%object) ?z)] ]
       =&gt; rewrite (fun a b =&gt; @transport_compose _ _ a b (fun y' =&gt; f (g (y' x)) z) (@object_of C D))
     | _ =&gt; progress transport_path_forall_hammer
     | [ |- context[components_of (transport ?P ?p ?z)] ]
