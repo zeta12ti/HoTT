@@ -660,6 +660,44 @@ Theorem 7.7.7
 </div>
 
 <div class="doc">
+Two modalities are the same if they have the same modal types. 
+</div>
+<div class="code">
+<span class="id" title="keyword">Class</span> <a name="Modalities_Theory.OeqO"><span class="id" title="record">OeqO</span></a> (<span class="id" title="var">O1</span> <span class="id" title="var">O2</span> : <a class="idref" href="HoTT.Modalities.Modality.html#Os.Modality"><span class="id" title="axiom">Modality</span></a>)<br/>
+&nbsp;&nbsp;:= <a name="Modalities_Theory.inO_OeqO"><span class="id" title="projection">inO_OeqO</span></a> : <span class="id" title="keyword">∀</span> <span class="id" title="var">A</span><a class="idref" href="HoTT.Basics.Notations.html#d2ec56b4b399745cfaad1420e500e21b"><span class="id" title="notation">,</span></a> <a class="idref" href="HoTT.Modalities.Modality.html#Modalities_Theory.In"><span class="id" title="class">In</span></a> <a class="idref" href="HoTT.Modalities.Modality.html#O1"><span class="id" title="variable">O1</span></a> <a class="idref" href="HoTT.Modalities.Modality.html#A"><span class="id" title="variable">A</span></a> <a class="idref" href="Coq.Init.Datatypes.html#df1ced36fc33ce188051218bca314374"><span class="id" title="notation">↔</span></a> <a class="idref" href="HoTT.Modalities.Modality.html#Modalities_Theory.In"><span class="id" title="class">In</span></a> <a class="idref" href="HoTT.Modalities.Modality.html#O2"><span class="id" title="variable">O2</span></a> <a class="idref" href="HoTT.Modalities.Modality.html#A"><span class="id" title="variable">A</span></a>.<br/>
+
+<br/>
+<span class="id" title="keyword">Global Instance</span> <a name="Modalities_Theory.reflexive_OeqO"><span class="id" title="instance">reflexive_OeqO</span></a> : <a class="idref" href="HoTT.Basics.Overture.html#Reflexive"><span class="id" title="class">Reflexive</span></a> <a class="idref" href="HoTT.Modalities.Modality.html#Modalities_Theory.OeqO"><span class="id" title="class">OeqO</span></a> | 10.<br/>
+<span class="id" title="keyword">Proof</span>.<br/>
+&nbsp;&nbsp;<span class="id" title="tactic">intros</span> <span class="id" title="var">O</span> <span class="id" title="var">A</span>; <span class="id" title="tactic">reflexivity</span>.<br/>
+<span class="id" title="keyword">Defined</span>.<br/>
+
+<br/>
+<span class="id" title="keyword">Global Instance</span> <a name="Modalities_Theory.symmetric_OeqO"><span class="id" title="instance">symmetric_OeqO</span></a> : <a class="idref" href="HoTT.Basics.Overture.html#Symmetric"><span class="id" title="class">Symmetric</span></a> <a class="idref" href="HoTT.Modalities.Modality.html#Modalities_Theory.OeqO"><span class="id" title="class">OeqO</span></a> | 10.<br/>
+<span class="id" title="keyword">Proof</span>.<br/>
+&nbsp;&nbsp;<span class="id" title="tactic">intros</span> <span class="id" title="var">O1</span> <span class="id" title="var">O2</span> <span class="id" title="var">O12</span> <span class="id" title="var">A</span>.<br/>
+&nbsp;&nbsp;<span class="id" title="tactic">specialize</span> (<span class="id" title="var">O12</span> <span class="id" title="var">A</span>).<br/>
+&nbsp;&nbsp;<span class="id" title="tactic">symmetry</span>; <span class="id" title="tactic">assumption</span>.<br/>
+<span class="id" title="keyword">Defined</span>.<br/>
+
+<br/>
+<span class="id" title="keyword">Global Instance</span> <a name="Modalities_Theory.transitive_OeqO"><span class="id" title="instance">transitive_OeqO</span></a> : <a class="idref" href="HoTT.Basics.Overture.html#Transitive"><span class="id" title="class">Transitive</span></a> <a class="idref" href="HoTT.Modalities.Modality.html#Modalities_Theory.OeqO"><span class="id" title="class">OeqO</span></a> | 10.<br/>
+<span class="id" title="keyword">Proof</span>.<br/>
+&nbsp;&nbsp;<span class="id" title="tactic">intros</span> <span class="id" title="var">O1</span> <span class="id" title="var">O2</span> <span class="id" title="var">O3</span> <span class="id" title="var">O12</span> <span class="id" title="var">O23</span> <span class="id" title="var">A</span>; <span class="id" title="tactic">split</span>.<br/>
+&nbsp;&nbsp;- <span class="id" title="tactic">intros</span> <span class="id" title="var">A1</span>.<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="id" title="tactic">apply</span> (@<a class="idref" href="HoTT.Modalities.Modality.html#Modalities_Theory.inO_OeqO"><span class="id" title="definition">inO_OeqO</span></a> <span class="id" title="var">O2</span> <span class="id" title="var">O3</span> <span class="id" title="var">O23</span>).<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="id" title="tactic">apply</span> (@<a class="idref" href="HoTT.Modalities.Modality.html#Modalities_Theory.inO_OeqO"><span class="id" title="definition">inO_OeqO</span></a> <span class="id" title="var">O1</span> <span class="id" title="var">O2</span> <span class="id" title="var">O12</span>).<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="id" title="tactic">exact</span> <span class="id" title="var">A1</span>.<br/>
+&nbsp;&nbsp;- <span class="id" title="tactic">intros</span> <span class="id" title="var">A3</span>.<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="id" title="tactic">apply</span> (@<a class="idref" href="HoTT.Modalities.Modality.html#Modalities_Theory.inO_OeqO"><span class="id" title="definition">inO_OeqO</span></a> <span class="id" title="var">O1</span> <span class="id" title="var">O2</span> <span class="id" title="var">O12</span>).<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="id" title="tactic">apply</span> (@<a class="idref" href="HoTT.Modalities.Modality.html#Modalities_Theory.inO_OeqO"><span class="id" title="definition">inO_OeqO</span></a> <span class="id" title="var">O2</span> <span class="id" title="var">O3</span> <span class="id" title="var">O23</span>).<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="id" title="tactic">exact</span> <span class="id" title="var">A3</span>.<br/>
+<span class="id" title="keyword">Defined</span>.<br/>
+
+<br/>
+</div>
+
+<div class="doc">
 <a name="lab277"></a><h2 class="section">Modally connected types</h2>
 
 <div class="paragraph"> </div>
@@ -863,6 +901,22 @@ Work around https://coq.inria.fr/bugs/show_bug.cgi?id=3811
 
 <br/>
 <span class="id" title="keyword">End</span> <a class="idref" href="HoTT.Modalities.Modality.html#Modalities_Theory.ConnectedTypes"><span class="id" title="section">ConnectedTypes</span></a>.<br/>
+
+<br/>
+</div>
+
+<div class="doc">
+Two equivalent modalities have the same connected types. 
+</div>
+<div class="code">
+<span class="id" title="keyword">Global Instance</span> <a name="Modalities_Theory.isconnected_OeqO"><span class="id" title="instance">isconnected_OeqO</span></a> {<span class="id" title="var">O1</span> <span class="id" title="var">O2</span> : <a class="idref" href="HoTT.Modalities.Modality.html#Os.Modality"><span class="id" title="axiom">Modality</span></a>} `{<a class="idref" href="HoTT.Modalities.Modality.html#Modalities_Theory.OeqO"><span class="id" title="class">OeqO</span></a> <a class="idref" href="HoTT.Modalities.Modality.html#O1"><span class="id" title="variable">O1</span></a> <a class="idref" href="HoTT.Modalities.Modality.html#O2"><span class="id" title="variable">O2</span></a>}<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;(<span class="id" title="var">A</span> : <span class="id" title="keyword">Type</span>) `{<a class="idref" href="HoTT.Modalities.Modality.html#Modalities_Theory.IsConnected"><span class="id" title="class">IsConnected</span></a> <a class="idref" href="HoTT.Modalities.Modality.html#O1"><span class="id" title="variable">O1</span></a> <a class="idref" href="HoTT.Modalities.Modality.html#A"><span class="id" title="variable">A</span></a>}<br/>
+&nbsp;&nbsp;: <a class="idref" href="HoTT.Modalities.Modality.html#Modalities_Theory.IsConnected"><span class="id" title="class">IsConnected</span></a> <a class="idref" href="HoTT.Modalities.Modality.html#O2"><span class="id" title="variable">O2</span></a> <a class="idref" href="HoTT.Modalities.Modality.html#A"><span class="id" title="variable">A</span></a>.<br/>
+<span class="id" title="keyword">Proof</span>.<br/>
+&nbsp;&nbsp;<span class="id" title="tactic">apply</span> <a class="idref" href="HoTT.Modalities.Modality.html#Modalities_Theory.isconnected_from_elim"><span class="id" title="definition">isconnected_from_elim</span></a>.<br/>
+&nbsp;&nbsp;<span class="id" title="tactic">intros</span> <span class="id" title="var">C</span> <span class="id" title="var">C2</span> <span class="id" title="var">f</span>.<br/>
+&nbsp;&nbsp;<span class="id" title="tactic">apply</span> (<a class="idref" href="HoTT.Modalities.Modality.html#Modalities_Theory.isconnected_elim"><span class="id" title="definition">isconnected_elim</span></a> <span class="id" title="var">O1</span>); <span class="id" title="tactic">apply</span> <a class="idref" href="HoTT.Modalities.Modality.html#Modalities_Theory.inO_OeqO"><span class="id" title="definition">inO_OeqO</span></a>; <span class="id" title="tactic">exact</span> <span class="id" title="var">_</span>.<br/>
+<span class="id" title="keyword">Defined</span>.<br/>
 
 <br/>
 </div>
