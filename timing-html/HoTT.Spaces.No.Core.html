@@ -37,27 +37,27 @@ Time: 0s">
 <div class="code" title="File: Core.v
 Line: 1
 Time: 0.043s">
-<div class="time" style="width: 4.1910331384016%"></div>
+<div class="time" style="width: 2.887844190732%"></div>
 <pre>Require Import HoTT.Basics HoTT.Types.</pre>
 </div>
 <div class="code" title="File: Core.v
 Line: 1
-Time: 0.005s">
-<div class="time" style="width: 0.48732943469786%"></div>
+Time: 0.006s">
+<div class="time" style="width: 0.40295500335796%"></div>
 <pre>
 Require Import UnivalenceImpliesFunext TruncType HSet.</pre>
 </div>
 <div class="code" title="File: Core.v
 Line: 2
-Time: 0.17s">
-<div class="time" style="width: 16.569200779727%"></div>
+Time: 0.174s">
+<div class="time" style="width: 11.685695097381%"></div>
 <pre>
 Require Import HIT.Truncations.</pre>
 </div>
 <div class="code" title="File: Core.v
 Line: 3
 Time: 0.003s">
-<div class="time" style="width: 0.29239766081871%"></div>
+<div class="time" style="width: 0.20147750167898%"></div>
 <pre>
 Import TrM.</pre>
 </div>
@@ -107,9 +107,9 @@ Time: 0s">
 <div class="time" style="width: 0%"></div>
 <pre>
 
-(** The surreal numbers use a lot of universes.  We include some universe annotations here and there to reduce the number of overall universe parameters from an unmanageable number to a slightly less unmanageable number.  This improves performance significantly.  We also use [abstract] and [Qed] whenever possible, for the same reason. *)
+(** ** Option sorts *)
 
-(** ** Definition *)
+(** We refine the surreal numbers by parametrizing them by "option sorts", which are predicates on the types that index the options.  A surreal number with given option sorts "hereditarily" has all options parametrized by types belonging to that sort. *)
 
 </pre>
 </div>
@@ -117,10 +117,51 @@ Time: 0s">
 Line: 18
 Time: 0s">
 <div class="time" style="width: 0%"></div>
-<pre>Module Export Surreals.</pre>
+<pre>Definition OptionSort@{i} := Type@{i} -&gt; Type@{i} -&gt; Type@{i}.</pre>
 </div>
 <div class="code" title="File: Core.v
 Line: 18
+Time: 0.003s">
+<div class="time" style="width: 0.20147750167898%"></div>
+<pre>
+Class InSort (S : OptionSort@{i}) (I J : Type@{i})
+  := insort : S I J.</pre>
+</div>
+<div class="code" title="File: Core.v
+Line: 20
+Time: 0s">
+<div class="time" style="width: 0%"></div>
+<pre>
+
+(** The surreal numbers use a lot of universes.  We include some universe annotations here and there to reduce the number of overall universe parameters from an unmanageable number to a slightly less unmanageable number.  This improves performance significantly.  We also use [abstract] and [Qed] whenever possible, for the same reason. *)
+
+(** ** Definition *)
+
+</pre>
+</div>
+<div class="code" title="File: Core.v
+Line: 25
+Time: 0s">
+<div class="time" style="width: 0%"></div>
+<pre>Module Export Surreals.</pre>
+</div>
+<div class="code" title="File: Core.v
+Line: 25
+Time: 0s">
+<div class="time" style="width: 0%"></div>
+<pre>
+
+  Section OptionSort.</pre>
+</div>
+<div class="code" title="File: Core.v
+Line: 27
+Time: 0s">
+<div class="time" style="width: 0%"></div>
+<pre>
+  Context {S : OptionSort@{i}}.</pre>
+</div>
+<div class="code" title="File: Core.v
+Line: 28
 Time: 0s">
 <div class="time" style="width: 0%"></div>
 <pre>
@@ -134,72 +175,80 @@ Time: 0s">
  </pre>
 </div>
 <div class="code" title="File: Core.v
-Line: 26
+Line: 36
 Time: 0s">
 <div class="time" style="width: 0%"></div>
 <pre>Private Inductive Game : Type :=
-  | opt : forall (L R : Type@{i}) (xL : L -&gt; Game) (xR : R -&gt; Game), Game.</pre>
+  | opt : forall (L R : Type@{i})
+                 (s : InSort@{i} S L R)
+                 (xL : L -&gt; Game) (xR : R -&gt; Game), Game.</pre>
 </div>
 <div class="code" title="File: Core.v
-Line: 27
+Line: 39
 Time: 0s">
 <div class="time" style="width: 0%"></div>
 <pre>
 
-  Arguments opt {L R} xL xR.</pre>
+  Arguments opt {L R s} xL xR.</pre>
 </div>
 <div class="code" title="File: Core.v
-Line: 29
-Time: 0.003s">
-<div class="time" style="width: 0.29239766081871%"></div>
+Line: 41
+Time: 0.005s">
+<div class="time" style="width: 0.33579583613163%"></div>
 <pre>
 
   Private Inductive game_le : Game@{i} -&gt; Game@{i} -&gt; Type :=
   | game_le_lr
-    : forall (L R : Type@{i}) (xL : L -&gt; Game@{i}) (xR : R -&gt; Game@{i})
-             (L' R' : Type@{i}) (yL : L' -&gt; Game@{i}) (yR : R' -&gt; Game@{i}),
+    : forall (L R : Type@{i}) (s : InSort@{i} S L R)
+             (xL : L -&gt; Game@{i}) (xR : R -&gt; Game@{i})
+             (L' R' : Type@{i}) (s' : InSort@{i} S L' R')
+             (yL : L' -&gt; Game@{i}) (yR : R' -&gt; Game@{i}),
         (forall (l:L), game_lt (xL l) (opt yL yR)) -&gt;
         (forall (r:R'), game_lt (opt xL xR) (yR r)) -&gt;
         game_le (opt xL xR) (opt yL yR)
 
   with game_lt : Game@{i} -&gt; Game@{i} -&gt; Type :=
   | game_lt_l
-    : forall (L R : Type@{i}) (xL : L -&gt; Game@{i}) (xR : R -&gt; Game@{i})
-             (L' R' : Type@{i}) (yL : L' -&gt; Game@{i}) (yR : R' -&gt; Game@{i})
+    : forall (L R : Type@{i}) (s : InSort@{i} S L R)
+             (xL : L -&gt; Game@{i}) (xR : R -&gt; Game@{i})
+             (L' R' : Type@{i}) (s' : InSort@{i} S L' R')
+             (yL : L' -&gt; Game@{i}) (yR : R' -&gt; Game@{i})
              (l : L'),
         (game_le (opt xL xR) (yL l)) -&gt;
         game_lt (opt xL xR) (opt yL yR)
   | game_lt_r
-    : forall (L R : Type@{i}) (xL : L -&gt; Game@{i}) (xR : R -&gt; Game@{i})
-             (L' R' : Type@{i}) (yL : L' -&gt; Game@{i}) (yR : R' -&gt; Game@{i})
+    : forall (L R : Type@{i}) (s : InSort@{i} S L R)
+             (xL : L -&gt; Game@{i}) (xR : R -&gt; Game@{i})
+             (L' R' : Type@{i}) (s' : InSort@{i} S L' R')
+             (yL : L' -&gt; Game@{i}) (yR : R' -&gt; Game@{i})
              (r : R),
         (game_le (xR r) (opt yL yR)) -&gt;
         game_lt (opt xL xR) (opt yL yR).</pre>
 </div>
 <div class="code" title="File: Core.v
-Line: 51
+Line: 69
 Time: 0s">
 <div class="time" style="width: 0%"></div>
 <pre>
 
-  Arguments game_le_lr {L R} xL xR {L' R'} yL yR _ _.</pre>
+  Arguments game_le_lr {L R s} xL xR {L' R' s'} yL yR _ _.</pre>
 </div>
 <div class="code" title="File: Core.v
-Line: 53
+Line: 71
 Time: 0s">
 <div class="time" style="width: 0%"></div>
 <pre>
-  Arguments game_lt_l {L R} xL xR {L' R'} yL yR l _.</pre>
+  Arguments game_lt_l {L R s} xL xR {L' R' s'} yL yR l _.</pre>
 </div>
 <div class="code" title="File: Core.v
-Line: 54
+Line: 72
 Time: 0s">
 <div class="time" style="width: 0%"></div>
 <pre>
-  Arguments game_lt_r {L R} xL xR {L' R'} yL yR r _.</pre>
+  Arguments game_lt_r {L R s} xL xR {L' R' s'} yL yR r _.</pre>
 </div>
 <div class="code" title="File: Core.v
-Line: 55
+Line: 73
 Time: 0s">
 <div class="time" style="width: 0%"></div>
 <pre>
@@ -209,18 +258,19 @@ Time: 0s">
  </pre>
 </div>
 <div class="code" title="File: Core.v
-Line: 59
-Time: 0s">
-<div class="time" style="width: 0%"></div>
+Line: 77
+Time: 0.001s">
+<div class="time" style="width: 0.067159167226326%"></div>
 <pre>Private Inductive is_surreal : Game@{i} -&gt; Type :=
-  | isno : forall (L R : Type@{i}) (xL : L -&gt; Game@{i}) (xR : R -&gt; Game@{i}),
+  | isno : forall (L R : Type@{i}) (s : InSort@{i} S L R)
+                  (xL : L -&gt; Game@{i}) (xR : R -&gt; Game@{i}),
              (forall l, is_surreal (xL l))
              -&gt; (forall r, is_surreal (xR r))
              -&gt; (forall (l:L) (r:R), game_lt (xL l) (xR r))
              -&gt; is_surreal (opt xL xR).</pre>
 </div>
 <div class="code" title="File: Core.v
-Line: 64
+Line: 83
 Time: 0s">
 <div class="time" style="width: 0%"></div>
 <pre>
@@ -228,68 +278,76 @@ Time: 0s">
   Unset Nonrecursive Elimination Schemes.</pre>
 </div>
 <div class="code" title="File: Core.v
-Line: 66
+Line: 85
 Time: 0s">
 <div class="time" style="width: 0%"></div>
 <pre>
-  Record No : Type :=
+  (** We call these "general surreal numbers" since they are parametrized by an option sort. *)
+ </pre>
+</div>
+<div class="code" title="File: Core.v
+Line: 87
+Time: 0.001s">
+<div class="time" style="width: 0.067159167226326%"></div>
+<pre>Record GenNo : Type := Build_No
     { game_of : Game
     ; isno_game_of : is_surreal (game_of) }.</pre>
 </div>
 <div class="code" title="File: Core.v
-Line: 69
+Line: 89
 Time: 0s">
 <div class="time" style="width: 0%"></div>
 <pre>
 
-  Bind Scope surreal_scope with No.</pre>
+  Bind Scope surreal_scope with GenNo.</pre>
 </div>
 <div class="code" title="File: Core.v
-Line: 71
+Line: 91
 Time: 0s">
 <div class="time" style="width: 0%"></div>
 <pre>
 
-  Definition lt (x y : No) := game_lt (game_of x) (game_of y).</pre>
+  Definition lt (x y : GenNo) := game_lt (game_of x) (game_of y).</pre>
 </div>
 <div class="code" title="File: Core.v
-Line: 73
+Line: 93
 Time: 0s">
 <div class="time" style="width: 0%"></div>
 <pre>
 
-  Definition le (x y : No) := game_le (game_of x) (game_of y).</pre>
+  Definition le (x y : GenNo) := game_le (game_of x) (game_of y).</pre>
 </div>
 <div class="code" title="File: Core.v
-Line: 75
+Line: 95
 Time: 0s">
 <div class="time" style="width: 0%"></div>
 <pre>
 
-  Infix "&lt;" := lt : surreal_scope.</pre>
+  Local Infix "&lt;" := lt : surreal_scope.</pre>
 </div>
 <div class="code" title="File: Core.v
-Line: 77
+Line: 97
 Time: 0s">
 <div class="time" style="width: 0%"></div>
 <pre>
-  Infix "&lt;=" := le : surreal_scope.</pre>
+  Local Infix "&lt;=" := le : surreal_scope.</pre>
 </div>
 <div class="code" title="File: Core.v
-Line: 78
+Line: 98
 Time: 0.004s">
-<div class="time" style="width: 0.38986354775828%"></div>
+<div class="time" style="width: 0.26863666890531%"></div>
 <pre>
 
-  Definition No_cut {L R : Type@{i}} (xL : L -&gt; No@{i}) (xR : R -&gt; No@{i})
+  Definition No_cut {L R : Type@{i}} {s : InSort@{i} S L R}
+             (xL : L -&gt; GenNo) (xR : R -&gt; GenNo)
              (xcut : forall (l:L) (r:R), (xL l) &lt; (xR r))
-  : No
+  : GenNo
     := Build_No (opt (game_of o xL) (game_of o xR))
-                (isno _ _ _ _ (isno_game_of o xL)
+                (isno _ _ _ _ _ (isno_game_of o xL)
                       (isno_game_of o xR) xcut).</pre>
 </div>
 <div class="code" title="File: Core.v
-Line: 85
+Line: 106
 Time: 0s">
 <div class="time" style="width: 0%"></div>
 <pre>
@@ -297,30 +355,32 @@ Time: 0s">
   Notation "{ { xL | xR // xcut } }" := (No_cut xL xR xcut) : surreal_scope.</pre>
 </div>
 <div class="code" title="File: Core.v
-Line: 87
+Line: 108
 Time: 0s">
 <div class="time" style="width: 0%"></div>
 <pre>
 
-  Axiom path_No : forall (x y : No), (x &lt;= y) -&gt; (y &lt;= x) -&gt; (x = y).</pre>
+  Axiom path_No : forall (x y : GenNo), (x &lt;= y) -&gt; (y &lt;= x) -&gt; (x = y).</pre>
 </div>
 <div class="code" title="File: Core.v
-Line: 89
+Line: 110
 Time: 0s">
 <div class="time" style="width: 0%"></div>
 <pre>
   Arguments path_No {x y} _ _.</pre>
 </div>
 <div class="code" title="File: Core.v
-Line: 90
+Line: 111
 Time: 0.006s">
-<div class="time" style="width: 0.58479532163743%"></div>
+<div class="time" style="width: 0.40295500335796%"></div>
 <pre>
 
   Definition le_lr
-             {L R : Type@{i} } (xL : L -&gt; No) (xR : R -&gt; No)
+             {L R : Type@{i} } {s : InSort@{i} S L R}
+             (xL : L -&gt; GenNo) (xR : R -&gt; GenNo)
              (xcut : forall (l:L) (r:R), (xL l) &lt; (xR r))
-             {L' R' : Type@{i} } (yL : L' -&gt; No) (yR : R' -&gt; No)
+             {L' R' : Type@{i} } {s' : InSort@{i} S L' R'}
+             (yL : L' -&gt; GenNo) (yR : R' -&gt; GenNo)
              (ycut : forall (l:L') (r:R'), (yL l) &lt; (yR r))
   : (forall (l:L), xL l &lt; {{ yL | yR // ycut }}) -&gt;
     (forall (r:R'), {{ xL | xR // xcut }} &lt; yR r) -&gt;
@@ -329,15 +389,17 @@ Time: 0.006s">
                   (game_of o yL) (game_of o yR).</pre>
 </div>
 <div class="code" title="File: Core.v
-Line: 101
-Time: 0.005s">
-<div class="time" style="width: 0.48732943469786%"></div>
+Line: 124
+Time: 0.006s">
+<div class="time" style="width: 0.40295500335796%"></div>
 <pre>
 
   Definition lt_l
-             {L R : Type@{i} } (xL : L -&gt; No) (xR : R -&gt; No)
+             {L R : Type@{i} } {s : InSort@{i} S L R}
+             (xL : L -&gt; GenNo) (xR : R -&gt; GenNo)
              (xcut : forall (l:L) (r:R), (xL l) &lt; (xR r))
-             {L' R' : Type@{i} } (yL : L' -&gt; No) (yR : R' -&gt; No)
+             {L' R' : Type@{i} } {s' : InSort@{i} S L' R'}
+             (yL : L' -&gt; GenNo) (yR : R' -&gt; GenNo)
              (ycut : forall (l:L') (r:R'), (yL l) &lt; (yR r))
              (l : L')
   : ({{ xL | xR // xcut }} &lt;= yL l) -&gt;
@@ -346,15 +408,17 @@ Time: 0.005s">
                  (game_of o yL) (game_of o yR) l.</pre>
 </div>
 <div class="code" title="File: Core.v
-Line: 112
-Time: 0.005s">
-<div class="time" style="width: 0.48732943469786%"></div>
+Line: 137
+Time: 0.006s">
+<div class="time" style="width: 0.40295500335796%"></div>
 <pre>
 
   Definition lt_r
-             {L R : Type@{i} } (xL : L -&gt; No) (xR : R -&gt; No)
+             {L R : Type@{i} } {s : InSort@{i} S L R}
+             (xL : L -&gt; GenNo) (xR : R -&gt; GenNo)
              (xcut : forall (l:L) (r:R), (xL l) &lt; (xR r))
-             {L' R' : Type@{i} } (yL : L' -&gt; No) (yR : R' -&gt; No)
+             {L' R' : Type@{i} } {s' : InSort@{i} S L' R'}
+             (yL : L' -&gt; GenNo) (yR : R' -&gt; GenNo)
              (ycut : forall (l:L') (r:R'), (yL l) &lt; (yR r))
              (r : R)
   : (xR r &lt;= {{ yL | yR // ycut }}) -&gt;
@@ -363,39 +427,39 @@ Time: 0.005s">
                  (game_of o yL) (game_of o yR) r.</pre>
 </div>
 <div class="code" title="File: Core.v
-Line: 123
+Line: 150
 Time: 0s">
 <div class="time" style="width: 0%"></div>
 <pre>
 
-  Global Instance ishprop_No_le {x y : No}
+  Global Instance ishprop_No_le {x y : GenNo}
   : IsHProp (x &lt;= y).</pre>
 </div>
 <div class="code" title="File: Core.v
-Line: 126
+Line: 153
 Time: 0s">
 <div class="time" style="width: 0%"></div>
 <pre>
   Admitted.</pre>
 </div>
 <div class="code" title="File: Core.v
-Line: 127
+Line: 154
 Time: 0s">
 <div class="time" style="width: 0%"></div>
 <pre>
 
-  Global Instance ishprop_No_lt {x y : No}
+  Global Instance ishprop_No_lt {x y : GenNo}
   : IsHProp (x &lt; y).</pre>
 </div>
 <div class="code" title="File: Core.v
-Line: 130
+Line: 157
 Time: 0s">
 <div class="time" style="width: 0%"></div>
 <pre>
   Admitted.</pre>
 </div>
 <div class="code" title="File: Core.v
-Line: 131
+Line: 158
 Time: 0s">
 <div class="time" style="width: 0%"></div>
 <pre>
@@ -405,36 +469,39 @@ Time: 0s">
  </pre>
 </div>
 <div class="code" title="File: Core.v
-Line: 135
+Line: 162
 Time: 0s">
 <div class="time" style="width: 0%"></div>
 <pre>Section NoInd.</pre>
 </div>
 <div class="code" title="File: Core.v
-Line: 135
-Time: 0.019s">
-<div class="time" style="width: 1.8518518518519%"></div>
+Line: 162
+Time: 0.029s">
+<div class="time" style="width: 1.9476158495635%"></div>
 <pre>
 
     Context
-      (A : No@{i} -&gt; Type)
-      (dle : forall (x y:No@{i}), (x &lt;= y) -&gt; A x -&gt; A y -&gt; Type)
-      (dlt : forall (x y:No@{i}), (x &lt; y) -&gt; A x -&gt; A y -&gt; Type)
+      (A : GenNo -&gt; Type)
+      (dle : forall (x y : GenNo), (x &lt;= y) -&gt; A x -&gt; A y -&gt; Type)
+      (dlt : forall (x y : GenNo), (x &lt; y) -&gt; A x -&gt; A y -&gt; Type)
       {ishprop_le : forall x y a b p, IsHProp (dle x y p a b)}
       {ishprop_lt : forall x y a b p, IsHProp (dlt x y p a b)}
-      (dcut : forall (L R : Type@{i}) (xL : L -&gt; No) (xR : R -&gt; No)
+      (dcut : forall (L R : Type@{i}) (s : InSort@{i} S L R)
+                     (xL : L -&gt; GenNo) (xR : R -&gt; GenNo)
                      (xcut : forall (l:L) (r:R), (xL l) &lt; (xR r))
                      (fxL : forall l, A (xL l)) (fxR : forall r, A (xR r))
                      (fxcut : forall l r, dlt _ _ (xcut l r) (fxL l) (fxR r)),
                 A {{ xL | xR // xcut }})
-      (dpath : forall (x y:No) (a:A x) (b:A y) (p : x &lt;= y) (q : y &lt;= x)
+      (dpath : forall (x y : GenNo) (a:A x) (b:A y) (p : x &lt;= y) (q : y &lt;= x)
                       (dp : dle x y p a b) (dq : dle y x q b a),
                  path_No p q # a = b)
-      (dle_lr : forall (L R : Type@{i}) (xL : L -&gt; No) (xR : R -&gt; No)
+      (dle_lr : forall (L R : Type@{i}) (s : InSort@{i} S L R)
+                       (xL : L -&gt; GenNo) (xR : R -&gt; GenNo)
                        (xcut : forall (l:L) (r:R), (xL l) &lt; (xR r))
                        (fxL : forall l, A (xL l)) (fxR : forall r, A (xR r))
                        (fxcut : forall l r, dlt _ _ (xcut l r) (fxL l) (fxR r))
-                       (L' R' : Type@{i}) (yL : L' -&gt; No) (yR : R' -&gt; No)
+                       (L' R' : Type@{i}) (s' : InSort@{i} S L' R')
+                       (yL : L' -&gt; GenNo) (yR : R' -&gt; GenNo)
                        (ycut : forall (l:L') (r:R'), (yL l) &lt; (yR r))
                        (fyL : forall l, A (yL l)) (fyR : forall r, A (yR r))
                        (fycut : forall l r, dlt _ _ (ycut l r) (fyL l) (fyR r))
@@ -442,38 +509,42 @@ Time: 0.019s">
                        (dp : forall (l:L),
                                dlt _ _ (p l)
                                    (fxL l)
-                                   (dcut _ _ yL yR ycut fyL fyR fycut))
+                                   (dcut _ _ _ yL yR ycut fyL fyR fycut))
                        (q : forall (r:R'), {{ xL | xR // xcut }} &lt; yR r)
                        (dq : forall (r:R'),
                                dlt _ _ (q r)
-                                   (dcut _ _ xL xR xcut fxL fxR fxcut)
+                                   (dcut _ _ _ xL xR xcut fxL fxR fxcut)
                                    (fyR r)),
                   dle {{ xL | xR // xcut }} {{ yL | yR // ycut }}
                       (le_lr xL xR xcut yL yR ycut p q)
-                      (dcut _ _ xL xR xcut fxL fxR fxcut)
-                      (dcut _ _ yL yR ycut fyL fyR fycut))
-      (dlt_l : forall (L R : Type@{i}) (xL : L -&gt; No) (xR : R -&gt; No)
+                      (dcut _ _ _ xL xR xcut fxL fxR fxcut)
+                      (dcut _ _ _ yL yR ycut fyL fyR fycut))
+      (dlt_l : forall (L R : Type@{i}) (s : InSort@{i} S L R)
+                      (xL : L -&gt; GenNo) (xR : R -&gt; GenNo)
                       (xcut : forall (l:L) (r:R), (xL l) &lt; (xR r))
                       (fxL : forall l, A (xL l)) (fxR : forall r, A (xR r))
                       (fxcut : forall l r, dlt _ _ (xcut l r) (fxL l) (fxR r))
-                      (L' R' : Type@{i}) (yL : L' -&gt; No) (yR : R' -&gt; No)
+                      (L' R' : Type@{i}) (s' : InSort@{i} S L' R')
+                      (yL : L' -&gt; GenNo) (yR : R' -&gt; GenNo)
                       (ycut : forall (l:L') (r:R'), (yL l) &lt; (yR r))
                       (fyL : forall l, A (yL l)) (fyR : forall r, A (yR r))
                       (fycut : forall l r, dlt _ _ (ycut l r) (fyL l) (fyR r))
                       (l : L')
                       (p : {{ xL | xR // xcut }} &lt;= yL l)
                       (dp : dle _ _ p
-                                (dcut _ _ xL xR xcut fxL fxR fxcut)
+                                (dcut _ _ _ xL xR xcut fxL fxR fxcut)
                                 (fyL l)),
                  dlt {{ xL | xR // xcut }} {{ yL | yR // ycut }}
                      (lt_l xL xR xcut yL yR ycut l p)
-                     (dcut _ _ xL xR xcut fxL fxR fxcut)
-                     (dcut _ _ yL yR ycut fyL fyR fycut))
-      (dlt_r : forall (L R : Type@{i}) (xL : L -&gt; No) (xR : R -&gt; No)
+                     (dcut _ _ _ xL xR xcut fxL fxR fxcut)
+                     (dcut _ _ _ yL yR ycut fyL fyR fycut))
+      (dlt_r : forall (L R : Type@{i}) (s : InSort@{i} S L R)
+                      (xL : L -&gt; GenNo) (xR : R -&gt; GenNo)
                       (xcut : forall (l:L) (r:R), (xL l) &lt; (xR r))
                       (fxL : forall l, A (xL l)) (fxR : forall r, A (xR r))
                       (fxcut : forall l r, dlt _ _ (xcut l r) (fxL l) (fxR r))
-                      (L' R' : Type@{i}) (yL : L' -&gt; No) (yR : R' -&gt; No)
+                      (L' R' : Type@{i}) (s' : InSort@{i} S L' R')
+                      (yL : L' -&gt; GenNo) (yR : R' -&gt; GenNo)
                       (ycut : forall (l:L') (r:R'), (yL l) &lt; (yR r))
                       (fyL : forall l, A (yL l)) (fyR : forall r, A (yR r))
                       (fycut : forall l r, dlt _ _ (ycut l r) (fyL l) (fyR r))
@@ -481,14 +552,14 @@ Time: 0.019s">
                       (p : (xR r) &lt;= {{ yL | yR // ycut }})
                       (dp : dle _ _ p
                                 (fxR r)
-                                (dcut _ _ yL yR ycut fyL fyR fycut)),
+                                (dcut _ _ _ yL yR ycut fyL fyR fycut)),
                  dlt {{ xL | xR // xcut }} {{ yL | yR // ycut }}
                      (lt_r xL xR xcut yL yR ycut r p)
-                     (dcut _ _ xL xR xcut fxL fxR fxcut)
-                     (dcut _ _ yL yR ycut fyL fyR fycut)).</pre>
+                     (dcut _ _ _ xL xR xcut fxL fxR fxcut)
+                     (dcut _ _ _ yL yR ycut fyL fyR fycut)).</pre>
 </div>
 <div class="code" title="File: Core.v
-Line: 206
+Line: 240
 Time: 0s">
 <div class="time" style="width: 0%"></div>
 <pre>
@@ -501,20 +572,20 @@ Finally, for conceptual isolation, and so as not to depend on the particular imp
    </pre>
 </div>
 <div class="code" title="File: Core.v
-Line: 213
+Line: 247
 Time: 0s">
 <div class="time" style="width: 0%"></div>
 <pre>Local Inductive No_Empty_for_admitted := .</pre>
 </div>
 <div class="code" title="File: Core.v
-Line: 213
+Line: 247
 Time: 0s">
 <div class="time" style="width: 0%"></div>
 <pre>
     Axiom No_Empty_admitted : No_Empty_for_admitted.</pre>
 </div>
 <div class="code" title="File: Core.v
-Line: 214
+Line: 248
 Time: 0s">
 <div class="time" style="width: 0%"></div>
 <pre>
@@ -523,7 +594,7 @@ Time: 0s">
    </pre>
 </div>
 <div class="code" title="File: Core.v
-Line: 217
+Line: 251
 Time: 0s">
 <div class="time" style="width: 0%"></div>
 <pre>Local Definition No_ind_internal_step
@@ -533,89 +604,89 @@ Time: 0s">
     : A (Build_No x xno).</pre>
 </div>
 <div class="code" title="File: Core.v
-Line: 221
+Line: 255
 Time: 0s">
 <div class="time" style="width: 0%"></div>
 <pre>
     Proof.</pre>
 </div>
 <div class="code" title="File: Core.v
-Line: 222
+Line: 256
 Time: 0s">
 <div class="time" style="width: 0%"></div>
 <pre>
       revert ishprop_le ishprop_lt dpath dle_lr dlt_l dlt_r.</pre>
 </div>
 <div class="code" title="File: Core.v
-Line: 223
-Time: 0.005s">
-<div class="time" style="width: 0.48732943469786%"></div>
+Line: 257
+Time: 0.006s">
+<div class="time" style="width: 0.40295500335796%"></div>
 <pre>
-      destruct xno as [L R xL xR Lno Rno xcut].</pre>
+      destruct xno as [L R ? xL xR Lno Rno xcut].</pre>
 </div>
 <div class="code" title="File: Core.v
-Line: 224
+Line: 258
 Time: 0s">
 <div class="time" style="width: 0%"></div>
 <pre>
       intros ishprop_le ishprop_lt dpath dle_lr dlt_l dlt_r.</pre>
 </div>
 <div class="code" title="File: Core.v
-Line: 225
+Line: 259
 Time: 0s">
 <div class="time" style="width: 0%"></div>
 <pre>
-      simple refine (dcut L R (fun l =&gt; Build_No (xL l) (Lno l))
+      simple refine (dcut L R _ (fun l =&gt; Build_No (xL l) (Lno l))
                    (fun r =&gt; Build_No (xR r) (Rno r)) xcut _ _ _).</pre>
 </div>
 <div class="code" title="File: Core.v
-Line: 227
+Line: 261
 Time: 0s">
 <div class="time" style="width: 0%"></div>
 <pre>
       -</pre>
 </div>
 <div class="code" title="File: Core.v
-Line: 228
+Line: 262
 Time: 0s">
 <div class="time" style="width: 0%"></div>
 <pre> intros l; exact (No_ind_internal (xL l) (Lno l)).</pre>
 </div>
 <div class="code" title="File: Core.v
-Line: 228
+Line: 262
 Time: 0s">
 <div class="time" style="width: 0%"></div>
 <pre>
       -</pre>
 </div>
 <div class="code" title="File: Core.v
-Line: 229
+Line: 263
 Time: 0s">
 <div class="time" style="width: 0%"></div>
 <pre> intros r; exact (No_ind_internal (xR r) (Rno r)).</pre>
 </div>
 <div class="code" title="File: Core.v
-Line: 229
+Line: 263
 Time: 0s">
 <div class="time" style="width: 0%"></div>
 <pre>
       -</pre>
 </div>
 <div class="code" title="File: Core.v
-Line: 230
+Line: 264
 Time: 0s">
 <div class="time" style="width: 0%"></div>
 <pre> intros; exact (match No_Empty_admitted with end).</pre>
 </div>
 <div class="code" title="File: Core.v
-Line: 230
-Time: 0.005s">
-<div class="time" style="width: 0.48732943469786%"></div>
+Line: 264
+Time: 0.006s">
+<div class="time" style="width: 0.40295500335796%"></div>
 <pre>
     Defined.</pre>
 </div>
 <div class="code" title="File: Core.v
-Line: 231
+Line: 265
 Time: 0s">
 <div class="time" style="width: 0%"></div>
 <pre>
@@ -625,91 +696,91 @@ Time: 0s">
     : A (Build_No x xno).</pre>
 </div>
 <div class="code" title="File: Core.v
-Line: 235
+Line: 269
 Time: 0s">
 <div class="time" style="width: 0%"></div>
 <pre>
     Proof.</pre>
 </div>
 <div class="code" title="File: Core.v
-Line: 236
+Line: 270
 Time: 0.001s">
-<div class="time" style="width: 0.097465886939571%"></div>
+<div class="time" style="width: 0.067159167226326%"></div>
 <pre>
       destruct xno.</pre>
 </div>
 <div class="code" title="File: Core.v
-Line: 237
+Line: 271
 Time: 0s">
 <div class="time" style="width: 0%"></div>
 <pre>
       exact (No_ind_internal_step No_ind_internal _ _).</pre>
 </div>
 <div class="code" title="File: Core.v
-Line: 238
-Time: 0s">
-<div class="time" style="width: 0%"></div>
+Line: 272
+Time: 0.001s">
+<div class="time" style="width: 0.067159167226326%"></div>
 <pre>
     Defined.</pre>
 </div>
 <div class="code" title="File: Core.v
-Line: 239
+Line: 273
 Time: 0s">
 <div class="time" style="width: 0%"></div>
 <pre>
 
-    Definition No_ind (x : No) : A x.</pre>
+    Definition No_ind (x : GenNo) : A x.</pre>
 </div>
 <div class="code" title="File: Core.v
-Line: 241
+Line: 275
 Time: 0s">
 <div class="time" style="width: 0%"></div>
 <pre>
     Proof.</pre>
 </div>
 <div class="code" title="File: Core.v
-Line: 242
+Line: 276
 Time: 0s">
 <div class="time" style="width: 0%"></div>
 <pre>
       destruct x as [x xno].</pre>
 </div>
 <div class="code" title="File: Core.v
-Line: 243
+Line: 277
 Time: 0s">
 <div class="time" style="width: 0%"></div>
 <pre>
       exact (No_ind_internal x xno).</pre>
 </div>
 <div class="code" title="File: Core.v
-Line: 244
+Line: 278
 Time: 0s">
 <div class="time" style="width: 0%"></div>
 <pre>
     Defined.</pre>
 </div>
 <div class="code" title="File: Core.v
-Line: 245
+Line: 279
 Time: 0s">
 <div class="time" style="width: 0%"></div>
 <pre>
 
-    Definition No_ind_le (x y : No) (p : x &lt;= y)
+    Definition No_ind_le (x y : GenNo) (p : x &lt;= y)
     : dle x y p (No_ind x) (No_ind y)
       := match No_Empty_admitted with end.</pre>
 </div>
 <div class="code" title="File: Core.v
-Line: 249
+Line: 283
 Time: 0s">
 <div class="time" style="width: 0%"></div>
 <pre>
 
-    Definition No_ind_lt (x y : No) (p : x &lt; y)
+    Definition No_ind_lt (x y : GenNo) (p : x &lt; y)
     : dlt x y p (No_ind x) (No_ind y)
       := match No_Empty_admitted with end.</pre>
 </div>
 <div class="code" title="File: Core.v
-Line: 253
+Line: 287
 Time: 0s">
 <div class="time" style="width: 0%"></div>
 <pre>
@@ -718,17 +789,17 @@ Time: 0s">
    </pre>
 </div>
 <div class="code" title="File: Core.v
-Line: 256
-Time: 0.003s">
-<div class="time" style="width: 0.29239766081871%"></div>
+Line: 290
+Time: 0.002s">
+<div class="time" style="width: 0.13431833445265%"></div>
 <pre>Definition No_ind_package
     : { f : forall x, A x &amp;
-      (forall (x y : No) (p : x &lt;= y), dle x y p (f x) (f y)) *
-      (forall (x y : No) (p : x &lt; y), dlt x y p (f x) (f y)) }
+      (forall (x y : GenNo) (p : x &lt;= y), dle x y p (f x) (f y)) *
+      (forall (x y : GenNo) (p : x &lt; y), dlt x y p (f x) (f y)) }
       := ( No_ind ; (No_ind_le , No_ind_lt) ).</pre>
 </div>
 <div class="code" title="File: Core.v
-Line: 260
+Line: 294
 Time: 0s">
 <div class="time" style="width: 0%"></div>
 <pre>
@@ -737,16 +808,16 @@ Time: 0s">
    </pre>
 </div>
 <div class="code" title="File: Core.v
-Line: 263
-Time: 0.002s">
-<div class="time" style="width: 0.19493177387914%"></div>
-<pre>Definition No_ind_le_lt (x y : No)
+Line: 297
+Time: 0.001s">
+<div class="time" style="width: 0.067159167226326%"></div>
+<pre>Definition No_ind_le_lt (x y : GenNo)
     : (forall (p : x &lt;= y), dle x y p (No_ind x) (No_ind y)) *
       (forall (p : x &lt; y), dlt x y p (No_ind x) (No_ind y))
       := (No_ind_le x y , No_ind_lt x y).</pre>
 </div>
 <div class="code" title="File: Core.v
-Line: 266
+Line: 300
 Time: 0s">
 <div class="time" style="width: 0%"></div>
 <pre>
@@ -755,28 +826,66 @@ Time: 0s">
    </pre>
 </div>
 <div class="code" title="File: Core.v
-Line: 269
-Time: 0.003s">
-<div class="time" style="width: 0.29239766081871%"></div>
+Line: 303
+Time: 0.004s">
+<div class="time" style="width: 0.26863666890531%"></div>
 <pre>Definition No_ind_cut `{Funext}
-               (L R : Type@{i}) (xL : L -&gt; No) (xR : R -&gt; No)
+               (L R : Type@{i}) (s : InSort@{i} S L R)
+               (xL : L -&gt; GenNo) (xR : R -&gt; GenNo)
                (xcut : forall (l:L) (r:R), (xL l) &lt; (xR r))
     : No_ind {{ xL | xR // xcut }}
-      = dcut L R xL xR xcut
+      = dcut L R _ xL xR xcut
              (fun l =&gt; No_ind (xL l)) (fun r =&gt; No_ind (xR r))
              (fun l r =&gt; No_ind_lt (xL l) (xR r) (xcut l r))
       := 1.</pre>
 </div>
 <div class="code" title="File: Core.v
-Line: 276
-Time: 0.017s">
-<div class="time" style="width: 1.6569200779727%"></div>
+Line: 311
+Time: 0.007s">
+<div class="time" style="width: 0.47011417058428%"></div>
 <pre>
 
   End NoInd.</pre>
 </div>
 <div class="code" title="File: Core.v
-Line: 278
+Line: 313
+Time: 0.024s">
+<div class="time" style="width: 1.6118200134318%"></div>
+<pre>
+
+  End OptionSort.</pre>
+</div>
+<div class="code" title="File: Core.v
+Line: 315
+Time: 0s">
+<div class="time" style="width: 0%"></div>
+<pre>
+
+  Arguments GenNo S : clear implicits.</pre>
+</div>
+<div class="code" title="File: Core.v
+Line: 317
+Time: 0s">
+<div class="time" style="width: 0%"></div>
+<pre>
+  Infix "&lt;" := lt : surreal_scope.</pre>
+</div>
+<div class="code" title="File: Core.v
+Line: 318
+Time: 0s">
+<div class="time" style="width: 0%"></div>
+<pre>
+  Infix "&lt;=" := le : surreal_scope.</pre>
+</div>
+<div class="code" title="File: Core.v
+Line: 319
+Time: 0s">
+<div class="time" style="width: 0%"></div>
+<pre>
+  Notation "{ { xL | xR // xcut } }" := (No_cut xL xR xcut) : surreal_scope.</pre>
+</div>
+<div class="code" title="File: Core.v
+Line: 320
 Time: 0s">
 <div class="time" style="width: 0%"></div>
 <pre>
@@ -784,7 +893,29 @@ Time: 0s">
 End Surreals.</pre>
 </div>
 <div class="code" title="File: Core.v
-Line: 280
+Line: 322
+Time: 0s">
+<div class="time" style="width: 0%"></div>
+<pre>
+
+Section OptionSort.</pre>
+</div>
+<div class="code" title="File: Core.v
+Line: 324
+Time: 0s">
+<div class="time" style="width: 0%"></div>
+<pre>
+Context {S : OptionSort@{i}}.</pre>
+</div>
+<div class="code" title="File: Core.v
+Line: 325
+Time: 0s">
+<div class="time" style="width: 0%"></div>
+<pre>
+Let No := GenNo S.</pre>
+</div>
+<div class="code" title="File: Core.v
+Line: 326
 Time: 0s">
 <div class="time" style="width: 0%"></div>
 <pre>
@@ -794,33 +925,52 @@ Time: 0s">
 </pre>
 </div>
 <div class="code" title="File: Core.v
-Line: 283
-Time: 0s">
-<div class="time" style="width: 0%"></div>
-<pre>Definition zero : No
-  := {{ Empty_rec | Empty_rec //
-        Empty_ind (fun x =&gt; forall y, Empty_rec x &lt; Empty_rec y ) }}.</pre>
-</div>
-<div class="code" title="File: Core.v
-Line: 285
+Line: 329
 Time: 0.001s">
-<div class="time" style="width: 0.097465886939571%"></div>
-<pre>
-
-Definition one : No
-  := {{ (fun _:Unit =&gt; zero) | Empty_rec // fun x =&gt; Empty_ind _ }}.</pre>
+<div class="time" style="width: 0.067159167226326%"></div>
+<pre>Definition rempty_cut {L : Type} {xL : L -&gt; No}
+  : forall (l:L) (r:Empty), xL l &lt; Empty_rec r
+  := fun l =&gt; Empty_ind _.</pre>
 </div>
 <div class="code" title="File: Core.v
-Line: 288
+Line: 331
 Time: 0s">
 <div class="time" style="width: 0%"></div>
 <pre>
 
-Definition minusone : No
-  := {{ Empty_rec | (fun _:Unit =&gt; zero) // Empty_ind _ }}.</pre>
+Definition lempty_cut {R : Type} {xR : R -&gt; No}
+  : forall (l:Empty) (r:R), Empty_rec l &lt; xR r
+  := Empty_ind _.</pre>
 </div>
 <div class="code" title="File: Core.v
-Line: 291
+Line: 335
+Time: 0.001s">
+<div class="time" style="width: 0.067159167226326%"></div>
+<pre>
+
+Definition zero `{InSort S Empty Empty} : No
+  := {{ Empty_rec | Empty_rec // lempty_cut }}.</pre>
+</div>
+<div class="code" title="File: Core.v
+Line: 338
+Time: 0.002s">
+<div class="time" style="width: 0.13431833445265%"></div>
+<pre>
+
+Definition one `{InSort S Empty Empty} `{InSort S Unit Empty} : No
+  := {{ unit_name zero | Empty_rec // rempty_cut }}.</pre>
+</div>
+<div class="code" title="File: Core.v
+Line: 341
+Time: 0.065s">
+<div class="time" style="width: 4.3653458697112%"></div>
+<pre>
+
+Definition minusone `{InSort S Empty Empty} `{InSort S Empty Unit} : No
+  := {{ Empty_rec | unit_name zero // lempty_cut }}.</pre>
+</div>
+<div class="code" title="File: Core.v
+Line: 344
 Time: 0s">
 <div class="time" style="width: 0%"></div>
 <pre>
@@ -832,11 +982,12 @@ Time: 0s">
 </pre>
 </div>
 <div class="code" title="File: Core.v
-Line: 296
+Line: 349
 Time: 0.001s">
-<div class="time" style="width: 0.097465886939571%"></div>
+<div class="time" style="width: 0.067159167226326%"></div>
 <pre>Definition No_ind_hprop (P : No -&gt; Type) `{forall x, IsHProp (P x)}
-           (dcut : forall (L R : Type) (xL : L -&gt; No) (xR : R -&gt; No)
+           (dcut : forall (L R : Type) (s : InSort@{i} S L R)
+                          (xL : L -&gt; No) (xR : R -&gt; No)
                           (xcut : forall (l:L) (r:R), (xL l) &lt; (xR r))
                           (IHL : forall l, P (xL l))
                           (IHR : forall r, P (xR r)),
@@ -845,16 +996,16 @@ Time: 0.001s">
 : P x.</pre>
 </div>
 <div class="code" title="File: Core.v
-Line: 303
+Line: 357
 Time: 0s">
 <div class="time" style="width: 0%"></div>
 <pre>
 Proof.</pre>
 </div>
 <div class="code" title="File: Core.v
-Line: 304
-Time: 0.115s">
-<div class="time" style="width: 11.208576998051%"></div>
+Line: 358
+Time: 0.059s">
+<div class="time" style="width: 3.9623908663533%"></div>
 <pre>
   revert x;
   refine (No_ind P (fun _ _ _ _ _ =&gt; Unit) (fun _ _ _ _ _ =&gt; Unit)
@@ -862,97 +1013,18 @@ Time: 0.115s">
   intros; try apply path_ishprop; try exact tt.</pre>
 </div>
 <div class="code" title="File: Core.v
-Line: 308
+Line: 362
 Time: 0s">
 <div class="time" style="width: 0%"></div>
 <pre>
   apply dcut; assumption.</pre>
 </div>
 <div class="code" title="File: Core.v
-Line: 309
-Time: 0.008s">
-<div class="time" style="width: 0.77972709551657%"></div>
+Line: 363
+Time: 0.011s">
+<div class="time" style="width: 0.73875083948959%"></div>
 <pre>
 Defined.</pre>
-</div>
-<div class="code" title="File: Core.v
-Line: 310
-Time: 0s">
-<div class="time" style="width: 0%"></div>
-<pre>
-
-(** *** The non-dependent recursion principle *)
-
-</pre>
-</div>
-<div class="code" title="File: Core.v
-Line: 313
-Time: 0s">
-<div class="time" style="width: 0%"></div>
-<pre>Section NoRec.</pre>
-</div>
-<div class="code" title="File: Core.v
-Line: 313
-Time: 0s">
-<div class="time" style="width: 0%"></div>
-<pre>
-  Context `{Funext}.</pre>
-</div>
-<div class="code" title="File: Core.v
-Line: 314
-Time: 0.01s">
-<div class="time" style="width: 0.97465886939571%"></div>
-<pre>
-
-  Context  (A : Type)
-           (dle : A -&gt; A -&gt; Type) `{is_mere_relation A dle}
-           (dlt : A -&gt; A -&gt; Type) `{is_mere_relation A dlt}
-           (dcut : forall (L R : Type@{i}) (xL : L -&gt; No) (xR : R -&gt; No)
-                          (xcut : forall (l:L) (r:R), (xL l) &lt; (xR r))
-                          (fxL : L -&gt; A) (fxR : R -&gt; A)
-                          (fxcut : forall l r, dlt (fxL l) (fxR r)),
-                     A)
-           (dpath : forall a b, dle a b -&gt; dle b a -&gt; a = b)
-           (dle_lr : forall (L R : Type@{i}) (xL : L -&gt; No) (xR : R -&gt; No)
-                            (xcut : forall (l:L) (r:R), (xL l) &lt; (xR r))
-                            (fxL : L -&gt; A) (fxR : R -&gt; A)
-                            (fxcut : forall l r, dlt (fxL l) (fxR r))
-                            (L' R' : Type@{i}) (yL : L' -&gt; No) (yR : R' -&gt; No)
-                            (ycut : forall (l:L') (r:R'), (yL l) &lt; (yR r))
-                            (fyL : L' -&gt; A) (fyR : R' -&gt; A)
-                            (fycut : forall l r, dlt (fyL l) (fyR r))
-                            (p : forall (l:L), xL l &lt; {{ yL | yR // ycut }})
-                            (dp : forall (l:L),
-                                    dlt (fxL l) (dcut _ _ yL yR ycut fyL fyR fycut))
-                            (q : forall (r:R'), {{ xL | xR // xcut }} &lt; yR r)
-                            (dq : forall (r:R'),
-                                    dlt (dcut _ _ xL xR xcut fxL fxR fxcut) (fyR r)),
-                       dle (dcut _ _ xL xR xcut fxL fxR fxcut)
-                           (dcut _ _ yL yR ycut fyL fyR fycut))
-           (dlt_l : forall (L R : Type@{i}) (xL : L -&gt; No) (xR : R -&gt; No)
-                           (xcut : forall (l:L) (r:R), (xL l) &lt; (xR r))
-                           (fxL : L -&gt; A) (fxR : R -&gt; A)
-                           (fxcut : forall l r, dlt (fxL l) (fxR r))
-                           (L' R' : Type@{i}) (yL : L' -&gt; No) (yR : R' -&gt; No)
-                           (ycut : forall (l:L') (r:R'), (yL l) &lt; (yR r))
-                           (fyL : L' -&gt; A) (fyR : R' -&gt; A)
-                           (fycut : forall l r, dlt (fyL l) (fyR r))
-                           (l : L') (p : {{ xL | xR // xcut }} &lt;= yL l)
-                           (dp : dle (dcut _ _ xL xR xcut fxL fxR fxcut) (fyL l)),
-                      dlt (dcut _ _ xL xR xcut fxL fxR fxcut)
-                          (dcut _ _ yL yR ycut fyL fyR fycut))
-           (dlt_r : forall (L R : Type@{i}) (xL : L -&gt; No) (xR : R -&gt; No)
-                           (xcut : forall (l:L) (r:R), (xL l) &lt; (xR r))
-                           (fxL : L -&gt; A) (fxR : R -&gt; A)
-                           (fxcut : forall l r, dlt (fxL l) (fxR r))
-                           (L' R' : Type@{i}) (yL : L' -&gt; No) (yR : R' -&gt; No)
-                           (ycut : forall (l:L') (r:R'), (yL l) &lt; (yR r))
-                           (fyL : L' -&gt; A) (fyR : R' -&gt; A)
-                           (fycut : forall l r, dlt (fyL l) (fyR r))
-                           (r : R) (p : (xR r) &lt;= {{ yL | yR // ycut }})
-                           (dp : dle (fxR r) (dcut _ _ yL yR ycut fyL fyR fycut)),
-                      dlt (dcut _ _ xL xR xcut fxL fxR fxcut)
-                          (dcut _ _ yL yR ycut fyL fyR fycut)).</pre>
 </div>
 <div class="code" title="File: Core.v
 Line: 364
@@ -960,19 +1032,107 @@ Time: 0s">
 <div class="time" style="width: 0%"></div>
 <pre>
 
+(** See also [repeat_No_ind_hprop], below *)
+
+(** *** The non-dependent recursion principle *)
+
+</pre>
+</div>
+<div class="code" title="File: Core.v
+Line: 369
+Time: 0s">
+<div class="time" style="width: 0%"></div>
+<pre>Section NoRec.</pre>
+</div>
+<div class="code" title="File: Core.v
+Line: 369
+Time: 0s">
+<div class="time" style="width: 0%"></div>
+<pre>
+  Context `{Funext}.</pre>
+</div>
+<div class="code" title="File: Core.v
+Line: 370
+Time: 0.019s">
+<div class="time" style="width: 1.2760241773002%"></div>
+<pre>
+
+  Context  (A : Type)
+           (dle : A -&gt; A -&gt; Type) `{is_mere_relation A dle}
+           (dlt : A -&gt; A -&gt; Type) `{is_mere_relation A dlt}
+           (dcut : forall (L R : Type@{i}) (s : InSort@{i} S L R)
+                          (xL : L -&gt; No) (xR : R -&gt; No)
+                          (xcut : forall (l:L) (r:R), (xL l) &lt; (xR r))
+                          (fxL : L -&gt; A) (fxR : R -&gt; A)
+                          (fxcut : forall l r, dlt (fxL l) (fxR r)),
+                     A)
+           (dpath : forall a b, dle a b -&gt; dle b a -&gt; a = b)
+           (dle_lr : forall (L R : Type@{i}) (s : InSort@{i} S L R)
+                            (xL : L -&gt; No) (xR : R -&gt; No)
+                            (xcut : forall (l:L) (r:R), (xL l) &lt; (xR r))
+                            (fxL : L -&gt; A) (fxR : R -&gt; A)
+                            (fxcut : forall l r, dlt (fxL l) (fxR r))
+                            (L' R' : Type@{i}) (s' : InSort@{i} S L' R')
+                            (yL : L' -&gt; No) (yR : R' -&gt; No)
+                            (ycut : forall (l:L') (r:R'), (yL l) &lt; (yR r))
+                            (fyL : L' -&gt; A) (fyR : R' -&gt; A)
+                            (fycut : forall l r, dlt (fyL l) (fyR r))
+                            (p : forall (l:L), xL l &lt; {{ yL | yR // ycut }})
+                            (dp : forall (l:L),
+                                    dlt (fxL l) (dcut _ _ _ yL yR ycut fyL fyR fycut))
+                            (q : forall (r:R'), {{ xL | xR // xcut }} &lt; yR r)
+                            (dq : forall (r:R'),
+                                    dlt (dcut _ _ _ xL xR xcut fxL fxR fxcut) (fyR r)),
+                       dle (dcut _ _ _ xL xR xcut fxL fxR fxcut)
+                           (dcut _ _ _ yL yR ycut fyL fyR fycut))
+           (dlt_l : forall (L R : Type@{i}) (s : InSort@{i} S L R)
+                           (xL : L -&gt; No) (xR : R -&gt; No)
+                           (xcut : forall (l:L) (r:R), (xL l) &lt; (xR r))
+                           (fxL : L -&gt; A) (fxR : R -&gt; A)
+                           (fxcut : forall l r, dlt (fxL l) (fxR r))
+                           (L' R' : Type@{i}) (s' : InSort@{i} S L' R')
+                           (yL : L' -&gt; No) (yR : R' -&gt; No)
+                           (ycut : forall (l:L') (r:R'), (yL l) &lt; (yR r))
+                           (fyL : L' -&gt; A) (fyR : R' -&gt; A)
+                           (fycut : forall l r, dlt (fyL l) (fyR r))
+                           (l : L') (p : {{ xL | xR // xcut }} &lt;= yL l)
+                           (dp : dle (dcut _ _ _ xL xR xcut fxL fxR fxcut) (fyL l)),
+                      dlt (dcut _ _ _ xL xR xcut fxL fxR fxcut)
+                          (dcut _ _ _ yL yR ycut fyL fyR fycut))
+           (dlt_r : forall (L R : Type@{i}) (s : InSort@{i} S L R)
+                           (xL : L -&gt; No) (xR : R -&gt; No)
+                           (xcut : forall (l:L) (r:R), (xL l) &lt; (xR r))
+                           (fxL : L -&gt; A) (fxR : R -&gt; A)
+                           (fxcut : forall l r, dlt (fxL l) (fxR r))
+                           (L' R' : Type@{i}) (s' : InSort@{i} S L' R')
+                           (yL : L' -&gt; No) (yR : R' -&gt; No)
+                           (ycut : forall (l:L') (r:R'), (yL l) &lt; (yR r))
+                           (fyL : L' -&gt; A) (fyR : R' -&gt; A)
+                           (fycut : forall l r, dlt (fyL l) (fyR r))
+                           (r : R) (p : (xR r) &lt;= {{ yL | yR // ycut }})
+                           (dp : dle (fxR r) (dcut _ _ _ yL yR ycut fyL fyR fycut)),
+                      dlt (dcut _ _ _ xL xR xcut fxL fxR fxcut)
+                          (dcut _ _ _ yL yR ycut fyL fyR fycut)).</pre>
+</div>
+<div class="code" title="File: Core.v
+Line: 427
+Time: 0s">
+<div class="time" style="width: 0%"></div>
+<pre>
+
   Definition No_rec (x : No) : A.</pre>
 </div>
 <div class="code" title="File: Core.v
-Line: 366
+Line: 429
 Time: 0s">
 <div class="time" style="width: 0%"></div>
 <pre>
   Proof.</pre>
 </div>
 <div class="code" title="File: Core.v
-Line: 367
-Time: 0.077s">
-<div class="time" style="width: 7.504873294347%"></div>
+Line: 430
+Time: 0.096s">
+<div class="time" style="width: 6.4472800537273%"></div>
 <pre>
     revert x;
     simple refine (No_ind (fun _ =&gt; A) (fun _ _ _ a b =&gt; dle a b)
@@ -981,106 +1141,106 @@ Time: 0.077s">
     intros.</pre>
 </div>
 <div class="code" title="File: Core.v
-Line: 372
+Line: 435
 Time: 0s">
 <div class="time" style="width: 0%"></div>
 <pre>
     -</pre>
 </div>
 <div class="code" title="File: Core.v
-Line: 373
+Line: 436
 Time: 0s">
 <div class="time" style="width: 0%"></div>
-<pre> exact (dcut L R xL xR xcut fxL fxR fxcut).</pre>
+<pre> exact (dcut L R _ xL xR xcut fxL fxR fxcut).</pre>
 </div>
 <div class="code" title="File: Core.v
-Line: 373
+Line: 436
 Time: 0s">
 <div class="time" style="width: 0%"></div>
 <pre>
     -</pre>
 </div>
 <div class="code" title="File: Core.v
-Line: 374
+Line: 437
 Time: 0.001s">
-<div class="time" style="width: 0.097465886939571%"></div>
+<div class="time" style="width: 0.067159167226326%"></div>
 <pre> refine (transport_const _ _ @ _).</pre>
 </div>
 <div class="code" title="File: Core.v
-Line: 374
+Line: 437
 Time: 0s">
 <div class="time" style="width: 0%"></div>
 <pre>
       apply dpath; assumption.</pre>
 </div>
 <div class="code" title="File: Core.v
-Line: 375
+Line: 438
 Time: 0s">
 <div class="time" style="width: 0%"></div>
 <pre>
     -</pre>
 </div>
 <div class="code" title="File: Core.v
-Line: 376
+Line: 439
 Time: 0s">
 <div class="time" style="width: 0%"></div>
 <pre> cbn.</pre>
 </div>
 <div class="code" title="File: Core.v
-Line: 376
+Line: 439
 Time: 0.001s">
-<div class="time" style="width: 0.097465886939571%"></div>
+<div class="time" style="width: 0.067159167226326%"></div>
 <pre> apply dle_lr; assumption.</pre>
 </div>
 <div class="code" title="File: Core.v
-Line: 376
+Line: 439
 Time: 0s">
 <div class="time" style="width: 0%"></div>
 <pre>
     -</pre>
 </div>
 <div class="code" title="File: Core.v
-Line: 377
+Line: 440
 Time: 0s">
 <div class="time" style="width: 0%"></div>
 <pre> cbn.</pre>
 </div>
 <div class="code" title="File: Core.v
-Line: 377
+Line: 440
 Time: 0s">
 <div class="time" style="width: 0%"></div>
 <pre> apply dlt_l with l; assumption.</pre>
 </div>
 <div class="code" title="File: Core.v
-Line: 377
+Line: 440
 Time: 0s">
 <div class="time" style="width: 0%"></div>
 <pre>
     -</pre>
 </div>
 <div class="code" title="File: Core.v
-Line: 378
+Line: 441
 Time: 0s">
 <div class="time" style="width: 0%"></div>
 <pre> cbn.</pre>
 </div>
 <div class="code" title="File: Core.v
-Line: 378
+Line: 441
 Time: 0s">
 <div class="time" style="width: 0%"></div>
 <pre> apply dlt_r with r; assumption.</pre>
 </div>
 <div class="code" title="File: Core.v
-Line: 378
-Time: 0.007s">
-<div class="time" style="width: 0.682261208577%"></div>
+Line: 441
+Time: 0.008s">
+<div class="time" style="width: 0.53727333781061%"></div>
 <pre>
   Defined.</pre>
 </div>
 <div class="code" title="File: Core.v
-Line: 379
-Time: 0.016s">
-<div class="time" style="width: 1.5594541910331%"></div>
+Line: 442
+Time: 0.023s">
+<div class="time" style="width: 1.5446608462055%"></div>
 <pre>
 
   Definition No_rec_le (x y : No) (p : x &lt;= y)
@@ -1089,9 +1249,9 @@ Time: 0.016s">
                  (fun _ _ _ a b =&gt; dlt a b) _ _ _ _ _ x y p.</pre>
 </div>
 <div class="code" title="File: Core.v
-Line: 384
-Time: 0.016s">
-<div class="time" style="width: 1.5594541910331%"></div>
+Line: 447
+Time: 0.023s">
+<div class="time" style="width: 1.5446608462055%"></div>
 <pre>
 
   Definition No_rec_lt (x y : No) (p : x &lt; y)
@@ -1100,9 +1260,9 @@ Time: 0.016s">
                  (fun _ _ _ a b =&gt; dlt a b) _ _ _ _ _ x y p.</pre>
 </div>
 <div class="code" title="File: Core.v
-Line: 389
-Time: 0.003s">
-<div class="time" style="width: 0.29239766081871%"></div>
+Line: 452
+Time: 0.002s">
+<div class="time" style="width: 0.13431833445265%"></div>
 <pre>
 
   Definition No_rec_package
@@ -1112,281 +1272,309 @@ Time: 0.003s">
     := ( No_rec ; (No_rec_le , No_rec_lt) ).</pre>
 </div>
 <div class="code" title="File: Core.v
-Line: 395
-Time: 0.012s">
-<div class="time" style="width: 1.1695906432749%"></div>
+Line: 458
+Time: 0.005s">
+<div class="time" style="width: 0.33579583613163%"></div>
 <pre>
 
 End NoRec.</pre>
 </div>
 <div class="code" title="File: Core.v
-Line: 397
+Line: 460
 Time: 0s">
 <div class="time" style="width: 0%"></div>
 <pre>
 
 (** ** Conway's Theorem 0 *)
 
-</pre>
+(** First we prove that *if* a left option of [y] is [&lt;=] itself, then it is [&lt; y]. *)</pre>
 </div>
 <div class="code" title="File: Core.v
-Line: 400
+Line: 464
 Time: 0.001s">
-<div class="time" style="width: 0.097465886939571%"></div>
+<div class="time" style="width: 0.067159167226326%"></div>
 <pre>Lemma Conway_theorem0_lemma1 `{Funext} (x : No@{i}) (xle : x &lt;= x)
-      (L' R' : Type@{i}) (yL : L' -&gt; No@{i}) (yR : R' -&gt; No@{i})
+      {L' R' : Type@{i}} {s' : InSort@{i} S L' R'}
+      (yL : L' -&gt; No@{i}) (yR : R' -&gt; No@{i})
       (ycut : forall (l:L') (r:R'), (yL l) &lt; (yR r))
       (l : L') (p : x = yL l)
 : x &lt; {{ yL | yR // ycut }}.</pre>
 </div>
 <div class="code" title="File: Core.v
-Line: 404
+Line: 469
 Time: 0s">
 <div class="time" style="width: 0%"></div>
 <pre>
 Proof.</pre>
 </div>
 <div class="code" title="File: Core.v
-Line: 405
-Time: 0.043s">
-<div class="time" style="width: 4.1910331384016%"></div>
+Line: 470
+Time: 0.061s">
+<div class="time" style="width: 4.0967092008059%"></div>
 <pre>
   generalize dependent x; refine (No_ind_hprop _ _); intros.</pre>
 </div>
 <div class="code" title="File: Core.v
-Line: 406
-Time: 0s">
-<div class="time" style="width: 0%"></div>
+Line: 471
+Time: 0.001s">
+<div class="time" style="width: 0.067159167226326%"></div>
 <pre>
   apply lt_l with l.</pre>
 </div>
 <div class="code" title="File: Core.v
-Line: 407
-Time: 0s">
-<div class="time" style="width: 0%"></div>
+Line: 472
+Time: 0.001s">
+<div class="time" style="width: 0.067159167226326%"></div>
 <pre>
   exact (transport (fun z =&gt; {{ xL | xR // xcut}} &lt;= z) p xle).</pre>
 </div>
 <div class="code" title="File: Core.v
-Line: 408
-Time: 0.002s">
-<div class="time" style="width: 0.19493177387914%"></div>
+Line: 473
+Time: 0.003s">
+<div class="time" style="width: 0.20147750167898%"></div>
 <pre>
 Defined.</pre>
 </div>
 <div class="code" title="File: Core.v
-Line: 409
+Line: 474
 Time: 0s">
 <div class="time" style="width: 0%"></div>
 <pre>
 
-Lemma Conway_theorem0_lemma2 `{Funext} (x : No@{i}) (xle : x &lt;= x)
-      (L' R' : Type@{i}) (yL : L' -&gt; No@{i}) (yR : R' -&gt; No@{i})
+(** And dually *)</pre>
+</div>
+<div class="code" title="File: Core.v
+Line: 476
+Time: 0.001s">
+<div class="time" style="width: 0.067159167226326%"></div>
+<pre>Lemma Conway_theorem0_lemma2 `{Funext} (x : No@{i}) (xle : x &lt;= x)
+      {L' R' : Type@{i}} {s' : InSort@{i} S L' R'}
+      (yL : L' -&gt; No@{i}) (yR : R' -&gt; No@{i})
       (ycut : forall (l:L') (r:R'), (yL l) &lt; (yR r))
       (r : R') (p : x = yR r)
 : {{ yL | yR // ycut }} &lt; x.</pre>
 </div>
 <div class="code" title="File: Core.v
-Line: 415
+Line: 481
 Time: 0s">
 <div class="time" style="width: 0%"></div>
 <pre>
 Proof.</pre>
 </div>
 <div class="code" title="File: Core.v
-Line: 416
-Time: 0.058s">
-<div class="time" style="width: 5.6530214424951%"></div>
+Line: 482
+Time: 0.05s">
+<div class="time" style="width: 3.3579583613163%"></div>
 <pre>
   generalize dependent x; refine (No_ind_hprop _ _); intros.</pre>
 </div>
 <div class="code" title="File: Core.v
-Line: 417
-Time: 0s">
-<div class="time" style="width: 0%"></div>
+Line: 483
+Time: 0.001s">
+<div class="time" style="width: 0.067159167226326%"></div>
 <pre>
   apply lt_r with r.</pre>
 </div>
 <div class="code" title="File: Core.v
-Line: 418
-Time: 0s">
-<div class="time" style="width: 0%"></div>
+Line: 484
+Time: 0.001s">
+<div class="time" style="width: 0.067159167226326%"></div>
 <pre>
   exact (transport (fun z =&gt; z &lt;= {{ xL | xR // xcut}}) p xle).</pre>
 </div>
 <div class="code" title="File: Core.v
-Line: 419
+Line: 485
 Time: 0.002s">
-<div class="time" style="width: 0.19493177387914%"></div>
+<div class="time" style="width: 0.13431833445265%"></div>
 <pre>
 Defined.</pre>
 </div>
 <div class="code" title="File: Core.v
-Line: 420
+Line: 486
 Time: 0s">
 <div class="time" style="width: 0%"></div>
 <pre>
 
-Theorem Conway_theorem0_i `{Funext} (x : No)
+(** Theorem 0 Part (i) *)</pre>
+</div>
+<div class="code" title="File: Core.v
+Line: 488
+Time: 0s">
+<div class="time" style="width: 0%"></div>
+<pre>Theorem le_reflexive `{Funext} (x : No)
 : x &lt;= x.</pre>
 </div>
 <div class="code" title="File: Core.v
-Line: 423
+Line: 489
 Time: 0s">
 <div class="time" style="width: 0%"></div>
 <pre>
 Proof.</pre>
 </div>
 <div class="code" title="File: Core.v
-Line: 424
-Time: 0.014s">
-<div class="time" style="width: 1.364522417154%"></div>
+Line: 490
+Time: 0.015s">
+<div class="time" style="width: 1.0073875083949%"></div>
 <pre>
   revert x; refine (No_ind_hprop _ _); intros.</pre>
 </div>
 <div class="code" title="File: Core.v
-Line: 425
+Line: 491
 Time: 0s">
 <div class="time" style="width: 0%"></div>
 <pre>
   apply le_lr.</pre>
 </div>
 <div class="code" title="File: Core.v
-Line: 426
+Line: 492
 Time: 0s">
 <div class="time" style="width: 0%"></div>
 <pre>
   -</pre>
 </div>
 <div class="code" title="File: Core.v
-Line: 427
+Line: 493
 Time: 0s">
 <div class="time" style="width: 0%"></div>
 <pre> intros l.</pre>
 </div>
 <div class="code" title="File: Core.v
-Line: 427
+Line: 493
 Time: 0s">
 <div class="time" style="width: 0%"></div>
-<pre> refine (Conway_theorem0_lemma1 (xL l) (IHL l) _ _ _ _ _ _ 1).</pre>
+<pre> refine (Conway_theorem0_lemma1 (xL l) (IHL l) _ _ _ _ 1).</pre>
 </div>
 <div class="code" title="File: Core.v
-Line: 427
+Line: 493
 Time: 0s">
 <div class="time" style="width: 0%"></div>
 <pre>
   -</pre>
 </div>
 <div class="code" title="File: Core.v
-Line: 428
+Line: 494
 Time: 0s">
 <div class="time" style="width: 0%"></div>
 <pre> intros r.</pre>
 </div>
 <div class="code" title="File: Core.v
-Line: 428
+Line: 494
 Time: 0s">
 <div class="time" style="width: 0%"></div>
-<pre> refine (Conway_theorem0_lemma2 (xR r) (IHR r) _ _ _ _ _ _ 1).</pre>
+<pre> refine (Conway_theorem0_lemma2 (xR r) (IHR r) _ _ _ _ 1).</pre>
 </div>
 <div class="code" title="File: Core.v
-Line: 428
-Time: 0s">
-<div class="time" style="width: 0%"></div>
+Line: 494
+Time: 0.001s">
+<div class="time" style="width: 0.067159167226326%"></div>
 <pre>
 Defined.</pre>
 </div>
 <div class="code" title="File: Core.v
-Line: 429
+Line: 495
 Time: 0.001s">
-<div class="time" style="width: 0.097465886939571%"></div>
+<div class="time" style="width: 0.067159167226326%"></div>
 <pre>
 
 Instance reflexive_le `{Funext} : Reflexive le
-  := Conway_theorem0_i.</pre>
+  := le_reflexive.</pre>
 </div>
 <div class="code" title="File: Core.v
-Line: 432
+Line: 498
 Time: 0s">
 <div class="time" style="width: 0%"></div>
 <pre>
 
-Theorem Conway_theorem0_ii_l `{Funext}
-        (L R : Type@{i}) (xL : L -&gt; No@{i}) (xR : R -&gt; No@{i})
+(** Theorem 0 Part (ii), left half *)</pre>
+</div>
+<div class="code" title="File: Core.v
+Line: 500
+Time: 0.001s">
+<div class="time" style="width: 0.067159167226326%"></div>
+<pre>Theorem lt_lopt `{Funext}
+        {L R : Type@{i}} {s : InSort@{i} S L R}
+        (xL : L -&gt; No@{i}) (xR : R -&gt; No@{i})
         (xcut : forall (l:L) (r:R), (xL l) &lt; (xR r))
         (l : L)
 : xL l &lt; {{ xL | xR // xcut }}.</pre>
 </div>
 <div class="code" title="File: Core.v
-Line: 438
+Line: 505
 Time: 0s">
 <div class="time" style="width: 0%"></div>
 <pre>
 Proof.</pre>
 </div>
 <div class="code" title="File: Core.v
-Line: 439
+Line: 506
 Time: 0s">
 <div class="time" style="width: 0%"></div>
 <pre>
-  refine (Conway_theorem0_lemma1 (xL l) _ _ _ _ _ _ _ 1).</pre>
+  refine (Conway_theorem0_lemma1 (xL l) _ _ _ _ _ 1).</pre>
 </div>
 <div class="code" title="File: Core.v
-Line: 440
+Line: 507
 Time: 0s">
 <div class="time" style="width: 0%"></div>
 <pre>
-  apply Conway_theorem0_i.</pre>
+  apply le_reflexive.</pre>
 </div>
 <div class="code" title="File: Core.v
-Line: 441
+Line: 508
 Time: 0s">
 <div class="time" style="width: 0%"></div>
 <pre>
 Defined.</pre>
 </div>
 <div class="code" title="File: Core.v
-Line: 442
+Line: 509
 Time: 0s">
 <div class="time" style="width: 0%"></div>
 <pre>
 
-Theorem Conway_theorem0_ii_r `{Funext}
-        (L R : Type@{i}) (xL : L -&gt; No@{i}) (xR : R -&gt; No@{i})
+(** Theorem 0 Part (ii), right half *)</pre>
+</div>
+<div class="code" title="File: Core.v
+Line: 511
+Time: 0.001s">
+<div class="time" style="width: 0.067159167226326%"></div>
+<pre>Theorem lt_ropt `{Funext}
+        {L R : Type@{i}} {s : InSort@{i} S L R}
+        (xL : L -&gt; No@{i}) (xR : R -&gt; No@{i})
         (xcut : forall (l:L) (r:R), (xL l) &lt; (xR r))
         (r : R)
 : {{ xL | xR // xcut }} &lt; xR r.</pre>
 </div>
 <div class="code" title="File: Core.v
-Line: 448
+Line: 516
 Time: 0s">
 <div class="time" style="width: 0%"></div>
 <pre>
 Proof.</pre>
 </div>
 <div class="code" title="File: Core.v
-Line: 449
+Line: 517
 Time: 0s">
 <div class="time" style="width: 0%"></div>
 <pre>
-  refine (Conway_theorem0_lemma2 (xR r) _ _ _ _ _ _ _ 1).</pre>
+  refine (Conway_theorem0_lemma2 (xR r) _ _ _ _ _ 1).</pre>
 </div>
 <div class="code" title="File: Core.v
-Line: 450
+Line: 518
 Time: 0s">
 <div class="time" style="width: 0%"></div>
 <pre>
-  apply Conway_theorem0_i.</pre>
+  apply le_reflexive.</pre>
 </div>
 <div class="code" title="File: Core.v
-Line: 451
+Line: 519
 Time: 0s">
 <div class="time" style="width: 0%"></div>
 <pre>
 Defined.</pre>
 </div>
 <div class="code" title="File: Core.v
-Line: 452
+Line: 520
 Time: 0s">
 <div class="time" style="width: 0%"></div>
 <pre>
@@ -1394,54 +1582,54 @@ Time: 0s">
 Global Instance isset_No `{Funext} : IsHSet No.</pre>
 </div>
 <div class="code" title="File: Core.v
-Line: 454
+Line: 522
 Time: 0s">
 <div class="time" style="width: 0%"></div>
 <pre>
 Proof.</pre>
 </div>
 <div class="code" title="File: Core.v
-Line: 455
-Time: 0.035s">
-<div class="time" style="width: 3.411306042885%"></div>
+Line: 523
+Time: 0.044s">
+<div class="time" style="width: 2.9550033579584%"></div>
 <pre>
   refine (@isset_hrel_subpaths No (fun (x y:No) =&gt; (x &lt;= y) * (y &lt;= x)) _ _ _).</pre>
 </div>
 <div class="code" title="File: Core.v
-Line: 456
+Line: 524
 Time: 0s">
 <div class="time" style="width: 0%"></div>
 <pre>
   -</pre>
 </div>
 <div class="code" title="File: Core.v
-Line: 457
-Time: 0s">
-<div class="time" style="width: 0%"></div>
-<pre> intros x; split; apply Conway_theorem0_i.</pre>
+Line: 525
+Time: 0.001s">
+<div class="time" style="width: 0.067159167226326%"></div>
+<pre> intros x; split; apply le_reflexive.</pre>
 </div>
 <div class="code" title="File: Core.v
-Line: 457
+Line: 525
 Time: 0s">
 <div class="time" style="width: 0%"></div>
 <pre>
   -</pre>
 </div>
 <div class="code" title="File: Core.v
-Line: 458
-Time: 0s">
-<div class="time" style="width: 0%"></div>
+Line: 526
+Time: 0.001s">
+<div class="time" style="width: 0.067159167226326%"></div>
 <pre> intros x y [xley ylex]; apply path_No; assumption.</pre>
 </div>
 <div class="code" title="File: Core.v
-Line: 458
+Line: 526
 Time: 0.001s">
-<div class="time" style="width: 0.097465886939571%"></div>
+<div class="time" style="width: 0.067159167226326%"></div>
 <pre>
 Defined.</pre>
 </div>
 <div class="code" title="File: Core.v
-Line: 459
+Line: 527
 Time: 0s">
 <div class="time" style="width: 0%"></div>
 <pre>
@@ -1450,11 +1638,12 @@ Time: 0s">
 (** ** The proofs of cut-ness don't impact equality of surreals *)</pre>
 </div>
 <div class="code" title="File: Core.v
-Line: 462
-Time: 0.001s">
-<div class="time" style="width: 0.097465886939571%"></div>
+Line: 530
+Time: 0.002s">
+<div class="time" style="width: 0.13431833445265%"></div>
 <pre>Definition path_No_easy `{Funext}
-           {L R : Type} (xL xL' : L -&gt; No) (xR xR' : R -&gt; No)
+           {L R : Type} {s : InSort S L R}
+           (xL xL' : L -&gt; No) (xR xR' : R -&gt; No)
            (xLeq : forall l, xL l = xL' l)
            (xReq : forall r, xR r = xR' r)
            (xcut : forall (l:L) (r:R), (xL l) &lt; (xR r))
@@ -1462,37 +1651,38 @@ Time: 0.001s">
 : {{ xL | xR // xcut }} = {{ xL' | xR' // xcut' }}.</pre>
 </div>
 <div class="code" title="File: Core.v
-Line: 468
+Line: 537
 Time: 0s">
 <div class="time" style="width: 0%"></div>
 <pre>
 Proof.</pre>
 </div>
 <div class="code" title="File: Core.v
-Line: 469
-Time: 0.007s">
-<div class="time" style="width: 0.682261208577%"></div>
+Line: 538
+Time: 0.01s">
+<div class="time" style="width: 0.67159167226326%"></div>
 <pre>
   apply path_No; apply le_lr; intros;
   [ rewrite xLeq | rewrite &lt;- xReq | rewrite &lt;- xLeq | rewrite xReq ];
-  try apply Conway_theorem0_ii_l;
-  try apply Conway_theorem0_ii_r.</pre>
+  try apply lt_lopt;
+  try apply lt_ropt.</pre>
 </div>
 <div class="code" title="File: Core.v
-Line: 473
+Line: 542
 Time: 0.002s">
-<div class="time" style="width: 0.19493177387914%"></div>
+<div class="time" style="width: 0.13431833445265%"></div>
 <pre>
 Qed.</pre>
 </div>
 <div class="code" title="File: Core.v
-Line: 474
-Time: 0.006s">
-<div class="time" style="width: 0.58479532163743%"></div>
+Line: 543
+Time: 0.008s">
+<div class="time" style="width: 0.53727333781061%"></div>
 <pre>
 
 Definition path_No_easy' `{Funext}
-           {L R : Type} (xL xL' : L -&gt; No) (xR xR' : R -&gt; No)
+           {L R : Type} {s : InSort S L R}
+           (xL xL' : L -&gt; No) (xR xR' : R -&gt; No)
            (xLeq : forall l, xL l = xL' l)
            (xReq : forall r, xR r = xR' r)
            (xcut : forall (l:L) (r:R), (xL l) &lt; (xR r))
@@ -1504,7 +1694,36 @@ Definition path_No_easy' `{Funext}
   := path_No_easy xL xL' xR xR' xLeq xReq xcut _.</pre>
 </div>
 <div class="code" title="File: Core.v
-Line: 486
+Line: 556
+Time: 0.027s">
+<div class="time" style="width: 1.8132975151108%"></div>
+<pre>
+
+End OptionSort.</pre>
+</div>
+<div class="code" title="File: Core.v
+Line: 558
+Time: 0s">
+<div class="time" style="width: 0%"></div>
+<pre>
+
+(** When we want to do induction on several variables at once, we have to be careful to do them in the right order.  This tactic does that, by calling itself recursively (although it doesn't choose useful names for all the hypotheses it introduces).  We have to define this here outside of all sections so that it will be visible globally. *)</pre>
+</div>
+<div class="code" title="File: Core.v
+Line: 560
+Time: 0s">
+<div class="time" style="width: 0%"></div>
+<pre>Ltac repeat_No_ind_hprop :=
+  try match goal with
+      | [ x : GenNo ?S |- _ ] =&gt;
+        revert x;
+        repeat_No_ind_hprop;
+        refine (No_ind_hprop _ _);
+        intros ? ? ? ? ? ? ? ?
+      end.</pre>
+</div>
+<div class="code" title="File: Core.v
+Line: 567
 Time: 0s">
 <div class="time" style="width: 0%"></div>
 <pre>
@@ -1514,22 +1733,36 @@ Time: 0s">
 </pre>
 </div>
 <div class="code" title="File: Core.v
-Line: 489
+Line: 570
 Time: 0s">
 <div class="time" style="width: 0%"></div>
 <pre>Section NoCodes.</pre>
 </div>
 <div class="code" title="File: Core.v
-Line: 489
+Line: 570
 Time: 0s">
 <div class="time" style="width: 0%"></div>
 <pre>
   Context `{Univalence}.</pre>
 </div>
 <div class="code" title="File: Core.v
-Line: 490
+Line: 571
+Time: 0s">
+<div class="time" style="width: 0%"></div>
+<pre>
+  Context {S : OptionSort@{i}}.</pre>
+</div>
+<div class="code" title="File: Core.v
+Line: 572
+Time: 0s">
+<div class="time" style="width: 0%"></div>
+<pre>
+  Let No := GenNo S.</pre>
+</div>
+<div class="code" title="File: Core.v
+Line: 573
 Time: 0.003s">
-<div class="time" style="width: 0.29239766081871%"></div>
+<div class="time" style="width: 0.20147750167898%"></div>
 <pre>
 
   Let A := {le'_x : No -&gt; hProp &amp;
@@ -1540,7 +1773,7 @@ Time: 0.003s">
            (forall y z : No, lt'_x y -&gt; y &lt;= z -&gt; lt'_x z)} }.</pre>
 </div>
 <div class="code" title="File: Core.v
-Line: 497
+Line: 580
 Time: 0s">
 <div class="time" style="width: 0%"></div>
 <pre>
@@ -1548,21 +1781,22 @@ Time: 0s">
   Section Inner.</pre>
 </div>
 <div class="code" title="File: Core.v
-Line: 499
-Time: 0.003s">
-<div class="time" style="width: 0.29239766081871%"></div>
+Line: 582
+Time: 0.004s">
+<div class="time" style="width: 0.26863666890531%"></div>
 <pre>
 
-    Context {L R : Type@{i} } (xL : L -&gt; No@{i}) (xR : R -&gt; No@{i})
+    Context {L R : Type@{i} } {s : InSort@{i} S L R}
+            (xL : L -&gt; No@{i}) (xR : R -&gt; No@{i})
             (xcut : forall (l : L) (r : R), xL l &lt; xR r)
             (xL_let : L -&gt; A) (xR_let : R -&gt; A)
             (x_lt_le : forall (l : L) (r : R) (y : No),
                          (xR_let r).1 y -&gt; ((xL_let l).2).1 y).</pre>
 </div>
 <div class="code" title="File: Core.v
-Line: 505
-Time: 0.005s">
-<div class="time" style="width: 0.48732943469786%"></div>
+Line: 589
+Time: 0.006s">
+<div class="time" style="width: 0.40295500335796%"></div>
 <pre>
 
     Let A' (y : No) : Type
@@ -1572,27 +1806,27 @@ Time: 0.005s">
          (forall r : R, (xR_let r).1 y -&gt; snd lelt'_x_y) }.</pre>
 </div>
 <div class="code" title="File: Core.v
-Line: 511
-Time: 0.004s">
-<div class="time" style="width: 0.38986354775828%"></div>
+Line: 595
+Time: 0.005s">
+<div class="time" style="width: 0.33579583613163%"></div>
 <pre>
 
     Let A'le (y z : No) (p : y &lt;= z) (tr : A' y) (sq : A' z) : Type
       := (fst tr.1 -&gt; fst sq.1) * (snd tr.1 -&gt; snd sq.1).</pre>
 </div>
 <div class="code" title="File: Core.v
-Line: 514
+Line: 598
 Time: 0.002s">
-<div class="time" style="width: 0.19493177387914%"></div>
+<div class="time" style="width: 0.13431833445265%"></div>
 <pre>
 
     Let A'lt (y z : No) (p : y &lt; z) (tr : A' y) (sq : A' z) : Type
       := (fst tr.1 -&gt; snd sq.1).</pre>
 </div>
 <div class="code" title="File: Core.v
-Line: 517
+Line: 601
 Time: 0.001s">
-<div class="time" style="width: 0.097465886939571%"></div>
+<div class="time" style="width: 0.067159167226326%"></div>
 <pre>
 
     Local Definition inner_package
@@ -1601,44 +1835,44 @@ Time: 0.001s">
        (forall y z p, A'lt y z p (inner y) (inner z)) }.</pre>
 </div>
 <div class="code" title="File: Core.v
-Line: 522
+Line: 606
 Time: 0s">
 <div class="time" style="width: 0%"></div>
 <pre>
     Proof.</pre>
 </div>
 <div class="code" title="File: Core.v
-Line: 523
-Time: 0.629s">
-<div class="time" style="width: 61.30604288499%"></div>
+Line: 607
+Time: 0.636s">
+<div class="time" style="width: 42.713230355944%"></div>
 <pre>
       simple refine (No_ind_package A' A'le A'lt _ _ _ _ _ );
       unfold A', A'le, A'lt; try exact _.</pre>
 </div>
 <div class="code" title="File: Core.v
-Line: 525
+Line: 609
 Time: 0s">
 <div class="time" style="width: 0%"></div>
 <pre>
       -</pre>
 </div>
 <div class="code" title="File: Core.v
-Line: 526
+Line: 610
 Time: 0s">
 <div class="time" style="width: 0%"></div>
-<pre> intros L' R' yL yR ycut x_let_yL x_let_yR y_lt_le.</pre>
+<pre> intros L' R' ? yL yR ycut x_let_yL x_let_yR y_lt_le.</pre>
 </div>
 <div class="code" title="File: Core.v
-Line: 526
-Time: 0.001s">
-<div class="time" style="width: 0.097465886939571%"></div>
+Line: 610
+Time: 0.002s">
+<div class="time" style="width: 0.13431833445265%"></div>
 <pre>
         set (y := {{ yL | yR // ycut }}).</pre>
 </div>
 <div class="code" title="File: Core.v
-Line: 527
-Time: 0.194s">
-<div class="time" style="width: 18.908382066277%"></div>
+Line: 611
+Time: 0.202s">
+<div class="time" style="width: 13.566151779718%"></div>
 <pre>
         exists (BuildhProp
                   ((forall l, (xL_let l).2.1 y) *
@@ -1647,9 +1881,9 @@ Time: 0.194s">
                     {r:R   &amp; (xR_let r).1 y})).</pre>
 </div>
 <div class="code" title="File: Core.v
-Line: 532
-Time: 0.348s">
-<div class="time" style="width: 33.918128654971%"></div>
+Line: 616
+Time: 0.42s">
+<div class="time" style="width: 28.206850235057%"></div>
 <pre>
         abstract (
             refine ((_,_),_);
@@ -1658,27 +1892,27 @@ Time: 0.348s">
               [ refine (snd (fst (xL_let l).2.2) (yL l') y _ _);
                 [ refine (fst (fst (fst (xL_let l).2.2)) (yL l') _);
                   exact (snd (fst (x_let_yL l').2) l h)
-                | by apply Conway_theorem0_ii_l ]
+                | by (apply lt_lopt; exact _) ]
               | exact (y_lt_le l' r' h)
               | exact (x_lt_le l r y h)
               | refine (snd (x_let_yR r').2 r _);
                 refine (fst (fst (fst (xR_let r).2.2)) _ _);
                 refine (snd (fst (xR_let r).2.2) y (yR r') h _);
-                apply Conway_theorem0_ii_r ]
+                apply lt_ropt; exact _ ]
             | intros l [h k]; apply h
             | intros r h; apply tr, inr; exact (r;h) ] ).</pre>
 </div>
 <div class="code" title="File: Core.v
-Line: 548
+Line: 632
 Time: 0s">
 <div class="time" style="width: 0%"></div>
 <pre>
       -</pre>
 </div>
 <div class="code" title="File: Core.v
-Line: 549
-Time: 0.483s">
-<div class="time" style="width: 47.076023391813%"></div>
+Line: 633
+Time: 0.498s">
+<div class="time" style="width: 33.445265278711%"></div>
 <pre> abstract (
             intros y z
                    [[x_le_y x_lt_y] ?]
@@ -1693,21 +1927,21 @@ Time: 0.483s">
             apply path_ishprop ).</pre>
 </div>
 <div class="code" title="File: Core.v
-Line: 560
+Line: 644
 Time: 0s">
 <div class="time" style="width: 0%"></div>
 <pre>
       -</pre>
 </div>
 <div class="code" title="File: Core.v
-Line: 561
-Time: 0.863s">
-<div class="time" style="width: 84.11306042885%"></div>
+Line: 645
+Time: 1.029s">
+<div class="time" style="width: 69.10678307589%"></div>
 <pre> abstract (
             cbn;
-            intros L' R' yL yR ycut x_let_yL x_let_yR y_lt_le;
+            intros L' R' ? yL yR ycut x_let_yL x_let_yR y_lt_le;
             set (y := {{ yL | yR // ycut }});
-            intros L'' R'' zL zR zcut x_let_zL x_let_zR z_lt_le;
+            intros L'' R'' ? zL zR zcut x_let_zL x_let_zR z_lt_le;
             set (z := {{ zL | zR // zcut }});
             intros yL_lt_z h1 y_lt_zR h2;
             assert (y_le_z := le_lr yL yR ycut zL zR zcut yL_lt_z y_lt_zR);
@@ -1721,63 +1955,63 @@ Time: 0.863s">
               refine (snd (fst (fst (xR_let r).2.2)) y z h3 y_le_z) ] ).</pre>
 </div>
 <div class="code" title="File: Core.v
-Line: 576
+Line: 660
 Time: 0s">
 <div class="time" style="width: 0%"></div>
 <pre>
       -</pre>
 </div>
 <div class="code" title="File: Core.v
-Line: 577
-Time: 0.04s">
-<div class="time" style="width: 3.8986354775828%"></div>
+Line: 661
+Time: 0.054s">
+<div class="time" style="width: 3.6265950302216%"></div>
 <pre> abstract (
             cbn;
-            intros L' R' yL yR ycut x_let_yL x_let_yR y_lt_le;
+            intros L' R' ? yL yR ycut x_let_yL x_let_yR y_lt_le;
             set (y := {{ yL | yR // ycut }});
-            intros L'' R'' zL zR zcut x_let_zL x_let_zR z_lt_le;
+            intros L'' R'' ? zL zR zcut x_let_zL x_let_zR z_lt_le;
             set (z := {{ zL | zR // zcut }});
             intros l'' y_le_zL [h1 h2] x_le_y;
             apply tr, inl; exact (l''; h1 x_le_y) ).</pre>
 </div>
 <div class="code" title="File: Core.v
-Line: 584
+Line: 668
 Time: 0s">
 <div class="time" style="width: 0%"></div>
 <pre>
       -</pre>
 </div>
 <div class="code" title="File: Core.v
-Line: 585
-Time: 0.039s">
-<div class="time" style="width: 3.8011695906433%"></div>
+Line: 669
+Time: 0.054s">
+<div class="time" style="width: 3.6265950302216%"></div>
 <pre> abstract (
             cbn;
-            intros L' R' yL yR ycut x_let_yL x_let_yR y_lt_le;
+            intros L' R' ? yL yR ycut x_let_yL x_let_yR y_lt_le;
             set (y := {{ yL | yR // ycut }});
-            intros L'' R'' zL zR zcut x_let_zL x_let_zR z_lt_le;
+            intros L'' R'' ? zL zR zcut x_let_zL x_let_zR z_lt_le;
             set (z := {{ zL | zR // zcut }});
             intros r' yR_le_z [h1 h2] x_le_y;
             apply h2; exact (snd x_le_y r') ).</pre>
 </div>
 <div class="code" title="File: Core.v
-Line: 592
+Line: 676
 Time: 0.043s">
-<div class="time" style="width: 4.1910331384016%"></div>
+<div class="time" style="width: 2.887844190732%"></div>
 <pre>
     Defined.</pre>
 </div>
 <div class="code" title="File: Core.v
-Line: 593
+Line: 677
 Time: 0.003s">
-<div class="time" style="width: 0.29239766081871%"></div>
+<div class="time" style="width: 0.20147750167898%"></div>
 <pre>
 
     Local Definition inner (y : No) : A' y
       := inner_package.1 y.</pre>
 </div>
 <div class="code" title="File: Core.v
-Line: 596
+Line: 680
 Time: 0s">
 <div class="time" style="width: 0%"></div>
 <pre>
@@ -1786,11 +2020,12 @@ Time: 0s">
    </pre>
 </div>
 <div class="code" title="File: Core.v
-Line: 599
-Time: 0.204s">
-<div class="time" style="width: 19.883040935673%"></div>
+Line: 683
+Time: 0.222s">
+<div class="time" style="width: 14.909335124244%"></div>
 <pre>Definition inner_cut_le
-               (L' R' : Type@{i}) (yL : L' -&gt; No@{i}) (yR : R' -&gt; No@{i})
+               (L' R' : Type@{i}) {s : InSort@{i} S L' R'}
+               (yL : L' -&gt; No@{i}) (yR : R' -&gt; No@{i})
                (ycut : forall (l:L') (r:R'), (yL l) &lt; (yR r))
     : fst (inner {{ yL | yR // ycut }}).1 =
       (BuildhProp ((forall l, (xL_let l).2.1 {{ yL | yR // ycut }}) *
@@ -1798,13 +2033,14 @@ Time: 0.204s">
       := 1.</pre>
 </div>
 <div class="code" title="File: Core.v
-Line: 605
-Time: 0.023s">
-<div class="time" style="width: 2.2417153996101%"></div>
+Line: 690
+Time: 0.022s">
+<div class="time" style="width: 1.4775016789792%"></div>
 <pre>
 
     Definition inner_cut_lt
-               (L' R' : Type@{i}) (yL : L' -&gt; No@{i}) (yR : R' -&gt; No@{i})
+               (L' R' : Type@{i}) {s : InSort@{i} S L' R'}
+               (yL : L' -&gt; No@{i}) (yR : R' -&gt; No@{i})
                (ycut : forall (l:L') (r:R'), (yL l) &lt; (yR r))
     : snd (inner {{ yL | yR // ycut }}).1 =
       (hor {l':L' &amp; fst (inner (yL l')).1}
@@ -1812,33 +2048,33 @@ Time: 0.023s">
       := 1.</pre>
 </div>
 <div class="code" title="File: Core.v
-Line: 613
+Line: 699
 Time: 0.007s">
-<div class="time" style="width: 0.682261208577%"></div>
+<div class="time" style="width: 0.47011417058428%"></div>
 <pre>
 
     Local Definition inner_le y z p : A'le y z p (inner y) (inner z)
       := fst (inner_package.2) y z p.</pre>
 </div>
 <div class="code" title="File: Core.v
-Line: 616
-Time: 0.006s">
-<div class="time" style="width: 0.58479532163743%"></div>
+Line: 702
+Time: 0.007s">
+<div class="time" style="width: 0.47011417058428%"></div>
 <pre>
 
     Local Definition inner_lt y z p : A'lt y z p (inner y) (inner z)
       := snd (inner_package.2) y z p.</pre>
 </div>
 <div class="code" title="File: Core.v
-Line: 619
+Line: 705
 Time: 0.016s">
-<div class="time" style="width: 1.5594541910331%"></div>
+<div class="time" style="width: 1.0745466756212%"></div>
 <pre>
 
   End Inner.</pre>
 </div>
 <div class="code" title="File: Core.v
-Line: 621
+Line: 707
 Time: 0s">
 <div class="time" style="width: 0%"></div>
 <pre>
@@ -1847,15 +2083,15 @@ Time: 0s">
  </pre>
 </div>
 <div class="code" title="File: Core.v
-Line: 624
+Line: 710
 Time: 0s">
 <div class="time" style="width: 0%"></div>
 <pre>Arguments inner : simpl never.</pre>
 </div>
 <div class="code" title="File: Core.v
-Line: 624
-Time: 0.008s">
-<div class="time" style="width: 0.77972709551657%"></div>
+Line: 710
+Time: 0.009s">
+<div class="time" style="width: 0.60443250503694%"></div>
 <pre>
 
   Definition No_codes_package
@@ -1867,16 +2103,16 @@ Time: 0.008s">
             forall z, ((lelt y).1 z -&gt; (lelt x).2.1 z)) }.</pre>
 </div>
 <div class="code" title="File: Core.v
-Line: 632
+Line: 718
 Time: 0s">
 <div class="time" style="width: 0%"></div>
 <pre>
   Proof.</pre>
 </div>
 <div class="code" title="File: Core.v
-Line: 633
-Time: 0.182s">
-<div class="time" style="width: 17.738791423002%"></div>
+Line: 719
+Time: 0.192s">
+<div class="time" style="width: 12.894560107455%"></div>
 <pre>
     simple refine (No_rec_package A
               (fun dm ht =&gt; forall y, (ht.1 y -&gt; dm.1 y)
@@ -1885,43 +2121,43 @@ Time: 0.182s">
               _ _ _ _ _).</pre>
 </div>
 <div class="code" title="File: Core.v
-Line: 638
+Line: 724
 Time: 0s">
 <div class="time" style="width: 0%"></div>
 <pre>
     -</pre>
 </div>
 <div class="code" title="File: Core.v
-Line: 639
+Line: 725
 Time: 0s">
 <div class="time" style="width: 0%"></div>
-<pre> intros L R xL xR xcut xL_let xR_let x_lt_le.</pre>
+<pre> intros L R ? xL xR xcut xL_let xR_let x_lt_le.</pre>
 </div>
 <div class="code" title="File: Core.v
-Line: 639
+Line: 725
 Time: 0s">
 <div class="time" style="width: 0%"></div>
 <pre>
       pose (x := {{ xL | xR // xcut }}).</pre>
 </div>
 <div class="code" title="File: Core.v
-Line: 640
+Line: 726
 Time: 0.002s">
-<div class="time" style="width: 0.19493177387914%"></div>
+<div class="time" style="width: 0.13431833445265%"></div>
 <pre>
       exists (fun y =&gt; fst (inner xL_let xR_let x_lt_le y).1).</pre>
 </div>
 <div class="code" title="File: Core.v
-Line: 641
+Line: 727
 Time: 0.002s">
-<div class="time" style="width: 0.19493177387914%"></div>
+<div class="time" style="width: 0.13431833445265%"></div>
 <pre>
       exists (fun y =&gt; snd (inner xL_let xR_let x_lt_le y).1).</pre>
 </div>
 <div class="code" title="File: Core.v
-Line: 642
-Time: 0.051s">
-<div class="time" style="width: 4.9707602339181%"></div>
+Line: 728
+Time: 0.05s">
+<div class="time" style="width: 3.3579583613163%"></div>
 <pre>
       abstract (
           repeat split;
@@ -1934,16 +2170,16 @@ Time: 0.051s">
             exact (snd (inner_le xL_let xR_let x_lt_le y z y_le_z) x_lt_y) ]).</pre>
 </div>
 <div class="code" title="File: Core.v
-Line: 651
+Line: 737
 Time: 0s">
 <div class="time" style="width: 0%"></div>
 <pre>
     -</pre>
 </div>
 <div class="code" title="File: Core.v
-Line: 652
-Time: 0.95s">
-<div class="time" style="width: 92.592592592593%"></div>
+Line: 738
+Time: 0.982s">
+<div class="time" style="width: 65.950302216253%"></div>
 <pre> abstract (
           intros [x_le [x_lt ?]] [x_le' [x_lt' ?]] p q; cbn in p, q;
           simple refine (path_sigma' _ _ _);
@@ -1956,25 +2192,25 @@ Time: 0.95s">
             | apply path_ishprop ] ] ).</pre>
 </div>
 <div class="code" title="File: Core.v
-Line: 661
+Line: 747
 Time: 0s">
 <div class="time" style="width: 0%"></div>
 <pre>
     -</pre>
 </div>
 <div class="code" title="File: Core.v
-Line: 662
-Time: 0.92s">
-<div class="time" style="width: 89.668615984405%"></div>
+Line: 748
+Time: 1.067s">
+<div class="time" style="width: 71.65883143049%"></div>
 <pre> abstract (
-          intros L R xL xR xcut xL_let xR_let x_le_lt
-                 L' R' yL yR ycut yL_let yR_let y_le_lt;
+          intros L R ? xL xR xcut xL_let xR_let x_le_lt
+                 L' R' ? yL yR ycut yL_let yR_let y_le_lt;
           set (x := {{ xL | xR // xcut }});
           set (y := {{ yL | yR // ycut }});
           cbn;
           intros xL_lt_y xL_lt_z x_lt_yR le_lt_y;
           refine (No_ind_hprop _ _);
-          intros L'' R'' zL zR zcut zLH zRH; split;
+          intros L'' R'' ? zL zR zcut zLH zRH; split;
           [ rewrite !inner_cut_le;
             intros y_le_z; split;
             [ intros l; refine (xL_lt_z l {{ zL | zR // zcut }} y_le_z)
@@ -1986,80 +2222,80 @@ Time: 0.92s">
             | refine (le_lt_y r {{ zL | zR // zcut }} yR_le_z) ]] ).</pre>
 </div>
 <div class="code" title="File: Core.v
-Line: 679
+Line: 765
 Time: 0s">
 <div class="time" style="width: 0%"></div>
 <pre>
     -</pre>
 </div>
 <div class="code" title="File: Core.v
-Line: 680
-Time: 0.171s">
-<div class="time" style="width: 16.666666666667%"></div>
+Line: 766
+Time: 0.261s">
+<div class="time" style="width: 17.528542646071%"></div>
 <pre> abstract (
-          intros L R xL xR xcut xL_let xR_let x_le_lt
-                 L' R' yL yR ycut yL_let yR_let y_le_lt;
+          intros L R ? xL xR xcut xL_let xR_let x_le_lt
+                 L' R' ? yL yR ycut yL_let yR_let y_le_lt;
           set (x := {{ xL | xR // xcut }});
           set (y := {{ yL | yR // ycut }});
           cbn; intros l x_le_yL zH;
           refine (No_ind_hprop _ _);
-          intros L'' R'' zL zR zcut zLH zRH y_le_z;
+          intros L'' R'' ? zL zR zcut zLH zRH y_le_z;
           refine (snd (zH {{ zL | zR // zcut }}) _);
           rewrite inner_cut_le in y_le_z;
           exact (fst y_le_z l) ).</pre>
 </div>
 <div class="code" title="File: Core.v
-Line: 690
+Line: 776
 Time: 0s">
 <div class="time" style="width: 0%"></div>
 <pre>
     -</pre>
 </div>
 <div class="code" title="File: Core.v
-Line: 691
-Time: 0.177s">
-<div class="time" style="width: 17.251461988304%"></div>
+Line: 777
+Time: 0.242s">
+<div class="time" style="width: 16.252518468771%"></div>
 <pre> abstract (
-          intros L R xL xR xcut xL_let xR_let x_le_lt
-                 L' R' yL yR ycut yL_let yR_let y_le_lt;
+          intros L R ? xL xR xcut xL_let xR_let x_le_lt
+                 L' R' ? yL yR ycut yL_let yR_let y_le_lt;
           set (x := {{ xL | xR // xcut }});
           set (y := {{ yL | yR // ycut }});
           cbn; intros r xR_le_y zH;
           refine (No_ind_hprop _ _);
-          intros L'' R'' zL zR zcut zLH zRH y_le_z;
+          intros L'' R'' ? zL zR zcut zLH zRH y_le_z;
           rewrite inner_cut_lt;
           apply tr; right; exists r;
           refine (fst (zH {{ zL | zR // zcut }}) y_le_z) ).</pre>
 </div>
 <div class="code" title="File: Core.v
-Line: 701
+Line: 787
 Time: 0.006s">
-<div class="time" style="width: 0.58479532163743%"></div>
+<div class="time" style="width: 0.40295500335796%"></div>
 <pre>
   Defined.</pre>
 </div>
 <div class="code" title="File: Core.v
-Line: 702
-Time: 0.004s">
-<div class="time" style="width: 0.38986354775828%"></div>
+Line: 788
+Time: 0.003s">
+<div class="time" style="width: 0.20147750167898%"></div>
 <pre>
 
   Definition le' (x y : No) : hProp
     := (No_codes_package.1 x).1 y.</pre>
 </div>
 <div class="code" title="File: Core.v
-Line: 705
-Time: 0.005s">
-<div class="time" style="width: 0.48732943469786%"></div>
+Line: 791
+Time: 0.004s">
+<div class="time" style="width: 0.26863666890531%"></div>
 <pre>
 
   Definition lt' (x y : No) : hProp
     := (No_codes_package.1 x).2.1 y.</pre>
 </div>
 <div class="code" title="File: Core.v
-Line: 708
-Time: 0.011s">
-<div class="time" style="width: 1.0721247563353%"></div>
+Line: 794
+Time: 0.009s">
+<div class="time" style="width: 0.60443250503694%"></div>
 <pre>
 
   Definition lt'_le' x y
@@ -2067,9 +2303,9 @@ Time: 0.011s">
     := (fst (fst (fst (No_codes_package.1 x).2.2)) y).</pre>
 </div>
 <div class="code" title="File: Core.v
-Line: 712
-Time: 0.02s">
-<div class="time" style="width: 1.9493177387914%"></div>
+Line: 798
+Time: 0.019s">
+<div class="time" style="width: 1.2760241773002%"></div>
 <pre>
 
   Definition le_le'_trans x y z
@@ -2077,9 +2313,9 @@ Time: 0.02s">
     := fun p q =&gt; (fst (fst (No_codes_package.2) x y p z) q).</pre>
 </div>
 <div class="code" title="File: Core.v
-Line: 716
+Line: 802
 Time: 0.02s">
-<div class="time" style="width: 1.9493177387914%"></div>
+<div class="time" style="width: 1.3431833445265%"></div>
 <pre>
 
   Definition le_lt'_trans x y z
@@ -2087,9 +2323,9 @@ Time: 0.02s">
     := fun p q =&gt; (snd (fst (No_codes_package.2) x y p z) q).</pre>
 </div>
 <div class="code" title="File: Core.v
-Line: 720
-Time: 0.019s">
-<div class="time" style="width: 1.8518518518519%"></div>
+Line: 806
+Time: 0.017s">
+<div class="time" style="width: 1.1417058428475%"></div>
 <pre>
 
   Definition lt_le'_trans x y z
@@ -2097,9 +2333,9 @@ Time: 0.019s">
     := fun p q =&gt; (snd (No_codes_package.2) x y p z q).</pre>
 </div>
 <div class="code" title="File: Core.v
-Line: 724
-Time: 0.023s">
-<div class="time" style="width: 2.2417153996101%"></div>
+Line: 810
+Time: 0.024s">
+<div class="time" style="width: 1.6118200134318%"></div>
 <pre>
 
   Definition le'_le_trans x y z
@@ -2107,9 +2343,9 @@ Time: 0.023s">
     := fun p q =&gt; (snd (fst (fst (No_codes_package.1 x).2.2)) y z p q).</pre>
 </div>
 <div class="code" title="File: Core.v
-Line: 728
-Time: 0.023s">
-<div class="time" style="width: 2.2417153996101%"></div>
+Line: 814
+Time: 0.021s">
+<div class="time" style="width: 1.4103425117529%"></div>
 <pre>
 
   Definition le'_lt_trans x y z
@@ -2117,9 +2353,9 @@ Time: 0.023s">
     := fun p q =&gt; (snd (fst (No_codes_package.1 x).2.2) y z p q).</pre>
 </div>
 <div class="code" title="File: Core.v
-Line: 732
-Time: 0.021s">
-<div class="time" style="width: 2.046783625731%"></div>
+Line: 818
+Time: 0.019s">
+<div class="time" style="width: 1.2760241773002%"></div>
 <pre>
 
   Definition lt'_le_trans x y z
@@ -2127,7 +2363,7 @@ Time: 0.021s">
     := fun p q =&gt; (snd (No_codes_package.1 x).2.2 y z p q).</pre>
 </div>
 <div class="code" title="File: Core.v
-Line: 736
+Line: 822
 Time: 0s">
 <div class="time" style="width: 0%"></div>
 <pre>
@@ -2136,13 +2372,15 @@ Time: 0s">
  </pre>
 </div>
 <div class="code" title="File: Core.v
-Line: 739
-Time: 0.528s">
-<div class="time" style="width: 51.461988304094%"></div>
+Line: 825
+Time: 0.489s">
+<div class="time" style="width: 32.840832773674%"></div>
 <pre>Definition le'_cut
-             (L R : Type) (xL : L -&gt; No) (xR : R -&gt; No)
+             (L R : Type) (s : InSort S L R)
+             (xL : L -&gt; No) (xR : R -&gt; No)
              (xcut : forall (l : L) (r : R), xL l &lt; xR r)
-             (L' R' : Type) (yL : L' -&gt; No) (yR : R' -&gt; No)
+             (L' R' : Type) (s' : InSort S L' R')
+             (yL : L' -&gt; No) (yR : R' -&gt; No)
              (ycut : forall (l : L') (r : R'), yL l &lt; yR r)
   : le' {{xL | xR // xcut}} {{yL | yR // ycut}}
     = ((forall l, lt' (xL l) {{ yL | yR // ycut }}) *
@@ -2152,15 +2390,17 @@ Time: 0.528s">
     := 1.</pre>
 </div>
 <div class="code" title="File: Core.v
-Line: 749
-Time: 1.026s">
-<div class="time" style="width: 100%"></div>
+Line: 837
+Time: 0.902s">
+<div class="time" style="width: 60.577568838146%"></div>
 <pre>
 
   Definition lt'_cut
-             (L R : Type) (xL : L -&gt; No) (xR : R -&gt; No)
+             (L R : Type) (s : InSort S L R)
+             (xL : L -&gt; No) (xR : R -&gt; No)
              (xcut : forall (l : L) (r : R), xL l &lt; xR r)
-             (L' R' : Type) (yL : L' -&gt; No) (yR : R' -&gt; No)
+             (L' R' : Type) (s' : InSort S L' R')
+             (yL : L' -&gt; No) (yR : R' -&gt; No)
              (ycut : forall (l : L') (r : R'), yL l &lt; yR r)
   : lt' {{xL | xR // xcut}} {{yL | yR // ycut}}
     = (hor {l':L' &amp; le' {{ xL | xR // xcut }} (yL l')}
@@ -2168,25 +2408,25 @@ Time: 1.026s">
     := 1.</pre>
 </div>
 <div class="code" title="File: Core.v
-Line: 759
-Time: 0.004s">
-<div class="time" style="width: 0.38986354775828%"></div>
+Line: 849
+Time: 0.003s">
+<div class="time" style="width: 0.20147750167898%"></div>
 <pre>
 
   Definition No_encode_le_lt (x y : No)
   : ((x &lt;= y) -&gt; (le' x y)) * ((x &lt; y) -&gt; (lt' x y)).</pre>
 </div>
 <div class="code" title="File: Core.v
-Line: 762
+Line: 852
 Time: 0s">
 <div class="time" style="width: 0%"></div>
 <pre>
   Proof.</pre>
 </div>
 <div class="code" title="File: Core.v
-Line: 763
-Time: 0.321s">
-<div class="time" style="width: 31.286549707602%"></div>
+Line: 853
+Time: 0.313s">
+<div class="time" style="width: 21.02081934184%"></div>
 <pre>
     refine (No_ind_le_lt (fun _ =&gt; Unit)
                          (fun x y _ _ _ =&gt; le' x y)
@@ -2194,181 +2434,181 @@ Time: 0.321s">
                          _ _ _ _ _ x y).</pre>
 </div>
 <div class="code" title="File: Core.v
-Line: 767
+Line: 857
 Time: 0s">
 <div class="time" style="width: 0%"></div>
 <pre>
     +</pre>
 </div>
 <div class="code" title="File: Core.v
-Line: 768
+Line: 858
 Time: 0s">
 <div class="time" style="width: 0%"></div>
 <pre> intros; exact tt.</pre>
 </div>
 <div class="code" title="File: Core.v
-Line: 768
+Line: 858
 Time: 0s">
 <div class="time" style="width: 0%"></div>
 <pre>
     +</pre>
 </div>
 <div class="code" title="File: Core.v
-Line: 769
+Line: 859
 Time: 0.003s">
-<div class="time" style="width: 0.29239766081871%"></div>
+<div class="time" style="width: 0.20147750167898%"></div>
 <pre> intros; apply path_contr.</pre>
 </div>
 <div class="code" title="File: Core.v
-Line: 769
+Line: 859
 Time: 0s">
 <div class="time" style="width: 0%"></div>
 <pre>
     +</pre>
 </div>
 <div class="code" title="File: Core.v
-Line: 770
+Line: 860
 Time: 0s">
 <div class="time" style="width: 0%"></div>
-<pre> intros L R xL xR xcut _ _ xcut'
-             L' R' yL yR ycut _ _ ycut'
+<pre> intros L R ? xL xR xcut _ _ xcut'
+             L' R' ? yL yR ycut _ _ ycut'
              xL_lt_y xL_lt_y' x_lt_yR x_lt_yR'.</pre>
 </div>
 <div class="code" title="File: Core.v
-Line: 772
+Line: 862
 Time: 0.004s">
-<div class="time" style="width: 0.38986354775828%"></div>
+<div class="time" style="width: 0.26863666890531%"></div>
 <pre>
       rewrite le'_cut.</pre>
 </div>
 <div class="code" title="File: Core.v
-Line: 773
+Line: 863
 Time: 0.001s">
-<div class="time" style="width: 0.097465886939571%"></div>
+<div class="time" style="width: 0.067159167226326%"></div>
 <pre>
       exact (xL_lt_y' , x_lt_yR').</pre>
 </div>
 <div class="code" title="File: Core.v
-Line: 774
+Line: 864
 Time: 0s">
 <div class="time" style="width: 0%"></div>
 <pre>
     +</pre>
 </div>
 <div class="code" title="File: Core.v
-Line: 775
+Line: 865
 Time: 0s">
 <div class="time" style="width: 0%"></div>
-<pre> intros L R xL xR xcut _ _ xcut'
-             L' R' yL yR ycut _ _ ycut'
+<pre> intros L R ? xL xR xcut _ _ xcut'
+             L' R' ? yL yR ycut _ _ ycut'
              l x_le_yL x_le_yL'.</pre>
 </div>
 <div class="code" title="File: Core.v
-Line: 777
+Line: 867
 Time: 0.004s">
-<div class="time" style="width: 0.38986354775828%"></div>
+<div class="time" style="width: 0.26863666890531%"></div>
 <pre>
       rewrite lt'_cut.</pre>
 </div>
 <div class="code" title="File: Core.v
-Line: 778
+Line: 868
 Time: 0.001s">
-<div class="time" style="width: 0.097465886939571%"></div>
+<div class="time" style="width: 0.067159167226326%"></div>
 <pre>
       apply tr; left.</pre>
 </div>
 <div class="code" title="File: Core.v
-Line: 779
+Line: 869
 Time: 0s">
 <div class="time" style="width: 0%"></div>
 <pre> exists l.</pre>
 </div>
 <div class="code" title="File: Core.v
-Line: 779
+Line: 869
 Time: 0s">
 <div class="time" style="width: 0%"></div>
 <pre> exact x_le_yL'.</pre>
 </div>
 <div class="code" title="File: Core.v
-Line: 779
+Line: 869
 Time: 0s">
 <div class="time" style="width: 0%"></div>
 <pre>
     +</pre>
 </div>
 <div class="code" title="File: Core.v
-Line: 780
+Line: 870
 Time: 0s">
 <div class="time" style="width: 0%"></div>
-<pre> intros L R xL xR xcut _ _ xcut'
-             L' R' yL yR ycut _ _ ycut'
+<pre> intros L R ? xL xR xcut _ _ xcut'
+             L' R' ? yL yR ycut _ _ ycut'
              r xR_le_y xR_le_y'.</pre>
 </div>
 <div class="code" title="File: Core.v
-Line: 782
+Line: 872
 Time: 0.004s">
-<div class="time" style="width: 0.38986354775828%"></div>
+<div class="time" style="width: 0.26863666890531%"></div>
 <pre>
       rewrite lt'_cut.</pre>
 </div>
 <div class="code" title="File: Core.v
-Line: 783
+Line: 873
 Time: 0.001s">
-<div class="time" style="width: 0.097465886939571%"></div>
+<div class="time" style="width: 0.067159167226326%"></div>
 <pre>
       apply tr; right.</pre>
 </div>
 <div class="code" title="File: Core.v
-Line: 784
+Line: 874
 Time: 0s">
 <div class="time" style="width: 0%"></div>
 <pre> exists r.</pre>
 </div>
 <div class="code" title="File: Core.v
-Line: 784
+Line: 874
 Time: 0s">
 <div class="time" style="width: 0%"></div>
 <pre> exact xR_le_y'.</pre>
 </div>
 <div class="code" title="File: Core.v
-Line: 784
-Time: 0.019s">
-<div class="time" style="width: 1.8518518518519%"></div>
+Line: 874
+Time: 0.02s">
+<div class="time" style="width: 1.3431833445265%"></div>
 <pre>
   Qed.</pre>
 </div>
 <div class="code" title="File: Core.v
-Line: 785
-Time: 0.004s">
-<div class="time" style="width: 0.38986354775828%"></div>
+Line: 875
+Time: 0.003s">
+<div class="time" style="width: 0.20147750167898%"></div>
 <pre>
 
   Definition No_decode_le_lt (x y : No)
   : ((le' x y) -&gt; (x &lt;= y)) * ((lt' x y) -&gt; (x &lt; y)).</pre>
 </div>
 <div class="code" title="File: Core.v
-Line: 788
+Line: 878
 Time: 0s">
 <div class="time" style="width: 0%"></div>
 <pre>
   Proof.</pre>
 </div>
 <div class="code" title="File: Core.v
-Line: 789
+Line: 879
 Time: 0s">
 <div class="time" style="width: 0%"></div>
 <pre>
     revert x y.</pre>
 </div>
 <div class="code" title="File: Core.v
-Line: 790
-Time: 0.104s">
-<div class="time" style="width: 10.136452241715%"></div>
+Line: 880
+Time: 0.107s">
+<div class="time" style="width: 7.1860308932169%"></div>
 <pre>
-    refine (No_ind_hprop _ _); intros L R xL xR xcut xHL xHR.</pre>
+    refine (No_ind_hprop _ _); intros L R ? xL xR xcut xHL xHR.</pre>
 </div>
 <div class="code" title="File: Core.v
-Line: 791
+Line: 881
 Time: 0s">
 <div class="time" style="width: 0%"></div>
 <pre>
@@ -2376,159 +2616,159 @@ Time: 0s">
    </pre>
 </div>
 <div class="code" title="File: Core.v
-Line: 793
-Time: 0.004s">
-<div class="time" style="width: 0.38986354775828%"></div>
-<pre>refine (@No_ind_hprop _
+Line: 883
+Time: 0.005s">
+<div class="time" style="width: 0.33579583613163%"></div>
+<pre>refine (@No_ind_hprop _ _
               (fun y =&gt; @trunc_prod _ _ trunc_arrow _ trunc_arrow) _).</pre>
 </div>
 <div class="code" title="File: Core.v
-Line: 794
+Line: 884
 Time: 0s">
 <div class="time" style="width: 0%"></div>
 <pre>
-    intros L' R' yL yR ycut yHL yHR.</pre>
+    intros L' R' ? yL yR ycut yHL yHR.</pre>
 </div>
 <div class="code" title="File: Core.v
-Line: 795
+Line: 885
 Time: 0s">
 <div class="time" style="width: 0%"></div>
 <pre> split.</pre>
 </div>
 <div class="code" title="File: Core.v
-Line: 795
+Line: 885
 Time: 0s">
 <div class="time" style="width: 0%"></div>
 <pre>
     -</pre>
 </div>
 <div class="code" title="File: Core.v
-Line: 796
+Line: 886
 Time: 0s">
 <div class="time" style="width: 0%"></div>
 <pre> intros x_le_y.</pre>
 </div>
 <div class="code" title="File: Core.v
-Line: 796
+Line: 886
 Time: 0.003s">
-<div class="time" style="width: 0.29239766081871%"></div>
+<div class="time" style="width: 0.20147750167898%"></div>
 <pre>
       rewrite le'_cut in x_le_y.</pre>
 </div>
 <div class="code" title="File: Core.v
-Line: 797
-Time: 0.003s">
-<div class="time" style="width: 0.29239766081871%"></div>
+Line: 887
+Time: 0.004s">
+<div class="time" style="width: 0.26863666890531%"></div>
 <pre>
       exact (le_lr xL xR xcut yL yR ycut
                    (fun l =&gt; snd (xHL l _) (fst x_le_y l))
                    (fun r =&gt; snd (yHR r) (snd x_le_y r))).</pre>
 </div>
 <div class="code" title="File: Core.v
-Line: 800
+Line: 890
 Time: 0s">
 <div class="time" style="width: 0%"></div>
 <pre>
     -</pre>
 </div>
 <div class="code" title="File: Core.v
-Line: 801
+Line: 891
 Time: 0s">
 <div class="time" style="width: 0%"></div>
 <pre> intros x_lt_y.</pre>
 </div>
 <div class="code" title="File: Core.v
-Line: 801
+Line: 891
 Time: 0.003s">
-<div class="time" style="width: 0.29239766081871%"></div>
+<div class="time" style="width: 0.20147750167898%"></div>
 <pre>
       rewrite lt'_cut in x_lt_y.</pre>
 </div>
 <div class="code" title="File: Core.v
-Line: 802
-Time: 0.201s">
-<div class="time" style="width: 19.590643274854%"></div>
+Line: 892
+Time: 0.212s">
+<div class="time" style="width: 14.237743451981%"></div>
 <pre>
       strip_truncations; destruct x_lt_y as [[l x_le_yL]|[r xR_le_y]].</pre>
 </div>
 <div class="code" title="File: Core.v
-Line: 803
+Line: 893
 Time: 0s">
 <div class="time" style="width: 0%"></div>
 <pre>
       +</pre>
 </div>
 <div class="code" title="File: Core.v
-Line: 804
-Time: 0s">
-<div class="time" style="width: 0%"></div>
+Line: 894
+Time: 0.001s">
+<div class="time" style="width: 0.067159167226326%"></div>
 <pre> apply lt_l with l.</pre>
 </div>
 <div class="code" title="File: Core.v
-Line: 804
+Line: 894
 Time: 0s">
 <div class="time" style="width: 0%"></div>
 <pre>
         exact (fst (yHL l) x_le_yL).</pre>
 </div>
 <div class="code" title="File: Core.v
-Line: 805
+Line: 895
 Time: 0s">
 <div class="time" style="width: 0%"></div>
 <pre>
       +</pre>
 </div>
 <div class="code" title="File: Core.v
-Line: 806
-Time: 0s">
-<div class="time" style="width: 0%"></div>
+Line: 896
+Time: 0.001s">
+<div class="time" style="width: 0.067159167226326%"></div>
 <pre> apply lt_r with r.</pre>
 </div>
 <div class="code" title="File: Core.v
-Line: 806
+Line: 896
 Time: 0s">
 <div class="time" style="width: 0%"></div>
 <pre>
         exact (fst (xHR r _) xR_le_y).</pre>
 </div>
 <div class="code" title="File: Core.v
-Line: 807
-Time: 0.012s">
-<div class="time" style="width: 1.1695906432749%"></div>
+Line: 897
+Time: 0.014s">
+<div class="time" style="width: 0.94022834116857%"></div>
 <pre>
   Qed.</pre>
 </div>
 <div class="code" title="File: Core.v
-Line: 808
+Line: 898
 Time: 0.003s">
-<div class="time" style="width: 0.29239766081871%"></div>
+<div class="time" style="width: 0.20147750167898%"></div>
 <pre>
 
   Definition No_encode_le x y := fst (No_encode_le_lt x y).</pre>
 </div>
 <div class="code" title="File: Core.v
-Line: 810
+Line: 900
 Time: 0.003s">
-<div class="time" style="width: 0.29239766081871%"></div>
+<div class="time" style="width: 0.20147750167898%"></div>
 <pre>
   Definition No_encode_lt x y := snd (No_encode_le_lt x y).</pre>
 </div>
 <div class="code" title="File: Core.v
-Line: 811
+Line: 901
 Time: 0.003s">
-<div class="time" style="width: 0.29239766081871%"></div>
+<div class="time" style="width: 0.20147750167898%"></div>
 <pre>
   Definition No_decode_le x y := fst (No_decode_le_lt x y).</pre>
 </div>
 <div class="code" title="File: Core.v
-Line: 812
+Line: 902
 Time: 0.003s">
-<div class="time" style="width: 0.29239766081871%"></div>
+<div class="time" style="width: 0.20147750167898%"></div>
 <pre>
   Definition No_decode_lt x y := snd (No_decode_le_lt x y).</pre>
 </div>
 <div class="code" title="File: Core.v
-Line: 813
+Line: 903
 Time: 0s">
 <div class="time" style="width: 0%"></div>
 <pre>
@@ -2536,49 +2776,49 @@ Time: 0s">
   Corollary lt_le {x y : No} (p : x &lt; y) : x &lt;= y.</pre>
 </div>
 <div class="code" title="File: Core.v
-Line: 815
+Line: 905
 Time: 0s">
 <div class="time" style="width: 0%"></div>
 <pre>
   Proof.</pre>
 </div>
 <div class="code" title="File: Core.v
-Line: 816
+Line: 906
 Time: 0s">
 <div class="time" style="width: 0%"></div>
 <pre>
     apply No_decode_le.</pre>
 </div>
 <div class="code" title="File: Core.v
-Line: 817
+Line: 907
 Time: 0.001s">
-<div class="time" style="width: 0.097465886939571%"></div>
+<div class="time" style="width: 0.067159167226326%"></div>
 <pre>
     apply lt'_le'.</pre>
 </div>
 <div class="code" title="File: Core.v
-Line: 818
+Line: 908
 Time: 0.001s">
-<div class="time" style="width: 0.097465886939571%"></div>
+<div class="time" style="width: 0.067159167226326%"></div>
 <pre>
     apply No_encode_lt.</pre>
 </div>
 <div class="code" title="File: Core.v
-Line: 819
+Line: 909
 Time: 0s">
 <div class="time" style="width: 0%"></div>
 <pre>
     assumption.</pre>
 </div>
 <div class="code" title="File: Core.v
-Line: 820
+Line: 910
 Time: 0s">
 <div class="time" style="width: 0%"></div>
 <pre>
   Qed.</pre>
 </div>
 <div class="code" title="File: Core.v
-Line: 821
+Line: 911
 Time: 0s">
 <div class="time" style="width: 0%"></div>
 <pre>
@@ -2587,72 +2827,72 @@ Time: 0s">
  </pre>
 </div>
 <div class="code" title="File: Core.v
-Line: 824
+Line: 914
 Time: 0s">
 <div class="time" style="width: 0%"></div>
 <pre>Corollary le_le_trans {x y z : No}
   : (x &lt;= y) -&gt; (y &lt;= z) -&gt; (x &lt;= z).</pre>
 </div>
 <div class="code" title="File: Core.v
-Line: 825
+Line: 915
 Time: 0s">
 <div class="time" style="width: 0%"></div>
 <pre>
   Proof.</pre>
 </div>
 <div class="code" title="File: Core.v
-Line: 826
+Line: 916
 Time: 0s">
 <div class="time" style="width: 0%"></div>
 <pre>
     intros p q.</pre>
 </div>
 <div class="code" title="File: Core.v
-Line: 827
+Line: 917
 Time: 0s">
 <div class="time" style="width: 0%"></div>
 <pre>
     apply No_decode_le.</pre>
 </div>
 <div class="code" title="File: Core.v
-Line: 828
+Line: 918
 Time: 0.001s">
-<div class="time" style="width: 0.097465886939571%"></div>
+<div class="time" style="width: 0.067159167226326%"></div>
 <pre>
     refine (le_le'_trans x y z p _).</pre>
 </div>
 <div class="code" title="File: Core.v
-Line: 829
+Line: 919
 Time: 0.001s">
-<div class="time" style="width: 0.097465886939571%"></div>
+<div class="time" style="width: 0.067159167226326%"></div>
 <pre>
     apply No_encode_le.</pre>
 </div>
 <div class="code" title="File: Core.v
-Line: 830
+Line: 920
 Time: 0s">
 <div class="time" style="width: 0%"></div>
 <pre>
     assumption.</pre>
 </div>
 <div class="code" title="File: Core.v
-Line: 831
+Line: 921
 Time: 0s">
 <div class="time" style="width: 0%"></div>
 <pre>
   Qed.</pre>
 </div>
 <div class="code" title="File: Core.v
-Line: 832
+Line: 922
 Time: 0.003s">
-<div class="time" style="width: 0.29239766081871%"></div>
+<div class="time" style="width: 0.20147750167898%"></div>
 <pre>
 
   Global Instance trans_le : Transitive le
     := @le_le_trans.</pre>
 </div>
 <div class="code" title="File: Core.v
-Line: 835
+Line: 925
 Time: 0s">
 <div class="time" style="width: 0%"></div>
 <pre>
@@ -2661,56 +2901,56 @@ Time: 0s">
   : (x &lt;= y) -&gt; (y &lt; z) -&gt; (x &lt; z).</pre>
 </div>
 <div class="code" title="File: Core.v
-Line: 838
+Line: 928
 Time: 0s">
 <div class="time" style="width: 0%"></div>
 <pre>
   Proof.</pre>
 </div>
 <div class="code" title="File: Core.v
-Line: 839
+Line: 929
 Time: 0s">
 <div class="time" style="width: 0%"></div>
 <pre>
     intros p q.</pre>
 </div>
 <div class="code" title="File: Core.v
-Line: 840
+Line: 930
 Time: 0s">
 <div class="time" style="width: 0%"></div>
 <pre>
     apply No_decode_lt.</pre>
 </div>
 <div class="code" title="File: Core.v
-Line: 841
+Line: 931
 Time: 0.001s">
-<div class="time" style="width: 0.097465886939571%"></div>
+<div class="time" style="width: 0.067159167226326%"></div>
 <pre>
     refine (le_lt'_trans x y z p _).</pre>
 </div>
 <div class="code" title="File: Core.v
-Line: 842
+Line: 932
 Time: 0.001s">
-<div class="time" style="width: 0.097465886939571%"></div>
+<div class="time" style="width: 0.067159167226326%"></div>
 <pre>
     apply No_encode_lt.</pre>
 </div>
 <div class="code" title="File: Core.v
-Line: 843
+Line: 933
 Time: 0s">
 <div class="time" style="width: 0%"></div>
 <pre>
     assumption.</pre>
 </div>
 <div class="code" title="File: Core.v
-Line: 844
+Line: 934
 Time: 0s">
 <div class="time" style="width: 0%"></div>
 <pre>
   Qed.</pre>
 </div>
 <div class="code" title="File: Core.v
-Line: 845
+Line: 935
 Time: 0s">
 <div class="time" style="width: 0%"></div>
 <pre>
@@ -2719,58 +2959,58 @@ Time: 0s">
   : (x &lt; y) -&gt; (y &lt;= z) -&gt; (x &lt; z).</pre>
 </div>
 <div class="code" title="File: Core.v
-Line: 848
+Line: 938
 Time: 0s">
 <div class="time" style="width: 0%"></div>
 <pre>
   Proof.</pre>
 </div>
 <div class="code" title="File: Core.v
-Line: 849
+Line: 939
 Time: 0s">
 <div class="time" style="width: 0%"></div>
 <pre>
     intros p q.</pre>
 </div>
 <div class="code" title="File: Core.v
-Line: 850
+Line: 940
 Time: 0s">
 <div class="time" style="width: 0%"></div>
 <pre>
     apply No_decode_lt.</pre>
 </div>
 <div class="code" title="File: Core.v
-Line: 851
+Line: 941
 Time: 0.001s">
-<div class="time" style="width: 0.097465886939571%"></div>
+<div class="time" style="width: 0.067159167226326%"></div>
 <pre>
     refine (lt_le'_trans x y z p _).</pre>
 </div>
 <div class="code" title="File: Core.v
-Line: 852
+Line: 942
 Time: 0.001s">
-<div class="time" style="width: 0.097465886939571%"></div>
+<div class="time" style="width: 0.067159167226326%"></div>
 <pre>
     apply No_encode_le.</pre>
 </div>
 <div class="code" title="File: Core.v
-Line: 853
+Line: 943
 Time: 0s">
 <div class="time" style="width: 0%"></div>
 <pre>
     assumption.</pre>
 </div>
 <div class="code" title="File: Core.v
-Line: 854
+Line: 944
 Time: 0s">
 <div class="time" style="width: 0%"></div>
 <pre>
   Qed.</pre>
 </div>
 <div class="code" title="File: Core.v
-Line: 855
+Line: 945
 Time: 0.004s">
-<div class="time" style="width: 0.38986354775828%"></div>
+<div class="time" style="width: 0.26863666890531%"></div>
 <pre>
 
   Definition lt_lt_trans {x y z : No}
@@ -2778,27 +3018,1313 @@ Time: 0.004s">
     := fun p q =&gt; lt_le_trans p (lt_le q).</pre>
 </div>
 <div class="code" title="File: Core.v
-Line: 859
+Line: 949
 Time: 0.004s">
-<div class="time" style="width: 0.38986354775828%"></div>
+<div class="time" style="width: 0.26863666890531%"></div>
 <pre>
 
   Global Instance trans_lt : Transitive lt
     := @lt_lt_trans.</pre>
 </div>
 <div class="code" title="File: Core.v
-Line: 862
-Time: 0.155s">
-<div class="time" style="width: 15.107212475634%"></div>
+Line: 952
+Time: 0.159s">
+<div class="time" style="width: 10.678307588986%"></div>
 <pre>
 
 End NoCodes.</pre>
 </div>
 <div class="code" title="File: Core.v
-Line: 865
+Line: 954
 Time: 0s">
 <div class="time" style="width: 0%"></div>
 <pre>
+
+(** ** Changing option sorts *)
+
+(** There is of course a "maximal" option sort, which defines "the" surreal numbers as in the book. *)
+
+</pre>
+</div>
+<div class="code" title="File: Core.v
+Line: 959
+Time: 0s">
+<div class="time" style="width: 0%"></div>
+<pre>Definition MaxSort : OptionSort := fun _ _ =&gt; Unit.</pre>
+</div>
+<div class="code" title="File: Core.v
+Line: 959
+Time: 0s">
+<div class="time" style="width: 0%"></div>
+<pre>
+Definition No : Type := GenNo MaxSort.</pre>
+</div>
+<div class="code" title="File: Core.v
+Line: 960
+Time: 0s">
+<div class="time" style="width: 0%"></div>
+<pre>
+
+(** This instance should be the one found by default, so that cuts live in [No] unless otherwise specified.  Thus, all other global instances of [InSort] should be declared with higher priority. *)</pre>
+</div>
+<div class="code" title="File: Core.v
+Line: 962
+Time: 0s">
+<div class="time" style="width: 0%"></div>
+<pre>Global Instance insort_maxsort {L R : Type}
+  : InSort MaxSort L R | 0
+  := tt.</pre>
+</div>
+<div class="code" title="File: Core.v
+Line: 964
+Time: 0s">
+<div class="time" style="width: 0%"></div>
+<pre>
+
+(** Furthermore, every other kind of surreal number *embeds* into the maximal ones.  So the other kinds of surreal numbers are really just subsets of the usual set of surreal numbers; but I don't know of a good way to define them except as their own HIITs. *)
+
+</pre>
+</div>
+<div class="code" title="File: Core.v
+Line: 967
+Time: 0s">
+<div class="time" style="width: 0%"></div>
+<pre>Section RaiseSort.</pre>
+</div>
+<div class="code" title="File: Core.v
+Line: 967
+Time: 0s">
+<div class="time" style="width: 0%"></div>
+<pre>
+  Context `{Univalence} `{S : OptionSort}.</pre>
+</div>
+<div class="code" title="File: Core.v
+Line: 968
+Time: 0s">
+<div class="time" style="width: 0%"></div>
+<pre>
+
+  Definition No_raise : GenNo S -&gt; No.</pre>
+</div>
+<div class="code" title="File: Core.v
+Line: 970
+Time: 0s">
+<div class="time" style="width: 0%"></div>
+<pre>
+  Proof.</pre>
+</div>
+<div class="code" title="File: Core.v
+Line: 971
+Time: 0.032s">
+<div class="time" style="width: 2.1490933512424%"></div>
+<pre>
+    simple refine (No_rec No le lt _ _ _ _ _).</pre>
+</div>
+<div class="code" title="File: Core.v
+Line: 972
+Time: 0s">
+<div class="time" style="width: 0%"></div>
+<pre>
+    -</pre>
+</div>
+<div class="code" title="File: Core.v
+Line: 973
+Time: 0s">
+<div class="time" style="width: 0%"></div>
+<pre> intros L R ? xL xR xcut fxL fxR fxcut.</pre>
+</div>
+<div class="code" title="File: Core.v
+Line: 973
+Time: 0s">
+<div class="time" style="width: 0%"></div>
+<pre>
+      exact {{ fxL | fxR // fxcut }}.</pre>
+</div>
+<div class="code" title="File: Core.v
+Line: 974
+Time: 0s">
+<div class="time" style="width: 0%"></div>
+<pre>
+    -</pre>
+</div>
+<div class="code" title="File: Core.v
+Line: 975
+Time: 0s">
+<div class="time" style="width: 0%"></div>
+<pre> apply path_No.</pre>
+</div>
+<div class="code" title="File: Core.v
+Line: 975
+Time: 0s">
+<div class="time" style="width: 0%"></div>
+<pre>
+    -</pre>
+</div>
+<div class="code" title="File: Core.v
+Line: 976
+Time: 0.007s">
+<div class="time" style="width: 0.47011417058428%"></div>
+<pre> intros; apply le_lr; assumption.</pre>
+</div>
+<div class="code" title="File: Core.v
+Line: 976
+Time: 0s">
+<div class="time" style="width: 0%"></div>
+<pre>
+    -</pre>
+</div>
+<div class="code" title="File: Core.v
+Line: 977
+Time: 0.007s">
+<div class="time" style="width: 0.47011417058428%"></div>
+<pre> intros; apply lt_l with l; assumption.</pre>
+</div>
+<div class="code" title="File: Core.v
+Line: 977
+Time: 0s">
+<div class="time" style="width: 0%"></div>
+<pre>
+    -</pre>
+</div>
+<div class="code" title="File: Core.v
+Line: 978
+Time: 0.008s">
+<div class="time" style="width: 0.53727333781061%"></div>
+<pre> intros; apply lt_r with r; assumption.</pre>
+</div>
+<div class="code" title="File: Core.v
+Line: 978
+Time: 0.004s">
+<div class="time" style="width: 0.26863666890531%"></div>
+<pre>
+  Defined.</pre>
+</div>
+<div class="code" title="File: Core.v
+Line: 979
+Time: 0s">
+<div class="time" style="width: 0%"></div>
+<pre>
+
+  (** See discussion at [plus_inner_cut] in [Addition.v]. *)
+ </pre>
+</div>
+<div class="code" title="File: Core.v
+Line: 982
+Time: 0.003s">
+<div class="time" style="width: 0.20147750167898%"></div>
+<pre>Definition No_raise_cut
+             {L R : Type} {s : InSort S L R}
+             (xL : L -&gt; GenNo S) (xR : R -&gt; GenNo S)
+             (xcut : forall l r, xL l &lt; xR r)
+    : { rxcut : forall l r, No_raise (xL l) &lt; No_raise (xR r) &amp;
+        No_raise {{ xL | xR // xcut }} = 
+        {{ (fun l =&gt; No_raise (xL l)) | (fun r =&gt; No_raise (xR r)) // rxcut }} }.</pre>
+</div>
+<div class="code" title="File: Core.v
+Line: 988
+Time: 0s">
+<div class="time" style="width: 0%"></div>
+<pre>
+  Proof.</pre>
+</div>
+<div class="code" title="File: Core.v
+Line: 989
+Time: 0s">
+<div class="time" style="width: 0%"></div>
+<pre>
+    eexists.</pre>
+</div>
+<div class="code" title="File: Core.v
+Line: 990
+Time: 0.018s">
+<div class="time" style="width: 1.2088650100739%"></div>
+<pre>
+    reflexivity.</pre>
+</div>
+<div class="code" title="File: Core.v
+Line: 991
+Time: 0.053s">
+<div class="time" style="width: 3.5594358629953%"></div>
+<pre>
+  Qed.</pre>
+</div>
+<div class="code" title="File: Core.v
+Line: 992
+Time: 0.022s">
+<div class="time" style="width: 1.4775016789792%"></div>
+<pre>
+
+  Definition No_raise_le (x y : GenNo S)
+    : (x &lt;= y) -&gt; (No_raise x &lt;= No_raise y)
+    := No_rec_le _ _ _ _ _ _ _ _ x y.</pre>
+</div>
+<div class="code" title="File: Core.v
+Line: 996
+Time: 0.013s">
+<div class="time" style="width: 0.87306917394224%"></div>
+<pre>
+
+  Definition No_raise_lt (x y : GenNo S)
+    : (x &lt; y) -&gt; (No_raise x &lt; No_raise y)
+    := No_rec_lt _ _ _ _ _ _ _ _ x y.</pre>
+</div>
+<div class="code" title="File: Core.v
+Line: 1000
+Time: 0.001s">
+<div class="time" style="width: 0.067159167226326%"></div>
+<pre>
+
+  Definition No_raise_reflects_lelt (x y : GenNo S)
+    : ((No_raise x &lt;= No_raise y) -&gt; (x &lt;= y)) *
+      ((No_raise x &lt;  No_raise y) -&gt; (x &lt;  y)).</pre>
+</div>
+<div class="code" title="File: Core.v
+Line: 1004
+Time: 0s">
+<div class="time" style="width: 0%"></div>
+<pre>
+  Proof.</pre>
+</div>
+<div class="code" title="File: Core.v
+Line: 1005
+Time: 0.164s">
+<div class="time" style="width: 11.014103425118%"></div>
+<pre>
+    repeat_No_ind_hprop.</pre>
+</div>
+<div class="code" title="File: Core.v
+Line: 1006
+Time: 0.02s">
+<div class="time" style="width: 1.3431833445265%"></div>
+<pre>
+    destruct (No_raise_cut xL xR xcut) as [rxcut p]; rewrite p.</pre>
+</div>
+<div class="code" title="File: Core.v
+Line: 1007
+Time: 0.027s">
+<div class="time" style="width: 1.8132975151108%"></div>
+<pre>
+    destruct (No_raise_cut xL0 xR0 xcut0) as [rxcut0 q]; rewrite q.</pre>
+</div>
+<div class="code" title="File: Core.v
+Line: 1008
+Time: 0s">
+<div class="time" style="width: 0%"></div>
+<pre>
+    split; intros sh.</pre>
+</div>
+<div class="code" title="File: Core.v
+Line: 1009
+Time: 0s">
+<div class="time" style="width: 0%"></div>
+<pre>
+    -</pre>
+</div>
+<div class="code" title="File: Core.v
+Line: 1010
+Time: 0.007s">
+<div class="time" style="width: 0.47011417058428%"></div>
+<pre> apply No_encode_le in sh; rewrite le'_cut in sh.</pre>
+</div>
+<div class="code" title="File: Core.v
+Line: 1010
+Time: 0.001s">
+<div class="time" style="width: 0.067159167226326%"></div>
+<pre>
+      apply le_lr.</pre>
+</div>
+<div class="code" title="File: Core.v
+Line: 1011
+Time: 0s">
+<div class="time" style="width: 0%"></div>
+<pre>
+      +</pre>
+</div>
+<div class="code" title="File: Core.v
+Line: 1012
+Time: 0s">
+<div class="time" style="width: 0%"></div>
+<pre> intros l.</pre>
+</div>
+<div class="code" title="File: Core.v
+Line: 1012
+Time: 0.003s">
+<div class="time" style="width: 0.20147750167898%"></div>
+<pre>
+        apply IHL, No_decode_lt.</pre>
+</div>
+<div class="code" title="File: Core.v
+Line: 1013
+Time: 0.004s">
+<div class="time" style="width: 0.26863666890531%"></div>
+<pre>
+        rewrite q; exact (fst sh l).</pre>
+</div>
+<div class="code" title="File: Core.v
+Line: 1014
+Time: 0s">
+<div class="time" style="width: 0%"></div>
+<pre>
+      +</pre>
+</div>
+<div class="code" title="File: Core.v
+Line: 1015
+Time: 0s">
+<div class="time" style="width: 0%"></div>
+<pre> intros r.</pre>
+</div>
+<div class="code" title="File: Core.v
+Line: 1015
+Time: 0.002s">
+<div class="time" style="width: 0.13431833445265%"></div>
+<pre>
+        apply IHR0, No_decode_lt.</pre>
+</div>
+<div class="code" title="File: Core.v
+Line: 1016
+Time: 0.002s">
+<div class="time" style="width: 0.13431833445265%"></div>
+<pre>
+        rewrite p; exact (snd sh r).</pre>
+</div>
+<div class="code" title="File: Core.v
+Line: 1017
+Time: 0s">
+<div class="time" style="width: 0%"></div>
+<pre>
+    -</pre>
+</div>
+<div class="code" title="File: Core.v
+Line: 1018
+Time: 0.007s">
+<div class="time" style="width: 0.47011417058428%"></div>
+<pre> apply No_encode_lt in sh; rewrite lt'_cut in sh.</pre>
+</div>
+<div class="code" title="File: Core.v
+Line: 1018
+Time: 0.297s">
+<div class="time" style="width: 19.946272666219%"></div>
+<pre>
+      strip_truncations.</pre>
+</div>
+<div class="code" title="File: Core.v
+Line: 1019
+Time: 0.004s">
+<div class="time" style="width: 0.26863666890531%"></div>
+<pre>
+      destruct sh as [[l sh]|[r sh]].</pre>
+</div>
+<div class="code" title="File: Core.v
+Line: 1020
+Time: 0s">
+<div class="time" style="width: 0%"></div>
+<pre>
+      +</pre>
+</div>
+<div class="code" title="File: Core.v
+Line: 1021
+Time: 0.001s">
+<div class="time" style="width: 0.067159167226326%"></div>
+<pre> apply lt_l with l.</pre>
+</div>
+<div class="code" title="File: Core.v
+Line: 1021
+Time: 1.489s">
+<div class="time" style="width: 100%"></div>
+<pre>
+        apply IHL0, (@No_decode_le _).</pre>
+</div>
+<div class="code" title="File: Core.v
+Line: 1022
+Time: 0.001s">
+<div class="time" style="width: 0.067159167226326%"></div>
+<pre>
+        rewrite p; exact sh.</pre>
+</div>
+<div class="code" title="File: Core.v
+Line: 1023
+Time: 0s">
+<div class="time" style="width: 0%"></div>
+<pre>
+      +</pre>
+</div>
+<div class="code" title="File: Core.v
+Line: 1024
+Time: 0.001s">
+<div class="time" style="width: 0.067159167226326%"></div>
+<pre> apply lt_r with r.</pre>
+</div>
+<div class="code" title="File: Core.v
+Line: 1024
+Time: 0.006s">
+<div class="time" style="width: 0.40295500335796%"></div>
+<pre>
+        apply IHR, No_decode_le.</pre>
+</div>
+<div class="code" title="File: Core.v
+Line: 1025
+Time: 0.003s">
+<div class="time" style="width: 0.20147750167898%"></div>
+<pre>
+        rewrite q; exact sh.</pre>
+</div>
+<div class="code" title="File: Core.v
+Line: 1026
+Time: 0.023s">
+<div class="time" style="width: 1.5446608462055%"></div>
+<pre>
+  Qed.</pre>
+</div>
+<div class="code" title="File: Core.v
+Line: 1027
+Time: 0.003s">
+<div class="time" style="width: 0.20147750167898%"></div>
+<pre>
+
+  Definition No_raise_reflects_le (x y : GenNo S)
+    : (No_raise x &lt;= No_raise y) -&gt; (x &lt;= y)
+    := fst (No_raise_reflects_lelt x y).</pre>
+</div>
+<div class="code" title="File: Core.v
+Line: 1031
+Time: 0.003s">
+<div class="time" style="width: 0.20147750167898%"></div>
+<pre>
+
+  Definition No_raise_reflects_lt (x y : GenNo S)
+    : (No_raise x &lt;  No_raise y) -&gt; (x &lt;  y)
+    := snd (No_raise_reflects_lelt x y).</pre>
+</div>
+<div class="code" title="File: Core.v
+Line: 1035
+Time: 0s">
+<div class="time" style="width: 0%"></div>
+<pre>
+
+  Global Instance isemb_No_raise : IsEmbedding No_raise.</pre>
+</div>
+<div class="code" title="File: Core.v
+Line: 1037
+Time: 0s">
+<div class="time" style="width: 0%"></div>
+<pre>
+  Proof.</pre>
+</div>
+<div class="code" title="File: Core.v
+Line: 1038
+Time: 0.002s">
+<div class="time" style="width: 0.13431833445265%"></div>
+<pre>
+    apply isembedding_isinj_hset.</pre>
+</div>
+<div class="code" title="File: Core.v
+Line: 1039
+Time: 0s">
+<div class="time" style="width: 0%"></div>
+<pre>
+    intros x y e; apply path_No.</pre>
+</div>
+<div class="code" title="File: Core.v
+Line: 1040
+Time: 0s">
+<div class="time" style="width: 0%"></div>
+<pre>
+    -</pre>
+</div>
+<div class="code" title="File: Core.v
+Line: 1041
+Time: 0.001s">
+<div class="time" style="width: 0.067159167226326%"></div>
+<pre> refine (No_raise_reflects_le x y _).</pre>
+</div>
+<div class="code" title="File: Core.v
+Line: 1041
+Time: 0.001s">
+<div class="time" style="width: 0.067159167226326%"></div>
+<pre>
+      rewrite e; apply reflexive_le.</pre>
+</div>
+<div class="code" title="File: Core.v
+Line: 1042
+Time: 0s">
+<div class="time" style="width: 0%"></div>
+<pre>
+    -</pre>
+</div>
+<div class="code" title="File: Core.v
+Line: 1043
+Time: 0.001s">
+<div class="time" style="width: 0.067159167226326%"></div>
+<pre> refine (No_raise_reflects_le y x _).</pre>
+</div>
+<div class="code" title="File: Core.v
+Line: 1043
+Time: 0.002s">
+<div class="time" style="width: 0.13431833445265%"></div>
+<pre>
+      rewrite e; apply reflexive_le.</pre>
+</div>
+<div class="code" title="File: Core.v
+Line: 1044
+Time: 0.005s">
+<div class="time" style="width: 0.33579583613163%"></div>
+<pre>
+  Qed.</pre>
+</div>
+<div class="code" title="File: Core.v
+Line: 1045
+Time: 0.032s">
+<div class="time" style="width: 2.1490933512424%"></div>
+<pre>
+
+End RaiseSort.</pre>
+</div>
+<div class="code" title="File: Core.v
+Line: 1047
+Time: 0s">
+<div class="time" style="width: 0%"></div>
+<pre>
+
+(** ** Ordinals *)
+
+(** The type of "plump ordinals" can be identified with surreal numbers that hereditarily have no right options. *)</pre>
+</div>
+<div class="code" title="File: Core.v
+Line: 1051
+Time: 0s">
+<div class="time" style="width: 0%"></div>
+<pre>Definition OrdSort : OptionSort := fun L R =&gt; ~R.</pre>
+</div>
+<div class="code" title="File: Core.v
+Line: 1051
+Time: 0s">
+<div class="time" style="width: 0%"></div>
+<pre>
+Definition POrd := GenNo OrdSort.</pre>
+</div>
+<div class="code" title="File: Core.v
+Line: 1052
+Time: 0s">
+<div class="time" style="width: 0%"></div>
+<pre>
+Global Instance insort_ordsort {L : Type}
+  : InSort OrdSort L Empty | 100
+  := idmap.</pre>
+</div>
+<div class="code" title="File: Core.v
+Line: 1055
+Time: 0s">
+<div class="time" style="width: 0%"></div>
+<pre>
+
+(** ** Decidable options *)
+
+(** A particularly interesting option sort restricts [L] and [R] to be decidable, i.e. either inhabited or empty. *)</pre>
+</div>
+<div class="code" title="File: Core.v
+Line: 1059
+Time: 0s">
+<div class="time" style="width: 0%"></div>
+<pre>Definition DecSort : OptionSort
+  := fun L R =&gt; Decidable L * Decidable R.</pre>
+</div>
+<div class="code" title="File: Core.v
+Line: 1060
+Time: 0s">
+<div class="time" style="width: 0%"></div>
+<pre>
+Definition DecNo : Type := GenNo DecSort.</pre>
+</div>
+<div class="code" title="File: Core.v
+Line: 1061
+Time: 0.001s">
+<div class="time" style="width: 0.067159167226326%"></div>
+<pre>
+
+Global Instance insort_decsort {L R : Type}
+         {dl : Decidable L} {dr : Decidable R}
+  : InSort DecSort L R | 100
+  := (dl , dr).</pre>
+</div>
+<div class="code" title="File: Core.v
+Line: 1066
+Time: 0s">
+<div class="time" style="width: 0%"></div>
+<pre>
+
+(** Perhaps surprisingly, this is not a restriction at all!  Any surreal number can be presented by a cut in which all the option sorts are hereditarily decidable.  The basic idea is that we can always add a "sufficiently large" right option and a "sufficiently small" left option in order to make both families of options inhabited without changing the value of the cut, but the details are a bit tricky. *)</pre>
+</div>
+<div class="code" title="File: Core.v
+Line: 1068
+Time: 0s">
+<div class="time" style="width: 0%"></div>
+<pre>Global Instance isequiv_DecNo_raise `{Univalence}
+  : IsEquiv (@No_raise DecSort).</pre>
+</div>
+<div class="code" title="File: Core.v
+Line: 1069
+Time: 0s">
+<div class="time" style="width: 0%"></div>
+<pre>
+Proof.</pre>
+</div>
+<div class="code" title="File: Core.v
+Line: 1070
+Time: 0.47s">
+<div class="time" style="width: 31.564808596373%"></div>
+<pre>
+  apply isequiv_surj_emb; try exact _.</pre>
+</div>
+<div class="code" title="File: Core.v
+Line: 1071
+Time: 0s">
+<div class="time" style="width: 0%"></div>
+<pre>
+  apply BuildIsSurjection; intros x.</pre>
+</div>
+<div class="code" title="File: Core.v
+Line: 1072
+Time: 0s">
+<div class="time" style="width: 0%"></div>
+<pre>
+  apply tr.</pre>
+</div>
+<div class="code" title="File: Core.v
+Line: 1073
+Time: 0.033s">
+<div class="time" style="width: 2.2162525184688%"></div>
+<pre>
+  revert x; refine (No_ind_hprop _ _).</pre>
+</div>
+<div class="code" title="File: Core.v
+Line: 1074
+Time: 0s">
+<div class="time" style="width: 0%"></div>
+<pre>
+  intros L R s xL xR xcut IHL IHR.</pre>
+</div>
+<div class="code" title="File: Core.v
+Line: 1075
+Time: 0s">
+<div class="time" style="width: 0%"></div>
+<pre>
+  pose (uLR := Unit + (L + R)).</pre>
+</div>
+<div class="code" title="File: Core.v
+Line: 1076
+Time: 0s">
+<div class="time" style="width: 0%"></div>
+<pre>
+  assert (Decidable uLR) by exact (inl (inl tt)).</pre>
+</div>
+<div class="code" title="File: Core.v
+Line: 1077
+Time: 0.004s">
+<div class="time" style="width: 0.26863666890531%"></div>
+<pre>
+  pose (xLR := sum_ind _ (fun _ =&gt; zero) (sum_ind (fun _ =&gt; DecNo) (fun l =&gt; (IHL l).1) (fun r =&gt; (IHR r).1)) : uLR -&gt; DecNo).</pre>
+</div>
+<div class="code" title="File: Core.v
+Line: 1078
+Time: 0.003s">
+<div class="time" style="width: 0.20147750167898%"></div>
+<pre>
+  pose (z := {{ xLR | Empty_rec // rempty_cut }}).</pre>
+</div>
+<div class="code" title="File: Core.v
+Line: 1079
+Time: 0.008s">
+<div class="time" style="width: 0.53727333781061%"></div>
+<pre>
+  pose (z' := {{ unit_name z | Empty_rec // rempty_cut }}).</pre>
+</div>
+<div class="code" title="File: Core.v
+Line: 1080
+Time: 0.003s">
+<div class="time" style="width: 0.20147750167898%"></div>
+<pre>
+  pose (y := {{ Empty_rec | xLR // lempty_cut }}).</pre>
+</div>
+<div class="code" title="File: Core.v
+Line: 1081
+Time: 0.005s">
+<div class="time" style="width: 0.33579583613163%"></div>
+<pre>
+  pose (y' := {{ Empty_rec | unit_name y // lempty_cut }} ).</pre>
+</div>
+<div class="code" title="File: Core.v
+Line: 1082
+Time: 0s">
+<div class="time" style="width: 0%"></div>
+<pre>
+  pose (L' := Unit + L).</pre>
+</div>
+<div class="code" title="File: Core.v
+Line: 1083
+Time: 0s">
+<div class="time" style="width: 0%"></div>
+<pre>
+  assert (Decidable L') by exact (inl (inl tt)).</pre>
+</div>
+<div class="code" title="File: Core.v
+Line: 1084
+Time: 0.001s">
+<div class="time" style="width: 0.067159167226326%"></div>
+<pre>
+  pose (wL := sum_ind _ (fun _ =&gt; y') (fun l =&gt; (IHL l).1) : L' -&gt; DecNo).</pre>
+</div>
+<div class="code" title="File: Core.v
+Line: 1085
+Time: 0s">
+<div class="time" style="width: 0%"></div>
+<pre>
+  pose (R' := Unit + R).</pre>
+</div>
+<div class="code" title="File: Core.v
+Line: 1086
+Time: 0s">
+<div class="time" style="width: 0%"></div>
+<pre>
+  assert (Decidable R') by exact (inl (inl tt)).</pre>
+</div>
+<div class="code" title="File: Core.v
+Line: 1087
+Time: 0.001s">
+<div class="time" style="width: 0.067159167226326%"></div>
+<pre>
+  pose (wR := sum_ind _ (fun _ =&gt; z') (fun r =&gt; (IHR r).1) : R' -&gt; DecNo).</pre>
+</div>
+<div class="code" title="File: Core.v
+Line: 1088
+Time: 0s">
+<div class="time" style="width: 0%"></div>
+<pre>
+  assert (wcut : forall l r, wL l &lt; wR r).</pre>
+</div>
+<div class="code" title="File: Core.v
+Line: 1089
+Time: 0s">
+<div class="time" style="width: 0%"></div>
+<pre>
+  {</pre>
+</div>
+<div class="code" title="File: Core.v
+Line: 1090
+Time: 0.004s">
+<div class="time" style="width: 0.26863666890531%"></div>
+<pre> intros [[]|l] [[]|r]; cbn.</pre>
+</div>
+<div class="code" title="File: Core.v
+Line: 1090
+Time: 0s">
+<div class="time" style="width: 0%"></div>
+<pre>
+    -</pre>
+</div>
+<div class="code" title="File: Core.v
+Line: 1091
+Time: 0.005s">
+<div class="time" style="width: 0.33579583613163%"></div>
+<pre> transitivity y.</pre>
+</div>
+<div class="code" title="File: Core.v
+Line: 1091
+Time: 0s">
+<div class="time" style="width: 0%"></div>
+<pre>
+      {</pre>
+</div>
+<div class="code" title="File: Core.v
+Line: 1092
+Time: 0.002s">
+<div class="time" style="width: 0.13431833445265%"></div>
+<pre> refine (lt_ropt _ _ _ tt).</pre>
+</div>
+<div class="code" title="File: Core.v
+Line: 1092
+Time: 0s">
+<div class="time" style="width: 0%"></div>
+<pre> }</pre>
+</div>
+<div class="code" title="File: Core.v
+Line: 1092
+Time: 0.004s">
+<div class="time" style="width: 0.26863666890531%"></div>
+<pre>
+      transitivity z.</pre>
+</div>
+<div class="code" title="File: Core.v
+Line: 1093
+Time: 0s">
+<div class="time" style="width: 0%"></div>
+<pre>
+      {</pre>
+</div>
+<div class="code" title="File: Core.v
+Line: 1094
+Time: 0.002s">
+<div class="time" style="width: 0.13431833445265%"></div>
+<pre> apply lt_l with (inl tt); cbn.</pre>
+</div>
+<div class="code" title="File: Core.v
+Line: 1094
+Time: 0.002s">
+<div class="time" style="width: 0.13431833445265%"></div>
+<pre>
+        apply le_lr; intros [].</pre>
+</div>
+<div class="code" title="File: Core.v
+Line: 1095
+Time: 0s">
+<div class="time" style="width: 0%"></div>
+<pre> }</pre>
+</div>
+<div class="code" title="File: Core.v
+Line: 1095
+Time: 0s">
+<div class="time" style="width: 0%"></div>
+<pre>
+      {</pre>
+</div>
+<div class="code" title="File: Core.v
+Line: 1096
+Time: 0.003s">
+<div class="time" style="width: 0.20147750167898%"></div>
+<pre> refine (lt_lopt _ _ _ tt).</pre>
+</div>
+<div class="code" title="File: Core.v
+Line: 1096
+Time: 0s">
+<div class="time" style="width: 0%"></div>
+<pre> }</pre>
+</div>
+<div class="code" title="File: Core.v
+Line: 1096
+Time: 0s">
+<div class="time" style="width: 0%"></div>
+<pre>
+    -</pre>
+</div>
+<div class="code" title="File: Core.v
+Line: 1097
+Time: 0.005s">
+<div class="time" style="width: 0.33579583613163%"></div>
+<pre> transitivity y.</pre>
+</div>
+<div class="code" title="File: Core.v
+Line: 1097
+Time: 0s">
+<div class="time" style="width: 0%"></div>
+<pre>
+      {</pre>
+</div>
+<div class="code" title="File: Core.v
+Line: 1098
+Time: 0.002s">
+<div class="time" style="width: 0.13431833445265%"></div>
+<pre> refine (lt_ropt _ _ _ tt).</pre>
+</div>
+<div class="code" title="File: Core.v
+Line: 1098
+Time: 0s">
+<div class="time" style="width: 0%"></div>
+<pre> }</pre>
+</div>
+<div class="code" title="File: Core.v
+Line: 1098
+Time: 0s">
+<div class="time" style="width: 0%"></div>
+<pre>
+      {</pre>
+</div>
+<div class="code" title="File: Core.v
+Line: 1099
+Time: 0.003s">
+<div class="time" style="width: 0.20147750167898%"></div>
+<pre> refine (lt_ropt _ _ _ (inr (inr r))).</pre>
+</div>
+<div class="code" title="File: Core.v
+Line: 1099
+Time: 0s">
+<div class="time" style="width: 0%"></div>
+<pre> }</pre>
+</div>
+<div class="code" title="File: Core.v
+Line: 1099
+Time: 0s">
+<div class="time" style="width: 0%"></div>
+<pre>
+    -</pre>
+</div>
+<div class="code" title="File: Core.v
+Line: 1100
+Time: 0.006s">
+<div class="time" style="width: 0.40295500335796%"></div>
+<pre> transitivity z.</pre>
+</div>
+<div class="code" title="File: Core.v
+Line: 1100
+Time: 0s">
+<div class="time" style="width: 0%"></div>
+<pre>
+      {</pre>
+</div>
+<div class="code" title="File: Core.v
+Line: 1101
+Time: 0.003s">
+<div class="time" style="width: 0.20147750167898%"></div>
+<pre> refine (lt_lopt _ _ _ (inr (inl l))).</pre>
+</div>
+<div class="code" title="File: Core.v
+Line: 1101
+Time: 0s">
+<div class="time" style="width: 0%"></div>
+<pre> }</pre>
+</div>
+<div class="code" title="File: Core.v
+Line: 1101
+Time: 0s">
+<div class="time" style="width: 0%"></div>
+<pre>
+      {</pre>
+</div>
+<div class="code" title="File: Core.v
+Line: 1102
+Time: 0.003s">
+<div class="time" style="width: 0.20147750167898%"></div>
+<pre> refine (lt_lopt _ _ _ tt).</pre>
+</div>
+<div class="code" title="File: Core.v
+Line: 1102
+Time: 0s">
+<div class="time" style="width: 0%"></div>
+<pre> }</pre>
+</div>
+<div class="code" title="File: Core.v
+Line: 1102
+Time: 0s">
+<div class="time" style="width: 0%"></div>
+<pre>
+    -</pre>
+</div>
+<div class="code" title="File: Core.v
+Line: 1103
+Time: 0.004s">
+<div class="time" style="width: 0.26863666890531%"></div>
+<pre> apply No_raise_reflects_lt.</pre>
+</div>
+<div class="code" title="File: Core.v
+Line: 1103
+Time: 0.003s">
+<div class="time" style="width: 0.20147750167898%"></div>
+<pre>
+      rewrite (IHL l).2, (IHR r).2.</pre>
+</div>
+<div class="code" title="File: Core.v
+Line: 1104
+Time: 0s">
+<div class="time" style="width: 0%"></div>
+<pre>
+      apply xcut.</pre>
+</div>
+<div class="code" title="File: Core.v
+Line: 1105
+Time: 0s">
+<div class="time" style="width: 0%"></div>
+<pre> }</pre>
+</div>
+<div class="code" title="File: Core.v
+Line: 1105
+Time: 0.005s">
+<div class="time" style="width: 0.33579583613163%"></div>
+<pre>
+  exists ({{ wL | wR // wcut }}).</pre>
+</div>
+<div class="code" title="File: Core.v
+Line: 1106
+Time: 0.025s">
+<div class="time" style="width: 1.6789791806582%"></div>
+<pre>
+  destruct (No_raise_cut wL wR wcut) as [rwcut p].</pre>
+</div>
+<div class="code" title="File: Core.v
+Line: 1107
+Time: 0s">
+<div class="time" style="width: 0%"></div>
+<pre>
+  rewrite p; clear p.</pre>
+</div>
+<div class="code" title="File: Core.v
+Line: 1108
+Time: 0.003s">
+<div class="time" style="width: 0.20147750167898%"></div>
+<pre>
+  apply path_No; apply le_lr.</pre>
+</div>
+<div class="code" title="File: Core.v
+Line: 1109
+Time: 0s">
+<div class="time" style="width: 0%"></div>
+<pre>
+  -</pre>
+</div>
+<div class="code" title="File: Core.v
+Line: 1110
+Time: 0.001s">
+<div class="time" style="width: 0.067159167226326%"></div>
+<pre> intros [[]|l].</pre>
+</div>
+<div class="code" title="File: Core.v
+Line: 1110
+Time: 0s">
+<div class="time" style="width: 0%"></div>
+<pre>
+    +</pre>
+</div>
+<div class="code" title="File: Core.v
+Line: 1111
+Time: 0.002s">
+<div class="time" style="width: 0.13431833445265%"></div>
+<pre> apply (lt_le_trans (y := No_raise y)).</pre>
+</div>
+<div class="code" title="File: Core.v
+Line: 1111
+Time: 0s">
+<div class="time" style="width: 0%"></div>
+<pre>
+      *</pre>
+</div>
+<div class="code" title="File: Core.v
+Line: 1112
+Time: 0s">
+<div class="time" style="width: 0%"></div>
+<pre> apply No_raise_lt.</pre>
+</div>
+<div class="code" title="File: Core.v
+Line: 1112
+Time: 0.003s">
+<div class="time" style="width: 0.20147750167898%"></div>
+<pre>
+        refine (lt_ropt _ _ _ tt).</pre>
+</div>
+<div class="code" title="File: Core.v
+Line: 1113
+Time: 0s">
+<div class="time" style="width: 0%"></div>
+<pre>
+      *</pre>
+</div>
+<div class="code" title="File: Core.v
+Line: 1114
+Time: 0.03s">
+<div class="time" style="width: 2.0147750167898%"></div>
+<pre> apply le_lr; [ intros [] | intros r ].</pre>
+</div>
+<div class="code" title="File: Core.v
+Line: 1114
+Time: 0.029s">
+<div class="time" style="width: 1.9476158495635%"></div>
+<pre>
+        rewrite &lt;- (IHR r).2.</pre>
+</div>
+<div class="code" title="File: Core.v
+Line: 1115
+Time: 0.012s">
+<div class="time" style="width: 0.80591000671592%"></div>
+<pre>
+        refine (lt_ropt _ _ _ (inr (inr r))).</pre>
+</div>
+<div class="code" title="File: Core.v
+Line: 1116
+Time: 0s">
+<div class="time" style="width: 0%"></div>
+<pre>
+    +</pre>
+</div>
+<div class="code" title="File: Core.v
+Line: 1117
+Time: 0.002s">
+<div class="time" style="width: 0.13431833445265%"></div>
+<pre> rewrite (IHL l).2.</pre>
+</div>
+<div class="code" title="File: Core.v
+Line: 1117
+Time: 0.003s">
+<div class="time" style="width: 0.20147750167898%"></div>
+<pre>
+      refine (lt_lopt _ _ _ l).</pre>
+</div>
+<div class="code" title="File: Core.v
+Line: 1118
+Time: 0s">
+<div class="time" style="width: 0%"></div>
+<pre>
+  -</pre>
+</div>
+<div class="code" title="File: Core.v
+Line: 1119
+Time: 0s">
+<div class="time" style="width: 0%"></div>
+<pre> intros r.</pre>
+</div>
+<div class="code" title="File: Core.v
+Line: 1119
+Time: 0.002s">
+<div class="time" style="width: 0.13431833445265%"></div>
+<pre>
+    rewrite &lt;- (IHR r).2.</pre>
+</div>
+<div class="code" title="File: Core.v
+Line: 1120
+Time: 0.003s">
+<div class="time" style="width: 0.20147750167898%"></div>
+<pre>
+    refine (lt_ropt _ _ _ (inr r)).</pre>
+</div>
+<div class="code" title="File: Core.v
+Line: 1121
+Time: 0s">
+<div class="time" style="width: 0%"></div>
+<pre>
+  -</pre>
+</div>
+<div class="code" title="File: Core.v
+Line: 1122
+Time: 0s">
+<div class="time" style="width: 0%"></div>
+<pre> intros l.</pre>
+</div>
+<div class="code" title="File: Core.v
+Line: 1122
+Time: 0.002s">
+<div class="time" style="width: 0.13431833445265%"></div>
+<pre>
+    rewrite &lt;- (IHL l).2.</pre>
+</div>
+<div class="code" title="File: Core.v
+Line: 1123
+Time: 0.009s">
+<div class="time" style="width: 0.60443250503694%"></div>
+<pre>
+    refine (lt_lopt _ _ _ (inr l)).</pre>
+</div>
+<div class="code" title="File: Core.v
+Line: 1124
+Time: 0s">
+<div class="time" style="width: 0%"></div>
+<pre>
+  -</pre>
+</div>
+<div class="code" title="File: Core.v
+Line: 1125
+Time: 0.004s">
+<div class="time" style="width: 0.26863666890531%"></div>
+<pre> intros [[]|r].</pre>
+</div>
+<div class="code" title="File: Core.v
+Line: 1125
+Time: 0s">
+<div class="time" style="width: 0%"></div>
+<pre>
+    +</pre>
+</div>
+<div class="code" title="File: Core.v
+Line: 1126
+Time: 0.002s">
+<div class="time" style="width: 0.13431833445265%"></div>
+<pre> apply (le_lt_trans (y := No_raise z)).</pre>
+</div>
+<div class="code" title="File: Core.v
+Line: 1126
+Time: 0s">
+<div class="time" style="width: 0%"></div>
+<pre>
+      *</pre>
+</div>
+<div class="code" title="File: Core.v
+Line: 1127
+Time: 0.024s">
+<div class="time" style="width: 1.6118200134318%"></div>
+<pre> apply le_lr; [ intros l | intros [] ].</pre>
+</div>
+<div class="code" title="File: Core.v
+Line: 1127
+Time: 0.029s">
+<div class="time" style="width: 1.9476158495635%"></div>
+<pre>
+        rewrite &lt;- (IHL l).2.</pre>
+</div>
+<div class="code" title="File: Core.v
+Line: 1128
+Time: 0.034s">
+<div class="time" style="width: 2.2834116856951%"></div>
+<pre>
+        refine (lt_lopt _ _ _ (inr (inl l))).</pre>
+</div>
+<div class="code" title="File: Core.v
+Line: 1129
+Time: 0s">
+<div class="time" style="width: 0%"></div>
+<pre>
+      *</pre>
+</div>
+<div class="code" title="File: Core.v
+Line: 1130
+Time: 0s">
+<div class="time" style="width: 0%"></div>
+<pre> apply No_raise_lt.</pre>
+</div>
+<div class="code" title="File: Core.v
+Line: 1130
+Time: 0.003s">
+<div class="time" style="width: 0.20147750167898%"></div>
+<pre>
+        refine (lt_lopt _ _ _ tt).</pre>
+</div>
+<div class="code" title="File: Core.v
+Line: 1131
+Time: 0s">
+<div class="time" style="width: 0%"></div>
+<pre>
+    +</pre>
+</div>
+<div class="code" title="File: Core.v
+Line: 1132
+Time: 0.002s">
+<div class="time" style="width: 0.13431833445265%"></div>
+<pre> rewrite (IHR r).2.</pre>
+</div>
+<div class="code" title="File: Core.v
+Line: 1132
+Time: 0.002s">
+<div class="time" style="width: 0.13431833445265%"></div>
+<pre>
+      refine (lt_ropt _ _ _ r).</pre>
+</div>
+<div class="code" title="File: Core.v
+Line: 1133
+Time: 0.209s">
+<div class="time" style="width: 14.036265950302%"></div>
+<pre>
+Defined.</pre>
+</div>
+<div class="code" title="File: Core.v
+Line: 1134
+Time: 0.063s">
+<div class="time" style="width: 4.2310275352586%"></div>
+<pre>
+
+Definition equiv_DecNo_raise `{Univalence}
+  : DecNo &lt;~&gt; No
+  := BuildEquiv _ _ No_raise _.</pre>
+</div>
+<div class="code" title="File: Core.v
+Line: 1139
+Time: 0s">
+<div class="time" style="width: 0%"></div>
+<pre>
+
+(** Note that this does not extend to other sorts.  For instance, it is *not* true that any plump ordinal is equal to a cut whose types of left and right options are respectively hereditarily decidable and hereditarily empty.  In particular, when making the type of left options inhabited, we have to use surreals whose type of right options is also inhabited.  For instance, [{{ fun _:P =&gt; zero | Empty_rec // rempty_cut }}], for a proposition [P], is a plump ordinal, but to make its left options inhabited we have to use a negative surreal, which is not itself a plump ordinal.  *)
 
 </pre>
 </div>
