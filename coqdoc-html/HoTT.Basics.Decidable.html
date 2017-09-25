@@ -47,6 +47,39 @@
 <span class="id" title="keyword">Global</span> <span class="id" title="var">Existing</span> <span class="id" title="keyword">Instance</span> <span class="id" title="var">dec_paths</span>.<br/>
 
 <br/>
+<span class="id" title="keyword">Class</span> <a name="Stable"><span class="id" title="record">Stable</span></a> <span class="id" title="var">P</span> := <a name="stable"><span class="id" title="projection">stable</span></a> : <a class="idref" href="HoTT.Basics.Overture.html#af3758a54699cd3ddfb577ac1b4173eb"><span class="id" title="notation">~~</span></a><a class="idref" href="HoTT.Basics.Decidable.html#P"><span class="id" title="variable">P</span></a> <a class="idref" href="Coq.Init.Logic.html#d43e996736952df71ebeeae74d10a287"><span class="id" title="notation">→</span></a> <a class="idref" href="HoTT.Basics.Decidable.html#P"><span class="id" title="variable">P</span></a>.<br/>
+
+<br/>
+<span class="id" title="keyword">Global Instance</span> <a name="stable_decidable"><span class="id" title="instance">stable_decidable</span></a> <span class="id" title="var">P</span> `{!<a class="idref" href="HoTT.Basics.Decidable.html#Decidable"><span class="id" title="class">Decidable</span></a> <a class="idref" href="HoTT.Basics.Decidable.html#P"><span class="id" title="variable">P</span></a>} : <a class="idref" href="HoTT.Basics.Decidable.html#Stable"><span class="id" title="class">Stable</span></a> <a class="idref" href="HoTT.Basics.Decidable.html#P"><span class="id" title="variable">P</span></a>.<br/>
+<span class="id" title="keyword">Proof</span>.<br/>
+&nbsp;&nbsp;<span class="id" title="tactic">intros</span> <span class="id" title="var">dn</span>;<span class="id" title="tactic">destruct</span> (<a class="idref" href="HoTT.Basics.Decidable.html#dec"><span class="id" title="definition">dec</span></a> <span class="id" title="var">P</span>) <span class="id" title="keyword">as</span> [<span class="id" title="var">p</span>|<span class="id" title="var">n</span>].<br/>
+&nbsp;&nbsp;- <span class="id" title="tactic">assumption</span>.<br/>
+&nbsp;&nbsp;- <span class="id" title="tactic">apply</span> <a class="idref" href="HoTT.Basics.Overture.html#Empty_rect"><span class="id" title="definition">Empty_rect</span></a>,<span class="id" title="var">dn</span>,<span class="id" title="var">n</span>.<br/>
+<span class="id" title="keyword">Qed</span>.<br/>
+
+<br/>
+</div>
+
+<div class="doc">
+  Because <span class="inlinecode"><span class="id" title="keyword">vm_compute</span></span> evaluates terms in <span class="inlinecode"><span class="id" title="var">PROP</span></span> eagerly
+  and does not remove dead code we
+  need the decide_rel hack. Suppose we have <span class="inlinecode">(<a class="idref" href="HoTT.Categories.Grothendieck.PseudofunctorToCat.html#x"><span class="id" title="projection">x</span></a></span> <span class="inlinecode">=</span> <span class="inlinecode"><a class="idref" href="HoTT.Categories.Functor.Attributes.html#fully_faithful_helpers.y"><span class="id" title="variable">y</span></a>)</span> <span class="inlinecode">=<span class="id" title="var">def</span></span>  <span class="inlinecode">(<a class="idref" href="HoTTBookExercises.html#Book_4_5.parts.f"><span class="id" title="variable">f</span></a></span> <span class="inlinecode"><a class="idref" href="HoTT.Categories.Grothendieck.PseudofunctorToCat.html#x"><span class="id" title="projection">x</span></a></span> <span class="inlinecode">=</span> <span class="inlinecode"><a class="idref" href="HoTTBookExercises.html#Book_4_5.parts.f"><span class="id" title="variable">f</span></a></span> <span class="inlinecode"><a class="idref" href="HoTT.Categories.Functor.Attributes.html#fully_faithful_helpers.y"><span class="id" title="variable">y</span></a>)</span>, now:
+     bool_decide (x = y) -&gt; bool_decide (f x = f y) -&gt; ...
+  As we see, the dead code <span class="inlinecode"><a class="idref" href="HoTTBookExercises.html#Book_4_5.parts.f"><span class="id" title="variable">f</span></a></span> <span class="inlinecode"><a class="idref" href="HoTT.Categories.Grothendieck.PseudofunctorToCat.html#x"><span class="id" title="projection">x</span></a></span> and <span class="inlinecode"><a class="idref" href="HoTTBookExercises.html#Book_4_5.parts.f"><span class="id" title="variable">f</span></a></span> <span class="inlinecode"><a class="idref" href="HoTT.Categories.Functor.Attributes.html#fully_faithful_helpers.y"><span class="id" title="variable">y</span></a></span> is actually evaluated,
+  which is of course an utter waste.
+  Therefore we introduce decide_rel and bool_decide_rel.
+     bool_decide_rel (=) x y -&gt; bool_decide_rel (fun a b =&gt; f a = f b) x y -&gt; ...
+  Now the definition of equality remains under a lambda and
+  our problem does not occur anymore!
+
+</div>
+<div class="code">
+<span class="id" title="keyword">Definition</span> <a name="decide_rel"><span class="id" title="definition">decide_rel</span></a> {<span class="id" title="var">A</span> <span class="id" title="var">B</span>} (<span class="id" title="var">R</span> : <a class="idref" href="HoTT.Basics.Decidable.html#A"><span class="id" title="variable">A</span></a> <a class="idref" href="Coq.Init.Logic.html#d43e996736952df71ebeeae74d10a287"><span class="id" title="notation">→</span></a> <a class="idref" href="HoTT.Basics.Decidable.html#B"><span class="id" title="variable">B</span></a> <a class="idref" href="Coq.Init.Logic.html#d43e996736952df71ebeeae74d10a287"><span class="id" title="notation">→</span></a> <span class="id" title="keyword">Type</span>)<br/>
+&nbsp;&nbsp;{<span class="id" title="var">dec</span> : <span class="id" title="keyword">∀</span> <span class="id" title="var">x</span> <span class="id" title="var">y</span><a class="idref" href="HoTT.Basics.Notations.html#d2ec56b4b399745cfaad1420e500e21b"><span class="id" title="notation">,</span></a> <a class="idref" href="HoTT.Basics.Decidable.html#Decidable"><span class="id" title="class">Decidable</span></a> (<a class="idref" href="HoTT.Basics.Decidable.html#R"><span class="id" title="variable">R</span></a> <a class="idref" href="HoTT.Basics.Decidable.html#x"><span class="id" title="variable">x</span></a> <a class="idref" href="HoTT.Basics.Decidable.html#y"><span class="id" title="variable">y</span></a>)} (<span class="id" title="var">x</span> : <a class="idref" href="HoTT.Basics.Decidable.html#A"><span class="id" title="variable">A</span></a>) (<span class="id" title="var">y</span> : <a class="idref" href="HoTT.Basics.Decidable.html#B"><span class="id" title="variable">B</span></a>)<br/>
+&nbsp;&nbsp;: <a class="idref" href="HoTT.Basics.Decidable.html#Decidable"><span class="id" title="class">Decidable</span></a> (<a class="idref" href="HoTT.Basics.Decidable.html#R"><span class="id" title="variable">R</span></a> <a class="idref" href="HoTT.Basics.Decidable.html#x"><span class="id" title="variable">x</span></a> <a class="idref" href="HoTT.Basics.Decidable.html#y"><span class="id" title="variable">y</span></a>)<br/>
+&nbsp;&nbsp;:= <a class="idref" href="HoTT.Basics.Decidable.html#dec"><span class="id" title="variable">dec</span></a> <a class="idref" href="HoTT.Basics.Decidable.html#x"><span class="id" title="variable">x</span></a> <a class="idref" href="HoTT.Basics.Decidable.html#y"><span class="id" title="variable">y</span></a>.<br/>
+
+<br/>
 </div>
 
 <div class="doc">
