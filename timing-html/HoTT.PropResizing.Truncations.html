@@ -39,14 +39,14 @@ Time: 0s">
 </div>
 <div class="code" title="File: Truncations.v
 Line: 3
-Time: 0.054s">
+Time: 0.069s">
 <div class="time" style="width: 100%"></div>
 <pre>Require Import HoTT.Basics HoTT.Types UnivalenceImpliesFunext HProp.</pre>
 </div>
 <div class="code" title="File: Truncations.v
 Line: 3
 Time: 0.001s">
-<div class="time" style="width: 1.8518518518519%"></div>
+<div class="time" style="width: 1.4492753623188%"></div>
 <pre>
 Require Import PropResizing.PropResizing.</pre>
 </div>
@@ -88,16 +88,22 @@ Time: 0s">
 <div class="time" style="width: 0%"></div>
 <pre>
 
-  Definition merely (A : Type@{i}) : Type@{i}
+  Definition merely@{i j} (A : Type@{i}) : Type@{i}
     := forall P:Type@{j}, IsHProp P -&gt; (A -&gt; P) -&gt; P.</pre>
 </div>
 <div class="code" title="File: Truncations.v
 Line: 14
 Time: 0s">
 <div class="time" style="width: 0%"></div>
-<pre>
+<pre>   (* requires j &lt; i *)
 
-  Definition trm {A} : A -&gt; merely A
+ </pre>
+</div>
+<div class="code" title="File: Truncations.v
+Line: 16
+Time: 0s">
+<div class="time" style="width: 0%"></div>
+<pre>Definition trm {A} : A -&gt; merely A
     := fun a P HP f =&gt; f a.</pre>
 </div>
 <div class="code" title="File: Truncations.v
@@ -117,22 +123,22 @@ Time: 0s">
 </div>
 <div class="code" title="File: Truncations.v
 Line: 20
-Time: 0.05s">
-<div class="time" style="width: 92.592592592593%"></div>
+Time: 0.065s">
+<div class="time" style="width: 94.202898550725%"></div>
 <pre>
     exact _.</pre>
 </div>
 <div class="code" title="File: Truncations.v
 Line: 21
 Time: 0.001s">
-<div class="time" style="width: 1.8518518518519%"></div>
+<div class="time" style="width: 1.4492753623188%"></div>
 <pre>
   Defined.</pre>
 </div>
 <div class="code" title="File: Truncations.v
 Line: 22
-Time: 0.006s">
-<div class="time" style="width: 11.111111111111%"></div>
+Time: 0.007s">
+<div class="time" style="width: 10.144927536232%"></div>
 <pre>
 
   Definition merely_rec {A : Type@{i}} {P : Type@{j}} `{IsHProp P} (f : A -&gt; P)
@@ -159,7 +165,7 @@ Time: 0s">
 <div class="code" title="File: Truncations.v
 Line: 31
 Time: 0.003s">
-<div class="time" style="width: 5.5555555555556%"></div>
+<div class="time" style="width: 4.3478260869565%"></div>
 <pre>
     srefine (merely_rec (trm o f)).</pre>
 </div>
@@ -172,17 +178,169 @@ Time: 0s">
 </div>
 <div class="code" title="File: Truncations.v
 Line: 33
-Time: 0.001s">
-<div class="time" style="width: 1.8518518518519%"></div>
+Time: 0s">
+<div class="time" style="width: 0%"></div>
 <pre>
 
-End AssumePropResizing.</pre>
+(* show what is gained by propositional resizing, without mentioning universe levels *)
+ </pre>
 </div>
 <div class="code" title="File: Truncations.v
 Line: 36
 Time: 0s">
 <div class="time" style="width: 0%"></div>
+<pre>Local Definition typeofid (A : Type) := A -&gt; A.</pre>
+</div>
+<div class="code" title="File: Truncations.v
+Line: 36
+Time: 0.001s">
+<div class="time" style="width: 1.4492753623188%"></div>
 <pre>
+   
+  Local Definition functor_merely_sameargs `{Funext} {A : Type} (f : typeofid A)
+    : typeofid (merely A) := functor_merely f.</pre>
+</div>
+<div class="code" title="File: Truncations.v
+Line: 39
+Time: 0s">
+<div class="time" style="width: 0%"></div>
+<pre>
+
+(* a more informative version using universe levels *)
+ </pre>
+</div>
+<div class="code" title="File: Truncations.v
+Line: 42
+Time: 0.001s">
+<div class="time" style="width: 1.4492753623188%"></div>
+<pre>Local Definition functor_merely_sameuniv `{Funext} {A B: Type@{i}} (f : A -&gt; B)
+    : merely@{j k} A -&gt; merely@{j k} B:= functor_merely f.</pre>
+</div>
+<div class="code" title="File: Truncations.v
+Line: 43
+Time: 0s">
+<div class="time" style="width: 0%"></div>
+<pre>    (* requires i &lt;= j &amp; k &lt; j *)
+
+
+</pre>
+</div>
+<div class="code" title="File: Truncations.v
+Line: 45
+Time: 0.001s">
+<div class="time" style="width: 1.4492753623188%"></div>
+<pre>End AssumePropResizing.</pre>
+</div>
+<div class="code" title="File: Truncations.v
+Line: 45
+Time: 0s">
+<div class="time" style="width: 0%"></div>
+<pre>
+
+(* Here, we show what goes wrong without propositional resizing. *)
+
+(* the naive definition *)</pre>
+</div>
+<div class="code" title="File: Truncations.v
+Line: 49
+Time: 0s">
+<div class="time" style="width: 0%"></div>
+<pre>Local Definition merely_rec_naive {A : Type@{i}} {P : Type@{j}} {p:IsHProp@{j} P} (f : A -&gt; P)
+  : merely@{i j} A -&gt; P
+  := fun ma =&gt; ma P p f.</pre>
+</div>
+<div class="code" title="File: Truncations.v
+Line: 51
+Time: 0s">
+<div class="time" style="width: 0%"></div>
+<pre>
+
+(* the too weak definition *)</pre>
+</div>
+<div class="code" title="File: Truncations.v
+Line: 53
+Time: 0s">
+<div class="time" style="width: 0%"></div>
+<pre>Local Definition functor_merely_weak `{Funext} {A B : Type@{k}} (f : A -&gt; B)
+  : merely@{j k} A -&gt; merely@{k l} B.</pre>
+</div>
+<div class="code" title="File: Truncations.v
+Line: 54
+Time: 0s">
+<div class="time" style="width: 0%"></div>
+<pre> (* evidently, this requires k&lt;j and l&lt;k *)</pre>
+</div>
+<div class="code" title="File: Truncations.v
+Line: 54
+Time: 0s">
+<div class="time" style="width: 0%"></div>
+<pre>Proof.</pre>
+</div>
+<div class="code" title="File: Truncations.v
+Line: 54
+Time: 0.003s">
+<div class="time" style="width: 4.3478260869565%"></div>
+<pre>
+  srefine (merely_rec_naive (trm o f)).</pre>
+</div>
+<div class="code" title="File: Truncations.v
+Line: 55
+Time: 0s">
+<div class="time" style="width: 0%"></div>
+<pre>
+Defined.</pre>
+</div>
+<div class="code" title="File: Truncations.v
+Line: 56
+Time: 0s">
+<div class="time" style="width: 0%"></div>
+<pre>
+
+(* impossible due to universe inconsistency: *)</pre>
+</div>
+<div class="code" title="File: Truncations.v
+Line: 58
+Time: 0.002s">
+<div class="time" style="width: 2.8985507246377%"></div>
+<pre>Fail Local Definition functor_merely_weak_sameargs `{Funext} {A : Type} (f : typeofid A)
+  : typeofid(merely A) := functor_merely_weak f.</pre>
+</div>
+<div class="code" title="File: Truncations.v
+Line: 59
+Time: 0s">
+<div class="time" style="width: 0%"></div>
+<pre>
+
+(* The following much weaker definition is possible: *)</pre>
+</div>
+<div class="code" title="File: Truncations.v
+Line: 61
+Time: 0.001s">
+<div class="time" style="width: 1.4492753623188%"></div>
+<pre>Local Definition functor_merely_weak_sameargs_weak `{Funext} {A : Type} (f : typeofid A)
+  : merely A -&gt; merely A := functor_merely_weak f.</pre>
+</div>
+<div class="code" title="File: Truncations.v
+Line: 62
+Time: 0s">
+<div class="time" style="width: 0%"></div>
+<pre>
+
+(* a more general (but still weak) and more informative version using universe levels *)</pre>
+</div>
+<div class="code" title="File: Truncations.v
+Line: 64
+Time: 0.001s">
+<div class="time" style="width: 1.4492753623188%"></div>
+<pre>Local Definition functor_merely_weak_sameuniv_weak `{Funext} {A B: Type@{i}} (f : A -&gt; B)
+  : merely@{j k} A -&gt; merely@{k l} B:= functor_merely_weak f.</pre>
+</div>
+<div class="code" title="File: Truncations.v
+Line: 66
+Time: 0s">
+<div class="time" style="width: 0%"></div>
+<pre>
+(* requires i &lt;= j &amp; l &lt; k &lt; j *)
 
 </pre>
 </div>
