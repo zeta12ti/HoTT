@@ -308,27 +308,27 @@
           
 
             i = 58;
-            data = "1 subgoal (ID 39)	  	  UA : Univalence	  PR : PropResizing	  A, B : Graph	  ============================	  {f : vert A <~> vert B &	  forall x y : vert A, edge A x y <-> edge B (f x) (f y)} <~>	  {p : A.1 = B.1 &	  transport (fun V : Type => {E : V -> V -> Type & is_mere_relation V E}) p	    A.2 = B.2}	";
+            data = "1 subgoal (ID 39)	  	  UA : Univalence	  PR : PropResizing	  A, B : Graph	  ============================	  {f : vert A <~> vert B &	  forall x y : vert A, edge A x y <-> edge B (f x) (f y)} <~>	  {p : A.1 = B.1 &	  transport	    (fun V : Type => {E : V -> V -> Type & forall x y : V, IsHProp (E x y)})	    p A.2 = B.2}	";
             responses[i]=data;
           
 
             i = 59;
-            data = "1 subgoal (ID 46)	  	  UA : Univalence	  PR : PropResizing	  A, B : Graph	  ============================	  forall a : vert A <~> vert B,	  (fun f : vert A <~> vert B =>	   forall x y : vert A, edge A x y <-> edge B (f x) (f y)) a <~>	  (fun p : A.1 = B.1 =>	   transport (fun V : Type => {E : V -> V -> Type & is_mere_relation V E}) p	     A.2 = B.2) ((equiv_path_universe (vert A) (vert B)) a)	";
+            data = "1 subgoal (ID 46)	  	  UA : Univalence	  PR : PropResizing	  A, B : Graph	  ============================	  forall a : vert A <~> vert B,	  (fun f : vert A <~> vert B =>	   forall x y : vert A, edge A x y <-> edge B (f x) (f y)) a <~>	  (fun p : A.1 = B.1 =>	   transport	     (fun V : Type => {E : V -> V -> Type & forall x y : V, IsHProp (E x y)})	     p A.2 = B.2) ((equiv_path_universe (vert A) (vert B)) a)	";
             responses[i]=data;
           
 
             i = 60;
-            data = "1 subgoal (ID 48)	  	  UA : Univalence	  PR : PropResizing	  A, B : Graph	  f : vert A <~> vert B	  ============================	  (forall x y : vert A, edge A x y <-> edge B (f x) (f y)) <~>	  transport (fun V : Type => {E : V -> V -> Type & is_mere_relation V E})	    (path_universe_uncurried f) A.2 = B.2	";
+            data = "1 subgoal (ID 48)	  	  UA : Univalence	  PR : PropResizing	  A, B : Graph	  f : vert A <~> vert B	  ============================	  (forall x y : vert A, edge A x y <-> edge B (f x) (f y)) <~>	  transport	    (fun V : Type => {E : V -> V -> Type & forall x y : V, IsHProp (E x y)})	    (path_universe_uncurried f) A.2 = B.2	";
             responses[i]=data;
           
 
             i = 61;
-            data = "1 subgoal (ID 54)	  	  UA : Univalence	  PR : PropResizing	  A, B : Graph	  f : vert A <~> vert B	  ============================	  (forall x y : vert A, edge A x y <-> edge B (f x) (f y)) <~>	  (transport (fun x : Type => x -> x -> Type) (path_universe_uncurried f)	     (A.2).1;	  transportD (fun x : Type => x -> x -> Type)	    (fun (x : Type) (y : x -> x -> Type) => is_mere_relation x y)	    (path_universe_uncurried f) (A.2).1 (A.2).2) = B.2	";
+            data = "1 subgoal (ID 54)	  	  UA : Univalence	  PR : PropResizing	  A, B : Graph	  f : vert A <~> vert B	  ============================	  (forall x y : vert A, edge A x y <-> edge B (f x) (f y)) <~>	  (transport (fun x : Type => x -> x -> Type) (path_universe_uncurried f)	     (A.2).1;	  transportD (fun x : Type => x -> x -> Type)	    (fun (x : Type) (y : x -> x -> Type) =>	     forall x0 y0 : x, IsHProp (y x0 y0)) (path_universe_uncurried f) 	    (A.2).1 (A.2).2) = B.2	";
             responses[i]=data;
           
 
             i = 62;
-            data = "1 subgoal (ID 71)	  	  UA : Univalence	  PR : PropResizing	  A, B : Graph	  f : vert A <~> vert B	  ============================	  (forall x y : vert A, edge A x y <-> edge B (f x) (f y)) <~>	  (transport (fun x : Type => x -> x -> Type) (path_universe_uncurried f)	     (A.2).1;	  transportD (fun x : Type => x -> x -> Type)	    (fun (x : Type) (y : x -> x -> Type) => is_mere_relation x y)	    (path_universe_uncurried f) (A.2).1 (A.2).2).1 = 	  (B.2).1	";
+            data = "1 subgoal (ID 71)	  	  UA : Univalence	  PR : PropResizing	  A, B : Graph	  f : vert A <~> vert B	  ============================	  (forall x y : vert A, edge A x y <-> edge B (f x) (f y)) <~>	  (transport (fun x : Type => x -> x -> Type) (path_universe_uncurried f)	     (A.2).1;	  transportD (fun x : Type => x -> x -> Type)	    (fun (x : Type) (y : x -> x -> Type) =>	     forall x0 y0 : x, IsHProp (y x0 y0)) (path_universe_uncurried f) 	    (A.2).1 (A.2).2).1 = (B.2).1	";
             responses[i]=data;
           
 
@@ -448,7 +448,7 @@
           
 
             i = 86;
-            data = "2 subgoals (ID 40)	  	  UA : Univalence	  PR : PropResizing	  A : Graph	  ============================	  vert A + Unit -> vert A + Unit -> Type		subgoal 2 (ID 42) is:	 is_mere_relation (vert A + Unit) ?edge	";
+            data = "2 subgoals (ID 40)	  	  UA : Univalence	  PR : PropResizing	  A : Graph	  ============================	  vert A + Unit -> vert A + Unit -> Type		subgoal 2 (ID 42) is:	 forall x y : vert A + Unit, IsHProp (?edge x y)	";
             responses[i]=data;
           
 
@@ -458,27 +458,27 @@
           
 
             i = 88;
-            data = "1 subgoal (ID 165)	  	  UA : Univalence	  PR : PropResizing	  A : Graph	  x, y : vert A	  ============================	  Type	<infomsg>	This subproof is complete, but there are some unfocused goals.	Focus next goal with bullet +.	</infomsg>	4 subgoals (ID 166)		subgoal 1 (ID 166) is:	 Type	subgoal 2 (ID 173) is:	 Type	subgoal 3 (ID 174) is:	 Type	subgoal 4 (ID 42) is:	 is_mere_relation (vert A + Unit)	   (fun X : vert A + Unit =>	    match X with	    | inl x0 =>	        fun X0 : vert A + Unit =>	        match X0 with	        | inl y0 => edge A x0 y0	        | inr y0 => ?Goal@{x:=x0; y:=y0}	        end	    | inr x0 =>	        fun X0 : vert A + Unit =>	        match X0 with	        | inl y0 => ?Goal0@{x:=x0; y:=y0}	        | inr y0 => ?Goal1@{x:=x0; y:=y0}	        end	    end)	";
+            data = "1 subgoal (ID 165)	  	  UA : Univalence	  PR : PropResizing	  A : Graph	  x, y : vert A	  ============================	  Type	<infomsg>	This subproof is complete, but there are some unfocused goals.	Focus next goal with bullet +.	</infomsg>	4 subgoals (ID 166)		subgoal 1 (ID 166) is:	 Type	subgoal 2 (ID 173) is:	 Type	subgoal 3 (ID 174) is:	 Type	subgoal 4 (ID 42) is:	 forall x y : vert A + Unit,	 IsHProp	   ((fun X : vert A + Unit =>	     match X with	     | inl x0 =>	         fun X0 : vert A + Unit =>	         match X0 with	         | inl y0 => edge A x0 y0	         | inr y0 => ?Goal@{x:=x0; y:=y0}	         end	     | inr x0 =>	         fun X0 : vert A + Unit =>	         match X0 with	         | inl y0 => ?Goal0@{x:=x0; y:=y0}	         | inr y0 => ?Goal1@{x:=x0; y:=y0}	         end	     end) x y)	";
             responses[i]=data;
           
 
             i = 89;
-            data = "1 subgoal (ID 166)	  	  UA : Univalence	  PR : PropResizing	  A : Graph	  x : vert A	  y : Unit	  ============================	  Type	<infomsg>	This subproof is complete, but there are some unfocused goals.	Focus next goal with bullet +.	</infomsg>	3 subgoals (ID 173)		subgoal 1 (ID 173) is:	 Type	subgoal 2 (ID 174) is:	 Type	subgoal 3 (ID 42) is:	 is_mere_relation (vert A + Unit)	   (fun X : vert A + Unit =>	    match X with	    | inl x0 =>	        fun X0 : vert A + Unit =>	        match X0 with	        | inl y0 => edge A x0 y0	        | inr _ => Unit	        end	    | inr x0 =>	        fun X0 : vert A + Unit =>	        match X0 with	        | inl y0 => ?Goal@{x:=x0; y:=y0}	        | inr y0 => ?Goal0@{x:=x0; y:=y0}	        end	    end)	";
+            data = "1 subgoal (ID 166)	  	  UA : Univalence	  PR : PropResizing	  A : Graph	  x : vert A	  y : Unit	  ============================	  Type	<infomsg>	This subproof is complete, but there are some unfocused goals.	Focus next goal with bullet +.	</infomsg>	3 subgoals (ID 173)		subgoal 1 (ID 173) is:	 Type	subgoal 2 (ID 174) is:	 Type	subgoal 3 (ID 42) is:	 forall x y : vert A + Unit,	 IsHProp	   ((fun X : vert A + Unit =>	     match X with	     | inl x0 =>	         fun X0 : vert A + Unit =>	         match X0 with	         | inl y0 => edge A x0 y0	         | inr _ => Unit	         end	     | inr x0 =>	         fun X0 : vert A + Unit =>	         match X0 with	         | inl y0 => ?Goal@{x:=x0; y:=y0}	         | inr y0 => ?Goal0@{x:=x0; y:=y0}	         end	     end) x y)	";
             responses[i]=data;
           
 
             i = 90;
-            data = "1 subgoal (ID 173)	  	  UA : Univalence	  PR : PropResizing	  A : Graph	  x : Unit	  y : vert A	  ============================	  Type	<infomsg>	This subproof is complete, but there are some unfocused goals.	Focus next goal with bullet +.	</infomsg>	2 subgoals (ID 174)		subgoal 1 (ID 174) is:	 Type	subgoal 2 (ID 42) is:	 is_mere_relation (vert A + Unit)	   (fun X : vert A + Unit =>	    match X with	    | inl x0 =>	        fun X0 : vert A + Unit =>	        match X0 with	        | inl y0 => edge A x0 y0	        | inr _ => Unit	        end	    | inr x0 =>	        fun X0 : vert A + Unit =>	        match X0 with	        | inl _ => Empty	        | inr y0 => ?Goal@{x:=x0; y:=y0}	        end	    end)	";
+            data = "1 subgoal (ID 173)	  	  UA : Univalence	  PR : PropResizing	  A : Graph	  x : Unit	  y : vert A	  ============================	  Type	<infomsg>	This subproof is complete, but there are some unfocused goals.	Focus next goal with bullet +.	</infomsg>	2 subgoals (ID 174)		subgoal 1 (ID 174) is:	 Type	subgoal 2 (ID 42) is:	 forall x y : vert A + Unit,	 IsHProp	   ((fun X : vert A + Unit =>	     match X with	     | inl x0 =>	         fun X0 : vert A + Unit =>	         match X0 with	         | inl y0 => edge A x0 y0	         | inr _ => Unit	         end	     | inr x0 =>	         fun X0 : vert A + Unit =>	         match X0 with	         | inl _ => Empty	         | inr y0 => ?Goal@{x:=x0; y:=y0}	         end	     end) x y)	";
             responses[i]=data;
           
 
             i = 91;
-            data = "1 subgoal (ID 174)	  	  UA : Univalence	  PR : PropResizing	  A : Graph	  x, y : Unit	  ============================	  Type	<infomsg>	This subproof is complete, but there are some unfocused goals.	Focus next goal with bullet -.	</infomsg>	1 subgoal (ID 42)		subgoal 1 (ID 42) is:	 is_mere_relation (vert A + Unit)	   (fun X : vert A + Unit =>	    match X with	    | inl x0 =>	        fun X0 : vert A + Unit =>	        match X0 with	        | inl y0 => edge A x0 y0	        | inr _ => Unit	        end	    | inr _ =>	        fun X0 : vert A + Unit =>	        match X0 with	        | inl _ => Empty	        | inr _ => Unit	        end	    end)	";
+            data = "1 subgoal (ID 174)	  	  UA : Univalence	  PR : PropResizing	  A : Graph	  x, y : Unit	  ============================	  Type	<infomsg>	This subproof is complete, but there are some unfocused goals.	Focus next goal with bullet -.	</infomsg>	1 subgoal (ID 42)		subgoal 1 (ID 42) is:	 forall x y : vert A + Unit,	 IsHProp	   ((fun X : vert A + Unit =>	     match X with	     | inl x0 =>	         fun X0 : vert A + Unit =>	         match X0 with	         | inl y0 => edge A x0 y0	         | inr _ => Unit	         end	     | inr _ =>	         fun X0 : vert A + Unit =>	         match X0 with	         | inl _ => Empty	         | inr _ => Unit	         end	     end) x y)	";
             responses[i]=data;
           
 
             i = 92;
-            data = "1 subgoal (ID 42)	  	  UA : Univalence	  PR : PropResizing	  A : Graph	  ============================	  is_mere_relation (vert A + Unit)	    (fun X : vert A + Unit =>	     match X with	     | inl x0 =>	         fun X0 : vert A + Unit =>	         match X0 with	         | inl y0 => edge A x0 y0	         | inr _ => Unit	         end	     | inr _ =>	         fun X0 : vert A + Unit =>	         match X0 with	         | inl _ => Empty	         | inr _ => Unit	         end	     end)	No more subgoals.	";
+            data = "1 subgoal (ID 42)	  	  UA : Univalence	  PR : PropResizing	  A : Graph	  ============================	  forall x y : vert A + Unit,	  IsHProp	    ((fun X : vert A + Unit =>	      match X with	      | inl x0 =>	          fun X0 : vert A + Unit =>	          match X0 with	          | inl y0 => edge A x0 y0	          | inr _ => Unit	          end	      | inr _ =>	          fun X0 : vert A + Unit =>	          match X0 with	          | inl _ => Empty	          | inr _ => Unit	          end	      end) x y)	No more subgoals.	";
             responses[i]=data;
           
 
@@ -1983,7 +1983,7 @@
           
 
             i = 393;
-            data = "1 subgoal (ID 195)	  	  UA : Univalence	  PR : PropResizing	  A, B : Graph	  ============================	  {E : vert A + vert B -> vert A + vert B -> Type &	  is_mere_relation (vert A + vert B) E}	";
+            data = "1 subgoal (ID 195)	  	  UA : Univalence	  PR : PropResizing	  A, B : Graph	  ============================	  {E : vert A + vert B -> vert A + vert B -> Type &	  forall x y : vert A + vert B, IsHProp (E x y)}	";
             responses[i]=data;
           
 
@@ -3253,12 +3253,12 @@
           
 
             i = 647;
-            data = "1 subgoal (ID 378)	  	  UA : Univalence	  PR : PropResizing	  n : N	  ============================	  Sect	    (fun X : {m : N & m < n} + Unit =>	     match X with	     | inl mH => (mH.1; N_lt_le mH.1 n mH.2)	     | inr _ => (n; reflexivity n)	     end)	    (fun mH : {m : N & m <= n} =>	     let s := N_le_eq_or_lt mH.1 n mH.2 in	     match s with	     | inl _ => inr tt	     | inr Hs => inl (mH.1; Hs)	     end)	<infomsg>	This subproof is complete, but there are some unfocused goals.	Focus next goal with bullet -.	</infomsg>	1 subgoal (ID 380)		subgoal 1 (ID 380) is:	 Sect	   (fun mH : {m : N & m <= n} =>	    let s := N_le_eq_or_lt mH.1 n mH.2 in	    match s with	    | inl _ => inr tt	    | inr Hs => inl (mH.1; Hs)	    end)	   (fun X : {m : N & m < n} + Unit =>	    match X with	    | inl mH => (mH.1; N_lt_le mH.1 n mH.2)	    | inr _ => (n; reflexivity n)	    end)	";
+            data = "1 subgoal (ID 378)	  	  UA : Univalence	  PR : PropResizing	  n : N	  ============================	  Sect	    (fun X : {m : N & m < n} + Unit =>	     match X with	     | inl mH => (mH.1; N_lt_le mH.1 n mH.2)	     | inr _ => (n; reflexivity n)	     end)	    (fun mH : {m : N & m <= n} =>	     let s := N_le_eq_or_lt mH.1 n mH.2 in	     match s with	     | inl _ => inr tt	     | inr Hs => inl (mH.1; Hs)	     end)	";
             responses[i]=data;
           
 
             i = 648;
-            data = "1 subgoal (ID 380)	  	  UA : Univalence	  PR : PropResizing	  n : N	  ============================	  Sect	    (fun mH : {m : N & m <= n} =>	     let s := N_le_eq_or_lt mH.1 n mH.2 in	     match s with	     | inl _ => inr tt	     | inr Hs => inl (mH.1; Hs)	     end)	    (fun X : {m : N & m < n} + Unit =>	     match X with	     | inl mH => (mH.1; N_lt_le mH.1 n mH.2)	     | inr _ => (n; reflexivity n)	     end)	No more subgoals.	";
+            data = "<infomsg>	This subproof is complete, but there are some unfocused goals.	Focus next goal with bullet -.	</infomsg>	1 subgoal (ID 380)		subgoal 1 (ID 380) is:	 Sect	   (fun mH : {m : N & m <= n} =>	    let s := N_le_eq_or_lt mH.1 n mH.2 in	    match s with	    | inl _ => inr tt	    | inr Hs => inl (mH.1; Hs)	    end)	   (fun X : {m : N & m < n} + Unit =>	    match X with	    | inl mH => (mH.1; N_lt_le mH.1 n mH.2)	    | inr _ => (n; reflexivity n)	    end)	1 subgoal (ID 380)	  	  UA : Univalence	  PR : PropResizing	  n : N	  ============================	  Sect	    (fun mH : {m : N & m <= n} =>	     let s := N_le_eq_or_lt mH.1 n mH.2 in	     match s with	     | inl _ => inr tt	     | inr Hs => inl (mH.1; Hs)	     end)	    (fun X : {m : N & m < n} + Unit =>	     match X with	     | inl mH => (mH.1; N_lt_le mH.1 n mH.2)	     | inr _ => (n; reflexivity n)	     end)	No more subgoals.	";
             responses[i]=data;
           
 
@@ -3963,12 +3963,12 @@
           
 
             i = 789;
-            data = "1 subgoal (ID 691)	  	  UA : Univalence	  PR : PropResizing	  X : Type	  x0 : X	  xs : X -> X	  n : N	  f : {m : N & m <= n} -> X	  xsn : X	  m : N	  H : m < n	  ============================	  (equiv_N_segment_succ_maps n) (f, xsn)	    (succ_seg (succ n) (_^-1 (_^-1 (inl (m; H))))) = 	  f (succ_seg n (m; H))	";
+            data = "1 subgoal (ID 691)	  	  UA : Univalence	  PR : PropResizing	  X : Type	  x0 : X	  xs : X -> X	  n : N	  f : {m : N & m <= n} -> X	  xsn : X	  m : N	  H : m < n	  ============================	  (equiv_N_segment_succ_maps n) (f, xsn)	    (succ_seg (succ n) (_^-1 (_^-1 (inl (m; H))))) = 	  f (succ_seg n (m; H))	2 subgoals (ID 723)	  	  UA : Univalence	  PR : PropResizing	  X : Type	  x0 : X	  xs : X -> X	  n : N	  f : {m : N & m <= n} -> X	  xsn : X	  m : N	  H : m < n	  ============================	  (equiv_N_segment_succ_maps n) (f, xsn)	    (succ_seg (succ n) (_^-1 (_^-1 (inl (m; H))))) =	  (equiv_N_segment_succ_maps n) (f, xsn)	    (succ m; N_lt_le (succ m) (succ n) (N_succ_lt m n H))		subgoal 2 (ID 724) is:	 (equiv_N_segment_succ_maps n) (f, xsn)	   (succ m; N_lt_le (succ m) (succ n) (N_succ_lt m n H)) =	 f (succ_seg n (m; H))	";
             responses[i]=data;
           
 
             i = 790;
-            data = "2 subgoals (ID 723)	  	  UA : Univalence	  PR : PropResizing	  X : Type	  x0 : X	  xs : X -> X	  n : N	  f : {m : N & m <= n} -> X	  xsn : X	  m : N	  H : m < n	  ============================	  (equiv_N_segment_succ_maps n) (f, xsn)	    (succ_seg (succ n) (_^-1 (_^-1 (inl (m; H))))) =	  (equiv_N_segment_succ_maps n) (f, xsn)	    (succ m; N_lt_le (succ m) (succ n) (N_succ_lt m n H))		subgoal 2 (ID 724) is:	 (equiv_N_segment_succ_maps n) (f, xsn)	   (succ m; N_lt_le (succ m) (succ n) (N_succ_lt m n H)) =	 f (succ_seg n (m; H))	1 subgoal (ID 723)	  	  UA : Univalence	  PR : PropResizing	  X : Type	  x0 : X	  xs : X -> X	  n : N	  f : {m : N & m <= n} -> X	  xsn : X	  m : N	  H : m < n	  ============================	  (equiv_N_segment_succ_maps n) (f, xsn)	    (succ_seg (succ n) (_^-1 (_^-1 (inl (m; H))))) =	  (equiv_N_segment_succ_maps n) (f, xsn)	    (succ m; N_lt_le (succ m) (succ n) (N_succ_lt m n H))	1 subgoal (ID 727)	  	  UA : Univalence	  PR : PropResizing	  X : Type	  x0 : X	  xs : X -> X	  n : N	  f : {m : N & m <= n} -> X	  xsn : X	  m : N	  H : m < n	  ============================	  succ_seg (succ n) (_^-1 (_^-1 (inl (m; H)))) =	  (succ m; N_lt_le (succ m) (succ n) (N_succ_lt m n H))	";
+            data = "1 subgoal (ID 723)	  	  UA : Univalence	  PR : PropResizing	  X : Type	  x0 : X	  xs : X -> X	  n : N	  f : {m : N & m <= n} -> X	  xsn : X	  m : N	  H : m < n	  ============================	  (equiv_N_segment_succ_maps n) (f, xsn)	    (succ_seg (succ n) (_^-1 (_^-1 (inl (m; H))))) =	  (equiv_N_segment_succ_maps n) (f, xsn)	    (succ m; N_lt_le (succ m) (succ n) (N_succ_lt m n H))	1 subgoal (ID 727)	  	  UA : Univalence	  PR : PropResizing	  X : Type	  x0 : X	  xs : X -> X	  n : N	  f : {m : N & m <= n} -> X	  xsn : X	  m : N	  H : m < n	  ============================	  succ_seg (succ n) (_^-1 (_^-1 (inl (m; H)))) =	  (succ m; N_lt_le (succ m) (succ n) (N_succ_lt m n H))	";
             responses[i]=data;
           
 
@@ -4153,17 +4153,17 @@
           
 
             i = 827;
-            data = "No more subgoals.	<infomsg>partial_Nrec_succ0 is defined</infomsg>	";
+            data = "No more subgoals.	";
             responses[i]=data;
           
 
             i = 828;
-            data = "<infomsg>partial_Nrec_succ is defined</infomsg>	";
+            data = "<infomsg>partial_Nrec_succ0 is defined</infomsg>	";
             responses[i]=data;
           
 
             i = 829;
-            data = "";
+            data = "<infomsg>partial_Nrec_succ is defined</infomsg>	";
             responses[i]=data;
           
 
@@ -4883,12 +4883,12 @@
           
 
             i = 973;
-            data = "1 subgoal (ID 725)	  	  UA : Univalence	  PR : PropResizing	  X : Type	  x0 : X	  xs : X -> X	  f : N -> X	  f0 : f zero = x0	  fs : forall m : N, f (succ m) = xs (f m)	  n : N	  refl_seg_n := refl_seg n : {m : N & m <= n}	  ============================	  path_contr (partial_Nrec_restr n (nrec_partials (f; (f0, fs)) (succ n)))	    (nrec_partials (f; (f0, fs)) n) = nrec_partials_succ n (f; (f0, fs))	";
+            data = "1 subgoal (ID 725)	  	  UA : Univalence	  PR : PropResizing	  X : Type	  x0 : X	  xs : X -> X	  f : N -> X	  f0 : f zero = x0	  fs : forall m : N, f (succ m) = xs (f m)	  n : N	  refl_seg_n := refl_seg n : {m : N & m <= n}	  ============================	  path_contr (partial_Nrec_restr n (nrec_partials (f; (f0, fs)) (succ n)))	    (nrec_partials (f; (f0, fs)) n) = nrec_partials_succ n (f; (f0, fs))	<infomsg>	This subproof is complete, but there are some unfocused goals.	Try unfocusing with \"}\".	</infomsg>	2 subgoals (ID 727)		subgoal 1 (ID 727) is:	 ap10	   (ap pr1	      (path_contr	         (partial_Nrec_restr n	            (fun mh : {m : N & m <= succ n} => f mh.1;	            (f0, fun mh : {m : N & m < succ n} => fs mh.1)))	         (fun mh : {m : N & m <= n} => f mh.1;	         (f0, fun mh : {m : N & m < n} => fs mh.1)))) refl_seg_n =	 ap10 (ap pr1 (nrec_partials_succ n (f; (f0, fs)))) refl_seg_n	subgoal 2 (ID 708) is:	 ap xs (ap10 (ap pr1 (nrec_partials_succ n (f; (f0, fs)))) refl_seg_n) = 1	1 subgoal (ID 727)	  	  UA : Univalence	  PR : PropResizing	  X : Type	  x0 : X	  xs : X -> X	  f : N -> X	  f0 : f zero = x0	  fs : forall m : N, f (succ m) = xs (f m)	  n : N	  refl_seg_n := refl_seg n : {m : N & m <= n}	  p : path_contr	        (partial_Nrec_restr n (nrec_partials (f; (f0, fs)) (succ n)))	        (nrec_partials (f; (f0, fs)) n) = nrec_partials_succ n (f; (f0, fs))	  ============================	  ap10	    (ap pr1	       (path_contr	          (partial_Nrec_restr n	             (fun mh : {m : N & m <= succ n} => f mh.1;	             (f0, fun mh : {m : N & m < succ n} => fs mh.1)))	          (fun mh : {m : N & m <= n} => f mh.1;	          (f0, fun mh : {m : N & m < n} => fs mh.1)))) refl_seg_n =	  ap10 (ap pr1 (nrec_partials_succ n (f; (f0, fs)))) refl_seg_n	<infomsg>	This subproof is complete, but there are some unfocused goals.	Focus next goal with bullet +.	</infomsg>	1 subgoal (ID 708)		subgoal 1 (ID 708) is:	 ap xs (ap10 (ap pr1 (nrec_partials_succ n (f; (f0, fs)))) refl_seg_n) = 1	";
             responses[i]=data;
           
 
             i = 974;
-            data = "<infomsg>	This subproof is complete, but there are some unfocused goals.	Try unfocusing with \"}\".	</infomsg>	2 subgoals (ID 727)		subgoal 1 (ID 727) is:	 ap10	   (ap pr1	      (path_contr	         (partial_Nrec_restr n	            (fun mh : {m : N & m <= succ n} => f mh.1;	            (f0, fun mh : {m : N & m < succ n} => fs mh.1)))	         (fun mh : {m : N & m <= n} => f mh.1;	         (f0, fun mh : {m : N & m < n} => fs mh.1)))) refl_seg_n =	 ap10 (ap pr1 (nrec_partials_succ n (f; (f0, fs)))) refl_seg_n	subgoal 2 (ID 708) is:	 ap xs (ap10 (ap pr1 (nrec_partials_succ n (f; (f0, fs)))) refl_seg_n) = 1	1 subgoal (ID 727)	  	  UA : Univalence	  PR : PropResizing	  X : Type	  x0 : X	  xs : X -> X	  f : N -> X	  f0 : f zero = x0	  fs : forall m : N, f (succ m) = xs (f m)	  n : N	  refl_seg_n := refl_seg n : {m : N & m <= n}	  p : path_contr	        (partial_Nrec_restr n (nrec_partials (f; (f0, fs)) (succ n)))	        (nrec_partials (f; (f0, fs)) n) = nrec_partials_succ n (f; (f0, fs))	  ============================	  ap10	    (ap pr1	       (path_contr	          (partial_Nrec_restr n	             (fun mh : {m : N & m <= succ n} => f mh.1;	             (f0, fun mh : {m : N & m < succ n} => fs mh.1)))	          (fun mh : {m : N & m <= n} => f mh.1;	          (f0, fun mh : {m : N & m < n} => fs mh.1)))) refl_seg_n =	  ap10 (ap pr1 (nrec_partials_succ n (f; (f0, fs)))) refl_seg_n	<infomsg>	This subproof is complete, but there are some unfocused goals.	Focus next goal with bullet +.	</infomsg>	1 subgoal (ID 708)		subgoal 1 (ID 708) is:	 ap xs (ap10 (ap pr1 (nrec_partials_succ n (f; (f0, fs)))) refl_seg_n) = 1	1 subgoal (ID 708)	  	  UA : Univalence	  PR : PropResizing	  X : Type	  x0 : X	  xs : X -> X	  f : N -> X	  f0 : f zero = x0	  fs : forall m : N, f (succ m) = xs (f m)	  n : N	  refl_seg_n := refl_seg n : {m : N & m <= n}	  ============================	  ap xs (ap10 (ap pr1 (nrec_partials_succ n (f; (f0, fs)))) refl_seg_n) = 1	1 subgoal (ID 1875)	  	  UA : Univalence	  PR : PropResizing	  X : Type	  x0 : X	  xs : X -> X	  f : N -> X	  f0 : f zero = x0	  fs : forall m : N, f (succ m) = xs (f m)	  n : N	  refl_seg_n := refl_seg n : {m : N & m <= n}	  ============================	  ap xs	    (ap10	       (ap pr1	          (path_sigma'	             (fun f1 : {m : N & m <= n} -> X =>	              (f1 (zero_seg n) = x0) *	              (forall mh : {m : N & m < n},	               f1 (succ_seg n mh) = xs (f1 (_^-1 (inl mh))))) 1	             (nrec_partials_succ_subproof n (f; (f0, fs))))) refl_seg_n) = 1	";
+            data = "1 subgoal (ID 708)	  	  UA : Univalence	  PR : PropResizing	  X : Type	  x0 : X	  xs : X -> X	  f : N -> X	  f0 : f zero = x0	  fs : forall m : N, f (succ m) = xs (f m)	  n : N	  refl_seg_n := refl_seg n : {m : N & m <= n}	  ============================	  ap xs (ap10 (ap pr1 (nrec_partials_succ n (f; (f0, fs)))) refl_seg_n) = 1	1 subgoal (ID 1875)	  	  UA : Univalence	  PR : PropResizing	  X : Type	  x0 : X	  xs : X -> X	  f : N -> X	  f0 : f zero = x0	  fs : forall m : N, f (succ m) = xs (f m)	  n : N	  refl_seg_n := refl_seg n : {m : N & m <= n}	  ============================	  ap xs	    (ap10	       (ap pr1	          (path_sigma'	             (fun f1 : {m : N & m <= n} -> X =>	              (f1 (zero_seg n) = x0) *	              (forall mh : {m : N & m < n},	               f1 (succ_seg n mh) = xs (f1 (_^-1 (inl mh))))) 1	             (nrec_partials_succ_subproof n (f; (f0, fs))))) refl_seg_n) = 1	";
             responses[i]=data;
           
 
